@@ -1,0 +1,107 @@
+<log title 
+detail
+/log>
+
+<ref addr 
+content
+/ref>
+
+<comment text /comment>
+
+<file filenanem
+file content
+/file>
+
+---------------------------------------------------
+
+<log 硬盘安装
+网络安装就好
+/log>
+
+<log 安装好之后连接无线网络wpa2
+$ iwconfig
+
+<ref https://wiki.archlinux.org/index.php/WPA_supplicant_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+# wpa_supplicant -B -i interface -c <(wpa_passphrase MYSSID passphrase)
+注意: 由于存在进程替换，这个命令不能带着 sudo 执行，必须切换到 root 身份。否则会报错：
+Successfully initialized wpa_supplicant
+Failed to open config file '/dev/fd/63', error: No such file or directory
+Failed to read or parse configuration '/dev/fd/63'
+/ref>
+
+<log 初始化root密码
+$ sudo passwd root
+/log>
+
+# wpa_supplicant -B -i wlp2s0 -c <(wpa_passphrase qijiu wuxiqijiu)
+$ iwconfig	<comment 可以看到有信号强度 /comment>
+$ sudo dhclient	<comment 找不到dhcpcd命令 不然就用# dhcpcd interface /comment>
+$ ifconfig -a 	<comment 可以开到分配好了ip等 /comment>
+/log>
+
+
+<log 更新源为163
+$ sudo cp /etc/apt/source.list /etc/apt/source.list.bk
+$ sudo vi /etc/apt/source.list	<comment 还没有安装vim和gedit等 /comment>
+
+<file /etc/apt/source.list
+deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb http://archive.canonical.com/ubuntu/ xenial partner
+deb-src http://archive.canonical.com/ubuntu/ xenial partner
+deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+/file>
+
+$ sudo apt-get update
+$ sudo apt-get upgrade
+
+163源不好使，改成cn.archive
+
+<log 安装vim
+sudo apt-get install vim
+/log>
+
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
+/log>
+
+<log 安装图形界面
+sudo apt-get install openbox xinit <comment lxdm看来也没有啥必要安装了/comment>
+
+/log>
+
+<log 测试x自带工具的锁屏
+sudo apt-get install x11-xserver-utils
+连带安装cpp cpp-5 libisl15 libmpc3 libmpfr4
+
+没有必要的玩意，删除掉
+sudo apt-get purge cpp cpp-5 libisl15 libmpc3 libmpfr4 x11-xserver-utils
+/log>
+
+<log 安装lxterminal
+sudo apt-get install lxterminal
+/log>
+
+
+<log 安装pcmanfm
+sudo apt-get install pcmanfm
+/log>
+
+
+<log 安装leafpad
+sudo apt-get install leafpad
+/log>
+
+
+gedit file-roller
+

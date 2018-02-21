@@ -1,0 +1,2964 @@
+//$ sudo leafpad /etc/locale.conf 
+//$ sudo leafpad /etc/locale.gen
+//$ sudo locale-gen
+$ sudo leafpad /etc/pacman.d/mirrorlist 
+mirrors.ustc.edu.cn or mirrors.163.com
+
+download .db file and put into
+/var/lib/pacman/sync
+
+$ sudo pacman -S archlinux-keyring && sudo pacman -Syu
+or
+$ sudo pacman -S archlinux-keyring && sudo pacman -Syy
+
+已损坏 (无效或已损坏的软件包 (PGP 签名))
+$ sudo pacman-key --refresh-keys
+
+
+$ pacman-key --export > all_keys
+$ sudo pacman-key --add all_keys
+$ pacman-key --list-keys
+
+
+
+$ sudo pacman -Syu
+$ sudo pacman-key --init
+$ sudo leafpad /etc/pacman.d/gnupg/gpg.conf
+change keyserver hkp://pool.sks-keyservers.net to hkp://keyserver.ubuntu.com
+$ sudo dirmngr < /dev/null
+$ sudo pacman-key -r <key-no>
+$ sudo pacman-key --refresh-keys
+
+$ sudo leafpad /etc/pacman.conf
+[archlinuxcn]
+SigLevel = Optional TrustAll
+#Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+Server = http://mirrors.163.com/archlinux-cn/$arch
+
+$ sudo pacman -Sy
+$ sudo pacman -S archlinuxcn-keyring
+$ sudo pacman -S opencc
+$ sudo sudo pacman -S yaourt 
+$ yaourt -S fcitx-sogoupinyin wps-office
+
+// 切莫安装sogoupinyin
+
+$ sudo leafpad ~/.xinitrc
+exec dbus-launch startxfce4
+to
+exec dbus-launch startxfce4 nm-applet &
+or
+exec dbus-launch startxfce4 nm-applet xfce4-panel &
+
+$ sudo sudo pacman -S wqy-zenhei
+
+$ leafpad /home/andy/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml/xfce4-desktop.xml
+check the path is /usr/share/backgrounds/xfce
+
+$ sudo sudo cp /usr/share/backgrounds/*.jpg /usr/share/backgrounds/xfce/
+
+$ sudo pacman -Syu
+
+
+$ sudo leafpad ~/.xinitrc
+back to
+exec dbus-launch startxfce4 
+$ sudo pacman -S samba
+$ sudo pacman -S nautilus
+//only keep xfce4-panel
+ 
+$ sudo leafpad /etc/locale.gen
+$ sudo locale-gen
+$ sudo pacman -S fcitx-im fcitx-configtool fcitx-cloudpinyin fcitx-sunpinyin bash-completion
+$ sudo pacman -S brasero gnome-mplayer mplayer gedit conky file-roller fcitx-googlepinyin htop
+$ sudo pacman -S ntfs-3g flashplugin vim bash-completion
+$ sudo pacman -S firefox chromium liferea thunderbird transmission-gtk brasero gnome-mplayer evince 
+$ sudo pacman -S lftp file-roller gedit ttf-arphic-uming ttf-arphic-ukai ttf-bitstream-vera
+
+$ sudo pacman -S base-devel
+
+
+//sfs extractor
+//Squashfs
+squashfs-tools
+mksquashfs
+unsquashfs
+
+//extra .sfs file from livecd and mount .img file as ext4 format
+
+$ pacman -Q --help
+
+//find installed packages
+$ pacman -Q -d > pacqd.txt
+$ pacman -Q -e > pacqe.txt
+$ pacman -Q -m > pacqm.txt
+$ pacman -Q -n > pacqn.txt
+
+// restore grub
+sudo chroot /path/to/mounted/
+sudo grub-install /dev/sda
+// or 
+sudo grub-install --root-directory=/path/to/mounted/ /dev/sda
+
+//generate new grub.cfg
+grub2-mkconfig -o /boot/grub2/grub.cfg
+or
+grub-mkconfig -o /boot/grub/grub.cfg
+
+// backup and restore system
+// boot into livecd, cd to mountpoint
+tar -jcvpf backup.tar.bz2 .
+// or
+tar -jxvpf backup.tar.bz2 .
+
+// backup pkgs
+$ sudo mv ~/Downloads/* /var/cache/pacman/pkg/
+$ sudo cp /var/lib/pacman/sync/* /mnt/win_e/arch_boot/sync/
+$ sudo cp /var/cache/pacman/pkg/* /mnt/win_e/TDDOWNLOAD/arch_repo/pkg/
+or
+$ sudo mv /var/cache/pacman/pkg/* /mnt/win_e/TDDOWNLOAD/arch_repo/pkg/
+
+// remote desktop
+$ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andy -f 192.168.1.99 &
+
+
+// vbox
+$ sudo pacman -S xorg-server xorg-xinit xorg-utils xorg-server-utils
+$ sudo pacman -S virtualbox
+===> You must load vboxdrv module before starting VirtualBox:
+===> # modprobe vboxdrv
+//$ sudo pacman -S virtualbox-archlinux-additions
+$ sudo pacman -S linux-headers mesa qt4
+$ sudo pacman -S virtualbox-guest-utils
+$ sudo pacman -S virtualbox-guest-modules
+$ sudo pacman -S virtualbox-guest-iso
+$ sudo pacman -S virtualbox-sdk
+$ sudo pacman -S virtualbox-host-dkms
+$ sudo pacman -S virtualbox-guest-dkms
+$ sudo modprobe vboxdrv
+$ sudo modprobe vboxnetflt
+$ sudo modprobe vboxnetadp
+$ sudo modprobe vboxpci
+$ sudo pacman -S linux-lts linux linux-lts-headers linux-headers
+$ sudo dkms autoinstall
+
+$ sudo leafpad /etc/modules-load.d/virtualbox.conf
+vboxdrv
+vboxnetadp
+vboxnetflt
+vboxpci
+
+
+// setup vim
+$ sudo vboxreload
+$ sudo pacman -S ctags cscope
+$ leafpad .vimrc
+set termencoding=utf-8
+
+// arm tool chain
+$ sudo pacman -S arm arm-none-eabi-binutils arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib
+$ arm-none-eabi-gcc --target-help
+
+// music player
+$ sudo pacman -S audacious rhythmbox
+//$  sudo pacman -S banshee
+
+// wine
+$ sudo pacman -S wine wine_gecko wine-mono winetricks
+
+$ sudo pacman -S busybox
+$ sudo chmod 4555 /usr/bin/busybox
+
+// openbox
+// scrot是截图工具
+$ sudo pacman -S wbar feh scrot obmenu
+$ sudo pacman -S lxappearance pcmanfm
+$ tint2conf
+
+$ leafpad ~/.config/openbox/autostart
+(sleep 2 && spacefm -d) &
+to
+(sleep 2 && pcmanfm -d) &
+
+$ leafpad ~/.config/obmenu-generator/schema.pl
+{item => ['spacefm',           'File Manager',      'file-manager']},
+to
+{item => ['pcmanfm',           'File Manager',      'file-manager']},
+
+$ pcmanfm --desktop
+$ pcmanfm --desktop-pref
+$ pcmanfm --desktop-off
+
+
+pcmanfm的bookmarks在
+~/.config/gtk-3.0/bookmarks
+
+pcmanfm右键新建清理，其实就是在模板里面
+~/Templates/
+
+
+
+// java
+$ sudo pacman -S jdk
+
+// eclipse + cdt
+$ sudo pacman -S eclipse
+$ sudo pacman -S openocd
+http://ftp.yzu.edu.tw/eclipse/tools/cdt/releases/8.7/cdt-8.7.0.zip
+http://avr-eclipse.sourceforge.net/wiki/index.php/The_AVR_Eclipse_Plugin
+http://sourceforge.net/projects/gnuarmeclipse
+http://opensource.zylin.com/embeddedcdt.html
+http://opensource.zylin.com/zylincdt
+
+// version control
+$ sudo pacman -S subversion git
+$ git config --global user.name "Andreas Zhang"
+$ git config --global user.email denglitsch@gmail.com
+
+
+// qemu
+$ sudo pacman -S qemu qemu-arch-extra qemu-block-gluster qemu-block-iscsi qemu-block-rbd qemu-guest-agent qemu-launcher 
+
+// avr tools
+$ sudo pacman -S avr-binutils avrdude avr-gcc avr-gdb avr-libc
+
+http://sourceware.org/insight/downloads.php
+ftp://sourceware.org/pub/insight/releases/
+ftp://sourceware.org/pub/insight/releases/insight-6.8-1a.tar.bz2
+cd ~
+tar jxvf insight-6.8-1a.tar.bz2
+mkdir /home/andy/insight-arm
+./configure --target=arm-linux --prefix=/home/andy/insight-arm --disable-werror
+// add '-' before the line 1090 of bfd/Makefile
+
+--disable-stage1-checking
+
+
+$ sudo pacman -S gdb
+$ gdb -tui
+info win
+fs SRC
+fs CMD
+
+mkdir /home/andy/insight-avr
+./configure --target=avr --prefix=/home/andy/insight-avr --disable-werror
+// if recile errors, add '-' before the line of makefile
+
+./configure --target=arm-none-eabi --prefix=/home/andy/insight-arm --disable-werror
+// add '-' before the line 1090 of bfd/Makefile
+
+// expect, tclsh and wish
+$ sudo pacman -S tcl tk expect
+http://tcl.activestate.com/software/tcltk/
+
+
+
+////////////////////////////////////////backup0919////////////////////////////////////////////////
+//设置文件管理器终端为
+lxterminal
+
+fcitx候选字改成7
+
+导入key
+$ sudo pacman-key --add all_keys
+
+$ sudo leafpad /etc/pacman.d/mirrorlist
+
+## Score: 1.3, China
+Server = http://mirrors.hustunique.com/archlinux/$repo/os/$arch
+## Score: 3.0, China
+#Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+## Score: 3.0, China
+#Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+## Score: 4.3, China
+#Server = http://mirror.bjtu.edu.cn/archlinux/$repo/os/$arch
+## Score: 4.7, China
+#Server = http://mirrors.hust.edu.cn/archlinux/$repo/os/$arch
+## Score: 7.3, China
+#Server = http://mirrors.163.com/archlinux/$repo/os/$arch
+
+$ sudo pacman -Syy
+
+
+// install rar
+$ wget http://www.rarsoft.com/rar/rarlinux-x64-5.3.b4.tar.gz
+$ tar zxvf rarlinux-x64-5.3.b4.tar.gz
+$ cd rar
+$ sudo make install
+$ cd ..
+$ rm -rf rar
+$ rm rarlinux-x64-5.3.b4.tar.gz
+通过samba，从window 7
+复制一份rarreg.key到～
+
+
+$ sudo pacman -S ncurses
+$ sudo pacman -S mono-tools
+
+
+// 修改yaourt默认编辑器
+$ sudo leafpad /etc/yaourtrc
+EDITOR="vim"
+没有用？
+
+// yaourt下载的位置在/tmp
+
+// for crosstool-ng
+//sudo pacman -S cvs gawk
+//cd /usr/bin
+//mv mawk mawk.bak
+//cd /home
+sudo pacman -S cvs
+//sudo ln -s gawk mawk
+
+$ sudo pacman -S gnome-system-monitor
+$ sudo pacman -S gnome-mines
+
+
+git clone https://github.com/friendlyarm/sd-fuse_nanopi.git
+git clone https://github.com/friendlyarm/prebuilts.git
+git clone https://github.com/friendlyarm/uboot_nanopi.git
+git clone https://github.com/friendlyarm/linux-4.x.y.git
+
+
+// ifconfig,route在net-tools中，nslookup,dig在dnsutils中，ftp,telnet等在inetutils中,ip命令在iproute2中
+$ sudo pacman -S net-tools dnsutils inetutils iproute2
+
+
+# dirmngr </dev/null
+
+
+$ sudo leafpad /etc/pacman.d/gnupg/gpg.conf
+change keyserver hkp://pool.sks-keyservers.net to hkp://keyserver.ubuntu.com:80
+$ sudo pacman-key -r 0940E3F9
+$ pacman-key --export > all_keys
+$ sudo pacman -S xrdp remmina freerdp telepathy-glib nxproxy xorg-server-xephyr libvncserver
+
+
+//$ vncserver -geometry 1440x900 -alwaysshared -dpi 96 :1
+$ x0vncserver -display :0 -passwordfile ~/.vnc/passwd
+需要的话添加到自启动里面
+
+// 创建一下密码123456,就是第一次运行的时候vncserver，或者调用vncpasswd
+$ vncserver
+
+// mingw
+$ sudo pacman -S mingw-w64-gcc mingw-w64-binutils mingw-w64-crt mingw-w64-headers mingw-w64-headers-bootstrap mingw-w64-winpthreads
+$ gcc -o main main.c
+$ i686-w64-mingw32-gcc -o main1 main.c
+$ x86_64-w64-mingw32-gcc -o main2 main.c
+$ file main*
+$ wine ./main1
+$ wine ./main2
+
+
+// 安装pdfstudio到～
+复制图标到app目录
+$ sudo cp pdfstudio9.desktop /usr/share/applications/
+$ cp pdfstudio9.desktop ~/Desktop
+
+// 修改schema.pl文件,添加
+{cat => ['wine',        'Wine',        'applications-wine']},
+
+//$ sudo mv /usr/share/applications/fcitx-ui-sogou-qimpanel.desktop ~/Desktop/
+//$ sudo mv /usr/bin/sogou-qimpanel ~/Desktop/
+
+
+//$ sudo pacman -S kdegraphics-okular 
+//$ sudo pacman -S ebook-tools
+//$ sudo pacman -S pulseaudio pulseaudio-alsa
+
+//$ sudo pacman -S xfce4 xfce4-goodies
+//$ sudo pacman -S gnome
+$ sudo pacman -S nautilus-terminal nautilus-open-terminal
+$ sudo pacman -S qt
+//$ sudo pacman -S qt5-doc
+
+// 不要安装kde
+//$ sudo pacman -S plasma kde-applications kde-l10n-zh_cn
+
+
+
+$ mkdir ~/share
+$ sudo leafpad /etc/samba/smb.conf
+
+[global]
+workgroup = WORKGROUP
+security = user
+
+[Movies]
+path = /home/andy/share
+valid users = andy
+public = yes
+writable = yes
+printable = no
+create mask = 0644
+
+
+$ sudo pdbedit -a -u andy
+创建samba密码
+
+samba-server-start.sh
+————————————————————————————
+#!/bin/bash
+sudo systemctl start smbd.service nmbd.service winbindd.service
+————————————————————————————
+和
+samba-server-stop.sh
+————————————————————————————
+#!/bin/bash
+sudo systemctl stop smbd.service nmbd.service winbindd.service
+————————————————————————————
+
+$ testparm -s
+$ smbclient -L hostname -U%
+
+
+
+$ sudo cpan
+$ sudo cpan install Linux::DesktopFiles Data::Dump
+
+$ sudo pacman -S dconf-editor
+$ dconf-editor
+依次点开->org->gnome->gedit->preferences->encodings
+改成
+['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+
+
+//危险，会破坏对smb://的解析
+//$ sudo pacman -S dbus
+
+// for winetricks
+$ sudo pacman -S zenity
+$ rm -rf ~/.wine
+WINEARCH=win32 WINEPREFIX=~/.wine winecfg
+
+or
+$ leafpad ~/.bashrc
+export WINEPREFIX=$HOME/.wine/
+export WINEARCH=win32
+
+记得退出一次终端
+
+
+$ echo $WINEARCH
+$ winecfg
+$ winetricks
+/home/andy/.cache/winetricks
+http://sourceforge.net/projects/wine/files/Wine Mono
+http://sourceforge.net/projects/wine/files/Wine%20Gecko/
+/usr/share/wine/mono
+/usr/share/wine/gecko
+
+
+安装foxit reader，beyond compare，source insight
+source insight出现打开项目错误时候，Documents/Source Insight/Settings/GLOBAL.CF3
+实在不行就删掉Documents目录下的配置目录就可以恢复
+
+
+最后保护根目录关键文件
+//chmod 1777 *
+$ sudo chattr +i rarreg.key
+$ lsattr -a
+
+
+使用ACL进行访问控制
+$ sudo pacman -S acl
+
+
+
+///////////////////////////////////////////////////////////////////////
+backup0927
+///////////////////////////////////////////////////////////////////////
+
+$ sudo pacman -S openvpn
+$ sudo pacman -S pptpclient
+$ sudo pacman -S networkmanager-vpnc networkmanager-openvpn networkmanager-pptp
+$ sudo pacman -S networkmanager-openconnect rp-pppoe
+https://www.igreenvpn.net
+
+$ sudo pacman -S axel
+$ sudo pacman -S tls
+$ sudo pacman -S xscreensaver
+
+
+// gstreamer
+// 设置环境变量的脚本
+/opt/gstreamer-sdk/bin/gst-sdk-shell
+// gcc 参数
+-Wl,-rpath=/opt/gstreamer-sdk/lib `pkg-config --cflags --libs gstreamer-0.10`
+// 例子
+$ gcc `pkg-config --cflags --libs gstreamer-0.10` basic-tutorial-1.c -o basic-tutorial-1
+$ gcc `pkg-config --cflags --libs gstreamer-interfaces-0.10 gtk+-2.0 gstreamer-0.10` basic-tutorial-5.c -o basic-tutorial-5
+
+$ gst-launch-0.10 videotestsrc ! ffmpegcolorspace ! autovideosink
+$ gst-launch-0.10 videotestsrc ! video/x-raw-gray ! ffmpegcolorspace ! autovideosink
+$ gst-launch-0.10 audiotestsrc ! audioconvert ! autoaudiosink
+$ gst-launch-0.10 videotestsrc pattern=11 ! ffmpegcolorspace ! autovideosink
+$ gst-launch-0.10 videotestsrc ! ffmpegcolorspace ! tee name=t ! queue ! autovideosink t. ! queue ! autovideosink
+$ gst-launch-0.10 souphttpsrc location=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! matroskademux name=d d.video_00 ! matroskamux ! filesink location=sintel_video.mkv
+$ gst-launch-0.10 souphttpsrc location=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! matroskademux name=d d.audio_00 ! vorbisparse ! matroskamux ! filesink location=sintel_audio.mka
+gst-launch-0.10 souphttpsrc location=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! matroskademux ! filesink location=test
+gst-launch-0.10 souphttpsrc location=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! matroskademux ! video/x-vp8 ! matroskamux ! filesink location=sintel_video.mkv
+gst-launch-0.10 playbin2 uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm
+gst-launch-0.10 playbin2 uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm
+gst-launch-0.10 filesrc location=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! decodebin2 ! autovideosink
+//gst-launch-0.10 filesrc location=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm ! decodebin2 ! autovideosink
+gst-launch-0.10 souphttpsrc location=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! matroskademux name=d ! queue ! vp8dec ! ffmpegcolorspace ! autovideosink d. ! queue ! vorbisdec ! audioconvert ! audioresample ! autoaudiosink
+gst-launch-0.10 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm name=d ! queue ! theoraenc ! oggmux name=m ! filesink location=sintel.ogg d. ! queue ! audioconvert ! audioresample ! flacenc ! m.
+gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm name=d ! queue ! theoraenc ! oggmux name=m ! filesink location=sintel.ogg d. ! queue ! audioconvert ! audioresample ! flacenc ! m.
+gst-launch-0.10 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! queue ! videoscale ! video/x-raw-yuv,width=320,height=200 ! ffmpegcolorspace ! autovideosink
+gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm ! queue ! videoscale ! video/x-raw-yuv,width=320,height=200 ! ffmpegcolorspace ! autovideosink
+gst-inspect
+gst-discoverer-0.10 http://docs.gstreamer.com/media/sintel_trailer-480p.webm -v
+gst-discoverer-0.10 file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm -v
+gst-launch-0.10 videotestsrc ! video/x-raw-rgb,framerate=30/1 ! videorate ! video/x-raw-rgb,framerate=1/1 ! ffmpegcolorspace ! autovideosink
+gst-launch-0.10 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! videoscale ! video/x-raw-yuv,width=178,height=100 ! ffmpegcolorspace ! autovideosink
+gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm ! videoscale ! video/x-raw-yuv,width=178,height=100 ! ffmpegcolorspace ! autovideosink
+gst-launch-0.10 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! audioresample ! audio/x-raw-float,rate=4000 ! audioconvert ! autoaudiosink
+gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm ! audioresample ! audio/x-raw-float,rate=4000 ! audioconvert ! autoaudiosink
+gst-launch-0.10 audiotestsrc ! tee name=t ! queue ! audioconvert ! autoaudiosink t. ! queue ! wavescope ! ffmpegcolorspace ! autovideosink
+
+http://docs.gstreamer.com/display/GstSDK/Tutorials
+
+// ./basic-tutorial-5 有告警
+//Failed to load module "canberra-gtk-module"
+$ pacman -Qm
+$ env
+$ pacman -Qo /usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so
+$ sudo vim /etc/ld.so.conf.d/gtk-2.0.conf
+/usr/lib/gtk-2.0/modules 
+$ sudo ldconfig
+// ok，解决
+// 其他，GTK_PATH=:/usr/lib/gtk-2.0，不知道行不行。反正上面的办法解决了，不试了。
+http://www.cnblogs.com/day/archive/2013/08/06/3242211.html
+https://bbs.archlinux.org/viewtopic.php?id=120761
+
+
+
+
+
+$ sudo pacman -S iftop
+$ sudo iftop -N -n -i wlp24s0
+//下面这个网络流量监控更方便操作
+$ sudo pacman -S iptraf-ng
+//这个太炫了一点
+$ sudo iptraf-ng 
+$ sudo pacman -S nethogs
+// bmon挺好
+$ sudo pacman -S bmon
+
+//这个看来好久没人去更新了
+$ sudo pacman -S slurm
+$ cd /lib
+$ sudo ln -s libncursesw.so.6.0 libncursesw.so.5
+$ slurm -s -i wlp24s0
+
+//这个简单直观
+$ yaourt -S speedometer
+python2-packaging-15.3-1  python2-setuptools-1:18.3.1-1  python2-urwid-1.3.0-2
+$ speedometer -rx wlp24s0 -tx wlp24s0
+$ speedometer -r wlp24s0 -c -t wlp24s0
+
+//一个pgp server
+http://pgp.mit.edu/
+
+
+// gvim就包含了cli的vim的，所以替换掉吧
+$ sudo pacman -S gvim
+
+
+// wine 一个 winrar
+
+// 没用
+//$ sudo pacman -S lua
+//$ sudo pacman -S lua-expat lua-filesystem
+//$ sudo pacman -S cairo-perl
+//$ sudo pacman -S cairomm
+
+
+$ sudo pacman -S nfs-utils
+$ sudo systemctl restart rpcbind
+$ sudo systemctl status rpcbind
+$ sudo vim /etc/iptables/iptables.rules
+$ sudo systemctl restart nfs-server iptables
+$ sudo systemctl status nfs-server iptables
+$ showmount -e
+
+
+minicom只限sudo，所以也有不同
+
+
+
+
+
+
+$ sudo pacman -S ccache
+$ sudo pacman -S vala
+$ sudo pacman -S btsync
+
+
+
+
+$ sudo pacman -S btsync
+	WebGUI can be accessed via following URL: http://localhost:8888
+	
+	* Running btsync system instance (using dedicated btsync:btsync account)
+
+  	  System instance of btsync is preconfigured (configuration file located
+	  at /etc/btsync.conf) and can be used directly after installation.
+
+	  Execute:
+
+	    to reload system systemd modules:     systemctl daemon-reload
+	    to start btsync manually:             systemctl start btsync
+	    to autostart btsync on system start:  systemctl enable btsync
+
+	* Running btsync user instance (using current user account)
+
+	  User instance MUST be configured before use. To perform configuration, 
+	  install btsync-autoconfig package or follow manual configuration steps:
+
+  	    1. Copy /etc/btsync/btsync.conf to ~/.config/btsync/btsync.conf for
+ 	    the user you wish to configure btsync:
+ 	
+	      mkdir -p ~/.config/btsync	
+	      cp /etc/btsync.conf ~/.config/btsync/btsync.conf
+ 
+	    2. Replace user-specific references with the appropriate information,
+	    including the following settings:
+ 
+	      - storage_path
+	      - pid_file
+	      - webui.listen
+	      - webui.login
+	      - webui.password
+
+	    3. Make sure folder you specified as storage_path and folder where pid_file will
+	    be located both exist in the filesystem, since btsync will not create it for you.
+
+	  Execute:
+
+	    to reload user systemd modules:       systemctl --user daemon-reload
+	    to start btsync manually:             systemctl --user start btsync
+	    to autostart btsync on user login:    systemctl --user enable btsync
+
+
+$ yaourt -S btsync-gui
+Please take in to account that btsync-gui makes the btsync web UI
+inaccessible (for security reasons) by default and binds the web UI
+interface to 127.0.0.1 using internal random credentials at each
+start. If you do not want this behaviour, please execute this command
+before starting btsync-gui:
+
+btsync-gui —webui —username <yourpreferredname> —password <yourpreferredpwd> —bindui all —savedefaults
+
+This command persistently configures btsync-gui to enable the web UI,
+binding it to all adapters and configured to use the supplied
+credentials for accessing the web UI.
+
+btsync-gui --webui --username andy --password btsync --bindui all --savedefaults
+http://192.168.1.100:8888/gui/
+http://127.0.0.1:8888/gui/
+$ sudo gvim /etc/btsync.conf
+$ sudo systemctl restart btsync
+$ journalctl -xe
+------------------------------------------------------
+打开putty
+./btsync --webui.listen 0.0.0.0:8888
+把其中0.0.0.0 换成你MC的IP就行
+------------------------------------------------------
+arch的log目录
+AFWWVHNX5KZ4BW6HZTQXMB25ISELTE7HF
+
+
+$ sudo pacman -S putty
+
+// 后面会安装iptux
+// wine ipmsg
+
+$ makepkg
+$ sudo pacman -U rar-5.3.b4-1-x86_64.pkg.tar.xz
+
+$ sudo pacman -S adobe-source-code-pro-fonts
+
+http://wallpaperswide.com/arch_linux-wallpapers.html
+在aotustart里设置wallpaper
+
+
+
+
+$ git clone git://pkgbuild.com/aur-mirror.git
+
+
+
+$ sudo pacman -S gnome-control-center
+$ sudo pacman -S system-config-printer rygel vino gst-plugins-ugly gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav tracker
+$ sudo pacman -S gnome-calculator gnome-clocks
+$ sudo pacman -S gnome-shell-extensions
+
+//安装飞秋，那么ipmsg就不用了
+$ yaourt -S iptux
+注意，只能传文件夹
+
+
+
+//百度云
+$ sudo pacman -S bcloud kwplayer
+//python-mutagenx plyvel python3-keybinder
+
+//$ yaourt python-cairo-git 
+$ yaourt -S python-cairo-git
+$ yaourt -S python-gobject-patched
+
+
+
+// mathomatic
+$ sudo pacman -S mathomatic gnuplot rlwrap
+//$ sudo pacman -S stellarium
+$ sudo pacman -S freemat octave
+运行FreeMat
+
+
+$ sudo pacman -S filelight
+$ sudo pacman -S baobab
+$ sudo pacman -S colordiff hardinfo
+
+$ yaourt -S archey3-git
+$ yaourt -S i-nex
+
+
+$ sudo pacman -S gnome-calendar calcurse when
+//$ yaourt -S  asco 
+$ sudo pacman -S qucs geda-gaf units freehdl pcb kicad gerbv iverilog gtkwave qucs gnucap ngspice 
+$ yaourt gspiceui gaw wxgtk pangox
+http://ports.ubuntu.com/pool/universe/g/geda-xgsch2pcb/geda-xgsch2pcb_0.1.3.orig.tar.gz
+$ yaourt intltool
+手动安装xgsch2pcb
+
+
+//网盘7上存有linux下的qii\matlab\modelsimse
+//这个qii其实可以到网站去下载
+
+
+
+// 修改默认浏览器,这三句works
+$ xdg-mime default browser.desktop x-scheme-handler/http
+$ xdg-mime default browser.desktop x-scheme-handler/https
+$ xdg-mime default browser.desktop text/html
+https://wiki.archlinux.org/index.php/Xdg-open#Set_the_default_browser
+
+// Alternatively, run:   // it dosen't work
+//$ xdg-settings set default-web-browser browser.desktop
+
+//cat /usr/bin/xdg-open
+//~/.local/share/applications/mimeapps.list says:
+//x-scheme-handler/http=opera.desktop
+//x-scheme-handler/https=opera.desktop
+
+// 参见default app
+https://wiki.archlinux.org/index.php/Default_applications#MIME_types_and_desktop_entries
+
+删除下列文件夹多余的
+/home/andy/.local/share/mime/application
+update-mime-database ~/.local/share/mime
+
+
+// 删除btsync
+$ sudo pacman -Rc btsync
+$ sudo pacman -Rc btsync-gui
+
+
+// 查看显卡
+$ lspci | grep -e VGA -e 3D
+
+
+
+
+$ sudo pacman -S gtkwave
+copy the /usr/share/gtkwave/examples/gtkwaverc file to
+your home directory (as .gtkwaverc)
+$ sudo cp /usr/share/gtkwave/examples/gtkwaverc ~/.gtkwaverc
+$ sudo pacman -S freehdl
+
+
+// 选择两款笔记本电量监控，battery监视
+$ pacman -Ss battery
+$ sudo pacman -S acpi cbatticon
+
+
+
+//安装VLC
+$ sudo pacman -S vlc
+$ cvlc
+$ vlc
+
+
+$ yaourt conky
+// 选择支持lua的，安装后没有效果	
+//$ sudo pacman -Sconky-manager
+
+
+$ sudo pacman -S tolua++
+$ sudo pacman -S lua51-expat
+
+
+$ sudo pacman -S scons
+sudo ./configure --enable-lua-cairo --enable-lua-imlib2 --enable-imlib2
+// 完全失败
+
+
+
+
+// 试着编译tolua-5.2.0，修改config文件
+WARN= -ansi -Wall -g -DLUA_32BITS
+可以编译完毕
+
+
+// 操作mdb文件
+$ sudo pacman -S unixodbc
+$ yaourt -S mdbtools-git
+$ yaourt -S gmdb
+
+
+//bypy
+$ yaourt bypy
+$ bypygui.pyw 
+c4c129458f6696f143123d8bd8fd30dd
+
+
+
+
+$ yaourt -S google-chrome
+$ google-chrome-stable
+
+
+
+// 安装modelsim
+$ yaourt libxtst
+$ yaourt libxp
+$ yaourt libxt
+都选32位元的，会请求把gcc等都换成multilib的
+$ cd /opt
+$ sudo mkdir modelsim
+$ sudo chmod 777 modelsim
+安装完毕之后
+$ chmod 777 -R modelsim
+$ sudo ./sfk6 rep -yes -pat -bin /5589E557565381ECD00000008B5508/31C0C357565381ECD00000008B5508/ -dir .
+
+$ yaourt libstdc++
+选择64和32位元的
+
+$ wine cmd
+去产生license, 似乎invalid，不管，先跑vsim
+需要更新freetype到freetype2-ubuntu
+参考《Altera Design Software在linux安装指南》
+http://bbs.eeworld.com.cn/thread-455341-1-1.html
+https://wiki.archlinux.org/index.php/Altera_Design_Software
+$ yaourt freetype
+选freetype2-ubuntu就可以运行vsim。再想办法破解license
+
+$ cd /opt/modelsim/modeltech/linux_x86_64
+$ export LANG=en_EN.UTF-8 
+$ wineconsole cmd 
+> patch_dll.bat
+
+// 查看license
+$ lmutil lmdiag
+// 信息显示hostid不符，但是确实是一样的。
+// 那么从网卡名称着手，修改为eth0
+https://wiki.archlinux.org/index.php/Network_configuration
+
+$ sudo leafpad /etc/udev/rules.d/10-network.rules
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="00:17:42:f4:8e:1c", NAME="eth0"
+$ sudo reboot
+$ vsim
+// 成功，到此破解完成
+// 这里没有给无线网卡改名字，算是把系统更改减少到最小，conky配置也不用动了
+
+$ yaourt veriwell
+
+// 安装有道词典
+$ yaourt python-xlib
+$ yaourt youdao-dict
+$ pacman -Ss tesseract-data-*
+// so easy!
+
+$ yaourt mounter
+archive-mounter
+automounter
+//gvfs-archive
+
+
+yaourt gedit
+yaourt gnome-terminal
+
+// 安装matlab,so easy!
+// 添加一下matlab的环境变量
+
+
+yaourt xz-git
+
+// 安装Qii 11
+$ sudo pacman -S tcsh
+
+
+$ sudo pacman -S expat fontconfig xorg-fonts-type1 glibc gtk2 libcanberra libpng libice libsm util-linux ncurses tcl tcllib zlib libx11 libxau libxdmcp libxext libxft libxrender libxt libxtst
+//yaourt freetype2
+yaourt libpng12
+yaourt lib32-libpng12
+$ sudo pacman -S lib32-expat lib32-fontconfig lib32-freetype2 lib32-glibc lib32-gtk2 lib32-libcanberra lib32-libpng
+
+$ sudo pacman -S lib32-libice lib32-libsm lib32-util-linux lib32-ncurses lib32-zlib lib32-libx11 lib32-libxau lib32-libxdmcp lib32-libxext
+$ sudo pacman -S lib32-libxft lib32-libxrender lib32-libxt lib32-libxtst
+
+
+find /usr/ -name "libpng*"
+
+// 安装包所在目录名称不能有空格哦
+$ sh 11.0_devices_linux.sh --noexec
+$ sh 11.0_dsp_builder_linux.sh --noexec
+$ sh 11.0_legacy_nios2_linux.sh --noexec
+$ sh 11.0_modelsim_ae_linux.sh --noexec
+$ sh 11.0_quartus_linux.sh --noexec
+$ sh 11.0_programmer_linux.sh --noexec
+
+//实际是安装包自己带的一些东西太旧了，archlinux这是libz.so.1，mv出去就能进安装界面
+http://www.linuxidc.com/Linux/2011-10/46280.htm
+http://www.linuxidc.com/Linux/2014-05/101212.htm
+
+运行altera的vsim有问题
+$ sudo yaourt ncurses5-compat-libs
+安装相关的包
+$ ./lmutil lmdiag
+$ ./vsim
+// key就以后需要的时候再更新吧
+
+
+//export LM_LICENSE_FILE=/opt/modelsim/license.dat
+//export PATH=$PATH:/opt/MATLAB/R2010b/bin:/opt/modelsim/modeltech/linux_x86_64:/opt/altera/11.0/quartus/linux64:/opt/altera/11.0/nios2eds/bin:/opt/altera/11.0/quartus/dsp_builder
+//export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64
+$ leafpad ~/.bashrc
+现在是这样的输出
+export WINEPREFIX=$HOME/.wine/
+export WINEARCH=win32
+alias cd..='cd ..'
+export LM_LICENSE_FILE=/opt/modelsim/license.dat:/opt/altera/license.dat
+export PATH=$PATH:/opt/MATLAB/R2010b/bin:/opt/modelsim/modeltech/bin:/opt/altera/11.0/quartus/bin:/opt/altera/11.0/nios2eds/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64
+
+
+
+
+
+/etc/udev/rules.d/51-altera-usb-blaster.rules
+
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
+
+sudo udevadm control --reload
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+arch_bk151007.tar.xz
+/////////////////////////////////////////////////////////
+备份前
+删除/home/andy/.cache/tracker/meta.db，媒体缓存超大且没啥用
+清空回收站
+
+$ xz --threads=0 -z arch_bk.tar 
+//$ xz -T 0 -z arch_bk.tar
+
+
+// 控制台中文显示
+$ yaourt zhcon
+然后在ttyn（Ctrl+Alt+Fn）下:
+$ zhcon --utf8
+
+
+$ sudo pacman -S quilt
+$ yaourt perl-expect
+$ yaourt perl-crypt-ssleay
+$ yaourt dbus-glib lib32-dbus-glib
+$ yaourt lib32-libarchive
+$ yaourt lzlib
+$ yaourt libsystemd-daemon
+$ yaourt xterm
+$ yaourt linux-headers
+
+$ sudo pacman -Syu
+
+// check /var/lib/dkms/vboxhost/5.0.6/source
+$ sudo dkms install vboxhost/5.0.6
+$ systemctl enable dkms.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: andy
+Password: 
+==== AUTHENTICATION COMPLETE ===
+Created symlink from /etc/systemd/system/multi-user.target.wants/dkms.service to /usr/lib/systemd/system/dkms.service.
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: andy
+Password: 
+==== AUTHENTICATION COMPLETE ===
+
+
+$ sudo vboxreload
+$ yaourt virtualbox-ext-oracle
+# modprobe -r vboxdrv
+# modprobe vboxdrv
+//以上=
+$ sudo vboxreload
+$ sudo pacman -S virtualbox-ext-oracle
+# modprobe -r vboxdrv
+# modprobe vboxdrv
+virtualbox扩展包位置在
+/usr/share/virtualbox/extensions/
+
+
+$ yaourt ddd
+$ yaourt asteroid
+//freeglut cmake jsoncpp vor smpeg sdl_mixer libmikmod sdl_net
+$ yaourt 0ad
+$ yaourt rigsofrods
+$ yaourt acroread
+$ yaourt acroread-fonts
+$ sudo pacman -S wesnoth wesnoth-data
+$ sudo pacman -S openra
+$ yaourt xeyes
+
+
+
+uboot
+    编译:
+    #make distclean
+    #make ARCH=arm CROSS_COMPILE=/opt/FriendlyARM/toolschain/4.5.1/bin/arm-none-linux-gnueabi- tiny210_config
+    #make ARCH=arm CROSS_COMPILE=/opt/FriendlyARM/toolschain/4.5.1/bin/arm-none-linux-gnueabi- all spl
+
+make mini2440_config
+make CROSS_COMPILE=arm-none-eabi-
+
+
+    将u-boot镜像写入SD卡
+    #dd iflag=dsync oflag=dsync if=spl/tiny210-spl.bin of=/dev/sdb seek=1
+    #dd iflag=dsync oflag=dsync if=u-boot.bin of=/dev/sdb  seek=49
+
+
+
+// 从iso镜像制作启动u盘的工具
+$ yaourt unetbootin
+
+// 硬盘加密工具
+$ yaourt truecrypt
+$ yaourt veracrypt
+
+// 支持delta sync的网盘
+$ yaourt dropbox
+$ yaourt dropbox-cli
+$ yaourt nautilus-dropbox
+//$ yaourt dropbox-gtk2
+$ yaourt dropbox-index
+
+//2/16进制查看和编辑
+xxd
+hexdump
+//$ yaourt biew
+$ yaourt hexedit
+$ yaourt dhex
+$ yaourt ultraedit
+uex
+$ yaourt okteta
+
+
+$ yaourt bcompare
+$ yaourt acetoneiso2
+$ yaourt dmg2dir
+
+$ yaourt isomaster
+$ yaourt onboard
+
+$ yaourt 115wangpan
+
+
+$ yaourt gimagereader
+$ yaourt tesseract
+$ yaourt mldonkey
+$ yaourt bluefish
+$ yaourt pointdownload
+$ yaourt magnet2torrent
+$ yaourt rtorrent
+$ yaourt deluge
+
+
+
+
+
+
+
+
+//全面采用lxterminal，设置显示菜单和控制条
+快捷键
+弹出菜单
+文件管理器
+
+
+
+
+//解决依赖冲突一个例子
+https://www.archlinux.org/news/java-users-manual-intervention-required-before-upgrade/
+# pacman -Sydd --asdeps java-runtime-common
+:: java-runtime-common and java-common are in conflict. Remove java-common? [y/N] y
+
+
+
+安装wps缺失的字体
+将整个wps_symbol_fonts目录拷贝到 /usr/share/fonts/  目录下
+注意，wps_symbol_fonts目录要有可读可执行权限
+1.权限设置,执行命令如下
+    cd /usr/share/fonts/
+    chmod 755 wps_symbol_fonts
+    cd /usr/share/fonts/wps_symbol_fonts 
+    chmod 644 *
+2.生成缓存配置信息
+    进入字体目录  
+    cd /usr/share/fonts/wps_symbol_fonts
+    生成
+    mkfontdir
+    mkfontscale
+    fc-cache
+
+
+
+$ yaourt parcellite
+$ yaourt audio-convert
+$ yaourt kmplayer
+$ yaourt lantern
+$ yaourt tor-browser-zh-cn
+$ gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 2E1AC68ED40814E0
+$ gpg --verify tor-browser-linux64-6.0.5_en-US.tar.xz.asc tor-browser-linux64-6.0.5_en-US.tar.xz$ 
+$ sudo pacman -U tor-browser-en-6.0.5-1-x86_64.pkg.tar.xz
+
+$ yaourt smplayer
+$ yaourt mpv
+
+// 截图工具
+$ yaourt shutter
+// 再搭配gimp，也很牛逼啊
+$ yaourt gnome-screenshot
+设置openbox键盘截屏rc.xml
+
+
+$ yaourt eclipsetrader
+$ sudo pacman -R eclipsetrader
+
+
+$ yaourt epub
+ppub lucidor
+$ yaourt calibre
+http://peco.github.io/
+https://github.com/peco/peco
+$ yaourt eaglemode
+$ yaourt synapse
+
+$ yaourt peco
+$ yaourt agrep
+$ yaourt pick
+$ yaourt fasd
+
+https://github.com/AlexTuduran/Locator
+$ yaourt locator
+sudo /opt/locator/locator
+$ sudo updatedb
+$ locate XXX | peco
+$ locate XXX | pick
+$ locate XXX | peco | xargs less
+$ locate XXX | less
+$ find . -iname '*.xx' | peco
+
+$ yaourt catfish
+sudo catfish
+
+
+$ yaourt wxPython
+
+
+$ ssh -X 192.168.1.110
+
+
+
+$ yaourt qt-doc
+5&4
+
+$ yaourt i2c-tools
+
+$ yaourt qtcreator
+$ yaourt qt5-examples
+
+$ yaourt qr code
+qrencode
+barcode
+
+//notepad++或者notepadqq
+$ yaourt notepadqq
+// tip：ctrl+alt可以进行列编辑
+
+
+// 处理aur-iptux安装的iptux传输（准确说是发送）文件大小为0的问题
+需要预装git libgtk2.0-dev libgconf2-dev g++ make autoconf libtool automake等
+git clone git://github.com/iptux-src/iptux.git
+cd iptux
+./configure
+make
+sudo make install
+iptux
+// 已经修改aur-iptux，可以直接打包成pacman安装包，便于管理
+
+
+// 计算器老外观更顺眼一点
+$ yaourt gcalctool-oldgui
+//gcalctool-oldgui 与 gnome-calculator 有冲突。删除 gnome-calculator
+
+
+
+==> If you experience sound problems try setting your SDL_AUDIODRIVER environment variable to "dma"
+==> eg. export SDL_AUDIODRIVER="dma" ; wesnoth
+==> If "dma" doesn't work,other options are: dsp,alsa,artsc,esd,nas try to find the right output.
+
+
+
+
+
+
+$ yaourt cpu-x
+
+
+
+$ yaourt wpa2
+
+
+
+
+$ sudo pacman -S apache
+或者
+$ yaourt apache-tools
+$ sudo gedit /etc/httpd/conf/httpd.conf 
+
+#DocumentRoot "/srv/http"
+#<Directory "/srv/http">
+DocumentRoot "/mnt/sdd1"
+AddDefaultCharset UTF-8
+DefaultLanguage zh-CN
+<Directory "/mnt/sdd1">
+    #
+    # Possible values for the Options directive are "None", "All",
+    # or any combination of:
+    #   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+    #
+    # Note that "MultiViews" must be named *explicitly* --- "Options All"
+    # doesn't give it to you.
+    #
+    # The Options directive is both complicated and important.  Please see
+    # http://httpd.apache.org/docs/2.4/mod/core.html#options
+    # for more information.
+    #
+    Options Indexes FollowSymLinks
+
+    #
+    # AllowOverride controls what directives may be placed in .htaccess files.
+    # It can be "All", "None", or any combination of the keywords:
+    #   AllowOverride FileInfo AuthConfig Limit
+    #
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+    #
+    # Controls who can get stuff from this server.
+    #
+    Require all granted
+</Directory>
+
+
+$ sudo systemctl restart httpd.service
+
+
+
+$ yaourt -S chromium-pepper-flash
+$ yaourt -S acroread (太垃圾)
+acroread 的可选依赖
+    acroread-fonts: CJK and extended font packs
+    lib32-libcanberra: XDG sound support
+    lib32-gtk-engine-murrine: fix ugly buttons and scrollbars
+
+$ yaourt -S foxitreader
+
+
+$ yaourt iceweasel
+
+$ yaourt genymotion
+/home/andy/.Genymobile/Genymotion/ova
+
+
+
+
+$ yaourt masterpdfeditor
+
+$ yaourt amule
+
+$ yaourt rtorrent
+
+
+ftp client
+$ yaourt filezilla
+
+ssh server
+sudo pacman -S openssh
+sudo systemctl start sshd.service
+ps -e | grep ssh
+ps -ef | grep sshd
+sudo iptables -L
+
+
+
+
+yaourt jwm
+
+
+
+
+安装 openproj
+$ makepkg
+$ sudo pacman -U openproj-1.4-2-x86_64.pkg.tar.xz
+
+
+百度文库下载
+idocdown_v29
+
+
+一个iso信息查看工具
+yaourt dumpet
+$ makepkg
+$ sudo pacman -U dumpet-2.1-5-x86_64.pkg.tar.xz
+
+
+一个iso制作工具
+yaourt xorriso
+
+
+用于转换安装包，比如从rpm包到deb包
+yaourt alien
+
+
+Framebuffer setup utility
+yaourt fbset
+
+
+一个版本控制工具
+yaourt bzr
+
+//暂时不安装这个东西
+yaourt lazarus
+
+
+
+
+yaourt wine-git
+
+
+
+
+yaourt libstdc++
+选5
+
+
+#yaourt glxinfo
+
+https://wiki.archlinux.org/index.php/Intel_graphics#Installation
+yaourt lib32-mesa-libgl mesa-libgl xf86-video-intel mesa-demos lib32-mesa-demos
+
+/etc/X11/xorg.conf.d/20-intel.conf
+
+Section "Device"
+   Identifier  "Intel Graphics"
+   Driver      "intel"
+EndSection
+
+https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Installing_VA-API
+yaourt libva-intel-driver libvdpau-va-gl
+
+
+glxinfo
+lspci | grep VGA
+
+yaourt lib32-tcl
+
+yaourt ksh ld-lsb
+
+
+
+killall xeyes
+
+
+
+为了update
+删除iceweasel、lib32-ffmpeg-1:3.0.2-2  lib32-libvdpau-va-gl-0.3.4-1
+
+
+
+sudo pacman -Rdd openjpeg2
+
+编译lib32-ffmpeg lib32-libvdpau-va-gl
+
+yaourt openjpeg2
+
+lib32-libvpx libvpx
+
+
+yaourt -Sua lib32-ffmpeg
+
+
+重新编译安装iceweasel
+libvpx不指定版本 
+
+
+
+为运行quartus
+安装lib32-libpng12
+
+
+
+
+
+exfat格式支持
+$ sudo pacman -S exfat-utils
+
+
+
+
+
+
+
+文件打开
+mime
+/home/andy/.local/share/applications/mimeinfo.cache等文件有关
+
+
+
+
+yaourt opera
+
+
+
+安装永中office
+EIOffice_Personal_Lin.tar.gz
+sudo ./setup.sh
+指向/opt
+命令是eio
+
+
+wps能够满足大部分需求，如果需要急用一些ms office的功能，就用eio顶一下啦
+
+
+
+
+yaourt lm_sensors
+$ sensors
+
+结合sensors监测cpu温度并显示在conkey中，要清除掉摄氏度前的A字符
+
+CPU0: ${exec sensors | grep "Core 0" | cut -c16-19}${exec sensors | grep "Core 0" | cut -c21-21}C$alignr${cpu cpu0}%
+${cpubar cpu0}
+#CPU1: ${exec sensors | grep "Core 1" | tail -n 1 | awk '{print $3}'| cut -c1,2,3,4,5,7}C$alignr${cpu cpu1}%
+CPU1: ${exec sensors | grep "Core 1" | awk '{print $3}'| cut -c2,3,4,5,7}C$alignr${cpu cpu1}%
+${cpubar cpu1}
+
+
+如果.conkyrc中的
+override_utf8_locale 修改为yes
+那么可以简化
+CPU0: ${exec sensors | grep "Core 0" | cut -c16-22}$alignr${cpu cpu0}%
+${cpubar cpu0}
+CPU1: ${exec sensors | grep "Core 1" | awk '{print $3}'| cut -c2-8}$alignr${cpu cpu1}%
+${cpubar cpu1}
+
+
+
+
+
+###yaourt qtchooser
+
+
+
+
+
+yaourt alsa-plugins
+选lib32
+
+
+
+
+ccs6
+lib32-dbus-glib
+lib32-libgcrypt
+lib32-gconf
+lib32-libgcrypt15
+
+
+
+
+
+
+
+坚果云
+yaourt nutstore
+
+
+
+
+安装flash-plugin
+https://wiki.archlinux.org/index.php/Chromium#Default_applications
+yaourt pepper-flash
+对opera、chromiun有效，查看和启用都在
+chrome://plugins/
+
+chrome自带
+
+firefox和iceweasel
+https://wiki.archlinux.org/index.php/Browser_plugins#Flash_Player
+yaourt ttf-ms-fonts
+yaourt freshplayerplugin
+cp /usr/share/freshplayerplugin/freshwrapper.conf.example ~/.config/freshwrapper.conf
+
+
+
+
+
+
+yaourt curlftpfs
+
+curlftpfs -o codepage=utf8 ftp://username:password@192.168.192.168 /ftp
+
+
+
+yaourt url encode # 没有必要安装的
+perl-url-encode
+
+URL字符编码可以用在线工具去解码
+http://tool.chinaz.com/tools/urlencode.aspx
+http://old.tool.chinaz.com/Tools/URLEncode.aspx
+http://www.w3school.com.cn/tags/html_ref_urlencode.html
+http://search.cpan.org/~chansen/URL-Encode-0.03/lib/URL/Encode.pod
+
+http://tech.mclarian.com/a/557
+纯解码
+url串保存到keywords.list
+$ perl -pe 's/%(..)/pack("c", hex($1))/eg' keywords.list
+
+！！！或者通过命令进行url encode and decode
+echo "%E9%B2%81" | perl -pe 's/%(..)/pack("c", hex($1))/eg'
+echo "%E9%B2%81%E5%85%8B%EF%BC%9A%E4%B8%AA%E4%BD%93%E4%B8%BB%E4%B9%89%E4%BC%A6%E7%90%86(20161019)" | perl -pe 's/%(..)/pack("c", hex($1))/eg'
+
+那么对应的编码就是
+echo 鲁 | perl -pe 's/([^\w\-\.\@])/$1 eq "\n" ? "\n":sprintf("%%%2.2x",ord($1))/eg'
+
+用脚本编码
+http://www.perlhowto.com/encode_and_decode_url_strings
+保存成.pl文件并chmod
+
+#!/usr/bin/perl
+use URI::Escape;
+ 
+my $string = "Hello world!";
+my $encode = uri_escape($string);
+ 
+print "Original string: $string\n";
+print "URL Encoded string: $encode\n";
+
+！！受此启发，写两个脚本
+
+url-decode.pl
+/---------------------------
+#!/usr/bin/perl
+ 
+use URI::Escape;
+
+print "Input original string:\n";
+my $string = <STDIN>;
+print "\nOriginal string:\n$string\n";
+
+my $encode = uri_escape($string);
+print "URL Encoded string:\n$encode\n\n";
+
+---------------------------/
+
+url-encode.pl
+/---------------------------
+#!/usr/bin/perl
+ 
+use URI::Escape;
+
+print "Input original string:\n";
+my $string = <STDIN>;
+print "\nOriginal string:\n$string\n";
+
+my $decode = uri_unescape($string);
+print "URL Decoded string:\n$decode\n";
+
+my $encode = uri_escape($decode);
+print "URL Encoded string:\n$encode\n\n";
+---------------------------/
+
+都chmod 777，就可以转换了
+复制到/bin去
+
+
+
+
+
+
+安装steam
+https://wiki.archlinux.org/index.php/Steam
+https://wiki.archlinux.org/index.php/Steam/Troubleshooting#Debugging_Steam
+yaourt steam-native-runtime
+yaourt steam
+$ steam-native
+或者
+$ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1 /usr/$LIB/libxcb.so.1 /usr/$LIB/libgpg-error.so' /usr/bin/steam
+
+
+安装unar
+yaourt unarchiver
+yaourt unzip-iconv
+
+
+deb转pacman安装包
+/mnt/win_e/boot/arch_doc/pacman
+一个例子是uex_4.0.0.7，在hexeditor目录
+注册时候断网之后任意输入，就点出离线注册了
+
+
+
+
+##双击载iso
+##yaourt automounter
+
+！！！！！！！iso挂载最好还是用gnome-disk-image-mounter
+yaour gnome-disk-utility
+
+
+
+
+光盘烧录
+yaourt k3b
+
+
+
+
+据说angrysearch山寨了searcheverything
+yaourt angrysearch
+
+
+
+
+提供crc32
+yaourt perl-archive-zip
+
+
+查看.db文件
+yaourt sqlitebrowser
+
+
+
+
+
+
+
+
+课题
+本地有xserver
+如何把远程桌面在本地运行？
+
+
+
+
+
+
+
+
+
+
+
+
+$ vsim
+Error in startup script:
+Initialization problem, exiting.
+Initialization problem, exiting.
+Initialization problem, exiting.
+   while executing
+"EnvHistory::Reset"
+   (procedure "PropertiesInit" line 3)
+   invoked from within
+"PropertiesInit"
+   invoked from within
+"ncFyP12 -+"
+   (file "/opt/questasim/linux_x86_64/../tcl/vsim/vsim" line 1)
+** Fatal: Read failure in vlm process (0,0)
+
+gedit /opt/modelsim/modeltech/vco
+add near the top (after the #!/bin/sh)
+/////////////////
+export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
+
+//////////////////////////////////////////////////////////
+ref to https://wiki.archlinux.org/index.php/Altera_Design_Software
+
+
+
+
+
+
+
+
+QR Code generator and decoder
+yaourt qtqr kqrcode
+
+
+
+
+
+
+
+
+yaourt eaglemode
+
+
+
+
+
+
+yaourt smath
+Octave、Scilab、Maxima就不安装了
+
+
+
+
+
+
+
+
+sudo chown andy:users opt/
+
+
+
+cd /usr/local/bin
+sudo gedit xxnet
+sudo chmod +x xxnet
+-------------------------------------------------
+#!/bin/bash
+
+/opt/XX-Net/start
+-------------------------------------------------
+
+$ leafpad ~/.config/openbox/autostart
+添加
+(sleep 2 && xxnet) &
+
+
+
+cadence快速运行
+
+cd /usr/local/bin
+sudo gedit allegro
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/allegro
+-------------------------------------------------
+sudo gedit concepthdl
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/concepthdl
+-------------------------------------------------
+sudo gedit pad_designer
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/pad_designer
+-------------------------------------------------
+sudo chmod +x allegro pad_designer concepthdl
+
+
+
+
+
+
+
+
+
+
+
+sudo pacman -Qdt
+sudo pacman -Rc geoclue
+
+
+
+
+
+sudo pacman -S btsync
+
+mkdir -p ~/.config/btsync
+sudo chmod +r /etc/btsync.conf
+cp /etc/btsync.conf ~/.config/btsync/btsync.conf
+gedit ~/.config/btsync/btsync.conf
+
+systemctl --user daemon-reload
+systemctl --user start btsync
+
+
+
+
+#yaourt pdf-xchange
+
+
+https://wiki.archlinux.org/index.php/Default_applications_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+/usr/share/applications
+~/.local/share/applications
+/usr/share/applications/mimeinfo.cache
+~/.local/share/applications/mimeinfo.cache
+$HOME/.local/share/applications/mimeapps.list
+$HOME/.config/mimeapps.list
+
+修改~/.local/share/applications/mimeinfo.cache
+
+application/pdf=wine-extension-pdf.desktop;
+
+
+
+
+perl-file-mimeinfo
+
+mimeopen -d 1.html
+
+
+
+
+
+
+yaourt dolphin
+
+
+
+yaourt stcgal sdcc
+
+
+yaourt ltspice
+
+
+yaourt mplab
+
+
+yaourt bluefish
+yaourt kompozer
+
+
+
+sudo updatedb -U /run/media/andy/BC482DD5482D8EE8/ -o ~/Downloads/mlocate_sdd.db
+sudo locate -d ~/Downloads/mlocate_sdd.db  XXX
+sudo locate -d ~/Downloads/mlocate_sdd.db  XXX | peco
+sudo locate -d ~/Downloads/mlocate_sdd.db VPFE | grep pdf | peco
+sudo locate -d ~/Downloads/mlocate_sdd.db VPFE | grep pdf
+
+
+
+yaourt realvnc
+sudo pacman -R xrdp
+sudo pacman -R tigervnc
+sudo pacman -U realvnc-vnc-server-6.0.2-1-x86_64.pkg.tar.xz 
+sudo pacman -U realvnc-vnc-viewer-6.0.2-1-x86_64.pkg.tar.xz 
+
+sudo systemctl enable vncserver-x11-serviced
+Created symlink /etc/systemd/system/multi-user.target.wants/vncserver-x11-serviced.service → /usr/lib/systemd/system/vncserver-x11-serviced.service.
+sudo systemctl start vncserver-x11-serviced
+WHJRK-UXY7V-Q34M9-CZU8L-8KGFA 
+sudo systemctl enable avahi-daemon.service
+Created symlink /etc/systemd/system/dbus-org.freedesktop.Avahi.service → /usr/lib/systemd/system/avahi-daemon.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service → /usr/lib/systemd/system/avahi-daemon.service.
+Created symlink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket → /usr/lib/systemd/system/avahi-daemon.socket.
+sudo systemctl start avahi-daemon.service 
+
+
+sudo systemctl enable teamviewerd.service
+Created symlink /etc/systemd/system/multi-user.target.wants/teamviewerd.service → /usr/lib/systemd/system/teamviewerd.service.
+sudo systemctl start teamviewerd.service
+
+
+
+
+
+
+yaourt minicom
+
+
+
+
+yaourt asciiflow
+
+
+https://wiki.archlinux.org/index.php/MySQL
+yaourt mysql
+sudo systemctl start mysqld.service 
+mysql -u root -p 直接回车，无需输入密码就可以进入数据库了
+设置密码
+mysql> set password for root@localhost = password('a');
+基本使用：
+显示已有数据库
+mysql> show databases;
+载入名为mysql的数据库
+mysql> use mysql;
+显示该数据库包含的表
+mysql> show tables;
+查询某表
+mysql> select * from user;
+退出
+mysql> exit;
+
+https://wiki.archlinux.org/index.php/PhpMyAdmin
+yaourt phpmyadmin
+sudo gedit /etc/httpd/conf/extra/phpmyadmin.conf
+sudo gedit /etc/httpd/conf/httpd.conf
+sudo systemctl restart httpd.service 
+
+
+
+
+
+
+
+php安装和apache的php扩展配置见wiki
+To install PHP, first install the php and php-apache packages.
+In /etc/httpd/conf/httpd.conf, comment the line:
+#LoadModule mpm_event_module modules/mod_mpm_event.so
+and uncomment the line:
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+To enable PHP, add these lines to /etc/httpd/conf/httpd.conf:
+
+    Place this at the end of the LoadModule list:
+LoadModule php7_module modules/libphp7.so
+AddHandler php7-script php
+
+    Place this at the end of the Include list:
+Include conf/extra/php7_module.conf
+
+Restart httpd.service using systemd. 
+
+Create the Apache configuration file:
+/etc/httpd/conf/extra/phpmyadmin.conf
+
+Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"
+<Directory "/usr/share/webapps/phpMyAdmin">
+    DirectoryIndex index.php
+    AllowOverride All
+    Options FollowSymlinks
+    Require all granted
+</Directory>
+
+And include it in /etc/httpd/conf/httpd.conf at the end of the Include list:
+# phpMyAdmin configuration
+Include conf/extra/phpmyadmin.conf
+
+
+建立一个测试文件test.php
+<?php phpinfo(); ?>
+php -S localhost:8000 test.php
+就可以用浏览器看 localhost:8000
+
+
+
+
+设置随系统启动服务
+sudo systemctl enable mysqld.service
+sudo systemctl enable httpd.service 
+
+
+强制安装某包
+sudo pacman -U *.xz --force
+不要单独更新openssl（libssl等），就算如php要求也不要单独更新，否则会让pacman和yaourt挂掉
+
+
+
+
+
+
+
+yaourt doxygen
+
+
+
+
+
+yaourt android-sdk-platform-tools
+其实在android-sdk里就有，在platform-tools目录
+
+/etc/udev/rules.d/50-android.rules
+内容是
+SUBSYSTEM=="usb", ENV{DEVTYPE} == "usb_device", ATTR{idVendor}=="2a45", MODE="0666"
+
+sudo udevadm control --reload
+
+/opt/Android/android-sdk/tools/android update adb
+gedit ~/.android/adb_usb.ini
+添加0x2a45
+
+
+
+
+
+
+
+
+
+
+
+[andy@andy ~]$ sudo pacman -Syu
+:: 正在同步软件包数据库...
+ core 已经是最新版本
+ extra 已经是最新版本
+ community 已经是最新版本
+ multilib 已经是最新版本
+ archlinuxcn 已经是最新版本
+:: 正在进行全面系统更新...
+正在解决依赖关系...
+正在查找软件包冲突...
+警告：正在从目标清单中删除 'gcc-libs' ，因为它和 'gcc-libs-multilib' 冲突
+警告：正在从目标清单中删除 'gcc' ，因为它和 'gcc-multilib' 冲突
+错误：无法准备事务处理 (无法满足依赖关系)
+:: gcc-objc: 要求 gcc=7.1.1-2
+[andy@andy ~]$ pacman -Sydd --asdeps  gcc-libs
+错误：非 root (根用户) 无法执行指定操作。
+[andy@andy ~]$ sudo pacman -Sydd --asdeps  gcc-libs
+:: 正在同步软件包数据库...
+ core 已经是最新版本
+ extra 已经是最新版本
+ community 已经是最新版本
+ multilib 已经是最新版本
+ archlinuxcn 已经是最新版本
+正在查找软件包冲突...
+:: gcc-libs 与 gcc-libs-multilib 有冲突。删除 gcc-libs-multilib 吗？ [y/N] y
+
+软件包 (2) gcc-libs-multilib-6.3.1-2 [删除]  gcc-libs-7.1.1-2
+
+下载大小:   17.41 MiB
+全部安装大小：  91.50 MiB
+净更新大小：  13.06 MiB
+
+:: 进行安装吗？ [Y/n] y
+:: 正在获取软件包......
+ gcc-libs-7.1.1-2-x86_64   17.4 MiB   605K/s 00:29 [######################] 100%
+(1/1) 正在检查密钥环里的密钥                       [######################] 100%
+(1/1) 正在检查软件包完整性                         [######################] 100%
+(1/1) 正在加载软件包文件                           [######################] 100%
+(1/1) 正在检查文件冲突                             [######################] 100%
+(2/2) 正在检查可用硬盘空间                         [######################] 100%
+:: 正在处理软件包的变化...
+(1/1) 正在删除 gcc-libs-multilib                   [######################] 100%
+(1/1) 正在安装 gcc-libs                            [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/2) Arming ConditionNeedsUpdate...
+(2/2) Updating the info directory file...
+[andy@andy ~]$ sudo pacman -Sydd --asdeps  gcc
+:: 正在同步软件包数据库...
+ core 已经是最新版本
+ extra 已经是最新版本
+ community 已经是最新版本
+ multilib 已经是最新版本
+ archlinuxcn 已经是最新版本
+正在查找软件包冲突...
+:: gcc 与 gcc-multilib 有冲突。删除 gcc-multilib 吗？ [y/N] y
+
+软件包 (2) gcc-multilib-6.3.1-2 [删除]  gcc-7.1.1-2
+
+下载大小:    28.95 MiB
+全部安装大小：  115.05 MiB
+净更新大小：   -4.17 MiB
+
+:: 进行安装吗？ [Y/n] y
+:: 正在获取软件包......
+ gcc-7.1.1-2-x86_64        28.9 MiB   755K/s 00:39 [######################] 100%
+(1/1) 正在检查密钥环里的密钥                       [######################] 100%
+(1/1) 正在检查软件包完整性                         [######################] 100%
+(1/1) 正在加载软件包文件                           [######################] 100%
+(1/1) 正在检查文件冲突                             [######################] 100%
+(2/2) 正在检查可用硬盘空间                         [######################] 100%
+:: 正在处理软件包的变化...
+(1/1) 正在删除 gcc-multilib                        [######################] 100%
+(1/1) 正在安装 gcc                                 [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/2) Arming ConditionNeedsUpdate...
+(2/2) Updating the info directory file...
+[andy@andy ~]$ 
+
+
+
+
+
+
+
+
+
+yaourt uget
+
+yaourt pyuv
+
+yaourt openh264
+
+
+
+
+
+
+
+[andy@andy bin]$ java TestJava2_5 
+错误: 找不到或无法加载主类 TestJava2_5
+
+sudo gedit /etc/profile
+添加 
+export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+
+或者
+export JAVA_HOME=/usr/lib/jvm/default/
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+
+
+
+
+
+
+
+[andy@andy test_3]$ python2 -V
+Python 2.7.13
+[andy@andy test_3]$ python -V
+Python 3.6.1
+[andy@andy test_3]$ 
+
+kchmviewer
+xchm
+gnochm
+chmsee
+
+
+
+
+
+错误：无法准备事务处理 (无法满足依赖关系)
+:: gnome-perl：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+:: gnome-vfs-perl：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+:: gnomecanvas-perl：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+:: mysql-clients：安装 libmariadbclient (10.1.24-1) 将破坏依赖关系 'libmysqlclient'
+:: perl-gnome2-wnck：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+:: perl-goo-canvas：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+:: perl-gtk2-imageview：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+:: perl-gtk2-unique：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
+[andy@andy ~]$ sudo pacman -R shutter
+
+
+
+以下命令很危险，半天才恢复一大部分被删除的包，不如用sudo pacman -R perl-gtk2-imageview等命令指定删除
+留下art-sharp、gnome-vfs-sharp、libgnome-sharp、webkit-sharp等包编译报错，无法还原，目前也没有什么必要性，所以先这样吧，没有安装就没有吧
+[andy@andy ~]$ sudo pacman -Rns $(pacman -Qtdq)
+正在检查依赖关系...
+:: perl-libwww可选依赖perl-lwp-protocol-https: for https:// url schemes
+:: syslinux可选依赖perl-digest-sha1: For sha1pass
+:: wxgtk可选依赖webkitgtk2: for webview support
+
+软件包 (151) art-sharp-2.24.2-4  diffstat-1.61-1  gnome-mime-data-2.18.0-7
+             gnome-vfs-2.24.4-10  gnome-vfs-perl-1.082-4
+             gnome-vfs-sharp-2.24.2-4  gnomecanvas-perl-1.002-14
+             goocanvas1-1.0.0-3  gtkimageview-1.6.4-4  hdf5-1.10.0_patch1-1
+             js17-17.0.0-4  lib32-at-spi2-atk-2.24.0-1
+             lib32-at-spi2-core-2.24.0-1  lib32-colord-1.3.5-1
+             lib32-dconf-0.26.0-1  lib32-glib-networking-2.50.0-1
+             lib32-json-glib-1.2.8-1  lib32-libcroco-0.6.11-1
+             lib32-libepoxy-1.4.2-1  lib32-libgusb-0.2.9-2
+             lib32-libmng-2.0.3-1  lib32-libproxy-0.4.13-1
+             lib32-librsvg-2.40.16-1  lib32-libsoup-2.58.0-1
+             lib32-libxkbcommon-0.7.1-1  lib32-rest-0.8.0-1
+             lib32-tclkit-8.6.6-1  libakonadi-qt4-1.13.0-13
+             libart-lgpl-2.3.21-3  libbonobo-2.32.1-4  libbonoboui-2.24.5-3
+             libgnome-2.32.1-6  libgnome-data-2.32.1-6  libgnomecanvas-2.30.3-3
+             libgnomeui-2.24.5-2  libunicodenames-1.2.0-1  libunique-1.1.6-6
+             libwnck-2.31.0-1  libxkbui-1.0.2-5  libxres-1.0.7-1
+             orbit2-2.14.19-3  perl-bit-vector-7.4-3
+             perl-canary-stability-2012-1  perl-carp-clan-6.06-1
+             perl-class-accessor-0.34-4  perl-class-data-inheritable-0.08-6
+             perl-common-sense-3.74-1  perl-data-random-0.12-1
+             perl-date-calc-6.4-1  perl-digest-hmac-1.03-3
+             perl-digest-sha1-2.13-7  perl-file-slurp-tiny-0.004-1
+             perl-gd-2.66-1  perl-html-form-6.03-2
+             perl-http-response-encoding-0.06-3  perl-http-server-simple-0.51-1
+             perl-io-socket-ssl-2.048-1  perl-json-2.90-1
+             perl-lwp-protocol-https-6.06-2  perl-mouse-2.4.9-1
+             perl-net-oauth-0.28-4  perl-net-ssleay-1.81-1
+             perl-sub-uplevel-0.2800-1  perl-test-warn-0.32-1
+             perl-tree-dag-node-1.29-1  perl-types-serialiser-1.0-1
+             perl-xml-namespacesupport-1.12-1  perl-xml-sax-0.99-4
+             perl-xml-sax-base-1.09-1  perl-xml-sax-expat-0.51-4
+             perl-yaml-tiny-1.70-1  python-beaker-1.8.1-2  python-mako-1.0.6-2
+             python-markupsafe-1.0-1  qjson-0.9.0-1  ucl-1.03-7
+             webkitgtk2-2.4.11-6  apache-ant-1.9.7-1  asar-0.13.0-1
+             autoconf2.13-2.13-4  cython-0.25.2-2  dkms-2.3-2
+             fakechroot-2.19-1  ffmpeg0.10-0.10.16-2  fltk-1.3.4-1
+             fontforge-20161012-4  gcc-objc-7.1.1-2  gegl-0.3.14-2
+             gendesk-0.6.4-1  gnome-perl-1.045-4  go-2:1.8.3-1
+             gobject-introspection-1.52.1-1  gulp-3.9.1-2
+             hardening-wrapper-10-1  icoutils-0.31.3-1  imake-1.0.7-1
+             kdepimlibs4-4.14.10-11  kyotocabinet-1.2.76-5  l-smash-2.9.1-1
+             lib32-db-5.3.28-3  lib32-fakeroot-1.21-1  lib32-gtk3-3.22.15-1
+             lib32-jansson-2.10-1  lib32-js17-17.0.0-6  lib32-json-c-0.12.1-1
+             lib32-pangox-compat-0.0.2-2  lib32-qt4-4.8.7-6
+             libgnome-sharp-2.24.2-4  libirman-0.5.2-1
+             libkactivities4-4.13.3-3  libkcddb4-16.08.3-1  libmediaart-1.9.1-1
+             librpcsecgss-0.19-8  libwnck3-3.20.1-2  lua-expat-1.3.0-3
+             nasm-2.13.01-1  netcdf-4.4.1-2  perl-archive-zip-1.59-1
+             perl-file-copy-recursive-0.38-1  perl-file-which-1.21-1
+             perl-gnome2-wnck-0.16-11  perl-goo-canvas-0.06-7
+             perl-gtk2-imageview-0.05-7  perl-gtk2-unique-0.05-13
+             perl-image-exiftool-10.50-1  perl-json-xs-3.03-1
+             perl-mozilla-ca-20160104-1  perl-net-dropbox-api-1.9-3
+             perl-path-class-0.37-1  perl-proc-processtable-0.53-2
+             perl-proc-simple-1.32-1  perl-sort-naturally-1.03-1
+             perl-www-mechanize-1.84-1  perl-xml-simple-2.24-1  pth-2.0.7-5
+             python-pyasn1-0.2.3-1  python2-crypto-2.6.1-5
+             python2-pyasn1-0.2.3-1  qca-qt4-2.1.3-4  qtwebkit-2.3.4-4
+             quilt-0.65-1  sdx-20080224-4  strigi-0.7.8-9  tor-0.3.0.7-1
+             upx-3.94-1  vala-0.36.3-1  webkit-sharp-0.3-5  webkitgtk-2.4.11-6
+             wxgtk2.8-2.8.12.1-4  xmltoman-0.4-2  yasm-1.3.0-1
+
+全部移去体积：  741.87 MiB
+
+:: 打算删除这些软件包吗？ [Y/n] y
+:: 正在运行事务前钩子函数...
+(1/2) Uninstalling GConf schemas...
+(2/2) Removing old entries from the info directory file...
+:: 正在处理软件包的变化...
+(  1/151) 正在删除 yasm                            [######################] 100%
+(  2/151) 正在删除 xmltoman                        [######################] 100%
+(  3/151) 正在删除 wxgtk2.8                        [######################] 100%
+(  4/151) 正在删除 webkitgtk                       [######################] 100%
+(  5/151) 正在删除 webkit-sharp                    [######################] 100%
+(  6/151) 正在删除 webkitgtk2                      [######################] 100%
+(  7/151) 正在删除 vala                            [######################] 100%
+(  8/151) 正在删除 upx                             [######################] 100%
+(  9/151) 正在删除 ucl                             [######################] 100%
+( 10/151) 正在删除 tor                             [######################] 100%
+( 11/151) 正在删除 strigi                          [######################] 100%
+( 12/151) 正在删除 sdx                             [######################] 100%
+( 13/151) 正在删除 lib32-tclkit                    [######################] 100%
+( 14/151) 正在删除 quilt                           [######################] 100%
+( 15/151) 正在删除 diffstat                        [######################] 100%
+( 16/151) 正在删除 qtwebkit                        [######################] 100%
+( 17/151) 正在删除 qca-qt4                         [######################] 100%
+( 18/151) 正在删除 python2-pyasn1                  [######################] 100%
+( 19/151) 正在删除 python2-crypto                  [######################] 100%
+( 20/151) 正在删除 python-pyasn1                   [######################] 100%
+( 21/151) 正在删除 pth                             [######################] 100%
+( 22/151) 正在删除 perl-xml-simple                 [######################] 100%
+( 23/151) 正在删除 perl-xml-sax-expat              [######################] 100%
+( 24/151) 正在删除 perl-xml-sax                    [######################] 100%
+( 25/151) 正在删除 perl-xml-sax-base               [######################] 100%
+( 26/151) 正在删除 perl-xml-namespacesupport       [######################] 100%
+( 27/151) 正在删除 perl-www-mechanize              [######################] 100%
+( 28/151) 正在删除 perl-test-warn                  [######################] 100%
+( 29/151) 正在删除 perl-tree-dag-node              [######################] 100%
+( 30/151) 正在删除 perl-sub-uplevel                [######################] 100%
+( 31/151) 正在删除 perl-http-server-simple         [######################] 100%
+( 32/151) 正在删除 perl-http-response-encoding     [######################] 100%
+( 33/151) 正在删除 perl-html-form                  [######################] 100%
+( 34/151) 正在删除 perl-sort-naturally             [######################] 100%
+( 35/151) 正在删除 perl-proc-simple                [######################] 100%
+( 36/151) 正在删除 perl-proc-processtable          [######################] 100%
+( 37/151) 正在删除 perl-path-class                 [######################] 100%
+( 38/151) 正在删除 perl-net-dropbox-api            [######################] 100%
+( 39/151) 正在删除 perl-net-oauth                  [######################] 100%
+( 40/151) 正在删除 perl-file-slurp-tiny            [######################] 100%
+( 41/151) 正在删除 perl-digest-hmac                [######################] 100%
+( 42/151) 正在删除 perl-digest-sha1                [######################] 100%
+( 43/151) 正在删除 perl-class-data-inheritable     [######################] 100%
+( 44/151) 正在删除 perl-class-accessor             [######################] 100%
+( 45/151) 正在删除 perl-mouse                      [######################] 100%
+( 46/151) 正在删除 perl-lwp-protocol-https         [######################] 100%
+( 47/151) 正在删除 perl-io-socket-ssl              [######################] 100%
+( 48/151) 正在删除 perl-net-ssleay                 [######################] 100%
+( 49/151) 正在删除 perl-json                       [######################] 100%
+( 50/151) 正在删除 perl-data-random                [######################] 100%
+( 51/151) 正在删除 perl-yaml-tiny                  [######################] 100%
+( 52/151) 正在删除 perl-gd                         [######################] 100%
+( 53/151) 正在删除 perl-date-calc                  [######################] 100%
+( 54/151) 正在删除 perl-bit-vector                 [######################] 100%
+( 55/151) 正在删除 perl-carp-clan                  [######################] 100%
+( 56/151) 正在删除 perl-mozilla-ca                 [######################] 100%
+( 57/151) 正在删除 perl-json-xs                    [######################] 100%
+( 58/151) 正在删除 perl-types-serialiser           [######################] 100%
+( 59/151) 正在删除 perl-common-sense               [######################] 100%
+( 60/151) 正在删除 perl-canary-stability           [######################] 100%
+( 61/151) 正在删除 perl-image-exiftool             [######################] 100%
+( 62/151) 正在删除 perl-gtk2-unique                [######################] 100%
+( 63/151) 正在删除 libunique                       [######################] 100%
+( 64/151) 正在删除 perl-gtk2-imageview             [######################] 100%
+( 65/151) 正在删除 gtkimageview                    [######################] 100%
+( 66/151) 正在删除 perl-goo-canvas                 [######################] 100%
+( 67/151) 正在删除 goocanvas1                      [######################] 100%
+( 68/151) 正在删除 perl-gnome2-wnck                [######################] 100%
+( 69/151) 正在删除 libwnck                         [######################] 100%
+( 70/151) 正在删除 perl-file-which                 [######################] 100%
+( 71/151) 正在删除 perl-file-copy-recursive        [######################] 100%
+( 72/151) 正在删除 perl-archive-zip                [######################] 100%
+( 73/151) 正在删除 netcdf                          [######################] 100%
+( 74/151) 正在删除 hdf5                            [######################] 100%
+( 75/151) 正在删除 nasm                            [######################] 100%
+( 76/151) 正在删除 lua-expat                       [######################] 100%
+( 77/151) 正在删除 libwnck3                        [######################] 100%
+( 78/151) 正在删除 libxres                         [######################] 100%
+( 79/151) 正在删除 librpcsecgss                    [######################] 100%
+( 80/151) 正在删除 libmediaart                     [######################] 100%
+( 81/151) 正在删除 libkcddb4                       [######################] 100%
+( 82/151) 正在删除 libkactivities4                 [######################] 100%
+( 83/151) 正在删除 libirman                        [######################] 100%
+( 84/151) 正在删除 libgnome-sharp                  [######################] 100%
+( 85/151) 正在删除 gnome-vfs-sharp                 [######################] 100%
+( 86/151) 正在删除 art-sharp                       [######################] 100%
+( 87/151) 正在删除 lib32-qt4                       [######################] 100%
+( 88/151) 正在删除 lib32-libmng                    [######################] 100%
+( 89/151) 正在删除 lib32-pangox-compat             [######################] 100%
+( 90/151) 正在删除 lib32-json-c                    [######################] 100%
+( 91/151) 正在删除 lib32-js17                      [######################] 100%
+( 92/151) 正在删除 js17                            [######################] 100%
+( 93/151) 正在删除 lib32-jansson                   [######################] 100%
+( 94/151) 正在删除 lib32-gtk3                      [######################] 100%
+( 95/151) 正在删除 lib32-rest                      [######################] 100%
+( 96/151) 正在删除 lib32-libsoup                   [######################] 100%
+( 97/151) 正在删除 lib32-glib-networking           [######################] 100%
+( 98/151) 正在删除 lib32-libproxy                  [######################] 100%
+( 99/151) 正在删除 lib32-libxkbcommon              [######################] 100%
+(100/151) 正在删除 lib32-librsvg                   [######################] 100%
+(101/151) 正在删除 lib32-libcroco                  [######################] 100%
+(102/151) 正在删除 lib32-libepoxy                  [######################] 100%
+(103/151) 正在删除 lib32-json-glib                 [######################] 100%
+(104/151) 正在删除 lib32-colord                    [######################] 100%
+(105/151) 正在删除 lib32-libgusb                   [######################] 100%
+(106/151) 正在删除 lib32-dconf                     [######################] 100%
+(107/151) 正在删除 lib32-at-spi2-atk               [######################] 100%
+(108/151) 正在删除 lib32-at-spi2-core              [######################] 100%
+(109/151) 正在删除 lib32-fakeroot                  [######################] 100%
+(110/151) 正在删除 lib32-db                        [######################] 100%
+(111/151) 正在删除 l-smash                         [######################] 100%
+(112/151) 正在删除 kyotocabinet                    [######################] 100%
+(113/151) 正在删除 kdepimlibs4                     [######################] 100%
+(114/151) 正在删除 qjson                           [######################] 100%
+(115/151) 正在删除 libakonadi-qt4                  [######################] 100%
+(116/151) 正在删除 imake                           [######################] 100%
+(117/151) 正在删除 icoutils                        [######################] 100%
+(118/151) 正在删除 hardening-wrapper               [######################] 100%
+(119/151) 正在删除 gulp                            [######################] 100%
+(120/151) 正在删除 gobject-introspection           [######################] 100%
+(121/151) 正在删除 python-mako                     [######################] 100%
+(122/151) 正在删除 python-markupsafe               [######################] 100%
+(123/151) 正在删除 python-beaker                   [######################] 100%
+(124/151) 正在删除 go                              [######################] 100%
+(125/151) 正在删除 gnome-perl                      [######################] 100%
+(126/151) 正在删除 libgnomeui                      [######################] 100%
+(127/151) 正在删除 libbonoboui                     [######################] 100%
+(128/151) 正在删除 libgnome                        [######################] 100%
+(129/151) 正在删除 libgnome-data                   [######################] 100%
+(130/151) 正在删除 libbonobo                       [######################] 100%
+(131/151) 正在删除 orbit2                          [######################] 100%
+(132/151) 正在删除 gnomecanvas-perl                [######################] 100%
+(133/151) 正在删除 libgnomecanvas                  [######################] 100%
+(134/151) 正在删除 libart-lgpl                     [######################] 100%
+(135/151) 正在删除 gnome-vfs-perl                  [######################] 100%
+(136/151) 正在删除 gnome-vfs                       [######################] 100%
+(137/151) 正在删除 gnome-mime-data                 [######################] 100%
+(138/151) 正在删除 gendesk                         [######################] 100%
+(139/151) 正在删除 gegl                            [######################] 100%
+(140/151) 正在删除 gcc-objc                        [######################] 100%
+(141/151) 正在删除 fontforge                       [######################] 100%
+(142/151) 正在删除 libxkbui                        [######################] 100%
+(143/151) 正在删除 libunicodenames                 [######################] 100%
+(144/151) 正在删除 fltk                            [######################] 100%
+(145/151) 正在删除 ffmpeg0.10                      [######################] 100%
+(146/151) 正在删除 fakechroot                      [######################] 100%
+(147/151) 正在删除 dkms                            [######################] 100%
+(148/151) 正在删除 cython                          [######################] 100%
+(149/151) 正在删除 autoconf2.13                    [######################] 100%
+(150/151) 正在删除 asar                            [######################] 100%
+(151/151) 正在删除 apache-ant                      [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/6) Probing GDK-Pixbuf loader lib32 modules...
+(2/6) Updating GIO module cache...
+(3/6) Updating icon theme caches...
+(4/6) Arming ConditionNeedsUpdate...
+(5/6) Updating the desktop file MIME type cache...
+(6/6) Updating the MIME type database...
+Unknown media type in type 'all/all'
+Unknown media type in type 'all/allfiles'
+
+
+
+
+[andy@andy ~]$ sudo pacman -R mysql-clients mysql phpmyadmin
+正在检查依赖关系...
+
+软件包 (3) mysql-5.7.18-1  mysql-clients-5.7.18-1  phpmyadmin-4.7.1-1
+
+全部移去体积：  199.98 MiB
+
+:: 打算删除这些软件包吗？ [Y/n] y
+:: 正在处理软件包的变化...
+(1/3) 正在删除 phpmyadmin                          [######################] 100%
+(2/3) 正在删除 mysql                               [######################] 100%
+userdel: user mysql is currently used by process 439
+groupdel：不能移除用户“mysql”的主组
+错误：命令未能被正确执行
+(3/3) 正在删除 mysql-clients                       [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/1) Arming ConditionNeedsUpdate...
+
+
+
+
+
+
+(31/31) 正在检查密钥环里的密钥                     [######################] 100%
+正在下载所需的密钥......
+错误：key "F9F9FA97A403F63E" could not be looked up remotely
+错误：所需的密钥从密钥环中丢失
+错误：无法提交处理 (未预期的错误)
+发生错误，没有软件包被更新。
+
+$ sudo leafpad /etc/pacman.conf
+[archlinuxcn]
+SigLevel = Optional TrustAll
+
+$ sudo pacman -S archlinuxcn-keyring
+
+
+
+
+
+
+
+
+[andy@andy ~]$ sudo pacman -S mysql mysql-clients  phpmyadmin
+:: 有 2 个软件包可提供 mysql ：
+:: 软件库 extra
+   1) mariadb
+:: 软件库 community
+   2) percona-server
+
+输入某个数字 ( 默认=1 ): 
+:: 有 2 个软件包可提供 mysql-clients ：
+:: 软件库 extra
+   1) mariadb-clients
+:: 软件库 community
+   2) percona-server-clients
+
+输入某个数字 ( 默认=1 ): 
+正在解决依赖关系...
+正在查找软件包冲突...
+
+软件包 (3) mariadb-10.1.24-1  mariadb-clients-10.1.24-1  phpmyadmin-4.7.1-1
+
+下载大小:    27.09 MiB
+全部安装大小：  237.53 MiB
+
+:: 进行安装吗？ [Y/n] 
+:: 正在获取软件包......
+ mariadb-clients-10....  1397.5 KiB  1152K/s 00:01 [######################] 100%
+ mariadb-10.1.24-1-x...    25.7 MiB  1593K/s 00:17 [######################] 100%
+(3/3) 正在检查密钥环里的密钥                       [######################] 100%
+(3/3) 正在检查软件包完整性                         [######################] 100%
+(3/3) 正在加载软件包文件                           [######################] 100%
+(3/3) 正在检查文件冲突                             [######################] 100%
+(3/3) 正在检查可用硬盘空间                         [######################] 100%
+:: 正在处理软件包的变化...
+(1/3) 正在安装 mariadb-clients                     [######################] 100%
+(2/3) 正在安装 mariadb                             [######################] 100%
+:: You need to initialize the MariaDB data directory prior to starting
+   the service. This can be done with mysql_install_db command, e.g.:
+   mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+mariadb 的可选依赖
+    perl-dbd-mysql: for mysqlhotcopy, mysql_convert_table_format and
+    mysql_setpermission
+(3/3) 正在安装 phpmyadmin                          [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/3) Updating system user accounts...
+(2/3) Creating temporary files...
+(3/3) Arming ConditionNeedsUpdate...
+
+
+
+
+
+
+
+
+
+
+
+升级gcc-libs之后启动allegro报错的处理
+[andy@andy allegro_166_patch]$ pacman -Qo /lib/libstdc++.so.6
+/usr/lib/libstdc++.so.6 属于 gcc-libs 7.1.1-2
+[andy@andy ~]$ ls /usr/lib32/libstdc++.so.6 -l
+lrwxrwxrwx 1 root root 19 6月  11 15:03 /usr/lib32/libstdc++.so.6 -> libstdc++.so.6.0.23
+[andy@andy lib32]$ ls /usr/lib32/libstdc++.so.6
+libstdc++.so.6       libstdc++.so.6.0.23 
+$ sudo rm /usr/lib32/libstdc++.so.6
+$ sudo ln -s /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21 /usr/lib32/libstdc++.so.6
+$ locate libstdc++.so.6 | grep 32
+$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
+        libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf717b000)
+[andy@andy ~]$ ls /usr/lib32/libstdc++.so.6 -l
+lrwxrwxrwx 1 root root 103 6月  11 15:12 libstdc++.so.6 -> /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21
+
+恢复原始的lib链接
+在配置文件/etc/ld.so.conf等文件的路径保持最初状态
+sudo ldconfig
+就恢复了
+
+
+更好的办法,通过环境变量LD_LIBRARY_PATH指定动态库搜索路径
+$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
+
+[andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
+	libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf70ce000)
+[andy@andy ~]$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
+	libstdc++.so.6 => /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6 (0xf71e1000)
+[andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc	libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf7163000)
+[andy@andy ~]$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/
+[andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc	libstdc++.so.6 => /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6 (0xf7224000)
+
+
+最终定案
+复制/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21到/opt/cadence/SPB166/tools.lnx86/lib
+命名为libstdc++.so.6
+修改spb166里的环境变量LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$CDS_ROOT/tools/lib64:$CDS_ROOT/tools.lnx86/mainwin540_64/mw/lib-amd64_linux_optimized:$CDS_ROOT/tools.lnx86/lib:$CDS_ROOT/tools.lnx86/mainwin540/mw/lib-linux_optimized:/usr/lib32/:/usr/lib/:/usr/lib64:$LD_LIBRARY_PATH
+
+就可以脱离系统库依赖了
+
+反正ldd看可执行文件，缺啥库，弄进来，环境变量顺序一设置，就不依赖系统库了
+
+
+[andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
+	libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf712f000)
+[andy@andy ~]$ cd /opt/cadence/allegro_166_patch/
+[andy@andy allegro_166_patch]$ source spb166 
+[andy@andy allegro_166_patch]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
+	libstdc++.so.6 => /opt/cadence/SPB166/tools.lnx86/lib/libstdc++.so.6 (0xf3ed4000)
+
+
+
+
+
+
+
+
+
+
+
+
+$ yaourt monodevelop
+$ ilasm --version 
+Mono ILasm compiler version 5.0.0.0
+$ dmcs  --version
+Note: dmcs is deprecated, please use mcs instead!
+Mono C# compiler version 5.0.0.0
+$ mcs  --version
+Mono C# compiler version 5.0.0.0
+$ mono --version
+
+
+
+
+
+
+$ yaourt sublime-text-imfix
+
+
+
+
+
+
+
+
+
+$ yaourt jlink
+
+
+
+
+
+pacman的几个常用命令
+pacman -S package_name #安装软件包
+pacman -R package_name #删除软件包
+
+pacman -Rs package_name #顺便删除软件包相关依赖
+pacman -Syu #升级系统中的所有包
+pacman -Ss package #查询软件包
+pacman -Qs package #查询已安装的包
+pacman -Qi package #显示查找的包的信息
+pacman -Ql package #显示你要找的包的文件都安装的位置
+pacman -Sw package #下载但不安装包
+pacman -U /path/package.pkg.tar.gz #安装本地包
+pacman -Scc #清理包缓存，下载的包会在/var/cache 这个目录
+pacman -Sf pacman #重新安装包
+
+其实要容易记的话可以自己在bashrc里配置一下alias就好。
+
+再说说包下载的提速。。。
+修改一下/etc/pacman.conf，把下面这句的注释去掉：
+XferCommand = /usr/bin/wget -c --passive-ftp -c %u
+
+这样就可以使用wget来下载包。当然你也可以尝试powerpill来提高下载速度，因为这个确实不错！
+
+也可以用aria2，在配置文件中加上这句：
+XferCommand = /usr/bin/aria2c -s 4 -m 2 -d / -o %o %u
+
+-s后面是连接的服务器数量，-m是线程数。
+
+
+
+
+
+开启所有tty
+for i in {1..7};do echo -n "tty$i is ";systemctl is-enabled getty@tty$i; done
+systemctl is-enabled getty@tty3
+
+sudo systemctl enable getty@tty1
+sudo systemctl enable getty@tty2
+sudo systemctl enable getty@tty3
+sudo systemctl enable getty@tty4
+sudo systemctl enable getty@tty5
+sudo systemctl enable getty@tty6 
+sudo systemctl enable getty@tty7
+
+sudo systemctl start getty@tty3
+or
+sudo systemctl enable --now getty@tty3
+
+
+[andy@andy ~]$ whoami
+andy
+[andy@andy ~]$ ps $(pgrep Xorg)
+  PID TTY      STAT   TIME COMMAND
+  472 tty1     Ssl+   0:51 /usr/lib/xorg-server/Xorg -background none :0 vt01 -nolisten tcp -novtswitch -auth /var/run/lxdm/lxdm-:0.auth
+
+$ tty
+/dev/pts/0
+
+It's easy to script this or to include it in the prompt, example:
+
+$ PS1='`tty`: '
+/dev/pts/0: _
+
+
+
+
+
+
+
+
+
+
+
+
+https://wiki.archlinux.org/index.php/Display_manager
+查看当前登录管理器
+$ ls -l /etc/systemd/system/display-manager.service
+lrwxrwxrwx 1 root root 36 3月  29 2015 /etc/systemd/system/display-manager.service -> /usr/lib/systemd/system/lxdm.service
+
+The configuration files for LXDM are all located in 
+/etc/lxdm/
+可执行文件在
+/usr/lib/lxdm/
+
+查看默认的运行级别配置
+$ ls -l /lib/systemd/system/default.target
+lrwxrwxrwx 1 root root 16 1月  29 06:32 /lib/systemd/system/default.target -> graphical.target
+这是登陆器的桌面候选
+$ ls /usr/share/xsessions/
+更换登录管理器，比如slim
+# systemctl enable slim.service
+display manager有
+kdm, gdm, lightdm, lxdm, wdm, xdm, slim, nodm, ldm
+
+
+https://wiki.archlinux.org/index.php/Systemd#Change_default_target_to_boot_into
+初始化运行级别配置
+# systemctl set-default multi-user.target
+修改运行级别配置
+# systemctl set-default -f multi-user.target
+实际上作用就是
+$ sudo ln -s /lib/systemd/system/multi-user.target default.target
+这样可以实现xstart登录，默认不开启X界面（# 字符界面启动 #）
+
+[andy@andy ~]$ sudo systemctl set-default multi-user.target
+[sudo] andy 的密码：
+Created symlink /etc/systemd/system/default.target → /usr/lib/systemd/system/multi-user.target.
+
+
+
+播放器
+$ sudo pacman -S totem grilo-plugins
+
+
+
+fcitx调试信息
+$ fcitx-diagnose
+
+
+找找
+xfce4-mime-settings
+
+
+
+
+
+x自带屏保
+xset q
+十秒黑屏
+xset s 10 600
+
+
+
+
+
+
+
+If you plan to use external client (e.g. amuleGUI or amuleweb) then you need to
+provide [ExternalConnect] configuration.
+You also need to specify amuleweb password.
+Please follow https://wiki.archlinux.org/index.php/AMule for more information.
+amuleweb can be started as 'systemctl start amuleweb'.
+
+
+
+
+
+
+
+sudo ln -s /opt/XX-Net/data/gae_proxy/CA.crt  /etc/ca-certificates/trust-source/anchors/GoAgent.crt
+sudo trust extract-compat
+
+发现一个衍生版
+CTKArch
+
+
+
+
+
+
+切换中文目录为英文目录 使用命令来转换中文目录为英文目录。
+即/home中的“桌面”、“下载”等等转换成“Desktop”、“Downloads”等等。
+export LANG=en_US
+xdg-user-dirs-update
+选 update
+export LANG=zh_CN.UTF-8
+xdg-user-dirs-update
+选“不要再提醒”和“保持原来的名称”
+
+arch无效
+
+修改user-dirs.dirs
+XDG_DESKTOP_DIR="$HOME/Desktop"
+XDG_DOWNLOAD_DIR="$HOME/Downloads"
+XDG_TEMPLATES_DIR="$HOME/Templates"
+XDG_PUBLICSHARE_DIR="$HOME/Public"
+XDG_DOCUMENTS_DIR="$HOME/Documents"
+XDG_MUSIC_DIR="$HOME/Music"
+XDG_PICTURES_DIR="$HOME/Pictures"
+XDG_VIDEOS_DIR="$HOME/Videos"
+
+
+mkdir Desktop Downloads Templates Public Documents Music Pictures Videos
+rm -rf 公共  视频  文档  音乐 模板  图片  下载  桌面
+
+
+
+
+
+批量配置文件
+openbox
+tint2
+obmenu-generator
+dmenu
+conky
+bin目录中的doc
+xinitrc目录中的
+vim
+firefox
+
+bookmarks现在在这，之前在/home/andy_old/.config/gtk-3.0
+.gtk-bookmarks
+file:///home/andy/Documents Documents
+file:///home/andy/Downloads Downloads
+file:/// /
+file:///var/cache/pacman/pkg pkg
+file:///home/andy/.wine/drive_c wine_drive_c
+file:///home/andy/.config config
+file:///mnt/win_e win_e
+file:///mnt/win_e/boot/arch_doc doc
+file:///home/andy/%E6%88%91%E7%9A%84%E5%9D%9A%E6%9E%9C%E4%BA%91 我的坚果云
+
+
+
+ps -elf |grep fcitx
+直接吧~/.config/fcitx目录删掉
+对比了一下两次fcitx-diagnose的结果
+pidof fcitx
+pkill fcitx
+
+
+
+$ yaourt fcitx-git
+1 archlinuxcn/fcitx-lilydjwg-git 2:4.2.9.1.20170518-1
+    A Flexible Input Method Framework. With Lua support
+==> 输入 n° 以安装需要的软件包（例如：1 2 3 或者是 1-3）
+==> ---------------------------------
+==> 1
+
+[sudo] andy 的密码：
+正在解决依赖关系...
+正在查找软件包冲突...
+:: fcitx-lilydjwg-git 与 fcitx 有冲突。删除 fcitx 吗？ [y/N] y
+:: fcitx-lilydjwg-git 与 fcitx-qt4 有冲突 (fcitx-qt)。删除 fcitx-qt4 吗？ [y/N] y
+:: fcitx-lilydjwg-git 与 fcitx-gtk2 有冲突。删除 fcitx-gtk2 吗？ [y/N] y
+:: fcitx-lilydjwg-git 与 fcitx-gtk3 有冲突。删除 fcitx-gtk3 吗？ [y/N] y
+
+软件包 (5) fcitx-4.2.9.1-2 [删除]  fcitx-gtk2-4.2.9.1-2 [删除]
+           fcitx-gtk3-4.2.9.1-2 [删除]  fcitx-qt4-4.2.9.1-2 [删除]
+           fcitx-lilydjwg-git-2:4.2.9.1.20170518-1
+
+下载大小:    7.10 MiB
+全部安装大小：  34.71 MiB
+净更新大小：  -0.40 MiB
+
+
+$ yaourt -S fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5
+
+~/.xprofile
+/etc/environment中加入：
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
+ #非桌面环境 里的环境变量改成如下的值：
+
+ export GTK_IM_MODULE=xim
+ export QT_IM_MODULE=xim
+
+
+
+
+
+$ yaourt downgrader
+
+
+
+
+
+$ qtqr
+Traceback (most recent call last):
+  File "/usr/bin/qtqr", line 14, in <module>
+    from PyQt4 import QtCore, QtGui, QtNetwork
+ImportError: /usr/lib/libharfbuzz.so.0: undefined symbol: FT_Get_Var_Blend_Coordinates
+
+$ sudo pacman -R harfbuzz
+正在检查依赖关系...
+错误：无法准备事务处理 (无法满足依赖关系)
+:: freetype2：移除 harfbuzz 将破坏依赖关系 'harfbuzz'
+:: harfbuzz-icu：移除 harfbuzz 将破坏依赖关系 'harfbuzz'
+:: lib32-harfbuzz：移除 harfbuzz 将破坏依赖关系 'harfbuzz'
+:: libx32-harfbuzz：移除 harfbuzz 将破坏依赖关系 'harfbuzz'
+:: pango：移除 harfbuzz 将破坏依赖关系 'harfbuzz'
+
+
+$ sudo pacman -R harfbuzz
+$ sudo pacman -S harfbuzz
+$ nm -D /lib64/libharfbuzz.so.0 | grep FT_Get
+$ nm -D /usr/lib/libharfbuzz.so.0 | grep FT_Get
+                 U FT_Get_Advance
+                 U FT_Get_Char_Index
+                 U FT_Get_Glyph_Name
+                 U FT_Get_Kerning
+                 U FT_Get_MM_Var
+                 U FT_Get_Name_Index
+                 U FT_Get_Var_Blend_Coordinates
+
+
+有啊
+
+$ cat /home/andy/.local/share/xorg/Xorg.0.log | grep FT_Get
+没有错啊
+
+
+$ yaout freetype2-git
+
+
+/home/andy目录备份，新建andy目录改好chown，发现qtqr可以运行呢
+逐步查找，定位在.bashrc的export LD_LIBRARY_PATH行，去掉就可以运行了，看来这个库出问题了
+再看看具体是啥玩意造成的呢
+/opt/modelsim/modeltech/lib
+这里有libfreetype.so
+去掉LD_LIBRARY_PATH变量中的/opt/modelsim/modeltech/lib:至少能用qtqr了嘛
+明白了，但是多次重启fcitx造成Xorg假死还是无解
+
+通过类似的方法试试能不能治好fcitx的问题呢，即就没有.bashrc呢
+次重启fcitx造成Xorg假死还是无解
+
+
+
+
+
+/home/andy备份
+backup_home_170622.tar.xz
+
+
+处理wine winrar启动不了的问题
+新建一个/home/andy目录
+发现wine winrar是可以启动的，那么配置肯定出问题了，定位哪里出问题了
+winecfg的函数库第三项，comctl32被删除之后就可以了。其实选内建先于原装也可以解决这个问题。
+但是，这样的话启动其他比如winecfg都会弹出一个报错窗口，但是可以继续运行，觉得很讨厌吧
+于是，可以对winrar单独进行一个设置，这样就可以兼顾了。
+
+看来处理wine问题，先配置一个函数库没有任何改造的运行配置就可以了，没有必要去动全局
+
+
+
+
+$ yaourt qtchooser
+与qt5-base、qt5-declarative、qt5-tools、qt5-xmlpatterns、冲突，
+qtchooser无效了，用
+qmake-qt4
+
+下面这个玩意影响qtcreator使用
+$ sudo pacman -Rdd hardening-wrapper
+
+
+
+yaourt libbs2b projectm mpc
+
+
