@@ -2316,6 +2316,9 @@ sudo ln -siT /lib/i386-linux-gnu/libudev.so.1 /lib/i386-linux-gnu/libudev.so.0
 If you cannot install libgcrypt11:i386 then add
 deb http://security.debian.org/debian-security wheezy/updates main to your /etc/apt/sources.list
 
+后来libgcrypt11更新到libgcrypt20，而ccs还是要用libgcrypt11
+简单暴力的方法，解压libgcrypt11_1.5.0-5+deb7u6_i386.deb提取libgcrypt.so.11.7.0，复制到/lib/i386-linux-gnu，然后建立一个软链接libgcrypt.so.11
+
 一个个安装处理包兼容性
 
 主要问题
@@ -2334,6 +2337,33 @@ libdbus-glib-1-2_0.102-1_amd64.deb
 
 这下可以安装ccs了
 
+
+ccs6的空白
+https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/349185
+ldd -v -r /opt/ti/ccsv6/eclipse/plugins/com.ti.chromium.browser.gtk.linux.x86_1.0.0.201604131600/libs/*.so|grep "not"
+sudo apt-get install libnss3:i386
+libgcrypt11升级问题也会导致空白，前面有解决方法:
+后来libgcrypt11更新到libgcrypt20，而ccs还是要用libgcrypt11
+简单暴力的方法，解压libgcrypt11_1.5.0-5+deb7u6_i386.deb提取libgcrypt.so.11.7.0，复制到/lib/i386-linux-gnu，然后建立一个软链接libgcrypt.so.11
+
+CCS的附加库选择
+比如xdc的最新版本安装在/opt/ti2/,而且其调用64位jre（eclipese目录下jre目录）
+在用ccs6.1.3时候就要说XDC_CG_ROOT路径有问题，
+
+只能通过product选择来更新路径。这样的情况是不应该让ccs去发现高版本的xdc库的
+有关设置位置
+window->reference-> code composer studio -> RTSC -> products 两种设置，一个是路径，一个是库，都可以进行选择，
+影响的path有
+project -> property -> resource -> linked resources
+还有一个办法是
+project -> property -> CCS General -> RTSC 这里可以选XDC版本
+the environment variable 'XDCTOOLS_JAVA_HOME' is set, but does not appear to be a directory containing a 64-bit Java Runtime Environment (1.7 or greater); e.g., '/usr/lib/jvm/java-7-openjdk-amd64'.
+ccs6的升级plugin报错
+https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/411178
+Cd to <installdir>\ccsv6\eclipse\p2\org.eclipse.equinox.p2.core and <installdir>\ccsv6\eclipse\p2\org.eclipse.equinox.p2.repository and delete the cache folders there.
+Try the update again.
+
+还有proxy设置的开启和关闭，都试试
 
 
 
@@ -3037,25 +3067,6 @@ andy@debian-dell:~$ cat /etc/group | grep vbox
 vboxusers:x:129:andy
 重启host，可以用usb筛选器了
 </log>
-
-
-
-
-ccs6的空白
-https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/349185
-ldd -v -r /opt/ti/ccsv6/eclipse/plugins/com.ti.chromium.browser.gtk.linux.x86_1.0.0.201604131600/libs/*.so|grep "not"
-sudo apt-get install libnss3:i386
-
-
-ccs6的升级plugin报错
-https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/411178
-Cd to <installdir>\ccsv6\eclipse\p2\org.eclipse.equinox.p2.core and <installdir>\ccsv6\eclipse\p2\org.eclipse.equinox.p2.repository and delete the cache folders there.
-Try the update again.
-
-还有proxy设置的开启和关闭，都试试
-
-
-
 
 
 
@@ -7478,6 +7489,103 @@ Tue Feb 13 09:56:10 CST 2018
 
 
 
+Sat Mar 10 14:49:55 CST 2018
+
+递归删除某类型文件
+find  . -name  '*.exe' -type  f -print -exec  rm -rf  {} \;  
+
+其他find . -type  f -name "*.o"  | xargs rm -f 对含空格和特殊符号的文件名路径名似乎没有起作用
+
+
+发现无法清除干净的.fuse_hiddenxxxxxx文件
+删除文件的动作，貌似是执行了的。但是，会马上生成另外一个文件名的文件——也是.fuse_hiddenxxxxxx开头，只是最后一位数字有变化。最后，我这个问题移动硬盘是NTFS文件系统。
+tips：SystemTap
+https://serverfault.com/questions/478558/how-to-delete-fuse-hidden-files
+    Log in to the system where the file physically resides. (no network mount)
+    Execute lsof dir-name/.fuse_hidden000bd8c100000185 to find out what processes are holding the file handle open.
+    Terminate those processes if it makes sense to, or figure out what steps you can perform to "gracefully" release the open file handle without terminating the process.
+
+
+没有深入研究，因为用解压软件打开来看，就占用了这样一个临时文件。关闭archive manager就可以删掉了
+
+
+Tue Mar 13 22:29:44 CST 2018
+
+为了能运行UniFlash
+andy@debian-dell /opt/ti/uniflash_4.0/node-webkit
+$ ./nw
+./nw: error while loading shared libraries: libudev.so.0: cannot open shared object file: No such file or directory
+andy@debian-dell /lib/x86_64-linux-gnu
+$ sudo ln -s libudev.so.1.5.0 libudev.so.0
+这样就可以了
+
+
+
+
+
+Wed Mar 14 10:27:25 CST 2018
+安装dcmtk
+sudo apt-get install dcmtk dcmtk-doc libdcmtk-dev dcmtk-www libdcmtk2 libdcmtk2
+
+根据zynq文档
+sudo apt-get install device-tree-compiler
+
+
+Mon Mar 19 08:54:27 CST 2018
+
+关于miredo服务开启
+sudo systemctl enable systemd-networkd-wait-online.service
+sudo systemctl enable miredo.service
+
+/lib/systemd/system/ 里面本来就有miredo.service
+--------------------------------------------------------------------
+[Unit]
+Description=Teredo IPv6 tunneling
+After=network.target
+
+[Service]
+ExecStartPre=/usr/sbin/miredo-checkconf -f /etc/miredo/miredo.conf
+ExecStart=/usr/sbin/miredo -f
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+---------------------------------------------------------------------
+
+和参考文件的miredo.service
+---------------------------------------------------------------------
+[Unit]
+Description=Teredo IPv6 tunneling
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+ExecStartPre=/usr/sbin/miredo-checkconf -f /etc/miredo/miredo.conf
+ExecStart=/usr/sbin/miredo -f
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+---------------------------------------------------------------------
+放到 /etc/systemd/system/
+执行sudo systemctl enable miredo.service 会冲突的
+所以只用/lib/systemd/system/miredo.service
+
+sudo systemctl start miredo.service
+
+
+
+
+
+
+
+
+
 
 date
+
+
+
 
