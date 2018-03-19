@@ -7577,6 +7577,19 @@ sudo systemctl start miredo.service
 
 
 
+github操作
+1. github导入本地已有的repo
+github新建一个空的project
+
+然后更换本地的remote地址
+git remote rm origin
+git remote add origin https://github.com/yxgi5/my_os_log.git
+git push -u origin master
+之后提示输入账号和密码，等到更新完成即可。
+
+2. 删除repo
+https://github.com/yxgi5/my_os_log/settings
+最下面 Danger Zone
 
 
 
