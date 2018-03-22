@@ -7628,6 +7628,8 @@ gpg --armor --export CD804564527D8490
 git config commit.gpgsign true
 git config --global commit.gpgsign true
 
+邮件要加到github的settings里，并且在邮箱里去确认才会verified
+
 date
 
 
