@@ -7604,6 +7604,30 @@ https://github.com/yxgi5/my_os_log/settings
 
 
 
+Thu Mar 22 20:08:49 CST 2018
+lantern(4.5.7)
+sudo dpkg -i lantern-installer-64-bit.deb
+
+/home/andy/.lantern/bin/lantern: error while loading shared libraries: libappindicator3.so.1: cannot open shared object file: No such file or directory
+
+sudo apt-get install libappindicator3-1
+
+The following NEW packages will be installed:
+  libappindicator3-1 libdbusmenu-gtk3-4 libindicator3-7
+
+
+
+
+gpg --list-secret-keys --keyid-format LONG
+gpg --import 公钥和密钥
+gpg --list-secret-keys --keyid-format LONG
+gpg --list-secret-key
+gpg --list-key
+gpg --armor --export CD804564527D8490
+按github的指令办
+git config commit.gpgsign true
+git config --global commit.gpgsign true
+
 date
 
 
