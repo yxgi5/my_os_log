@@ -7581,11 +7581,18 @@ github操作
 1. github导入本地已有的repo
 github新建一个空的project
 
+
+本地检出所有分支
+git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+git fetch --all
+git pull --all
+
 然后更换本地的remote地址
 git remote rm origin
 git remote add origin https://github.com/yxgi5/my_os_log.git
 git push -u origin master
 之后提示输入账号和密码，等到更新完成即可。
+git push -u origin [其他分支]
 
 2. 删除repo
 https://github.com/yxgi5/my_os_log/settings
