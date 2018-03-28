@@ -1649,6 +1649,7 @@ sudo updatedb -U /media/sdd1/
 可以本地查找用catfish/locator，外部存储器用命令行
 另外生成外部存储器的缓存文件
 sudo updatedb -U /media/sdd1/ -o /var/lib/mlocate/mlocate_sdd.db
+sudo updatedb -U /media/andy/BC482DD5482D8EE8 -o /var/lib/mlocate/mlocate_sdd.db
 用locate查找就行了
 sudo locate -d /var/lib/mlocate/mlocate_sdd.db  XXX
 sudo locate -d /var/lib/mlocate/mlocate_sdd.db  XXX | peco
