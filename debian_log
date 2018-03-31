@@ -7631,8 +7631,128 @@ git config --global commit.gpgsign true
 
 邮件要加到github的settings里，并且在邮箱里去确认才会verified
 
+
+
+Wed Mar 28 14:03:34 CST 2018
+
+sudo apt-get install gcc-arm-none-eabi libnewlib-arm-none-eabi binutils-arm-none-eabi gdb-arm-none-eabi
+
+
+
+Fri Mar 30 13:34:34 CST 2018
+
+$ wget ftp://sourceware.org/pub/insight/releases/insight-6.8-1a.tar.bz2
+$ tar jxvf insight-6.8-1a.tar.bz2
+$ cd insight-6.8-1/
+$ ./configure --target=arm-none-linux-gnueabi --prefix=/home/andy/insight-arm --disable-werror
+修复bug
+sed -i -e 's/@colophon/@@colophon/' \
+       -e 's/doc@cygnus.com/doc@@cygnus.com/' bfd/doc/bfd.texinfo
+sed -i 's/subsubsection/subsection/' ./bfd/doc/elf.texi
+
+$ make
+$ make install
+
+解决端口号无法修改的bug，没有成功
+$ ./configure --target=arm-none-linux-gnueabi --prefix=/home/andy/insight-arm --disable-werror --with-solib-absolute-prefix=/opt/codesourcery/arm-2009q1/arm-none-linux-gnueabi/libc/lib
+
+端口号直接用1000暂时也没问题，不过配合jlink的话会有端口问题，修改代码 或者 使用界面上的gdb命令手动敲啦
+
+
+$ sudo apt-get install kdbg
+
+$ sudo apt-get install cgdb
+
+
+
+
+
+
+
+
+
+
+
+gdb前端还是insight最好使！旧版本(6.8及之前)由于编译器原因各种问题
+git clone git://sourceware.org/git/insight.git
+cd insight
+git submodule init
+git submodule update
+autoconf
+
+$ ./configure --libdir=/home/andy/insight/lib64 --disable-binutils --disable-elfcpp --disable-gas --disable-gold--disable-gprof --disable-ld --disable-rpath --disable-zlib --with-gdb-datadir=/home/andy/insight/share/insight --with-jit-reader-dir=/home/andy/insight/lib64/insight --with-separate-debug-dir='/home/andy/insight/lib/debug' --with-expat --with-python --without-libunwind --prefix=/home/andy/insight
+
+make && make install
+
+运行insight-git(8.1.50)需要的库
+$ sudo apt-get install itcl3 itcl3-dev itcl3-doc itk3 itk3-dev itk3-doc iwidgets4 
+
+
+
+
+
+启动gdb时候有个告警
+warning: the debug information found in "/lib64/ld-2.19.so" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch)
+据说是libc6 libc6-dbg版本不一致
+https://stackoverflow.com/questions/28834807/can-crc-mismatch-cause-error-in-connection-with-libnetcdff-so-6
+$ sudo apt-get install libc6 libc6-dbg libc6-dev libc6-i386 libc6-x32
+无效
+
+$ ls /lib64/ld-2.19.so 
+/lib64/ld-2.19.so
+andy@debian-dell ~/insight/bin
+$ ls /lib64/ld-linux-x86-64.so.2 -l
+lrwxrwxrwx 1 root root 32 Jun 18  2017 /lib64/ld-linux-x86-64.so.2 -> /lib/x86_64-linux-gnu/ld-2.19.so
+andy@debian-dell ~/insight/bin
+$ ./insight 
+^Candy@debian-dell ~/insight/bin
+$ md5sum /lib64/ld-2.19.so
+cb9d6ceb30bbf18b06b2281ee6f882f6  /lib64/ld-2.19.so
+andy@debian-dell ~/insight/bin
+$ md5sum /lib/x86_64-linux-gnu/ld-2.19.so
+c9bd48abebc39c0881f847ecdc23029b  /lib/x86_64-linux-gnu/ld-2.19.so
+
+这两个文件的确不一样哈
+
+
+Confused about packages libc6-amd64 and libc6:amd64
+https://askubuntu.com/questions/660759/confused-about-packages-libc6-amd64-and-libc6amd64
+
+查询文件属于那个安装包
+andy@debian-dell ~/insight/bin
+$ dpkg-query -S /lib/x86_64-linux-gnu/ld-2.19.so
+libc6:amd64: /lib/x86_64-linux-gnu/ld-2.19.so
+andy@debian-dell ~/insight/bin
+$ dpkg-query -S /lib64/ld-2.19.so
+libc6-amd64: /lib64/ld-2.19.so
+andy@debian-dell ~/insight/bin
+$ aptitude search libc6:amd64
+i   libc6                           - GNU C Library: Shared libraries           
+andy@debian-dell ~/insight/bin
+$ aptitude search libc6-amd64
+i   libc6-amd64:i386                - GNU C Library: 64bit Shared libraries for
+
+查询安装包依赖关系
+apt-cache rdepends libc6:amd64
+apt-cache rdepends libc6-amd64
+
+
+sudo apt-get remove libc6-amd64:i386
+$ ls /lib64/ld-2.19.so
+ls: cannot access /lib64/ld-2.19.so: No such file or directory
+
+问题解决！
+
+
+
+
+
+
+
+
+
+
+
+
 date
-
-
-
 
