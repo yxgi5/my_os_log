@@ -7746,6 +7746,22 @@ ls: cannot access /lib64/ld-2.19.so: No such file or directory
 
 
 
+再编译一个支持arm调试的，8.1.50.20180330-git
+export PATH=/opt/codesourcery/arm-2009q1/bin:$PATH
+./configure --libdir=/home/andy/insight-arm/lib --disable-binutils --disable-elfcpp --disable-gas --disable-gold--disable-gprof --disable-ld --disable-rpath --disable-zlib --with-gdb-datadir=/home/andy/insight-arm/share/insight --with-jit-reader-dir=/home/andy/insight-arm/lib/insight --with-separate-debug-dir='/home/andy/insight-arm/lib/debug' --with-expat --with-python --without-libunwind --prefix=/home/andy/insight-arm --target=arm-none-linux-gnueabi
+
+完美解决port不能修改的问题
+
+
+如果无法run了，删掉~/.gdbtkinit 配置就重置了
+
+
+
+
+
+
+
+
 
 
 
