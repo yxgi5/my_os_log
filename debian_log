@@ -776,7 +776,12 @@ echo "alias cd..='cd ..'" >> ~/.bashrc
 
 updata-doc放到/usr/bin
 
+
+winavr
+https://sourceforge.net/p/winavr/code/HEAD/tree/
+https://github.com/embecosm/winavr.git
 winavr-code放到～
+目录名修改为winavr @@ 20180412
 
 $ sudo apt-get install dconf-tools
 $ dconf-editor
@@ -1087,6 +1092,8 @@ $ sudo gedit /usr/share/mime/packages/kde.xml
 //$ sudo apt-get install mathomatic gnuplot rlwrap filelight baobab colordiff hardinfo i-nex gnome-calendar calcurse when qucs geda-gaf units freehdl
 $ sudo apt-get install mathomatic gnuplot rlwrap filelight baobab colordiff hardinfo calcurse when units freehdl
 
+gnuplot> plot [-3.14:3.14] sin(x)
+http://www.gnuplot.info/demo/
 
 
 
@@ -2510,6 +2517,48 @@ sudo /usr/lib/sendmail -bp
 /var/spool/exim4/input
 
 如果要重装，exim4-config和exim4都删除重装，mailutils没有必要，purge掉并autoremove
+
+
+mail -s test yxgi5@163.com
+aa  #这里是邮件内容
+ss
+s #正文以ctrl+d结束并下一步; 两次Ctrl+C键则中断工作，不送此信件
+Cc:  #以enter结束并发送
+
+
+sudo /usr/lib/sendmail -bp
+
+将文件当做电子邮件的内容送出
+mail -s 邮件主题 -a 附件 用户名@地址 < 正文内容文件
+echo “邮件正文” | mail -s 邮件主题 -a 附件 用户名@地址
+
+uuencode <in_file> <remote_file> | mail -s "title" mail@address
+
+
+在linux中输入mail ，就进行了收件箱，并显示二十封邮件列表。
+
+    此时命令提示符为”&”：（可以输入以下命令对邮件进行相关操作）
+    unread 标记为未读邮件
+    h|headers 显示当前的邮件列表
+    l|list 显示当前支持的命令列表
+    ?|help 显示多个查看邮件列表的命令参数用法
+    d 删除当前邮件，指针并下移。 d 1-100 删除第1到100封邮件
+    f|from 只显示当前邮件的简易信息。 f num 显示某一个邮件的简易信息
+    f|from num 指针移动到某一封邮件
+    z 显示刚进行收件箱时的后面二十封邮件列表
+    more|p|page 阅读当前指针所在的邮件内容 阅读时，按空格键就是翻页，按回车键就是下移一行
+    t|type|more|p|page num 阅读某一封邮件
+    n|next|{什么都不填} 阅读当前指针所在的下一封邮件内容阅读时，按空格键就是翻页，按回车键就是下移一行
+    v|visual 当前邮件进入纯文本编辑模式
+    n|next|{什么都不填} num 阅读某一封邮件
+    top 显示当前指针所在的邮件的邮件头
+    file|folder 显示系统邮件所在的文件，以及邮件总数等信息
+    x 退出mail命令平台，并不保存之前的操作，比如删除邮件
+    q 退出mail命令平台，保存之前的操作，比如删除已用d删除的邮件，已阅读邮件会转存到当前用户家目录下的mbox文件中。如果在mbox中删除文件才会 彻底删除。在linux文本命令平台输入 mail -f mbox，就可以看到当前目录下的mbox中的邮件了。
+    cd 改变当前所在文件夹的位置
+
+
+
 
 
 
@@ -6100,6 +6149,10 @@ dot -Tpdf test2.dot -o test2.pdf
 
 
 
+
+
+
+
 UML建模工具
 $ sudo apt-get install umbrello
 
@@ -6594,7 +6647,9 @@ root_bk171118.tar.xz还原后
 sudo apt-get purge mysql-server phpmyadmin
 sudo apt-get autoremove
 sudo apt-get install mysql-server phpmyadmin
-
+http://localhost/phpmyadmin/user_password.php
+root
+*
 
 没有用,最后确认更新udisk2才行
 $ sudo aptitude -t jessie-backports install udev udevil systemd-sysv libudev-dev libpam-systemd
@@ -7191,8 +7246,14 @@ dd if=/dev/zero of=sdcard.img bs=1M count=256
 
 sudo dd if=s5p4418-debian-sd8g-20171017.img | pv | sudo dd of=/dev/sdc bs=4M
 
+dd其实也有支持进度显示(测试无效)
+dd if=/dev/zero of=/dev/null status=progress
 
-
+复制东西的时候要显示进度
+安装使用gcp就可以，好像依赖x11
+rsync -a --progress src dest
+pv src > dest
+cp命令本身有一些显示选项比如-v
 
 
 
@@ -7450,6 +7511,10 @@ Select an editor.  To change later, run 'select-editor'.
 
 从dot文件产生图片
 dot -Tpng test.dot -o test.png
+dot -Tjpg test.dot -o test.jpg
+
+xdot可以直接查看dot文件
+
 
 
 
@@ -7759,7 +7824,524 @@ export PATH=/opt/codesourcery/arm-2009q1/bin:$PATH
 
 
 
+下载回来的压缩包不完整可能报错
+tar: Skipping to next header
+tar: Exiting with failure status due to previous errors
+不论是否sudo都有这个错误，就要检查sha1 sha256
 
+
+
+$ sudo ln -s /opt/gnuarmeclipse/qemu/2.8.0-201703022210-head/bin/qemu-system-gnuarmeclipse /usr/local/bin/qemu-system-gnuarmeclipse
+
+
+
+
+
+
+Tue Apr 10 14:07:26 CST 2018
+全文搜索工具
+$ sudo apt-get install recoll
+gedit ~/.recoll/recoll.conf
+indexallfilenames = 1
+indexedmimetypes = text/abcd
+
+
+
+
+
+mlocate.db文件操作
+
+mlocate -d mlocate.db / > mlocate.txt
+这样dump出来的是带完整路径的文件名
+
+strings mlocate.db > mlocate.txt
+这样dump出来的仅仅有文件名没有路径
+
+前面的一个命令比后面的一个命令要好
+
+mlocate -d mlocate.db / | sort > mlocate.txt
+strings mlocate.db | sort > mlocate.txt
+排序会相当慢
+
+
+
+
+
+Sat Apr 14 22:06:10 CST 2018
+
+$ sudo apt-get install geany-plugin-markdown markdown
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  geany-plugins-common libmarkdown2
+The following NEW packages will be installed:
+  geany-plugin-markdown geany-plugins-common libmarkdown2 markdown
+
+
+Sun Apr 15 23:59:09 CST 2018
+
+meld - a graphical tool to diff and merge files
+sudo apt-get install meld
+The following NEW packages will be installed:
+  meld python-gi-cairo
+
+
+
+pgadmin3 graphical administration tool for PostgreSQL
+http://wiki.ubuntu.org.cn/PostgreSQL
+https://stackoverflow.com/questions/15301826/psql-fatal-role-postgres-does-not-exist
+https://launchschool.com/blog/how-to-install-postgres-for-linux
+https://stackoverflow.com/questions/12552929/failed-to-build-gem-native-extension-rails-install
+
+sudo apt-get install pgadmin3 postgresql-contrib postgresql-9.4 postgresql-doc-9.4 pgadmin3-data pgagent postgresql-client postgresql-client-9.4 postgresql-client-common 
+Suggested packages:
+  oidentd ident-server locales-all libdbd-pg-perl
+
+$ sudo /etc/init.d/postgresql start
+sudo -u <administrator account> createuser <standard account> -d -P
+sudo -u postgres createuser --superuser $USER -d -P
+psql -l
+sudo -u postgres createdb $USER
+touch .psql_history
+
+//pip install --upgrade pip
+sudo pip install psycopg2-binary
+sudo pip install pgcli
+
+
+sudo apt-get install postgresql postgresql-contrib libpq-dev
+The following NEW packages will be installed:
+  comerr-dev krb5-multidev libgssrpc4 libkadm5clnt-mit9 libkadm5srv-mit9
+  libkdb5-7 libpq-dev postgresql
+
+
+Type "psql" on your terminal to connect to the server:
+
+Enter "\q" to quit
+
+sudo apt-get install ruby-dev
+sudo gem install pg
+sudo apt-get install bundler
+The following NEW packages will be installed:
+  bundler ruby-net-http-persistent ruby-thor
+bundle init
+cd ~
+echo "gem 'pg'" >> Gemfile
+bundle install
+
+
+$ sudo apt-get install sqlite
+The following NEW packages will be installed:
+  libsqlite0 sqlite
+
+
+sudo apt-get update
+sudo apt-get install ruby
+没有能更新到要求的版本
+
+sudo gem install activesupport -v '5.1.6'
+
+gem sources -l
+gem sources --remove https://rubygems.org/
+gem sources -a https://rubygems.org/
+
+
+sudo apt-get install ruby-build
+Recommended packages:
+  libxslt-dev
+The following NEW packages will be installed:
+  libxslt1-dev rbenv ruby-build
+
+
+
+//#安装ruby
+//# https://github.com/rbenv/ruby-build#readme
+//git clone https://github.com/rbenv/ruby-build.git
+//ruby -v
+
+
+$ psql -U postgres -h localhost
+password？
+
+sudo /etc/init.d/postgresql stop
+
+危险
+sudo deluser postgres
+
+sudo -u postgres createuser andy -d -P
+
+不高兴用这个玩意了
+
+sudo apt-get --reinstall install pgadmin3 postgresql-contrib postgresql-9.4 postgresql-doc-9.4 pgadmin3-data pgagent postgresql-client postgresql-client-9.4 postgresql-client-common 
+
+sudo service postgresql restart 
+
+psql -U postgres -d postgres
+
+sudo service postgresql status
+
+
+
+sudo apt-get purge pgadmin3 postgresql-contrib postgresql-9.4 postgresql-doc-9.4 pgadmin3-data pgagent postgresql-client postgresql-client-9.4 postgresql-client-common
+
+修改密码
+sudo su postgres -c psql template1
+postgres=# ALTER USER postgres WITH PASSWORD 'postgres';
+
+
+
+
+Bless hex editor
+sudo apt-get install bless
+
+
+Pinta - a Simple drawing/painting program
+sudo apt-get install pinta
+
+
+Teigha File Converter 是一个免费的cad文件版本转换器,可把 .dwg和 .DXF 文件转换为不同的 AutoCAD 版本可以正常打开的文件,支持 AutoCAD 2000-2014
+https://www.opendesign.com/guestfiles/teigha_file_converter
+
+sudo dpkg -i TeighaFileConverter_QT5_lnxX64_4.7dll.deb
+
+
+yEd Graph Editor
+https://www.yworks.com/products/yed/download#download
+chmod +x yEd-3.18.0.2_64-bit_setup.sh
+./yEd-3.18.0.2_64-bit_setup.sh
+
+
+BeeBEEP (Secure Lan Messenger)
+http://beebeep.sourceforge.net/download.php
+
+
+zenmap - The Network Mapper Front End
+sudo apt-get install zenmap
+
+
+网页API集成的微信
+wget https://github.com/geeeeeeeeek/electronic-wechat/releases/download/V2.0/linux-x64.tar.gz
+tar zxvf linux-x64.tar.gz -C /opt
+
+desktop文件参考
+electronic-wechat.desktop
+-------
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Electronic WeChat
+Icon=/opt/electronic-wechat-linux-x64/wechat.png
+Exec=/opt/electronic-wechat-linux-x64/electronic-wechat
+StartupNotify=false
+StartupWMClass=electronic-wechat
+OnlyShowIn=Unity;
+X-UnityGenerated=true
+--------
+
+icon可以在这找
+http://www.iconfont.cn/
+
+
+ 
+jd-gui - Java Decompiler
+http://jd.benow.ca/
+wget https://github.com/java-decompiler/jd-gui/releases/download/v1.4.0/jd-gui_1.4.0-0_all.deb
+wget https://github.com/java-decompiler/jd-eclipse/releases/download/v1.0.0/jd-eclipse-site-1.0.0-RC2.zip
+
+sudo dpkg -i jd-gui_1.4.0-0_all.deb
+到opt里面去执行
+
+jd-eclipse这个嘛要用再安装
+
+
+
+
+
+st-flash
+https://github.com/texane/stlink
+http://startingelectronics.org/tutorials/STM32-microcontrollers/programming-STM32-flash-in-Linux/
+https://github.com/texane/stlink.git
+
+sudo apt-get install libusb-1.0-0-dev git
+git clone https://github.com/texane/stlink stlink.git
+cd stlink.git
+make
+cd flash
+sudo cp st-flash /usr/bin
+cd ..
+sudo cp *.rules /etc/udev/rules.d
+sudo restart udev
+st-flash write v1 myflash.bin 0x8000000
+
+
+
+
+atom-ide
+https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-linux
+https://packagecloud-prod.global.ssl.fastly.net/5969/6634/any/package_files/505662.deb?t=1523970178_968440c3e2aa614d8eb61620bb54f1a7a3c2f667
+
+sudo dpkg -i atom-beta_1.26.0-beta2_amd64.deb
+打开markdown文件，ctrl+shift+m
+还是这个看起来比较好一点
+
+
+
+vscode
+sudo dpkg -i code_1.22.2-1523551015_amd64.deb
+命令是code
+
+
+sudo apt-get install pandoc
+Suggested packages:
+  texlive-xetex texlive-luatex pandoc-citeproc etoolbox
+The following NEW packages will be installed:
+  pandoc pandoc-data
+
+
+
+MdCharm
+https://github.com/zhangshine/MdCharm/releases
+sudo dpkg -i mdcharm_1.2_amd64.deb
+sudo apt-get install libhunspell-dev
+这个也还行啊，预览比geany插件要好
+
+
+dillinger
+https://dillinger.io/
+
+Cmd Markdown
+https://www.zybuluo.com/mdeditor
+下载客户端
+https://www.zybuluo.com/cmd/#
+
+
+
+
+
+
+sudo apt-get install texlive-full fonts-freefont musixlyr
+Suggested packages:
+  perl-tk fontforge context-nonfree context-doc-nonfree jadetex passivetex
+  xindy xmltex
+Recommended packages:
+  fonts-freefont musixlyr
+The following NEW packages will be installed:
+  chktex cm-super cm-super-minimal context context-modules dvidvi feynmf
+  fonts-cabin fonts-comfortaa fonts-crosextra-caladea fonts-crosextra-carlito
+  fonts-ebgaramond fonts-ebgaramond-extra fonts-font-awesome
+  fonts-freefont-otf fonts-gfs-artemisia fonts-gfs-baskerville
+  fonts-gfs-bodoni-classic fonts-gfs-complutum fonts-gfs-didot
+  fonts-gfs-didot-classic fonts-gfs-gazis fonts-gfs-neohellenic fonts-gfs-olga
+  fonts-gfs-porson fonts-gfs-solomos fonts-gfs-theokritos fonts-hosny-amiri
+  fonts-inconsolata fonts-junicode fonts-lato fonts-linuxlibertine
+  fonts-lobster fonts-lobstertwo fonts-oflb-asana-math fonts-stix fragmaster
+  lacheck latexdiff latexmk lcdf-typetools m-tx musixtex pfb2t1c2pfb pmx
+  purifyeps tex4ht tex4ht-common texlive-bibtex-extra texlive-fonts-extra
+  texlive-fonts-extra-doc texlive-formats-extra texlive-full texlive-games
+  texlive-humanities texlive-humanities-doc texlive-lang-african
+  texlive-lang-arabic texlive-lang-cyrillic texlive-lang-czechslovak
+  texlive-lang-english texlive-lang-european texlive-lang-french
+  texlive-lang-german texlive-lang-greek texlive-lang-indic
+  texlive-lang-italian texlive-lang-polish texlive-lang-portuguese
+  texlive-lang-spanish texlive-luatex texlive-math-extra texlive-metapost
+  texlive-metapost-doc texlive-music texlive-omega texlive-plain-extra
+  texlive-publishers texlive-publishers-doc texlive-xetex ttf-adf-accanthis
+  ttf-adf-gillius ttf-adf-universalis
+0 upgraded, 83 newly installed, 0 to remove and 150 not upgraded.
+Need to get 825 MB of archives.
+After this operation, 1,607 MB of additional disk space will be used.
+
+
+sudo apt-get install texmaker texworks
+
+
+
+sudo apt-get install texlive-lang-all texlive-fonts-extra
+Suggested packages:
+  fontforge cm-super
+The following NEW packages will be installed:
+  fonts-cabin fonts-comfortaa fonts-crosextra-caladea fonts-crosextra-carlito
+  fonts-ebgaramond fonts-ebgaramond-extra fonts-font-awesome
+  fonts-freefont-otf fonts-gfs-artemisia fonts-gfs-baskerville
+  fonts-gfs-complutum fonts-gfs-didot fonts-gfs-neohellenic fonts-gfs-olga
+  fonts-gfs-porson fonts-gfs-solomos fonts-hosny-amiri fonts-inconsolata
+  fonts-junicode fonts-lato fonts-linuxlibertine fonts-lobster
+  fonts-lobstertwo fonts-oflb-asana-math fonts-stix texlive-fonts-extra
+  texlive-fonts-extra-doc texlive-lang-african texlive-lang-all
+  texlive-lang-arabic texlive-lang-cyrillic texlive-lang-czechslovak
+  texlive-lang-english texlive-lang-european texlive-lang-french
+  texlive-lang-german texlive-lang-greek texlive-lang-indic
+  texlive-lang-italian texlive-lang-polish texlive-lang-portuguese
+  texlive-lang-spanish ttf-adf-accanthis ttf-adf-gillius ttf-adf-universalis
+0 upgraded, 45 newly installed, 0 to remove and 150 not upgraded.
+Need to get 544 MB of archives.
+After this operation, 1,099 MB of additional disk space will be used.
+
+
+
+
+sudo apt-get install retext
+Suggested packages:
+  python-markdown-doc python-pil-doc python3-pil-dbg ttf-bitstream-vera
+The following NEW packages will be installed:
+  python3-docutils python3-enchant python3-markdown python3-markups
+  python3-pil python3-pygments python3-pyqt5.qtwebkit python3-roman
+  python3-yaml retext
+
+
+
+复制这几个字体到
+ls ~/.fonts | grep sim
+simfang.ttf
+simhei.ttf
+simkai.ttf
+simli.ttf
+simsunb.ttf
+simsun.ttc
+simyou.ttf
+
+
+fc-cache 
+fc-list | grep sim
+查看系统中文字体
+fc-list :lang=zh-cn
+查看系统字体缓存
+fc-cache -fv
+
+
+
+sudo apt-get install texlive
+
+
+cd /usr/share/texlive/texmf-dist/fonts/truetype
+sudo cp simkai.ttf SIMKAI.TTF
+sudo mktexlsr
+fc-cache -fv
+
+texmaker 选 xelatex
+latex_tikz/test1/test1.tex
+
+
+Installing code2000 package.
+
+    Download the package from its respective link http://www.fonts2u.com/code2000.font
+    Copy code2000.ttf to /usr/share/fonts/
+    fc-cache -fv to refresh font list.
+
+
+
+
+texstudio 也可以选 xelatex 编译
+
+
+
+
+
+
+texlive-full它的各种配置文件啊、环境变量啊，都放在哪里呢？使用tlmgr conf命令即可查看
+tlmgr conf
+
+
+/usr/share/texlive/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
+
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={[SIMKAI.TTF]}]
+  {SimSun}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{[SIMFANG.TTF]}
+
+\setCJKfamilyfont{zhsong}{SimSun}
+\setCJKfamilyfont{zhhei}{SimHei}
+\setCJKfamilyfont{zhkai}{[SIMKAI.TTF]}
+\setCJKfamilyfont{zhfs}{[SIMFANG.TTF]}
+% \setCJKfamilyfont{zhli}{LiSu}
+% \setCJKfamilyfont{zhyou}{YouYuan}
+
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+\newcommand*{\kaishu}{\CJKfamily{zhkai}}  % 楷书
+\newcommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+% \newcommand*{\lishu}{\CJKfamily{zhli}}    % 隶书
+% \newcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆
+
+\endinput
+
+---------------------
+修改为
+
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]
+  {SimSun}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{FangSong}
+
+\setCJKfamilyfont{zhsong}{SimSun}
+\setCJKfamilyfont{zhhei}{SimHei}
+\setCJKfamilyfont{zhkai}{KaiTi}
+\setCJKfamilyfont{zhfs}{FangSong}
+% \setCJKfamilyfont{zhli}{LiSu}
+% \setCJKfamilyfont{zhyou}{YouYuan}
+
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+\newcommand*{\kaishu}{\CJKfamily{zhkai}}  % 楷书
+\newcommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+% \newcommand*{\lishu}{\CJKfamily{zhli}}    % 隶书
+% \newcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆
+
+\endinput
+
+------------------------
+
+
+
+
+
+sudo apt-get install nasm
+
+
+
+
+
+gvedit
+从graphviz-2.40.1编译gvedit，graphviz-2.40.1/cmd/gvedit/.libs/gvedit 复制到/usr/bin/
+
+
+
+
+
+
+
+
+Sat Apr 21 09:40:44 CST 2018
+
+
+sudo apt-get install clang
+Suggested packages:
+  gnustep gnustep-devel clang-3.5-doc llvm-3.5-doc
+The following NEW packages will be installed:
+  clang clang-3.5 libclang-common-3.5-dev libffi-dev llvm-3.5 llvm-3.5-dev
+  llvm-3.5-runtime
+
+
+sudo apt-get install clang clang-3.5-doc llvm-3.5-doc
+
+## sudo aptitude install gnustep gnustep-devel
+
+
+
+
+
+
+安装、更新cad软件
+
+draftSight.deb
+BricsCAD-V17.2.11-1-zh_CN-amd64.deb
+ARES_Commander_2018-2018.1.1.2107-64.deb
+这三个默认就在/opt
+
+qcad-3.20.1-trial-linux-x86_64.run
+这个用管理员权限应该安装在/opt，普通用户权限是安装在~/opt/
 
 
 
