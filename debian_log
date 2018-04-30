@@ -8086,6 +8086,9 @@ sudo dpkg -i atom-beta_1.26.0-beta2_amd64.deb
 打开markdown文件，ctrl+shift+m
 还是这个看起来比较好一点
 
+最佳方法是使用vs code加插件
+
+
 
 
 vscode
@@ -8351,6 +8354,141 @@ qcad-3.20.1-trial-linux-x86_64.run
 
 vs code的sync
 54fcf1cf77dd77f18b9491514dc545346e5a479e
+
+
+
+markdown-preview.vim
+配置文件添加
+Bundle 'iamcco/mathjax-support-for-mkdp'
+Bundle 'iamcco/markdown-preview.vim'
+这里是用的0.9的版本的Bundle插件，和最新的命令稍微不同的
+:BundleInstall
+打开md文件后启用
+:MarkdownPreview
+
+to check if vim supports python:
+vim ‐‐version | grep +python
+:version
+或者这样
+:echo has("python")
+:echo has("python3")
+
+
+
+vundle来管理plugin之外，还可以选vim-plug
+https://github.com/junegunn/vim-plug
+
+
+
+
+
+
+
+Sat Apr 28 19:10:50 CST 2018
+sudo apt-get install qemu
+sudo apt-get install qemu-kvm
+
+sudo apt-get install virt-manager
+Suggested packages:
+  python-gnomekeyring python-guestfs
+The following NEW packages will be installed:
+  gir1.2-gtk-vnc-2.0 gir1.2-libvirt-glib-1.0 gir1.2-spice-client-glib-2.0
+  gir1.2-spice-client-gtk-3.0 python-ipaddr python-libvirt python-urlgrabber
+  virt-manager virt-viewer virtinst
+
+
+virt-manager
+报错不能建立连接（选用ssh新建一个连接可以）
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=765045
+$ virsh --connect qemu:///system --debug 4
+error: failed to connect to the hypervisor
+error: authentication failed: no agent is available to authenticate
+$ virt-manager --debug --no-fork
+看看报错信息
+$ /usr/lib/kde4/libexec/polkit-kde-authentication-agent-1 # 这个我没有安装kde也不需要
+https://wiki.archlinux.org/index.php/Polkit_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+
+添加文件（好像没有用）
+sudo vim /etc/polkit-1/localauthority/50-local.d/org.libvirt.unix.manage.pkla
+===============================
+[Allow group libvirt management permissions]
+Identity=unix-group:libvirt
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+===============================
+
+我这里运行pkexec
+$ pkexec bash
+Authentication is needed to run `/bin/bash' as user andy,,, (andy)
+Authenticating as: ,,, (postgres)
+Password: 
+或者
+$ pkexec --user andy /bin/bash
+Authentication is needed to run `/bin/bash' as the super user
+Authenticating as: ,,, (postgres)
+Password: 
+
+无论是andy，root或者postgres的密码都不能
+==== AUTHENTICATION COMPLETE ===
+都是
+==== AUTHENTICATION FAILED ===
+Error executing command as another user: Not authorized
+
+解决办法
+https://blog.xiaoben.li/p/497
+
+groupadd libvirt # 实际上已经有libvirt组了
+
+usermod -a -G libvirt user_name # 比如添加andy到libvirt组
+
+
+virt-manager就能建立connection了
+
+但是pkexec还是不知道怎么通过authorize，既然virt-manager能用起来了，就不管那么多了。
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1437933
+http://blog.wikichoon.com/2016/01/polkit-password-less-access-for-libvirt.html
+usermod --append --groups libvirt `whoami`
+这样也一样
+
+
+
+
+git clone https://github.com/aric1987/stlink.git
+
+
+
+
+
+
+
+sudo apt-get install libchm-dev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
