@@ -582,7 +582,7 @@ $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 437D05B
 
 
 
-$ sudo apt-get install gcc-arm-none-eabi gcc-avr avr-libc libnewlib-doc avrdude avrdude-doc avr-libc avrprog openocd skyeye
+$ sudo apt-get install gcc-arm-none-eabi gcc-avr avr-libc libnewlib-doc avrdude avrdude-doc avr-libc libnewlib-dev binutils-avr avrprog openocd skyeye
 $ sudo apt-get install gdb-arm-none-eabi gdb-avr gdb gdb-mingw-w64 gdbserver gdb-doc gcc-mingw-w64 gcc-msp430 gcc-multilib gdb-msp430 msp430-libc msp430mcu 
 
 //$ sudo apt-get install gcc-arm-linux-gnueabi lib32bz2-1.0 
@@ -6360,8 +6360,20 @@ $ sudo hdparm -i /dev/sda
 锁屏
 slimlock
 xscreensaver-command --lock
+slock 这个空白正常，输入正确login就能进桌面
 
+在~/.config/rc.xml 合适位置添加如下内容
+    <keybind key="W-l">
+      <action name="Execute">
+        <command>xscreensaver-command --lock</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Lock Screen</name>
+        </startupnotify>
+      </action>
+    </keybind>
 
+然后运行reconfigure openbox，就可以通过快捷键锁屏了
 
 
 opencv
@@ -7660,6 +7672,9 @@ git push -u origin master
 之后提示输入账号和密码，等到更新完成即可。
 git push -u origin [其他分支]
 
+本地局域网可以这样地址像这样
+andy@192.168.4.101:/home/andy/repositories/dm368_kernel.git
+
 2. 删除repo
 https://github.com/yxgi5/my_os_log/settings
 最下面 Danger Zone
@@ -8455,6 +8470,11 @@ usermod --append --groups libvirt `whoami`
 
 
 
+Qemu独占鼠标之后，要用Ctrl-Alt+g解除
+按下 Ctrl-Alt-1 切到 serial
+
+
+
 
 git clone https://github.com/aric1987/stlink.git
 
@@ -8469,6 +8489,8 @@ sudo apt-get install libchm-dev
 
 
 
+sudo apt-get install gitg
+git difftool -d
 
 
 
@@ -8478,16 +8500,46 @@ sudo apt-get install libchm-dev
 
 
 
+~/.gitconfig 一个例子
+
+[user]
+	email = denglitsch@gmail.com
+	name = Andreas Zhang
+[core]
+	editor = xed
+	quotepath = false
+	autocrlf = false
+[diff]
+	tool = meld
+[cola]
+	fontdiff = Ubuntu Mono, 9, -1, 5, 50, 0, 0, 0, 0, 0
+	blameviewer = git gui blame
+[merge]
+	tool = meld
+[gui]
+	fontui = -family \"WenQuanYi Micro Hei\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"WenQuanYi Micro Hei Mono\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	spellingdictionary = none
+	tabsize = 4
+[credential]
+	helper = store
 
 
 
 
+bcompare
+的配置在~/.config/bcompare,其中BCPreferences.xml文件是预置过滤配置存放的文件 
 
 
 
+mintlinx (Linux Mint 18.3 Sylvia)
+增加shutter和parcellite（desktop文件复制放到~/.config/autostar）
+tips：添加到桌面，再切过去
+好像没有自启动效果
 
 
 
+其他剪贴板管理器，像diodon，clipit，glipper，parcellite
 
 
 
