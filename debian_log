@@ -6846,7 +6846,7 @@ sudo apt-get install git-cola
 
 
 
-valido安装后有一个烦人的Xilinx Information Center
+vivado安装后有一个烦人的Xilinx Information Center
 https://wiki.archlinux.org/index.php/Autostarting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#.E5.9B.BE.E5.BD.A2.E7.A8.8B.E5.BA.8F
 https://wiki.archlinux.org/index.php/Desktop_entries#Autostart
 可知在
@@ -7569,11 +7569,16 @@ Tue Feb 13 09:56:10 CST 2018
 
 Sat Mar 10 14:49:55 CST 2018
 
-递归删除某类型文件
+批量递归删除某类型文件
 find  . -name  '*.exe' -type  f -print -exec  rm -rf  {} \;  
 
 其他find . -type  f -name "*.o"  | xargs rm -f 对含空格和特殊符号的文件名路径名似乎没有起作用
 
+*.PcbLib.Zip
+*.PcbDoc.Zip
+*.SchDoc.Zip
+*.SchLib.Zip
+*.PrjPCB.Zip
 
 发现无法清除干净的.fuse_hiddenxxxxxx文件
 删除文件的动作，貌似是执行了的。但是，会马上生成另外一个文件名的文件——也是.fuse_hiddenxxxxxx开头，只是最后一位数字有变化。最后，我这个问题移动硬盘是NTFS文件系统。
@@ -8199,7 +8204,8 @@ After this operation, 1,099 MB of additional disk space will be used.
 
 
 
-
+markdown最好还是用haroopad，下载安装
+下面这个也能用
 sudo apt-get install retext
 Suggested packages:
   python-markdown-doc python-pil-doc python3-pil-dbg ttf-bitstream-vera
@@ -8545,7 +8551,116 @@ tips：添加到桌面，再切过去
 
 
 
+Tue Jul 24 15:56:11 CST 2018
+
+HOME目录下默认路径名称有关的配置文件
+.config/user-dirs.dirs
+/etc/xdg/user-dirs.conf
+/etc/xdg/user-dirs.defaults
+
+$(XDG_CONFIG_HOME)/user-dirs.dirs (XDG_CONFIG_HOME defaults to ~/.config)
+
+默认的中文路径改成英文路径
+export LANG=en_US
+xdg-user-dirs-gtk-update
+不保留原来名字
+
+export LANG=zh_CN.UTF-8
+xdg-user-dirs-gtk-update
+保留原来名字
+
+
+
+
+
+
+
+$ sudo apt-get install kdevelop
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  cpp-4.9-arm-linux-gnueabi libfltk-cairo1.3
+Use 'apt-get autoremove' to remove them.
+The following extra packages will be installed:
+  kdevelop-data kdevplatform8-libs libgrantlee-core0 libprocesscore4abi1
+  libprocessui4a libsublime8
+Suggested packages:
+  kapptemplate kdevelop-l10n ninja-build kdevplatform-l10n konsole
+The following NEW packages will be installed:
+  kdevelop kdevelop-data kdevplatform8-libs libgrantlee-core0
+  libprocesscore4abi1 libprocessui4a libsublime8
+0 upgraded, 7 newly installed, 0 to remove and 669 not upgraded.
+Need to get 7,763 kB of archives.
+
+
+
+
+
+安装haroopad
+最好的markdown编辑器
+
+
+
+
+
+查看库文件符号表
+nm -g --defined-only Appro_2a_lib.a
+objdump -t Appro_2a_lib.a
+nm -g --defined-only libcontrolcan.so
+objdump -t libcontrolcan.so 
+
+
+
+Mon Aug 13 13:36:38 CST 2018
+$ sudo apt-get install wireshark
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  cpp-4.9-arm-linux-gnueabi libfltk-cairo1.3
+Use 'apt-get autoremove' to remove them.
+The following extra packages will be installed:
+  geoip-database-extra libjs-openlayers libnghttp2-5 libsmi2ldbl
+  libwireshark-data libwireshark8 libwiretap6 libwscodecs1 libwsutil7
+  wireshark-common wireshark-qt
+Suggested packages:
+  snmp-mibs-downloader wireshark-doc
+The following NEW packages will be installed:
+  geoip-database-extra libjs-openlayers libnghttp2-5 libsmi2ldbl
+  libwireshark-data libwireshark8 libwiretap6 libwscodecs1 libwsutil7
+  wireshark wireshark-common wireshark-qt
+0 upgraded, 12 newly installed, 0 to remove and 668 not upgraded.
+Need to get 30.9 MB of archives.
+After this operation, 135 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+
+
+
 
 
 date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
