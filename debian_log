@@ -8638,7 +8638,9 @@ Do you want to continue? [Y/n] y
 
 
 
+2018年 08月 15日 星期三 13:55:18 CST
 
+<<<<<<< HEAD
 Mon Aug 20 22:16:59 CST 2018
 处理插u盘不能进入图形界面的问题
 原因是设备号有变化，比如/dev/sda1是/，但是插了个盘让这个玩意变化了，那就不能正确找到要挂载的分区
@@ -8655,6 +8657,13 @@ sudo blkid查看所有分区的UUID
 
 date
 
+=======
+禁用笔记本触摸板
+~/.bashrc 文件，为这两条命令添加别名。
+alias tpOff=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled’ 0”
+alias tpOn=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled’ 1”
+执行source .bashrc，使刚才起的别名生效。
+>>>>>>> a5a70ccba39ac0e18f91d3b63e3f711230d2ac56
 
 
 
@@ -8668,6 +8677,7 @@ date
 
 
 
+date
 
 
 
