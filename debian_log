@@ -8639,6 +8639,20 @@ Do you want to continue? [Y/n] y
 
 
 
+Mon Aug 20 22:16:59 CST 2018
+处理插u盘不能进入图形界面的问题
+原因是设备号有变化，比如/dev/sda1是/，但是插了个盘让这个玩意变化了，那就不能正确找到要挂载的分区
+解决办法，直接用UUID
+sudo blkid查看所有分区的UUID
+用UUID=xxx替代原来在/etc/fstab里面的/dev/sdXX
+问题解决！
+
+
+
+
+
+
+
 date
 
 
