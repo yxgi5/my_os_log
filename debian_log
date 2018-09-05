@@ -6358,6 +6358,8 @@ $ sudo hdparm -i /dev/sda
 
 
 锁屏
+gnome-screensaver-command -l
+
 slimlock
 xscreensaver-command --lock
 slock 这个空白正常，输入正确login就能进桌面
