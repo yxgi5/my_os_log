@@ -8667,6 +8667,236 @@ alias tpOn=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled
 
 
 
+$ sudo pip install --upgrade pip
+$ sudo pip install intelhex-2.1-py2.py3-none-any.whl
+
+
+
+
+1、安装miredo
+sudo apt install miredo
+2、在 /etc/systemd/system新建miredo.service文件
+sudo gedit /etc/systemd/system/miredo.service
+3、将以下内容复制粘贴并保存：
+[Unit]
+Description=Teredo IPv6 tunneling
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+ExecStartPre=/usr/sbin/miredo-checkconf -f /etc/miredo/miredo.conf
+ExecStart=/usr/sbin/miredo -f
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+4、设置服务开机启动
+sudo systemctl enable systemd-networkd-wait-online.service
+sudo systemctl enable miredo.service
+
+已在两台笔记本上验证成功，但我并不明白命令的具体含义，只是将几个命令拼在一起。
+#参考文档：https://bugs.launchpad.net/ubuntu/+source/miredo/+bug/1482069
+http://tieba.baidu.com/p/1937157864
+https://www.v2ex.com/t/186840
+http://www.jinbuguo.com/systemd/systemd-networkd-wait-online.service.html
+
+
+
+
+
+
+## this failed ## 
+pip install sip
+
+pip install pyqt5
+
+sudo python -m pip install --upgrade pip
+
+pip install xxx -i https://mirrors.163.com/pypi/simple --trusted-host mirrors.163.com
+
+
+
+
+
+
+$ sudo apt-get install libssl-dev openssl 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libssl1.0.0 libssl1.0.0:i386
+The following packages will be upgraded:
+  libssl-dev libssl1.0.0 libssl1.0.0:i386 openssl
+
+
+
+$ sudo apt-get install idle-python*
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Note, selecting 'idle-python2.5' for regex 'idle-python*'
+Note, selecting 'idle-python2.6' for regex 'idle-python*'
+Note, selecting 'idle-python2.7' for regex 'idle-python*'
+Note, selecting 'idle-python3.4' for regex 'idle-python*'
+The following NEW packages will be installed:
+  idle-python2.7 idle-python3.4
+
+
+
+$ sudo apt-get install -y python3-pip
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  python3-colorama python3-distlib python3-html5lib python3-requests
+  python3-wheel
+Suggested packages:
+  python3-genshi python3-ndg-httpsclient python3-openssl python3-pyasn1
+The following NEW packages will be installed:
+  python3-colorama python3-distlib python3-html5lib python3-pip
+  python3-requests python3-wheel
+0 upgraded, 6 newly installed, 0 to remove and 389 not upgraded.
+Need to get 557 kB of archives
+
+sudo apt-get install build-essential libssl-dev libffi-dev python-dev
+
+
+
+
+
+
+$ sudo apt-get install -y python3-venv
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  python-chardet-whl python-colorama-whl python-distlib-whl
+  python-html5lib-whl python-pip-whl python-requests-whl python-setuptools-whl
+  python-six-whl python-urllib3-whl python3.4-venv
+The following NEW packages will be installed:
+  python-chardet-whl python-colorama-whl python-distlib-whl
+  python-html5lib-whl python-pip-whl python-requests-whl python-setuptools-whl
+  python-six-whl python-urllib3-whl python3-venv python3.4-venv
+0 upgraded, 11 newly installed, 0 to remove and 389 not upgraded.
+
+
+
+
+$ sudo apt-get install virtualenv
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  python3-virtualenv
+The following NEW packages will be installed:
+  python3-virtualenv virtualenv
+0 upgraded, 2 newly installed, 0 to remove and 389 not upgraded.
+
+
+
+
+
+$ sudo apt-get install software-properties-common
+
+$ sudo add-apt-repository ppa:deadsnakes/ppa
+
+sudo add-apt-repository ppa:jonathonf/python-3.5
+sudo apt-get update
+$ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 8CF63AD3F06FC659
+	
+	
+$ sudo apt-get install screen
+Reading package lists... Done
+Building dependency tree        
+Reading state information... Done
+Suggested packages:
+  iselect screenie byobu
+The following NEW packages will be installed:
+  screen
+
+
+$ sudo apt-get install libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+libsqlite3-dev is already the newest version.
+libssl-dev is already the newest version.
+Suggested packages:
+  db5.3-doc
+The following NEW packages will be installed:
+  libdb5.3-dev libgdbm-dev
+0 upgraded, 2 newly installed, 0 to remove and 440 not upgraded.
+
+
+
+
+python3.5以上源码安装好了
+./configure
+make all -j8
+sudo make install
+
+
+sudo pip3.5 install --upgrade pip
+
+
+
+
+wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz
+tar -Jxvf Python-3.6.4.tar.xz
+cd Python-3.6.4
+##./configure --enable-optimizations
+./configure
+make -j8
+#sudo make altinstall
+sudo make install
+sudo pip3.6 install --upgrade pip
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev
+sudo apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+The following NEW packages will be installed:
+  llvm llvm-runtime
+sudo apt-get install -y libncurses5-dev libncursesw5-dev xz-utils tk-dev
+
+andy@debian-dell ~/Downloads/eric6-18.09
+$ sudo python3.6 install.py
+
+$ sudo pip3 install pyinstaller -i https://mirrors.163.com/pypi/simple
+
+
+
+
+$ sudo apt-get install -y libopenblas-dev liblapack-dev
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+liblapack-dev is already the newest version.
+The following NEW packages will be installed:
+  libopenblas-dev
+0 upgraded, 1 newly installed, 0 to remove and 435 not upgraded.
+$ sudo apt-get install -y libopencv-dev
+
+
+python3.6 -m pip -V
+
+$ sudo pip3 install mxnet -i https://mirrors.163.com/pypi/simple
+$ sudo pip3 install tensorflow -i https://mirrors.163.com/pypi/simple
+$ sudo pip3 install graphviz -i https://mirrors.163.com/pypi/simple
+$ sudo pip3 install mxnet-mkl -i https://mirrors.163.com/pypi/simple
+
+$ git clone https://github.com/mli/gluon-tutorials-zh
+
+
+
+
+aria2c  https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/
+
+http://mirrors.ustc.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+
 
 
 
@@ -8674,13 +8904,6 @@ alias tpOn=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled
 
 
 date
-
-
-
-
-
-
-
 
 
 
