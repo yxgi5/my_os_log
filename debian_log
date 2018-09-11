@@ -8875,6 +8875,7 @@ liblapack-dev is already the newest version.
 The following NEW packages will be installed:
   libopenblas-dev
 0 upgraded, 1 newly installed, 0 to remove and 435 not upgraded.
+
 $ sudo apt-get install -y libopencv-dev
 
 
@@ -8895,6 +8896,17 @@ https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-
 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/
 
 http://mirrors.ustc.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+
+
+
+
+
+
+
+
+
+
 
 
 
