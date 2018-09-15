@@ -8881,6 +8881,7 @@ liblapack-dev is already the newest version.
 The following NEW packages will be installed:
   libopenblas-dev
 0 upgraded, 1 newly installed, 0 to remove and 435 not upgraded.
+
 $ sudo apt-get install -y libopencv-dev
 
 
@@ -9160,6 +9161,17 @@ $ sudo apt-mark hold firefox-esr   ##或者修改/etc/apt/apt.conf.d/里的配�
 $ sudo apt-get upgrade
 
 比如uex和bcompare什么的
+
+
+
+
+
+
+
+
+
+
+
 
 
 
