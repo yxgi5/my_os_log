@@ -9,6 +9,10 @@ $ su
 andy	ALL=(ALL:ALL) ALL
 </log>
 
+
+sources.list
+比如163,aliyun都要用https,更稳定连接
+
 ////////////////////////////////////////////////////////////////////
 // install openbox
 
@@ -4607,6 +4611,7 @@ Updating certificates in /etc/ssl/certs
 export https_proxy="127.0.0.1:8087"
 export http_proxy="127.0.0.1:8087"
 git config --global http.sslVerify false
+##git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
 </log>
 
 1.这是较常用的方法，修改/etc/apt/apt.conf,加入以下内容：
@@ -8837,9 +8842,10 @@ python3.5以上源码安装好了
 ./configure
 make all -j8
 sudo make install
+sudo make altinstall
 
 
-sudo pip3.5 install --upgrade pip
+sudo pip3.5 install --upgrade pip -i https://mirrors.163.com/pypi/simple
 
 
 
@@ -8895,6 +8901,274 @@ https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-
 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/
 
 http://mirrors.ustc.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+
+
+sudo pip3.6 install tensorflow==1.5 -i https://mirrors.163.com/pypi/simple
+sudo pip3.6 install mxnet==1.1 -i https://mirrors.163.com/pypi/simple
+
+下面这一句会删除pip3.5,所以要做个备份
+sudo pip3.6 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
+
+$ sudo apt-get install python3.5 python3.5-dev python3.5-doc
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libmpdec2 libpython3.5 libpython3.5-dev libpython3.5-minimal
+  libpython3.5-stdlib python3.5-minimal
+Suggested packages:
+  python3.5-venv
+The following NEW packages will be installed:
+  libpython3.5 libpython3.5-dev libpython3.5-minimal libpython3.5-stdlib
+  python3.5 python3.5-dev python3.5-doc python3.5-minimal
+The following packages will be upgraded:
+  libmpdec2
+1 upgraded, 8 newly installed
+
+
+
+
+
+## python3 ## 汇总
+python3 -V
+pip3 -V
+sudo easy_install -U pip -i https://mirrors.163.com/pypi/simple
+sudo pip3 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+sudo python3 -m pip install -U pip -i https://mirrors.163.com/pypi/simple
+
+sudo pip3 install QScintilla  -i https://mirrors.163.com/pypi/simple
+sudo pip3 install PyQt5 -i https://mirrors.163.com/pypi/simple
+sudo pip3 install pyqt5_tools -i https://mirrors.163.com/pypi/simple ## for win
+
+sudo pip3 install pyinstaller -i https://mirrors.163.com/pypi/simple
+sudo pip3 install virtualenv -i https://mirrors.163.com/pypi/simple
+sudo pip3 install jupyter_client -i https://mirrors.163.com/pypi/simple
+sudo pip3 install notedown -i https://mirrors.163.com/pypi/simple
+sudo pip3 install matplotlib -i https://mirrors.163.com/pypi/simple
+sudo pip3 install mxnet==11 -i https://mirrors.163.com/pypi/simple
+sudo pip3 install graphviz -i https://mirrors.163.com/pypi/simple
+sudo pip3 install mxnet-mkl -i https://mirrors.163.com/pypi/simple
+sudo pip3 install scipy -i https://mirrors.163.com/pypi/simple
+sudo pip3 install pytest -i https://mirrors.163.com/pypi/simple
+sudo pip3 install tensorflow -i https://mirrors.163.com/pypi/simple
+sudo pip3 install PyHamcrest -i https://mirrors.163.com/pypi/simple
+sudo pip3 install spacy -i https://mirrors.163.com/pypi/simple
+sudo python3 -m spacy download en
+
+
+
+
+
+
+
+
+$ sudo apt-get install kicad-doc-zh-cn 
+$ sudo apt-get install kicad-doc-en
+
+$ sudo apt install cmake doxygen libboost-context-dev libboost-dev libboost-system-dev libboost-test-dev libcairo2-dev libcurl4-openssl-dev libgl1-mesa-dev libglew-dev libglm-dev liboce-foundation-dev liboce-ocaf-dev libssl-dev libwxbase3.0-dev libwxgtk3.0-dev python-dev python-wxgtk3.0-dev swig wx-common
+The following extra packages will be installed:
+  liboce-modeling-dev liboce-ocaf-lite-dev liboce-visualization-dev swig2.0
+Suggested packages:
+  swig-doc swig-examples swig2.0-examples swig2.0-doc
+The following NEW packages will be installed:
+  libglm-dev liboce-foundation-dev liboce-modeling-dev liboce-ocaf-dev
+  liboce-ocaf-lite-dev liboce-visualization-dev python-wxgtk3.0-dev swig
+  swig2.0
+0 upgraded, 9 newly installed
+
+源码安装kicad5
+$ sudo apt-get install swig3.0 ##实际上是源码安装
+$ sudo apt-get remove swig2.0
+是否可以编译安装完之后再补回来？
+
+
+
+
+
+https://www.ipaddress.com/
+http://tool.chinaz.com/dns
+github.com和github.global.ssl.fastly.net的ip
+
+## /etc/hosts ##
+192.30.253.112	github.com
+151.101.185.194	github.global.ssl.fastly.net
+151.101.184.133 avatars0.githubusercontent.com
+151.101.184.133 avatars1.githubusercontent.com
+151.101.184.133 assets-cdn.github.com
+
+$ sudo systemctl restart networking.service
+
+ssh alex@47.92.87.217 -X
+scp -r local_folder remote_username@remote_ip:remote_folder
+scp local_file remote_username@remote_ip:remote_folder
+scp local_file remote_username@remote_ip:remote_file 
+scp root@192.168.120.204:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
+
+scp teamviewer_12.0.93330_i386.deb alex@47.92.87.217:/home/alex/Downloads
+scp alex@47.92.87.217:/home/alex/kicad-symbols-git.tar.bz2 .
+
+
+
+
+## github xxnet加速 ##
+
+export https_proxy="127.0.0.1:8087"
+export http_proxy="127.0.0.1:8087"
+export https_proxy="127.0.0.1:1080"
+export http_proxy="127.0.0.1:1080"
+git config --global http.sslVerify false
+##git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
+或者git clone -c http.sslverify=false https://github.com/KiCad/kicad-packages3D.git
+export https_proxy="127.0.0.1:9150"
+export http_proxy="127.0.0.1:9150"
+
+
+
+
+
+
+
+pcbnew找不到库
+/etc/ld.so.conf.d
+里面有/usr/local/lib
+sudo /sbin/ldconfig
+使得修改生效,ok
+
+~/.config/kicad
+fp-lib-table还是要从安装目录下面去找过来才能看到所有的pcb库
+
+
+
+
+执行locate前先sudo updatedb
+
+
+
+
+## kicad-doc ##
+$ sudo apt-get install dblatex
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Suggested packages:
+  docbook opensp
+The following NEW packages will be installed:
+  dblatex
+0 upgraded, 1 newly installed,
+
+$ sudo apt-get install po4a
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libmime-charset-perl libsgmls-perl libsombok3 libsp1c2
+  libunicode-linebreak-perl sp
+Suggested packages:
+  libencode-hanextra-perl sgmlspl sgmls-doc
+The following NEW packages will be installed:
+  libmime-charset-perl libsgmls-perl libsombok3 libsp1c2
+  libunicode-linebreak-perl po4a sp
+0 upgraded, 7 newly installed
+
+
+$ sudo apt-get install asciidoc
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  docbook-dsssl docbook-utils jadetex libosp5 libostyle1c2 openjade sgmlspl
+  xmlto
+Suggested packages:
+  source-highlight docbook-dsssl-doc sgmls-doc xmltex
+The following NEW packages will be installed:
+  asciidoc docbook-dsssl docbook-utils jadetex libosp5 libostyle1c2 openjade
+  sgmlspl xmlto
+0 upgraded, 9 newly installed
+
+
+
+sudo apt-get install asciidoc cmake dblatex fonts-freefont-ttf \
+fonts-vlgothic gettext git make po4a source-highlight \
+texlive-lang-cyrillic texlive-lang-english texlive-lang-european \
+texlive-lang-french texlive-lang-german texlive-lang-italian \
+texlive-lang-japanese texlive-lang-other texlive-lang-polish \
+texlive-lang-spanish texlive-xetex texlive-lang-chinese
+
+
+
+sudo apt-get install asciidoc cmake dblatex fonts-freefont-ttf \
+fonts-vlgothic gettext git make po4a source-highlight \
+texlive-lang-all texlive-xetex
+
+
+
+andy@debian-dell ~/Downloads/kicad/kicad-doc/build
+$ cmake -DLANGUAGES=en ..
+
+
+doc在/usr/local/share/doc/kicad
+
+
+
+AppStream cache update completed, but some metadata was ignored due to errors
+appstreamcli --version
+sudo appstreamcli refresh --force
+apt list --upgradable
+
+
+
+
+
+
+
+
+$ sudo apt-get remove `dpkg-query -f'${Package}:${Architecture}\n' -W '*:armhf'`
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  cpp-4.9-arm-linux-gnueabihf dpkg-cross libconfig-auto-perl
+  libdebian-dpkgcross-perl
+Use 'apt-get autoremove' to remove them.
+The following packages will be REMOVED:
+  crossbuild-essential-armhf g++-4.9-arm-linux-gnueabihf
+  g++-arm-linux-gnueabihf gcc-4.9-arm-linux-gnueabihf gcc-4.9-base:armhf
+  gcc-arm-linux-gnueabihf libasan1:armhf libatomic1:armhf libc6:armhf
+  libc6-dev:armhf libgcc-4.9-dev:armhf libgcc1:armhf libgomp1:armhf
+  libstdc++-4.9-dev:armhf libstdc++6:armhf libubsan0:armhf
+  linux-libc-dev:armhf
+0 upgraded, 0 newly installed, 17 to remove and 230 not upgraded.
+After this operation, 70.7 MB disk space will be freed.
+
+$ sudo dpkg --remove-architecture armhf
+
+
+
+
+
+
+忽略升级
+$ apt list --upgradable
+$ sudo apt-mark hold firefox-esr   ##或者修改/etc/apt/apt.conf.d/里的配置文件
+$ sudo apt-get upgrade
+
+比如uex和bcompare什么的
+
+
+
+
+
+
+
+
+
 
 
 
