@@ -9166,22 +9166,31 @@ $ sudo apt-get upgrade
 
 
 
+sudo apt-get purge sqlitebrowser libqcustomplot1.2
+https://packages.debian.org/search?suite=jessie&mode=filename&searchon=contents&keywords=linguist
+sudo apt-get install qttools5-dev qttools5-dev-tools libqscintilla2-dev libantlr-dev
+
+sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev
 
 
+sqlite3 test.db
+CREATE TABLE `files` (`files` TEXT);
+.tables
+select * from files
+.import mlocate_n.txt files
+.exit;
+sqlitebrowser test.db
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+gui导入乱码，命令行导入ok， 编译如下，失败
+$ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev
+$ git clone https://github.com/sqlitebrowser/sqlitebrowser
+$ cd sqlitebrowser
+$ mkdir build
+$ cd build
+$ cmake -Dsqlcipher=1 -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON ..
+$ make
+$ sudo make install
 
 
 
