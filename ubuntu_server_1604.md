@@ -518,3 +518,16 @@ Do you want to continue? [Y/n]
 sudo apt-get install gdm
 
 
+
+
+ssh alex@192.168.0.82
+vncserver -kill :1
+vncserver :1 -geometry 1902x1080
+
+
+
+
+
+
+
+
