@@ -759,6 +759,21 @@ https://wiki.archlinux.org/index.php/Xdg-open#Set_the_default_browser
 // 参见default app
 https://wiki.archlinux.org/index.php/Default_applications#MIME_types_and_desktop_entries
 
+
+用ff设置默认浏览器
+~/.config/mimeapps.list发生变化
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/ftp=firefox.desktop
+x-scheme-handler/chrome=firefox.desktop
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+application/x-extension-xhtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
+
+
 删除下列文件夹多余的
 /home/andy/.local/share/mime/application
 update-mime-database ~/.local/share/mime
@@ -2758,7 +2773,11 @@ amuleweb can be started as 'systemctl start amuleweb'.
 
 
 
+亚全局
 
+在 Unix 和 GNU/Linux 中，大多 HTTP 应用程序均支持调用环境变量 http_proxy 和 https_proxy 进行代理。此外该环境变量的大小写其实并没有统一标准，有个别程序就只支持全大写的环境变量。所以为方便起见，直接在 ~/.bash_profile 或 ~/.zshenv 添加以下即可： export http_proxy=http://127.0.0.1:8087/ export https_proxy=$http_proxy export HTTP_PROXY=$http_proxy export HTTPS_PROXY=$HTTP_PROXY
+
+再执行以下命令，导入证书以archlinux为例：
 sudo ln -s /opt/XX-Net/data/gae_proxy/CA.crt  /etc/ca-certificates/trust-source/anchors/GoAgent.crt
 sudo trust extract-compat
 
@@ -2875,7 +2894,8 @@ export XMODIFIERS=@im=fcitx
 
 
 $ yaourt downgrader
-
+降级firefox
+downgrader -h firefox
 
 
 
@@ -2886,6 +2906,7 @@ Traceback (most recent call last):
     from PyQt4 import QtCore, QtGui, QtNetwork
 ImportError: /usr/lib/libharfbuzz.so.0: undefined symbol: FT_Get_Var_Blend_Coordinates
 
+//可以不删除的
 $ sudo pacman -R harfbuzz
 正在检查依赖关系...
 错误：无法准备事务处理 (无法满足依赖关系)
@@ -2914,7 +2935,7 @@ $ nm -D /usr/lib/libharfbuzz.so.0 | grep FT_Get
 $ cat /home/andy/.local/share/xorg/Xorg.0.log | grep FT_Get
 没有错啊
 
-
+不需要
 $ yaout freetype2-git
 
 
@@ -2924,6 +2945,22 @@ $ yaout freetype2-git
 /opt/modelsim/modeltech/lib
 这里有libfreetype.so
 去掉LD_LIBRARY_PATH变量中的/opt/modelsim/modeltech/lib:至少能用qtqr了嘛
+
+
+终极解决办法，/opt/modelsim/modeltech/lib里面的freetype库和软链接都删掉，更新为系统自带的也行
+这样.bashrc还是要改
+
+http://bbs.eeworld.com.cn/thread-455341-1-1.html
+用freetype2-2.5.0.1-1-x86_64.pkg.tar.xz里面的truetype，替换/opt/modelsim/modeltech/lib里面的
+
+
+
+这样由于modelsim里truetype库问题引起的故障排除，vsim终于可以用了，qtqr等也没有影响了
+
+
+
+
+
 明白了，但是多次重启fcitx造成Xorg假死还是无解
 
 通过类似的方法试试能不能治好fcitx的问题呢，即就没有.bashrc呢
@@ -2960,5 +2997,1479 @@ $ sudo pacman -Rdd hardening-wrapper
 
 
 yaourt libbs2b projectm mpc
+
+
+
+
+
+
+20171118日更新后
+确认phpmyadmin不能使用
+处理
+phpmyadmin运行错误
+
+先检查apache，ok的
+
+检查php的test页，ok的
+
+再检查mysql，失效了，不能运行
+根据提示查找到
+https://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+
+
+sudo rm /var/lib/mysql -rf
+重新安装
+sudo pacman -S mysql
+sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo systemctl start mysqld
+
+/usr/bin/mysqladmin -u root password
+
+
+ok
+
+
+
+
+
+
+过期的软件包到这里找
+https://archive.archlinux.org/packages
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+备份arch_root_only_20171119还原之后
+
+首先，发现apache服务还是没有自动启动，设置自启动
+sudo systemctl enable httpd.service
+没有效果？/usr/lib/systemd/system/下确实有啊
+systemctl status httpd
+发现有错误了，因为挂载点权限每次启动都还原掉的，
+换成根目录是/run/media也不行，/run是一个内存文件系统，启动服务的时候还没有这货
+所以，u盘挂载点udev设置不改，就每次手动启动httpd
+
+
+修改挂载点会怎么样呢? ok
+https://wiki.archlinux.org/index.php/Udisks#Mount_to_.2Fmedia_.28udisks2.29
+By default, udisks2 mounts removable drives under the ACL controlled directory /run/media/$USER/. 
+If you wish to mount to /media instead, use this rule:
+
+/etc/udev/rules.d/99-udisks2.rules
+
+# UDISKS_FILESYSTEM_SHARED
+# ==1: mount filesystem to a shared directory (/media/VolumeName)
+# ==0: mount filesystem to a private directory (/run/media/$USER/VolumeName)
+# See udisks(8)
+ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"
+
+
+
+
+
+
+修改web根目录
+sudo gedit /etc/httpd/conf/httpd.conf
+
+DocumentRoot "/media/"
+AddDefaultCharset UTF-8
+DefaultLanguage zh-CN
+<Directory "/media/">
+
+浏览器显示乱码，
+sudo gedit /etc/httpd/conf/httpd.conf
+关闭charset也不行啊
+#AddDefaultCharset UTF-8
+#AddDefaultCharset GB2312
+AddDefaultCharset off
+
+终极解决方式：最后面添加
+IndexOptions Charset=UTF-8
+
+
+#每次启动挂载点权限还原了
+#/run/media权限设置一下，最好是644或755，确保个人使用才能是777
+
+
+
+
+
+
+
+
+
+https://github.com/XX-net/XX-Net/wiki/IPv6-Linux
+$ yaourt  miredo
+测试：http://test-ipv6.com/
+ifconfig
+在结果中应该能看见一个叫 teredo 的虚拟网卡
+重启系统之后，需要重新开启miredo
+sudo miredo
+
+
+
+
+
+
+
+
+
+
+
+
+
+Linux 手动处理用户级别证书
+
+创建文件夹
+
+mkdir -p ~/.pki/nssdb
+
+Create a new certificate database
+certutil -d $HOME/.pki/nssdb -N
+
+手动导入证书到数据库
+
+certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n "GoAgent XX-Net - GoAgent" -i /opt/XX-Net/data/gae_proxy/CA.crt
+certutil -d sql:$HOME/.pki/nssdb -A -t TC -n "goagent" -i /opt/XX-Net/data/gae_proxy/CA.crt
+certutil -d sql:${HOME}/.pki/nssdb -A -t TC -n "goagent" -i /opt/XX-Net/data/gae_proxy/CA.crt
+
+若失败,可尝试更改证书数据库密码,可改为空
+
+modutil -changepw "NSS Certificate DB" -dbdir ~/.pki/nssdb
+modutil -changepw "NSS Certificate DB" -dbdir $HOME/.pki/nssdb
+
+查看证书:??
+
+certutil -L -d sql:~/.pki/nssdb #用～不行，SEC_ERROR_BAD_DATABASE，必须下面这样写
+certutil -L -d sql:${HOME}/.pki/nssdb
+
+ref：
+certutil -L
+The certificate/key database is in an old, unsupported format
+https://stackoverflow.com/questions/27666517/certutil-function-failed-sec-error-legacy-database-the-certificate-key-databa
+The database has migrated over the years from flat files to Berkeley DB to now SQLite in 3.12. Prefix the directory name with sql and enclose in quotes to get around spaces: 
+certutil -L -d sql:${HOME}/.pki/nssdb 
+For reference, here's the Mozilla NSS roadmap.
+http://wiki.mozilla.org/NSS:Roadmap#SQLite-Based_Shareable_Certificate_and_Key_Databases
+
+
+若要删除证书:
+
+certutil -d sql:~/.pki/nssdb -D -n "GoAgent XX-Net - GoAgent"
+实际是
+certutil -d sql:${HOME}/.pki/nssdb -D -n "goagent"
+
+
+
+
+
+
+
+
+
+安装 ise 14.7
+
+$ yaourt fxload
+git clone git://git.zerfleddert.de/usb-driver
+
+$ ./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE
+
+lsusb:
+Bus 001 Device 004: ID 03fd:0008 Xilinx, Inc.
+
+
+-----ise的启动icon-----
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=ISE 14.7
+Comment=ISE 14.7
+Icon=/opt/Xilinx/14.7/ISE_DS/ISE/data/images/pn-ise.png
+Exec=/opt/Xilinx/14.7/ISE_DS/ise
+----------
+
+-----脚本名：/opt/Xilinx/14.7/ISE_DS/ise-----
+#!/bin/bash
+ISE_DS_DIR=/opt/Xilinx/14.7/ISE_DS
+export gmake=/usr/bin/make
+
+cd "$ISE_DS_DIR"
+source "$ISE_DS_DIR"/settings64.sh
+
+export LANG=''  # reset locale to English to fix decimal/comma seperation
+
+"$ISE_DS_DIR"/ISE/bin/lin64/ise
+
+----------
+记得给777权限
+
+
+
+
+
+类似的方法给quartus做一个启动器
+-----Quartusii.desktop-----
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Quartusii 11
+Comment=Quartusii 11
+Icon=/opt/altera/11.0/quartus/adm/quartusii.png
+Exec=/opt/altera/11.0/quartusii
+----------
+-----脚本名：/opt/altera/11.0/quartusii-----
+#!/bin/bash
+export LM_LICENSE_FILE=/opt/modelsim/license.dat:/opt/altera/license.dat
+export LANG=''
+/opt/altera/11.0/quartus/bin/quartus
+----------
+
+
+
+
+
+
+2018年 02月 09日 星期五 20:56:48 CST
+ 
+:: 正在进行全面系统更新...
+:: 替换 gtk3-print-backends 吗 (使用 extra/gtk3 )？ [Y/n] y
+y:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n] 
+:: 替换 spice-glib 吗 (使用 community/spice-gtk )？ [Y/n] y
+:: 替换 spice-gtk3 吗 (使用 community/spice-gtk )？ [Y/n] y
+正在解决依赖关系...
+正在查找软件包冲突...
+错误：无法准备事务处理 (无法满足依赖关系)
+:: ffmpeg0.10：安装 libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-64'
+:: ffmpeg0.10：安装 libx264 (2:152.20171224-1) 将破坏依赖关系 'libx264.so=148-64'
+:: lib32-ffmpeg：安装 lib32-libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-32'
+
+
+[andy@andy ~]$ sudo pacman -R ffmpeg0.10
+正在检查依赖关系...
+
+软件包 (1) ffmpeg0.10-0.10.16-3
+
+全部移去体积：  9.81 MiB
+
+:: 打算删除这些软件包吗？ [Y/n] y
+:: 正在处理软件包的变化...
+(1/1) 正在删除 ffmpeg0.10                          [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/1) Arming ConditionNeedsUpdate...
+[andy@andy ~]$ sudo pacman -R lib32-ffmpeg
+正在检查依赖关系...
+错误：无法准备事务处理 (无法满足依赖关系)
+:: lib32-libvdpau-va-gl：移除 lib32-ffmpeg 将破坏依赖关系 'lib32-ffmpeg'
+
+
+
+[andy@andy ~]$ sudo pacman -R lib32-ffmpeg lib32-libvdpau-va-gl
+正在检查依赖关系...
+
+软件包 (2) lib32-ffmpeg-1:3.1.2-1  lib32-libvdpau-va-gl-0.3.4-1
+
+全部移去体积：  18.36 MiB
+
+:: 打算删除这些软件包吗？ [Y/n] y
+:: 正在处理软件包的变化...
+(1/2) 正在删除 lib32-libvdpau-va-gl                [######################] 100%
+(2/2) 正在删除 lib32-ffmpeg                        [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/1) Arming ConditionNeedsUpdate...
+
+
+
+
+
+
+
+错误：无法升级 archlinuxcn (调用外部下载程序时出错)
+:: 正在进行全面系统更新...
+:: 替换 gtk3-print-backends 吗 (使用 extra/gtk3 )？ [Y/n] y
+:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n] y
+:: 替换 spice-glib 吗 (使用 community/spice-gtk )？ [Y/n] y
+:: 替换 spice-gtk3 吗 (使用 community/spice-gtk )？ [Y/n] y
+正在解决依赖关系...
+正在查找软件包冲突...
+警告：检测到依赖关系环：
+警告：harfbuzz 将在它 freetype2 的依赖关系之前被安装
+
+软件包 (694) adwaita-icon-theme-3.26.1-1  alsa-plugins-1.1.5-1
+             alsa-utils-1.1.5-2  amule-10990-5
+             android-sdk-platform-tools-r27.0.1-1  apr-util-1.6.1-2
+             arch-install-scripts-18-1  archlinux-keyring-20180108-1
+             archlinuxcn-keyring-20180202-1  argon2-20171227-3
+             arm-none-eabi-binutils-2.30-1  arm-none-eabi-gcc-7.3.0-1
+             arm-none-eabi-gdb-8.1-1  asar-0.14.1-1  assimp-4.1.0-1
+             at-3.1.20-4  attica-qt5-5.42.0-1  audacious-plugins-3.9-2
+             avahi-0.7-4  avr-binutils-2.30-1  avr-gcc-7.3.0-1  avr-gdb-8.1-1
+             axel-2.16.1-1  babl-0.1.38-1  baloo-5.42.0-1
+             baloo-widgets-17.12.2-1  bash-4.4.018-1  bind-tools-9.12.0-1
+             binutils-2.29.1-2  blas-3.8.0-1  bluefish-2.2.10-3  bluez-5.48-1
+             bluez-libs-5.48-1  boost-libs-1.66.0-1  brltty-5.5-3
+             btrfs-progs-4.14.1-1  ca-certificates-mozilla-3.35-1
+             cairo-1.15.10-1  calibre-3.16.0-1  cantarell-fonts-1:0.100-1
+             catfish-1.4.4-1  cblas-3.8.0-1  ccache-3.3.5-1  cdrtools-3.02a09-1
+             ceph-12.2.2-5  ceph-libs-12.2.2-5  certbot-0.21.1-1  chmlib-0.40-5
+             chromaprint-1.4.3-1  chromium-64.0.3282.140-2  clang-5.0.1-2
+             cmake-3.10.2-2  colord-1.4.1+6+gf08c25d-1  conky-1.10.7-2
+             coreutils-8.29-1  crypto++-6.0.0-2  cryptsetup-2.0.1-1
+             cuda-9.1.85-1  curl-7.58.0-1  dbus-1.12.2-1  dbus-glib-0.110-1
+             deadbeef-0.7.2-3  deluge-1.3.15+14+gb8e5ebe82-1
+             device-mapper-2.02.177-1  dhclient-4.4.0-1
+             dialog-1:1.3_20171209-1  diffstat-1.61-2  dkms-2.5-1  dmenu-4.7-2
+             dolphin-17.12.2-1  dolphin-plugins-17.12.2-1  doxygen-1.8.14-1
+             dropbox-43.4.49-3  e2fsprogs-1.43.8-1  eclipse-common-4.7.2-1
+             eclipse-cpp-4.7.2-1  efivar-32-1  electron-1.7.12-1
+             enchant-2.2.1-1  ethtool-1:4.15-1  exim-4.90-3  expat-2.2.5-1
+             expect-5.45.3-1  f2fs-tools-1.10.0-1  fcgi-2.4.0-13
+             fcitx-cloudpinyin-0.3.6-2  fcitx-configtool-0.4.10-3
+             fcitx-qt5-1.2.2-1  feh-2.23.1-1  ffmpeg-1:3.4.1-4
+             ffmpeg2.8-2.8.13-5  filesystem-2017.10-2  filezilla-3.30.0-1
+             firefox-58.0.2-1  flashplugin-28.0.0.161-1  fltk-1.3.4.2-2
+             fluidsynth-1.1.9-1  foxitreader-2.4.1.0609-10
+             freerdp-1:2.0.0_rc1-1  freetype2-2.9-2  frei0r-plugins-1.6.1-5
+             freshplayerplugin-0.3.9-1  fribidi-0.19.7-2  fuse-common-3.2.1-1
+             fuse3-3.2.1-1  gavl-1.4.0-3  gawk-4.2.0-3  gcc-7.3.0-1
+             gcc-libs-7.3.0-1  gcc-objc-7.3.0-1  gcc5-5.5.0-2.1  gcc6-6.4.1-5
+             gcc6-libs-6.4.1-5  gdb-8.1-1  gdb-common-8.1-1  gdbm-1.14.1-1
+             gegl-0.3.26-1  gendesk-0.7-1  geoip-database-20180206-1
+             ghostscript-9.22-7  git-2.16.1-1  glib2-2.54.3+2+g94b38beff-1
+             glib2-docs-2.54.3+2+g94b38beff-1  glibc-2.26-11
+             glusterfs-1:3.13.1-1  gmime-2.6.23+4+g91dcee38-2  gmime3-3.2.0-1
+             gmtk-1.0.9-5  gnome-calculator-3.26.0-2
+             gnome-color-manager-3.26.0+16+g3b2109b-1
+             gnome-control-center-3.26.2+14+g5ac6a0da6-1
+             gnome-desktop-1:3.26.2-2  gnome-keyring-1:3.27.2-1
+             gnome-mplayer-1.0.9-5  gnome-online-accounts-3.26.2-1
+             gnome-perl-1.045-13  gnome-themes-standard-3.22.3+16+gc092fc89-1
+             gnome-vfs-nosmb-2.24.4-10  gnome-vfs-perl-1.082-9
+             gnomecanvas-perl-1.002-20  gnupg-2.2.4-2  gnutls-3.5.17-1
+             go-2:1.9.4-1  goocanvas-2.0.4-1  goocanvas1-1.0.0-5
+             google-chrome-64.0.3282.140-1  gperftools-2.6.2-1  gpgme-1.10.0-1
+             graphviz-2.40.1-10  grub-2:2.02-4  gspell-1.7.1-1
+             gst-libav-1.12.4-1  gst-plugins-bad-1.12.4-3
+             gst-plugins-base-1.12.4-1  gst-plugins-base-libs-1.12.4-1
+             gst-plugins-good-1.12.4-2  gst-plugins-ugly-1.12.4-3
+             gstreamer-1.12.4-1  gthumb-3.6.0-1  gtk-doc-1.27-1
+             gtk-sharp-2-2.12.45-1  gtk-sharp-3-2.99.3-1
+             gtk-update-icon-cache-3.22.26+161+g60750b3ffd-1  gtk2-2.24.32-1
+             gtk3-3.22.26+161+g60750b3ffd-1
+             gtk3-print-backends-3.22.26-1 [删除]  gtkimageview-1.6.4-5
+             gtksourceview3-3.24.6-1  guile-2.2.3-1  gulp-4.0.0-1
+             gvfs-1.34.2-1  gvfs-mtp-1.34.2-1  gvfs-nfs-1.34.2-1
+             gvfs-smb-1.34.2-1  gvim-8.0.1476-1  gzip-1.9-1  harfbuzz-1.7.5-1
+             harfbuzz-icu-1.7.5-1  hdf5-1.10.1-2  hidapi-0.8.0rc1-3
+             hspell-1.4-1  htop-2.1.0-1  hwids-20171003-1  iana-etc-20180131-1
+             icu-60.2-1  imagemagick-7.0.7.22-1  iniparser-4.1-1
+             intel-tbb-2018_20171205-1  intel-ucode-20180108-1
+             iproute2-4.15.0-1  iptables-1.6.1-2  iw-4.14-1  jansson-2.10-3
+             jbig2dec-0.14-1  jdk-9.0.4-1  jemalloc-1:5.0.1-4  json-c-0.13-1
+             jsoncpp-1.8.4-2  jwm-2.3.7-1  k3b-1:17.12.2-1
+             kactivities-5.42.0-1  karchive-5.42.0-1  kauth-5.42.0-1
+             kbookmarks-5.42.0-1  kcmutils-5.42.0-1  kcodecs-5.42.0-1
+             kcompletion-5.42.0-1  kconfig-5.42.0-1  kconfigwidgets-5.42.0-1
+             kcoreaddons-5.42.0-1  kcrash-5.42.0-1  kdbusaddons-5.42.0-1
+             kdebase-runtime-17.08.3-2  kdeclarative-5.42.0-1  kded-5.42.0-1
+             kdelibs-4.14.38-3  kdelibs4support-5.42.0-1  kdnssd-5.42.0-1
+             kemoticons-5.42.0-1  kfilemetadata-5.42.0-1  kglobalaccel-5.42.0-1
+             kguiaddons-5.42.0-1  khtml-5.42.0-1  ki18n-5.42.0-1  kicad-4.0.7-4
+             kiconthemes-5.42.0-1  kidletime-5.42.0-1  kinit-5.42.0-1
+             kio-5.42.0-1  kio-extras-17.12.2-1  kitemmodels-5.42.0-1
+             kitemviews-5.42.0-1  kjobwidgets-5.42.0-1  kjs-5.42.0-1
+             knewstuff-5.42.0-1  knotifications-5.42.0-2
+             knotifyconfig-5.42.0-1  kpackage-5.42.0-1  kparts-5.42.0-1
+             kpty-5.42.0-1  krb5-1.16-1  kservice-5.42.0-1
+             ktextwidgets-5.42.0-1  kuiserver-5.12.0-1
+             kunitconversion-5.42.0-1  kwallet-5.42.0-1
+             kwidgetsaddons-5.42.1-1  kwindowsystem-5.42.0-1  kxmlgui-5.42.0-1
+             lapack-3.8.0-1  lcms-1.19-7  lcms2-2.9-1  ldb-1.3.0-1
+             ldns-1.7.0-4  lib32-acl-2.2.52-3  lib32-alsa-lib-1.1.5-1
+             lib32-alsa-plugins-1.1.5-1  lib32-at-spi2-atk-2.26.1-1
+             lib32-at-spi2-core-2.26.1-1  lib32-attr-2.4.47-2
+             lib32-curl-7.58.0-1  lib32-dbus-1.12.2-1
+             lib32-fontconfig-2.12.6+5+g665584a-1  lib32-gcc-libs-7.3.0-1
+             lib32-glibc-2.26-11  lib32-gst-plugins-base-libs-1.12.4-1
+             lib32-gstreamer-1.12.4-1  lib32-harfbuzz-1.7.1-1
+             lib32-harfbuzz-icu-1.7.1-1  lib32-icu-60.1-1  lib32-krb5-1.16-1
+             lib32-libcurl-compat-7.58.0-1  lib32-libcurl-gnutls-7.58.0-1
+             lib32-libdrm-2.4.89-1  lib32-libjpeg-turbo-1.5.3-1
+             lib32-libjpeg6-turbo-1.5.3-1  lib32-libnm-glib-1.10.2-1
+             lib32-libogg-1.3.3-2  lib32-libpciaccess-0.14-1
+             lib32-libpsl-0.19.1-1  lib32-libtasn1-4.13-1  lib32-libvpx-1.7.0-1
+             lib32-libxcursor-1.1.15-1  lib32-libxml2-2.9.4+16+g07418011-2
+             lib32-llvm-libs-5.0.1-1  lib32-mesa-17.3.3-1
+             lib32-ncurses-6.0+20170902-1  lib32-nss-3.34-1
+             lib32-nvidia-utils-390.25-1  lib32-ocl-icd-2.2.12-1
+             lib32-openssl-1.0-1.0.2.n-1  lib32-qt4-4.8.7-14
+             lib32-sqlite-3.21.0-1  lib32-systemd-237.0-1  lib32-tcl-8.6.8-1
+             lib32-tdb-1.3.15-1  libabw-0.1.2-1  libaec-1.0.2-1  libao-1.2.2-2
+             libassuan-2.5.1-1  libatomic_ops-7.6.2-1  libblockdev-2.14-2
+             libbs2b-3.1.0-6  libbsd-0.8.7-1  libbytesize-1.0-2
+             libcdio-2.0.0-1  libcdio-paranoia-10.2+0.94+2-2  libcdr-0.1.4-2
+             libcmis-0.5.1-8  libcups-2.2.6-4  libcurl-compat-7.58.0-1
+             libcurl-gnutls-7.58.0-1  libdrm-2.4.89-1  libe-book-0.1.3-1
+             libepubgen-0.1.0-1  libevdev-1.5.8-1  libfbclient-2.5.7.27050-4
+             libfilezilla-0.11.2-1  libfm-1.2.5-2  libfm-extra-1.2.5-2
+             libfm-gtk2-1.2.5-2  libfreehand-0.1.2-1  libftdi-1.4-1
+             libftdi-compat-0.20-5  libgcrypt-1.8.2-1
+             libgda-5.2.4+39+g3f70d4fce-2  libgdiplus-5.6-1  libgexiv2-0.10.7-1
+             libgphoto2-2.5.16-1  libgpod-0.8.3-5  libgsf-1.14.42-1
+             libgweather-3.26.1-1  libical-3.0.1-1  libice-1.0.9-2
+             libidn2-2.0.4-2  libinput-1.9.4-1  libisoburn-1.4.8-2
+             libixion-0.13.0-1  libjpeg-turbo-1.5.3-1  libjpeg6-turbo-1.5.3-1
+             libkcddb-17.12.2-1  libmagick-7.0.7.22-1  libmagick6-6.9.9.34-1
+             libmariadbclient-10.1.30-1  libmediaart-1.9.4+1+ga704d0b-1
+             libmm-glib-1.6.12-1  libmpc-1.1.0-1  libmspub-0.1.3-1
+             libmwaw-0.3.13-1  libnautilus-extension-3.26.2-3  libnftnl-1.0.9-1
+             libnghttp2-1.29.0-1  libnm-1.10.3dev+38+g78ef57197-1
+             libnm-glib-1.10.3dev+38+g78ef57197-1  libogg-1.3.3-2
+             liborcus-0.13.2-1  libpagemaker-0.0.4-1
+             libplist-2.0.0+11+gec9ba8b-1  libpsl-0.19.1-1  libqxp-0.0.1-1
+             libraqm-0.4.0-1  libreoffice-fresh-6.0.0-1  librsvg-2:2.42.2-1
+             libsasl-2.1.26-12  libseccomp-2.3.2-2  libsodium-1.0.16-1
+             libsoup-2.60.3-1  libspeechd-0.8.8-1  libsrtp-1:2.1.0-1
+             libstaroffice-0.0.5-1  libsystemd-237.0-2  libtasn1-4.13-1
+             libtiff-4.0.9-1  libtirpc-1.0.2-3  libtool-2.4.6+40+g6ca5e224-4
+             libtorrent-rasterbar-1:1.1.6-1  libunicodenames-1.2.2-1
+             libunistring-0.9.8-1  libupnp-1.6.24-2  libutil-linux-2.31.1-1
+             libuv-1.19.1-1  libvisio-0.1.6-2  libvpx-1.7.0-1  libwacom-0.27-1
+             libwbclient-4.7.4-1  libwebp-0.6.1-1  libwps-0.4.8-1
+             libx264-2:152.20171224-1  libx264-all-2:152.20171224-1
+             libxau-1.0.8-3  libxcursor-1.1.15-1  libxdamage-1.1.4-3
+             libxfixes-5.0.3-2  libxfont2-2.0.3-1  libxkbcommon-0.8.0-1
+             libxkbcommon-x11-0.8.0-1  libxklavier-5.4-2
+             libxml2-2.9.7+4+g72182550-2  libxrandr-1.5.1-2  libzip-1.3.2-1
+             libzmf-0.0.2-2  liferea-1.12.1-1  linux-4.15.1-2
+             linux-api-headers-4.14.8-1  linux-firmware-20180119.2a713be-1
+             linux-headers-4.15.1-2  linux-lts-4.14.18-1
+             linux-lts-headers-4.14.18-1  llvm-libs-5.0.1-2  logrotate-3.13.0-1
+             lua52-luajson-1.3.4-1  lvm2-2.02.177-1  lxdm-0.5.3-5
+             lxterminal-0.3.1-1  mailcap-2.1.48+14+g5811758-1  man-db-2.8.0-1
+             man-pages-4.15-1  mariadb-10.1.30-1  mariadb-clients-10.1.30-1
+             masterpdfeditor-4.3.82-1  mcpp-2.7.2-6  menu-cache-1.1.0-1
+             mesa-17.3.3-2  mime-types-9-1 [删除]  mono-5.4.1.7-2
+             mono-addins-1.3.3-1  mpfr-4.0.0-1  mpg123-1.25.8-1
+             mplayer-38017-1  mpv-1:0.27.0-6  mutagen-1.39-1  nano-2.9.3-1
+             nasm-2.13.02-1  nautilus-3.26.2-3  ncdu-1.13-1  netctl-1.15-1
+             nettle-3.4-1  network-manager-applet-1.8.11dev+7+ga52ccb2f-1
+             networkmanager-1.10.3dev+38+g78ef57197-1
+             networkmanager-openconnect-1.2.4-3
+             networkmanager-openvpn-1.8.1dev+10+ge4d8cda-2
+             networkmanager-pptp-1.2.4-3  networkmanager-vpnc-1.2.4-3
+             nfs-utils-2.3.1-1  nfsidmap-2.3.1-1  nilfs-utils-2.2.7-1
+             nm-connection-editor-1.8.11dev+7+ga52ccb2f-1  nodejs-9.5.0-1
+             npm-5.6.0-1  nspr-4.18-1  nss-3.35-1  numactl-2.0.11-2
+             nvidia-utils-390.25-2  ocl-icd-2.2.12-1  opencl-nvidia-390.25-2
+             opencv-3.4.0-2  openssh-7.6p1-2  openssl-1.0-1.0.2.n-1
+             opera-51.0.2830.26-1  optipng-0.7.7-1  orc-0.4.28-1
+             osinfo-db-20170813-1  oxygen-icons-1:5.42.0-1  p7zip-16.02-4
+             pacman-mirrorlist-20180203-1  partimage-0.6.9-12  pciutils-3.5.6-1
+             pcsclite-1.8.23-1  pepper-flash-28.0.0.161-1  perl-5.26.1-2
+             perl-archive-zip-1.60-1  perl-file-copy-recursive-0.40-1
+             perl-gtk2-unique-0.05-21  perl-http-message-6.14-1
+             perl-json-2.97000-1  perl-mouse-2.5.1-1
+             perl-proc-processtable-0.55-1  perl-try-tiny-0.30-1
+             perl-uri-1.73-1  phodav-2.2-2  php-7.2.2-1  php-apache-7.2.2-1
+             php-cgi-7.2.2-1  phpmyadmin-4.7.7-2  pigz-2.4-1  pinentry-1.1.0-1
+             polkit-0.113+34+g29ba7af-1  pptpclient-1.10.0-1  prison-5.42.0-1
+             procps-ng-3.3.12-2  protobuf-3.5.1.1-1  putty-0.70-2
+             pygobject2-devel-2.28.7-1  pygtk-2.24.0-8  pyqt5-common-5.10-2
+             python-3.6.4-2  python-acme-0.21.1-1  python-asn1crypto-0.24.0-1
+             python-cffi-1.11.4-1  python-cryptography-2.1.4-1
+             python-cssselect-1.0.3-1  python-dbus-1.2.6-1
+             python-dbus-common-1.2.6-1  python-html2text-2018.1.9-1
+             python-josepy-1.0.1-2  python-keyring-11.0.0-1
+             python-lxml-4.1.1-1  python-pexpect-4.3.1-1  python-pyasn1-0.4.2-1
+             python-pyopenssl-17.5.0-1  python-pyqt5-5.10-2
+             python-setuptools-1:38.5.1-1  python-sip-4.19.7-1
+             python-werkzeug-0.14.1-1  python2-2.7.14-2  python2-apsw-3.21.0-1
+             python2-asn1crypto-0.24.0-1  python2-attrs-17.4.0-1
+             python2-backports-1.0-1
+             python2-backports.functools_lru_cache-1.5-1  python2-cffi-1.11.4-1
+             python2-cheroot-6.0.0-1  python2-cherrypy-13.1.0-1
+             python2-cryptography-2.1.4-1  python2-cssselect-1.0.3-1
+             python2-dbus-1.2.6-1  python2-gobject2-2.28.7-1
+             python2-html5lib-1.0.1-2  python2-ipaddress-1.0.19-1
+             python2-jaraco-2017.11.25-1  python2-jinja-2.10-1
+             python2-lxml-4.1.1-1  python2-mechanize-1:0.3.6-1
+             python2-more-itertools-3.1.0-1  python2-msgpack-0.5.0-2
+             python2-nautilus-1.2.2-1  python2-pecan-1.2.1-4
+             python2-pillow-5.0.0-1  python2-prettytable-0.7.2-8
+             python2-psutil-5.4.3-1  python2-pyasn1-0.4.2-1
+             python2-pyopenssl-17.5.0-1  python2-pyqt5-5.10-2
+             python2-regex-2018.02.08-1  python2-setuptools-1:38.5.1-1
+             python2-singledispatch-3.4.0.3-2  python2-sip-4.19.7-1
+             python2-webob-1.7.4-1  python2-werkzeug-0.14.1-1  qbs-1.10.0-1
+             qca-qt4-2.1.3-6  qca-qt5-2.1.3-6  qemu-2.11.0-4
+             qemu-arch-extra-2.11.0-4  qemu-block-gluster-2.11.0-4
+             qemu-block-iscsi-2.11.0-4  qemu-block-rbd-2.11.0-4
+             qemu-guest-agent-2.11.0-4  qt4-4.8.7-23  qt5-3d-5.10.0-2
+             qt5-base-5.10.0-4  qt5-canvas3d-5.10.0-1
+             qt5-connectivity-5.10.0-1  qt5-declarative-5.10.0-1
+             qt5-doc-5.10.0-1  qt5-examples-5.10.0-1
+             qt5-graphicaleffects-5.10.0-1  qt5-imageformats-5.10.0-1
+             qt5-location-5.10.0-1  qt5-multimedia-5.10.0-1
+             qt5-quickcontrols-5.10.0-1  qt5-quickcontrols2-5.10.0-1
+             qt5-script-5.10.0-1  qt5-sensors-5.10.0-1  qt5-serialport-5.10.0-1
+             qt5-speech-5.10.0-1  qt5-svg-5.10.0-1  qt5-tools-5.10.0-1
+             qt5-translations-5.10.0-1  qt5-wayland-5.10.0-3
+             qt5-webchannel-5.10.0-1  qt5-webengine-5.10.0-4
+             qt5-webkit-5.212.0alpha2-11  qt5-websockets-5.10.0-1
+             qt5-x11extras-5.10.0-1  qt5-xmlpatterns-5.10.0-1
+             qtcreator-4.5.0-2  raptor-2.0.15-7  rasqal-1:0.9.33-2
+             re2-20180201-1  recode-3.7-1  refind-efi-0.11.2-1
+             reiserfsprogs-3.6.27-1  remmina-1:1.2.0rcgit.26-1  rpcbind-0.2.4-4
+             rsync-3.1.3-1  rtkit-0.11+8+ge0a51fe-1  rubberband-1.8.1-4
+             ruby-2.5.0-4  run-parts-4.8.3-1  s-nail-14.9.6-1  samba-4.7.4-1
+             scons-3.0.1-1  semver-5.5.0-1  sg3_utils-1.42-1  shadow-4.5-4
+             sip-4.19.7-1  slim-1.3.6-7  smbclient-4.7.4-1  smplayer-18.2.0-1
+             snappy-1.1.7-1  solid-5.42.0-1  sonnet-5.42.0-1
+             source-highlight-3.1.8-14  speech-dispatcher-0.8.8-1
+             spice-0.14.0-2  spice-glib-0.34-1 [删除]  spice-gtk-0.34-1
+             spice-gtk3-0.34-2 [删除]  sqlite-3.22.0-1  sqlitebrowser-3.10.1-1
+             steam-1.0.0.54-3  steam-native-runtime-1.0.0.54-5
+             subversion-1.9.7-4  sudo-1.8.22-1  syslinux-6.03-8
+             systemd-237.0-2  systemd-sysvcompat-237.0-2  talloc-2.1.11-1
+             tar-1.30-1  tcl-8.6.8-1  tevent-1:0.9.34-1  thunderbird-52.6.0-2
+             tint2-16.2-1  tk-8.6.8-2  tmux-2.6-2  tor-0.3.2.9-1
+             tracker-2.0.3-1  transmission-cli-2.93-1  transmission-gtk-2.93-1
+             tslib-1.15-1  tzdata-2018c-1  udevil-0.4.4-2  udiskie-1.7.3-1
+             udisks2-2.7.5-1  uget-2.2.0-1  upower-0.99.7-1
+             usb_modeswitch-2.5.2-1  usbutils-009-1  util-linux-2.31.1-1
+             v4l-utils-1.14.1-1  vala-0.38.7-1  valgrind-3.13.0-6
+             vim-runtime-8.0.1476-1  virtualbox-5.2.6-2
+             virtualbox-ext-oracle-5.2.6-3  virtualbox-ext-vnc-5.2.6-2
+             virtualbox-guest-iso-5.2.7-1
+             virtualbox-guest-modules-arch-5.2.6-6
+             virtualbox-guest-utils-5.2.6-2
+             virtualbox-host-modules-arch-5.2.6-6  virtualbox-sdk-5.2.6-2
+             vlc-2.2.8-4  volume_key-0.3.9-5  vte-common-0.50.2+6+g7fe155b9-1
+             vte3-0.50.2+6+g7fe155b9-1  w3m-0.5.3.git20180125-1
+             wayland-protocols-1.12-1  webkit2gtk-2.18.6-1
+             webkitgtk-3:2.4.11-11  webkitgtk2-3:2.4.11-11  wget-1.19.4-1
+             wildmidi-0.4.2-1  wine-3.1-1  winetricks-20171222-1
+             wxgtk-common-3.0.3.1-11  wxgtk2-3.0.3.1-11  wxgtk3-3.0.3.1-11
+             wxpython-3.0.2.0-7  x265-2.6-1
+             xf86-video-intel-1:2.99.917+805+g26f54068-1  xfce4-notifyd-0.4.1-1
+             xfsprogs-4.14.0-1  xine-lib-1.2.9-3  xkeyboard-config-2.23.1-2
+             xorg-server-1.19.6+13+gd0d1a694f-1
+             xorg-server-common-1.19.6+13+gd0d1a694f-1
+             xorg-server-xephyr-1.19.6+13+gd0d1a694f-1
+             xorg-server-xvfb-1.19.6+13+gd0d1a694f-1  xscreensaver-5.38-1
+             xterm-331-1  xulrunner-41.0.2-14  zbar-0.10-12  zstd-1.3.3-1
+
+下载大小:    4427.19 MiB
+全部安装大小：  14469.67 MiB
+净更新大小：   1058.30 MiB
+
+
+
+
+
+
+
+sudo pacman -S libffi
+如果强制删除
+sudo pacman -Rdd libffi
+
+
+
+
+
+
+
+ALA
+https://archive.archlinux.org
+https://wiki.archlinux.org/index.php/Arch_Linux_Archive
+
+
+
+yaourt icecat
+sudo ln -s /usr/lib/libvpx.so.5 /usr/lib/libvpx.so.4
+
+
+
+
+firefox降级遇到的依赖性问题
+
+icu库软链接到最新的不行，去下载需要的icu版本，解压出来lib目录里只复制库，到/usr/lib，再去建立软链接
+libicudata.so.58.2  libicuio.so.58.2    libicutu.so.58.2
+libicui18n.so.58.2  libicutest.so.58.2  libicuuc.so.58.2
+
+用软链接应付一下的
+cd /usr/lib
+sudo ln -s libhunspell-1.6.so.0 libhunspell-1.5.so.0
+sudo ln -s libevent-2.1.so.6 libevent-2.0.so.5
+
+最好还是https://archive.archlinux.org下载对应的库包，提取库文件，再新建软链接
+查询库文件所属的软件包
+pacman -Qo /usr/lib/***
+
+
+
+
+
+2018年 02月 10日 星期六 16:55:55 CST
+恢复root分区为arch_root_only_20171119.tar.xz
+
+删除cuda
+sudo pacman -R cuda crark-cuda
+
+
+树形目录
+yaourt tree
+
+
+
+
+
+
+
+2018年 04月 22日 星期日 14:44:56 CST
+
+
+yaourt vscode
+
+yaourt geany geany-plugins
+
+
+
+
+
+
+shutter 缺模块
+[andy@andy ~]$ shutter
+Can't locate Gnome2.pm in @INC (you may need to install the Gnome2 module) (@INC contains: /usr/lib/perl5/5.26/site_perl /usr/share/perl5/site_perl /usr/lib/perl5/5.26/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5/5.26/core_perl /usr/share/perl5/core_perl) at /usr/bin/shutter line 37.
+BEGIN failed--compilation aborted at /usr/bin/shutter line 37.
+
+[andy@andy ~]$ sudo cpan install Gnome2
+ok
+
+
+
+
+
+
+
+
+
+:: 正在进行全面系统更新...
+:: 替换 apache-ant 吗 (使用 extra/ant )？ [Y/n] y
+:: 替换 attica-qt5 吗 (使用 extra/attica )？ [Y/n] y
+:: 替换 ca-certificates-cacert 吗 (使用 core/ca-certificates )？ [Y/n] y
+:: 替换 compositeproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 damageproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 dmxproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 fixesproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 fontsproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 glproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 gnome-themes-standard 吗 (使用 extra/gnome-themes-extra )？ [Y/n] y
+:: 替换 gtk3-print-backends 吗 (使用 extra/gtk3 )？ [Y/n] y
+:: 替换 inputproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 kbproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 kuiserver 吗 (使用 extra/plasma-workspace )？ [Y/n] y
+:: 替换 libx264 吗 (使用 extra/x264 )？ [Y/n] y
+:: 替换 libx264-all 吗 (使用 extra/x264 )？ [Y/n] y
+:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n] y
+:: 替换 pkg-config 吗 (使用 core/pkgconf )？ [Y/n] y
+:: 替换 printproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 python-crypto 吗 (使用 community/python-pycryptodome )？ [Y/n] y
+:: 替换 python2-crypto 吗 (使用 community/python2-pycryptodome )？ [Y/n] y
+:: 替换 qca-qt5 吗 (使用 extra/qca )？ [Y/n] y
+:: 替换 randrproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 recordproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 renderproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 scrnsaverproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 spice-glib 吗 (使用 community/spice-gtk )？ [Y/n] y
+:: 替换 spice-gtk3 吗 (使用 community/spice-gtk )？ [Y/n] y
+警告：unarchiver：本地 (1:1.10.1-1) 比 community 的版本更新 (1.10.1-4)
+:: 替换 videoproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 wxpython 吗 (使用 community/python2-wxpython3 )？ [Y/n] y
+:: 替换 xextproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xf86dgaproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xf86vidmodeproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xineramaproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+正在解决依赖关系...
+正在查找软件包冲突...
+警告：正在从目标清单中删除 'unrar' ，因为它和 'rar' 冲突
+:: rar 与 unrar 有冲突。删除 unrar 吗？ [y/N] y
+:: attica 与 attica-qt4 有冲突。删除 attica-qt4 吗？ [y/N] y
+:: qca 与 qca-qt4 有冲突。删除 qca-qt4 吗？ [y/N] y
+错误：无法准备事务处理 (无法满足依赖关系)
+:: ffmpeg0.10：安装 libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-64'
+:: ffmpeg0.10：移除 libx264 将破坏依赖关系 'libx264.so=148-64'
+:: ffmpeg2.8：安装 libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-64'
+:: ffmpeg2.8：移除 libx264 将破坏依赖关系 'libx264.so=148-64'
+:: ffmpeg2.8：安装 x265 (2.8-1) 将破坏依赖关系 'libx265.so=130-64'
+:: kdelibs：移除 attica-qt4 将破坏依赖关系 'attica-qt4'
+:: kqrcode：安装 zbar (0.20-3) 将破坏依赖关系 'zbar-qt'
+:: lib32-ffmpeg：安装 lib32-libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-32'
+:: libxfont：移除 fontsproto 将破坏依赖关系 'fontsproto>=2.1.3'
+[andy@andy ~]$ sudo pacman -R ffmpeg0.10
+[sudo] andy 的密码：
+正在检查依赖关系...
+
+软件包 (1) ffmpeg0.10-0.10.16-3
+
+全部移去体积：  9.81 MiB
+
+:: 打算删除这些软件包吗？ [Y/n] y
+:: 正在处理软件包的变化...
+(1/1) 正在删除 ffmpeg0.10                          [######################] 100%
+:: 正在运行事务后钩子函数...
+(1/1) Arming ConditionNeedsUpdate...
+[andy@andy ~]$ sudo pacman -R ffmpeg2.8
+正在检查依赖关系...
+错误：无法准备事务处理 (无法满足依赖关系)
+:: vlc：移除 ffmpeg2.8 将破坏依赖关系 'ffmpeg2.8'
+
+
+sudo pacman -R vlc npapi-vlc
+sudo pacman -R ffmpeg2.8
+
+sudo pacman -R kdelibs kdebase-runtime kdepimlibs4 kqrcode libkcddb4
+sudo pacman -R lib32-ffmpeg lib32-libvdpau-va-gl
+sudo pacman -R libxfont
+
+2018年 10月 06日 星期六 10:09:11 CST
+sudo pacman -Syu
+
+:: 正在进行全面系统更新...
+:: 替换 apache-ant 吗 (使用 extra/ant )？ [Y/n] y
+:: 替换 attica-qt5 吗 (使用 extra/attica )？ [Y/n] y
+:: 替换 ca-certificates-cacert 吗 (使用 core/ca-certificates )？ [Y/n] y
+:: 替换 compositeproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 damageproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 dmxproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 fixesproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 fontsproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 glproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 gnome-themes-standard 吗 (使用 extra/gnome-themes-extra )？ [Y/n] y
+:: 替换 gtk3-print-backends 吗 (使用 extra/gtk3 )？ [Y/n] y
+:: 替换 inputproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 kbproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 kuiserver 吗 (使用 extra/plasma-workspace )？ [Y/n] y
+:: 替换 libx264 吗 (使用 extra/x264 )？ [Y/n] y
+:: 替换 libx264-all 吗 (使用 extra/x264 )？ [Y/n] y
+:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n] y
+:: 替换 pkg-config 吗 (使用 core/pkgconf )？ [Y/n] y
+:: 替换 printproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 python-crypto 吗 (使用 community/python-pycryptodome )？ [Y/n] y
+:: 替换 python2-crypto 吗 (使用 community/python2-pycryptodome )？ [Y/n] y
+:: 替换 qca-qt5 吗 (使用 extra/qca )？ [Y/n] y
+:: 替换 randrproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 recordproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 renderproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 scrnsaverproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 spice-glib 吗 (使用 community/spice-gtk )？ [Y/n] y
+:: 替换 spice-gtk3 吗 (使用 community/spice-gtk )？ [Y/n] y
+警告：unarchiver：本地 (1:1.10.1-1) 比 community 的版本更新 (1.10.1-4)
+:: 替换 videoproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 wxpython 吗 (使用 community/python2-wxpython3 )？ [Y/n] y
+:: 替换 xextproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xf86dgaproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xf86vidmodeproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xineramaproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+:: 替换 xproto 吗 (使用 extra/xorgproto )？ [Y/n] y
+正在解决依赖关系...
+正在查找软件包冲突...
+警告：正在从目标清单中删除 'unrar' ，因为它和 'rar' 冲突
+:: rar 与 unrar 有冲突。删除 unrar 吗？ [y/N] y
+:: attica 与 attica-qt4 有冲突。删除 attica-qt4 吗？ [y/N] y
+:: qca 与 qca-qt4 有冲突。删除 qca-qt4 吗？ [y/N] y
+警告：检测到依赖关系环：
+警告：harfbuzz 将在它 freetype2 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：mesa 将在它 libglvnd 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：nvidia-utils 将在它 libglvnd 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：xorg-server 将在它 libglvnd 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：x264 将在它 ffmpeg 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：python2-incremental 将在它 python2-twisted 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：phonon-qt5-gstreamer 将在它 phonon-qt5 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：lib32-harfbuzz 将在它 lib32-freetype2 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：lib32-keyutils 将在它 lib32-krb5 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：lib32-mesa 将在它 lib32-libglvnd 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：lib32-nvidia-utils 将在它 lib32-libglvnd 的依赖关系之前被安装
+警告：检测到依赖关系环：
+警告：rubygems 将在它 ruby 的依赖关系之前被安装
+
+软件包 (1515) accountsservice-0.6.54-1  acl-2.2.53-1
+              adwaita-icon-theme-3.30.0-1  aircrack-ng-1.3-1
+              alsa-firmware-1.0.29-2  alsa-lib-1.1.6-1  alsa-oss-1.1.6-1
+              alsa-plugins-1.1.6-2  alsa-utils-1.1.6-1  amule-10998-4
+              android-sdk-platform-tools-28.0.1-1  ant-1.10.5-1  aom-1.0.0-1
+              apache-2.4.35-1  apache-ant-1.9.7-1 [删除]  apr-1.6.5-1
+              apr-util-1.6.1-3  arch-install-scripts-19-1
+              archlinux-keyring-20181003-1  archlinuxcn-keyring-20180905-1
+              argon2-20171227-3  aria2-1.34.0-1  arj-3.10.22-12
+              arm-none-eabi-binutils-2.31.1-1  arm-none-eabi-gcc-8.2.0-1
+              arm-none-eabi-gdb-8.2-2  arm-none-eabi-newlib-3.0.0.20180831-1
+              asar-0.14.3-1  assimp-4.1.0-1  at-3.1.23-1  at-spi2-atk-2.30.0-1
+              at-spi2-core-2.30.0-2  atk-2.30.0-1  attica-5.50.0-1
+              attica-qt4-0.4.2-3 [删除]  attica-qt5-5.40.0-1 [删除]
+              attr-2.4.48-1  audacious-3.10-1  audacious-plugins-3.10-1
+              audit-2.8.4-2  automake-1.16.1-1  avahi-0.7+16+g1cc2b8e-2
+              avr-binutils-2.31.1-1  avr-gcc-8.2.0-1  avr-gdb-8.2-2
+              axel-2.16.1-1  babl-0.1.56-1  baloo-5.50.0-1
+              baloo-widgets-18.08.1-1  baobab-3.30.0-1  bash-4.4.023-1
+              bash-completion-2.8-1  bind-tools-9.13.3-1  binutils-2.31.1-3
+              bison-3.0.5-1  blas-3.8.0-2  bluefish-2.2.10-3  bluez-5.50-3
+              bluez-libs-5.50-3  boost-libs-1.68.0-1  breeze-5.13.5-1
+              breeze-icons-5.50.0-1  brltty-5.6-4  broadcom-wl-6.30.223.271-51
+              brotli-1.0.6-1  btrfs-progs-4.17.1-1  bubblewrap-0.3.0-1
+              busybox-1.29.3-1  bzip2-1.0.6-8  c-ares-1.14.0-1
+              ca-certificates-20180821-1
+              ca-certificates-cacert-20140824-4 [删除]
+              ca-certificates-mozilla-3.39-1  ca-certificates-utils-20180821-1
+              cabextract-1.6-3  cairo-1.15.14-1  cairo-perl-1.106-6
+              calibre-3.32.0-1  cantarell-fonts-1:0.111-1  catfish-1.4.6-2
+              cblas-3.8.0-2  ccache-3.4.3-1  cdparanoia-10.2-7
+              cdrtools-3.02a09-1  celt0.5.1-0.5.1.3-4  ceph-13.2.1-2
+              ceph-libs-13.2.1-2  certbot-0.27.1-1  cheese-3.30.0-1
+              chmlib-0.40-5  chromaprint-1.4.3-2  chromium-69.0.3497.100-1
+              cifs-utils-6.8-2  clang-7.0.0-1  clazy-1.4-3  clucene-2.3.3.4-10
+              clutter-gst-3.0.26-1  cmake-3.12.3-1  colord-1.4.3-2
+              compiler-rt-7.0.0-2  compositeproto-0.4.2-3 [删除]
+              confuse-3.2.2-1  conky-1.10.8-2  convertlit-1.8-8
+              coreutils-8.30-1  crypto++-7.0.0-1  cryptsetup-2.0.4-1
+              cscope-15.8.a-4  ctags-5.8-6  curl-7.61.1-3  curlftpfs-0.9.2-7
+              cython-0.28.5-1  damageproto-1.2.1-3 [删除]  db-5.3.28-4
+              dbus-1.12.10-2  dbus-glib-0.110-1  dconf-0.30.0-1
+              dconf-editor-3.30.2-1  ddrescue-1.23-1  deadbeef-0.7.2-4
+              deluge-1.3.15+14+gb8e5ebe82-1
+              desktop-file-utils-0.23+4+g92af410-1  device-mapper-2.02.181-1
+              dhclient-4.4.1-4  dhcpcd-7.0.8-1  dialog-1:1.3_20180621-1
+              diffstat-1.61-3  ding-libs-0.6.1-2  djvulibre-3.5.27-4
+              dkms-2.5-3  dmenu-4.8-1  dmidecode-3.2-1  dmraid-1.0.0.rc16.3-11
+              dmxproto-2.3.1-3 [删除]  docbook-xml-4.5-8  dolphin-18.08.1-2
+              dolphin-plugins-18.08.1-1  dotconf-1.3-5
+              double-conversion-3.1.1-1  doxygen-1.8.14-1  drbl-2.25.10-1
+              dropbox-58.4.92-1  dvd+rw-tools-7.1-8  e2fsprogs-1.44.4-1
+              eaglemode-0.93.2-1  eclipse-common-4.9-1  eclipse-cpp-4.9-1
+              editorconfig-core-c-0.12.2-1  efibootmgr-16-1  efitools-1.8.1-1
+              efivar-35-1  egl-wayland-1.1.0-1
+              eglexternalplatform-1.0+3+g7c8f8e2-1  electron-2.0.9-1
+              elfutils-0.174-1  enca-1.19-2  enchant-2.2.3-1  ethtool-1:4.18-1
+              evince-3.30.1-1  exempi-2.4.5-1  exfat-utils-1.3.0-1  exim-4.91-2
+              expat-2.2.6-1  expect-5.45.4-1  f2fs-tools-1.11.0-2
+              faac-1.29.9.2-1  faad2-2.8.8-1  fakeroot-1.23-1  fbset-2.1-6
+              fcgi-2.4.0-14  fcitx-4.2.9.6-1  fcitx-cloudpinyin-0.3.6-2
+              fcitx-configtool-0.4.10-3  fcitx-gtk2-4.2.9.6-1
+              fcitx-gtk3-4.2.9.6-1  fcitx-qt4-4.2.9.6-1  fcitx-qt5-1.2.3-3
+              fcitx-ui-light-0.1.3-4  feh-2.28-1  ffmpeg-1:4.0.2-3
+              ffmpegthumbnailer-2.2.0-2  fftw-3.3.8-1  file-5.34-1
+              file-roller-3.30.0-1  filesystem-2018.8-1  filezilla-3.37.4-1
+              firefox-62.0.3-1  fixesproto-5.0+9+g4292ec1-1 [删除]
+              flashplugin-31.0.0.108-1  fltk-1.3.4.2-3  fluidsynth-1.1.11-2
+              fontconfig-2:2.13.1+12+g5f5ec56-1  fontforge-20170731-2
+              fontsproto-2.1.3-2 [删除]  fox-1:1.6.57-1
+              foxitreader-2.4.1.0609-10  frameworkintegration-5.50.0-1
+              freeimage-3.17.0-8  freerdp-1:2.0.0_rc3-1  freetype2-2.9.1-1
+              frei0r-plugins-1.6.1-5  freshplayerplugin-0.3.9-2
+              fribidi-1.0.5-1  fuse-common-3.2.6-1  fuse2-2.9.8-1
+              fuse3-3.2.6-1  gamin-0.1.10-9  gavl-1.4.0-3  gawk-4.2.1-1
+              gc-7.6.8-1  gcc-8.2.1+20180831-1  gcc-libs-8.2.1+20180831-1
+              gcc-objc-8.2.1+20180831-1  gcc5-5.5.0-3
+              gconf-3.2.6+11+g07808097-3  gcr-3.28.0-4  gdb-8.2-2
+              gdb-common-8.2-2  gdbm-1.18-1  gdk-pixbuf2-2.38.0-1
+              gedit-3.30.1-1  gegl-0.4.8-1  gendesk-0.7-2  genymotion-2.12.2-1
+              geoclue2-2.4.12-1  geocode-glib-3.26.0-1  geoip-1.6.12-1
+              geoip-database-20180403-1  ghostscript-9.25-3  giblib-1.2.4-7
+              gimp-2.10.6-2  git-2.19.0-1  gl2ps-1.4.0-1  glade-perl-1.007-14
+              glib-networking-2.58.0-1  glib-perl-1.326-2  glib2-2.58.1-1
+              glib2-docs-2.58.1-1  glibc-2.28-4  glibmm-2.56.0-1  glm-0.9.9.2-1
+              glproto-1.4.17-1 [删除]  glu-9.0.0-5  glusterfs-1:4.1.5-1
+              gmime-2.6.23+4+g91dcee38-2  gmime3-3.2.0-3  gmtk-1.0.9-5
+              gnome-autoar-0.2.3-1  gnome-bluetooth-3.28.2-1
+              gnome-calculator-3.30.1-1  gnome-color-manager-3.30.0-1
+              gnome-control-center-3.30.1-1  gnome-desktop-1:3.30.1-1
+              gnome-disk-utility-3.30.1-1  gnome-keyring-1:3.28.2-1
+              gnome-mime-data-2.18.0-8  gnome-mines-3.30.1.1-1
+              gnome-mplayer-1.0.9-6  gnome-online-accounts-3.30.0-1
+              gnome-perl-1.045-15  gnome-screenshot-3.30.0-1
+              gnome-settings-daemon-3.30.1.2-1  gnome-system-monitor-3.30.0-1
+              gnome-themes-extra-3.28-1
+              gnome-themes-standard-3.22.3+13+ga993fdc0-1 [删除]
+              gnome-vfs-nosmb-2.24.4-10  gnome-vfs-perl-1.082-11
+              gnome-video-effects-0.4.3+13+g6867955-1
+              gnomecanvas-perl-1.002-21  gnupg-2.2.10-1  gnustep-base-1.25.1-3
+              gnustep-make-2.7.0-3  gnutls-3.5.19-2  go-2:1.11-1
+              gobject-introspection-1.58.0+2+g1f1dd7f4-2
+              gobject-introspection-runtime-1.58.0+2+g1f1dd7f4-2  gom-0.3.3-2
+              goocanvas-2.0.4-2  goocanvas1-1.0.0-5
+              google-chrome-69.0.3497.100-1  gparted-0.32.0-1  gperftools-2.7-1
+              gpgme-1.11.1-2  gpm-1.20.7.r27.g1fd1941-1  gptfdisk-1.0.4-1
+              graphene-1.8.2-1  graphite-1:1.3.12-1  graphviz-2.40.1-13
+              grilo-0.3.6-1  grilo-plugins-0.3.8-1  grub-2:2.02-7
+              gsettings-desktop-schemas-3.28.1-1  gsfonts-20180524-1
+              gsm-1.0.18-1  gspell-1.8.1-1  gssproxy-0.8.0-1
+              gst-libav-1.14.4-1  gst-plugins-bad-1.14.4-1
+              gst-plugins-base-1.14.4-1  gst-plugins-base-libs-1.14.4-1
+              gst-plugins-good-1.14.4-1  gst-plugins-ugly-1.14.4-1
+              gstreamer-1.14.4-1  gthumb-3.6.2-1  gtk-doc-1.29-1
+              gtk-sharp-2-2.12.45-1
+              gtk-update-icon-cache-3.24.1+8+g220f77d8c1-1  gtk2-2.24.32-1
+              gtk2-perl-1.24992-2  gtk3-3.24.1+8+g220f77d8c1-1
+              gtk3-print-backends-3.22.26-1 [删除]  gtkglext-1.2.0-11
+              gtkimageview-1.6.4-5  gtksourceview3-3.24.9-2  gtkwave-3.3.94-1
+              gts-0.7.6-5  guile-2.2.4-1  gulp-4.0.0-1  gvfs-1.38.1-1
+              gvfs-mtp-1.38.1-1  gvfs-smb-1.38.1-1  gvim-8.1.0374-1  gzip-1.9-1
+              hardinfo-0.5.1-8  harfbuzz-1.9.0-1  harfbuzz-icu-1.9.0-1
+              haveged-1.9.4-3  hddtemp-0.3.beta15.53-1  hdf5-1.10.3-2
+              hidapi-0.8.0rc1-3  hspell-1.4-1  htop-2.2.0-2
+              http-parser-2.8.1-1  hunspell-en_US-2018.04.16-5
+              hwids-20180518-1  hyphen-2.8.8-2  i2c-tools-4.0-2
+              iana-etc-20180221-1  icoutils-0.32.3-1  icu-62.1-1  idnkit-1.0-4
+              ilmbase-2.3.0-1  imagemagick-7.0.8.12-1  imlib2-1.5.1-1
+              iniparser-4.1-1  inputproto-2.3.2-1 [删除]  intel-tbb-2019-1
+              intel-ucode-20180807.a-1  iproute2-4.18.0-1  iptables-1:1.6.2-3
+              iputils-20180629.f6aac8d-2  iso-codes-3.79-1  iw-4.14-1
+              jack-0.125.0-5  jansson-2.11-1  jbig2dec-0.15-1  jdk-11-2
+              jemalloc-1:5.1.0-1  jfsutils-1.1.15-6  js52-52.9.0-1
+              json-c-0.13.1-2  json-glib-1.4.4-1  jsoncpp-1.8.4-2  jwm-2.3.7-1
+              jxrlib-0.2.1-3  k3b-1:18.08.1-1  kactivities-5.50.0-1
+              kactivitymanagerd-5.13.5-1  karchive-5.50.0-1  kauth-5.50.0-1
+              kbookmarks-5.50.0-1  kbproto-1.0.7-1 [删除]  kcmutils-5.50.0-1
+              kcodecs-5.50.0-1  kcompletion-5.50.0-1  kconfig-5.50.0-1
+              kconfigwidgets-5.50.0-1  kcoreaddons-5.50.0-1  kcrash-5.50.0-1
+              kdbusaddons-5.50.0-1  kde-cli-tools-5.13.5-1
+              kdeclarative-5.50.0-1  kdecoration-5.13.5-1  kded-5.50.0-1
+              kdelibs4support-5.50.0-1  kdesu-5.50.0-1  kdnssd-5.50.0-1
+              kemoticons-5.50.0-1  keyutils-1.5.11-1  kfilemetadata-5.50.0-1
+              kglobalaccel-5.50.0-1  kguiaddons-5.50.0-1  kholidays-1:5.50.0-1
+              khtml-5.50.0-1  ki18n-5.50.0-1  kicad-5.0.0-2
+              kiconthemes-5.50.0-1  kidletime-5.50.0-1  kinit-5.50.0-1
+              kio-5.50.0-1  kio-extras-18.08.1-2  kirigami2-5.50.0-1
+              kitemmodels-5.50.0-1  kitemviews-5.50.0-1  kjobwidgets-5.50.0-1
+              kjs-5.50.0-1  kjsembed-5.50.0-1  kmod-25-1  knewstuff-5.50.0-1
+              knotifications-5.50.0-1  knotifyconfig-5.50.0-1
+              kpackage-5.50.0-1  kparts-5.50.0-1  kpty-5.50.0-1  krb5-1.16.1-1
+              krunner-5.50.0-1  kscreenlocker-5.13.5-1  kservice-5.50.0-1
+              ktexteditor-5.50.0-1  ktextwidgets-5.50.0-1
+              kuiserver-5.11.3-1 [删除]  kunitconversion-5.50.0-1
+              kwallet-5.50.0-1  kwayland-5.50.0-1  kwidgetsaddons-5.50.0-1
+              kwin-5.13.5-2  kwindowsystem-5.50.0-1  kwplayer-3.5.2-2.2
+              kxmlgui-5.50.0-1  kyotocabinet-1.2.76-6  l-smash-2.14.5-1
+              ladspa-1.13-7  lame-3.100-2  lapack-3.8.0-2  lbzip2-2.5-4
+              lcms2-2.9-1  ldb-1:1.3.6-1  ldns-1.7.0-4  lensfun-0.3.2-7
+              less-530-1  lftp-4.8.4-2  lib32-acl-2.2.53-1
+              lib32-alsa-lib-1.1.6-1  lib32-alsa-plugins-1.1.6-1
+              lib32-at-spi2-atk-2.30.0-1  lib32-at-spi2-core-2.30.0-1
+              lib32-atk-2.30.0-1  lib32-attr-2.4.48-1  lib32-bzip2-1.0.6-3
+              lib32-cairo-1.15.14-1  lib32-colord-1.4.3-1  lib32-curl-7.61.1-1
+              lib32-db-5.3.28-4  lib32-dbus-1.12.10-1  lib32-dbus-glib-0.110-1
+              lib32-dconf-0.30.0-1  lib32-e2fsprogs-1.44.4-1
+              lib32-expat-2.2.6-1  lib32-fakeroot-1.23-1
+              lib32-fontconfig-2:2.13.1+12+g5f5ec56-1  lib32-freetype2-2.9.1-1
+              lib32-fribidi-1.0.5-1  lib32-gcc-libs-8.2.1+20180831-1
+              lib32-gdk-pixbuf2-2.38.0-1  lib32-glib-networking-2.58.0-1
+              lib32-glib2-2.58.1-1  lib32-glibc-2.28-4  lib32-glu-9.0.0-4
+              lib32-gnutls-3.5.19-2  lib32-gst-plugins-base-libs-1.14.3-1
+              lib32-gstreamer-1.14.3-1  lib32-gtk2-2.24.32-1
+              lib32-gtk3-3.24.1-1  lib32-harfbuzz-1.9.0-1
+              lib32-harfbuzz-icu-1.9.0-1  lib32-icu-62.1-1
+              lib32-imlib2-1.5.1-1  lib32-jansson-2.11-1  lib32-json-c-0.13.1-2
+              lib32-json-glib-1.4.4-1  lib32-keyutils-1.5.11-1
+              lib32-krb5-1.16.1-1  lib32-lcms2-2.9-1
+              lib32-libcanberra-0.30+2+gc0620e4-1  lib32-libcups-2.2.7-1
+              lib32-libcurl-compat-7.61.1-1  lib32-libcurl-gnutls-7.61.1-1
+              lib32-libdatrie-0.2.12-1  lib32-libdrm-2.4.94-1
+              lib32-libelf-0.174-1  lib32-libepoxy-1.5.2-1
+              lib32-libffi-3.2.1-2  lib32-libgcrypt-1.8.3-1
+              lib32-libglvnd-1.1.0-1  lib32-libgpg-error-1.32-1
+              lib32-libgusb-0.3.0-1  lib32-libice-1.0.9-3  lib32-libidn-1.35-1
+              lib32-libidn2-2.0.5-1  lib32-libiec61883-1.2.0-2
+              lib32-libjpeg-turbo-2.0.0-1  lib32-libjpeg6-turbo-1.5.3-1
+              lib32-libldap-2.4.46-1  lib32-libltdl-2.4.6+40+g6ca5e224-4
+              lib32-libnm-glib-1.14.0-1  lib32-libnsl-1.2.0-1
+              lib32-libogg-1.3.3-2  lib32-libpcap-1.9.0-1
+              lib32-libpciaccess-0.14-1  lib32-libpng-1.6.35-1
+              lib32-libpng12-1.2.59-1  lib32-libpsl-0.20.2-1
+              lib32-libpulse-12.2-1  lib32-librsvg-2.44.6-1
+              lib32-libsoup-2.64.1-1  lib32-libtasn1-4.13-1
+              lib32-libthai-0.1.27-1  lib32-libtheora-1.1.1-11
+              lib32-libtiff-4.0.9-1  lib32-libtirpc-1.1.4-1
+              lib32-libunistring-0.9.10-1  lib32-libusb-1.0.22-1
+              lib32-libva-2.3.0-1  lib32-libva-intel-driver-2.2.0-1
+              lib32-libva1-1.8.3-1  lib32-libvdpau-1.1.1-3
+              lib32-libvorbis-1.3.6-1  lib32-libvpx-1.7.0-1
+              lib32-libwebp-1.0.0-1  lib32-libwrap-7.6.24-3
+              lib32-libx11-1.6.6-1  lib32-libxcb-1.13-1
+              lib32-libxcomposite-0.4.4-3  lib32-libxcursor-1.1.15-1
+              lib32-libxdamage-1.1.4-3  lib32-libxdmcp-1.1.2-2
+              lib32-libxext-1.3.3-2  lib32-libxft-2.3.2-2
+              lib32-libxinerama-1.1.4-1  lib32-libxkbcommon-0.8.2-1
+              lib32-libxml2-2.9.8-4  lib32-libxmu-1.1.2-2
+              lib32-libxshmfence-1.3-1  lib32-libxslt-1.1.32+3+g32c88216-1
+              lib32-libxss-1.2.3-1  lib32-libxt-1.1.5-2
+              lib32-libxxf86vm-1.1.4-2  lib32-llvm-libs-7.0.0-1
+              lib32-mesa-18.2.1-2  lib32-mesa-demos-8.4.0-1
+              lib32-mpg123-1.25.10-1  lib32-ncurses-6.1-3  lib32-nettle-3.4-1
+              lib32-nspr-4.20-1  lib32-nss-3.39-1  lib32-nvidia-utils-410.57-1
+              lib32-ocl-icd-2.2.12-1  lib32-openal-1.19.0-2
+              lib32-openssl-1:1.1.1-1  lib32-openssl-1.0-1.0.2.p-1
+              lib32-orc-0.4.28-1  lib32-p11-kit-0.23.14-1  lib32-pam-1.3.1-1
+              lib32-pango-1.42.4-1  lib32-pcre-8.42-1  lib32-polkit-0.114-1
+              lib32-qt4-4.8.7-14  lib32-readline-7.0.005-1  lib32-sdl2-2.0.8-9
+              lib32-sdl2_image-2.0.3-1  lib32-sdl_ttf-2.0.11-4
+              lib32-speexdsp-1.2rc3-2  lib32-sqlite-3.25.2-1
+              lib32-systemd-239.2-1  lib32-tcl-8.6.8-2  lib32-tdb-1.3.16-1
+              lib32-util-linux-2.32.1-1  lib32-v4l-utils-1.14.2-1
+              lib32-wayland-1.16.0-1  lib32-xz-5.2.4-1  libabw-0.1.2-1
+              libaec-1.0.2-1  libaio-0.3.111-1  libao-1.2.2-2
+              libarchive-3.3.3-1  libassuan-2.5.1-1  libatasmart-0.19-4
+              libatomic_ops-7.6.6-1  libblockdev-2.20-1  libbluray-1.0.2-2
+              libbs2b-3.1.0-6  libbsd-0.9.1-1  libbytesize-1.4-1
+              libcacard-2.6.1-1  libcap-ng-0.7.9-1  libcddb-1.3.2-5
+              libcdio-2.0.0-1  libcdio-paranoia-10.2+0.94+2-2  libcdr-0.1.4-4
+              libcmis-0.5.1-10  libcue-2.2.1-1  libcups-2.2.8-3
+              libcurl-compat-7.61.1-1  libcurl-gnutls-7.61.1-1
+              libdaemon-0.14-4  libdatrie-0.2.12-1  libdca-0.0.6-1
+              libde265-1.0.3-1  libdmx-1.1.4-1  libdrm-2.4.94-1
+              libdvbpsi-1:1.3.2-1  libdvdnav-6.0.0-1  libdvdread-6.0.0-1
+              libe-book-0.1.3-3  libebml-1.3.6-1  libedit-20180525_3.1-1
+              libelf-0.174-1  libepoxy-1.5.3-1  libepubgen-0.1.1-1
+              libetonyek-0.1.8-1  libevdev-1.5.9-1  libfbclient-2.5.8.27089-2
+              libfdk-aac-0.1.6-1  libfilezilla-0.14.0-1  libfm-1.3.0.2-1
+              libfm-extra-1.3.0.2-1  libfm-gtk2-1.3.0.2-1  libfontenc-1.1.3-2
+              libfreehand-0.1.2-1  libftdi-1.4-2  libftdi-compat-0.20-5
+              libgcrypt-1.8.3-1  libgda-5.2.4+39+g3f70d4fce-2  libgdiplus-5.6-1
+              libgee-0.20.1-2  libgexiv2-0.10.8-2  libgit2-1:0.27.4-1
+              libglade-2.6.4-6  libglvnd-1.1.0-1  libgme-0.6.2-1
+              libgnome-games-support-1.4.2-1  libgnome-keyring-3.12.0-3
+              libgnomecanvas-2.30.3-4  libgnomekbd-3.26.0+5+g1c1b585-1
+              libgooglepinyin-0.1.2-4  libgpg-error-1.32-1  libgphoto2-2.5.19-1
+              libgpod-0.8.3-5  libgsf-1.14.44-1  libgssglue-0.4-3
+              libgtop-2.38.0+13+gcab8791f-1  libguess-1.2-2  libgusb-0.3.0-1
+              libgweather-3.28.2-1  libheif-1.3.2-1  libibus-1.5.19-1
+              libical-3.0.4-1  libice-1.0.9-2  libid3tag-0.15.1b-9
+              libidn-1.35-1  libidn2-2.0.5-1  libiec61883-1.2.0-5
+              libieee1284-0.2.11-7  libimobiledevice-1.2.0+66+g5a85432-2
+              libinput-1.12.0-2  libiodbc-3.52.12-2  libiptcdata-1.0.4-4
+              libiscsi-1.18.0-1  libisoburn-1.4.8-2  libixion-0.13.0-4
+              libjpeg-turbo-2.0.0-1  libjpeg6-turbo-1.5.3-1  libkate-0.4.1-6
+              libkcddb-18.08.1-1  libksysguard-5.13.5-1  libldap-2.4.46-2
+              liblqr-0.4.2-2  libmad-0.15.1b-8  libmagick-7.0.8.12-1
+              libmariadbclient-10.1.36-1  libmatroska-1.4.9-1
+              libmediaart-1.9.4+1+ga704d0b-1  libmm-glib-1.8.2-1
+              libmng-2.0.3-2  libmp4v2-2.0.0-5  libmpc-1.1.0-1
+              libmpdclient-2.15-1  libmpeg2-0.5.1-6  libmspub-0.1.4-3
+              libmtp-1.1.15-1  libmusicbrainz5-5.1.0-3  libmwaw-0.3.14-1
+              libmypaint-1.3.0-6  libnautilus-extension-3.30.1-1  libndp-1.7-1
+              libnewt-0.52.20-2  libnfs-3.0.0-2  libnftnl-1.1.1-1
+              libnghttp2-1.33.0-1  libnice-0.1.14+70+gfb2f1f7-1
+              libnm-1.14.1dev+13+g0d3234478-1
+              libnm-glib-1.14.1dev+13+g0d3234478-1  libnm-gtk-1.8.18-2
+              libnma-1.8.18-2  libnsl-1.2.0-1  libnumbertext-1.0-1
+              libodfgen-0.1.7-1  libogg-1.3.3-3  libomxil-bellagio-0.9.3-2
+              liborcus-0.13.4-4  libosinfo-1.2.0-1  libpagemaker-0.0.4-1
+              libpcap-1.9.0-1  libpeas-1.22.0-3  libpgm-5.2.122-3
+              libplist-2.0.0+11+gec9ba8b-2  libpng-1.6.35-1  libpng12-1.2.59-1
+              libproxy-0.4.15-8  libpsl-0.20.2-1  libpulse-12.2-2
+              libqalculate-2.6.2-1  libquvi-0.9.4-5
+              libquvi-scripts-0.9.20131130-4  libqxp-0.0.1-3  libraqm-0.5.0-1
+              libraw-0.19.0-1  libreoffice-fresh-6.1.1-3  librevenge-0.0.4-2
+              librsvg-2:2.44.6-1  libsasl-2.1.26-13  libseccomp-2.3.3-1
+              libsecret-0.18.6-1  libsm-1.2.2-3  libsodium-1.0.16-1
+              libsoup-2.64.1-1  libsoxr-0.1.3-1  libspeechd-0.8.8-2
+              libspiro-1:0.5.20150702-2  libsrtp-1:2.2.0-1  libssh-0.8.3-1
+              libstaroffice-0.0.6-1  libstdc++5-3.3.6-6  libstroke-0.5.1-7
+              libsynctex-2018.47465-3  libsystemd-239.2-1  libtar-1.2.20-4
+              libtasn1-4.13-1  libteam-1.27-2  libthai-0.1.28-1
+              libtheora-1.1.1-4  libtiff-4.0.9-2  libtiger-0.3.4-5
+              libtirpc-1.1.4-1  libtool-2.4.6+42+gb88cebd5-2
+              libtorrent-0.13.7-1  libtorrent-rasterbar-1:1.1.9-2
+              libunicodenames-1.2.2-1  libunique-1.1.6-7  libunistring-0.9.10-1
+              libunrar-1:5.6.8-1  libupnp-1.6.25-1  liburcu-0.10.1-1
+              libusb-1.0.22-1  libusb-compat-0.1.5-2  libutempter-1.1.6-3
+              libutf8proc-2.2.0-1  libutil-linux-2.32.1-2  libuv-1.23.1-1
+              libva-2.3.0-1  libva-intel-driver-2.2.0-1  libva1-1.8.3-1
+              libvisio-0.1.6-4  libvisual-0.4.0-7  libvncserver-0.9.11-3
+              libvoikko-4.1.1-2  libvorbis-1.3.6-1  libvpx-1.7.0-1
+              libwacom-0.31-1  libwbclient-4.8.5-1  libwebp-1.0.0-1
+              libwnck-2.31.0-2  libwnck3-3.30.0-1  libwps-0.4.10-1
+              libwrap-7.6.24-4  libx11-1.6.6-1  libx264-2:148.20170521-1 [删除]
+              libx264-all-2:148.20170521-1 [删除]  libxau-1.0.8-3
+              libxaw-1.0.13-2  libxcb-1.13-1  libxcomp-3.5.99.16-1
+              libxcomposite-0.4.4-3  libxcursor-1.1.15-1  libxdamage-1.1.4-3
+              libxdmcp-1.1.2-2  libxext-1.3.3-2  libxfce4util-4.13.2-1
+              libxfixes-5.0.3-2  libxfont2-2.0.3-1  libxft-2.3.2-2
+              libxinerama-1.1.4-1  libxkbcommon-0.8.2-1
+              libxkbcommon-x11-0.8.2-1  libxkbfile-1.0.9-2  libxkbui-1.0.2-6
+              libxklavier-5.4-2  libxml2-2.9.8-5  libxmu-1.1.2-2  libxp-1.0.3-2
+              libxrandr-1.5.1-2  libxshmfence-1.3-1  libxss-1.2.3-1
+              libxt-1.1.5-2  libxxf86dga-1.1.4-2  libxxf86vm-1.1.4-2
+              libyaml-0.2.1-1  libzip-1.5.1-1  libzmf-0.0.2-4  liferea-1.12.5-3
+              linux-4.18.12.arch1-1  linux-api-headers-4.17.11-1
+              linux-firmware-20180825.fea76a0-1  linux-headers-4.18.12.arch1-1
+              linux-lts-4.14.72-1  linux-lts-headers-4.14.72-1  lirc-1:0.10.1-2
+              llvm-libs-7.0.0-1  lm_sensors-3.4.0+5176+dcf23676-1
+              lmdb-0.9.22-1  logrotate-3.14.0-1  lrzip-0.631-2
+              lsb-release-1.4-15  lua-5.3.5-1  lua-expat-1.3.0-4  lua51-5.1.5-7
+              lua52-5.2.4-3  lua52-expat-1.3.0-4  lua52-lpeg-1.0.1-2
+              lua52-luajson-1.3.4-1  lvm2-2.02.181-1  lxdm-0.5.3-6
+              lxterminal-0.3.1-3  lynx-2.8.9-2  lz4-1:1.8.3-1
+              mailcap-2.1.48+14+g5811758-1  man-db-2.8.4-1  man-pages-4.16-2
+              mariadb-10.1.36-1  mariadb-clients-10.1.36-1
+              masterpdfeditor-5.1.42-1  mcpp-2.7.2-6  media-player-info-23-1
+              menu-cache-1.1.0-1  mesa-18.2.1-2  mesa-demos-8.4.0-1
+              metis-5.1.0.p3-1  milou-5.13.5-1  mime-types-9-1 [删除]
+              minicom-2.7.1-2  miniupnpc-2.1-2  minizip-1:1.2.11-3
+              mkinitcpio-busybox-1.29.3-1  mkinitcpio-nfs-utils-0.3-6
+              mldonkey-3.1.6-2  mlocate-0.26.git.20170220-1  mono-5.14.0.177-1
+              mono-addins-1.3.3-2  mozilla-common-1.4-5  mpc-0.30-1
+              mpfr-4.0.1-1  mpg123-1.25.10-1  mplayer-38101-2  mpv-1:0.29.1-2
+              mtd-utils-2.0.1-1  mtdev-1.1.5-2  mutagen-1.41.1-1
+              mypaint-brushes-1.3.0-2  nano-3.1-1  nasm-2.13.03-1
+              nautilus-3.30.1-1  nautilus-sendto-3.8.6+14+ge8a3604-1
+              nautilus-terminal-1.1-2  nbd-3.18-1  ncdu-1.13-1  ncurses-6.1-3
+              ncurses5-compat-libs-6.1-1  ndctl-62-2  neon-0.30.2-3
+              net-snmp-5.7.3-9  net-tools-1.60.20180212git-1  netcdf-4.6.1-2
+              netctl-1.18-1  nettle-3.4-1  network-manager-applet-1.8.18-2
+              networkmanager-1.14.1dev+13+g0d3234478-1
+              networkmanager-openconnect-1.2.4-3
+              networkmanager-openvpn-1.8.6-1  networkmanager-pptp-1.2.6-1
+              networkmanager-vpnc-1.2.6-1  nfs-utils-2.3.3-1  nfsidmap-2.3.3-1
+              ngspice-28-1  nilfs-utils-2.2.7-1  nm-connection-editor-1.8.18-2
+              node-gyp-3.8.0-1  nodejs-10.11.0-1  noto-fonts-20180322-1
+              npm-6.4.1-1  npth-1.6-1  nrg2iso-0.4-10  nspr-4.20-1  nss-3.39-1
+              ntfs-3g-2017.3.23-3  numactl-2.0.12-1  nvidia-utils-410.57-3
+              nxproxy-3.5.99.16-1  oath-toolkit-2.6.2-4  obconf-2.0.4-5
+              ocl-icd-2.2.12-1  openal-1.19.0-2  openbox-3.6.1-4
+              openbox-themes-1.0.2-4  opencascade-7.3.0-3
+              opencl-nvidia-410.57-3  opencv-3.4.3-3  openexr-2.3.0-1
+              openh264-1.8.0-1  openjpeg-1.5.2-2  openjpeg2-2.3.0-3
+              openssh-7.8p1-1  openssl-1.1.1-1  openssl-1.0-1.0.2.p-1
+              openvpn-2.4.6-1  opera-56.0.3051.31-1  optipng-0.7.7-1
+              orbit2-2.14.19-7  orc-0.4.28-1  osinfo-db-20180903-1
+              oxygen-icons-1:5.50.0-1  p11-kit-0.23.14-1  p7zip-16.02-5
+              package-query-1.9-3  pacman-5.1.1-1  pacman-mirrorlist-20180912-1
+              pam-1.3.1-1  pango-1.42.4-1  pango-perl-1.227-9
+              partclone-0.2.89-3  partimage-0.6.9-12  patch-2.7.6-3
+              pbzip2-1.1.13-2  pcb-1:4.1.2-1  pciutils-3.6.1-1  pcmanfm-1.3.0-1
+              pcre-8.42-1  pcre2-10.32-1  pcsclite-1.8.23-3
+              pepper-flash-31.0.0.108-1  perl-5.28.0-1  perl-archive-zip-1.64-1
+              perl-bit-vector-7.4-7  perl-canary-stability-2012-4
+              perl-carp-clan-6.06-4  perl-common-sense-3.74-4
+              perl-data-dump-1.23-4  perl-data-random-0.13-2
+              perl-date-calc-6.4-4  perl-digest-hmac-1.03-6
+              perl-digest-sha1-2.13-11  perl-encode-locale-1.05-4
+              perl-error-0.17026-2  perl-extutils-depends-0.405-4
+              perl-extutils-pkgconfig-1.16-4  perl-file-basedir-0.08-2
+              perl-file-copy-recursive-0.44-2  perl-file-desktopentry-0.22-4
+              perl-file-listing-6.04-5  perl-file-mimeinfo-0.29-1
+              perl-file-slurp-tiny-0.004-4  perl-file-which-1.22-2
+              perl-gd-2.69-1  perl-gnome2-wnck-0.16-17  perl-goo-canvas-0.06-11
+              perl-gtk2-imageview-0.05-12  perl-gtk2-unique-0.05-23
+              perl-html-form-6.03-5  perl-html-parser-3.72-6
+              perl-html-tagset-3.20-7  perl-http-cookies-6.04-3
+              perl-http-daemon-6.01-6  perl-http-date-6.02-5
+              perl-http-message-6.18-2  perl-http-negotiate-6.01-5
+              perl-http-server-simple-0.52-1  perl-image-exiftool-11.11-1
+              perl-io-html-1.001-4  perl-io-socket-ssl-2.056-2
+              perl-ipc-system-simple-1.25-4  perl-json-2.97001-1
+              perl-json-xs-3.03-5  perl-libwww-6.33-2
+              perl-locale-gettext-1.07-6  perl-lwp-mediatypes-6.02-5
+              perl-lwp-protocol-https-6.07-2  perl-mailtools-2.20-2
+              perl-mouse-2.5.6-1  perl-mozilla-ca-20180117-2
+              perl-net-dbus-1.1.0-7  perl-net-dropbox-api-1.9-6
+              perl-net-http-6.18-2  perl-net-oauth-0.28-8
+              perl-net-ssleay-1.85-2  perl-parse-yapp-1.05-9
+              perl-path-class-0.37-4  perl-proc-processtable-0.55-2
+              perl-proc-simple-1.32-4  perl-sort-naturally-1.03-4
+              perl-test-pod-1.52-2  perl-test-warn-0.34-1
+              perl-text-iconv-1.7-15  perl-timedate-2.30-5
+              perl-tree-dag-node-1.31-1  perl-try-tiny-0.30-2
+              perl-types-serialiser-1.0-4  perl-uri-1.74-2
+              perl-www-mechanize-1.88-1  perl-www-robotrules-6.02-5
+              perl-x11-protocol-0.56-9  perl-xml-parser-2.44-7
+              perl-xml-sax-1.00-1  perl-xml-simple-2.25-2  perl-xml-twig-3.52-4
+              perl-yaml-tiny-1.73-2  phodav-2.2-2  phonon-qt5-4.10.1-2
+              phonon-qt5-gstreamer-4.9.0-5  php-7.2.10-1  php-apache-7.2.10-1
+              php-cgi-7.2.10-1  phpmyadmin-4.8.3-1  pigz-2.4-1
+              pinentry-1.1.0-4  pixz-1.0.6-2  pkcs11-helper-1.23-1
+              pkg-config-0.29.2-1 [删除]  pkgconf-1.5.3-1  pkgfile-18-2
+              plasma-framework-5.50.0-1  plasma-integration-5.13.5-1
+              plasma-workspace-5.13.5-2  podofo-0.9.6-2
+              polkit-0.115+3+g8638ec5-1  polkit-qt5-0.112.0+git20180107-2
+              poppler-0.67.0-1  poppler-data-0.4.9-1  poppler-glib-0.67.0-1
+              poppler-qt5-0.67.0-1  pptpclient-1.10.0-1
+              printproto-1.0.5-3 [删除]  prison-5.50.0-1  procps-ng-3.3.15-1
+              progsreiserfs-0.3.0.5-9  protobuf-3.6.1-1  pth-2.0.7-6
+              pulseaudio-12.2-2  pulseaudio-alsa-2-4
+              pulseaudio-bluetooth-12.2-2  putty-0.70-2
+              pygobject-devel-3.30.1-3  pygobject2-devel-2.28.7-2
+              pygtk-2.24.0-8  pyqt5-common-5.11.3-1  python-3.7.0-4
+              python-acme-0.27.1-1  python-anytree-2.4.3-2
+              python-appdirs-1.4.3-2  python-asn1crypto-0.24.0-2
+              python-beaker-1.10.0-2  python-cairo-1.17.0-2
+              python-cffi-1.11.5-2  python-chardet-3.0.4-2
+              python-configargparse-0.13.0-2  python-configobj-5.0.6-4
+              python-crypto-2.6.1-5 [删除]  python-cryptography-2.3.1-1
+              python-cssselect-1.0.3-2  python-dbus-1.2.8-2
+              python-dbus-common-1.2.8-2  python-docopt-0.6.2-5
+              python-entrypoints-0.2.3-3  python-future-0.16.0-3
+              python-gobject-3.30.1-3  python-html2text-2018.1.9-2
+              python-idna-2.7-3  python-jeepney-0.4-1  python-josepy-1.1.0-2
+              python-keyring-15.1.0-1  python-keyutils-0.5-3
+              python-lxml-4.2.5-1  python-mako-1.0.7-2  python-markupsafe-1.0-2
+              python-mock-2.0.0-4  python-packaging-18.0-1
+              python-parsedatetime-2.4-2  python-pbr-4.3.0-1
+              python-pexpect-4.6.0-2  python-ply-3.11-2
+              python-ptyprocess-0.6.0-2  python-pyasn1-0.4.4-1
+              python-pycparser-2.19-1  python-pycryptodome-3.6.6-2
+              python-pygments-2.2.0-2  python-pyinotify-0.9.6-4
+              python-pyopenssl-18.0.0-2  python-pyparsing-2.2.2-1
+              python-pyqt5-5.11.3-1  python-pyrfc3339-1.1-2
+              python-pyserial-3.4-2  python-pytz-2018.5-2
+              python-requests-2.19.1-2  python-requests-toolbelt-0.8.0-3
+              python-secretstorage-3.1.0-1  python-setuptools-1:40.4.3-1
+              python-sip-4.19.13-1  python-sip-pyqt5-4.19.13-1
+              python-six-1.11.0-3  python-unidecode-1.0.22-2
+              python-urllib3-1.23-2  python-werkzeug-0.14.1-3
+              python-xdg-0.26-2  python-yaml-3.13-2
+              python-zope-component-4.4.1-2  python-zope-event-4.3.0-2
+              python-zope-interface-4.5.0-2  python2-2.7.15-2
+              python2-appdirs-1.4.3-2  python2-apsw-3.24.0-2
+              python2-asn1crypto-0.24.0-2  python2-attrs-18.2.0-1
+              python2-automat-0.7.0-2  python2-backports-1.0-1
+              python2-backports.functools_lru_cache-1.5-1
+              python2-backports.unittest_mock-1.2.1-1  python2-bcrypt-3.1.4-2
+              python2-beaker-1.10.0-2  python2-beautifulsoup4-4.6.3-1
+              python2-cairo-1.17.0-2  python2-cffi-1.11.5-2
+              python2-chardet-3.0.4-2  python2-cheroot-6.5.2-1
+              python2-cherrypy-17.4.0-1  python2-click-7.0-1
+              python2-constantly-15.1.0-3  python2-contextlib2-0.5.5-1
+              python2-crypto-2.6.1-5 [删除]  python2-cryptography-2.3.1-1
+              python2-cssselect-1.0.3-2  python2-cssutils-1.0.2-2
+              python2-dateutil-2.7.3-2  python2-dbus-1.2.8-2
+              python2-dnspython-1.15.0-3  python2-dukpy-0.3-3
+              python2-funcsigs-1.0.2-1  python2-gobject-3.30.1-3
+              python2-gobject2-2.28.7-2  python2-html5-parser-0.4.5-3
+              python2-html5lib-1.0.1-3  python2-hyperlink-18.0.0-2
+              python2-idna-2.7-3  python2-incremental-17.5.0-2
+              python2-ipaddress-1.0.22-1  python2-jaraco-2018.09.08-1
+              python2-jinja-2.10-2  python2-logutils-0.3.5-3
+              python2-lxml-4.2.5-1  python2-mako-1.0.7-2
+              python2-markupsafe-1.0-2  python2-mechanize-1:0.3.7-1
+              python2-mock-2.0.0-4  python2-more-itertools-4.3.0-1
+              python2-msgpack-0.5.6-2  python2-nautilus-1.2.2-2
+              python2-netifaces-0.10.7-2  python2-notify-0.1.1-14
+              python2-olefile-0.46-1  python2-packaging-18.0-1
+              python2-pbr-4.3.0-1  python2-pecan-1.3.2-3
+              python2-pillow-5.2.0-3  python2-ply-3.11-2  python2-portend-2.3-2
+              python2-prettytable-0.7.2-9  python2-psutil-5.4.7-1
+              python2-pyasn1-0.4.4-1  python2-pycparser-2.19-1
+              python2-pycryptodome-3.6.6-2  python2-pygments-2.2.0-2
+              python2-pyhamcrest-1.9.0-3  python2-pyopenssl-18.0.0-2
+              python2-pyparsing-2.2.2-1  python2-pyqt5-5.11.3-1
+              python2-pytz-2018.5-2  python2-regex-2018.08.29-1
+              python2-repoze.lru-0.7-2  python2-requests-2.19.1-2
+              python2-routes-2.4.1-2  python2-setuptools-1:40.4.3-1
+              python2-singledispatch-3.4.0.3-3  python2-sip-4.19.13-1
+              python2-sip-pyqt5-4.19.13-1  python2-six-1.11.0-3
+              python2-tempora-1.13-2  python2-twisted-18.7.0-2
+              python2-unrardll-0.1.3-4  python2-urllib3-1.23-2
+              python2-urwid-2.0.1-2  python2-waitress-1.1.0-2
+              python2-webencodings-0.5.1-2  python2-webob-1.8.2-2
+              python2-webtest-2.0.32-1  python2-werkzeug-0.14.1-3
+              python2-wxpython3-3.0.2.0-1  python2-xdg-0.26-2
+              python2-zc.lockfile-1.3.0-1  python2-zope-interface-4.5.0-2
+              qbs-1.12.1-1  qca-2.1.3-1  qca-qt4-2.1.3-4 [删除]
+              qca-qt5-2.1.3-4 [删除]  qemu-3.0.0-2  qemu-arch-extra-3.0.0-2
+              qemu-block-gluster-3.0.0-2  qemu-block-iscsi-3.0.0-2
+              qemu-block-rbd-3.0.0-2  qemu-guest-agent-3.0.0-2
+              qqc2-desktop-style-5.50.0-1  qrencode-4.0.2-1  qt4-4.8.7-25
+              qt5-3d-5.11.2-1  qt5-base-5.11.2-1  qt5-canvas3d-5.11.2-1
+              qt5-connectivity-5.11.2-1  qt5-declarative-5.11.2-1
+              qt5-doc-5.11.2-1  qt5-examples-5.11.2-1
+              qt5-graphicaleffects-5.11.2-1  qt5-imageformats-5.11.2-1
+              qt5-location-5.11.2-1  qt5-multimedia-5.11.2-1
+              qt5-quickcontrols-5.11.2-1  qt5-quickcontrols2-5.11.2-1
+              qt5-script-5.11.2-1  qt5-sensors-5.11.2-1
+              qt5-serialport-5.11.2-1  qt5-speech-5.11.2-1  qt5-svg-5.11.2-1
+              qt5-tools-5.11.2-2  qt5-translations-5.11.2-1
+              qt5-wayland-5.11.2-1  qt5-webchannel-5.11.2-1
+              qt5-webengine-5.11.2-1  qt5-webkit-5.212.0alpha2-20
+              qt5-websockets-5.11.2-1  qt5-x11extras-5.11.2-1
+              qt5-xmlpatterns-5.11.2-1  qtcreator-4.7.1-3  qtwebkit-2.3.4-7
+              randrproto-1.5.0-1 [删除]  raptor-2.0.15-9  rar-5.6.1-2
+              rasqal-1:0.9.33-2  re2-20180901-1  readline-7.0.005-1
+              recode-3.7-1  recordproto-1.14.2-2 [删除]  refind-efi-0.11.3-1
+              reiserfsprogs-3.6.27-1  remmina-1:1.2.31.4-2
+              renderproto-0.11.1-3 [删除]  rhash-1.3.6-1
+              rhythmbox-3.4.2+4+ge123ad533-2  rp-pppoe-3.12-3  rpcbind-1.2.5-1
+              rsync-3.1.3-1  rtkit-0.11+8+ge0a51fe-1  rtorrent-0.9.7-1
+              rubberband-1.8.2-1  ruby-2.5.1-2  rubygems-2.7.7-1
+              run-parts-4.8.6-1  s-nail-14.9.11-1  samba-4.8.5-1  sbc-1.3-2
+              schroedinger-1.0.11-5  scons-3.0.1-1
+              scrnsaverproto-1.2.2-2 [删除]  scrot-0.8.18-1  sdcc-3.7.0-5
+              sdl2-2.0.8-9  sdl2_image-2.0.3-1  sed-4.5-1  semver-5.5.1-1
+              sg3_utils-1.43-1  shadow-4.6-1  shared-mime-info-1.10-1
+              sip-4.19.13-1  slang-2.3.2-1  slim-1.3.6-7  smbclient-4.8.5-1
+              smplayer-18.9.0-1  smplayer-themes-1:18.6.0-1  snappy-1.1.7-1
+              solid-5.50.0-1  sonnet-5.50.0-1  sound-theme-freedesktop-0.8-3
+              soundtouch-2.1.0-1  source-highlight-3.1.8-17  spandsp-0.0.6-2
+              speech-dispatcher-0.8.8-2  speexdsp-1.2rc3-3  spice-0.14.0-2
+              spice-glib-0.34-1 [删除]  spice-gtk-0.35-1
+              spice-gtk3-0.34-2 [删除]  sqlite-3.25.2-1  sqlitebrowser-3.10.1-1
+              squashfs-tools-4.3-5  srt-1.3.1-1  sshfs-3.5.0-1
+              steam-1.0.0.56-1  steam-native-runtime-1.0.0.56-2
+              subversion-1.10.2-2  sudo-1.8.25.p1-1  suitesparse-5.3.0-1
+              sunpinyin-data-1:2.0.3.20140820-2  syntax-highlighting-5.50.0-1
+              sysfsutils-2.1.0-10  syslinux-6.03-11  systemd-239.2-1
+              systemd-sysvcompat-239.2-1  talloc-2.1.14-1  tar-1.30-1
+              tcl-8.6.8-3  tdb-1.3.16-1  teamviewer-13.2.13582-9
+              telepathy-glib-0.24.1-2  tevent-1:0.9.37-1
+              thin-provisioning-tools-0.7.6-1  threadweaver-5.50.0-1
+              thunderbird-60.0-4  tint2-16.6.1-1  tk-8.6.8-3  tmux-2.7-1
+              tor-0.3.4.8-1  totem-3.26.2-1  totem-plparser-3.26.1+2+gb7f36dd-1
+              tracker-2.1.5-2  transmission-cli-2.94-1  transmission-gtk-2.94-1
+              tslib-1.17-1  ttf-arphic-ukai-0.2.20080216.1-6
+              ttf-arphic-uming-0.2.20080216.1-6  ttf-dejavu-2.37-2
+              ttf-hack-3.003-1  twolame-0.3.13-8  tzdata-2018e-2  ucl-1.03-8
+              udevil-0.4.4-3  udiskie-1.7.5-2  udisks2-2.8.1-1  uget-2.2.1-1
+              units-2.17-1  unixodbc-2.3.7-1  unrar-1:5.5.8-1 [删除]
+              upower-0.99.8-2  upx-3.95-1  usb_modeswitch-2.5.2-1
+              usbutils-010-1  util-linux-2.32.1-2  v4l-utils-1.14.2-1
+              vala-0.42.2-1  valgrind-3.13.0+290+2b0aa0a5-1
+              vamp-plugin-sdk-2.7.1-2  vde2-2.3.2-11  vi-1:070224-3
+              vid.stab-1.1-2  videoproto-2.3.3-1 [删除]  vim-runtime-8.1.0374-1
+              virglrenderer-0.7.0-1  virtualbox-5.2.18-1
+              virtualbox-ext-oracle-5.2.18-3  virtualbox-ext-vnc-5.2.18-1
+              virtualbox-guest-iso-5.2.18-1
+              virtualbox-guest-modules-arch-5.2.18-14
+              virtualbox-guest-utils-5.2.18-1
+              virtualbox-host-modules-arch-5.2.18-14  virtualbox-sdk-5.2.18-1
+              visual-studio-code-bin-1.27.2-1  volume_key-0.3.11-2
+              volumeicon-0.5.1-3  vte-common-0.54.1-1  vte3-0.54.1-1
+              vtk-8.1.1-2  vulkan-icd-loader-1.1.82+2958+1f9a54573-1
+              w3m-0.5.3.git20180125-1  wavpack-5.1.0-2  wayland-1.16.0-1
+              wayland-protocols-1.16-1  webkit2gtk-2.22.2-1
+              webkitgtk-3:2.4.11-13  webkitgtk2-3:2.4.11-13
+              webrtc-audio-processing-0.3.1-1  wget-1.19.5-1  wildmidi-0.4.2-1
+              wine-3.17-1  wine-mono-4.7.3-1  winetricks-20180815-1
+              wireless_tools-30.pre9-2  woff2-1.0.2-1  wpa_supplicant-1:2.6-12
+              wps-office-10.1.0.6757-1  wvdial-1.61-7  wxgtk-common-3.0.4-2
+              wxgtk2-3.0.4-2  wxgtk3-3.0.4-2  wxpython-3.0.2.0-3 [删除]
+              x264-2:155.r0a84d986-2  x265-2.8-1  xarchiver-0.5.4.13-1
+              xbitmaps-1.1.2-1  xcb-proto-1.13-2  xcb-util-0.4.0-2
+              xcb-util-cursor-0.1.3-1  xcb-util-image-0.4.0-2
+              xcb-util-keysyms-0.4.0-2  xcb-util-renderutil-0.3.9-2
+              xcb-util-wm-0.4.1-2  xdg-user-dirs-0.17-1  xdg-utils-1.1.3-3
+              xextproto-7.3.0-1 [删除]  xf86-input-evdev-2.10.6-1
+              xf86-input-libinput-0.28.0-1  xf86-input-mouse-1.9.3-1
+              xf86-input-synaptics-1.9.1-1  xf86-video-ati-1:18.1.0-1
+              xf86-video-dummy-0.3.8-3  xf86-video-fbdev-0.5.0-1
+              xf86-video-intel-1:2.99.917+847+g25c9a2fc-1
+              xf86-video-nouveau-1.0.15-3  xf86-video-openchrome-0.6.0-3
+              xf86-video-vesa-2.4.0-2  xf86-video-voodoo-1.2.5-10
+              xf86dgaproto-2.1-3 [删除]  xf86vidmodeproto-2.3.1-3 [删除]
+              xfce4-notifyd-0.4.2-1  xfconf-4.12.1-5  xfsprogs-4.17.0-1
+              xine-lib-1.2.9-7  xineramaproto-1.2.1-3 [删除]
+              xkeyboard-config-2.24-1  xmlsec-1.2.26-1  xmltoman-0.4-3
+              xorg-appres-1.0.5-1  xorg-font-util-1.3.1-2
+              xorg-font-utils-7.6-5  xorg-fonts-alias-1.0.3-2
+              xorg-fonts-encodings-1.0.4-5  xorg-iceauth-1.0.8-1
+              xorg-luit-1.1.1-3  xorg-mkfontdir-1.0.7-9
+              xorg-mkfontscale-1.1.3-1  xorg-server-1.20.1-1
+              xorg-server-common-1.20.1-1  xorg-server-xephyr-1.20.1-1
+              xorg-server-xvfb-1.20.1-1  xorg-setxkbmap-1.3.1-2
+              xorg-xbacklight-1.2.2-1  xorg-xcmsdb-1.0.5-2
+              xorg-xdpyinfo-1.3.2-2  xorg-xdriinfo-1.0.6-1  xorg-xev-1.2.2-2
+              xorg-xeyes-1.1.2-1  xorg-xgamma-1.0.6-2  xorg-xhost-1.0.7-2
+              xorg-xinit-1.4.0-3  xorg-xinput-1.6.2-2  xorg-xkbcomp-1.4.2-1
+              xorg-xkill-1.0.5-1  xorg-xlsatoms-1.1.2-2
+              xorg-xlsclients-1.1.4-1  xorg-xmessage-1.0.5-1
+              xorg-xmodmap-1.0.9-2  xorg-xprop-1.2.3-1  xorg-xrdb-1.1.1-1
+              xorg-xrefresh-1.0.6-1  xorg-xset-1.2.4-1  xorg-xsetroot-1.1.2-1
+              xorg-xvinfo-1.1.3-2  xorg-xwininfo-1.1.4-1  xorgproto-2018.4-1
+              xproto-7.0.31-1 [删除]  xscreensaver-5.40-1  xterm-337-1
+              xvidcore-1.3.5-1  yajl-2.1.0-2  zbar-0.20-3  zenity-3.30.0-1
+              zeromq-4.2.5-1  zip-3.0-8  zita-alsa-pcmi-0.3.2-1
+              zita-resampler-1.6.2-1  zlib-1:1.2.11-3  zstd-1.3.5-1
+              zvbi-0.2.35-3
+
+下载大小:    3973.75 MiB
+全部安装大小：  15207.09 MiB
+净更新大小：   2074.88 MiB
+
+
+
+错误：无法提交处理 (有冲突的文件)
+android-sdk-platform-tools: 文件系统中已存在 /opt/android-sdk/platform-tools/e2fsdroid 
+
+sudo pacman -S android-sdk-platform-tools --force
+sudo pacman -S google-chrome --force
+
+
+
+icecat替代老版本的ff(比如54版本)
+yaourt icecat
+依赖icu61,解压lib里的有关库文件到/usr/lib，ok
+或者源码编译。。。
+
+
+
+
+yaourt meld
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

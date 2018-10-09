@@ -518,11 +518,72 @@ Do you want to continue? [Y/n]
 sudo apt-get install gdm
 
 
-
-
 ssh alex@192.168.0.82
 vncserver -kill :1
 vncserver :1 -geometry 1902x1080
+
+
+XX-Net version:3.12.10
+Installing pyOpenSSL for your system... Please type in your password if requested
+[sudo] password for alex: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  python-cffi-backend python-cryptography python-enum34 python-idna
+  python-ipaddress python-ply python-pyasn1
+Suggested packages:
+  python-cryptography-doc python-cryptography-vectors python-enum34-doc
+  python-openssl-doc python-openssl-dbg python-ply-doc
+The following NEW packages will be installed:
+  python-cffi-backend python-cryptography python-enum34 python-idna
+  python-ipaddress python-openssl python-ply python-pyasn1 python-pycparser
+0 upgraded, 9 newly installed, 0 to remove and 61 not upgraded.
+Need to get 579 kB of archives.
+After this operation, 3,815 kB of additional disk space will be used.
+
+
+
+
+$ sudo apt-get install torbrowser-launcher 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  python-attr python-lzma python-pam python-parsley python-psutil
+  python-pyasn1-modules python-serial python-service-identity python-twisted
+  python-twisted-bin python-twisted-core python-txsocksx python-zope.interface
+  tor tor-geoipdb torsocks wmctrl
+Suggested packages:
+  python-pam-dbg python-psutil-doc python-wxgtk3.0 | python-wxgtk
+  python-twisted-bin-dbg python-tk python-glade2 python-qt3 python-wxgtk3.0
+  mixmaster socat tor-arm apparmor-utils obfsproxy obfs4proxy python-pygame
+The following NEW packages will be installed:
+  python-attr python-lzma python-pam python-parsley python-psutil
+  python-pyasn1-modules python-serial python-service-identity python-twisted
+  python-twisted-bin python-twisted-core python-txsocksx python-zope.interface
+  tor tor-geoipdb torbrowser-launcher torsocks wmctrl
+0 upgraded, 18 newly installed, 0 to remove and 61 not upgraded.
+
+
+
+
+
+vncserver -geometry 1366x768 :1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
