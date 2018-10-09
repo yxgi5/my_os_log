@@ -8375,9 +8375,13 @@ qcad-3.20.1-trial-linux-x86_64.run
 这个用管理员权限应该安装在/opt，普通用户权限是安装在~/opt/
 
 
-
-
-
+cd /usr/local/bin
+sudo gedit draftsight
+------------------------------------
+#!/bin/bash
+/opt/dassault-systemes/DraftSight/Linux/DraftSight
+------------------------------------
+sudo chmod +x draftsight
 
 
 vs code的sync
@@ -9194,6 +9198,17 @@ $ cd build
 $ cmake -Dsqlcipher=1 -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON ..
 $ make
 $ sudo make install
+
+
+
+
+
+
+
+
+
+
+
 
 
 
