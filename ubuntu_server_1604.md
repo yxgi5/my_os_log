@@ -570,18 +570,35 @@ The following NEW packages will be installed:
 
 
 vncserver -geometry 1366x768 :1
+vncserver -geometry 1920x1080 :1
+
+
+
+添加用户
+sudo unity-control-center
+
+sudo adduser xxx
+修改group和passwd
+
+sudo smbpasswd -a xxx
+
+smb://192.168.0.82/
 
 
 
 
 
-
-
-
-
-
-
-
+ sudo apt-get install cifs-utils 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  keyutils
+Suggested packages:
+  smbclient winbind
+The following NEW packages will be installed:
+  cifs-utils keyutils
+0 upgraded, 2 newly installed
 
 
 
