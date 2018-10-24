@@ -9180,6 +9180,12 @@ sudo apt-get install qttools5-dev qttools5-dev-tools libqscintilla2-dev libantlr
 sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev
 
 
+
+
+$ sudo updatedb -U /media/andy/KINGIDISK/ -o /home/andy/Downloads/offen_used/locate/mlocate_n.db
+$ sudo chmod 777 mlocate_n.db
+
+
 sqlite3 test.db
 CREATE TABLE `files` (`files` TEXT);
 .tables
@@ -9198,6 +9204,32 @@ $ cd build
 $ cmake -Dsqlcipher=1 -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON ..
 $ make
 $ sudo make install
+
+
+
+操作速记
+mlocate -d mlocate_n.db / > mlocate_n.txt
+sort mlocate_n.txt > mlocate_n_ascii.txt
+find -name 'mlocate_n_ascii.txt' | xargs perl -pi -e 's|^/media/andy||g'
+sqlite3 mlocate_n1.db
+drop table files;
+CREATE TABLE `files` (`files` TEXT);
+.tables
+select * from files;
+.import mlocate_n_ascii.txt files
+.exit
+sqlitebrowser mlocate_n1.db
+
+
+
+
+
+
+
+watch -n 1 "cat /proc/cpuinfo"
+watch -n 1 "ps aux"
+
+
 
 
 
