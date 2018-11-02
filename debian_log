@@ -4699,6 +4699,7 @@ chrome访问很多https网站弹出证书警示，需要将local/CA.crt证书导
 解决办法：
 sudo apt-get install libnss3-tools
 假设goagent在用户的家目录：certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i '~/goagent/local/CA.crt'
+certutil -L -d sql:${HOME}/.pki/nssdb
 重启chrome浏览器，这下ok了。
     
 $ sudo apt-get install libnss3-tools libnss3:i386
@@ -7723,6 +7724,18 @@ git config --global commit.gpgsign true
 
 邮件要加到github的settings里，并且在邮箱里去确认才会verified
 
+ cat /home/andy/.gitconfig
+[user]
+	name = Andreas Zhang
+	email = denglitsch@gmail.com
+	signingkey = CD804564527D8490
+[color]
+	ui = auto
+[commit]
+	gpgsign = true
+[http]
+	sslVerify = false
+
 
 
 Wed Mar 28 14:03:34 CST 2018
@@ -9234,11 +9247,204 @@ watch -n 1 "ps aux"
 
 
 
+将文件夹的内容制作为ISO镜像@tech_log/cd_burning/cdrecord.doc
+genisoimage -V 20100724B -J -jcharset=utf8 -joliet-long -r -o /TargetImage.iso /media/CB71A5FF367EFAC1/Temp/
+
+file(1) will show the volume label in an ISO file.
+% file /tmp/FreeBSD-8.2-RC1-i386-livefs.iso
+
+I can use command "file" to view the volume label.
+I can use editors/bvi or editors/hexedit to modify the volume label. (notice: only modify the ISO9660 label, not Joliet label)
+Under X Windows, I can use sysutils/isomaster to do everything.
+
+isomaster建立和编辑iso也是ok的
+ 
+据说linux下用chmcmd可以创建chm文件
+
+
+递归显示目录内容
+ls -al -R
+
+
+
+
+ntfs分区的卷标不喜欢，可以用ntfslabel换掉，然后自动挂载
+sudo fdisk -l 或者 df -hT
+sudo umount /dev/sda5
+sudo ntfslabel /dev/sda5 music
 
 
 
 
 
+
+
+$ sudo apt-get install iperf
+
+
+
+
+
+
+
+Run
+sudo dpkg-reconfigure ca-certificates
+That should give you a list where you can deselect CAs.
+The list of CAs is stored in the file /etc/ca-certificates.conf. If you edit this file manually you need to run
+sudo update-ca-certificates
+to update the actual certificates in /etc/ssl/certs/ (if you use dpkg-reconfigure that is done automatically).
+See /usr/share/doc/ca-certificates/README.Debian for more information.
+
+
+
+git svn clone https://47.254.25.14/svn/repo_us repo_us -T trunk -b branches -t tags
+Error validating server certificate for 'https://47.254.25.14:443':
+ - The certificate is not issued by a trusted authority. Use the
+   fingerprint to validate the certificate manually!
+ - The certificate hostname does not match.
+Use of uninitialized value in printf at /usr/share/perl5/Git/SVN/Prompt.pm line 55.
+Certificate information:
+ - Hostname: 
+ - Valid: from Aug  6 19:28:19 2018 GMT until Aug  6 19:28:19 2019 GMT
+ - Issuer: Default Company Ltd, Default City
+ - Fingerprint: D8:25:84:DB:94:6E:B6:2A:B8:8F:7E:26:07:88:59:EF:33:F6:24:5A
+Certificate problem.
+(R)eject, accept (t)emporarily or accept (p)ermanently? p
+Authentication realm: <https://47.254.25.14:443> SVN Repos
+Password for 'andy': 
+Authentication realm: <https://47.254.25.14:443> SVN Repos
+Username: alex 
+Password for 'alex': 
+
+svn ls https://47.254.25.14/svn/repo_us
+== svn list https://47.254.25.14/svn/repo_us
+
+sudo certutil -L
+certutil: function failed: SEC_ERROR_LEGACY_DATABASE: The certificate/key database is in an old, unsupported format.
+
+ls ~/.subversion/auth/svn.simple/
+832bbdd4a613f14f73dd66e46af83d6c
+$ cat ~/.subversion/auth/svn.simple/832bbdd4a613f14f73dd66e46af83d6c 
+
+密钥号
+CD804564527D8490
+
+
+
+
+
+
+
+How to remove all .svn directories from my application directories？
+find . -name .svn | rm -fr
+It didn't work...
+
+
+Before running a command like that, I often like to run this first:
+find . -type d -name .svn -exec ls '{}' \;
+Try this:
+find . -type d -name .svn -exec rm -rf '{}' \;
+find . -name .svn | xargs rm -fr
+find . -type d -name .svn -print0 | xargs -0 rm -rf
+find . -name .svn -exec rm -rf {} \;
+find . -depth -name .svn -exec rm -fr {} \;
+find . -name .svn -exec rm -v {} \;
+
+Newer implementations of rm allow you to conclude the command with a + indicating that rm will accept as many arguments as possible:
+find . -name .svn -exec rm -rf {} +
+
+No need for pipes, xargs, exec, or anything（-delete won't touch a directory if it contains files）
+find . -name .svn -delete
+
+Alternatively, if you want to export a copy without modifying the working copy, you can use rsync:
+rsync -a --exclude .svn path/to/working/copy path/to/export
+
+svn checkout --non-interactive --trust-server-cert --username name --password password --no-auth-cache -r revision https://server.address/trunk/
+echo "t" | svn checkout --username name --password password --no-auth-cache -r revision https://server.address/trunk/
+yes 't' | svn checkout --username name --password password --no-auth-cache -r revision https://server.address/trunk/
+svn checkout --username name --password password --no-auth-cache -r revision https://server.address/trunk/
+{sleep 3; echo "t"; } | svn checkout ...
+
+
+
+
+
+
+
+
+Revoke a Certificate
+openssl ca -config openssl.cnf（/etc/ssl里有一个） -revoke certs/$domain.crt
+Enter pass phrase for ./private/ca.key: $password
+
+
+
+//git config --global merge.tool vimdiff  
+Git可以接受kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, 和 opendiff作为有效的合并工具
+git help config
+
+git config --list
+命令来列出Git可以在该处找到的所有的设置
+
+
+$ cat /home/andy/.gitconfig
+[user]
+	name = Andreas Zhang
+	email = denglitsch@gmail.com
+	signingkey = CD804564527D8490
+[color]
+	ui = auto
+[commit]
+	gpgsign = false
+[http]
+	sslVerify = false
+
+
+
+
+
+
+$ sudo apt-get install qt5-doc-html pyqt5-doc --reinstall
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  qtbase5-doc-html qtdeclarative5-doc-html qtenginio5-doc-html
+  qtgraphicaleffects5-doc-html qtmultimedia5-doc-html qtpositioning5-doc-html
+  qtscript5-doc-html qtsensors5-doc-html qtserialport5-doc-html
+  qtsvg5-doc-html qttools5-doc-html qtwebkit5-doc-html
+  qtwebkit5-examples-doc-html qtwebsockets5-doc-html qtx11extras5-doc-html
+  qtxmlpatterns5-doc-html
+The following NEW packages will be installed:
+  qt5-doc-html qtbase5-doc-html qtdeclarative5-doc-html qtenginio5-doc-html
+  qtgraphicaleffects5-doc-html qtmultimedia5-doc-html qtpositioning5-doc-html
+  qtscript5-doc-html qtsensors5-doc-html qtserialport5-doc-html
+  qtsvg5-doc-html qttools5-doc-html qtwebkit5-doc-html
+  qtwebkit5-examples-doc-html qtwebsockets5-doc-html qtx11extras5-doc-html
+  qtxmlpatterns5-doc-html
+0 upgraded, 17 newly installed, 1 reinstalled
+
+sudo pip2 install pyqtdoc -i https://mirrors.163.com/pypi/simple
+/usr/local/Lib\site-packages\PyQt4\doc\qch
+
+
+sudo updatedb
+locate .qch
+locate qnetworkconfiguration.html
+locate qtnetwork.html
+locate site-packages
+其实pyqt的参考文档在
+http://pyqt.sourceforge.net/Docs/PyQt4/modules.html
+也可以在对应win安装包里找到的
+/usr/share/doc/python-qt4-doc/html
+/usr/share/doc/python-qt4-doc/examples
+/usr/share/doc/pyqt5-doc/html
+/usr/share/doc/pyqt5-examples/examples
+/usr/lib/qt4/examples
+/usr/lib/x86_64-linux-gnu/qt5/examples/
+/usr/share/qt5/doc
+/usr/share/doc/python2.7/examples
+/usr/share/doc/python3.5/examples
 
 
 
