@@ -1587,6 +1587,30 @@ x-terminal-emulator %s
 to
 lxterminal
 
+原来是
+In pcmanfm preferences, under the advanced tab, change the terminal to "x-terminal-emulator -e %s". You can also change the "terminal" value in ~/.config/libfm/libfm.conf
+
+最好的办法
+$ sudo update-alternatives --config  x-terminal-emulator
+[sudo] password for andy: 
+There are 8 choices for the alternative x-terminal-emulator (providing /usr/bin/x-terminal-emulator).
+
+  Selection    Path                             Priority   Status
+------------------------------------------------------------
+* 0            /usr/bin/gnome-terminal.wrapper   40        auto mode
+  1            /usr/bin/deepin-terminal          30        manual mode
+  2            /usr/bin/gnome-terminal.wrapper   40        manual mode
+  3            /usr/bin/koi8rxterm               20        manual mode
+  4            /usr/bin/lxterm                   30        manual mode
+  5            /usr/bin/lxterminal               40        manual mode
+  6            /usr/bin/uxterm                   20        manual mode
+  7            /usr/bin/xfce4-terminal.wrapper   40        manual mode
+  8            /usr/bin/xterm                    20        manual mode
+
+Press enter to keep the current choice[*], or type selection number: 5
+
+
+
 pcmanfm的bookmark文件在
 /home/andy/.config/gtk-3.0/bookmarks
 
@@ -2712,11 +2736,32 @@ Please choose a default application for files of type text/plain
 
 pcmanfm open with是空的
 https://wiki.archlinux.org/index.php/PCManFM
+Open With dialog window empty
+If you do not see any applications to choose from in the open with dialog, then you can try removing gnome-menus and instead install lxmenu-data. Furthermore, export the following variables:
+export XDG_MENU_PREFIX=lxde-
+export XDG_CURRENT_DESKTOP=LXDE
+No "Applications"
+You can try this method: Delete all files in the $HOME/.cache/menus directory, and run PCManFM again.
+PCManFM requires the environment variable XDG_MENU_PREFIX to be set. The value of the variable should match the beginning of a file present in the /etc/xdg/menus/ directory. E.g. you can set the value in your .xinitrc file with the line:
+export XDG_MENU_PREFIX="lxde-"
+See these threads for more information: [1], and especially this post from the Linux Mint forums: [2]
+
+看来是 gnome-menus 和 lxmenu-data 冲突了，那么有 gnome-menus 就用 nautilus 的 open with 来 associate apps
+有关路径
+/home/andy/.cache/menus
+尝试1,failed
+gedit ~/.xinitrc
+export XDG_MENU_PREFIX=lxde-
+#export XDG_CURRENT_DESKTOP=LXDE
+
+
+
 /etc/xdg/menus
 alacarte
 export XDG_MENU_PREFIX="lxde-" to .initrc好像不行呢
 https://sourceforge.net/p/pcmanfm/bugs/864/
 I would like to see values of XDG_CURRENT_DESKTOP and XDG_MENU_PREFIX environment variables when you start pcmanfm and also listing of ~/.config/menus and /etc/xdg/menus folders.
+
 
 添加rar类型的
 /home/andy/.local/share/mime/application/x-wine-extension-rar.xml
@@ -2730,7 +2775,7 @@ I would like to see values of XDG_CURRENT_DESKTOP and XDG_MENU_PREFIX environmen
 
 其他有关mime的文件
 ~/.config/mimeapps.list
-如果通过选择默认程选了wine里面的rar,会在这里体现,可以删掉pcmanfm多的openwith
+！！ 如果通过选择默认程选了wine里面的rar,会在这里体现,可以删掉pcmanfm多的openwith
 
 pcmanfm多的openwith就更新一下目标desktop文件就刷掉了
 应该是指向/home/andy/.local/share/applications内的wine快捷图标就行了的
@@ -2740,6 +2785,60 @@ pcmanfm多的openwith就更新一下目标desktop文件就刷掉了
 /home/andy/.local/share/applications/mimeinfo.cache的内容要对
 
 这样rar文件openwith winrar打开就对了
+
+一个好的mime图形化工具
+xfce4-mime-settings
+
+nautilus的openwith正常能用
+
+
+
+
+bcompare open folder with associated app change:
+inode/directory= ?
+from /usr/share/applications/mimeinfo.cache
+or
+/home/andy/.config/mimeapps.list
+or
+other mimeapps.list or mimeinfo.cache files
+
+
+firefox下载好的在文件夹中打开“Open containing folder” 
+
+If the already mentioned solutions don't work, try this.
+Write the following to 
+/usr/share/dbus-1/services/org.freedesktop.FileManager1.service
+[D-BUS Service]
+Name=org.freedesktop.FileManager1
+#Exec=/usr/bin/nautilus --gapplication-service
+Exec=/usr/bin/pcmanfm --gapplication-service
+
+这里dbus-1/services看来最优先，其次是各个mimeapps.list或mimeinfo.cache的inode/directory= 
+
+
+还有，标准名称包装了的程序，可以这样换默认调用
+sudo update-alternatives --config x-terminal-emulator
+sudo update-alternatives --config x-www-browser
+sudo update-alternatives --config editor
+
+
+
+xdg-mime query { filetype | default } ...
+xdg-mime default application mimetype(s)
+xdg-mime install [--mode mode] [--novendor] mimetypes-file
+xdg-mime uninstall [--mode mode] mimetypes-file
+xdg-mime { --help | --manual | --version }
+比如
+xdg-mime default nautilus.desktop inode/directory
+The command above adds a line inode/directory=nautilus.desktop to your .local/share/applications/mimeapps.list
+
+
+sudo apt-get install nautilus nautilus-sendto nautilus-share
+
+
+
+
+
 
 
 
