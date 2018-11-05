@@ -9665,6 +9665,49 @@ sphinx.ext.pngmath -> sphinx.ext.imgmath
 
 
 
+$ tlmgr install collection-latexextra
+
+
+
+
+sudo apt-file update
+apt-file -x search '/multind.sty$'
+https://www.ctan.org/pkg/multind?lang=en
+
+
+
+
+
+
+
+抓取网站的mirror目录
+wget -c -r -npH -k -e robots=off -E https://mirrors.tuna.tsinghua.edu.cn/CTAN/info/
+-c：断点续传
+-r：递归下载
+-np：递归下载时不搜索上层目录
+-nd：递归下载时不创建一层一层的目录,把所有文件下载当前文件夹中
+-p：下载网页所需要的所有文件(图片,样式,js文件等)
+-H：当递归时是转到外部主机下载图片或链接
+-k：将绝对链接转换为相对链接,这样就可以在本地脱机浏览网页了
+-m //镜像，就是整站抓取
+-e robots=off //忽略robots协议
+-E //将所有text/html文档以.html扩展名保存
+find  . -name  '*?C*' -print -exec  rm -rf  {} \;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
