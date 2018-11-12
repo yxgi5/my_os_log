@@ -9700,6 +9700,141 @@ find  . -name  '*?C*' -print -exec  rm -rf  {} \;
 
 
 
+* * *
+# 为 python3 安装 PyQt4
+pip3查不到有PyQt4，但是书上的例子是python2+pyqt4
+
+## 一般python包的安装
+```
+python configure.py
+make
+sudo make install
+
+```
+
+- - -
+## 为 python3 安装 PyQt4 -- 这样编译PyQt4
+
+== 源码安装 pyqt4 for pyhthon 3.5 ==
+```
+sudo pip3.5 uninstall sip
+cd sip-4.19.12/
+python3.5 configure.py	## 这次是配置 编译PyQt 要用的SIP v4 (i.e. the sip.sipconfig module)
+make
+sudo make install
+
+cd ../PyQt4_gpl_x11-4.12.3/
+##python3.5 configure.py ## 就用 SIP v4 编译
+python3.5 configure-ng.py ## qmake 编译 ，还是需要配置编译SIP v4，不然版本不够
+make -j $(nproc)
+sudo make install
+
+cd ../sip-4.19.12/
+#python3.5 configure.py --sip-module PyQt4.sip --no-dist-info --no-tools
+#会报错 ValueError: PyCapsule_GetPointer called with incorrect name
+python3.5 configure.py --sip-module PyQt4.sip
+make	## 这次是配置运行 import PyQt4 所需要的 PyQt4.sip
+sudo make install
+```
+
+ok，可以用了，python3.5支持PyQt4了(就是可以import了)
+
+==如果有问题就还原sip为安装版本==
+```
+sudo pip3.5 uninstall sip
+sudo pip3.5 install --upgrade  sip -i https://mirrors.163.com/pypi/simple
+```
+
+运行情况
+```
+$ python3.5 signals.pyw 1
+Traceback (most recent call last):
+  File "signals.pyw", line 13, in <module>
+    from PyQt4.QtCore import *
+ValueError: PyCapsule_GetPointer called with incorrect name
+```
+我操哦，不能用。现在机器上3.5是apt安装的3.6是源码安装的，看来源码安装python是最好的
+
+
+- - -
+
+== 源码安装 python 3.5 ==
+```
+wget https://www.python.org/ftp/python/3.5.6/Python-3.5.6.tar.gz
+tar -zxvf Python-3.5.6.tar.xz
+cd Python-3.5.6
+##./configure --enable-optimizations
+./configure
+make -j $(nproc)
+#sudo make altinstall
+sudo make install -n
+sudo make install
+sudo pip3.5 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+```
+
+
+- - -
+
+== 源码安装 pyqt4 for pyhthon 3.6 ==
+```
+sudo pip3.6 uninstall sip
+cd sip-4.19.12/
+python3.6 configure.py	## 这次是配置 编译PyQt 要用的SIP v4 (i.e. the sip.sipconfig module)
+make
+sudo make install
+
+cd ../PyQt4_gpl_x11-4.12.3/
+##python3.6 configure.py ## 就用 SIP v4 编译
+python3.6 configure-ng.py ## qmake 编译 ，还是需要配置编译SIP v4，不然版本不够
+make -j $(nproc)
+sudo make install
+
+cd ../sip-4.19.12/
+#python3.6 configure.py --sip-module PyQt4.sip --no-dist-info --no-tools
+#会报错 ValueError: PyCapsule_GetPointer called with incorrect name
+python3.6 configure.py --sip-module PyQt4.sip
+make	## 这次是配置运行 import PyQt4 所需要的 PyQt4.sip
+sudo make install
+```
+
+ok，可以用了，python3.6支持PyQt4了(就是可以import了)
+
+如果有问题就还原sip为安装版本
+```
+sudo pip3.6 uninstall sip
+sudo pip3.6 install --upgrade  sip -i https://mirrors.163.com/pypi/simple
+```
+
+
+
+- - -
+
+
+查看要安装的文件和位置
+```
+sudo make install -n
+```
+查看要卸载的文件和位置
+```
+sudo make uninstall -n
+```
+
+
+
+指定单次安装源
+```
+pip install <包名> -i http://pypi.v2ex.com/simple
+```
+
+指定全局安装源
+在unix和macos，配置文件为：$HOME/.pip/pip.conf
+在windows上，配置文件为：%HOME%\pip\pip.ini
+```
+[global]
+timeout = 6000
+  index-url = http://pypi.douban.com/simple
+```
+
 
 
 
