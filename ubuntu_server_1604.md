@@ -8,6 +8,8 @@ andy ALL=(ALL:ALL) ALL
 
 # chmod -w /etc/sudoers
 ```
+或者在/etc/group里面设置sudo的group
+
 
 ## 安装gnome ##
 alex@iZ8vb9hu2kftezexm9ehyiZ:~$ sudo apt-get install gnome
@@ -519,8 +521,8 @@ sudo apt-get install gdm
 
 
 ssh alex@192.168.0.82
-vncserver -kill :1
-vncserver :1 -geometry 1902x1080
+vnc4server -kill :1
+vnc4server :1 -geometry 1920x1080
 
 
 XX-Net version:3.12.10
@@ -601,7 +603,32 @@ The following NEW packages will be installed:
 0 upgraded, 2 newly installed
 
 
+sudo apt-get install samba samba-common samba-client
 
+
+sudo apt-get install aptitude
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  aptitude-common libcwidget3v5
+Suggested packages:
+  apt-xapian-index aptitude-doc-en | aptitude-doc debtags tasksel
+  libcwidget-dev
+The following NEW packages will be installed:
+  aptitude aptitude-common libcwidget3v5
+0 upgraded, 3 newly installed
+
+
+
+
+
+Xlib extension “RANDR” missing on display “:1”
+
+https://stackoverflow.com/questions/18940380/xlib-extension-randr-missing-on-display-1
+
+The vnc server you're using does not provide support for dynamically resizing/rotating the screen. midori seems to require this.
+You should use a specific vnc server that supports this extension e.g. vnc4server, and the exception will not be thrown.
 
 
 
