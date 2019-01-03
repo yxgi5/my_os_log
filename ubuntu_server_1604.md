@@ -635,4 +635,11 @@ You should use a specific vnc server that supports this extension e.g. vnc4serve
 
 
 
+sudo chgrp -c -R transmission csd
+sudo chgrp -c vision trasmission csd
+
+
+
+
+
 

@@ -22,7 +22,7 @@ sudo ufw disable
 sudo apt-get install tightvncserver
 sudo apt-get install vnc4server tightvncserver vnc4server
 vncserver -kill :1
-vncserver :1 -geometry 1902x1080
+vncserver :1 -geometry 1920x1080
 
 
 sudo apt-get install vim

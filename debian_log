@@ -7272,7 +7272,8 @@ sudo apt-get remove `dpkg-query -f'${Package}:${Architecture}\n' -W '*:armhf'`
 $ sudo dpkg --remove-architecture armhf
 sudo apt-get remove `dpkg-query -f'${Package}:${Architecture}\n' -W '*:armel'`
 $ sudo dpkg --remove-architecture armel
-
+sudo apt-get remove .*:arm64
+sudo dpkg --remove-architecture arm64
 
 $ sudo apt-get install xxgdb
 
@@ -9843,6 +9844,23 @@ timeout = 6000
 
 
 
+端口占用情况
+netstat -tunlp 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sudo apt install /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv_3.3.1_amd64.deb /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv-dev_3.3.1_amd64.deb /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv-python_3.3.1_amd64.deb /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv-samples_3.3.1_amd64.deb
 
 
 
@@ -9858,7 +9876,28 @@ timeout = 6000
 
 
 
+find /var/log -maxdepth 1 -print0 -type f | xargs -0 ls -ld
+find /var/log  -type f -exec ls -ld {} \;
+find /var/log/ -type f -ls
+find /usr/share/man/ | sed -e "s#/usr/share/man##" | grep \^/man | awk -F/ '{ print $3 }' | sed -e "s/\.[0-9].gz//"
 
+
+
+
+find man doc
+man -k [a-z] | more
+to search for anything hex related as an example:
+man -k hex | more
+
+
+
+
+
+
+
+
+查看命令类型
+type -a xxx
 
 
 
