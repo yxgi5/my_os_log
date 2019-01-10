@@ -9911,6 +9911,33 @@ type -a xxx
 
 
 
+~/.gitconfig
+
+-------------------------------
+[user]
+	name = Andreas Zhang
+	email = denglitsch@gmail.com
+	signingkey = CD804564527D8490
+[core]
+	autocrlf = false    
+	longpaths = true
+[color]
+	ui = auto
+[commit]
+	gpgsign = false
+[http]
+	sslVerify = false
+-------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 
