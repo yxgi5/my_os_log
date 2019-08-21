@@ -9949,3 +9949,141 @@ autoconf libjpeg-dev libpng12-dev libfreetype6-dev libgtk2.0-dev libjpeg-dev lib
 #libssl1.0-dev cannot
 
 
+
+
+
+
+
+sudo apt-get install qtbase5-dev
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libqt5concurrent5 libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5
+  libqt5opengl5 libqt5opengl5-dev libqt5printsupport5 libqt5sql5
+  libqt5sql5-sqlite libqt5test5 libqt5widgets5 libqt5xml5 qt5-qmake
+  qtbase5-dev-tools qtbase5-examples
+Suggested packages:
+  firebird-dev
+The following packages will be upgraded:
+  libqt5concurrent5 libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5
+  libqt5opengl5 libqt5opengl5-dev libqt5printsupport5 libqt5sql5
+  libqt5sql5-sqlite libqt5test5 libqt5widgets5 libqt5xml5 qt5-qmake
+  qtbase5-dev qtbase5-dev-tools qtbase5-examples
+17 upgraded, 0 newly installed, 0 to remove and 1124 not upgraded.
+Need to get 16.3 MB of archives.
+
+https://packages.debian.org/jessie/libbotan1.10-dev
+$ sudo apt-get install libbotan1.10-dev 
+
+
+编译libQtShadowsocks-1.11.0
+https://github.com/shadowsocks/libQtShadowsocks/wiki/Compiling
+mkdir build && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+make -j4
+sudo make install
+
+
+https://github.com/shadowsocks/shadowsocks-qt5/wiki/Compiling
+
+
+botan2.10
+https://github.com/randombit/botan
+sudo apt-get install libasio-dev
+python3 configure.py
+make -j8
+sudo make install
+
+
+修改libQtShadowsocks-2.1.0的makelist的qt版本为5.3
+mkdir build && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+make -j8
+sudo make install
+
+
+
+
+
+
+非要qt5.5,
+
+
+
+
+apt-get install shadowsocks-libev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deb http://ppa.launchpad.net/hzwhuang/ss-qt5/ubuntu trusty main
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 6DA746A05F00FA99
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 648ACFD622F3D138
+sudo apt-get install shadowsocks-qt5
+
+
+
+
+ss-local -v -c ./config.json
+------------
+{
+    "server":"104.238.150.238",
+    "server_port":5000,
+    "local_address": "127.0.0.1",
+    "local_port":1081,
+    "password":"202619.5",
+    "timeout":300,
+    "method":"aes-256-ctr",
+    "fast_open": false,
+    "workers": 1
+}
+-------------
+
+
+
+
+
+
+sudo apt-get install klatexformula
+
+The following packages were automatically installed and are no longer required:
+  libavdevice55 libproxy-tools vlc-plugin-pulse
+Use 'apt-get autoremove' to remove them.
+The following extra packages will be installed:
+  libklatexformula3
+The following NEW packages will be installed:
+  klatexformula libklatexformula3
+
+
+sudo apt-get install equalx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
