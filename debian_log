@@ -10017,7 +10017,8 @@ apt-get install shadowsocks-libev
 
 
 
-
+sudo apt-get install shadowsocks-qt5 
+ss-qt5
 
 
 
@@ -10053,7 +10054,7 @@ ss-local -v -c ./config.json
 -------------
 
 
-
+sudo apt-get install android-tools-fsutils
 
 
 
@@ -10073,6 +10074,76 @@ sudo apt-get install equalx
 
 
 
+sudo dpkg-reconfigure dash
+sudo apt-get install libav-tools 
+sudo apt-get install libav-tools 
+sudo apt-get update -qq && sudo apt-get -y install   autoconf   automake   build-essential   cmake   git-core   libass-dev   libfreetype6-dev   libsdl2-dev   libtool   libva-dev   libvdpau-dev   libvorbis-dev   libxcb1-dev   libxcb-shm0-dev   libxcb-xfixes0-dev   pkg-config   texinfo   wget   zlib1g-dev
+sudo apt-get -y install   autoconf   automake   build-essential   cmake   git-core   libass-dev   libfreetype6-dev   libsdl2-dev   libtool   libva-dev   libvdpau-dev   libvorbis-dev   libxcb1-dev   libxcb-shm0-dev   libxcb-xfixes0-dev   pkg-config   texinfo   wget   zlib1g-dev
+sudo aptitude install   autoconf   automake   build-essential   cmake   git-core   libass-dev   libfreetype6-dev   libsdl2-dev   libtool   libva-dev   libvdpau-dev   libvorbis-dev   libxcb1-dev   libxcb-shm0-dev   libxcb-xfixes0-dev   pkg-config   texinfo   wget   zlib1g-dev
+sudo apt-get install libav-tools 
+sudo apt-get install ffmpeg
+sudo aptitude install ffmpeg
+sudo apt-get install nasm
+apt-get install libav-tools 
+sudo apt-get install yasm
+sudo apt-get install nasm
+sudo apt-get install libx264-dev
+sudo apt-get install libx265-dev libnuma-dev libvpx-dev libfdk-aac-dev libmp3lame-dev libopus-dev 
+sudo aptitude install libx265-dev libnuma-dev libvpx-dev libfdk-aac-dev libmp3lame-dev libopus-dev 
+sudo apt install libnuma-dev libvpx-dev libfdk-aac-dev libmp3lame-dev libopus-dev 
+sudo aptitude install libx265-dev
+sudo aptitude install libx265
+sudo aptitude install libx265-116
+sudo aptitude install libx265-dev
+sudo aptitude install libx265-116
+sudo aptitude remove libnuma1
+sudo aptitude install libnuma1
+sudo aptitude install libx265-dev 
+sudo gedit /etc/apt/sources.list
+sudo apt-get update 
+sudo aptitude install libx265-dev
+sudo aptitude install libx265---
+sudo aptitude install libx265-87 
+sudo apt install libx265-87 
+sudo apt install libx265-dev
+sudo gedit /etc/apt/sources.list
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys  5C808C2B65558117
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+sudo apt install libx265-dev
+sudo apt install ffmpeg
+sudo aptitude install ffmpeg
+sudo aptitude install libx265-dev libnuma-dev
+sudo apt-get install libvpx-dev
+sudo apt-get install libfdk-aac-dev libmp3lame-dev libopus-dev libaom-dev 
+sudo apt-get install libfdk-aac-dev libmp3lame-dev libopus-dev
+sudo apt-get install ffmpeg
+sudo apt-get install libavcodec56 libavdevice56
+sudo apt-get install libavcodec56 libavdevice56 libfdk-aac1
+sudo apt-get install ffmpeg
+ffmpeg 
+ffprobe 
+sudo apt-get install libfdk-aac-dev libmp3lame-dev libopus-dev
+
+sudo apt-get install make libc6:i386 lib32z1 lib32stdc++6 zlib1g-dev libncurses5-dev ncurses-term libncursesw5-dev g++ u-boot-tools:i386 texinfo texlive gawk libssl-dev openssl bc curl upx
+sudo aptitude install nautilus-share samba samba-common smbclient smbfs system-config-samba winbind cifs-utils
+sudo apt-get install zlib1g-dev liblzo2-dev uuid-dev pkg-config ffmpeg mtd-utils autoconf automake
+sudo apt-get install zlib1g-dev liblzo2-dev uuid-dev pkg-config mtd-utils autoconf automake
+sudo apt-get install ffmpeg
+ffmpeg
+sudo gedit /etc/apt/sources.list
+sudo apt-get install autoconf automake build-essential libass-dev     libfreetype6-dev libgpac-dev libsdl1.2-dev libtheora-dev libtool     libva-dev libvdpau-dev libvorbis-dev libx11-dev libxext-dev     libxfixes-dev pkg-config texi2html zlib1g-dev yasm
+ffmpeg
+ffprobe
+sudo apt-get install libfdk-aac-dev libmp3lame-dev libopus-dev
+sudo apt-get update 
+sudo apt-get install ffmpeg
+sudo aptitude install ffmpeg
+avconv -formats
+ffmpeg
+ffprobe
+ffmvforce --help
+sudo apt-get install libav-tools
+x264 --help
 
 
 
@@ -10081,8 +10152,48 @@ sudo apt-get install equalx
 
 
 
+wps的et,等效于excel
 
 
+readelf -d xxx 也有 类似 ldd的效果,查看交叉编译的目标文件调用库依赖
+
+
+
+
+
+$ sudo apt-get install linaro-image-tools
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libavdevice55 libproxy-tools vlc-plugin-pulse
+Use 'apt-get autoremove' to remove them.
+The following extra packages will be installed:
+  btrfs-tools command-not-found cryptsetup-bin liblvm2app2.2 python-gdbm
+  python-linaro-image-tools python-parted udisks
+Suggested packages:
+  python-gdbm-dbg xfsprogs reiserfsprogs mdadm
+The following NEW packages will be installed:
+  btrfs-tools command-not-found cryptsetup-bin liblvm2app2.2
+  linaro-image-tools python-gdbm python-linaro-image-tools python-parted
+  udisks
+0 upgraded, 9 newly installed, 0 to remove and 89 not upgraded.
+Need to get 1,632 kB of archives.
+After this operation, 7,594 kB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+
+
+
+
+
+
+sudo apt-get install build-essential vim tofrodos iproute2 gawk gcc git make net-tools zlib1g-dev libssl-dev flex bison libselinux1 libncurses5-dev tftpd lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6 xvfb chrpath socat autoconf libtool
+
+./petalinux-v2017.4-final-installer.run /opt/petalinux
+
+Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+ $ . /opt/petalinux/components/yocto/source/microblaze_lite/environment-setup-microblazeel-v10.0-bs-cmp-ml-xilinx-linux
 
 
 
