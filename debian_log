@@ -10198,3 +10198,16 @@ Each time you wish to use the SDK in a new shell session, you need to source the
 
 
 
+新foxitreader太坑人
+旧的怎么恢复wine的版本
+wine-extension-pdf.desktop
+env WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen FoxitReader.Document %f
+FoxitReader.Document是在./.wine/system.reg中定义的, 修改成正确的就可以用了. 之前是定位到移动硬盘上的exe去了, 所以插移动硬盘能开pdf
+D:\\software\\reader\\pdf\\foxit\\Foxit Reader.exe替换成
+C:\\Program Files\\Foxit Software\\Foxit Reader\\Foxit Reader.exe
+
+
+
+
+
+
