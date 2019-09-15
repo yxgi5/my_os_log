@@ -10210,4 +10210,345 @@ C:\\Program Files\\Foxit Software\\Foxit Reader\\Foxit Reader.exe
 
 
 
+git clone https://github.com/DreamSourceLab/DSView.git
+sudo apt-get install libzip-dev check libfftw3-bin libfftw3-dev libfftw3-long3 libfftw3-quad3
+
+
+ $ cd libsigrok4DSL
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+ $ sudo make install
+ $ cd ..
+
+ $ cd libsigrokdecode4DSL
+ $ ./autogen.sh
+ $ ./configure
+ $ make
+ $ sudo make install
+ $ cd ..
+
+ $ cd DSView
+ $ cmake .
+
+ $ make
+ $ sudo make install
+
+
+
+重新编译python3.6
+./configure --enable-shared CFLAGS=-fPIC
+make -j$(nproc)
+sudo make install
+
+
+参考:
+运行ldd /usr/local/bin/python3，看看python3运行所需要的库，结果显示如下:
+
+linux-vdso.so.1 =>  (0x00007fff70da5000)
+libpython3.6m.so.1.0 => not found
+libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f1496ff1000)
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1496c27000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f149720e000)
+发现那个依赖文件的确没有找到.。
+
+查找一下文件的位置:
+
+find /-name 'libpython3.3m.so.1.0'
+文件位置为:
+
+/usr/local/lib/libpython3.6m.so.1.0
+之后在目录/etc/ld.so.conf.d下，建立python3.conf文件
+
+cd /etc
+cd ld.so.conf.d
+sudo touch python3.conf
+然后编辑该文件，加入libpython3.6m.so.1.0文件所在的目录
+
+sudo gedit python3.conf                   #编辑文件
+
+/usr/local/lib/                           #加入文件所在的目录
+最后运行：sudo ldconfig
+
+
+
+
+ $ cd DSView
+ $ cmake .
+
+干你娘, apt安装的qt5版本还是太低了, 解决办法在下面
+The Qt:AA_EnableHighDpiScaling was introduced in QT 5.6 ( http://blog.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6/ ) 
+Ubuntu Trusty provides 5.2.1, xenial provides 5.5.1 thus OBS will not compile without manually updating Qt until yakkety providing 5.6.1. 
+
+ $ make
+ $ sudo make install
+cp /usr/share/applications/DSView.desktop ~/Desktop/
+
+
+终于受不了qt5版本问题了,干脆弄个5.10版本的
+
+qt account
+202619.Mm5
+yxgi5@163.com
+
+安装qt5.10到opt
+----------------------1
+sudo gedit /etc/profile
+#启动QtCreator
+export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
+export PATH=$QTDIR/bin:/opt/Qt5.10.1/Tools/QtCreator/bin:$PATH
+export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
+
+
+source /etc/profile
+source ~/.bashrc
+
+sudo gedit /etc/ld.so.conf.d/qt5.10.conf
+然后编辑该文件，加入
+/opt/Qt5.10.1/5.10.1/gcc_64/lib
+最后运行：sudo ldconfig
+
+
+--------------------2
+或者
+sudo gedit /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf
+#/usr/lib/x86_64-linux-gnu/qt4/bin
+#/usr/lib/x86_64-linux-gnu
+修改成
+/opt/Qt5.10.1/
+/opt/Qt5.10.1/5.10.1/gcc_64/bin
+
+
+
+cmake配置的时候找到类似Qt5Core_DIR之类的路径指定为/opt/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core
+
+
+
+
+
+https://bitbucket.org/gusphdproj/deeparg-ss
+https://files.pythonhosted.org/packages/a0/c5/d2238762d780dde84a20b8c761f563fe882b88c5a5fb03c056547c442a19/scikit_learn-0.21.3-cp36-cp36m-manylinux1_x86_64.whl
+sudo pip3.6 install nolearn
+
+
+
+sudo pip3.6 install PyQtWebEngine -i https://mirrors.163.com/pypi/simple
+自动更新qt5 lib到最新
+markups
+
+sudo pip3.6 install retext -i https://mirrors.163.com/pypi/simple
+FT_Get_Font_Format
+
+tar -xf freetype-2.10.0.tar.bz2
+cd freetype-2.10.0/
+./configure --prefix=/usr/lib/freetype
+make
+make install
+libfreetype.so.6 替换掉原先的libfreetype.so.6
+sudo pip3.6 install docwriter -i https://mirrors.163.com/pypi/simple
+//sudo pip3.6 uninstall retext
+
+andy@debian-dell /usr/lib/x86_64-linux-gnu
+$ sudo ln -s libfreetype.so.6.17.0 libfreetype.so
+$ sudo ln -s libfreetype.so.6.17.0 libfreetype.so.6
+retext能用,qtqr依然能用,就ok了嘛
+
+$ sudo apt-get purge retext
+5.0.1
+现在可以修改重命名/usr/local/share/applications里的desktop文件了, 名字是retext.desktop,小写.
+这样还是可以右键开启文件的
+
+
+
+for i in /opt/fsl/lib/*.so; do echo $i; nm -D $i | grep -in glGenVertexArrays; done
+
+
+
+retext输入字符闪退....
+
+
+
+apt安装的retext果然是因为Qt库制定为5.10(ldconfig)才挂了.
+
+
+
+sudo pip3.6 install retext -i https://mirrors.163.com/pypi/simple
+7.0.4
+sudo pip3.6 uninstall retext
+sudo pip3.6 install retext==5.0.1 -i https://mirrors.163.com/pypi/simple
+sudo pip3.6 uninstall retext
+sudo apt-get install retext
+
+
+
+cd /usr/local/bin
+sudo mv DSView ../share/DSView/
+复制/usr/local/share/DSView到/opt
+建立相对目录
+/opt/DSView/bin,把可执行文件复制到这里
+/opt/DSView/share/DSView
+
+sudo gedit DSView
+sudo chmod +x DSView
+-------------------------------------------------
+#!/bin/bash
+export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
+export PATH=$QTDIR/bin:/opt/Qt5.10.1/Tools/QtCreator/bin:$PATH
+export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
+/opt/DSView/bin/DSView
+-------------------------------------------------
+修改/usr/share/applications/DSView.desktop里的desktop文件,图标要修改路径了
+
+
+
+retext还原ok, ldconfig没有动, qtchooser没有动, DSView单独用5.10的库, 或者指向pyqt的更高版本的库
+
+retext没有icon,
+sudo apt-get install retext retext-wpgen
+没有效果
+
+
+需要配置文件~/.config/ReText\ project/ReText.conf,添加：
+
+[General] 
+iconTheme=gnome
+
+搞定!
+
+sudo apt-get install libjs-mathjax
+sudo apt-get install python-pygments
+gedit ~/.config/markdown-extensions.txt
+添加
+codehilite
+mathjax
+
+
+css用github.css(我目前放到~/.config/ReText project/github.css)
+/usr/share/wpgen/style_Blue.css
+
+
+
+更新的版本编译安装
+https://github.com/retext-project/retext
+
+--user安装到用户目录
+/home/andy/.local/bin
+测试还是存在闪退现象. 不玩了, TMD
+
+
+pip3.6  uninstall retext
+然后删掉
+/home/andy/.local/bin/
+/home/andy/.local/lib/python3.6/
+
+
+
+
+
+$ qtchooser  -l
+4
+5
+default
+qt4-x86_64-linux-gnu
+qt4
+qt5-x86_64-linux-gnu
+qt5
+
+应该是对应
+/usr/lib/x86_64-linux-gnu/qtchooser
+下面的几个软链接
+
+实际位置
+/usr/share/qtchooser/
+文件为
+qt4-x86_64-linux-gnu.conf
+qt5-x86_64-linux-gnu.conf
+
+/usr/lib/x86_64-linux-gnu/qt-default/qtchooser
+下面实际上是个软链接
+指向/usr/share/qtchooser/中qt的某个conf文件
+
+
+
+
+qtchooser -install qt5.10 /opt/Qt5.10.1/5.10.1/gcc_64/bin/qmake
+/home/andy/.config/qtchooser/
+会有
+qt5.10.conf
+内容是
+/opt/Qt5.10.1/5.10.1/gcc_64/bin
+/opt/Qt5.10.1/5.10.1/gcc_64/lib
+
+$ export QT_SELECT=qt5.10
+
+$ qmake -v
+QMake version 3.1
+Using Qt version 5.10.1 in /opt/Qt5.10.1/5.10.1/gcc_64/lib
+
+
+qmake -qt=qt5.10 -v
+和
+export QT_SELECT=qt5.10是一样的
+
+
+
+再就是qtcreator了
+export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
+export PATH=/opt/Qt5.10.1/Tools/QtCreator/bin:$QTDIR/bin:$PATH
+export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
+
+which qtcreator
+whereis qtcreator
+
+cp /usr/share/applications/qtcreator.desktop ~/.local/share/applications/
+修改一下咯
+
+最后
+./profile里面有个
+export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
+
+
+总结:如果全部换成qt5.10, 其他都不要动, 只需要临时设置环境变量
+export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
+export PATH=/opt/Qt5.10.1/Tools/QtCreator/bin:$QTDIR/bin:$PATH
+export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
+export QT_QPA_PLATFORM_PLUGIN_PATH=/opt/Qt5.10.1/5.10.1/gcc_64/plugins/platforms
+或者
+export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
+export PATH=/opt/Qt5.10.1/Tools/QtCreator/bin:$QTDIR/bin:$PATH
+export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
+export QT_QPA_PLATFORM_PLUGIN_PATH=
+
+为啥不动系统配置,要动配置也配置成用户配置,为了之前安装的东西还能继续用啊.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
