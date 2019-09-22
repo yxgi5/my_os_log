@@ -10025,7 +10025,9 @@ ss-qt5
 
 
 
-
+源过期处理
+InRelease is expired. Updates for this repository will not be applied.
+sudo apt-get -o Acquire::Check-Valid-Until=false update
 
 
 
@@ -10197,19 +10199,19 @@ Each time you wish to use the SDK in a new shell session, you need to source the
 
 
 
-
-新foxitreader太坑人
-旧的怎么恢复wine的版本
+# 恢复wine的版本foxitreader
+```
+新foxitreader书签太坑人, 旧的怎么恢复wine的版本?
 wine-extension-pdf.desktop
 env WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen FoxitReader.Document %f
 FoxitReader.Document是在./.wine/system.reg中定义的, 修改成正确的就可以用了. 之前是定位到移动硬盘上的exe去了, 所以插移动硬盘能开pdf
 D:\\software\\reader\\pdf\\foxit\\Foxit Reader.exe替换成
 C:\\Program Files\\Foxit Software\\Foxit Reader\\Foxit Reader.exe
+```
 
 
-
-
-
+# 编译安装DSView, 并设置单独的运行库
+```
 git clone https://github.com/DreamSourceLab/DSView.git
 sudo apt-get install libzip-dev check libfftw3-bin libfftw3-dev libfftw3-long3 libfftw3-quad3
 
@@ -10233,10 +10235,10 @@ sudo apt-get install libzip-dev check libfftw3-bin libfftw3-dev libfftw3-long3 l
 
  $ make
  $ sudo make install
+```
 
-
-
-重新编译python3.6
+## 重新编译python3.6
+```
 ./configure --enable-shared CFLAGS=-fPIC
 make -j$(nproc)
 sudo make install
@@ -10269,30 +10271,53 @@ sudo gedit python3.conf                   #编辑文件
 
 /usr/local/lib/                           #加入文件所在的目录
 最后运行：sudo ldconfig
+```
+## 现在可以继续编译了
 
-
-
-
+```
  $ cd DSView
  $ cmake .
 
-干你娘, apt安装的qt5版本还是太低了, 解决办法在下面
+干你娘, apt安装的qt5版本还是太低了, 解决办法是安装高版本qt并设置环境变量并设置cmake配置路径就行了
 The Qt:AA_EnableHighDpiScaling was introduced in QT 5.6 ( http://blog.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6/ ) 
 Ubuntu Trusty provides 5.2.1, xenial provides 5.5.1 thus OBS will not compile without manually updating Qt until yakkety providing 5.6.1. 
+找到Qt5Core_DIR之类的路径指定为/opt/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core
 
  $ make
  $ sudo make install
 cp /usr/share/applications/DSView.desktop ~/Desktop/
 
 
-终于受不了qt5版本问题了,干脆弄个5.10版本的
+cd /usr/local/bin
+sudo mv DSView ../share/DSView/
+复制/usr/local/share/DSView到/opt
+建立相对目录
+/opt/DSView/bin,把可执行文件复制到这里
+/opt/DSView/share/DSView
+
+sudo gedit DSView
+sudo chmod +x DSView
+-------------------------------------------------
+#!/bin/bash
+export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
+export PATH=$QTDIR/bin:/opt/Qt5.10.1/Tools/QtCreator/bin:$PATH
+export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
+/opt/DSView/bin/DSView
+-------------------------------------------------
+修改/usr/share/applications/DSView.desktop里的desktop文件,图标要修改路径了
+```
+
+
+
+# 终于受不了qt5版本问题了,干脆弄个5.10版本的
 
 qt account
 202619.Mm5
 yxgi5@163.com
 
-安装qt5.10到opt
-----------------------1
+## 安装qt5.10到opt
+```
+----------------------1 不安全,看总结
 sudo gedit /etc/profile
 #启动QtCreator
 export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
@@ -10309,7 +10334,7 @@ sudo gedit /etc/ld.so.conf.d/qt5.10.conf
 最后运行：sudo ldconfig
 
 
---------------------2
+--------------------2 不安全,看总结
 或者
 sudo gedit /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf
 #/usr/lib/x86_64-linux-gnu/qt4/bin
@@ -10319,18 +10344,17 @@ sudo gedit /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf
 /opt/Qt5.10.1/5.10.1/gcc_64/bin
 
 
+```
 
-cmake配置的时候找到类似Qt5Core_DIR之类的路径指定为/opt/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core
+## cmake配置
+找到类似Qt5Core_DIR之类的路径指定为/opt/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core
 
-
-
-
+## 系统QT库设置变更之后的库依赖的错乱现象
+```
 
 https://bitbucket.org/gusphdproj/deeparg-ss
 https://files.pythonhosted.org/packages/a0/c5/d2238762d780dde84a20b8c761f563fe882b88c5a5fb03c056547c442a19/scikit_learn-0.21.3-cp36-cp36m-manylinux1_x86_64.whl
 sudo pip3.6 install nolearn
-
-
 
 sudo pip3.6 install PyQtWebEngine -i https://mirrors.163.com/pypi/simple
 自动更新qt5 lib到最新
@@ -10368,7 +10392,7 @@ retext输入字符闪退....
 
 
 
-apt安装的retext果然是因为Qt库制定为5.10(ldconfig)才挂了.
+apt安装的retext果然是因为Qt库指定为5.10(ldconfig)才挂了.
 
 
 
@@ -10378,27 +10402,6 @@ sudo pip3.6 uninstall retext
 sudo pip3.6 install retext==5.0.1 -i https://mirrors.163.com/pypi/simple
 sudo pip3.6 uninstall retext
 sudo apt-get install retext
-
-
-
-cd /usr/local/bin
-sudo mv DSView ../share/DSView/
-复制/usr/local/share/DSView到/opt
-建立相对目录
-/opt/DSView/bin,把可执行文件复制到这里
-/opt/DSView/share/DSView
-
-sudo gedit DSView
-sudo chmod +x DSView
--------------------------------------------------
-#!/bin/bash
-export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
-export PATH=$QTDIR/bin:/opt/Qt5.10.1/Tools/QtCreator/bin:$PATH
-export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
-/opt/DSView/bin/DSView
--------------------------------------------------
-修改/usr/share/applications/DSView.desktop里的desktop文件,图标要修改路径了
-
 
 
 retext还原ok, ldconfig没有动, qtchooser没有动, DSView单独用5.10的库, 或者指向pyqt的更高版本的库
@@ -10441,10 +10444,10 @@ pip3.6  uninstall retext
 /home/andy/.local/bin/
 /home/andy/.local/lib/python3.6/
 
+```
 
-
-
-
+## 更安全的办法,使用qtchooser
+```
 $ qtchooser  -l
 4
 5
@@ -10489,10 +10492,11 @@ Using Qt version 5.10.1 in /opt/Qt5.10.1/5.10.1/gcc_64/lib
 qmake -qt=qt5.10 -v
 和
 export QT_SELECT=qt5.10是一样的
+```
 
 
-
-再就是qtcreator了
+## 再就是qtcreator了
+```
 export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
 export PATH=/opt/Qt5.10.1/Tools/QtCreator/bin:$QTDIR/bin:$PATH
 export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
@@ -10501,14 +10505,15 @@ which qtcreator
 whereis qtcreator
 
 cp /usr/share/applications/qtcreator.desktop ~/.local/share/applications/
-修改一下咯
+修改一下路径就可以用
 
 最后
 ./profile里面有个
 export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
+```
 
-
-总结:如果全部换成qt5.10, 其他都不要动, 只需要临时设置环境变量
+## 总结:如果全部换成qt5.10, 其他都不要动, 只需要临时设置环境变量
+```
 export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
 export PATH=/opt/Qt5.10.1/Tools/QtCreator/bin:$QTDIR/bin:$PATH
 export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
@@ -10520,32 +10525,90 @@ export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$L
 export QT_QPA_PLATFORM_PLUGIN_PATH=
 
 为啥不动系统配置,要动配置也配置成用户配置,为了之前安装的东西还能继续用啊.
+```
+
+
+
+
+# 安装glmark
+```
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+sudo apt-get install git g++ build-essential pkg-config
+sudo aptitude install libx11-dev libgl1-mesa-dev
+
+cd ~/Downloads
+git clone https://github.com/glmark2/glmark2.git
+cd glmark2/
+./waf configure --with-flavors=x11-gl
+./waf build -j 4
+./waf install --destdir=glmark2-out
+./waf configure --with-flavors=x11-glesv2
+./waf build -j 4
+./waf install --destdir=glmark2-out 
+（本机安装，执行"./waf install"）
+
+sudo strip -s glmark2-out/usr/local/bin/glmark2
+sudo strip -s glmark2-out/usr/local/bin/glmark2-es2
+
+打包
+或者复制out目录到系统路径
+
+
+$ taskset -c 4-5 glmark2-es2
+```
 
 
 
 
 
 
+# apt强制更新过期源
+```
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+sudo aptitude -o Acquire::Check-Valid-Until=false update
+```
+
+# 蓝牙 Bluetooth
+```
+sudo apt-get install blueman
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  gir1.2-appindicator3-0.1 libopenobex1 obex-data-server
+The following NEW packages will be installed:
+  blueman gir1.2-appindicator3-0.1 libopenobex1 obex-data-server
+0 upgraded, 4 newly installed, 0 to remove and 319 not upgraded.
+Need to get 1,847 kB of archives.
+
+sudo apt-get install blueman bluez*
+
+hcitool scan
+bluez-simple-agent hci075:EF:82:69:D2:83
+bluez-test-device trusted75:EF:82:69:D2:83 yes
+bluez-test-input connect75:EF:82:69:D2:83
+$ sudo -i
+# bluetoothctl
+[bluetooth]# power off
+[bluetooth]# power on
+[bluetooth]# scan on
+[bluetooth]# connect XX:XX:XX:XX:XX:XX
+[Arc Touch Mouse SE]# trust
+[Arc Touch Mouse SE]# pair
+[Arc Touch Mouse SE]# unblock
+[Arc Touch Mouse SE]# power off
+[bluetooth]# power on
+
+/etc/bluetooth/main.conf
+[Policy]
+AutoEnable
+sudo vi /lib/udev/rules.d/50-bluetooth-hci-auto-poweron.rules
+每行都加上 # 开头，其实也可以删除了这个文件。
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sudo apt-get purge blueman
+sudo apt purge blueproximity
+```
 
 
 
