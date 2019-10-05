@@ -65,6 +65,28 @@ sudo ln -s /etc/systemd/system/vncserver@.service /etc/systemd/system/multi-user
 sudo reboot
 
 
+# apt-get 告警问题
+```
+W: Download is performed unsandboxed as root as file '/var/cache/apt/archives/partial/libmng2_2.0.2-0ubuntu3_arm64.deb' 
+couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
+参考：
+
+解决办法：
+sudo chown _apt /var/lib/update-notifier/package-data-downloads/partial/
+https://askubuntu.com/questions/954862/couldnt-be-accessed-by-user-apt-pkgacquirerun-13-permission-denied
+
+我的解决办法
+//sudo chown root cache/apt/archives/partial/
+sudo chown _apt cache/apt/archives/partial/
+
+没有效果,也不影响,算了
+
+
+```
+
+
+sudo apt-get install vim ctags vim-doc vim-scripts exuberant-ctags libtemplate-perl ispell vim-addon-manager cscope  
+sudo apt-get install apt-transport-https ttf-mscorefonts-installer  
 
 
 

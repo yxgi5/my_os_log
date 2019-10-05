@@ -319,7 +319,7 @@ $ sudo aptitude install gtk-theme-switch gtk2-engines
 $ sudo aptitude install lxrandr
 $ sudo apt-get install volumeicon-alsa
 
-在 ~/.config/openbox/autostart.sh 下加入
+在 ~/.config/openbox/autostart 下加入
 背景图片
 feh --bg-scale /path/to/your/background/image.jpg
 
@@ -10610,6 +10610,33 @@ sudo apt-get purge blueman
 sudo apt purge blueproximity
 ```
 
+
+
+解压进度条
+参考海思解压脚本
+run_command_progress_float在scripts/common.sh定义的
+
+
+
+几个讨厌的autorun程序去掉
+/home/andy/.config/autostart
+其他位置查autostart
+
+
+
+EDID调试讯息
+cat /proc/umap/hdmi0_sink
+
+
+
+# 百度云盘
+cd /usr/local/bin
+sudo gedit baidunetdisk
+------------------------------------
+#!/bin/bash
+/opt/baidunetdisk/baidunetdisk
+------------------------------------
+sudo chmod +x baidunetdisk
 
 
 
