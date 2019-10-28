@@ -10641,4 +10641,19 @@ sudo chmod +x baidunetdisk
 
 
 
+sudo apt-get install hwinfo
+sudo apt-get install mediainfo
+sudo apt-get install libgpac-dev
+
+
+
+
+sudo gedit /etc/resolv.conf
+sudo /etc/init.d/networking restart
+
+ping6 fe80::20c:29ff:fe1c:8c75%eth0
+
+ping -6 fe80::20c:29ff:fe1c:8c75
+
+
 
