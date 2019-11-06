@@ -10657,3 +10657,14 @@ ping -6 fe80::20c:29ff:fe1c:8c75
 
 
 
+
+
+
+sudo apt-get install archivemount
+
+
+
+
+
+
+
