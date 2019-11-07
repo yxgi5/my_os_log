@@ -10666,5 +10666,19 @@ sudo apt-get install archivemount
 
 
 
+gcc a.c -o a.S -S 就可以生成汇编
+收发二进制可使用 dump 命令，cat 只是测试字符
+
+
+
+
+
+
+
+
+
+
+
+
 
 
