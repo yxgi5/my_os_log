@@ -10675,6 +10675,86 @@ gcc a.c -o a.S -S 就可以生成汇编
 
 
 
+sudo apt install qemu-kvm qemu virt-manager libvirt-bin bridge-utils iptables dnsmasq uml-utilities
+
+
+
+
+
+
+
+
+sudo gedit /etc/libvirt/libvirtd.conf
+unix_sock_group = "libvirt"
+unix_sock_ro_perms = "0777"
+unix_sock_rw_perms = "0770"
+
+sudo systemctl start libvirtd
+sudo systemctl enable libvirtd
+
+sudo usermod -a -G libvirt $(whoami)
+注销并重新登录
+可以通过命令行 （virsh） 或通过 virt-manager 图形界面管理 libvirt 系统
+
+
+/var/lib/libvirt/images
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
