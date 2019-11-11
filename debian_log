@@ -10701,28 +10701,78 @@ sudo usermod -a -G libvirt $(whoami)
 
 
 
+shadowsocks有关
+安装 shadowsocks-libev(c++) 或者 shadowsocks(Python)
+
+shadowsocks-qt5采用aes-256-cfb可能会出现
+ERR_SSL_VERSION_OR_CIPHER_MISMATCH
+自带的ss-qt5不会出现这个问题
+可能和botan有关
 
 
+$ sudo apt-get install shadowsocks
+The following NEW packages will be installed:
+  python-m2crypto shadowsocks
+
+编辑/etc/shadowsocks/config.json
+
+ss-local -c /etc/shadowsocks/config.json
+或者
+sslocal -c /etc/shadowsocks/config.json
+
+参考
+https://wiki.archlinux.org/index.php/Shadowsocks_(简体中文)
+
+作为systemd服务启动
+从
+https://www.archlinux.org/packages/community/x86_64/shadowsocks-libev/
+https://www.archlinux.org/packages/community/any/shadowsocks/
+搞到systemd有关的文件
+community 源里安装的shadowsocks好像自带 systemd 服务
+只要编辑 /etc/shadowsocks/config.json 配置文件
+然后 sudo systemctl enable shadowsocks@config.service 就可以了
+##sudo systemctl start shadowsocks@config.service
 
 
+shadowsocks@.service
+-------------------------------
+[Unit]
+Description=Shadowsocks Client Service
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+ExecStart=/usr/bin/sslocal -c /etc/shadowsocks/%i.json
+
+[Install]
+WantedBy=multi-user.target
+-------------------------------
+
+/etc/shadowsocks/config.json
+-------------------------------
+{
+    "server":"119.28.9.79",
+    "server_port":3588,
+    "local_address": "127.0.0.1",
+    "local_port":1081,
+    "password":"xinhai",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false,
+    "workers": 10
+}
+-------------------------------
+
+sudo systemctl start shadowsocks@config.service
+
+netstat -ntlp | grep 1081
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Failure to obtain a Verilog simulation license. Unable to checkout any of these license features: alteramtivsim or alteramtivlog
+/opt/altera/11.0/modelsim_ae/bin/vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L maxii_ver -L rtl_work -L work -voptargs="+acc" Top
+./lmutil lmdiag -c /opt/altera/license.dat alteramtivsim
+分明已经可以了,但是还是报错
 
 
 
