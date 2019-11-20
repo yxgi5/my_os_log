@@ -10714,6 +10714,9 @@ $ sudo apt-get install shadowsocks
 The following NEW packages will be installed:
   python-m2crypto shadowsocks
 
+$ sudo apt-get shadowsocks-libev
+
+
 编辑/etc/shadowsocks/config.json
 
 ss-local -c /etc/shadowsocks/config.json
@@ -10734,7 +10737,7 @@ community 源里安装的shadowsocks好像自带 systemd 服务
 ##sudo systemctl start shadowsocks@config.service
 
 
-shadowsocks@.service
+/usr/lib/systemd/system/shadowsocks@.service
 -------------------------------
 [Unit]
 Description=Shadowsocks Client Service
