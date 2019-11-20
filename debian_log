@@ -10773,11 +10773,11 @@ Failure to obtain a Verilog simulation license. Unable to checkout any of these 
 /opt/altera/11.0/modelsim_ae/bin/vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L maxii_ver -L rtl_work -L work -voptargs="+acc" Top
 ./lmutil lmdiag -c /opt/altera/license.dat alteramtivsim
 分明已经可以了,但是还是报错
+AE版本的modelsim是没辙了
 
 
 
-
-
+sudo systemctl enable shadowsocks@config.service
 
 
 
