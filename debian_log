@@ -10819,6 +10819,14 @@ sudo udevadm control --reload-rules
 /opt/lscc/license.dat添加到~/.bashrc的LM_LICENSE_FILE环境变量
 
 
+cd /usr/local/bin
+sudo gedit diamond
+sudo chmod +x diamond
+-------------------------------------------------
+#!/bin/bash
+cd /opt/lscc/diamond/3.9_x64/bin/lin64/
+./diamond
+-------------------------------------------------
 
 
 
