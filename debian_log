@@ -10813,6 +10813,9 @@ SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh 
 ---------------------------------------------------------------
 sudo chmod 755 10-local.rules
 sudo udevadm control --reload-rules
+sudo rmmod ftdi_sio
+
+
 
 
 /opt/lscc/diamond/3.9_x64/bin/lin64添加到~/.bashrc的PATH环境变量
