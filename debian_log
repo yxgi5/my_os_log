@@ -2279,6 +2279,12 @@ sudo apt-get install squashfs-tools
 
 office project
 安装openproj
+安装
+Download openproj from http://sourceforge.net/projects/openproj/ Yes, you can only download the rpm file. But you can also install it in Ubuntu via alien. sudo apt-get install alien sudo alien -i openproj.rpm
+错误
+Your Java vendor is "Oracle Corporation". To run OpenProj, you need the Sun Java implementation. The auto-detected Java Runtime used is..
+解决办法
+修改$HOME/.openproj/run.conf，将JAVA_OPTS="-Xms128m -Xmx768m"改为AVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，最后重启openproj
 
 
 
