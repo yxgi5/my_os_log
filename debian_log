@@ -1327,6 +1327,14 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin
 
 
 
+cd /usr/local/bin
+sudo gedit quartus
+---------------------------------
+#!/bin/bash
+cd /opt/altera/11.0/quartus/bin/
+./quartus
+---------------------------------
+sudo chmod +x quartus
 
 
 /home/user/.cache/tracker目录，找到meta.db（多媒体文件索引数据），删除这个文件（可以放心删除，手机重启后会自动生成），然后重启
