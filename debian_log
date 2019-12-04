@@ -10850,10 +10850,33 @@ cd /opt/lscc/diamond/3.9_x64/bin/lin64/
 
 
 
+定期清理内存占用
+
+buff/cache占据了的内存,是可以被释放的
+
+andy@debian-dell ~
+$ free -m
+             total       used       free     shared    buffers     cached
+Mem:         15850      13950       1899        401       3164       3110
+-/+ buffers/cache:       7675       8174
+Swap:            0          0          0
+
+andy@debian-dell ~
+$ sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'
+andy@debian-dell ~
+$ sudo sh -c 'echo 2 > /proc/sys/vm/drop_caches'
+andy@debian-dell ~
+$ sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+
+andy@debian-dell ~
+$ free -m
+             total       used       free     shared    buffers     cached
+Mem:         15850       1997      13852        386         61        795
+-/+ buffers/cache:       1140      14709
+Swap:            0          0          0
 
 
-
-
+see, 释放了吧
 
 
 
