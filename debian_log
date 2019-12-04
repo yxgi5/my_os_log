@@ -10861,7 +10861,7 @@ Mem:         15850      13950       1899        401       3164       3110
 -/+ buffers/cache:       7675       8174
 Swap:            0          0          0
 
-andy@debian-dell ~
+andy@debian-dell ~ [其实应该先sync]
 $ sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'
 andy@debian-dell ~
 $ sudo sh -c 'echo 2 > /proc/sys/vm/drop_caches'
@@ -10879,16 +10879,25 @@ Swap:            0          0          0
 see, 释放了吧
 
 更安全的操作
+
 1. 切换到管理员权限
 $ sudo su
+
 2. 多次执行 sync 命令
 # sync
 # sync
 sync 命令将所有未写的系统缓冲区写到磁盘中，包含已修改的 i-node、已延迟的块 I/O 和读写映射文件）。数据一般是先从硬盘调到内存来被CPU进行处理，sync是一个非常牛逼的命令，他可以将放在内存中暂时没有写入硬盘的数
 据写入到硬盘中，避免数据的丢失。在关机的时候默认的有这个命令.
+
 3. 将/proc/sys/vm/drop_caches值设为3
-/proc是一个虚拟文件系统，我们可以通过对它的读写操作做为与kernel实体间进行通信的一种手段。也就是说可以通过修改/proc中的文件，来对当前kernel的行为做出调整。那么我们可以通过调整/proc/sys/vm/drop_caches来释放内存。
 # echo 3 > /proc/sys/vm/drop_caches
+/proc是一个虚拟文件系统，我们可以通过对它的读写操作做为与kernel实体间进行通信的一种手段。也就是说可以通过修改/proc中的文件，来对当前kernel的行为做出调整。那么我们可以通过调整/proc/sys/vm/drop_caches来释放内存。
+drop_caches的值可以是0-3之间的数字，代表不同的含义：
+0：不释放（系统默认值）;默认情况下表示不释放内存，由操作系统自动管理;
+1：释放页缓存;To free pagecache.
+2：释放dentries和inodes；To free dentries and inodes.
+3：释放所有缓存；To free pagecache, dentries and inodes.
+
 4. free -m 查看内存使用情况
 $ free -m
     参数 说明
@@ -10910,7 +10919,8 @@ $ free -m
 
 
 
-
+thunderbird是可以最小化到托盘的
+MinimizeToTray Reanimated插件
 
 
 
