@@ -10305,10 +10305,11 @@ cp /usr/share/applications/DSView.desktop ~/Desktop/
 cd /usr/local/bin
 sudo mv DSView ../share/DSView/
 复制/usr/local/share/DSView到/opt
-建立相对目录
+建立相对目录如下
 /opt/DSView/bin,把可执行文件复制到这里
 /opt/DSView/share/DSView
 
+cd /usr/local/bin
 sudo gedit DSView
 sudo chmod +x DSView
 -------------------------------------------------
