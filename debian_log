@@ -2846,6 +2846,8 @@ xdg-mime { --help | --manual | --version }
 xdg-mime default nautilus.desktop inode/directory
 The command above adds a line inode/directory=nautilus.desktop to your .local/share/applications/mimeapps.list
 
+xdg-mime query filetype /media/andy/M4A/备份/desktop/workdir/*.xlsx
+application/wps-office.xlsx
 
 sudo apt-get install nautilus nautilus-sendto nautilus-share
 
@@ -10934,6 +10936,23 @@ MinimizeToTray Reanimated插件
 
 
 
+xlsx文件设置open with et (WPS)
+
+~/.config/mimeapps.list
+添加
+application/wps-office.xlsx=wps-office-et.desktop;
+---不行
+
+修改zip的部分
+application/zip=org.gnome.FileRoller.desktop;libreoffice-calc.desktop;wps-office-wps.desktop;wps-office-et.desktop;wps-office-wpp.desktop;libreoffice-writer.desktop;xarchiver.desktop;wine-extension-zip.desktop;
+
+sudo update-mime-database /usr/share/mime
+update-mime-database ~/.local/share/mime
+
+这样, 虽然xlsx, docx, pptx等还是识别为zip格式, 但是通过右键open with 可以选wps的对应软件打开
+
+$ file --mime-type 11111.xlsx 
+11111.xlsx: application/zip
 
 
 
@@ -10942,5 +10961,68 @@ MinimizeToTray Reanimated插件
 
 
 
+
+
+
+
+据说assogiate可以修改mime数据库
+https://launchpad.net/ubuntu/+source/assogiate/0.2.1-3拿到src
+
+解决配置报的缺失
+No package 'gnome-doc-utils' found
+$ sudo apt-get install gnome-doc-utils
+
+No package 'glibmm-2.4' found
+$ sudo apt-get install libglibmm-2.4-dev
+
+No package 'gtkmm-2.4' found
+$ sudo apt-get install libgtkmm-2.4-dev
+
+No package 'libxml++-2.6' found
+$ sudo apt-get install libxml++2.6-dev
+
+No package 'gnome-vfsmm-2.6' found
+??
+
+sudo update-desktop-database
+没用
+
+
+$ sudo apt-get install rox-filer
+没用
+
+
+
+andy@debian-dell ~/Downloads
+$ file -b 11111.xlsx 
+Zip archive data, at least v1.0 to extract
+andy@debian-dell ~/Downloads
+$ file --version
+file-5.22
+magic file from /etc/magic:/usr/share/misc/magic
+
+sudo apt-get install file
+
+The following extra packages will be installed:
+  libmagic-mgc libmagic1
+The following packages will be REMOVED:
+  python3-magic
+The following NEW packages will be installed:
+  libmagic-mgc
+The following packages will be upgraded:
+  file libmagic1
+
+$ file --version
+file-5.35
+
+$ file -b 11111.xlsx 
+Zip archive data, at least v1.0 to extract
+
+
+
+libfm-1.3.1
+sudo apt-get install libmenu-cache-dev
+
+sudo apt-get install libfm-dev libfm-gtk-dev
 
 
