@@ -11026,3 +11026,47 @@ sudo apt-get install libmenu-cache-dev
 sudo apt-get install libfm-dev libfm-gtk-dev
 
 
+
+
+
+
+
+
+
+zip解压安装的eric6运行问题
+PyQt: undefined symbol:FT_Get_Font_Format Error
+cd /usr/local/lib/python3.6/site-packages/PyQt5/Qt/lib
+sudo ln -s libfreetype.so.6.17.0 libfreetype.so
+sudo ln -s libfreetype.so.6.17.0 libfreetype.so.6
+
+export QTDIR=/usr/local/lib/python3.6/site-packages/PyQt5/Qt
+export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
+
+$ eric6
+ok
+
+
+修改/usr/local/bin/eric6
+sudo gedit /usr/local/bin/eric6
+
+添加上面两个export语句
+
+直接就可以运行
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
