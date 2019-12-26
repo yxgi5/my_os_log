@@ -11089,6 +11089,122 @@ sudo chmod +x pycharm
 
 
 
+Accept this solution? [Y/n/q/?] y
+The following NEW packages will be installed:
+  g++-multilib gcc-multilib gcj-4.9-jre-lib gnome-shell-dbg gnome-shell-extension-autohidetopbar 
+  gnome-shell-extension-suspend-button gnome-shell-extensions-gpaste gnome-shell-mailnag gnome-shell-pomodoro gnome-shell-timer 
+  idesk libconfig-auto-perl postgresql printer-driver-foo2zjs printer-driver-m2300w spacefm spacefm-common wine64 xarchiver 
+The following packages will be REMOVED:
+  fonts-horai-umefont{u} gir1.2-appindicator3-0.1{u} libavdevice55{u} libgsoap5{u} libproxy-tools{u} libvncserver0{u} 
+  qemu-user{u} vlc-plugin-pulse{u} wine-gecko2.34:i386{u} 
+The following packages are RECOMMENDED but will NOT be installed:
+  wine32:i386 
+0 packages upgraded, 19 newly installed, 9 to remove and 358 not upgraded.
+
+
+The following NEW packages will be installed:
+  libwine:i386{a} wine32:i386 wine64 
+The following packages will be REMOVED:
+  libwine-development{u} libwine-development:i386{u} libwine-gecko-2.24{u} wine32-development:i386{u} wine64-development{u} 
+The following packages are RECOMMENDED but will NOT be installed:
+  libasound2-plugins:i386 
+0 packages upgraded, 3 newly installed, 5 to remove and 462 not upgraded.
+
+The following NEW packages will be installed:
+  libwine:i386{a} mesa-vdpau-drivers{a} wine wine32:i386 wine64 
+The following packages will be upgraded:
+  vdpau-va-driver 
+The following packages are RECOMMENDED but will NOT be installed:
+  libasound2-plugins:i386 
+1 packages upgraded, 5 newly installed, 0 to remove and 461 not upgraded.
+Need to get 1,343 kB/16.9 MB of archives. After unpacking 124 MB will be used.
+
+The following NEW packages will be installed:
+  wine{a} 
+The following packages will be REMOVED:
+  wine1.7{a} wine1.7-amd64 wine1.7-i386:i386{a} 
+0 packages upgraded, 1 newly installed, 3 to remove and 444 not upgraded.
+
+$ sudo aptitude install -f
+The following packages will be REMOVED:  
+  libasyncns0:i386{u} libcap2:i386{u} libflac8:i386{u} libjson-c2:i386{u} libpcap0.8:i386{u} libpulse0:i386{u} 
+  libsndfile1:i386{u} libvorbisenc2:i386{u} libwrap0:i386{u} ocl-icd-libopencl1:i386{u} wine-mono4.5.4{u} 
+0 packages upgraded, 0 newly installed, 11 to remove and 441 not upgraded.
+Need to get 0 B of archives. After unpacking 56.8 MB will be freed.
+
+
+
+dpkg: error processing /var/cache/apt/archives/*.deb
+
+sudo dpkg -i --force-overwrite <filename>
+sudo dpkg -i --force-overwrite *.deb
+
+再使用sudo apt-get -f install 即可修复
+
+
+
+$ sudo apt-get install wine1.7 wine1.7-amd64
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  i965-va-driver:i386 libexosip2-11 libgsm1:i386 libjack-jackd2-0:i386 liblinphone5 libmediastreamer-base3 libopenjpeg5:i386
+  libopus0:i386 libortp9 libosip2-11 libsamplerate0:i386 libschroedinger-1.0-0:i386 libspeex1:i386 libspeexdsp1:i386 libtheora0:i386
+  libva1:i386 libvdpau1:i386 libx264-142:i386 linphone-common linphone-nogtk
+Use 'apt-get autoremove' to remove them.
+The following extra packages will be installed:
+  fonts-horai-umefont libasyncns0:i386 libcap2:i386 libflac8:i386 libgsm1:i386 libjson-c2:i386 libpcap0.8 libpcap0.8:i386
+  libpulse0:i386 libsndfile1 libsndfile1:i386 libvorbis-dev libvorbis0a libvorbis0a:i386 libvorbisenc2 libvorbisenc2:i386
+  libvorbisfile3 libvorbisfile3:i386 libwrap0:i386 ocl-icd-libopencl1:i386 wine-gecko2.34:i386 wine-mono4.5.4 wine1.7-i386:i386
+Suggested packages:
+  opencl-icd:i386 dosbox:any
+Recommended packages:
+  wine1.5-i386:i386 libgnutls26 libjpeg8 libasound2-plugins:i386 libgnutls26:i386 libjpeg8:i386 wine-mono4.5.4:i386
+The following packages will be REMOVED:
+  linphone mpv
+The following NEW packages will be installed:
+  fonts-horai-umefont libasyncns0:i386 libcap2:i386 libflac8:i386 libgsm1:i386 libjson-c2:i386 libpcap0.8:i386 libpulse0:i386
+  libsndfile1:i386 libvorbisenc2:i386 libwrap0:i386 ocl-icd-libopencl1:i386 wine-gecko2.34:i386 wine-mono4.5.4 wine1.7 wine1.7-amd64
+  wine1.7-i386:i386
+The following packages will be upgraded:
+  libpcap0.8 libsndfile1 libvorbis-dev libvorbis0a libvorbis0a:i386 libvorbisenc2 libvorbisfile3 libvorbisfile3:i386
+8 upgraded, 17 newly installed, 2 to remove and 434 not upgraded.
+Need to get 128 MB of archives.
+After this operation, 479 MB of additional disk space will be used.
+
+
+sudo apt-get install wine1.7 wine1.7-amd64 winetricks
+
+
+
+
+export WINEPREFIX=$HOME/.wine/
+export WINEARCH=win32
+export LANG=zh_CN.UTF-8
+wine xxx.exe
+==
+env LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
