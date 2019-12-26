@@ -11053,6 +11053,38 @@ sudo gedit /usr/local/bin/eric6
 
 直接就可以运行
 
+/usr/lib/x86_64-linux-gnu里面的
+libfreetype.so和libfreetype.so.6保持链接到libfreetype.so.6.11.1
+
+
+
+
+
+
+pycharm添加启动
+pycharm-2018.2.3.desktop
+------------------------------------------
+[Desktop Entry]
+Name=pycharm-community-2018.2.3
+Comment=Pycharm IDE
+Exec=/opt/pycharm-community-2018.2.3/bin/pycharm.sh
+Icon=/opt/pycharm-community-2018.2.3/bin/pycharm.png
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Development;
+StartupNotify=true
+------------------------------------------
+
+cd /usr/local/bin
+sudo gedit pycharm
+---------------------------------
+#!/bin/bash
+cd /opt/pycharm-community-2018.2.3/bin/
+./pycharm.sh &
+---------------------------------
+sudo chmod +x pycharm
+
+
 
 
 
