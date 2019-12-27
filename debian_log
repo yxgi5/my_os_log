@@ -11189,7 +11189,8 @@ env LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
 
 
 
-
+visio画的vsd文件
+可以用LibreOffice Draw编辑, 但是保存为odg文件
 
 
 
