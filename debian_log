@@ -4551,6 +4551,8 @@ Suggested packages:
 The following NEW packages will be installed:
   graphviz libcdt5 libcgraph6 libgvc6 libgvpr2 libpathplan4 libxdot4
 0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
+
+$ gvedit
 </log>
     
     
