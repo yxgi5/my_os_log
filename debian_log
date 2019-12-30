@@ -11198,6 +11198,32 @@ visio画的vsd文件
 
 
 
+在Debian上安装完整的内核源码
+sudo apt-get install dpkg-dev
+sudo gedit /etc/apt/sources.list
+打开deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+sudo apt-get source linux-image-$(uname -r)
+sudo apt-get build-dep linux-image-$(uname -r)
+然后关闭deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4435,8 +4435,26 @@ yaourt meld
 
 
 
+pacman 解决依赖关系 和 强制覆盖已存在文件
+In the process of Xorg cleanup the update requires manual intervention when you hit this message:
 
+:: installing xorgproto (2019.2-2) breaks dependency 'inputproto' required by lib32-libxi
+:: installing xorgproto (2019.2-2) breaks dependency 'dmxproto' required by libdmx
+:: installing xorgproto (2019.2-2) breaks dependency 'xf86dgaproto' required by libxxf86dga
+:: installing xorgproto (2019.2-2) breaks dependency 'xf86miscproto' required by libxxf86misc
+when updating, use: pacman -Rdd libdmx libxxf86dga libxxf86misc && pacman -Syu to perform the upgrade.
 
+primus_vk>=1.3-1 update requires manual intervention
+2019-11-25
+The primus_vk package prior to version 1.3-1 was missing some soname links. This has been fixed in 1.3-1 so the upgrade will need to overwrite the untracked soname links. If you get an error like:
+
+primus_vk: /usr/lib/libnv_vulkan_wrapper.so.1 exists in filesystem
+primus_vk: /usr/lib/libprimus_vk.so.1 exists in filesystem
+when updating, use:
+
+pacman -Syu --overwrite=/usr/lib/libnv_vulkan_wrapper.so.1,/usr/lib/libprimus_vk.so.1
+
+to perform the upgrade.
 
 
 
