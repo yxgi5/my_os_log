@@ -10855,7 +10855,7 @@ cd /opt/lscc/diamond/3.9_x64/bin/lin64/
 
 
 
-定期清理内存占用
+定期清理内存占用, 释放内存
 
 buff/cache占据了的内存,是可以被释放的
 
