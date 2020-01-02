@@ -11235,6 +11235,13 @@ Need to get 36.0 MB of archives.
 
 
 
+pycharm设置r-interpreter
+File->Settings->Languages & .. -> R Language
+填入/usr/bin/R
+重启pycharm
+
+
+
 
 
 
