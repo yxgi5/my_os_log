@@ -11211,7 +11211,26 @@ sudo apt-get -o Acquire::Check-Valid-Until=false update
 
 
 
-
+r language 安装 r 语言
+$ sudo apt-get install r-base r-base-dev
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  cdbs r-base-core r-base-html r-cran-boot r-cran-class r-cran-cluster
+  r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-mass
+  r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet r-cran-rpart
+  r-cran-spatial r-cran-survival r-doc-html r-recommended
+Suggested packages:
+  ess r-doc-info r-doc-pdf r-mathlib
+The following NEW packages will be installed:
+  cdbs r-base r-base-core r-base-dev r-base-html r-cran-boot r-cran-class
+  r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth
+  r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet
+  r-cran-rpart r-cran-spatial r-cran-survival r-doc-html r-recommended
+0 upgraded, 22 newly installed, 0 to remove and 446 not upgraded.
+Need to get 36.0 MB of archives.
 
 
 
