@@ -11243,7 +11243,10 @@ File->Settings->Languages & .. -> R Language
 
 
 
-
+python安装opencv模块
+sudo pip3.6 install opencv-python -i https://mirrors.163.com/pypi/simple
+python安装直方图模块
+sudo pip3.6 install matplotlib -i https://mirrors.163.com/pypi/simple
 
 
 
