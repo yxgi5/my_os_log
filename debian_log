@@ -11636,8 +11636,8 @@ remake -x -d UNIT_TESTING=-DUNIT_TESTING test
 make -d --debug=v V=s UNIT_TESTING=-DUNIT_TESTING test
 
 
-
-
+可以这样指定临时动态库
+LD_PRELOAD=./xxx.so ./run_test
 
 
 
@@ -11743,9 +11743,9 @@ mysqlcheck -u root -p --all-databases
 
 
 
-
-
-
+gcov代码覆盖统计工具和前端处理
+sudo dpkg -i lcov_1.14-2_all.deb
+sudo pip3.6 install gcovr -i https://mirrors.163.com/pypi/simple
 
 
 
