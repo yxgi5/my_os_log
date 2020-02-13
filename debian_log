@@ -11615,8 +11615,15 @@ sudo make install
 cmocka测试导出报表
 CMOCKA_XML_FILE='./out.xml' CMOCKA_MESSAGE_OUTPUT=xml ./sample_test
 
+打桩可以利用链接工具ld的wrapper支持, 实现mock函数替换. will_return()和mock()照常使用
+__wrap_uptime()可以替换uptime()
+链接器选项
+ld --wrap=uptime
+间接传递连接器选项
+gcc -Wl,--wrap=uptime
 
-
+查看LD符号信息
+LD_DEBUG=symbols ./example/uptime/test_uptime
 
 
 makefile报错查原因
@@ -11730,13 +11737,8 @@ sudo apt-get install libuptimed-dev
 
 
 
-
-
-
-
-
-
-
+测试mysql
+mysqlcheck -u root -p --all-databases
 
 
 
