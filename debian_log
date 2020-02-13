@@ -4551,6 +4551,8 @@ Suggested packages:
 The following NEW packages will be installed:
   graphviz libcdt5 libcgraph6 libgvc6 libgvpr2 libpathplan4 libxdot4
 0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
+
+$ gvedit
 </log>
     
     
@@ -10853,7 +10855,7 @@ cd /opt/lscc/diamond/3.9_x64/bin/lin64/
 
 
 
-定期清理内存占用
+定期清理内存占用, 释放内存
 
 buff/cache占据了的内存,是可以被释放的
 
@@ -11189,6 +11191,62 @@ env LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
 
 
 
+visio画的vsd文件
+可以用LibreOffice Draw编辑, 但是保存为odg文件
+
+
+
+
+
+在Debian上安装完整的内核源码
+sudo apt-get install dpkg-dev
+sudo gedit /etc/apt/sources.list
+打开deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+sudo apt-get source linux-image-$(uname -r)
+sudo apt-get build-dep linux-image-$(uname -r)
+然后关闭deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+
+
+
+
+r language 安装 r 语言
+$ sudo apt-get install r-base r-base-dev
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  cdbs r-base-core r-base-html r-cran-boot r-cran-class r-cran-cluster
+  r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-mass
+  r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet r-cran-rpart
+  r-cran-spatial r-cran-survival r-doc-html r-recommended
+Suggested packages:
+  ess r-doc-info r-doc-pdf r-mathlib
+The following NEW packages will be installed:
+  cdbs r-base r-base-core r-base-dev r-base-html r-cran-boot r-cran-class
+  r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth
+  r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet
+  r-cran-rpart r-cran-spatial r-cran-survival r-doc-html r-recommended
+0 upgraded, 22 newly installed, 0 to remove and 446 not upgraded.
+Need to get 36.0 MB of archives.
+
+
+
+
+pycharm设置r-interpreter
+File->Settings->Languages & .. -> R Language
+填入/usr/bin/R
+重启pycharm
+
+
+
+
+python安装opencv模块
+sudo pip3.6 install opencv-python -i https://mirrors.163.com/pypi/simple
+python安装直方图模块
+sudo pip3.6 install matplotlib -i https://mirrors.163.com/pypi/simple
 
 
 JIRA安装配置
