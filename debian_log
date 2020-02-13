@@ -11191,6 +11191,504 @@ env LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
 
 
 
+JIRA安装配置
+java -version
+mysql -uroot -pa
+mysql> create database jira default character set utf8 collate utf8_bin;
+
+$ locate my.cnf
+/etc/mysql/my.cnf
+
+http://localhost/phpmyadmin 可视化管理mysql
+端口80
+
+
+atlassian-jira-software-7.2.2-x64.bin
+安装路径
+/opt/atlassian/jira
+/var/atlassian/application-data/jira
+端口是
+HTTP Port: 8080 
+RMI Port: 8005
+配置文件
+/opt/software/jira/conf/server.xml
+
+开关jira的脚本在
+/opt/atlassian/jira/bin
+
+访问地址
+http://localhost:8080
+
+host name 修改见
+/opt/atlassian/jira/conf/server.xml
+
+破解
+sudo /opt/atlassian/jira/bin/stop-jira.sh
+atlassian-extras-3.1.2.jar和mysql-connector-java-5.1.39-bin.jar
+两个文件复制到/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/目录下
+sudo /opt/atlassian/jira/bin/startup.sh
+
+具体见 <JIRA安装配置记录.doc>
+
+关闭jira服务
+sudo /opt/atlassian/jira/bin/stop-jira.sh
+
+帐号
+andy
+*
+
+
+
+
+Jenkins安装配置
+https://pkg.jenkins.io/debian-stable/
+http://updates.jenkins-ci.org
+选择了
+jenkins_2.89.2_all.deb
+实际上要安装一些插件要更新到jenkins_2.150.3_all.deb或以上
+
+andy@debian-dell ~/Downloads
+$ sudo dpkg -i jenkins_2.89.2_all.deb 
+[sudo] password for andy: 
+Selecting previously unselected package jenkins.
+(Reading database ... 770638 files and directories currently installed.)
+Preparing to unpack jenkins_2.89.2_all.deb ...
+Unpacking jenkins (2.89.2) ...
+dpkg: dependency problems prevent configuration of jenkins:
+ jenkins depends on daemon; however:
+  Package daemon is not installed.
+
+dpkg: error processing package jenkins (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for systemd (215-17+deb8u7) ...
+Errors were encountered while processing:
+ jenkins
+andy@debian-dell ~/Downloads
+$ sudo apt-get install -f
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Correcting dependencies... Done
+The following extra packages will be installed:
+  daemon
+The following NEW packages will be installed:
+  daemon
+0 upgraded, 1 newly installed, 0 to remove and 433 not upgraded.
+1 not fully installed or removed.
+Need to get 97.4 kB of archives.
+After this operation, 283 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 https://mirrors.aliyun.com/debian/ jessie/main daemon amd64 0.6.4-1 [97.4 kB]
+Fetched 97.4 kB in 0s (241 kB/s)
+Selecting previously unselected package daemon.
+(Reading database ... 770649 files and directories currently installed.)
+Preparing to unpack .../daemon_0.6.4-1_amd64.deb ...
+Unpacking daemon (0.6.4-1) ...
+Processing triggers for man-db (2.7.0.2-5) ...
+Setting up daemon (0.6.4-1) ...
+Setting up jenkins (2.89.2) ...
+insserv: warning: script 'K01jira' missing LSB tags and overrides
+insserv: warning: script 'jira' missing LSB tags and overrides
+Processing triggers for systemd (215-17+deb8u7) ...
+
+
+修改jenkins端口
+sudo vim /etc/default/jenkins
+
+#修改如下内容
+HTTP_PORT=8090
+
+#重启jenkins服务
+$ sudo /etc/init.d/jenkins restart
+
+#启动jenkis
+sudo /etc/init.d/jenkins [start|restart|stop]
+
+
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+
+sudo netstat -ntlp | grep 8090
+
+
+$ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+64c10730c5c747fc84c7673672ce008d
+
+/etc/default/jenkins 中可以看出来
+$JENKINS_HOME就是
+/var/lib/jenkins
+
+
+在http://localhost:8090/
+创建了admin用户为
+admin
+202*****
+
+sudo gedit /var/lib/jenkins/hudson.model.UpdateCenter.xml
+原内容
+<?xml version='1.0' encoding='UTF-8'?>
+<sites>
+  <site>
+    <id>default</id>
+    <url>https://updates.jenkins.io/update-center.json</url>
+  </site>
+</sites>
+修改镜像源为国内源
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
+或者
+进入jenkins系统管理 
+进入插件管理
+点击高级，修改升级站点的地址为清华大学镜像地址
+
+
+关闭jenkins服务
+sudo /etc/init.d/jenkins stop
+sudo systemctl stop jenkins
+
+
+
+
+
+Gitlab环境搭建
+sudo apt-get install curl openssh-server ca-certificates
+sudo apt-get install postfix
+选 internet site
+
+$ sudo apt-get install -y postfix
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Suggested packages:
+  postfix-mysql postfix-pgsql postfix-ldap postfix-pcre sasl2-bin
+  dovecot-common resolvconf postfix-cdb ufw postfix-doc
+The following packages will be REMOVED:
+  exim4 exim4-base exim4-config exim4-daemon-light
+The following NEW packages will be installed:
+  postfix
+
+
+企业版
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+或免费版
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+sudo apt-get -o Acquire::Check-Valid-Until=false update
+
+sudo netstat -anptl | grep 80
+sudo kill -9 <pid>
+暂时释放80和8080端口
+sudo EXTERNAL_URL="http://." apt-get install gitlab-ce
+sudo EXTERNAL_URL="http://127.0.0.1" apt-get install gitlab-ce
+sudo EXTERNAL_URL="http://." apt-get install gitlab-ee
+sudo EXTERNAL_URL="http://127.0.0.1:8091" apt-get install gitlab-ee --reinstall
+sudo EXTERNAL_URL="http://." apt-get install gitlab-ee --reinstall
+
+https://packages.gitlab.com/gitlab/gitlab-ee
+https://packages.gitlab.com/gitlab/gitlab-ee/packages/debian/jessie/gitlab-ee_12.7.5-ee.0_amd64.deb
+wget --content-disposition https://packages.gitlab.com/gitlab/gitlab-ee/packages/debian/jessie/gitlab-ee_12.7.5-ee.0_amd64.deb/download.deb
+
+或者安装
+https://packages.gitlab.com/gitlab/gitlab-ce/packages/debian/jessie/gitlab-ce_12.7.5-ce.0_amd64.deb/download.deb
+
+修改Nginx端口
+sudo gedit /etc/gitlab/gitlab.rb
+把文件中的
+external_url 'http://localhost'
+  改为：
+external_url 'http://127.0.0.1:8091'
+
+影响
+sudo gedit /var/opt/gitlab/nginx/conf/gitlab-http.conf
+
+继续修改Unicorn端口
+unicorn['port'] = 8092
+gitlab_workhorse['auth_backend'] = "http://localhost:8092"
+
+sudo netstat -tunlp | grep 8080
+sudo lsof -Pni |grep <port number>
+先关闭8080端口占用
+
+生效配置
+sudo gitlab-ctl reconfigure
+重启运行中的服务, 也可有stop再start
+sudo gitlab-ctl restart
+
+
+
+sudo gedit /var/opt/gitlab/gitlab-rails/etc/unicorn.rb
+把文件中的
+listen "127.0.0.1:8080"
+改为：
+listen "127.0.0.1:8092"
+
+sudo gedit /opt/gitlab/embedded/service/gitlab-shell/config.yml
+8092
+
+重新配置(之后要重启服务)
+sudo gitlab-ctl reconfigure
+重启服务
+sudo gitlab-ctl restart
+service sshd start
+service postfix start
+
+
+
+
+
+查看gitlab服务器状态
+sudo gitlab-ctl status
+
+
+// sudo apt-get install nginx
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  nginx-common nginx-full
+Suggested packages:
+  fcgiwrap nginx-doc
+The following NEW packages will be installed:
+  nginx nginx-common nginx-full
+
+
+详细运行状态查看
+sudo gitlab-rake gitlab:env:info
+sudo gitlab-rake gitlab:check SANITIZE=true
+
+Nginx端口8091 (安装默认是80)
+Unicorn端口8092 (安装默认是8080)
+
+访问
+http://localhost:8091
+强制刷新几次
+
+设置默认账户 root 的密码 12345678
+接下来 account-->new user之类的普通账户设置
+创建仓库和设置项目分支用户权限
+
+
+卸载gitlab
+sudo gitlab-ctl uninstall
+sudo dpkg -r gitlab-ce
+sudo rpm -e gitlab-ce
+sudo reboot
+
+
+仓库存储位置, 邮件发送等参数
+http://blog.sina.com.cn/s/blog_4152a9f50102zo49.html
+
+
+关闭gitlab服务
+sudo gitlab-ctl stop
+
+
+
+
+
+
+
+
+
+
+
+
+$ sudo apt-get install libcunit1-dev
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  libcunit1
+Suggested packages:
+  libcunit1-doc
+The following NEW packages will be installed:
+  libcunit1 libcunit1-dev
+
+
+
+
+
+sudo apt-get install splint
+一般启用严格检查
+splint --strict *.c
+头文件找不到时, 比如在/usr/local/include, 可以这样
+splint -I/usr/local/include *.c
+
+
+
+这个的规则还是自己写个好了, 不要用默认的规则
+##sudo pip3.6 install cpplint -i https://mirrors.163.com/pypi/simple
+sudo pip3.6 uninstall cpplint
+
+
+
+wine的环境变量
+wine regedit
+全局环境变量在HLM->System->CurrentControlSet->Control->SessionManager->Environment
+用户环境变量在HCU->Environment
+wineboot 重启wine
+
+
+
+
+#这个不是最新的
+#sudo apt-get install libcmocka-dev
+#sudo apt-get remove cmocka-doc libcmocka-dev libcmocka0
+
+源码编译安装cmocka
+https://cmocka.org/files/1.1/cmocka-1.1.5.tar.xz
+cd cmocka-1.1.5
+mkdir build
+cmake -DWITH_STATIC_LIB=on ..
+make
+sudo make install
+
+
+-- Install configuration: ""
+-- Installing: /usr/local/lib/pkgconfig/cmocka.pc
+-- Installing: /usr/local/lib/cmake/cmocka/cmocka-config.cmake
+-- Installing: /usr/local/lib/cmake/cmocka/cmocka-config-version.cmake
+-- Installing: /usr/local/include/cmocka.h
+-- Installing: /usr/local/include/cmocka_pbc.h
+-- Installing: /usr/local/lib/libcmocka.so.0.7.0
+-- Installing: /usr/local/lib/libcmocka.so.0
+-- Installing: /usr/local/lib/libcmocka.so
+
+cmocka测试导出报表
+CMOCKA_XML_FILE='./out.xml' CMOCKA_MESSAGE_OUTPUT=xml ./sample_test
+
+
+
+
+
+makefile报错查原因
+比如
+make UNIT_TESTING=-DUNIT_TESTING test
+报错
+
+那么通过下面命令查看为啥出错
+remake -x -d UNIT_TESTING=-DUNIT_TESTING test
+make -d --debug=v V=s UNIT_TESTING=-DUNIT_TESTING test
+
+
+
+
+
+
+
+
+编译安装cmockery [其实cmocka就源于cmockery]
+/usr/local/share/doc/cmockery*
+/usr/local/include/google
+/usr/local/lib/libcmockery*
+修改默认头文件安装位置到/usr/local/include
+
+
+
+
+
+
+
+
+
+编译安装gtest
+-- Install configuration: ""
+-- Up-to-date: /usr/local/include
+-- Installing: /usr/local/include/gmock
+-- Installing: /usr/local/include/gmock/gmock-more-matchers.h
+-- Installing: /usr/local/include/gmock/gmock-matchers.h
+-- Installing: /usr/local/include/gmock/gmock-function-mocker.h
+-- Installing: /usr/local/include/gmock/gmock-generated-actions.h
+-- Installing: /usr/local/include/gmock/gmock-nice-strict.h
+-- Installing: /usr/local/include/gmock/internal
+-- Installing: /usr/local/include/gmock/internal/custom
+-- Installing: /usr/local/include/gmock/internal/custom/gmock-matchers.h
+-- Installing: /usr/local/include/gmock/internal/custom/README.md
+-- Installing: /usr/local/include/gmock/internal/custom/gmock-generated-actions.h
+-- Installing: /usr/local/include/gmock/internal/custom/gmock-port.h
+-- Installing: /usr/local/include/gmock/internal/custom/gmock-generated-actions.h.pump
+-- Installing: /usr/local/include/gmock/internal/gmock-port.h
+-- Installing: /usr/local/include/gmock/internal/gmock-internal-utils.h
+-- Installing: /usr/local/include/gmock/internal/gmock-pp.h
+-- Installing: /usr/local/include/gmock/gmock-spec-builders.h
+-- Installing: /usr/local/include/gmock/gmock-cardinalities.h
+-- Installing: /usr/local/include/gmock/gmock-more-actions.h
+-- Installing: /usr/local/include/gmock/gmock-generated-actions.h.pump
+-- Installing: /usr/local/include/gmock/gmock-actions.h
+-- Installing: /usr/local/include/gmock/gmock.h
+-- Installing: /usr/local/lib/libgmock.a
+-- Installing: /usr/local/lib/libgmock_main.a
+-- Installing: /usr/local/lib/pkgconfig/gmock.pc
+-- Installing: /usr/local/lib/pkgconfig/gmock_main.pc
+-- Installing: /usr/local/lib/cmake/GTest/GTestTargets.cmake
+-- Installing: /usr/local/lib/cmake/GTest/GTestTargets-noconfig.cmake
+-- Installing: /usr/local/lib/cmake/GTest/GTestConfigVersion.cmake
+-- Installing: /usr/local/lib/cmake/GTest/GTestConfig.cmake
+-- Up-to-date: /usr/local/include
+-- Installing: /usr/local/include/gtest
+-- Installing: /usr/local/include/gtest/gtest-param-test.h
+-- Installing: /usr/local/include/gtest/gtest-printers.h
+-- Installing: /usr/local/include/gtest/gtest-typed-test.h
+-- Installing: /usr/local/include/gtest/gtest-message.h
+-- Installing: /usr/local/include/gtest/gtest-test-part.h
+-- Installing: /usr/local/include/gtest/gtest.h
+-- Installing: /usr/local/include/gtest/internal
+-- Installing: /usr/local/include/gtest/internal/gtest-filepath.h
+-- Installing: /usr/local/include/gtest/internal/gtest-port.h
+-- Installing: /usr/local/include/gtest/internal/custom
+-- Installing: /usr/local/include/gtest/internal/custom/gtest-port.h
+-- Installing: /usr/local/include/gtest/internal/custom/gtest-printers.h
+-- Installing: /usr/local/include/gtest/internal/custom/README.md
+-- Installing: /usr/local/include/gtest/internal/custom/gtest.h
+-- Installing: /usr/local/include/gtest/internal/gtest-string.h
+-- Installing: /usr/local/include/gtest/internal/gtest-type-util.h
+-- Installing: /usr/local/include/gtest/internal/gtest-internal.h
+-- Installing: /usr/local/include/gtest/internal/gtest-death-test-internal.h
+-- Installing: /usr/local/include/gtest/internal/gtest-param-util.h
+-- Installing: /usr/local/include/gtest/internal/gtest-port-arch.h
+-- Installing: /usr/local/include/gtest/gtest-death-test.h
+-- Installing: /usr/local/include/gtest/gtest-spi.h
+-- Installing: /usr/local/include/gtest/gtest-matchers.h
+-- Installing: /usr/local/include/gtest/gtest_prod.h
+-- Installing: /usr/local/include/gtest/gtest_pred_impl.h
+-- Installing: /usr/local/lib/libgtest.a
+-- Installing: /usr/local/lib/libgtest_main.a
+-- Installing: /usr/local/lib/pkgconfig/gtest.pc
+-- Installing: /usr/local/lib/pkgconfig/gtest_main.pc
+
+
+
+
+
+
+
+
+
+
+sudo apt-get install libuptimed-dev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
