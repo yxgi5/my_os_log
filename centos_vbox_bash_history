@@ -148,21 +148,6 @@ $ docker run hello-world
 //////////////////
 
 
-
-$ docker search gitlab
-$ docker pull gitlab/gitlab-ce
-也可以安装gitlab/gitlab-ee:latest或者gitlab/gitlab-ce:rc
-
-$ docker search jenkins
-$ docker pull jenkins
-或者jenkinsci/blueocean
-
-$ docker search jira
-$ docker pull atlassian/jira-software
-
-/// snapshot 4 ///
-//////////////////
-
 阿里云镜像加速
 https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
 
@@ -183,10 +168,29 @@ docker info
 
 
 
+
+
+$ docker pull mysql:5.7
+
+$ docker search gitlab
+$ docker pull gitlab/gitlab-ce
+也可以安装gitlab/gitlab-ee:latest或者gitlab/gitlab-ce:rc
+
+$ docker search jenkins
+$ docker pull jenkins
+或者jenkinsci/blueocean
+
+$ docker search jira
+$ docker pull atlassian/jira-software
+
+
+/// snapshot 4 ///
+//////////////////
+
 这样分布映射目录
 /home/docker/gitlab         权限root:root
 /home/docker/jenkins_home   权限$USER:$USER
-
+/home/docker/jira
 
 
 运行gitlab镜像
@@ -263,9 +267,10 @@ $ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
 
 
 
-$ docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v /home/jenkins_home:/var/jenkins_home jenkins
+$ docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -p 322:22 --restart always -v /home/docker/jenkins_home:/var/jenkins_home jenkins
 docker logs <容器ID> 检查报错，有目录权限问题，要把owner从root修改成当前用户
-sudo chown -R 1000:1000 /home/jenkins_home
+sudo chown -R 1000:1000 /home/docker/jenkins_home
+docker stop jenkins
 docker container rm --force jenkins
 再运行
 http://192.168.5.177:8080
@@ -275,6 +280,8 @@ http://192.168.5.177:8080
 //$ docker exec -it 7f485bd95c3b  /bin/bash           //进入jenkins容器 
 //$ cat /var/jenkins_home/secrets/initialAdminPassword
 $ cat /home/jenkins_home/secrets/initialAdminPassword
+有类似于 ca93a1c9b11d4bb39266a85558d4ec0a 的字符串
+用这串字符解锁
 
 安装默认插件。要等很长时间
 以后要替换插件源
@@ -291,11 +298,22 @@ sudo gedit /var/lib/jenkins/hudson.model.UpdateCenter.xml
 https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
 
 
+ERROR: : input contained no data
+docker stop jenkins
+docker container rm --force jenkins
+rm /home/jenkins_home/* -rf
+
 创建admin用户，设置密码
 
 
+后台没有启动怎么办
+手动运行容器
+$ docker restart jenkins
+
+
+
 修改端口映射
-$ docker run -d --name jenkins -p 8081:8080 -p 50000:50000 -v /home/jenkins_home:/var/jenkins_home jenkins
+$ docker run -d --name jenkins -p 8081:8080 -p 50000:50000 --restart always -v /home/docker/jenkins_home:/var/jenkins_home jenkins
 如果有tomcat端口也要加上去-p 6080:6080
 
 
@@ -305,24 +323,154 @@ $ docker run -d --name jenkins -p 8081:8080 -p 50000:50000 -v /home/jenkins_home
 
 
 
+//运行jira
+//docker run -d -p 8090:8080 \
+    --name jira-software \
+　　 -v /etc/localtime:/etc/localtime:ro \
+    cptactionhank/atlassian-jira-software:8.1.0
+//docker run -d -it -p  8080:8080  --privileged  -m 4096M -v /data/jira-data:/var/atlassian/application-data/jira  -v /etc/localtime:/etc/localtime --name jira dchevell/jira-software:7.13.0
+
+
+启动mysql docker实例
+docker run --name atlassian-mysql \
+    --restart always \
+    -p 3306:3306 \
+    -v /opt/mysql_data:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+根据实际替换passwd
+
+
+docker run -ti --link atlassian-mysql:mysql --rm mysql:5.7 sh
+MYSQL_PORT_3306_TCP_ADDR是172.17.0.2
+
+连接mysql
+docker run -it --link atlassian-mysql:mysql \
+    --rm mysql:5.7 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+
+
+
+创建jira数据库,并添加jira用户
+//mysql> create database jira default character set utf8 collate utf8_bin;
+//mysql> CREATE USER `jira`@`%` IDENTIFIED BY 'jira';GRANT ALL ON *.* TO `jira`@`%` WITH GRANT OPTION;
+//mysql> alter user 'jira'@'%' identified with mysql_native_password by 'jira';
+修改mysql事物隔离级别
+//mysql> set global transaction isolation level read committed;
+//mysql> set session transaction isolation level read committed;
+//mysql> quit
+
+
+CREATE DATABASE jiradb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+MySQL 5.7.0 - 5.7.5:
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX on <JIRADB>.* TO '<USERNAME>'@'<JIRA_SERVER_HOSTNAME>' IDENTIFIED BY '<PASSWORD>';
+flush privileges;
+
+MySQL 5.7.6 and later (must also include the REFERENCES permission):
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,REFERENCES,ALTER,INDEX on <JIRADB>.* TO '<USERNAME>'@'<JIRA_SERVER_HOSTNAME>' IDENTIFIED BY '<PASSWORD>';
+flush privileges;
+
+
+//create database jira default character set utf8 collate utf8_bin;
+//CREATE USER `jira`@`%` IDENTIFIED BY 'jira';GRANT ALL ON *.* TO `jira`@`%` WITH GRANT OPTION;
+//alter user 'jira'@'%' identified with mysql_native_password by 'jira';
+//flush privileges;
+
+//CREATE DATABASE jiradb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+//GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,REFERENCES,ALTER,INDEX on jiradb.* TO 'root'@'%' IDENTIFIED BY '123456';
+//flush privileges;
+
+
+CREATE DATABASE jira CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER `jira`@`%` IDENTIFIED BY 'jira';GRANT ALL ON *.* TO `jira`@`%` WITH GRANT OPTION;
+alter user 'jira'@'%' identified with mysql_native_password by 'jira';
+
+
+
+列出正在运行的容器
+docker ps
+进入容器
+docker exec -it 4c3bb58c08a9 /bin/bash
+查看配置文件my.cnf
+cat /etc/mysql/mysql.conf.d/mysqld.cnf
+cat /etc/mysql/my.cnf
+复制出来
+docker cp  atlassian-mysql:/etc/mysql/mysql.cnf .
+
+添加这么一段
+[mysqld]
+default-storage-engine=INNODB
+character_set_server=utf8mb4
+innodb_default_row_format=DYNAMIC
+innodb_large_prefix=ON
+innodb_file_format=Barracuda
+innodb_log_file_size=2G
+
+
+docker cp mysql.cnf 4c3bb58c08a9:/etc/mysql/mysql.cnf
+docker restart 4c3bb58c08a9
+
+
+
+启动jira实例
+docker run -d -p 8090:8080 \
+    --detach --restart always \
+    --name jira \
+    -v /home/docker/jira/:/var/atlassian/application-data/jira \
+    -v /etc/localtime:/etc/localtime \
+    atlassian/jira-software
+    
+
+拷贝atlassian-extras到容器内
+sudo mount -t vboxsf share /mnt/share/
+$ docker cp atlassian-extras-3.2.jar jira:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+//$ docker cp mysql-connector-java-5.1.39-bin.jar jira:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+$ docker cp mysql-connector-java-5.1.48-bin.jar jira:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+进入容器设置atlassian-extras的权限
+$ docker exec -it jira bash
+  chmod 755 /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/atlassian-extras-3.2.jar
+  chmod 755 /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/mysql-connector-java-5.1.39-bin.jar
+# 重启容器
+$ docker restart jira
 
 
 
 
+设置数据库
+hostname填这个，而不是服务器ip
+MYSQL_PORT_3306_TCP_ADDR是172.17.0.2
+docker run -ti --link atlassian-mysql:mysql --rm mysql:5.7 sh
+命令env可以查看
+也可以用jira安装目录里的config.sh来测试数据库连接
+
+
+复制ID
+比如是BM95-7DHR-TP1E-EHM7
+java -jar atlassian-agent.jar -d -m denglitscg@gmail.com -n BAT -p jira -o http://192.168.5.177 -s BM95-7DHR-TP1E-EHM7
+产生的注册码好像失效了，不管了，在线生成吧
 
 
 
 
+利用docker安装中文版GitLab
+docker network create gitlab-net
+
+--network gitlab-net
+docker network (一): 命令
+https://www.jianshu.com/p/263274f27a7d
 
 
 
 
+停止并删除容器
+docker stop e1066fe2db35
+docker rm e1066fe2db35
 
 
 
-
-
-
-
+show databases;
+create database <数据库名>
+drop database <数据库名>
+查看mysql的sql_mode
+SELECT @@GLOBAL.sql_mode;
 
 
