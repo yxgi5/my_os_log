@@ -1,0 +1,328 @@
+sudo yum groupinstall GNOME Desktop Environment -t
+sudo yum groupinstall GNOME Desktop Environment -y
+sudo reboot
+startx
+sudo startx
+sudo yum groupinstall GNOME Desktop Environment -y
+sudo yum groupinstall Xorg -y
+sudo yum install Xorg -y
+startx
+sudo reboot
+ls /usr/src/kernels/3.10.0-862.11.6.el7.x86_64/
+uname -r
+sudo yum update kernel
+sudo rpm -qa | grep kernel-devel
+uname -r
+sudo yum install -y kernel-devel-3.10.0-862.el7.x86_64
+sudo yum -y upgrade kernel kernel-devel
+startx
+sudo yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
+sudo yum groupinstall "X Window System"
+startx
+ls
+sudo ./VBoxLinuxAdditions.run 
+cat /var/log/VBoxGuestAdditions.log
+rpm -qa | grep kernel | sort
+ls /usr/src/kernels/
+sudo yum -y install dkms gcc
+sudo ./VBoxLinuxAdditions.run 
+cat /var/log/VBoxGuestAdditions.log
+cat /var/log/vboxadd-install.log
+sudo yum -y install kernel-devel-3.10.0-862.11.6.el7.x86_64 
+sudo ./VBoxLinuxAdditions.run 
+cat /var/log/VBoxGuestAdditions.log
+cat /var/log/vboxadd-install.log
+ls /usr/src/kernels/
+/etc/init.d/vboxdrv
+sudo ./VBoxLinuxAdditions.run KERN_DIR=/usr/src/kernels/3.10.0-862.11.6.el7.x86_64
+sudo ./autorun.sh 
+sudo ./autorun.sh KERN_DIR=/usr/src/kernels/3.10.0-862.11.6.el7.x86_64
+sudo ./autorun.sh 
+sudo reboot
+startx
+sudo ./VBoxLinuxAdditions.run 
+sudo ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+sudo reboot
+sudo /mnt/
+cd /mnt/
+ls
+sudo mkdir share
+sudo mount -t vboxsf share /mnt/share/
+
+
+
+/// snapshot 2 ///
+
+
+
+更新源
+$ sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+$ sudo wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+或者
+$ sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+//sudo yum makecache
+
+清除缓存
+$ sudo yum clean all     # 清除系统所有的yum缓存 /var/cache/yum
+$ sudo yum makecache     # 生成yum缓存
+
+
+epel源 安装和配置
+
+查看可用的epel源
+$ yum list | grep epel-release
+epel-release.noarch                         7-11                       extras
+$ sudo yum install -y epel-release
+epel源安装成功，比原来多了一个epel.repo和epel-testing.repo文件
+
+添加阿里镜像提供的epel源
+$ sudo wget -O /etc/yum.repos.d/epel-7.repo  http://mirrors.aliyun.com/repo/epel-7.repo
+又多出一个epel-7.repo
+//sudo yum clean all     # 清除系统所有的yum缓存
+$ sudo yum makecache     # 生成yum缓存
+
+查看所有的yum源：
+$ yum repolist all
+查看可用的yum源：
+$ yum repolist enabled
+
+关于yum配置的说明
+$ man yum.conf
+
+
+确保删除旧版docker
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+
+设置docker所需的依赖
+$ sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+
+添加docker的repository
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+
+
+公钥安装
+$ wget https://download.docker.com/linux/centos/gpg
+或者
+$ wget https://get.docker.com/gpg
+$ sudo rpmkeys --import ./gpg
+
+脚本安装docker
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+
+中间出问题要运行
+$ sudo yum-complete-transaction --cleanup-only
+$ sudo yum history redo last
+
+添加当前用户到docker组
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ groups
+
+
+
+//$ sudo gedit /etc/sysctl.conf
+//user.max_user_namespaces=28633
+//$ sudo sysctl --system
+
+
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+$ sudo chkconfig docker on
+$ docker run hello-world
+
+
+/// snapshot 3 ///
+//////////////////
+
+
+
+$ docker search gitlab
+$ docker pull gitlab/gitlab-ce
+也可以安装gitlab/gitlab-ee:latest或者gitlab/gitlab-ce:rc
+
+$ docker search jenkins
+$ docker pull jenkins
+或者jenkinsci/blueocean
+
+$ docker search jira
+$ docker pull atlassian/jira-software
+
+/// snapshot 4 ///
+//////////////////
+
+阿里云镜像加速
+https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
+
+修改daemon配置文件/etc/docker/daemon.json来使用加速器
+sudo mkdir -p /etc/docker
+
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://3m45wpca.mirror.aliyuncs.com"]
+}
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+验证
+docker info
+
+
+
+这样分布映射目录
+/home/docker/gitlab         权限root:root
+/home/docker/jenkins_home   权限$USER:$USER
+
+
+
+运行gitlab镜像
+$ docker run -d -p 443:443 -p 80:80 -p 222:22 --name gitlab --restart always -v /home/docker/gitlab/config:/etc/gitlab -v /home/docker/gitlab/logs:/var/log/gitlab -v /home/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce
+# -d：后台运行，在后台启动
+# -p：将容器内部端口向外映射， 外部宿主机端口：容器内部应用端口
+# --name：命名容器名称，容器启动之后的名字
+# --restart 重启配置，可以是unless-stopped等
+# -v：将容器内数据文件夹或者日志、配置等文件夹映射到宿主机指定目录
+
+
+宿主服务器上默认的 SSH 服务也是使用的 22 端口，因此默认会产生端口冲突
+//一种办法是修改宿主 SSH 端口
+//其中的 Port 22 改为其它端口号，然后 service sshd restart 。这种方式比较推荐，因为管理用的宿主 SSH 端口改成别的其实更安全
+另一种是修改容器的 SSH 端口
+修改容器的端口映射关系，比如将 -p 22:22 改为 -p 2222:22 ，这样 GitLab 的 SSH 服务端口将是 2222。
+这样做会让使用 GitLab 的 SSH 克隆、提交代码有些障碍。这种情况要改变用户使用Git 的链接方式
+要从之前的：
+git clone git@gitlab.example.com:myuser/awesome-project.git
+改为明确使用 ssh:// 的 URL 方式
+git clone ssh://git@gitlab.example.com:2222/myuser/awesome-project.git
+
+
+等待一会
+访问http://localhost
+设置root密码，至少8字符
+然后用root登录
+创建一个测试仓库项目，组/用户root，权限private
+看到生成项目的URL访问地址是按容器的hostname来生成的，也就是容器的id
+git@ac89efcb8f82:root/gitlab_test.git
+需要一个固定的URL访问地址，于是需要配置gitlab.rb，宿主机路径：/home/gitlab/config/gitlab.rb
+
+$ sudo gedit /home/gitlab/config/gitlab.rb
+
+external_url 'http://192.168.5.177'
+gitlab_rails['gitlab_ssh_host'] = '192.168.5.177'
+gitlab_rails['gitlab_shell_ssh_port'] = 222 # 此端口是run时22端口映射的222端口
+
+# 重启gitlab容器（容器外重启）
+$ docker restart gitlab
+
+进入容器命令行
+sudo docker exec -it gitlab bash
+容器中应用配置
+sudo gitlab-ctl reconfigure
+容器中重启服务
+sudo gitlab-ctl restart
+
+
+
+客户访问
+比如，这里服务器运行docker，客户机器可以访问服务器
+
+git clone http://192.168.5.177/root/gitlab_test.git
+http方式需要用户名和密码
+
+
+
+打开客户机本地git bash,使用如下命令生成ssh公钥和私钥对
+$ ssh-keygen -t rsa -C 'xxx@xxx.com'
+cat $HOME/.ssh/id_rsa.pub
+添加这个公钥到gitlab
+客户也可以登录BS网页管理，root登录。。。
+在最右上管理里的settings，然后再左边条里（目前是root账户 ，那么这个公钥就是root的公钥）
+
+添加客户机公钥之后，就可以免密码拉取和提交了
+$ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
+
+
+
+
+
+
+
+
+
+$ docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v /home/jenkins_home:/var/jenkins_home jenkins
+docker logs <容器ID> 检查报错，有目录权限问题，要把owner从root修改成当前用户
+sudo chown -R 1000:1000 /home/jenkins_home
+docker container rm --force jenkins
+再运行
+http://192.168.5.177:8080
+第一次启动的时候正在加载jenkins大概会等待3-10分钟
+
+然后解锁jenkins
+//$ docker exec -it 7f485bd95c3b  /bin/bash           //进入jenkins容器 
+//$ cat /var/jenkins_home/secrets/initialAdminPassword
+$ cat /home/jenkins_home/secrets/initialAdminPassword
+
+安装默认插件。要等很长时间
+以后要替换插件源
+sudo gedit /var/lib/jenkins/hudson.model.UpdateCenter.xml
+原内容
+<?xml version='1.0' encoding='UTF-8'?>
+<sites>
+  <site>
+    <id>default</id>
+    <url>https://updates.jenkins.io/update-center.json</url>
+  </site>
+</sites>
+修改镜像源为国内源
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
+
+创建admin用户，设置密码
+
+
+修改端口映射
+$ docker run -d --name jenkins -p 8081:8080 -p 50000:50000 -v /home/jenkins_home:/var/jenkins_home jenkins
+如果有tomcat端口也要加上去-p 6080:6080
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

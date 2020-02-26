@@ -11,7 +11,7 @@ andy	ALL=(ALL:ALL) ALL
 
 
 sources.list
-比如163,aliyun都要用https,更稳定连接
+比如163,aliyun都要用https,更稳定连接 tip: 查发行版本名称lsb_release -cs，会获得比如jessie等名称
 
 ////////////////////////////////////////////////////////////////////
 // install openbox
@@ -2150,7 +2150,7 @@ $ sudo sysv-rc-conf
 $ pstree
 
 
-#对于debian8和ubuntu16有效
+#对于debian8和ubuntu16有效 #runlevel
 http://unix.stackexchange.com/questions/210117/how-to-set-up-a-runlevel-3-in-debian-8
 Debian 8 that you speak of don't use upstart. ubuntu1404还是用的upstart
 Two things you need to know:
@@ -2907,6 +2907,9 @@ unzip -O CP936 test.zip
 要一直生效就在/etc/environment中加入
 UNZIP=”-O CP936″
 ZIPINFO=”-O CP936″
+或者在$HOME/.bashrc里
+alias unzip='unzip -O cp936'
+
 
 解压之后替换文件名
 LANG=C 7za x your-zip-file.zip
@@ -11764,7 +11767,132 @@ sudo pip3.6 install gcovr -i https://mirrors.163.com/pypi/simple
 
 
 
+好像不是这个，看起来有趣的玩意。先删
+$ sudo apt-get install morse-simulator
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  blender blender-data libavdevice55 libopencolorio1 libopenimageio1.4 libyaml-cpp0.3 morse-simulator-data morse-simulator-doc
+  python3-morse-simulator
+The following NEW packages will be installed:
+  blender blender-data libavdevice55 libopencolorio1 libopenimageio1.4 libyaml-cpp0.3 morse-simulator morse-simulator-data
+  morse-simulator-doc python3-morse-simulator
 
+sudo apt-get remove blender blender-data libavdevice55 libopencolorio1 libopenimageio1.4 libyaml-cpp0.3 morse-simulator morse-simulator-data   morse-simulator-doc python3-morse-simulator
+
+
+
+摩尔斯电码
+xdemorse
+morse2ascii
+morsegen
+morse
+
+
+
+
+<log 更新安装opera>
+
+60.0.3255.27，download页面打不开
+--> 66.0.3515.72
+
+
+
+
+
+Getting Started with TensorFlow.pdf
+sudo pip3.6 install pandas  -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+andy@debian-dell ~/Downloads/docker
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+andy@debian-dell ~/Downloads/docker
+$ sudo sh get-docker.sh
+[sudo] password for andy: 
+# Executing docker install script, commit: f45d7c11389849ff46a6b4d94e0dd1ffebca32c1
++ sh -c 'apt-get update -qq >/dev/null'
+E: Release file for http://archive.debian.org/debian/dists/jessie-backports/InRelease is expired (invalid since 370d 4h 46min 12s). Updates for this repository will not be applied.
+andy@debian-dell ~/Downloads/docker
+$ sudo sh get-docker.sh
+# Executing docker install script, commit: f45d7c11389849ff46a6b4d94e0dd1ffebca32c1
++ sh -c 'apt-get -o Acquire::Check-Valid-Until=false update -qq >/dev/null'
++ sh -c 'DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null'
++ sh -c 'curl -fsSL "https://download.docker.com/linux/debian/gpg" | apt-key add -qq - >/dev/null'
++ sh -c 'echo "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable" > /etc/apt/sources.list.d/docker.list'
++ sh -c 'apt-get -o Acquire::Check-Valid-Until=false update -qq >/dev/null'
++ '[' -n '' ']'
++ sh -c 'apt-get install -y -qq --no-install-recommends docker-ce >/dev/null'
++ sh -c 'docker version'
+Client:
+ Version:           18.06.3-ce
+ API version:       1.38
+ Go version:        go1.10.3
+ Git commit:        d7080c1
+ Built:             Wed Feb 20 02:28:55 2019
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server:
+ Engine:
+  Version:          18.06.3-ce
+  API version:      1.38 (minimum version 1.12)
+  Go version:       go1.10.3
+  Git commit:       d7080c1
+  Built:            Wed Feb 20 02:27:21 2019
+  OS/Arch:          linux/amd64
+  Experimental:     false
+If you would like to use Docker as a non-root user, you should now consider
+adding your user to the "docker" group with something like:
+
+  sudo usermod -aG docker your-user
+
+Remember that you will have to log out and back in for this to take effect!
+
+WARNING: Adding a user to the "docker" group will grant the ability to run
+         containers which can be used to obtain root privileges on the
+         docker host.
+         Refer to https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface
+         for more information.
+
+
+andy@debian-dell ~/Downloads/docker
+$ sudo usermod -aG docker andy
+[sudo] password for andy: 
+
+
+newgrp docker
+
+
+$ docker run hello-world
+
+sudo systemctl enable docker
+//sudo systemctl disable docker
+//echo manual | sudo tee /etc/init/docker.override
+sudo apt-get install chkconfig
+查询服务列表
+sudo chkconfig --list
+默认就是开启服务的
+//sudo chkconfig docker on
+服务管理也可以用sysv-rc-conf
+sudo apt-get install sysv-rc-conf
+sudo sysv-rc-conf
 
 
 
