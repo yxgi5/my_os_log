@@ -11898,6 +11898,48 @@ sudo sysv-rc-conf
 
 
 
+32 bit
+https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/0.32.3/0.32.3-linux-ia32.zip
+64 bit
+https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/0.32.3/0.32.3-linux-x64.zip
+unzip 0.32.3-linux-x64.zip
+sudo mv /usr/lib/x86_64-linux-gnu/opera/libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/libffmpeg.so.bk
+sudo cp libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/
+其他地方暂时不动
+/opt/electronic-wechat-linux-x64/libffmpeg.so
+/usr/lib/x86_64-linux-gnu/opera/libffmpeg.so
+/usr/share/atom/libffmpeg.so
+/usr/share/code/libffmpeg.so
+
+dpkg -S libffmpeg.so
+
+
+
+
+查看网速
+sudo apt install nethogs
+nethogs eth0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

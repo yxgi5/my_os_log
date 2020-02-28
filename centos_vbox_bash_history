@@ -1,10 +1,181 @@
+su
+chmod +w /etc/sudoers
+vi /etc/sudoers    == visudo
+chmod +w /etc/sudoers
+// add this line
+andy	ALL=(ALL:ALL) ALL
+
+
+现在还没有ifconfig
+ip link show 显示网络接口状态信息。
+ip addr 查看网络接口IP地址相关，发现网络接口enp0s3没有分配IP地址
+
+vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+修改ONBOOT=yes
+service network restart
+ip addr应该能看到dhcp分配的ip地址
+DHCP状态下查看网关地址：
+netstat -rn
+route -n
+ip route show
+ping一下外网
+
+
+如果要设置静态ip，/etc/sysconfig/network-scripts/ifcfg-enp0s3应该这样设置
+BOOTPROTO="static" #dhcp改为static   
+ONBOOT="yes" #开机启用本配置  
+IPADDR=192.168.7.106 #静态IP  
+GATEWAY=192.168.7.1 #默认网关  
+NETMASK=255.255.255.0 #子网掩码  
+DNS1=192.168.7.1 #DNS 配置
+
+
+
+退出su
+[一开始update很重要，免得出错]
+sudo yum update yum
+yum provides ifconfig
+sudo yum install net-tools #for ifconfig
+sudo yum install vim gedit
+sudo yum update
+sudo yum clean all
+sudo yum makecache
+reboot
+sudo yum update
+reboot
+
+yum search ifconfig现在不对
+sudo yum update bzip2
+
+
+解决fwupdate-efi 同grub2-common冲突[一开始update可避免]
+sudo yum update grub2-common
+
+
+加快yum速度
+sudo yum -y install yum-plugin-fastestmirror
+
+
+按TAB没有了自动补全的功能，主要是因为Centos7在使用最小化安装的时候，没有安装自动补全的包，需要自己手动安装
+sudo yum install -y  bash-completion
+# CentOS 7 需要再安装一个扩展
+sudo yum -y install bash-completion-extras
+使配置生效
+source /etc/profile.d/bash_completion.sh 
+
+
+
+//安装X视窗
+sudo yum grouplist
+//sudo yum install Xorg -y
+sudo yum -y groupinstall "X Window System"
+//sudo yum -y groupinstall X11
+
+
+安装xfce桌面环境
+sudo yum install epel-release
+sudo yum --enablerepo=epel -y groups install "Xfce"
+sudo yum --enablerepo=epel grouplist
+安装中文字体
+sudo yum install cjkuni-ukai-fonts
+sudo yum install google-noto-sans-simplified-chinese-fonts.noarch
+sudo echo "exec /usr/bin/xfce4-session" >> ~/.xinitrc
+现在startx成功
+
+
+设置开启启动桌面环境
+sudo systemctl set-default graphical.target     [！！光盘安装之后立即update就可以避免启动失效]
+centos7启动时显示Oh no! Something has gone wrong
+virtualbox 发送 ctrl alt fn组合键的方法：使用热键（默认右ctrl）+fn即可
+Check /var/log/messages & Xorg logs. /var/log/Xorg.0.log
+暂时先用
+sudo systemctl set-default multi-user.target    这个startx可以
+sudo ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+[！用graphical.target！光盘安装之后立即update就可以避免启动失效]
+
+
+安装gnome
+sudo yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
+sudo yum groupinstall "X Window System"
+sudo ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+centos7启动时显示Oh no! Something has gone wrong
+sudo systemctl set-default graphical.target
+centos7启动时显示Oh no! Something has gone wrong
+sudo systemctl set-default multi-user.target
+也是不行，应该还是一开始没有update
+
+
+
+rpm -qa|grep xorg
+cat /var/log/Xorg.0.log
+
+安装vbox增强工具5.2.26-->5.2.38
+sudo yum -y install gcc-c++
+sudo yum install make
+sudo yum --enablerepo=elrepo-kernel install kernel-ml-devel
+sudo yum install -y "kernel-devel-uname-r == $(uname -r)"
+sudo yum -y install kernel kernel-devel kernel-headers
+sudo reboot
+sudo mkdir --p /media/cdrom
+sudo mount -t auto /dev/cdrom /media/cdrom/
+cd /media/cdrom/
+sudo sh VBoxLinuxAdditions.run # 出错
+//sudo ln -s /usr/src/kernels/3.xx /usr/src/linux
+sudo sh VBoxLinuxAdditions.run # 出错
+sudo reboot
+#sudo sbin/rcvboxadd quicksetup KERN_DIR=/usr/src/kernels/xxx
+#vim /etc/profile
+#KERN_DIR=/usr/src/kernels/<内核版本号>
+#export KERN_DIR
+
+反正这两个报错不影响共享目录和双向剪贴板
+mem_global_ref
+bo_global_ref
+
+lsmod | grep vboxsf
+sudo modprobe vboxsf
+
+[总结：kernel-devel-3.10.0-862.el7.x86_64 vbox的5.2.26iso可以，3.10.0-1062.12.1.el7.x86_64得用5.2.38的iso增强]
+
+模块在
+/usr/lib/modules/3.10.0-1062.12.1.el7.x86_64/misc/
+
+/etc/fstab中添加一项
+share /mnt/share vboxsf rw,gid=100,uid=1000,auto 0 0
+
+也可以
+#vi /etc/rc.d/rc.local
+在文件的最后加入上面手动挂接的命令，比如：
+mount -t vboxsf sharefolder /share
+
+
+
+
+sudo yum install mlocate
+sudo updatedb
+
+
+
+
+sudo yum -y install dkms gcc
+rpm -qa kernel\*
+yum list installed | grep kernel
+yum check-update|grep kernel
+
+
+
+安装下载工具
+sudo yum install curl axel
+yum provides wget
+
+
 sudo yum groupinstall GNOME Desktop Environment -t
 sudo yum groupinstall GNOME Desktop Environment -y
 sudo reboot
 startx
 sudo startx
 sudo yum groupinstall GNOME Desktop Environment -y
-sudo yum groupinstall Xorg -y
+
 sudo yum install Xorg -y
 startx
 sudo reboot
@@ -16,8 +187,7 @@ uname -r
 sudo yum install -y kernel-devel-3.10.0-862.el7.x86_64
 sudo yum -y upgrade kernel kernel-devel
 startx
-sudo yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
-sudo yum groupinstall "X Window System"
+
 startx
 ls
 sudo ./VBoxLinuxAdditions.run 
@@ -46,8 +216,10 @@ sudo reboot
 sudo /mnt/
 cd /mnt/
 ls
-sudo mkdir share
+sudo mkdir -p /mnt/share/
 sudo mount -t vboxsf share /mnt/share/
+
+
 
 
 
@@ -67,6 +239,7 @@ $ sudo yum clean all     # 清除系统所有的yum缓存 /var/cache/yum
 $ sudo yum makecache     # 生成yum缓存
 
 
+
 epel源 安装和配置
 
 查看可用的epel源
@@ -81,10 +254,19 @@ $ sudo wget -O /etc/yum.repos.d/epel-7.repo  http://mirrors.aliyun.com/repo/epel
 //sudo yum clean all     # 清除系统所有的yum缓存
 $ sudo yum makecache     # 生成yum缓存
 
+
 查看所有的yum源：
 $ yum repolist all
 查看可用的yum源：
 $ yum repolist enabled
+
+
+使能CentOSPlus repository
+$ sudo gedit /etc/yum.repos.d/epel-7.repo
+CentOSPlus repository字段
+修改enabled=0为enabled=1
+sudo yum makecache
+
 
 关于yum配置的说明
 $ man yum.conf
@@ -110,13 +292,15 @@ $ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 
-
-
 公钥安装
 $ wget https://download.docker.com/linux/centos/gpg
 或者
 $ wget https://get.docker.com/gpg
 $ sudo rpmkeys --import ./gpg
+
+sudo yum makecache
+
+
 
 脚本安装docker
 $ curl -fsSL https://get.docker.com -o get-docker.sh
@@ -452,7 +636,7 @@ java -jar atlassian-agent.jar -d -m denglitscg@gmail.com -n BAT -p jira -o http:
 
 
 利用docker安装中文版GitLab
-docker network create gitlab-net
+//docker network create gitlab-net
 
 --network gitlab-net
 docker network (一): 命令
@@ -472,5 +656,10 @@ create database <数据库名>
 drop database <数据库名>
 查看mysql的sql_mode
 SELECT @@GLOBAL.sql_mode;
+
+
+
+
+
 
 
