@@ -1945,6 +1945,9 @@ sudo gedit /etc/apache2/apache2.conf
 	Require all granted
 </Directory>
 
+...末尾
+IndexOptions Charset=UTF-8
+如果原来乱码ff看是unicode，这样简易的文件服务器乱码就好了
 
 $ cd /etc/apache2
 $ sudo a2dissite 000-default.conf
@@ -3006,6 +3009,20 @@ sudo /etc/init.d/smbd restart
 
 
 
+sudo useradd andy
+sudo smbpasswd -a andy
+sudo vi /etc/samba/smb.conf
+[dell]
+    comment = Network Logon Service
+    path = /media/andy
+    valid users = andy
+    guest ok = no
+    read only = no
+    writeable = yes
+    browseable = yes
+
+sudo /etc/init.d/nmbd restart
+sudo /etc/init.d/smbd restart
 
 
 安装steam
@@ -11912,8 +11929,9 @@ sudo cp libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/
 /usr/share/code/libffmpeg.so
 
 dpkg -S libffmpeg.so
-
-
+测试https://www.youtube.com/watch?v=4LoSNnJaxNA
+经过验证，用/opt/baidunetdisk/libffmpeg.so
+sudo cp /opt/baidunetdisk/libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/
 
 
 查看网速
