@@ -11930,7 +11930,8 @@ nethogs eth0
 
 
 
-
+工具找出USB驱动器的名称
+lsblk
 
 
 
