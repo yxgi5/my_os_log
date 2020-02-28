@@ -262,7 +262,7 @@ $ yum repolist enabled
 
 
 使能CentOSPlus repository
-$ sudo gedit /etc/yum.repos.d/epel-7.repo
+$ sudo gedit /etc/yum.repos.d/CentOS-Base.repo
 CentOSPlus repository字段
 修改enabled=0为enabled=1
 sudo yum makecache

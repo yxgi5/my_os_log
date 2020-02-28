@@ -11939,6 +11939,23 @@ lsblk
 
 
 
+查看历史记录：
+$ history
+$ $USER/.bash_history
+对于查询不到刚刚执行的命令，是因为还在缓存中, 写缓存
+$ history -w
+清除历史记录
+$ history -c
+可以通过修改 /etc/profile 中 HISTSIZE 的大小来改变记录历史的记录条数
+
+
+
+
+
+
+
+
+
 
 
 
