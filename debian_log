@@ -7939,6 +7939,9 @@ cat $HOME/.ssh/id_rsa.pub
 客户也可以登录BS网页管理，root登录。。。
 在最右上管理里的settings，然后再左边条里（目前是root账户 ，那么这个公钥就是root的公钥）
 
+$ ssh -T git@github.com
+Hi yxgi5! You've successfully authenticated, but GitHub does not provide shell access.
+
 添加客户机公钥之后，就可以免密码拉取和提交了
 $ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
 
