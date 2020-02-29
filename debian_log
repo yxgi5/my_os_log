@@ -7858,6 +7858,7 @@ gpg --list-key
 gpg --armor --export CD804564527D8490
 按github的指令办
 git config commit.gpgsign true
+git config --global user.signingkey CD804564527D8490
 //git config --global commit.gpgsign true
 
 邮件要加到github的settings里，并且在邮箱里去确认才会verified
@@ -7877,7 +7878,16 @@ cat /home/andy/.gitconfig
 gpg的私钥为啥要设置密码
 gpg的私钥一旦泄露，就只有密码这最后一道防线了，所以，私钥最好应该加密码，这样最安全。
 
-对于github，还是没有必要使用加了密码的私钥去加密/签名。
+$ git commit -S -m your commit message
+# Creates a signed commit
+$ git tag -s mytag
+# Creates a signed tag
+$ git tag -v mytag
+# Verifies the signed tag
+$ git push
+# Pushes your local commits to the remote repository
+
+对于github，目前还是没有必要使用加了密码的私钥去加密/签名。
 取消验证gpg签名
 git config commit.gpgsign false
 
@@ -7934,7 +7944,7 @@ $ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
 
 
 这个是俺的ssh公钥
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC28JQZ4WRahsVhU3gZcdpcQl+Y6yUpaPwsfXgXv5j6UGWz/WuSJbNXJdhUaRmd4qEPcOpHM/Ir2/Ht3OvKLdej0v1svriH9S/pF72EvMTeQXIgAWwHOp8hoU/al+lhbOnz2/IYaw6zYXCnWOi3v+gWQfptYI9RCLsmIV1XWNXQdmFDIwDL0xVzq6VlgytxaolcQ6y8ubH21s+voeFgQm0lA3DlHkQPrZuIOMuGuhTQ7Da1cGiz0FYrVZGmdKAsDkc0EcA+AcvTec36lmBMGP2/1POK+wu8EVIhOKVbtqLxVwVSgUqykR7Pe040upnKcBcyVtsHcrqlv1C42wZO+lDX denglitsch@gmail.com
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDGmzfCtRm+PN6YxOwvrH9xLs+1N7AIJpRiHCdrBKlNwlxw0CCCWKQDi73ZhSA9KTHzp2zAnEfAQ37bFEQ6xoPo5yQcDBTj8CwArbaZ1nxn527BgX58CW8ZJYmzQ/xDqR3ktd1Z356gOfqNMICzPJM5kK4AtjMlmqQXbLhR0eYKu19ZTmUlh+EIss7S+kzeRfKBeW+QgwqLPWnrj8so0GoyMfvsUIfxK/pyvqYIUvFGD6RBTH/8WVH276yFEc7+E5nmz58oqAY1kDMD2DVNB7xImD6nINYsM8XytPSj9GXoCHW0Ld60ZsJVSFmFMTEiu+pG5SI5WYzmHcjRaJzRWWf denglitscg@gmail.com
 
 
 
