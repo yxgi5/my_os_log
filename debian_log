@@ -7858,7 +7858,7 @@ gpg --list-key
 gpg --armor --export CD804564527D8490
 按github的指令办
 git config commit.gpgsign true
-git config --global commit.gpgsign true
+//git config --global commit.gpgsign true
 
 邮件要加到github的settings里，并且在邮箱里去确认才会verified
 
