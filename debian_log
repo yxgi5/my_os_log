@@ -7858,11 +7858,11 @@ gpg --list-key
 gpg --armor --export CD804564527D8490
 按github的指令办
 git config commit.gpgsign true
-git config --global commit.gpgsign true
+//git config --global commit.gpgsign true
 
 邮件要加到github的settings里，并且在邮箱里去确认才会verified
 
- cat /home/andy/.gitconfig
+cat /home/andy/.gitconfig
 [user]
 	name = Andreas Zhang
 	email = denglitsch@gmail.com
@@ -7873,6 +7873,69 @@ git config --global commit.gpgsign true
 	gpgsign = true
 [http]
 	sslVerify = false
+为啥要这么干呢，用本地保存的gpg私钥，加密提交的内容，github或者gitlab上用gpg公钥解密，就保证了数据的加密和不被篡改。
+gpg的私钥为啥要设置密码
+gpg的私钥一旦泄露，就只有密码这最后一道防线了，所以，私钥最好应该加密码，这样最安全。
+
+对于github，还是没有必要使用加了密码的私钥去加密/签名。
+取消验证gpg签名
+git config commit.gpgsign false
+
+
+这个是俺的gpg公钥
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1
+
+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
+=wYsT
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+打开客户机本地git bash,使用如下命令生成ssh公钥和私钥对
+$ ssh-keygen -t rsa -C 'xxx@xxx.com'
+cat $HOME/.ssh/id_rsa.pub
+添加这个公钥到gitlab
+客户也可以登录BS网页管理，root登录。。。
+在最右上管理里的settings，然后再左边条里（目前是root账户 ，那么这个公钥就是root的公钥）
+
+添加客户机公钥之后，就可以免密码拉取和提交了
+$ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
+
+
+这个是俺的ssh公钥
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC28JQZ4WRahsVhU3gZcdpcQl+Y6yUpaPwsfXgXv5j6UGWz/WuSJbNXJdhUaRmd4qEPcOpHM/Ir2/Ht3OvKLdej0v1svriH9S/pF72EvMTeQXIgAWwHOp8hoU/al+lhbOnz2/IYaw6zYXCnWOi3v+gWQfptYI9RCLsmIV1XWNXQdmFDIwDL0xVzq6VlgytxaolcQ6y8ubH21s+voeFgQm0lA3DlHkQPrZuIOMuGuhTQ7Da1cGiz0FYrVZGmdKAsDkc0EcA+AcvTec36lmBMGP2/1POK+wu8EVIhOKVbtqLxVwVSgUqykR7Pe040upnKcBcyVtsHcrqlv1C42wZO+lDX denglitsch@gmail.com
+
 
 
 
