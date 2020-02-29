@@ -7940,11 +7940,17 @@ cat $HOME/.ssh/id_rsa.pub
 在最右上管理里的settings，然后再左边条里（目前是root账户 ，那么这个公钥就是root的公钥）
 
 $ ssh -T git@github.com
+....
+16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48这个是github的公钥指纹，表明下载了这个公钥
+....
 Hi yxgi5! You've successfully authenticated, but GitHub does not provide shell access.
 
-添加客户机公钥之后，就可以免密码拉取和提交了
+添加客户机公钥之后，就可以通过ssh方式免密码拉取和提交了
 $ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
-
+$ git clone git@github.com:yxgi5/my_os_log.git    
+默认端口等效于
+$ git clone ssh://git@github.com:22/yxgi5/my_os_log.git
+$ git clone ssh://git@192.30.253.112:22/yxgi5/my_os_log.git
 
 这个是俺的ssh公钥
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDGmzfCtRm+PN6YxOwvrH9xLs+1N7AIJpRiHCdrBKlNwlxw0CCCWKQDi73ZhSA9KTHzp2zAnEfAQ37bFEQ6xoPo5yQcDBTj8CwArbaZ1nxn527BgX58CW8ZJYmzQ/xDqR3ktd1Z356gOfqNMICzPJM5kK4AtjMlmqQXbLhR0eYKu19ZTmUlh+EIss7S+kzeRfKBeW+QgwqLPWnrj8so0GoyMfvsUIfxK/pyvqYIUvFGD6RBTH/8WVH276yFEc7+E5nmz58oqAY1kDMD2DVNB7xImD6nINYsM8XytPSj9GXoCHW0Ld60ZsJVSFmFMTEiu+pG5SI5WYzmHcjRaJzRWWf denglitscg@gmail.com
