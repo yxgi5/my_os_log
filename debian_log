@@ -11701,6 +11701,8 @@ cd cmocka-1.1.5
 mkdir build
 cd build
 cmake -DWITH_STATIC_LIB=on ..
+==
+cmake -DBUILD_STATIC_LIB=on ..
 make
 sudo make install
 
@@ -11764,7 +11766,8 @@ git clone https://github.com/google/googletest
 cd googletest
 mkdir build
 cd build
-cmake ..
+//cmake ..
+cmake -DBUILD_SHARED_LIBS=on ..
 make
 sudo make install
 
