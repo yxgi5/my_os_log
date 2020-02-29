@@ -11699,6 +11699,7 @@ wineboot 重启wine
 https://cmocka.org/files/1.1/cmocka-1.1.5.tar.xz
 cd cmocka-1.1.5
 mkdir build
+cd build
 cmake -DWITH_STATIC_LIB=on ..
 make
 sudo make install
@@ -11759,6 +11760,14 @@ LD_PRELOAD=./xxx.so ./run_test
 
 
 编译安装gtest
+git clone https://github.com/google/googletest
+cd googletest
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+
 -- Install configuration: ""
 -- Up-to-date: /usr/local/include
 -- Installing: /usr/local/include/gmock
