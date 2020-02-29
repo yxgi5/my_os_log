@@ -29,6 +29,7 @@ GATEWAY=192.168.7.1 #默认网关
 NETMASK=255.255.255.0 #子网掩码  
 DNS1=192.168.7.1 #DNS 配置
 
+sudo service network restart
 
 
 退出su
@@ -407,7 +408,7 @@ git clone ssh://git@gitlab.example.com:2222/myuser/awesome-project.git
 git@ac89efcb8f82:root/gitlab_test.git
 需要一个固定的URL访问地址，于是需要配置gitlab.rb，宿主机路径：/home/gitlab/config/gitlab.rb
 
-$ sudo gedit /home/gitlab/config/gitlab.rb
+$ sudo gedit /home/docker/gitlab/config/gitlab.rb
 
 external_url 'http://192.168.5.177'
 gitlab_rails['gitlab_ssh_host'] = '192.168.5.177'
@@ -451,7 +452,7 @@ $ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
 
 
 
-$ docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -p 322:22 --restart always -v /home/docker/jenkins_home:/var/jenkins_home jenkins
+$ docker run -d --name jenkins -p 8081:8080 -p 50000:50000 -p 322:22 --restart always -v /home/docker/jenkins_home:/var/jenkins_home jenkins
 docker logs <容器ID> 检查报错，有目录权限问题，要把owner从root修改成当前用户
 sudo chown -R 1000:1000 /home/docker/jenkins_home
 docker stop jenkins
@@ -463,7 +464,7 @@ http://192.168.5.177:8080
 然后解锁jenkins
 //$ docker exec -it 7f485bd95c3b  /bin/bash           //进入jenkins容器 
 //$ cat /var/jenkins_home/secrets/initialAdminPassword
-$ cat /home/jenkins_home/secrets/initialAdminPassword
+$ cat /home/docker/jenkins_home/secrets/initialAdminPassword
 有类似于 ca93a1c9b11d4bb39266a85558d4ec0a 的字符串
 用这串字符解锁
 
@@ -526,6 +527,13 @@ docker run --name atlassian-mysql \
 
 docker run -ti --link atlassian-mysql:mysql --rm mysql:5.7 sh
 MYSQL_PORT_3306_TCP_ADDR是172.17.0.2
+
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' atlassian-mysql
+也可以获得ip
+
+
+
+
 
 连接mysql
 docker run -it --link atlassian-mysql:mysql \
@@ -621,7 +629,7 @@ $ docker restart jira
 
 设置数据库
 hostname填这个，而不是服务器ip
-MYSQL_PORT_3306_TCP_ADDR是172.17.0.2
+MYSQL_PORT_3306_TCP_ADDR是172.17.0.2 (可以在  sudo vim /home/docker/jira/dbconfig.xml  里修改)
 docker run -ti --link atlassian-mysql:mysql --rm mysql:5.7 sh
 命令env可以查看
 也可以用jira安装目录里的config.sh来测试数据库连接
@@ -656,6 +664,260 @@ create database <数据库名>
 drop database <数据库名>
 查看mysql的sql_mode
 SELECT @@GLOBAL.sql_mode;
+use <数据库名>;
+show tables;
+create table <表名> ( <字段名1> <类型1> [,..<字段名n> <类型n>]);
+drop table <表名> 
+insert into <表名> [( <字段名1>[,..<字段名n > ])] values ( 值1 )[, ( 值n )]
+select <字段1，字段2，...> from < 表名 > where < 表达式 >
+delete from 表名 where 表达式
+update 表名 set 字段=新值,… where 条件
+alter table 表名 add字段 类型 其他;
+rename table 原表名 to 新表名;
+mysqldump -u 用户名 -p<密码> 数据库名 > 导出的文件名
+mysqldump -u 用户名 -p<密码> 数据库名 表名> 导出的文件名
+mysqldump -u 用户名 -p<密码> -d –add-drop-table database_name > outfile_name.sql
+
+
+
+[andy@localhost Desktop]$ docker container ls
+CONTAINER ID        IMAGE                     COMMAND                  CREATED             STATUS                 PORTS                                                                   NAMES
+f06349dd3557        atlassian/jira-software   "/tini -- /entrypoin…"   22 hours ago        Up 16 minutes          0.0.0.0:8090->8080/tcp                                                  jira
+32f45d4d9921        jenkins                   "/bin/tini -- /usr/l…"   22 hours ago        Up 3 hours             0.0.0.0:50000->50000/tcp, 0.0.0.0:322->22/tcp, 0.0.0.0:8081->8080/tcp   jenkins
+00a690834def        gitlab/gitlab-ce          "/assets/wrapper"        22 hours ago        Up 3 hours (healthy)   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 0.0.0.0:222->22/tcp           gitlab
+cc6058ab98ac        mysql:5.7                 "docker-entrypoint.s…"   22 hours ago        Up 3 hours             0.0.0.0:3306->3306/tcp, 33060/tcp                                       atlassian-mysql
+[andy@localhost Desktop]$ docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' f06349dd3557
+172.17.0.4
+[andy@localhost Desktop]$ docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 32f45d4d9921
+172.17.0.5
+[andy@localhost Desktop]$ docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 00a690834def
+172.17.0.2
+[andy@localhost Desktop]$ docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cc6058ab98ac
+172.17.0.3
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+sudo yum -y install ntfs-3g
+sudo gedit /etc/fstab
+------------
+/dev/mapper/cl-root     /                       xfs     defaults        0 0
+UUID=91ff8b62-fee3-4424-97a6-b1b4b9d1f880 /boot                   xfs     defaults        0 0
+UUID=ad758cc5-cf96-49fa-bb6e-7015ae597d78 /media/ssddata  ext4 defaults 0 1
+UUID=d3c5651c-00cc-4570-be8d-024d8368aacd /media/hhddata  ext4 defaults 0 1
+/dev/mapper/cl-home     /home                   xfs     defaults        0 0
+------------
+sudo mkdir -p /media/ssddata
+sudo mkdir -p /media/hhddata
+
+
+sudo yum -y install git nethogs
+sudo service firewalld stop
+
+
+
+# 查询端口是否开放
+sudo firewall-cmd --query-port=8080/tcp
+# 开放80端口
+sudo firewall-cmd --permanent --add-port=80/tcp
+# 移除端口
+sudo firewall-cmd --permanent --remove-port=8080/tcp
+#重启防火墙(修改配置后要重启防火墙)
+sudo firewall-cmd --reload
+
+不行啊
+换成iptables
+
+sudo yum update iptables
+sudo systemctl   disable  firewalld.service
+sudo systemctl   mask firewalld.service
+sudo yum install iptables-services
+
+
+sudo iptables -L -n #查看iptables现有规则 
+iptables -P INPUT ACCEPT  #先允许所有,不然有可能会杯具  
+iptables -F  #清空所有默认规则  
+iptables -X  #清空所有自定义规则  
+iptables -Z  #所有计数器归0  
+iptables -A INPUT -i lo -j ACCEPT  #允许来自于lo接口的数据包(本地访问)  
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT  #开放22端口  
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT  #开放21端口(FTP)  
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT #开放80端口(HTTP)   
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT  #开放443端口(HTTPS)  
+iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT  #允许ping  
+iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT  #允许接受本机请求之后的返回数据 RELATED,是为FTP设置的  
+iptables -P INPUT DROP  #其他入站一律丢弃  
+iptables -P OUTPUT ACCEPT  #所有出站一律绿灯  
+iptables -P FORWARD DROP  #所有转发一律丢弃  
+service iptables save  #保存上述规则  
+systemctl restart iptables.service 
+
+systemctl enable iptables.service  #注册iptables服务  相当于以前的chkconfig iptables on  
+systemctl start iptables.service  #开启服务  
+systemctl status iptables.service  #查看状态  
+/etc/sysconfig/iptables-config中修改或者添加以下内容
+#添加以下内容,注意顺序不能调换  
+IPTABLES_MODULES="ip_conntrack_ftp"  
+IPTABLES_MODULES="ip_nat_ftp"  
+
+
+iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT  
+iptables -P INPUT ACCEPT 
+iptables -F 
+iptables -X 
+iptables -Z 
+iptables -A INPUT -i lo -j ACCEPT 
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --dport 222 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 322 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 5901 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 5902 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 3306 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 8081 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 8090 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 50000 -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT 
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
+iptables -P INPUT DROP 
+iptables -P OUTPUT ACCEPT 
+iptables -P FORWARD DROP 
+service iptables save 
+systemctl restart iptables.service 
+systemctl enable iptables.service
+systemctl restart  docker	# 更换防火墙之后要重启docker
+
+
+
+
+
+可能使用container模式运行mysql和jira更合适
+--net container:atlassian-mysql
+这样理论上
+sudo vim /home/docker/jira/dbconfig.xml
+可以填写127.0.0.1
+
+//启动jira实例, [直接这样不行]
+docker run -d -p 8090:8080 \
+    --detach --restart always \
+    --name jira1 \
+    --net container:atlassian-mysql \
+    -v /home/docker/jira/:/var/atlassian/application-data/jira \
+    -v /etc/localtime:/etc/localtime \
+    atlassian/jira-software
+
+docker: Error response from daemon: conflicting options: port publishing and the container type network mode.
+解决办法
+
+
+docker run --name atlassian-mysql1 \
+    --restart always \
+    -p 3306:3306 \
+    -p 8090:8080 \
+    -v /opt/mysql_data:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+根据实际替换passwd
+
+docker cp  atlassian-mysql1:/etc/mysql/mysql.cnf .
+添加这么一段
+[mysqld]
+default-storage-engine=INNODB
+character_set_server=utf8mb4
+innodb_default_row_format=DYNAMIC
+innodb_large_prefix=ON
+innodb_file_format=Barracuda
+innodb_log_file_size=2G
+
+docker cp mysql.cnf atlassian-mysql1:/etc/mysql/mysql.cnf
+docker restart atlassian-mysql1
+
+
+连接mysql
+docker run -it --link atlassian-mysql1:mysql \
+    --rm mysql:5.7 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'
+
+
+CREATE DATABASE jira CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER `jira`@`%` IDENTIFIED BY 'jira';GRANT ALL ON *.* TO `jira`@`%` WITH GRANT OPTION;
+alter user 'jira'@'%' identified with mysql_native_password by 'jira';
+quit
+
+
+
+启动jira实例
+docker run -d \
+    --detach --restart always \
+    --name jira1 \
+    --net container:atlassian-mysql1 \
+    -v /home/docker/jira/:/var/atlassian/application-data/jira \
+    -v /etc/localtime:/etc/localtime \
+    atlassian/jira-software
+
+docker cp atlassian-extras-3.2.jar jira1:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+docker cp mysql-connector-java-5.1.48-bin.jar jira1:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+docker restart jira1
+
+这样就可以了!
+database的备份在/opt/mysql_data
+
+docker rename 原容器名  新容器名
+
+
+docker rm jira
+docker rm atlassian-mysql
+docker stop jira1
+docker stop atlassian-mysql1
+docker rename jira1  jira
+docker rename atlassian-mysql1  atlassian-mysql
+docker start atlassian-mysql
+docker start jira
+
+docker network ls
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
