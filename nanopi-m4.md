@@ -3,7 +3,7 @@ sudo passwd pi
 sudo passwd root
 
 # 更换国内源
-ubuntu 18.04 arm64架构
+ubuntu 18.04 arm64架构  
 /etc/apt/sources.list
 ```
 deb http://mirrors.ustc.edu.cn/ubuntu-ports bionic main multiverse restricted universe
