@@ -287,6 +287,7 @@ sudo apt install -y samba samba-common python-glade2 system-config-samba
 
 ## 设置移动硬盘samba共享
 sudo gedit /etc/samba/smb.conf
+```
 [dell]
     comment = Network Logon Service
     path = /media/andy
@@ -294,7 +295,7 @@ sudo gedit /etc/samba/smb.conf
     read only = no
     writeable = yes
     browseable = yes
-
+```
 //sudo update-rc.d samba defaults
 //sudo useradd andy
 sudo useradd andy -d /media/pi -s /usr/sbin/nologin
