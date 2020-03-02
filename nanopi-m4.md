@@ -1,6 +1,8 @@
 # 更新密码
-> sudo passwd pi
-> sudo passwd root
+```
+sudo passwd pi
+sudo passwd root
+```  
 
 # 更换国内源
 ubuntu 18.04 arm64架构  
@@ -19,16 +21,21 @@ deb-src http://mirrors.ustc.edu.cn/ubuntu-ports bionic-updates main multiverse r
 ```
 
 # 设置静态ip
+```
 set static ip in network-manager
+```  
 
 # 全盘更新
+```
 sudo dpkg --configure -a  
 sudo apt update  
 sudo apt list --upgradable  
 sudo apt upgrade  
 sudo apt autoremove  
+```  
 
 # 补全一些软件
+```
 sudo apt-get install apt-transport-https ttf-mscorefonts-installer  
 sudo apt-get install curl wget apt-transport-https ca-certificates  
 sudo apt-get install \
@@ -36,20 +43,26 @@ sudo apt-get install \
     ca-certificates \
     curl \
     software-properties-common
-  
+```  
 
 # bash设置
+```
 sudo gedit /etc/bash.bashrc  
 open bash_comletion
+```  
 
 # 设置默认终端为lxterminal
+```
 sudo apt-get install lxterminal  
 sudo update-alternatives --config x-terminal-emulator  
 /usr/bin/lxterminal  
+```  
 
 # 中文输入法(ibus更好)
+```
 sudo apt-get install fcitx fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-sunpinyin   
 fcitx-autostart  
+```
 发现fcitx在这个平台不好使, 换成ibus, 先删除fcitx  
 sudo apt purge fcitx*  
 ```
@@ -61,9 +74,12 @@ The following packages will be REMOVED:
   fcitx-module-lua* fcitx-module-x11* fcitx-modules* fcitx-sunpinyin*
   fcitx-ui-classic*
 ```
+```
 sudo apt autoremove  
+```  
 
 ## 安装ibus中文输入法
+```
 sudo apt-get install ibus ibus-clutter ibus-gtk ibus-gtk3 ibus-qt4  
 sudo apt-get install ibus-pinyin  
 /usr/lib/ibus-pinyin/ibus-setup-pinyin  
@@ -71,6 +87,7 @@ sudo apt-get install ibus-sunpinyin
 /usr/lib/ibus-sunpinyin/ibus-setup-sunpinyin  
 sudo  im-config  
 im-config -s ibus  
+```
 
 在/etc/profile, /etc/envirenment等添加  
 ```
@@ -91,34 +108,40 @@ ibus-daemon -drx
 ```
 
 ## 添加英文和中文拼音输入法
-修改切换热键ctrl+space（好像没有生效）
-在输入法的reference里面设置出事输入法为英文
+修改切换热键ctrl+space（好像没有生效）  
+在输入法的reference里面设置出事输入法为英文  
 
 ## 强制运行ibus
+```
 ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3
-
-
-
+```  
 
 # 安装vncserver
-ref: <http://wiki.friendlyarm.com/wiki/index.php/How_to_setup_VNC_server_on_NanoPC-T4/zh>  
+ref:   
+<http://wiki.friendlyarm.com/wiki/index.php/How_to_setup_VNC_server_on_NanoPC-T4/zh>  
 
 ## 安装VNC Server
+```
 sudo apt-get install tightvncserver
 tips: 不要用VNC-Server-6.5.0-Linux-ARM.deb 
-万一安装了就
+```  
+万一安装了就  
+```
 sudo apt purge realvnc
 sudo apt purge VNC-Server-6.5.0-Linux-ARM.deb 
 sudo apt purge realvnc-vnc-server
 sudo apt autoremove
+```  
 
 ## 设置密码
-运行一次tightvncserver
+运行一次tightvncserver  
+```
 tightvncserver :1
 tightvncserver -kill :1
+```  
 
 ## 配置VNC server
-编辑~/.vnc/xstartup文件，在尾部添加:
+编辑~/.vnc/xstartup文件，在尾部添加:  
 ```
 #!/bin/sh
 
@@ -132,12 +155,15 @@ export XKL_XMODMAP_DISABLE=1
 #lxterminal &
 /usr/bin/lxsession -s LXDE &
 ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3 &
-```
+```  
+
 ## 手动启动VNC Server
+```
 vncserver -geometry 1280x800
+```  
 
 ## 设置开机自动启动VNC server
-/etc/systemd/system/vncserver@.service
+/etc/systemd/system/vncserver@.service  
 ```
 [Unit]
 Description=Start TightVNC server at startup
@@ -156,10 +182,13 @@ ExecStop=/usr/bin/vncserver -kill :%i
 WantedBy=multi-user.target
 ```
 创建符号链接以实现开机自启动：  
+```
 sudo ln -s /etc/systemd/system/vncserver@.service /etc/systemd/system/multi-user.target.wants/vncserver@1.service
+```  
 重启开发板：  
+```
 sudo reboot
-
+```
 
 # apt-get 告警问题
 ```
@@ -172,7 +201,7 @@ sudo chown _apt /var/lib/update-notifier/package-data-downloads/partial/
 https://askubuntu.com/questions/954862/couldnt-be-accessed-by-user-apt-pkgacquirerun-13-permission-denied
 
 我的解决办法
-~~sudo chown root cache/apt/archives/partial/  
+//sudo chown root cache/apt/archives/partial/
 sudo chown _apt cache/apt/archives/partial/
 
 没有效果,也不影响,算了
@@ -180,29 +209,29 @@ sudo chown _apt cache/apt/archives/partial/
 
 ```
 
-
 # 安装vim套件
+```
 sudo apt-get install vim ctags vim-doc vim-scripts exuberant-ctags libtemplate-perl ispell vim-addon-manager cscope  
-之后导入我的vimrc配置
-
-
-
+之后导入我的vimrc配置  
+```  
 
 # 安装mplayer
+```
 sudo apt install mplayer
-
-
+```  
 
 # 安装nethogs
+```
 sudo apt install nethogs
-
+```  
 
 # 禁用hostapd ,如果apt报这玩意启动错误
+```
 sudo systemctl disable hostapd.service
-
-
+```  
 
 # 安装docker
+```
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-key fingerprint 0EBFCD88
 
@@ -210,25 +239,25 @@ sudo apt-get remove docker docker-engine docker.io containerd runc
 
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
-
-!注意!arch=arm64
-
+```
+!注意!arch=arm64  
+```
 sudo docker run hello-world
 sudo usermod -aG docker $USER
 newgrp docker
 docker version
 docker run hello-world
-这样就算安装好了
-
+```  
+这样就算安装好了  
 
 # docker安装apache2和php服务器
-
+  
 ## docker安装配置httpd(这个没有php)
+```
 docker pull httpd
-
 docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf
-
-添加或修改为如下
+```
+添加或修改为如下 
 ```
 DocumentRoot "/usr/local/apache2/htdocs"
 <Directory "/usr/local/apache2/htdocs">
@@ -248,29 +277,33 @@ AddDefaultCharset off
 #IndexOptions Charset=GB2312
 IndexOptions Charset=UTF-8 # 文件服务器列表中文防乱码
 ```
-
+```
 docker run -d --name my-httpd -p 8080:80 -v /media/pi:/usr/local/apache2/htdocs/ httpd
 docker cp my-httpd.conf my-httpd:/usr/local/apache2/conf/httpd.conf
 sudo chmod 755 /media/pi
 docker restart my-httpd
+```
 这样就是一个最简单的apache服务器了
 
 
 ## docker安装配置php:7.2-apache
+```
 docker pull php:7.2-apache
 docker run -d --name my-apache-php -p 8080:80 -v /media/pi:/var/www/html php:7.2-apache
 docker cp my-apache-php:/etc/apache2/apache2.conf .
-修改参考上面httpd的修改
+```
+修改参考上面httpd的修改  
+```
 docker exec -it my-apache-php /bin/bash
 docker cp apache2.conf my-apache-php:/etc/apache2/apache2.conf
 docker restart my-apache-php
-用文件服务器和test.php等进行测试
-
-test.php
+```  
+用文件服务器和test.php等进行测试  
+test.php  
 ```
 <?php phpinfo(); ?>
-```
-hello.php
+```  
+hello.php  
 ```
 <html>
  <head>
@@ -280,13 +313,17 @@ hello.php
  <?php echo '<p>Hello World</p>'; ?> 
  </body>
 </html>
-```
+```  
 
 # 安装samba服务
+```
 sudo apt install -y samba samba-common python-glade2 system-config-samba
+```  
 
 ## 设置移动硬盘samba共享
+```
 sudo gedit /etc/samba/smb.conf
+```
 ```
 [dell]
     comment = Network Logon Service
@@ -295,6 +332,7 @@ sudo gedit /etc/samba/smb.conf
     read only = no
     writeable = yes
     browseable = yes
+```  
 ```
 //sudo update-rc.d samba defaults
 //sudo useradd andy
@@ -303,14 +341,18 @@ sudo passwd andy
 sudo smbpasswd -a andy
 sudo /etc/init.d/nmbd restart
 sudo /etc/init.d/smbd restart
-
+```  
 
 # 安装tftp服务
+```
 sudo apt install vsftpd
+```  
 
 ## 添加全局访问用户
 配置/etc/shells 
-sudo gedit /etc/shells 
+```
+sudo gedit /etc/shells  
+```  
 ```
 /bin/sh
 /bin/dash
@@ -324,13 +366,16 @@ sudo gedit /etc/shells
 /usr/bin/tcsh
 /usr/sbin/nologin     ++ 用户设置成这个就禁止登录, 不添加这行用户会无法登录ftp
 /usr/bin/screen
+```  
 ```
 sudo useradd andy -d /media/pi -s /usr/sbin/nologin
 sudo passwd andy
+```
 
 ## ftp配置修改
+```
 sudo gedit /etc/vsftpd.conf
-
+```  
 ```
 local_enable=YES
 write_enable=YES
@@ -343,31 +388,35 @@ userlist_deny=NO
 userlist_file=/etc/allowed_users
 seccomp_sandbox=NO
 user_config_dir=/etc/vsftpd/vsftpd_user_conf
-```
+```  
 
 ## 限制用户操作权限
-这里我们不限制本地用户pi的权限, 限制非管理员全局ftp访问用户的权限为 可写,不可删除,不可重命名
-这样就可以防止误操作删掉文件了, 要删除用本地用户登录去删
+这里我们不限制本地用户pi的权限, 限制非管理员全局ftp访问用户的权限为 可写,不可删除,不可重命名  
+这样就可以防止误操作删掉文件了, 要删除用本地用户登录去删  
+```
 mkdir -p /etc/vsftpd/vsftpd_user_conf
 sudo gedit /etc/vsftpd/vsftpd_user_conf/pi
 sudo gedit /etc/vsftpd/vsftpd_user_conf/andy
 ```
+```
 write_enable=YES
 cmds_denied=DELE,RNFR
 ```
-既然是全局访问的ftp专用账户, 要能访问本地用户pi的私有目录, 添加到同一组
+既然是全局访问的ftp专用账户, 要能访问本地用户pi的私有目录, 添加到同一组  
 /etc/group
 ```
 andy:x:1001:pi
 ```
 
 ## vsftpd配置生效
+```
 sudo service vsftpd restart
 sudo service vsftpd status
-
+```  
 
 # 源码编译安装cmocka
-https://cmocka.org/files/1.1/cmocka-1.1.5.tar.xz
+```
+wget https://cmocka.org/files/1.1/cmocka-1.1.5.tar.xz
 cd cmocka-1.1.5
 mkdir build
 cd build
@@ -376,9 +425,10 @@ cmake -DWITH_STATIC_LIB=on ..
 cmake -DBUILD_STATIC_LIB=on ..
 make
 sudo make install
-
+```  
 
 # 编译安装gtest
+```
 git clone https://github.com/google/googletest
 cd googletest
 mkdir build
@@ -387,6 +437,8 @@ cd build
 cmake -DBUILD_SHARED_LIBS=on ..
 make
 sudo make install
+```  
+
 
 
 
