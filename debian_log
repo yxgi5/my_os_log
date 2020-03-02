@@ -11973,6 +11973,62 @@ $ history -c
 
 
 
+安装sunloginclient10
+然后就可以运行
+/usr/local/sunlogin/bin/sunloginclient
+既可以作为主机,也可以作为客户机
+主机开机就默认后台运行,客户机可以从远端登录主机
+
+
+创建快速启动命令
+cd /usr/local/bin
+sudo gedit sunloginclient
+------------------------------------
+#!/bin/bash
+/usr/local/sunlogin/bin/sunloginclient
+------------------------------------
+sudo chmod +x sunloginclient
+
+
+sunlogin_remote
+可以从远端访问账户绑定的主机, 可以被sunloginclient取代
+
+从10版本起,已经不通过bs方式配置主机了
+http://127.0.0.1:30080
+就没有了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
