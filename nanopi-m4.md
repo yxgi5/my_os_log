@@ -22,36 +22,36 @@ deb-src http://mirrors.ustc.edu.cn/ubuntu-ports bionic-updates main multiverse r
 set static ip in network-manager
 
 # 全盘更新
-sudo dpkg --configure -a
-sudo apt update
-sudo apt list --upgradable
-sudo apt upgrade
-sudo apt autoremove
+sudo dpkg --configure -a  
+sudo apt update  
+sudo apt list --upgradable  
+sudo apt upgrade  
+sudo apt autoremove  
 
 # 补全一些软件
-sudo apt-get install apt-transport-https ttf-mscorefonts-installer
-sudo apt-get install curl wget apt-transport-https ca-certificates
+sudo apt-get install apt-transport-https ttf-mscorefonts-installer  
+sudo apt-get install curl wget apt-transport-https ca-certificates  
 sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     software-properties-common
-
+  
 
 # bash设置
-sudo gedit /etc/bash.bashrc
+sudo gedit /etc/bash.bashrc  
 open bash_comletion
 
 # 设置默认终端为lxterminal
-sudo apt-get install lxterminal
-sudo update-alternatives --config x-terminal-emulator
-/usr/bin/lxterminal
+sudo apt-get install lxterminal  
+sudo update-alternatives --config x-terminal-emulator  
+/usr/bin/lxterminal  
 
 # 中文输入法(ibus更好)
-sudo apt-get install fcitx fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-sunpinyin
-fcitx-autostart
-发现fcitx在这个平台不好使, 换成ibus, 先删除fcitx
-sudo apt purge fcitx*
+sudo apt-get install fcitx fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-sunpinyin   
+fcitx-autostart  
+发现fcitx在这个平台不好使, 换成ibus, 先删除fcitx  
+sudo apt purge fcitx*  
 ```
 The following packages will be REMOVED:
   fcitx* fcitx-bin* fcitx-config-common* fcitx-config-gtk* fcitx-data*
@@ -61,27 +61,27 @@ The following packages will be REMOVED:
   fcitx-module-lua* fcitx-module-x11* fcitx-modules* fcitx-sunpinyin*
   fcitx-ui-classic*
 ```
-sudo apt autoremove
+sudo apt autoremove  
 
 ## 安装ibus中文输入法
-sudo apt-get install ibus ibus-clutter ibus-gtk ibus-gtk3 ibus-qt4
-sudo apt-get install ibus-pinyin
-/usr/lib/ibus-pinyin/ibus-setup-pinyin
-sudo apt-get install ibus-sunpinyin
-/usr/lib/ibus-sunpinyin/ibus-setup-sunpinyin
-sudo  im-config
-im-config -s ibus
+sudo apt-get install ibus ibus-clutter ibus-gtk ibus-gtk3 ibus-qt4  
+sudo apt-get install ibus-pinyin  
+/usr/lib/ibus-pinyin/ibus-setup-pinyin  
+sudo apt-get install ibus-sunpinyin  
+/usr/lib/ibus-sunpinyin/ibus-setup-sunpinyin  
+sudo  im-config  
+im-config -s ibus  
 
-在/etc/profile, /etc/envirenment等添加
+在/etc/profile, /etc/envirenment等添加  
 ```
 export GTK_IM_MODULE=ibus
 export QT4_IM_MODULE=xim
 export QT_IM_MODULE=xim
 export XMODIFIERS=@im=ibus
 ```
-
-本地配置也添加
-gedit ~/.xinitrc
+  
+本地配置也添加  
+gedit ~/.xinitrc  
 ```
 export GTK_IM_MODULE=ibus
 export QT4_IM_MODULE=ibus
