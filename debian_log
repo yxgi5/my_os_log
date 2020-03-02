@@ -7863,6 +7863,7 @@ The following NEW packages will be installed:
 
 
 
+[github设置 ssh pgp]
 
 gpg --list-secret-keys --keyid-format LONG
 gpg --import 公钥和密钥
@@ -7966,7 +7967,7 @@ $ git clone git@github.com:yxgi5/my_os_log.git
 $ git clone ssh://git@github.com:22/yxgi5/my_os_log.git
 $ git clone ssh://git@192.30.253.112:22/yxgi5/my_os_log.git
 
-这个是俺的ssh公钥
+这个是俺的ssh公钥, 命令cat $HOME/.ssh/id_rsa.pub
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDGmzfCtRm+PN6YxOwvrH9xLs+1N7AIJpRiHCdrBKlNwlxw0CCCWKQDi73ZhSA9KTHzp2zAnEfAQ37bFEQ6xoPo5yQcDBTj8CwArbaZ1nxn527BgX58CW8ZJYmzQ/xDqR3ktd1Z356gOfqNMICzPJM5kK4AtjMlmqQXbLhR0eYKu19ZTmUlh+EIss7S+kzeRfKBeW+QgwqLPWnrj8so0GoyMfvsUIfxK/pyvqYIUvFGD6RBTH/8WVH276yFEc7+E5nmz58oqAY1kDMD2DVNB7xImD6nINYsM8XytPSj9GXoCHW0Ld60ZsJVSFmFMTEiu+pG5SI5WYzmHcjRaJzRWWf denglitscg@gmail.com
 
 
@@ -12073,6 +12074,62 @@ $ history -w
 清除历史记录
 $ history -c
 可以通过修改 /etc/profile 中 HISTSIZE 的大小来改变记录历史的记录条数
+
+
+
+
+
+
+
+
+安装sunloginclient10
+然后就可以运行
+/usr/local/sunlogin/bin/sunloginclient
+既可以作为主机,也可以作为客户机
+主机开机就默认后台运行,客户机可以从远端登录主机
+
+
+创建快速启动命令
+cd /usr/local/bin
+sudo gedit sunloginclient
+------------------------------------
+#!/bin/bash
+/usr/local/sunlogin/bin/sunloginclient
+------------------------------------
+sudo chmod +x sunloginclient
+
+
+sunlogin_remote
+可以从远端访问账户绑定的主机, 可以被sunloginclient取代
+
+从10版本起,已经不通过bs方式配置主机了
+http://127.0.0.1:30080
+就没有了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
