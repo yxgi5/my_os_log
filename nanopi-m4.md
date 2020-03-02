@@ -1,6 +1,6 @@
 # 更新密码
-sudo passwd pi
-sudo passwd root
+> sudo passwd pi
+> sudo passwd root
 
 # 更换国内源
 ubuntu 18.04 arm64架构  
@@ -172,7 +172,7 @@ sudo chown _apt /var/lib/update-notifier/package-data-downloads/partial/
 https://askubuntu.com/questions/954862/couldnt-be-accessed-by-user-apt-pkgacquirerun-13-permission-denied
 
 我的解决办法
-//sudo chown root cache/apt/archives/partial/
+~~sudo chown root cache/apt/archives/partial/  
 sudo chown _apt cache/apt/archives/partial/
 
 没有效果,也不影响,算了
