@@ -890,15 +890,29 @@ docker network ls
 
 
 
+xfce锁屏
+xflock4  没有效果啊
+//sudo yum -y install xfce4-utils
+sudo yum -y install light-locker
+light-locker
+//xfconf-query -c xfce4-keyboard-shortcuts -p '/xfwm4/custom/<Primary><Alt>Down+Right' -n -t string -s "tile_window_down_right"
+sudo yum -y install vncserver
+light-locker-command -l
+light-locker-command --lock
+但是现在有点错误, 失败,无法锁屏
+
+xfconf-query -c xfce4-session -p /general/LockCommand -s "xscreensaver-command -lock" --create -t string
+ctl+alt+del,待验证
+
+sudo yum -y install xscreensaver
+xscreensaver
+xscreensaver-command -prefs
+xscreensaver-command -lock
+这样就锁屏了
 
 
 
-
-
-
-
-
-
+sudo yum -y install htop
 
 
 

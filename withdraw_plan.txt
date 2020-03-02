@@ -10,5 +10,5 @@
 
 5. workdir目录的删除
 
-
+6. 所有的 bash_history
 
