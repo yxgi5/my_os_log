@@ -483,6 +483,20 @@ env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
 
 
 
+pulseaudio会导致alsamixer的speaker开机静音
+修改
+/usr/share/pulseaudio/alsa-mixer/paths/analog-output.conf
+and change this:
+[Element Speaker]
+switch = mute
+volume = off
+to this:
+[Element Speaker]
+switch = mute
+volume = merge
+类似这样的修改，重启之后就有声音了
+
+
 andy@andy-hp:~/kylinlog$ git commit -a -m "远程登陆,安装配置wine"
 andy@andy-hp:~/kylinlog$ git log --pretty=format:"%h %s" --graph
 
