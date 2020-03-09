@@ -296,6 +296,7 @@ docker cp my-apache-php:/etc/apache2/apache2.conf .
 ```
 docker exec -it my-apache-php /bin/bash
 docker cp apache2.conf my-apache-php:/etc/apache2/apache2.conf
+docker container update --restart=always my-apache-php
 docker restart my-apache-php
 ```  
 用文件服务器和test.php等进行测试  

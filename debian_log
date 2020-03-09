@@ -12109,9 +12109,44 @@ http://127.0.0.1:30080
 
 
 
+删除sunloginclient需要删掉
+/usr/share/gdm/dconf/50-slscreenagrentsvr.conf
+否则gdm服务启动失败
+
+$ sudo systemctl status gdm.service 
+● gdm.service - GNOME Display Manager
+   Loaded: loaded (/lib/systemd/system/gdm.service; enabled)
+   Active: failed (Result: start-limit) since Wed 2020-03-04 20:57:07 CST; 3min 9s ago
+  Process: 4636 ExecStartPre=/usr/share/gdm/generate-config (code=exited, status=1/FAILURE)
+  Process: 4631 ExecStartPre=/bin/sh -c [ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/gdm3" ] (code=exited, status=0/SUCCESS)
+
+那么执行
+$ /usr/share/gdm/generate-config
+/usr/share/gdm/dconf/50-slscreenagrentsvr.conf: [SeatDefaults]: greeter-setup-script: invalid value: xhost + (0-5:unknown keyword)
+
+$ cat /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
+[SeatDefaults]
+greeter-setup-script=xhost +
+display-setup-script=xhost +
+
+
+得出这玩意影响了gdm
+删掉
+sudo rm /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
 
 
 
+
+
+dpkg -i --force-all xxx
+dpkg -r xxx
+
+
+
+
+
+串口调试助手
+sudo apt-get install cutecom lrzsz
 
 
 
