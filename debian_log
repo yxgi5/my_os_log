@@ -12095,8 +12095,47 @@ http://127.0.0.1:30080
 
 
 
+还是9的client版本方便，修改一下支持debian就好了，已经存档
 
 
+
+
+
+
+
+
+
+minigui的repo添加
+1. Add FMSoft GPG Key
+wget -qO - http://files.fmsoft.cn/ubuntu/key/fmsoft.gpg | sudo apt-key add -
+2. Add MiniGUI Software Source
+sudo gedit /etc/apt/sources.list
+添加
+#deb http://files.fmsoft.cn/ubuntu/ trusty restricted #没有trusty分支
+deb http://files.fmsoft.cn/ubuntu/ xenial restricted
+sudo apt -o Acquire::Check-Valid-Until=false update
+拉倒吧,不能展开.
+
+
+
+
+
+
+查询局域网主机名对应的ip
+sudo apt install nbtscan
+nbtscan -v -s : 192.168.1.0/24 | grep printer
+arp -a
+nmap命令应该也可以
+
+
+
+
+
+
+
+xilinx驱动
+/opt/Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers
+安装后在/etc/udev/rules.d
 
 
 
