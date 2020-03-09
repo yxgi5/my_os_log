@@ -12153,11 +12153,19 @@ xilinx驱动
 
 
 
+sudo apt-get install tofrodos iproute2 gawk
+sudo apt-get install gcc git make
+sudo apt-get install xvfb
+sudo apt-get install net-tools libncurses5-dev tftpd
+sudo apt-get install zlib1g-dev zlib1g-dev:i386 libssl-dev flex bison libselinux1
+sudo apt-get install gnupg wget diffstat chrpath socat xterm
+sudo apt-get install autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev
+sudo apt-get install screen pax gzip tar
+sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6
+//sudo apt-get install tftp-hpa tftpd-hpa xinetd
 
-
-
-
-
+$ mkdir -p /opt/petalinux/v2017.4
+$ ./petalinux-v2018.1-final-installer.run /opt/petalinux/v2017.4
 
 
 
