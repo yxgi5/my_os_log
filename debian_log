@@ -12112,6 +12112,7 @@ http://127.0.0.1:30080
 删除sunloginclient需要删掉
 /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
 否则gdm服务启动失败
+还是9的client版本方便，修改一下支持debian就好了，已经存档
 
 $ sudo systemctl status gdm.service 
 ● gdm.service - GNOME Display Manager
@@ -12153,7 +12154,53 @@ sudo apt-get install cutecom lrzsz
 
 
 
+minigui的repo添加
+1. Add FMSoft GPG Key
+wget -qO - http://files.fmsoft.cn/ubuntu/key/fmsoft.gpg | sudo apt-key add -
+2. Add MiniGUI Software Source
+sudo gedit /etc/apt/sources.list
+添加
+#deb http://files.fmsoft.cn/ubuntu/ trusty restricted #没有trusty分支
+deb http://files.fmsoft.cn/ubuntu/ xenial restricted
+sudo apt -o Acquire::Check-Valid-Until=false update
+拉倒吧,不能展开.
 
+
+
+
+
+
+查询局域网主机名对应的ip
+sudo apt install nbtscan
+nbtscan -v -s : 192.168.1.0/24 | grep printer
+arp -a
+nmap命令应该也可以
+
+
+
+
+
+
+
+xilinx驱动
+/opt/Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers
+安装后在/etc/udev/rules.d
+
+
+
+sudo apt-get install tofrodos iproute2 gawk
+sudo apt-get install gcc git make
+sudo apt-get install xvfb
+sudo apt-get install net-tools libncurses5-dev tftpd
+sudo apt-get install zlib1g-dev zlib1g-dev:i386 libssl-dev flex bison libselinux1
+sudo apt-get install gnupg wget diffstat chrpath socat xterm
+sudo apt-get install autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev
+sudo apt-get install screen pax gzip tar
+sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6
+//sudo apt-get install tftp-hpa tftpd-hpa xinetd
+
+$ mkdir -p /opt/petalinux/v2017.4
+$ ./petalinux-v2018.1-final-installer.run /opt/petalinux/v2017.4
 
 
 
