@@ -849,6 +849,7 @@ $ testparm -s
 //$ sudo chattr +a *
 //$ sudo chattr +a .*
 $ sudo chattr +i rarreg.key
+$ sudo chattr -i rarreg.key
 $ lsattr -a
 
 
@@ -12201,6 +12202,23 @@ sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6
 
 $ mkdir -p /opt/petalinux/v2017.4
 $ ./petalinux-v2018.1-final-installer.run /opt/petalinux/v2017.4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
