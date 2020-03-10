@@ -12212,10 +12212,50 @@ $ ./petalinux-v2018.1-final-installer.run /opt/petalinux/v2017.4
 
 
 
+wine安装ORCAD Capture 16.3精简版，只是为了看或者画16.2以上格式的原理图
+//首先，修改安装文件exe的名字，不要有中文
+
+//export LANG=zh_CN.utf8
+//wine capture.exe
+//这个屌货强制安装到d:盘哇
+先到虚拟机里安装一个复制出来好了
 
 
+以前wine过orcad10
+~/.local/share/applications/wine-extension-dsn.desktop
+查到Exec=env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
+OrCADDesign-FileType是在～/.wine/system.reg中定义的
+
+Z:\\home\\andy\\DOWN~NTG\\ORCA~RWC\\Capture\\Capture.exe
+Z:\\home\\andy\\Downloads\\OrCAD_Demo\\Capture\\Capture.exe
+替换成
+C:\\Program Files\\ORCAD16.3\\Capture.exe
+
+重启wine
+wineboot
+
+试一下
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType  machxo3-9400_dev_board_schematic_source.DSN
+缺少 MFC80.DLL
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
+
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks win2k vcrun2005
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vcrun2005sp1
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks win2k vcrun2005sp1
+
+安装vcrun2005不能
+那么直接给mfc80.dll文件吧，可以运行了
+
+export CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType  machxo3-9400_dev_board_schematic_source.DSN
 
 
+修改一下~/.local/share/applications/wine-extension-dsn.desktop
+Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
+
+另外修改
+gedit ~/.local/share/applications/wine-extension-opj.desktop
+Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADProject-FileType %f
 
 
 
