@@ -12271,6 +12271,7 @@ The following NEW packages will be installed:
 
 sudo apt install libcups2:i386
 重启之后可以打印到pdf什么的
+sudo systemctl status cups.service
 
 输出pdf用pdf打印机的话是输出到~/PDF目录，不用选输出到文件(prn格式)
 
