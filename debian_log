@@ -12224,12 +12224,15 @@ wine安装ORCAD Capture 16.3精简版，只是为了看或者画16.2以上格式
 以前wine过orcad10
 ~/.local/share/applications/wine-extension-dsn.desktop
 查到Exec=env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
-OrCADDesign-FileType是在～/.wine/system.reg中定义的
+OrCADDesign-FileType是在~/.wine/system.reg中定义的
 
 Z:\\home\\andy\\DOWN~NTG\\ORCA~RWC\\Capture\\Capture.exe
 Z:\\home\\andy\\Downloads\\OrCAD_Demo\\Capture\\Capture.exe
 替换成
 C:\\Program Files\\ORCAD16.3\\Capture.exe
+
+看上去是C:\\Program Files\\ORCAD16.3\\Capture.exe
+实际上gedit用C:\\\\Program Files\\\\ORCAD16.3\\\\Capture.exe注意区别
 
 重启wine
 wineboot
@@ -12257,6 +12260,17 @@ Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.
 gedit ~/.local/share/applications/wine-extension-opj.desktop
 Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADProject-FileType %f
 
+
+
+解决wine程序打印问题
+sudo apt-get install cups-pdf
+The following NEW packages will be installed:
+  cups-pdf printer-driver-cups-pdf
+
+sudo apt install libcups2:i386
+重启之后可以打印到pdf什么的
+
+输出pdf用pdf打印机的话是输出到~/PDF目录，不用选输出到文件(prn格式)
 
 
 

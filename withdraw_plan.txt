@@ -12,3 +12,4 @@
 
 6. 所有的 bash_history
 
+7. 销毁本log
