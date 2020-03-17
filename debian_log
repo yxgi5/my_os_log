@@ -12314,6 +12314,20 @@ Exec=env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphic
 
 
 
+sudo apt install quilt gquilt
+
+cat > ~/.quiltrc<<EOF  
+QUILT_DIFF_ARGS="--no-timestamps --no-index -p ab --color=auto"  
+QUILT_REFRESH_ARGS="--no-timestamps --no-index -p ab"  
+QUILT_PATCH_OPTS="--unified"  
+QUILT_DIFF_OPTS="-p"  
+EDITOR="vi"  
+
+
+
+
+
+
 
 
 
