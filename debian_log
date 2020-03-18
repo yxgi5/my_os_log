@@ -12352,6 +12352,7 @@ proxychains git clone https://github.com/xxx/xxx.git
 git config --global http.proxy 'socks5://127.0.0.1:1081'
 查询是否启用代理
 git config --global http.proxy
+git config --list
 取消代理
 git config --global --unset http.proxy
 
@@ -12392,20 +12393,55 @@ delete the line “TEST=test”
 
 
 sudo dpkg-buildpackage -rfakeroot -b
+sudo dpkg -i git_... 
 
 
 
 error: RPC failed; result=18, HTTP code = 200 MiB
 
 git config --global http.postBuffer 24288000
+无法排除
+--depth 1
+也无法排除
+
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+git lfs install
+
+git lfs clone ...
+
+
+git config --global ssh.postBuffer 1048576000
 
 
 
+git remote remove origin
+git remote add origin https://github..com/user/repo
+git push --set-upstream origin master
+
+
+git clone   --progress -v ....
+
+GIT_CURL_VERBOSE=1 git clone   --progress -v https://github.com/pamsimochen/ipnc_5.1-acs1910.git --depth 1
+
+
+sudo apt-get install libcurl4-gnutls-dev
+sudo apt-get install libcurl4-openssl-dev
+
+
+GIT_CURL_VERBOSE=1 git clone   --progress -v git@github.com:pamsimochen/ipnc_5.1-acs1910.git
 
 
 
+#on linux
+export GIT_TRACE_PACKET=1
+export GIT_TRACE=1
+export GIT_CURL_VERBOSE=1
 
-
+#on windows
+set GIT_TRACE_PACKET=1
+set GIT_TRACE=1
+set GIT_CURL_VERBOSE=1
 
 
 
