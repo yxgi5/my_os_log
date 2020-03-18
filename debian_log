@@ -12350,6 +12350,7 @@ proxychains git clone https://github.com/xxx/xxx.git
 
 全局github代理加速
 git config --global http.proxy 'socks5://127.0.0.1:1081'
+git config --global https.proxy 'socks5://127.0.0.1:1081'
 查询是否启用代理
 git config --global http.proxy
 git config --list
