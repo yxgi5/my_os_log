@@ -12308,7 +12308,7 @@ Exec=env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphic
 
 
 安装hopper-v3
-修改了deb包，补全了缺的库，steam里面找来的，安装好就能用
+修改了deb包，补全了一些缺的库，steam里面找来的，安装好就能用
 
 
 
