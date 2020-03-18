@@ -12328,6 +12328,66 @@ EDITOR="vi"  
 
 
 
+通过shadowsocks加速github
+安装和配置shadowsocks客户端, 在前面有，我的本地端口是1081
+安装和配置proxychains
+sudo apt install proxychains
+The following NEW packages will be installed:
+  libproxychains3 proxychains
+
+sudo gedit /etc/proxychains.conf
+----------------------------
+[ProxyList]
+# add proxy here ...
+# meanwile
+# defaults set to "tor"
+socks5  127.0.0.1 1080
+----------------------------
+测试代理
+proxychains curl www.google.com
+加速github
+proxychains git clone https://github.com/xxx/xxx.git
+
+全局github代理加速
+git config --global http.proxy 'socks5://127.0.0.1:1081'
+查询是否启用代理
+git config --global http.proxy
+取消代理
+git config --global --unset http.proxy
+
+这下好了，不用忍龟速了。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
