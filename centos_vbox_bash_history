@@ -928,8 +928,22 @@ sudo yum -y install htop
 
 
 
+docker pull nextcloud
+sudo mkdir -p /home/docker/nextcloud
+docker run -d --restart=always --name nextcloud -p 81:80 -v /home/docker/nextcloud:/var/www/html/data nextcloud
+关于防火墙添加
+iptables -A INPUT -p tcp --dport 81 -j ACCEPT
 
 
+
+docker pull mediawiki
+
+
+
+
+docker run -d --name mediawiki -p 82:80 -v /home/docker/mediawiki:/var/www/html/images -v /home/docker/mediawiki/data:/var/www/data mediawiki
+
+docker run -d --name mediawiki -p 82:80 -v /home/docker/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php  -v /home/docker/mediawiki:/var/www/html/images -v /home/docker/mediawiki/data:/var/www/data mediawiki
 
 
 
