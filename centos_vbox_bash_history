@@ -940,10 +940,15 @@ docker pull mediawiki
 
 
 
-
+sudo mkdir -p /home/docker/mediawiki/data
 docker run -d --name mediawiki -p 82:80 -v /home/docker/mediawiki:/var/www/html/images -v /home/docker/mediawiki/data:/var/www/data mediawiki
 
+设置sqlite数据库最简单
+docker stop mediawiki
+docker rm mediawiki
 docker run -d --name mediawiki -p 82:80 -v /home/docker/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php  -v /home/docker/mediawiki:/var/www/html/images -v /home/docker/mediawiki/data:/var/www/data mediawiki
+
+
 
 
 
