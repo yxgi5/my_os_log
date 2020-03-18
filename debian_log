@@ -12307,13 +12307,13 @@ Exec=env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphic
 
 
 
-安装hopper-v3
+安装 hopper-v3, (反汇编分析工具)
 修改了deb包，补全了一些缺的库，steam里面找来的，安装好就能用
 
 
 
 
-
+安装 quilt（补丁管理工具）
 sudo apt install quilt gquilt
 
 cat > ~/.quiltrc<<EOF  
@@ -12341,7 +12341,7 @@ sudo gedit /etc/proxychains.conf
 # add proxy here ...
 # meanwile
 # defaults set to "tor"
-socks5  127.0.0.1 1080
+socks5  127.0.0.1 1081
 ----------------------------
 测试代理
 proxychains curl www.google.com
@@ -12357,6 +12357,7 @@ git config --global --unset http.proxy
 
 这下好了，不用忍龟速了。
 
+sudo proxychains aptitude install r-base r-base-core r-base-dev
 
 
 
@@ -12364,21 +12365,33 @@ git config --global --unset http.proxy
 
 
 
+解决git clone 完成后提示'error: RPC failed; curl 56 GnuTLS recv error (-9)
+
+sudo apt-get install gnutls-bin
+The following NEW packages will be installed:
+  gnutls-bin libopts25
+
+git config --global http.sslVerify false
+git config --global http.postBuffer 1048576000
+还是不行
+
+
+考证应该是 Gnutls_handshake() Failed
+sudo apt-get build-dep libcurl4-openssl-dev
+sudo apt-get install libcurl4-openssl-dev
+sudo apt-get build-dep git
+sudo apt-get install libcurl4-openssl-dev
+apt-get source git
 
 
 
+debian/control
+Replace all the occurences of “libcurl4-gnutls-dev” to “libcurl4-openssl-dev”
+debian/rules
+delete the line “TEST=test”
 
 
-
-
-
-
-
-
-
-
-
-
+sudo dpkg-buildpackage -rfakeroot -b
 
 
 
