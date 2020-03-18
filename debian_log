@@ -12395,8 +12395,9 @@ sudo dpkg-buildpackage -rfakeroot -b
 
 
 
+error: RPC failed; result=18, HTTP code = 200 MiB
 
-
+git config --global http.postBuffer 24288000
 
 
 
