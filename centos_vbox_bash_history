@@ -931,6 +931,20 @@ sudo yum -y install htop
 docker pull nextcloud
 sudo mkdir -p /home/docker/nextcloud
 docker run -d --restart=always --name nextcloud -p 81:80 -v /home/docker/nextcloud:/var/www/html/data nextcloud
+app目录应该映射出来，似乎这样更好
+docker run -d --restart=always --name nextcloud -p 81:80 -v /home/docker/nextcloud:/var/www/html nextcloud
+离线添加app
+比如下载files_accesscontrol-1.8.1.tar.gz
+https://apps.nextcloud.com/apps/files_accesscontrol
+在服务器解压之后
+docker cp files_accesscontrol nextcloud:/var/www/html/apps
+docker exec -it nextcloud bash
+cd apps/
+chown -R www-data:root files_accesscontrol
+docker restart nextcloud
+
+
+
 关于防火墙添加
 iptables -A INPUT -p tcp --dport 81 -j ACCEPT
 

@@ -12378,29 +12378,38 @@ git config --global http.postBuffer 1048576000
 还是不行
 
 
+
+查询源码包
+sudo apt-cache showsrc tree
+
+
 考证应该是 Gnutls_handshake() Failed
 sudo apt-get build-dep libcurl4-openssl-dev
 sudo apt-get install libcurl4-openssl-dev
 sudo apt-get build-dep git
-sudo apt-get install libcurl4-openssl-dev
+这里，如果实在安装不了libcurl4-gnutls-dev，就把其他缺的安装好就行了
+sudo apt-get install cvsps libdbd-sqlite3-perl
+sudo apt-get install libcurl4-openssl-dev 用于替换libcurl4-gnutls-dev
 apt-get source git
-
 
 
 debian/control
 Replace all the occurences of “libcurl4-gnutls-dev” to “libcurl4-openssl-dev”
 debian/rules
-delete the line “TEST=test”
+delete the line “TEST =test”
 
 
 sudo dpkg-buildpackage -rfakeroot -b
 sudo dpkg -i git_... 
 
+目前可排除curl 56 GnuTLS recv error (-9)
 
 
-error: RPC failed; result=18, HTTP code = 200 MiB
+但是出现error: RPC failed; result=18, HTTP code = 200
+经查是curl的报错导致
 
-git config --global http.postBuffer 24288000
+git config --global http.postBuffer 1048576000
+git config --global https.postBuffer 1048576000
 无法排除
 --depth 1
 也无法排除
@@ -12415,25 +12424,26 @@ git lfs clone ...
 git config --global ssh.postBuffer 1048576000
 
 
-
+那么新建一个空repo用pull方式来拉取？未验证
 git remote remove origin
 git remote add origin https://github..com/user/repo
 git push --set-upstream origin master
 
 
-git clone   --progress -v ....
+git clone --progress -v ....
+git clone --depth 1
 
-GIT_CURL_VERBOSE=1 git clone   --progress -v https://github.com/pamsimochen/ipnc_5.1-acs1910.git --depth 1
-
+GIT_CURL_VERBOSE=1 git clone --progress -v https://github.com/pamsimochen/ipnc_5.1-acs1910.git --depth 1
+可以看到curl的报错信息，但是不给出curl的错误号
 
 sudo apt-get install libcurl4-gnutls-dev
 sudo apt-get install libcurl4-openssl-dev
 
 
-GIT_CURL_VERBOSE=1 git clone   --progress -v git@github.com:pamsimochen/ipnc_5.1-acs1910.git
+GIT_CURL_VERBOSE=1 git clone --progress -v git@github.com:pamsimochen/ipnc_5.1-acs1910.git
+没有详细输出
 
-
-
+git的更多详细信息输出
 #on linux
 export GIT_TRACE_PACKET=1
 export GIT_TRACE=1
@@ -12443,6 +12453,42 @@ export GIT_CURL_VERBOSE=1
 set GIT_TRACE_PACKET=1
 set GIT_TRACE=1
 set GIT_CURL_VERBOSE=1
+
+
+经过验证，ssh方式可以获取超级大的repo
+
+
+
+
+
+下载
+git_2.11.0.orig.tar.xz
+git_2.11.0-3+deb9u5.debian.tar.xz
+git_2.11.0-3+deb9u5.dsc
+sudo apt-get install dh-exec dh-apache2
+dpkg-source -x git_2.11.0-3+deb9u5.dsc
+cd git-2.11.0
+dpkg-buildpackage -rfakeroot -uc -b
+
+这里'-rfakeroot'指定命令使用fakeroot程序来模仿root权限(来实现所有者(ownership)目的)，'-uc'表示"Don't cryptographically sign the changelog"，'-b'代表只建立二进制包。
+
+
+sudo proxychains apt-get install -f 安装其他依赖包
+sudo proxychains aptitude install -f 彻底清理依赖关系
+
+dpkg的状态标志都写在/var/lib/dpkg/status
+
+
+
+
+
+sudo apt-get build-dep curl
+proxychains apt-get source curl
+cd curl-7.38.0/
+//sudo dpkg-buildpackage -rfakeroot -b
+dpkg-buildpackage -rfakeroot -uc -b
+
+
 
 
 
