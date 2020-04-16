@@ -2924,11 +2924,12 @@ $ sudo make install
 unzip -O GBK test.zip
 unzip -O GB18030 test.zip
 unzip -O CP936 test.zip
-要一直生效就在/etc/environment中加入
-UNZIP=”-O CP936″
-ZIPINFO=”-O CP936″
-或者在$HOME/.bashrc里
-alias unzip='unzip -O cp936'
+要一直生效就在/etc/environment或者在$HOME/.bashrc里加入
+
+UNZIP="-O CP936"
+ZIPINFO="-O CP936"
+或者
+alias unzip='unzip -O cp936'  （有效）
 
 
 解压之后替换文件名
@@ -4742,7 +4743,7 @@ $ sudo apt-get install uget
     
     
     
-<log apt-get使用proxy代理>
+<log apt-get使用proxy代理加速>
 0.新建文件 apt_proxy_conf(文件名任意)内容如下：
 Acquire::http::proxy "http://127.0.0.1:8087";
 Acquire::ftp::proxy "http://127.0.0.1:8087";
@@ -12493,6 +12494,11 @@ dpkg-buildpackage -rfakeroot -uc -b
 
 
 sudo gedit /etc/apt/apt.conf.d/apt.conf
+
+
+
+
+
 
 
 
