@@ -1308,7 +1308,10 @@ Filemanager目录属性一般设置2770，子目录属组继承，可以列表�
 
 
 
-
+sudo systemctl start smb
+sudo systemctl enable smb
+sudo systemctl restart smb
+sudo systemctl status smb
 
 
 

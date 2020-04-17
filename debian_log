@@ -4513,7 +4513,14 @@ source spb166
 /opt/cadence/SPB166/tools/pcb/bin/pad_designer
 -------------------------------------------------
 sudo chmod +x allegro pad_designer concepthdl
-
+sudo gedit projmgr
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/projmgr
+-------------------------------------------------
+sudo chmod +x projmgr
 
 eagle 8.1.0
 cd /usr/local/bin
@@ -12488,6 +12495,34 @@ proxychains apt-get source curl
 cd curl-7.38.0/
 //sudo dpkg-buildpackage -rfakeroot -b
 dpkg-buildpackage -rfakeroot -uc -b
+
+
+
+
+
+
+
+
+串口助手
+sudo apt-get install cutecom
+
+
+
+
+
+
+
+
+
+
+
+
+安装ffmpy3
+https://ffmpy3.readthedocs.io/en/latest/
+sudo pip3 install ffmpy3 -i https://mirrors.163.com/pypi/simple
+
+
+
 
 
 
