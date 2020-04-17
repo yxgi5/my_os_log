@@ -12500,6 +12500,35 @@ dpkg-buildpackage -rfakeroot -uc -b
 
 
 
+sudo gedit /etc/apt/apt.conf.d/apt.conf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
