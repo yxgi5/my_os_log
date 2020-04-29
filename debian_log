@@ -4514,6 +4514,14 @@ source spb166
 -------------------------------------------------
 sudo chmod +x allegro pad_designer concepthdl
 
+sudo gedit projmgr
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/projmgr
+-------------------------------------------------
+sudo chmod +x projmgr
 
 eagle 8.1.0
 cd /usr/local/bin
@@ -12502,12 +12510,31 @@ sudo gedit /etc/apt/apt.conf.d/apt.conf
 
 
 
+which virtualenv 
+/usr/local/bin/virtualenv
 
+virtualenv --no-site-packages venv
+source venv/bin/activate
 
+pip install six==1.12.0 -i https://mirrors.163.com/pypi/simple
+pip install colorama==0.3.9 -i https://mirrors.163.com/pypi/simple
+pip install contextlib2==0.5.1 -i https://mirrors.163.com/pypi/simple
+pip install future==0.16.0 -i https://mirrors.163.com/pypi/simple
+pip install mutablerecords==0.4.1 -i https://mirrors.163.com/pypi/simple
+pip install oauth2client==1.5.2 -i https://mirrors.163.com/pypi/simple
+pip install protobuf==3.6.0 -i https://mirrors.163.com/pypi/simple
+pip install pyOpenSSL==17.1.0 -i https://mirrors.163.com/pypi/simple
+pip install PyYAML==3.13 -i https://mirrors.163.com/pypi/simple
+pip install sockjs-tornado==1.0.3 -i https://mirrors.163.com/pypi/simple
+pip install tornado==4.3 -i https://mirrors.163.com/pypi/simple
+pip install spintop-openhtf -i https://mirrors.163.com/pypi/simple
 
-
-
-
+git clone https://github.com/google/openhtf.git
+cd openhtf/
+python setup.py install
+cd examples/
+python frontend_example.py
+http://localhost:4444
 
 
 
