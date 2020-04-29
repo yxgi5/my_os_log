@@ -12552,6 +12552,67 @@ http://localhost:4444
 
 
 
+串口助手
+sudo apt-get install cutecom
+
+
+
+
+
+
+
+
+
+
+
+
+安装ffmpy3
+https://ffmpy3.readthedocs.io/en/latest/
+sudo pip3 install ffmpy3 -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
+
+
+
+
+
+更新spb166到spb172
+cd /usr/local/bin
+
+sudo gedit allegro
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/allegro
+-------------------------------------------------
+sudo gedit concepthdl
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/concepthdl
+-------------------------------------------------
+sudo gedit pad_designer
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/padstack_editor
+-------------------------------------------------
+sudo chmod +x allegro pad_designer concepthdl
+
+sudo gedit projmgr
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/projmgr
+-------------------------------------------------
+sudo chmod +x projmgr
 
 
 

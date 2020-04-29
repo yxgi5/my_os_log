@@ -792,7 +792,9 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -p tcp --dport 222 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 322 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 5901 -j ACCEPT 
-iptables -A INPUT -p tcp --dport 5902 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 5902 -j ACCEPT
+iptables -A INPUT -p tcp --dport 3680 -j ACCEPT
+iptables -A INPUT -p tcp --dport 3690 -j ACCEPT
 iptables -A INPUT -p tcp --dport 3306 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 8081 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 8090 -j ACCEPT 
@@ -1302,8 +1304,75 @@ Others->Filemanager管理分享的根目录下文件和目录的权限，一般�
 
 tips: 
 Filemanager目录属性一般设置2770，子目录属组继承，可以列表。  如果设置成2660, 通过samba的授权用户(同一属组)，也没法打开了，见前面关于目录权限。
+https://xxx.xxx.xxx.xxx:10000
 
 
+
+
+
+sudo systemctl start smb
+sudo systemctl enable smb
+sudo systemctl restart smb
+sudo systemctl status smb
+
+
+
+
+
+
+docker search svn
+docker pull elleflorio/svn-server
+docker images
+
+
+docker run --restart always --name svn-server -d -v /home/svn:/home/svn -p 3680:80 -p 3690:3690 -e SVN_REPONAME=repository elleflorio/svn-server
+
+#docker run --restart always --name svn-server -d -v /home/svn:/var/opt/svn -p 3680:80 -p 3690:3690 -e SVN_REPONAME=repository elleflorio/svn-server
+#docker run -v /opt/data/svn/repo:/var/opt/svn --name svn-server -p 3690:3690 -e SVN_REPONAME=repository -d svn_configed
+
+docker exec -t svn-server htpasswd -b /etc/subversion/passwd admin 123456
+
+#docker exec -it svn-server /bin/sh
+#svnadmin create svn
+#cd svn/conf
+#vi svnserve.conf
+#vi passwd
+#vi authz
+#cd /etc/apache2
+#vi httpd.conf
+#cd /var/opt/svn
+
+#exit
+#chmod -R o+rw /home/svn
+#cd svn/conf
+
+#docker restart svn-server
+
+
+
+#docker run --name svn-server -d -v /home/andy/Downloads/tmp/svn:/home/svn -p 3680:80 -p 3690:3690 -e SVN_REPONAME=repository elleflorio/svn-server
+#docker exec -t svn-server htpasswd -b /etc/subversion/passwd admin 123456
+#docker exec -it svn-server /bin/sh
+#chmod -R 777 /home/svn
+#cd /home/svn/
+#cd svn/conf
+#vi svnserve.conf
+
+
+管理界面
+http://192.168.1.110:3680/svnadmin
+填入
+/etc/subversion/subversion-access-control
+/etc/subversion/passwd
+/home/svn
+/usr/bin/svn
+/usr/bin/svnadmin
+然后
+创建repo设置用户和组
+
+
+svn co http://192.168.1.110:3680/svn/svn-repo
+#svn co svn://192.168.1.110:3690/svn/svn-repo
 
 
 
