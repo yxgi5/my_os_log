@@ -12514,6 +12514,11 @@ which virtualenv
 /usr/local/bin/virtualenv
 
 virtualenv --no-site-packages venv
+最新的virtualenv没有--no-site-packages，默认就是
+最后支持--no-site-packages的virtualenv==16.7.9
+sudo pip3 install --upgrade virtualenv==16.7.9 -i https://mirrors.163.com/pypi/simple
+
+
 source venv/bin/activate
 
 pip install six==1.12.0 -i https://mirrors.163.com/pypi/simple
