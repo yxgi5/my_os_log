@@ -3012,7 +3012,7 @@ sudo apt-get install gpicview
 
 
 
-设置移动硬盘samba共享
+设置移动硬盘samba共享share
 sudo vi /etc/samba/smb.conf
 [dell]
     comment = Network Logon Service
