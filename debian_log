@@ -12642,12 +12642,17 @@ v2ray
 v2ray-linux-64.zip下载到相同目录就可以安装到本机
 然后
 sudo gedit /etc/v2ray/config.json
+sudo service v2ray start
+可以使用 service v2ray start|stop|status|reload|restart|force-reload 控制 V2Ray 的运行
+
+然后是opera和chrome等浏览器的代理自动切换设置，协议和端口查/etc/v2ray/config.json
 
 
 anti-g*f*w 20200630
 首先，用X-Tunnel或者tor-browser-linux64-9.5获取最新的free vmess
 虚拟机里贴进v2rayN
 再得到最新的uuid填入/etc/v2ray/config.json
+
 
 CC fucking P， 你丫拦得住俺？
 
