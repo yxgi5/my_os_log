@@ -12623,4 +12623,47 @@ sudo chmod +x projmgr
 
 
 
+cd /usr/local/bin
+sudo gedit diamond
+-------------------------------------------------
+#!/bin/bash
+cd /opt/lscc/diamond/3.9_x64/bin/lin64/
+#cd /opt/lscc/diamond/3.11_x64/bin/lin64/
+./diamond
+-------------------------------------------------
+
+
+
+
+
+v2ray
+原始的go.sh脚本需要修改
+已经修改好的go_mod.sh
+v2ray-linux-64.zip下载到相同目录就可以安装到本机
+然后
+sudo gedit /etc/v2ray/config.json
+
+
+anti-g*f*w 20200630
+首先，用X-Tunnel或者tor-browser-linux64-9.5获取最新的free vmess
+虚拟机里贴进v2rayN
+再得到最新的uuid填入/etc/v2ray/config.json
+
+CC fucking P， 你丫拦得住俺？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
