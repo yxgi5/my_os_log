@@ -12660,9 +12660,13 @@ CC fucking P， 你丫拦得住俺？
 
 
 
+v2ray for terminal
 
-
-
+export ALL_PROXY="socks5://127.0.0.1:10808"
+或者
+export https_proxy="socks5://127.0.0.1:10808"
+export http_proxy="socks5://127.0.0.1:10808"
+export ftp_proxy="socks5://127.0.0.1:10808"
 
 
 
