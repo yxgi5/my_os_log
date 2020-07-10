@@ -12671,6 +12671,47 @@ export ftp_proxy="socks5://127.0.0.1:10808"
 
 
 
+Scientific_Toolworks_Understand
+
+
+
+
+
+magnetw现在还算好用吧
+
+使用文档
+https://magnetw.app/advanced/rule-apply.html
+
+下载地址
+https://github.com/xiandanin/magnetW/releases
+
+这样运行linux版本
+./magnetw-3.1.1-linux.AppImage --no-sandbox
+
+设置v2ray
+设置-->启用代理
+Socks5, 127.0.0.1:10808
+也可以设置为ss代理
+Socks5, 127.0.0.1:1080
+
+
+运行freecad最新版本
+./FreeCAD_0.18-16146-Linux-Conda_Py3Qt5_glibc2.12-x86_64.AppImage
+
+
+
+
+diagrams的AppImage版本这样运行
+chmod +x draw.io-x86_64-13.3.9.AppImage
+./draw.io-x86_64-13.3.9.AppImage --no-sandbox
+
+可以直接安装diagrams的deb包
+sudo dpkg -i draw.io-amd64-13.3.9.deb
+
+
+
+
+
 
 
 
