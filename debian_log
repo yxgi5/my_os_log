@@ -12710,7 +12710,8 @@ sudo dpkg -i draw.io-amd64-13.3.9.deb
 
 
 
-
+wine 一些游戏
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine age2.exe
 
 
 
