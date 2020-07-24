@@ -12714,6 +12714,33 @@ wine 一些游戏
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine age2.exe
 
 
+perl脚本 Can't locate autobox/Core.pm 之类的模块未安装问题
+cpan方式安装
+sudo cpanm autobox::Core
+sudo cpanm Try::Tiny
+sudo cpanm XML::TreePP
+sudo cpanm XML::TreePP::XMLPath
+sudo cpanm Text::Xslate
+sudo cpanm Readonly
+
+或者apt方式安装
+# 查找在哪个apt包 apt-cache search perl autobox::Core
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
