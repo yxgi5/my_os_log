@@ -12729,8 +12729,8 @@ sudo cpanm Readonly
 
 
 
-
-
+dos emulator dos模拟器
+sudo apt-get install dosbox dosemu
 
 
 
