@@ -12736,6 +12736,23 @@ sudo apt-get install dosbox dosemu
 
 
 
+ttf字体编辑工具
+sudo apt-get install fontforge
+
+
+
+
+
+
+
+source insight 中文显示等
+原理
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
+
+
+双击打开也想支持, 修改
+~/.local/share/applications/wine-extension-pr.desktop
+
 
 
 
