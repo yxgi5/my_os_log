@@ -101,6 +101,7 @@ $ sudo apt-get install subversion subversion-tools rapidsvn
 
 $ sudo apt-get install rdesktop grdesktop 
 $ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andy -f 192.168.1.99 &
+$ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:share=/home/andy -f 192.168.1.99 &
 退出全屏模式 :使用组合键ctrl+alt+enter
 
 $ sudo apt-get install xrdp vnc4server tightvncserver ssh
