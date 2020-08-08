@@ -226,6 +226,7 @@ sudo pacman -S jdk jdk-openjdk jre-openjdk java-environment-common jdk8-openjdk
 
 
 v2ray
+sudo systemctl enable v2ray.service
 sudo systemctl restart v2ray.service
 
 
@@ -237,6 +238,12 @@ $ dconf-editor
 
 
 
+sudo pacman -S lightdm-gtk-greeter lightdm
+sudo systemctl disable lxdm.service
+sudo systemctl enable lightdm.service
+sudo systemctl start lightdm.service
 
 
 
+sudo systemctl disable lightdm.service
+sudo systemctl enable lxdm.service
