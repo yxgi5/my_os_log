@@ -226,6 +226,7 @@ sudo pacman -S jdk jdk-openjdk jre-openjdk java-environment-common jdk8-openjdk
 
 
 v2ray
+sudo systemctl enable v2ray.service
 sudo systemctl restart v2ray.service
 
 
