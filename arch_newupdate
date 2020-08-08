@@ -238,6 +238,12 @@ $ dconf-editor
 
 
 
+sudo pacman -S lightdm-gtk-greeter lightdm
+sudo systemctl disable lxdm.service
+sudo systemctl enable lightdm.service
+sudo systemctl start lightdm.service
 
 
 
+sudo systemctl disable lightdm.service
+sudo systemctl enable lxdm.service

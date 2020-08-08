@@ -12758,42 +12758,6 @@ env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
 
 
 
-sudo dpkg -i baidunetdisk_3.3.2_amd64.deb
-cd /opt/baidunetdisk
-./baidunetdisk --no-sandbox
-
-cd /usr/local/bin
-sudo gedit baidunetdisk
--------------------------------------------------
-#!/bin/bash
-cd /opt/baidunetdisk/
-./baidunetdisk --no-sandbox
--------------------------------------------------
-sudo chmod +x baidunetdisk
-
-
-
-
-sudo gedit /etc/fstab
--------------------------------------------------
-UUID=f5cd428a-7bcc-4026-80b7-9f570e5966cf	/               ext4    errors=remount-ro 0       1
-UUID=08D8BF9DD8BF8788	/mnt/c_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
-UUID=0CC416CC0CC416CC	/mnt/d_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
-UUID=0CC416BF0CC416BF	/mnt/e_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
-UUID=bdeccf6e-c968-4741-86e0-e0b3f15e62ff	/home	ext4	errors=remount-ro 	0       1
-UUID=3bc97d5e-cdc7-49fc-aeeb-4b455100c5df	/opt	ext4	errors=remount-ro 	0       1
--------------------------------------------------
-
-
-
-cat /etc/*-release
-
-
-
-
-
-
-
 
 
 
