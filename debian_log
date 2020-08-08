@@ -1105,6 +1105,28 @@ Unknown media type in type 'uri/rtspu'
 $ sudo gedit /usr/share/mime/packages/kde.xml
 删除上面有关的部分内容
 
+类似的
+Unknown media type in type 'chemical
+...
+
+sudo rm /usr/share/mime/packages/chemical-mime-data.xml
+
+
+
+该错误源于KDE，自2008年以来一直没有修复：
+
+https://bugs.kde.org/show_bug.cgi?id=303627
+
+https://bugs.kde.org/show_bug.cgi?id=250924
+
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469833
+
+https://bugs.launchpad.net/ubuntu/+source/shared-mime-info/+bug/289592
+
+https://askubuntu.com/questions/39852/how-to-remove-warnings-like-unknown-media-type
+
+
+
 
 
 
