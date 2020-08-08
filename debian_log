@@ -12815,6 +12815,11 @@ cat /etc/*-release
 
 
 
+美国源 security.debian.org
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+
+
 
 
 
