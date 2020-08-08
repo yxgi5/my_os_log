@@ -229,7 +229,11 @@ v2ray
 sudo systemctl restart v2ray.service
 
 
-
+$ sudo pacman -S dconf-editor
+$ dconf-editor
+依次点开->org->gnome->gedit->preferences->encodings
+改成
+['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
 
 
 
