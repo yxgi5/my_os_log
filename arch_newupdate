@@ -1,0 +1,238 @@
+qemu-launcher：移除 glade-perl 将破坏依赖关系 'glade-perl'
+[andy@andy ~]$ sudo pacman -R glade-perl qemu-launcher
+
+
+
+
+
+
+
+
+
+
+
+
+ubuntu live cd
+sudo bash
+find root of arch
+./bin/arch-chroot .
+
+
+    设置DNS
+        vim /etc/resolv.conf #编辑配置文件
+        nameserver 8.8.8.8
+        nameserver 114.114.114.114
+        保存退出，必要时清NDS缓存
+    更换源，本次更换清华源
+        编辑 /etc/pacman.d/mirrorlist， 在文件的最顶端添加： Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+        更新软件包缓存： sudo pacman -Syy
+
+
+pacman-key --init
+pacman -S archlinux-keyring
+pacman -S archlinuxcn-keyring
+pacman-key --populate archlinux
+pacman -Syu
+
+
+
+sudo gedit //etc/locale.conf
+LANG=en_US.UTF-8
+sudo gedit /etc/locale
+sudo gedit /etc/locale.gen
+sudo locale-gen
+
+
+修复obmenu-generator
+sudo cpan install Linux::DesktopFiles Data::Dump
+sudo pacman -S cpanminus 
+sudo cpanm --reinstall Linux::DesktopFiles
+sudo cpanm --reinstall Data::Dump
+git clone git://github.com/trizen/obmenu-generator
+sudo cp obmenu-generator/obmenu-generator /usr/bin
+
+
+
+
+sudo pacman -S cpython-pyqt5-sip
+sudo pacman -S cpython-pyqt5
+sudo pacman -S md4c
+sudo pacman -S qtqr
+
+
+
+
+Create the file /etc/polkit-1/rules.d/50-udiskie.rules with permissions 644, and with the following contents:
+
+polkit.addRule(function(action, subject) {
+  var YES = polkit.Result.YES;
+  // NOTE: there must be a comma at the end of each line except for the last:
+  var permission = {
+    // required for udisks1:
+    "org.freedesktop.udisks.filesystem-mount": YES,
+    "org.freedesktop.udisks.luks-unlock": YES,
+    "org.freedesktop.udisks.drive-eject": YES,
+    "org.freedesktop.udisks.drive-detach": YES,
+    // required for udisks2:
+    "org.freedesktop.udisks2.filesystem-mount": YES,
+    "org.freedesktop.udisks2.encrypted-unlock": YES,
+    "org.freedesktop.udisks2.eject-media": YES,
+    "org.freedesktop.udisks2.power-off-drive": YES,
+    // required for udisks2 if using udiskie from another seat (e.g. systemd):
+    "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+    "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+    "org.freedesktop.udisks2.encrypted-unlock-other-seat": YES,
+    "org.freedesktop.udisks2.eject-media-other-seat": YES,
+    "org.freedesktop.udisks2.power-off-drive-other-seat": YES
+  };
+  if (subject.isInGroup("storage")) {
+    return permission[action.id];
+  }
+});
+
+
+
+
+时间栏修复
+sudo pacman -S orage zenity libwpe wpebackend-fdo
+
+sudo pacman -Fy
+
+
+时间显示修复
+sudo timedatectl set-local-rtc false
+sudo hwclock -u
+sudo timedatectl set-ntp true
+timedatectl timesync-status
+timedatectl show-timesync --all
+timedatectl status
+
+//sudo timedatectl set-local-rtc true
+//timedatectl set-local-rtc 0
+//timedatectl status
+
+
+
+conky修复
+新的配置文件
+rm ～/.conkyrc
+~/.config/conky/conky.conf
+yaout conky-git
+
+/----------------------------------------------------------------------
+-- Conky config for ArchBang
+-- by Mr Green
+
+conky.config = {
+background = true,
+use_xft = true,
+font = 'monospace:size=9',
+xftalpha = 1,
+update_interval = 1.0,
+total_run_times = 0,
+own_window = true,
+own_window_transparent = true,
+own_window_type = 'desktop',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+double_buffer = true,
+minimum_height = 390,
+maximum_width = 340,
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+default_color = 'white',
+default_shade_color = '000000',
+default_outline_color = 'd9d7d6',
+alignment = 'top_right',
+gap_x = 12,
+gap_y = 12,
+no_buffers = true,
+uppercase = false,
+cpu_avg_samples = 2,
+override_utf8_locale = false,
+color1 = 'gray',
+color2 = 'gray',
+color3 = 'gray',
+}
+
+conky.text = [[
+${color2}${font sans:normal:size=9}CPU ${color1}
+${cpubar cpu0}
+${cpubar cpu1}
+${cpubar cpu2}
+${cpubar cpu3}
+${cpubar cpu4}
+${cpubar cpu5}
+${cpubar cpu6}
+${cpubar cpu7}
+${color2}${font sans:normal:size=9}RAM ${color1}
+${membar}
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${color2}${font sans:normal:size=9}SYSTEM ${color1}${hr 2}
+#${color1}${font sans:normal:size=9}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#
+${color2}${font sans:bold:size=9}TOP PROCESSES ${color1}${hr 2}
+${color1}${font sans:normal:size=9}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+
+${color2}${font sans:bold:size=9}SHORTCUT KEYS ${color1}${hr 2}${color1}${font sans:normal:size=9}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize]]
+----------------------------------------------------------------------/
+
+
+
+
+sudo pacman -S opera opera-ffmpeg-codecs
+
+
+
+
+修复opera
+https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+
+
+
+
+修复jdk
+sudo pacman -S jdk jdk-openjdk jre-openjdk java-environment-common jdk8-openjdk
+
+
+v2ray
+sudo systemctl restart v2ray.service
+
+
+
+
+
+
+
+
+
