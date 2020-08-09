@@ -12757,8 +12757,13 @@ env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
 
 
 
+livecd+chroot维护系统（也可安装debootstrap安装包）
+mount -o bind /dev /mnt/debian/dev
+chroot /mnt/debian /bin/bash
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
 
-
+分区home和opt等继续挂载
 
 
 
