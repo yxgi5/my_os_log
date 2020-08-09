@@ -1105,6 +1105,28 @@ Unknown media type in type 'uri/rtspu'
 $ sudo gedit /usr/share/mime/packages/kde.xml
 删除上面有关的部分内容
 
+类似的
+Unknown media type in type 'chemical
+...
+
+sudo rm /usr/share/mime/packages/chemical-mime-data.xml
+
+
+
+该错误源于KDE，自2008年以来一直没有修复：
+
+https://bugs.kde.org/show_bug.cgi?id=303627
+
+https://bugs.kde.org/show_bug.cgi?id=250924
+
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469833
+
+https://bugs.launchpad.net/ubuntu/+source/shared-mime-info/+bug/289592
+
+https://askubuntu.com/questions/39852/how-to-remove-warnings-like-unknown-media-type
+
+
+
 
 
 
@@ -12762,8 +12784,91 @@ mount -o bind /dev /mnt/debian/dev
 chroot /mnt/debian /bin/bash
 mount -t proc proc /proc
 mount -t sysfs sysfs /sys
-
 分区home和opt等继续挂载
+
+
+sudo dpkg -i baidunetdisk_3.3.2_amd64.deb
+cd /opt/baidunetdisk
+./baidunetdisk --no-sandbox
+
+cd /usr/local/bin
+sudo gedit baidunetdisk
+-------------------------------------------------
+#!/bin/bash
+cd /opt/baidunetdisk/
+./baidunetdisk --no-sandbox
+-------------------------------------------------
+sudo chmod +x baidunetdisk
+
+
+
+
+sudo gedit /etc/fstab
+-------------------------------------------------
+UUID=f5cd428a-7bcc-4026-80b7-9f570e5966cf	/               ext4    errors=remount-ro 0       1
+UUID=08D8BF9DD8BF8788	/mnt/c_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+UUID=0CC416CC0CC416CC	/mnt/d_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+UUID=0CC416BF0CC416BF	/mnt/e_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+UUID=bdeccf6e-c968-4741-86e0-e0b3f15e62ff	/home	ext4	errors=remount-ro 	0       1
+UUID=3bc97d5e-cdc7-49fc-aeeb-4b455100c5df	/opt	ext4	errors=remount-ro 	0       1
+-------------------------------------------------
+
+
+
+cat /etc/*-release
+
+
+
+gedit ~/Documents/apt_proxy_conf
+Acquire::http::proxy "http://127.0.0.1:10808";
+Acquire::ftp::proxy "ftp://127.0.0.1:10808";
+Acquire::https::proxy "https://127.0.0.1:10808";
+or
+Acquire::http::proxy "socks5://127.0.0.1:10808";
+Acquire::ftp::proxy "socks5://127.0.0.1:10808";
+Acquire::https::proxy "socks5://127.0.0.1:10808";
+
+sudo apt-get -c ~/Documents/apt_proxy_conf upgrade
+Proxy CONNECT aborted
+
+
+export -p
+查看有没有类似proxy的环境变量，例如
+
+declare -x ftp_proxy="127.0.0.1:8118"
+declare -x http_proxy="127.0.0.1:8118"
+declare -x https_proxy="127.0.0.1:8118"
+
+如果有，则全部删掉（具体名字要看你自己的终端显示）：
+
+export -n ftp_proxy 
+export -n http_proxy
+export -n https_proxy 
+
+然后再sudo apt-get update
+
+gedit ~/.bashrc
+set proxy
+export http_proxy="http://127.0.0.1:8118"
+export https_proxy="https://127.0.0.1:8118"
+export ftp_proxy="ftp://127.0.0.1:8118"
+
+还是不行算了
+
+
+
+
+
+不就是美国源 security.debian.org 慢的问题嘛
+下面的两个应该等效
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+
+
+
+
+
+
 
 
 
