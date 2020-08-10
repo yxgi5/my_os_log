@@ -12761,5 +12761,13 @@ env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
 
 
 
-
+xrandr --output default --gamma 1:1:1 --mode 1920x1080
+cvt
+lspci -vnn
+xrandr -q
+inxi -G
+sudo lshw -C display
+Xorg -configure
+xrandr --verbose
+lspci | grep VGA
 
