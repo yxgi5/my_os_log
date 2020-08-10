@@ -12875,6 +12875,78 @@ deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free con
 
 
 
+pcmanfm的application为空处理
+/home/andy/.config/menus/lxde-applications.menu
+
+<!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN'
+ 'http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd'>
+<Menu>
+    <Name>Applications</Name>
+    <MergeFile type='parent'>/etc/xgd/menus/lxde-applications.menu</MergeFile>
+    <!-- added by LibFM -->
+    <Include>
+        <Filename>demo.ui.desktop</Filename>
+    </Include>
+    <!-- added by LibFM -->
+    <Include>
+        <Filename>compile-on-the-fly.pyw.desktop</Filename>
+    </Include>
+    <Menu>
+        <Name>C52ADCCD-884E-4EF7-A803-3DB9313A459C-dm365_jpegenc_01_00_00_05_production</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>08292447-1685-4FD9-BBE3-CCBBF48436A0-dsplib_3_1_1_1</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>6BF36CF3-26CB-453C-ABB0-686E833439E6-dvsdk</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>61297B0C-1FFA-41FF-B644-948D0D6C28A4-GraphicsSDK</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>08292447-1685-4FD9-BBE3-CCBBF48436A0-imglib_1_,__1</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>E02F7109-DD46-4DE9-B1DC-2186FB78EEA2-PrivateTI_IPNC_RDK</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>08292447-1685-4FD9-BBE3-CCBBF48436A0-TexasInstruments</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>MCSDK-1_01_00_02-TexasInstruments</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>Xilinx Design Tools</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+</Menu>
+
+
+
+
+
 
 
 
@@ -12888,6 +12960,10 @@ sudo lshw -C display
 Xorg -configure
 xrandr --verbose
 lspci | grep VGA
+
+
+
+
 
 
 
@@ -12973,6 +13049,12 @@ ok
 aptitude update
 aptitude safe-upgrade
 aptitude full-upgrade
+
+
+
+
+
+
 
 
 
