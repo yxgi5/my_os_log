@@ -486,7 +486,7 @@ env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
 
 
 
-pulseaudio会导致alsamixer的speaker开机静音
+pulseaudio会导致alsamixer的speaker开机静音 声音 音量
 修改
 /usr/share/pulseaudio/alsa-mixer/paths/analog-output.conf
 and change this:
@@ -12884,6 +12884,28 @@ xrandr --verbose
 lspci | grep VGA
 
 
+
+
+
+
+
+
+you should be able to repair your system by repeatedly running dpkg --configure --pending, apt-get -f install, and apt-get dist-upgrade until there are no errors.
+$ aptitude search '~i(!~ODebian)'
+$ apt-forktracer | sort
+# apt -f install
+# dpkg --configure --pending
+# dpkg -r --force-depends package_name
+# apt-get autoremove
+# apt purge $(dpkg -l | awk '/^rc/ { print $2 }')
+# aptitude search '~c'
+# aptitude purge '~c'
+# aptitude search '~o'
+# aptitude purge '~o'
+
+
+sudo dpkg --purge --force-depends xxx
+sudo apt-get install -f 
 
 
 
