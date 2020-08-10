@@ -320,7 +320,9 @@ $ sudo aptitude install gtk-theme-switch gtk2-engines
 $ sudo aptitude install lxrandr
 $ sudo apt-get install volumeicon-alsa
 
+
 在 ~/.config/openbox/autostart 下加入
+(The autostart script is located at ~/.config/openbox/autostart.sh. If that file does not exist, then the system-wide default script, located at /etc/xdg/openbox/autostart.sh, is run instead)
 背景图片
 feh --bg-scale /path/to/your/background/image.jpg
 
