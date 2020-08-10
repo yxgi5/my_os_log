@@ -247,3 +247,34 @@ sudo systemctl start lightdm.service
 
 sudo systemctl disable lightdm.service
 sudo systemctl enable lxdm.service
+
+
+
+
+
+
+
+
+
+
+chroot替代arch-chroot的可能
+mount --bind /dev dev 
+mount --bind /proc proc
+mount --bind /sys sys 
+chroot ./ bin/sh
+是否可行？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
