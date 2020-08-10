@@ -12907,6 +12907,7 @@ $ apt-forktracer | sort
 sudo dpkg --purge --force-depends xxx
 sudo apt-get install -f 
 
+dpkg --configure -a
 
 
 
