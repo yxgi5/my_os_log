@@ -4473,10 +4473,49 @@ to perform the upgrade.
 
 
 
+sudo pacman-key --refresh-keys
+sudo gedit /etc/pacman.d/gnupg/gpg.conf
+#keyserver hkp://pool.sks-keyservers.net 
+keyserver hkp://keyserver.ubuntu.com
+国内可用key server列表：
+keyserver.ubuntu.com
+pgp.mit.edu
+subkeys.pgp.net
+www.gpg-keyserver.de
+
+sudo pacman -S archlinuxcn-keyring
+sudo pacman -S archlinux-keyring
+sudo pacman -Syudd --asdeps
+
+
+sudo gedit /etc/locale.conf
+#LANG="zh_CN.UTF-8"
+LANG=en_US.UTF-8
+
+
+
+wlp4s0 名字 换成 wlan0
+$ sudo leafpad /etc/udev/rules.d/10-network.rules
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="00:17:42:f4:8e:1c", NAME="eth0"
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="24:ec:99:60:29:57", NAME="wlan0"
+
+sudo systemctl restart systemd-networkd.service
 
 
 
 
+
+网络接口重命名
+作为更改设备名称的替代方案，systemd 使用.link文件用于接口重命名。常见的例子是基于 MAC 地址给一个 USB 接口以太网适配器设置一个可预见的接口名称。这类设备依其连接到不同 USB 接口而具有不同的接口名称。
+
+/etc/systemd/network/10-ethusb0.link
+[Match]
+MACAddress=12:34:56:78:90:ab
+
+[Link]
+Description=USB to Ethernet Adapter
+Name=ethusb0
+注意： 任何由用户提供的.link文件名必须是依字典顺序先于默认配置文件名99-default.link才能生效。例如，必须是10-ethusb0.link而不能是 ethusb0.link
 
 
 
