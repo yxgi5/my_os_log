@@ -12790,8 +12790,8 @@ mount -t proc proc /proc
 mount -t sysfs sysfs /sys
 mount -t devpts devpts /dev/pts
 mount -t tmpfs tmpfs /run/lock
-mount /dev/sdc2 /home
-mount /dev/sdc3 /opt
+mount /dev/sdx2 /home
+mount /dev/sdx3 /opt
 
 
 
@@ -13042,6 +13042,16 @@ sudo dpkg --purge --force-depends jd-gui
 
 
 
+dpkg --configure -a
+dpkg: dependency problems prevent configuration of va-driver-all:amd64:
+apt-get install -f
+trying to overwrite 'YYY', which is also in package xxx：[ver]
+dpkg --force-depends -r xxx
+
+
+
+
+
 
 ok
 
@@ -13084,6 +13094,56 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 
 sudo apt-get install libnet-ifconfig-wrapper-perl
+
+
+
+------------buster--------------------------------------
+
+not initialized in udev database even after waiting 10000000 microseconds
+mount --bind /run/lvm run/lvm  ??
+
+
+
+sudo apt-get install orage
+sudo apt-get purge dropbear
+
+
+sudo update-initramfs -u
+https://www.kutu66.com//ubuntu/article_164784
+
+
+dnsmasq 替代 bind9
+sudo systemctl stop bind9.service
+sudo systemctl status dnsmasq.service
+
+
+sudo rm /lib/systemd/system/bind9.service
+
+
+sudo apt-get dselect-upgrade
+
+
+
+https://bbs.archlinux.org/viewtopic.php?pid=1807200
+
+https://blog.csdn.net/weixin_42720824/article/details/104790247
+sudo apt-get install firmware-misc-nonfree
+??
+
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/i915
+
+下载kbl_dmc_ver1_04.bin
+
+最后拷贝到/lib/firmware文件夹下：
+
+cd /lib/firmware
+sudo mkdir i915
+sudo cp Downloads/kbl_dmc_ver1_04.bin /lib/firmware/i915
+
+
+
+
+
 
 
 

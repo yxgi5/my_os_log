@@ -115,7 +115,7 @@ timedatectl status
 
 conky修复
 新的配置文件
-rm ～/.conkyrc
+rm ~/.conkyrc
 ~/.config/conky/conky.conf
 yaout conky-git
 
