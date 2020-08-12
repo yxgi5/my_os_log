@@ -35,6 +35,18 @@ pacman-key --populate archlinux
 pacman -Syu
 
 
+pacman -Syu : key could not be looked up remotely.
+# sudo pacman -Syu
+...
+error: key "5F702428F70E0903" could not be looked up remotely
+error: required key missing from keyring
+error: failed to commit transaction (unexpected error)
+Errors occurred, no packages were upgraded.
+...
+#sudo pacman -S archlinux-keyring  && pacman -S archlinuxcn-keyring && sudo pacman -Syu
+
+
+
 
 sudo gedit //etc/locale.conf
 LANG=en_US.UTF-8
@@ -247,3 +259,41 @@ sudo systemctl start lightdm.service
 
 sudo systemctl disable lightdm.service
 sudo systemctl enable lxdm.service
+/etc/systemd/system/...
+
+sudo systemctl enable gdm.service
+sudo systemctl start gdm.service
+
+
+
+
+
+
+sudo pacman -S hwloc aircrack-ng gdm alsa-topology-conf alsa-lib hwloc aircrack-ng alsa-topology-conf alsa-ucm-conf alsa-lib libsidplayfp libmaxminddb bind audacious-plugins python-patiencediff breezy brltty liblouis ceph python-bcrypt python-cmd2 deluge-gtk deluge=2.0.4.dev38+g23a48dd01-2 libmicrohttpd elfutils libspf2 exim openmpi fftw fluidsynth gimp libinstpatch-1.0.so=2-64 mypaint-brushes1 gst-plugins-bad-libs=1.16.2 gst-plugins-bad lilv gst-plugins-bad gst-plugin-gtk gthumb netpbm gts kactivities-stats kio-extras kdsoap-ws-discovery-client kio-extras lib32-brotli lib32-libsoup java-openjfx mujs mpv perl-clone perl-http-message perl-cgi perl-http-server-simple python2-importlib_resources python2-jaraco python2-ordered-set python2-setuptools libslirp qemu liburing qemu yaml-cpp qtcreator ruby-irb ruby lsof steam lib32-vulkan-icd-loader steam lib32-vulkan-icd-loader steam-native-runtime xf86-video-vmware virtualbox-guest-utils xdg-dbus-proxy webkit2gtk 
+
+
+??
+xorg-fonts-misc xorg-fonts-alias-misc dmxproto libdmx xf86dgaproto libxxf86dga microchip-mplabx-bin 
+
+
+
+
+
+sudo pacman -S lightdm gdm
+
+sudo pacman -S gnome gnome-extra gnome-shell
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

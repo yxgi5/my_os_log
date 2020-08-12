@@ -4523,10 +4523,9 @@ Name=ethusb0
 
 
 
-
-
-
-
+修复cadence
+mv /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1 /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1.bk
+cp /usr/lib32/libgcc_s.so.1 /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1
 
 
 
