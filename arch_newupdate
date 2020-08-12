@@ -311,6 +311,14 @@ sudo pacman -S lxde lxde-common lxsession
 sudo pacman -S xfce4 xfce4-goodies mousepad
 
 
+sunloginclient
+[andy@andy ~]$ xhost +
+access control disabled, clients can connect from any host
+[andy@andy ~]$ which xhost 
+/usr/bin/xhost
+[andy@andy ~]$ sudo xhost +
+[sudo] password for andy: 
+access control disabled, clients can connect from any host
 
 
 
