@@ -298,13 +298,17 @@ chroot ./ bin/sh
 
 
 
+xdg-settings set default-web-browser opera.desktop
 
 
 
+$ xdg-mime default opera.desktop x-scheme-handler/http
+$ xdg-mime default opera.desktop x-scheme-handler/https
+$ xdg-mime default opera.desktop text/html
 
+sudo pacman -S lxde lxde-common lxsession
 
-
-
+sudo pacman -S xfce4 xfce4-goodies mousepad
 
 
 
