@@ -127,7 +127,7 @@ timedatectl status
 
 conky修复
 新的配置文件
-rm ～/.conkyrc
+rm ~/.conkyrc
 ~/.config/conky/conky.conf
 yaout conky-git
 
@@ -259,11 +259,11 @@ sudo systemctl start lightdm.service
 
 sudo systemctl disable lightdm.service
 sudo systemctl enable lxdm.service
+
 /etc/systemd/system/...
 
 sudo systemctl enable gdm.service
 sudo systemctl start gdm.service
-
 
 
 
@@ -282,6 +282,39 @@ xorg-fonts-misc xorg-fonts-alias-misc dmxproto libdmx xf86dgaproto libxxf86dga m
 sudo pacman -S lightdm gdm
 
 sudo pacman -S gnome gnome-extra gnome-shell
+
+
+
+
+chroot替代arch-chroot的可能
+mount --bind /dev dev 
+mount --bind /proc proc
+mount --bind /sys sys 
+chroot ./ bin/sh
+是否可行？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
