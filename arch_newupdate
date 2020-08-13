@@ -657,10 +657,10 @@ export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
 
 
 
+sudo /sbin/rcvboxdrv setup
 
-
-
-
-
+sudo /usr/lib/virtualbox/vboxdrv.sh setup
+sudo pacman -S linux-headers virtualbox-host-dkms linux-lts
+sudo pacman -S virtualbox-guest-dkms
 
 
