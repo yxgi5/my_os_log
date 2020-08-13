@@ -12174,7 +12174,7 @@ display-setup-script=xhost +
 删掉
 sudo rm /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
 
-
+实际上在/etc/gdm3/Init/Default添加一行 xhost + 到头部
 
 
 

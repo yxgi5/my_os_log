@@ -323,6 +323,7 @@ access control disabled, clients can connect from any host
 [sudo] password for andy: 
 access control disabled, clients can connect from any host
 
+/etc/gdm/Init/Default添加一行 xhost + 到头部
 
 
 
