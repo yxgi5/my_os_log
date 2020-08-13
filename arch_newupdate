@@ -45,7 +45,10 @@ Errors occurred, no packages were upgraded.
 ...
 #sudo pacman -S archlinux-keyring  && pacman -S archlinuxcn-keyring && sudo pacman -Syu
 
-
+$ sudo leafpad /etc/pacman.d/gnupg/gpg.conf
+change keyserver hkp://pool.sks-keyservers.net to hkp://keyserver.ubuntu.com:80
+$ sudo pacman-key -r 5F702428F70E0903
+就可以搞定
 
 
 sudo gedit //etc/locale.conf
@@ -324,6 +327,324 @@ access control disabled, clients can connect from any host
 
 
 
+
+
+looking for conflicting packages...
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing xorgproto (2019.2-2) breaks dependency 'dmxproto' required by libdmx
+:: installing xorgproto (2019.2-2) breaks dependency 'xf86dgaproto' required by libxxf86dga
+==> upgrading SVN/CVS/HG/GIT package
+
+
+pacman -Rns $(pacman -Qqtd)
+checking dependencies...
+:: angrysearch optionally requires xdotool: Thunar & PCmanFM to select file on path open
+:: apr-util optionally requires mariadb-libs: enable mysql/mariadb support
+:: chromium optionally requires pepper-flash: support for Flash content
+:: dhcpcd optionally requires openresolv: resolvconf support
+:: ffmpeg optionally requires ladspa: LADSPA filters
+:: file-roller optionally requires lrzip: lrzip archive support
+:: git optionally requires perl-lwp-protocol-https: git mediawiki https support
+:: gnome-nettool optionally requires net-tools: Network statistics
+:: gnupg optionally requires libusb-compat: scdaemon
+:: imagemagick optionally requires libheif: HEIF support
+:: imagemagick optionally requires libwmf: WMF support
+:: kio optionally requires kio-extras: extra protocols support (sftp, fish and more)
+:: lib32-alsa-plugins optionally requires lib32-speexdsp: for pcm_speex and rate_speexrate plugins
+:: libproxy optionally requires networkmanager: NetworkManager configuration module
+:: libreoffice-fresh optionally requires mariadb-libs: for mysql-connector
+:: libvirt optionally requires dmidecode: DMI system info support
+:: mkinitcpio optionally requires lzop: Use lzo compression for the initramfs image
+:: perl-libwww optionally requires perl-lwp-protocol-https: for https:// url schemes
+:: poppler optionally requires poppler-data: encoding data to display PDF documents containing CJK characters
+:: python-pyqt5 optionally requires qt5-tools: QtHelp, QtDesigner
+:: qt4 optionally requires mariadb-libs: MariaDB driver
+:: qt5-base optionally requires qt5-translations: for some native UI translations
+:: qt5-base optionally requires mariadb-libs: MariaDB driver
+:: shutter optionally requires perl-lwp-protocol-https: Imgur and Dropbox upload support
+:: shutter optionally requires perl-net-oauth: Imgur and Dropbox upload support
+:: shutter optionally requires bc: 3D Rotate and 3D Reflection plugins support
+:: smplayer optionally requires mplayer: alternative multimedia engine
+:: syslinux optionally requires perl-digest-sha1: For sha1pass
+:: syslinux optionally requires efibootmgr: For EFI support
+:: udevil optionally requires sshfs: mount sftp shares
+:: udisks2 optionally requires ntfs-3g: NTFS filesystem management support
+:: xarchiver optionally requires lrzip: lrzip support
+:: xarchiver optionally requires lzop: LZOP support
+warning: dependency cycle detected:
+warning: phonon-qt5-gstreamer will be removed after its phonon-qt5 dependency
+
+Packages (565) arm-none-eabi-binutils-2.34-1  assimp-5.0.1-1  atkmm-2.28.0-2
+               audacious-plugins-4.0.5-1  baloo-5.73.0-1
+               baloo-widgets-20.04.3-1  bc-1.07.1-4  cabextract-1.9.1-2
+               cairomm-1.12.2-4  calibre-common-4.22.0-1  cblas-3.9.0-3
+               chmlib-0.40-6  clazy-1.7-1  confuse-3.3-1  convertlit-1.8-10
+               crypto++-8.2.0-3  diffstat-1.63-1  dmidecode-3.2-2
+               dolphin-20.04.3-1  drbl-2.30.5-1  ebook-tools-0.2.2-7
+               ecryptfs-utils-111-4  efibootmgr-17-1  efivar-37-4  enca-1.19-4
+               ethtool-1:5.7-1  fakeroot-1.24-2  freeimage-3.18.0-7
+               ftgl-2.4.0-2  gcc6-libs-6.4.1-4  gcc8-libs-8.4.0-1
+               gl2ps-1.4.2-2  glew-2.2.0-2  glibmm-2.64.2-1  glm-0.9.9.8-1
+               gmtk-1.0.9-6  goocanvas-2.0.4-5  gperftools-2.7-2
+               groff-1.22.4-3  gtkglext-1.2.0-12  gtkmm3-3.24.2-2  iw-5.4-1
+               jemalloc-1:5.2.1-3  jxrlib-0.2.1-3  kdnssd-5.73.0-1
+               kemoticons-5.73.0-1  kfilemetadata-5.73.0-1  kidletime-5.73.0-1
+               kinit-5.73.0-1  kio-extras-20.04.3-1  kjs-5.73.0-1
+               knotifyconfig-5.73.0-1  kparts-5.73.0-1  kpty-5.73.0-1
+               kunitconversion-5.73.0-1  ladspa-1.15-2  lbzip2-2.5-5
+               leveldb-1.22-2  lib32-at-spi2-atk-2.34.2-1
+               lib32-at-spi2-core-2.36.0-1  lib32-glew-2.2.0-1
+               lib32-glib-networking-2.64.3-1  lib32-libepoxy-1.5.4-1
+               lib32-libraw1394-2.1.2-2  lib32-librsvg-2.48.8-1
+               lib32-libsoup-2.70.0-1  lib32-libxkbcommon-0.10.0-1
+               lib32-rest-0.8.1-2  lib32-speexdsp-1.2.0-1  libebml-1.4.0-1
+               libfilezilla-0.19.3-2  libftdi-1.4-4  libftdi-compat-0.20-8
+               libgda-5.2.9-4  libgooglepinyin-0.1.2-5  libgpod-0.8.3-11
+               libguess-1.2-3  libheif-1.7.0-2  libkcddb-20.04.3-1
+               libmpdclient-2.19-1  libnatpmp-20150609-3  libndp-1.7-2
+               libnewt-0.52.21-3  libpgm-5.2.122-5  libpipeline-1.5.2-1
+               libsigc++-2.10.3-1  libsodium-1.0.18-2  libteam-1.31-1
+               libtorrent-0.13.8-2  libuninameslist-20200413-1
+               libunrar-1:5.9.4-1  libupnp-1.6.25-2  libusb-compat-0.1.7-1
+               libva1-1.8.3-3  libwmf-0.2.12-2  libxvmc-1.0.12-3
+               libzip-1.6.1-2  lirc-1:0.10.1-6  lrzip-0.631-3  lzop-1.04-3
+               mariadb-clients-10.4.14-1  mariadb-libs-10.4.14-1
+               mathjax-3.0.5-1  mesa-demos-8.4.0-4  mingw-w64-binutils-2.35-1
+               mingw-w64-crt-7.0.0-1  mingw-w64-headers-7.0.0-1
+               mingw-w64-winpthreads-7.0.0-1  miniupnpc-2.1.20191224-1
+               mplayer-38157-3  net-tools-1.60.20181103git-2
+               networkmanager-1.26.0-1  nilfs-utils-2.2.8-2
+               ntfs-3g-2017.3.23-4  oniguruma-6.9.5_rev1-1
+               opencascade-7.4.0.1-1  openconnect-1:8.10-1  openjade-1.3.2-6
+               openjpeg-1.5.2-2  openresolv-3.10.0-1  opensp-1.5.2-9
+               openvpn-2.4.9-2  optipng-0.7.7-2  pangomm-2.42.1-2
+               partclone-0.3.12-1  partimage-0.6.9-13  pbzip2-1.1.13-3
+               pepper-flash-32.0.0.403-1  perl-bit-vector-7.4-11
+               perl-carp-clan-6.08-3  perl-class-accessor-0.51-2
+               perl-class-data-inheritable-0.08-9  perl-common-sense-3.75-2
+               perl-data-random-0.13-4  perl-digest-hmac-1.03-9
+               perl-digest-sha1-2.13-15  perl-gd-2.72-1
+               perl-io-socket-ssl-2.067-2  perl-lwp-protocol-https-6.09-1
+               perl-mouse-2.5.10-2  perl-net-oauth-0.28-10
+               perl-net-ssleay-1.88-2  perl-sgmls-1:1.1-7
+               perl-types-serialiser-1.0-6  perl-yaml-tiny-1.73-4
+               phonon-qt5-4.11.1-2  phonon-qt5-gstreamer-4.10.0-2  php-7.4.9-1
+               pigz-2.4-2  pixz-1.0.6-3  pkcs11-helper-1.26.0-1  podofo-0.9.6-3
+               poppler-data-0.4.9-2  poppler-qt5-0.90.1-1  potrace-1.16-2
+               ppp-2.4.7-7  pptpclient-1.10.0-2  progsreiserfs-0.3.0.5-10
+               pyqt4-common-4.12.3-5  python-acme-1.7.0-1
+               python-configargparse-1.2.3-1  python-docopt-0.6.2-7
+               python-future-0.18.2-3  python-josepy-1.3.0-1
+               python-keyutils-0.6-4  python-markdown-3.2.2-1
+               python-mock-3.0.5-3  python-parsedatetime-2.6-1
+               python-pbr-5.4.5-1  python-psutil-5.7.2-1
+               python-pyrfc3339-1.1-5  python-requests-toolbelt-0.9.1-3
+               python-wxpython-4.0.7.2-1  python-yaml-5.3.1-2
+               python-zope-component-4.6.2-1
+               python-zope-deferredimport-4.3.1-4
+               python-zope-deprecation-4.4.0-3  python-zope-event-4.4-3
+               python-zope-hookable-5.0.1-1  python-zope-proxy-4.3.5-1
+               python2-apsw-3.32.2-1  python2-backports-1.0-3
+               python2-backports.functools_lru_cache-1.6.1-2
+               python2-backports.unittest_mock-1.2.1-3  python2-beaker-1.10.1-1
+               python2-beautifulsoup4-4.9.1-1  python2-chardet-3.0.4-5
+               python2-cheroot-8.4.2-1  python2-contextlib2-0.6.0.post1-1
+               python2-css-parser-1.0.4-3  python2-cssselect-1.1.0-4
+               python2-dateutil-2.8.1-3  python2-dbus-1.2.16-1
+               python2-dnspython-1.16.0-3  python2-feedparser-5.2.1-6
+               python2-funcsigs-1.0.2-3  python2-gobject-3.36.1-1
+               python2-html2text-2019.8.11-4  python2-html5-parser-0.4.9-2
+               python2-html5lib-1.1-1  python2-jaraco-2019.10.22-3
+               python2-logutils-0.3.5-3  python2-lxml-4.5.2-1
+               python2-mako-1.0.14-1  python2-markdown-3.1.1-5
+               python2-markupsafe-1.1.1-4  python2-mechanize-1:0.4.5-1
+               python2-mock-3.0.5-3  python2-more-itertools-5.0.0-2
+               python2-msgpack-0.6.2-3  python2-nautilus-1.1-4
+               python2-netifaces-0.10.9-3  python2-pbr-5.4.5-1
+               python2-pillow-6.1.0-1  python2-portend-2.6-2
+               python2-psutil-5.7.2-1  python2-pychm-0.8.6-1
+               python2-pygments-2.5.2-2  python2-pyqt5-5.15.0-3
+               python2-pyqtwebengine-5.15.0-2  python2-pytz-2020.1-1
+               python2-regex-2020.7.14-1  python2-repoze.lru-0.7-2
+               python2-sip-pyqt4-4.19.22-1  python2-sip-pyqt5-4.19.23-1
+               python2-soupsieve-1.9.6-2  python2-tempora-1.14.1-5
+               python2-unrardll-0.1.4-2  python2-urllib3-1.25.10-1
+               python2-waitress-1.3.0-1  python2-webencodings-0.5.1-4
+               python2-webob-1.8.6-1  python2-webtest-2.0.33-1
+               python2-zc.lockfile-2.0-3  qbs-1.16.0-1  qca-2.3.1-2
+               qt5-tools-5.15.0-3  qt5-translations-5.15.0-1  recode-3.7.7-1
+               schroedinger-1.0.11-6  screen-4.8.0-1  sed-4.8-1
+               sg3_utils-1.45-1  sgml-common-0.6.3-7  sip-4.19.23-1
+               slang-2.3.2-2  smpeg2-1:2.0.0-2  sshfs-3.7.0-1  stoken-0.92-4
+               sunpinyin-3.0.0rc1-3  sunpinyin-data-1:2.0.3.20140820-3
+               tepl-4.4.0-1  ucl-1.03-9  vim-runtime-8.2.0814-3
+               vpnc-1:0.5.3.r468.r81-1  vtk-8.2.0-14  wpa_supplicant-2:2.9-7
+               wvstreams-4.6.1-16  wxgtk3-3.0.5.1-1  xdotool-3.20160805.1-3
+               xine-lib-1.2.10-4  xmlrpc-c-1:1.51.06-1  xorg-xmessage-1.0.5-2
+               xplc-0.3.13-8  zeromq-4.3.2-2  acpi-1.7-3  acpid-2.0.32-2
+               aircrack-ng-1.6-2  alsa-firmware-1.2.1-2  alsa-oss-1.1.8-3
+               alsa-utils-1.2.3-2  amule-11047-1
+               android-sdk-platform-tools-30.0.4-1  ant-1.10.8-1
+               arch-install-scripts-23-2  arm-none-eabi-gcc-10.2.0-1
+               arm-none-eabi-gdb-9.2-1  asar-3.0.3-1  at-3.2.1-2
+               audacious-4.0.5-1  autoconf2.13-2.13-6  automoc4-0.9.88-8
+               avr-gdb-9.2-1  avrdude-1:6.3-7  axel-2.17.9-1  baobab-3.34.1-1
+               bind-9.16.5-2  bison-3.6.4-1  bluefish-2.2.11-1  bmon-4.0-4
+               broadcom-wl-6.30.223.271-216  busybox-1.31.1-3  calibre-4.22.0-1
+               catfish-1.4.13-2  ccache-3.7.11-1  celt0.5.1-0.5.1.3-5
+               ceph-14.2.8-1  certbot-1.7.0-1  clonezilla-3.35.2-2
+               colordiff-1.0.18-3  cowpatty-4.8-2  cscope-15.9-2
+               cvs-1.11.23-13  dcadec-0.2.0-1  dconf-editor-3.36.4-1
+               ddrescue-1.25-1  deadbeef-1.8.4-1
+               deluge-gtk-2.0.4.dev38+g23a48dd01-2  dkms-2.8.3-1  dmenu-4.9-2
+               docbook2x-0.8.8-17  dolphin-plugins-20.04.3-1  doxygen-1.8.18-2
+               eaglemode-0.94.2-1  efitools-1.9.2-3  expect-5.45.4-2
+               fakechroot-2.20.1-2  fbset-2.1-7  fcgi-2.4.2-2
+               fcitx-cloudpinyin-0.3.7-1  fcitx-googlepinyin-0.1.6-7
+               fcitx-sunpinyin-0.4.2-2  fcitx-ui-light-0.1.3-5  feh-3.4.1-1
+               filezilla-3.46.3-1  firefox-79.0-1  fontforge-20200314-2
+               freshplayerplugin-0.3.11-3  gcc-objc-10.1.0-2  gcc5-5.5.0-2
+               gcc6-6.4.1-4  gcc8-8.4.0-1  gedit-3.36.2-1  gegl02-0.2.0-7
+               gendesk-1.0.6-1  genymotion-3.1.0-1  gerbv-2.7.0-2
+               gimp-2.10.20-1  gmime-2.6.23+4+g91dcee38-3
+               gnome-calculator-3.36.0-1  gnome-icon-theme-3.12.0-6
+               gnome-mines-3.36.0-1  gnome-mplayer-1.0.9-8
+               gnome-screenshot-3.36.0-1  gnome-system-monitor-3.36.1-1
+               gnustep-make-2.8.0-1  gobject-introspection-1.64.1-2
+               gparted-1.1.0-1  gpicview-0.2.5-5  grub-2:2.04-8
+               gstreamer0.10-base-plugins-0.10.36-13  gthumb-3.10.0-2
+               gtkmm-1:2.24.5-4  gulp-4.0.2-3  gvim-8.2.0814-3
+               hardinfo-0.5.1.816.g877ea2b-2  haveged-1.9.13-1  htop-2.2.0-3
+               i2c-tools-4.1-4  idnkit-1.0-3  imake-1.0.8-2
+               intel-ucode-20200616-1  intltool-0.51.0-6  iptraf-ng-1.1.4-5
+               iverilog-10.3-2  js-24.2.0-4  js60-60.9.0-2  jwm-2.3.7-2
+               k3b-1:20.04.3-1  kchmviewer-7.7-5  kdelibs4support-5.73.0-1
+               khtml-5.73.0-1  kicad-5.1.6-1  ksh-2020.0.0-2
+               kuiserver-5.11.3-1  kyotocabinet-1.2.78-1  laptop-detect-0.16-1
+               lcms-1.19-5  leafpad-0.8.18.1-9  lftp-4.9.1-1
+               lib32-fakeroot-1.24-1  lib32-gsm-1.0.14-1  lib32-gtk3-3.24.21-1
+               lib32-harfbuzz-icu-2.7.0-1  lib32-jansson-2.13.1-1
+               lib32-json-c-0.15-1  lib32-ladspa-1.15-1  lib32-lame-3.99.5-2
+               lib32-libass-0.13.2-1  lib32-libavc1394-0.5.4-2
+               lib32-libbluray-0.9.2-1  lib32-libcroco-0.6.13-1
+               lib32-libiec61883-1.2.0-2  lib32-libtxc_dxtn-1.0.1-5
+               lib32-libva1-1.8.3-3  lib32-libvpx-1.9.0-1
+               lib32-libx264-148.20160103-4  lib32-mesa-demos-8.4.0-2
+               lib32-opencore-amr-0.1.3-2  lib32-openjpeg-1.5.2-1
+               lib32-opus-1.3.1-1  lib32-schroedinger-1.0.11-2
+               lib32-smpeg2-2.0.0-2  lib32-speex-1.2.0-2
+               lib32-xvidcore-1.3.4-1  libappindicator-gtk2-12.10.0.r296-1
+               libdbusmenu-qt4-0.9.3+16.04.20160218-1  libdmx-1.1.4-1
+               libdvbpsi-1:1.3.3-2  libiodbc-3.52.13-2  libirman-0.5.2-3
+               libmatroska-1.6.2-1  libmp4v2-4.1.3-1  libqzeitgeist-0.8.0-6
+               libstdc++5-3.3.6-7  libtar-1.2.20-5  libtiger-0.3.4-6
+               libtracker-sparql-1.12.3-1  libtxc_dxtn-1.0.1-6
+               libvdpau-va-gl-0.4.2-3  libxp-1.0.3-4  libxxf86dga-1.1.5-1
+               licenses-20200427-1  liferea-1.12.8-1  linux-lts-5.4.55-1
+               logrotate-3.17.0-1  lua-socket-20200329-1  lua51-5.1.5-9
+               lxdm-0.5.3-7  lxinput-0.3.5-3  lxrandr-0.3.2-2
+               lxterminal-0.3.2-2  man-db-2.9.3-1  man-pages-5.07-1
+               mariadb-10.4.14-1  masterpdfeditor-5.6.20-2  mbedtls-2.16.7-1
+               memtest86+-5.01-4  mingw-w64-gcc-10.2.0-1  minicom-2.7.1-4
+               mldonkey-3.1.7-1  mpc-0.33-2  mtd-utils-2.1.2-1
+               mypaint-brushes-2.0.2-1  nano-5.0-1  nasm-2.15.02-1
+               nautilus-terminal-3.3.0-1  nbd-3.20-2  ncdu-1.15.1-1
+               ncurses5-compat-libs-6.2-1  netctl-1.23-1
+               network-manager-applet-1.18.0-1
+               networkmanager-openconnect-1.2.6-2
+               networkmanager-openvpn-1.8.12-1
+               networkmanager-pptp-1.2.9dev+10+gb41b0d0-2
+               networkmanager-vpnc-1.2.7dev+20+gdca3aea-2  nrg2iso-0.4-11
+               nuget-5.6.0-1  obconf-2.0.4-7  opencv-4.4.0-1  openh264-2.1.1-1
+               openocd-1:0.10.0-3  openslp-2.0.0-2  opera-70.0.3728.106-1
+               oxygen-icons-1:5.73.0-1  parcellite-1.2.1-4  pcb-1:4.2.2-1
+               perl-canary-stability-2013-3  perl-date-calc-6.4-7
+               perl-extutils-depends-0.8000-4  perl-extutils-pkgconfig-1.16-7
+               perl-json-xs-4.0-4  perl-mozilla-ca-20200520-3
+               perl-net-dropbox-api-1.9-9  perl-test-pod-1.52-5
+               php-apache-7.4.9-1  php-cgi-7.4.9-1  phpmyadmin-5.0.2-1
+               pkgfile-21-2  polkit-qt4-0.112.0+git20160226-1  projectm-3.1.3-1
+               pth-2.0.7-7  putty-0.74-1  python-sip-4.19.23-1
+               python-sip-pyqt5-4.19.18-1  python-werkzeug-1.0.1-2
+               python2-cherrypy-17.4.2-1  python2-cssutils-1.0.2-1
+               python2-dukpy-0.3-3  python2-jinja-2.11.2-1
+               python2-mutagen-1.42.0-3  python2-notify-0.1.1-14
+               python2-pecan-1.3.3-1  python2-prettytable-0.7.2-9
+               python2-pyqt4-4.12.3-5  python2-qrtools-1.4-1
+               python2-requests-2.24.0-1  python2-routes-2.4.1-2
+               python2-singledispatch-3.4.0.3-4  python2-sip-4.19.18-1
+               python2-werkzeug-0.15.2-1  python2-wxpython3-3.0.2.0-3
+               qemu-guest-agent-5.0.0-8  qt5-3d-5.15.0-1  qtcreator-4.12.4-2
+               qtqr-2.0-2  quilt-0.66-2  ragel-6.10-3  refind-0.12.0-6
+               remmina-1:1.4.7-1  rhythmbox-3.4.4-1  rp-pppoe-3.14-1
+               rtorrent-0.9.8-2  scons-3.1.2-2  screenfetch-3.9.1-1
+               slim-1.3.6-9  slurm-0.4.3-2  sqlitebrowser-3.11.2-2
+               tcsh-6.22.02-1  teamviewer-15.8.3-1  thunderbird-68.11.0-1
+               tint2-16.7-2  tmux-3.1_b-1  tor-0.4.3.6-1  totem-3.34.1-2
+               transmission-gtk-3.00-2  ttf-arphic-ukai-0.2.20080216.1-8
+               ttf-arphic-uming-0.2.20080216.1-8  udiskie-2.2.0-2  uget-2.2.3-1
+               units-2.19-2  upx-3.96-2  usb_modeswitch-2.6.1-1  vi-1:070224-4
+               virtualbox-ext-oracle-6.1.12-1  virtualbox-guest-utils-6.1.12-3
+               volumeicon-0.5.1-5  vte-0.28.2-8  w3m-0.5.3.git20200507-1
+               webkitgtk-3:2.4.11-19  wine-gecko-2.47.1-1  wine-mono-5.1.0-1
+               winetricks-20200412-1  wps-office-11.1.0.9615-1
+               wqy-zenhei-0.9.45-8  wvdial-1.61-8  xf86-input-evdev-2.10.6-2
+               xf86-input-synaptics-1.9.1-2  xf86-input-void-1.4.1-5
+               xf86-video-ati-1:19.1.0-2  xf86-video-dummy-0.3.8-4
+               xf86-video-fbdev-0.5.0-2
+               xf86-video-intel-1:2.99.917+908+g7181c5a4-1
+               xf86-video-nouveau-1.0.16-2  xf86-video-openchrome-0.6.0-4
+               xf86-video-vesa-2.4.0-3  xf86-video-voodoo-1.2.5-11
+               xfce4-notifyd-0.6.1-1  xmltoman-0.4-4  xorg-fonts-misc-1.0.3-9
+               xorg-fonts-type1-7.7-6  xorg-server-xvfb-1.20.8-3
+               xorg-xeyes-1.1.2-2  xorg-xkill-1.0.5-2  yasm-1.3.0-4
+
+Total Removed Size:  7477.17 MiB
+
+
+看起来很不安全
+
+sudo pacman -Runsc xorgproto
+也不安全
+
+不如这样
+pacman -Rdd libdmx libxxf86dga && pacman -Syu
+
+
+
+
+vsim
+sudo grep -r FT_Done_MM_Var *
+注释掉/opt/modelsim/modeltech/bin/vsim里的
+#export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
+报错啥libncurses.so太短
+并且先清除/usr/lib32/libtinfo.so.5和/usr/lib32/libncurses.so.5
+再安装
+lib32-ncurses5-compat-libs
+
+又报错
+Error in startup script: 
+Initialization problem, exiting.
+
+Initialization problem, exiting.
+
+Initialization problem, exiting.
+
+    while executing
+"EnvHistory::Reset"
+    (procedure "PropertiesInit" line 3)
+    invoked from within
+"PropertiesInit"
+    invoked from within
+"ncFyP12 -+"
+    (file "/mtitcl/vsim/vsim" line 1)
+** Fatal: Read failure in vlm process (0,0)
+
+复制libfreetype.so.6.11.1和libfontconfig.so.1.6.2到/opt/modelsim/modeltech/lib
+建立软链接
+/opt/modelsim/modeltech/bin/vsim里加入
+export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
+就可以用了
 
 
 
