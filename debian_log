@@ -13065,6 +13065,17 @@ aptitude full-upgrade
 
 
 
+关于xrandr 
+Failed to get size of gamma for output default
+
+启动参数加上i915.alpha_support=1
+未验证
+
+lspci -k | grep -iEA5 'vga|display|3d'
+sudo lshw -numeric -class video
+lspci -vnn 
+inxi -G
+inxi -Fxz
 
 
 
