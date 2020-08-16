@@ -12796,15 +12796,20 @@ mount -t tmpfs tmpfs /run/lock
 mount /dev/sdx2 /home
 mount /dev/sdx3 /opt
 
-
+sudo grub-install /dev/sdx
 sudo grub-install --root-directory=/boot/ /dev/sdx
 grub-mkconfig -o /boot/grub/grub.cfg
 
-
-
-
-
-
+umount /dev/sdx3
+umount /dev/sdx2
+umount /run/lock
+rmdir /run/lock
+umount /dev/pts
+umount /sys
+umount /proc
+exit
+umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/var/lib/os-prober/mount
+umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/dev
 
 sudo dpkg -i baidunetdisk_3.3.2_amd64.deb
 cd /opt/baidunetdisk
