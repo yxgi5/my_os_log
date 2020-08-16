@@ -13159,6 +13159,135 @@ sudo cp Downloads/kbl_dmc_ver1_04.bin /lib/firmware/i915
 
 
 
+---------------jessie---------------
+cat /sys/class/scsi_host/host*/link_power_management_policy
+sudo blkid
+sudo systemctl status nxserver.service
+sudo rm /etc/systemd/system/multi-user.target.wants/nxserver.service
+sudo systemctl stop nxserver.service
+sudo cat /var/log/kern.log
+sudo journalctl -f _TRANSPORT=kernel
+
+
+ls /etc/apt/sources.list.d/
+docker.list          github_git-lfs.list  opera-stable.list
+rm /etc/apt/sources.list.d/*
+
+
+
+
+
+
+dmenu_run
+Missing menu entries
+$ rm ~/.dmenu_cache
+$ rm ~/.cache/dmenu_run    #这条有效，ref https://wiki.archlinux.org/index.php/Dmenu
+
+rc.xml
+修改
+    <keybind key="A-F3">
+      <action name="Execute">
+        <command>~/.config/dmenu/dmenu-bind.sh</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>dmenu</name>
+        </startupnotify>
+      </action>
+    </keybind>
+
+修改W-r组合键
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>~/.config/dmenu/dmenu-bind.sh</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>dmenu</name>
+        </startupnotify>
+      </action>
+    </keybind>
+
+
+
+
+
+/home/andy/.config/opera/Opera Add-ons Downloads
+sudo rm /usr/local/share/applications/CCSv5-ReleaseNote.desktop
+sudo rm /etc/xdg/menus/applications-merged/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments-60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.menu
+sudo rm /usr/share/desktop-directories/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.5.0.directory
+
+
+$ cat /etc/xdg/menus/applications-merged/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments-60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.menu 
+<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+    "http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd">
+<!-- Do not edit manually - generated and managed by xdg-desktop-menu -->
+<Menu>
+    <Name>Applications</Name>
+<Menu>
+    <Name>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments</Name>
+    <Directory>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments.directory</Directory>
+<Menu>
+    <Name>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5</Name>
+    <Directory>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.5.0.directory</Directory>
+    <Include>
+        <Filename>Code</Filename>
+        <Filename>Composer</Filename>
+        <Filename>Studio</Filename>
+        <Filename>5.5.0-program.desktop</Filename>
+        <Filename>CCSv5-ReleaseNote.desktop</Filename>
+        <Filename>5.5.0-uninstall.desktop</Filename>
+    </Include>
+</Menu>
+</Menu>
+</Menu>
+
+
+
+sudo systemctl status dnsmasq.service
+sudo systemctl stop dnsmasq.service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
