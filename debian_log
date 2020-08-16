@@ -12791,9 +12791,18 @@ chroot .
 mount -t proc proc /proc
 mount -t sysfs sysfs /sys
 mount -t devpts devpts /dev/pts
+mkdir -p /run/lock
 mount -t tmpfs tmpfs /run/lock
 mount /dev/sdx2 /home
 mount /dev/sdx3 /opt
+
+
+sudo grub-install --root-directory=/boot/ /dev/sdx
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
+
 
 
 
