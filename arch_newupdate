@@ -662,5 +662,5 @@ sudo /sbin/rcvboxdrv setup
 sudo /usr/lib/virtualbox/vboxdrv.sh setup
 sudo pacman -S linux-headers virtualbox-host-dkms linux-lts
 sudo pacman -S virtualbox-guest-dkms
-
+sudo fsck /dev/sdd3 -y
 
