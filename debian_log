@@ -12898,7 +12898,7 @@ pcmanfm的application为空处理
  'http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd'>
 <Menu>
     <Name>Applications</Name>
-    <MergeFile type='parent'>/etc/xgd/menus/lxde-applications.menu</MergeFile>
+    <MergeFile type='parent'>/etc/xdg/menus/lxde-applications.menu</MergeFile>
     <!-- added by LibFM -->
     <Include>
         <Filename>demo.ui.desktop</Filename>
@@ -13264,6 +13264,19 @@ sudo systemctl stop dnsmasq.service
 
 
 
+steam repair
+Unable to preload the following plugins:
+	libAsyncGPUReadbackPlugin.so
+	libresonanceaudio.so
+
+
+cd /home/andy/.local/share/Steam/steamapps/common/Universe\ Sandbox\ 2/Universe\ Sandbox_Data/Plugins
+ldd libAsyncGPUReadbackPlugin.so
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.21' not found 
+
+
+strings /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21 | grep GLIBCXX
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
 
 
 
@@ -13278,14 +13291,262 @@ sudo systemctl stop dnsmasq.service
 
 
 
+------------------------buster----------------------------------
+安装opera并设置默认浏览器
+sudo update-alternatives --config x-www-browser
+
+sudo update-alternatives --config gnome-www-browser 
+
+
+安装bcompare
 
 
 
 
+cd .wine/drive_c/windows/
+wine regedit.exe
+cp /usr/share/doc/wine-development/examples/wine.desktop /home/andy/.local/share/applications
+xfce4-mime-settings
+这样就能右键wine可执行的windows的exe程序
 
 
+安装VNC-Server-6.3.1-Linux-x64.deb
+systemctl (enable|disable|start|stop) vncserver-virtuald.service
+systemctl (enable|disable|start|stop) vncserver-x11-serviced.service
+
+安装VNC-Viewer-6.18.625-Linux-x64.deb
 
 
+库里也没有leafpad了，编译安装好了
+sudo apt-get install build-essential checkinstall intltool libgtk2.0-dev
+
+mkdir -v $HOME/leafpad_build && cd $HOME/leafpad_build && \
+wget http://savannah.nongnu.org/download/leafpad/leafpad-0.8.18.1.tar.gz && \
+tar xvf leafpad-0.8.18.1.tar.gz && cd leafpad-0.8.18.1 && \
+./configure && make && \
+sudo checkinstall -D --install=yes --fstrans=no --pakdir "$HOME/leafpad_build" \
+     --pkgname leafpad --backup=no --deldoc=yes --deldesc=yes --delspec=yes \
+     --default --pkgversion "0.8.18.1" && \
+make distclean && sudo ldconfig
+
+
+安装vbox
+
+
+重新配置conky
+mv /home/andy/.conkyrc conkyrc.bk
+/------------------------
+background yes
+use_xft yes
+xftfont monospace:size=9
+xftalpha 1
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_colour black
+double_buffer yes
+minimum_size 1 1
+maximum_width 240
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color gray
+default_shade_color 000000
+default_outline_color d9d7d6
+alignment tr
+gap_x 12
+gap_y 12
+no_buffers yes
+uppercase no
+cpu_avg_samples 8
+override_utf8_locale no
+color1 red
+color2 gray
+##############################################
+#  Output
+##############################################
+TEXT
+CPU:
+#CPU0: $alignr${cpu cpu0}%
+#${cpubar cpu0}
+#CPU1: $alignr${cpu cpu1}%
+#${cpubar cpu1}
+#CPU2: $alignr${cpu cpu2}%
+#${cpubar cpu2}
+#CPU3: $alignr${cpu cpu3}%
+#${cpubar cpu3}
+#CPU4: $alignr${cpu cpu4}%
+#${cpubar cpu4}
+#CPU5: $alignr${cpu cpu5}%
+#${cpubar cpu5}
+#CPU6: $alignr${cpu cpu6}%
+#${cpubar cpu6}
+#CPU7: $alignr${cpu cpu7}%
+#${cpubar cpu7}
+${if_match "${cpu cpu0}"!=""}${cpubar cpu0}${endif}
+${if_match "${cpu cpu1}"!=""}${cpubar cpu1}${endif}
+${if_match "${cpu cpu2}"!=""}${cpubar cpu2}${endif}
+${if_match "${cpu cpu3}"!=""}${cpubar cpu3}${endif}
+${if_match "${cpu cpu4}"!=""}${cpubar cpu4}${endif}
+${if_match "${cpu cpu5}"!=""}${cpubar cpu5}${endif}
+${if_match "${cpu cpu6}"!=""}${cpubar cpu6}${endif}
+${if_match "${cpu cpu7}"!=""}${cpubar cpu7}${endif}
+${if_match "${cpu cpu8}"!=""}${cpubar cpu8}${endif}
+${if_match "${cpu cpu9}"!=""}${cpubar cpu9}${endif}
+${if_match "${cpu cpu10}"!=""}${cpubar cpu10}${endif}
+${if_match "${cpu cpu11}"!=""}${cpubar cpu11}${endif}
+${if_match "${cpu cpu12}"!=""}${cpubar cpu12}${endif}
+${if_match "${cpu cpu13}"!=""}${cpubar cpu13}${endif}
+${if_match "${cpu cpu14}"!=""}${cpubar cpu14}${endif}
+${if_match "${cpu cpu15}"!=""}${cpubar cpu15}${endif}
+RAM: $alignr$mem/$memmax
+$membar
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${font sans-serif:bold:size=8}SYSTEM ${hr 2}
+#${font sans-serif:normal:size=8}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#RUNNING:$alignr$running_processes
+#PROCESSES:$alignr${processes}
+#SWAP:$alignr${swapperc}
+#
+${font sans-serif:bold:size=8}TOP PROCESSES ${hr 2}
+${font sans-serif:normal:size=8}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+$font${top_mem name 3}${alignr}${top mem 3} %
+$font${top_mem name 4}${alignr}${top mem 4} %
+$font${top_mem name 5}${alignr}${top mem 5} %
+$font${top_mem name 6}${alignr}${top mem 6} %
+
+${font sans-serif:bold:size=8}SHORTCUT KEYS ${hr 2}
+${font sans-serif:normal:size=8}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize
+------------------------/
+
+mkdir -p /home/andy/.config/conky
+/home/andy/.config/conky/conky.conf
+/------------------------
+-- Conky config for ArchBang
+-- by Mr Green
+
+conky.config = {
+background = true,
+use_xft = true,
+font = 'monospace:size=9',
+xftalpha = 1,
+update_interval = 1.0,
+total_run_times = 0,
+own_window = true,
+own_window_transparent = true,
+own_window_type = 'desktop',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+double_buffer = true,
+minimum_height = 390,
+maximum_width = 340,
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+default_color = 'white',
+default_shade_color = '000000',
+default_outline_color = 'd9d7d6',
+alignment = 'top_right',
+gap_x = 12,
+gap_y = 12,
+no_buffers = true,
+uppercase = false,
+cpu_avg_samples = 2,
+override_utf8_locale = false,
+color1 = 'gray',
+color2 = 'gray',
+color3 = 'gray',
+}
+
+conky.text = [[
+#${pre_exec nproc}
+#${execi 86400 nproc}
+${color2}${font sans:normal:size=9}CPU ${cpu cpu0}%${color1}
+#${cpu cpu0} is the total usage
+${cpubar cpu1}
+${cpubar cpu2}
+${cpubar cpu3}
+${cpubar cpu4}
+${cpubar cpu5}
+${cpubar cpu6}
+${cpubar cpu7}
+${cpubar cpu8}
+${color2}${font sans:normal:size=9}RAM ${color1}
+${membar}
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${color2}${font sans:normal:size=9}SYSTEM ${color1}${hr 2}
+#${color1}${font sans:normal:size=9}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#
+${color2}${font sans:bold:size=9}TOP PROCESSES ${color1}${hr 2}
+${color1}${font sans:normal:size=9}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+
+${color2}${font sans:bold:size=9}SHORTCUT KEYS ${color1}${hr 2}${color1}${font sans:normal:size=9}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize]]
+------------------------/
+
+调试conky配置
+conky -DD -c ~/.config/conky/conky.conf
+ref
+http://conky.sourceforge.net/variables.html
 
 
 
