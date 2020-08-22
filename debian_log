@@ -13264,6 +13264,21 @@ sudo systemctl stop dnsmasq.service
 
 
 
+steam repair
+Unable to preload the following plugins:
+	libAsyncGPUReadbackPlugin.so
+	libresonanceaudio.so
+
+
+cd /home/andy/.local/share/Steam/steamapps/common/Universe\ Sandbox\ 2/Universe\ Sandbox_Data/Plugins
+ldd libAsyncGPUReadbackPlugin.so
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.21' not found 
+
+
+strings /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21 | grep GLIBCXX
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
+
+
 
 
 
