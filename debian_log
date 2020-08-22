@@ -13989,7 +13989,8 @@ sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT
 
 
 
-
+iconv -c -f utf-8 -t gb2312 BlogSohu_utf8.py >> BlogSohu_ansi_gb2312.py
+iconv -f utf-8 -t  gb18030 file1.txt -o file2.txt
 
 
 
