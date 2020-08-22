@@ -13310,11 +13310,11 @@ xfce4-mime-settings
 这样就能右键wine可执行的windows的exe程序
 
 
-安装VNC-Server-6.3.1-Linux-x64.deb
+安装VNC-Server
 systemctl (enable|disable|start|stop) vncserver-virtuald.service
 systemctl (enable|disable|start|stop) vncserver-x11-serviced.service
 
-安装VNC-Viewer-6.18.625-Linux-x64.deb
+安装VNC-Viewer
 
 
 库里也没有leafpad了，编译安装好了
@@ -13547,6 +13547,437 @@ Alt+Super+Arrow$alignr Resize]]
 conky -DD -c ~/.config/conky/conky.conf
 ref
 http://conky.sourceforge.net/variables.html
+
+
+
+
+
+
+
+临时修改mac地址
+sudo ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+可能需要，debian 10 看来不需要这样
+sudo ifconfig eth0 down
+sudo ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+sudo ifconfig eth0 up
+
+重启也有效就在etc/rc.local添加
+ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+
+物理mac读取失败
+"ethtool -e wlan0" and "ethtool -E wlan0..." give the error "Cannot get EEPROM data: Operation not supported".
+
+
+
+
+
+
+sudo apt-get install ros-desktop-full ros-desktop-full-dev
+
+
+sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
+
+
+sudo apt-get install vlc
+
+替代shutter
+sudo apt-get install flameshot
+
+sudo apt install ufw
+sudo ufw default deny incoming
+sudo ufw default allow incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw enable
+sudo ufw status
+
+sudo apt-get install maxima fig2ps
+sudo apt-get install octave
+sudo apt-get install gimp shotwell zim gftp  network-manager-gnome
+sudo apt-get install libwnck-dev
+
+设置默认终端
+sudo update-alternatives --config  x-terminal-emulator
+
+
+恢复shutter
+https://shutter-project.org/downloads/source-code/
+https://launchpad.net/debian/buster/+source/shutter
+https://launchpad.net/shutter/+download
+git clone https://github.com/shutter-project/shutter.git
+cd shutter
+make install
+
+
+
+重新安装wps
+重新安装baidunetdisk
+
+sudo apt-get install libgtkimageview-dev libunique-dev libwnck-dev libgnomecanvas2-dev libgoocanvas-2.0-dev libgoocanvas2-perl libgoocanvasmm-2.0-dev
+sudo cpanm Number::Bytes::Human
+sudo cpanm Gnome2::Wnck
+sudo cpanm Gtk2::ImageView
+sudo cpanm Gtk2::Unique
+sudo cpanm Gnome2::Canvas
+sudo cpanm Gnome2
+sudo cpanm File::Copy::Recursive
+sudo cpanm Proc::Simple
+sudo cpanm Sort::Naturall
+sudo cpanm Proc::Killfam
+sudo cpanm Goo::Canvas
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Image::ExifTool
+也可以在vim ~/.bashrc中添加alias cpanm='cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only'使alias生效既可解决
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only App::cpanminus
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only JSON::MaybeXS
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only WWW::Mechanize
+
+sudo apt-get install libappindicator-dev gir1.2-appindicator-0.1
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Gtk2::AppIndicator
+
+echo $PKG_CONFIG_PATH 
+/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
+wget http://ftp.gnome.org/pub/GNOME/sources/goocanvas/1.0/goocanvas-1.0.0.tar.gz
+解压
+./configure
+make
+sudo make install
+
+Making install in src
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make  install-am
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make[3]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+test -z "/usr/local/lib" || /bin/mkdir -p "/usr/local/lib"
+ /bin/sh ../libtool   --mode=install /usr/bin/install -c   libgoocanvas.la '/usr/local/lib'
+libtool: install: /usr/bin/install -c .libs/libgoocanvas.so.3.5.0 /usr/local/lib/libgoocanvas.so.3.5.0
+libtool: install: (cd /usr/local/lib && { ln -s -f libgoocanvas.so.3.5.0 libgoocanvas.so.3 || { rm -f libgoocanvas.so.3 && ln -s libgoocanvas.so.3.5.0 libgoocanvas.so.3; }; })
+libtool: install: (cd /usr/local/lib && { ln -s -f libgoocanvas.so.3.5.0 libgoocanvas.so || { rm -f libgoocanvas.so && ln -s libgoocanvas.so.3.5.0 libgoocanvas.so; }; })
+libtool: install: /usr/bin/install -c .libs/libgoocanvas.lai /usr/local/lib/libgoocanvas.la
+libtool: install: /usr/bin/install -c .libs/libgoocanvas.a /usr/local/lib/libgoocanvas.a
+libtool: install: chmod 644 /usr/local/lib/libgoocanvas.a
+libtool: install: ranlib /usr/local/lib/libgoocanvas.a
+libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /usr/local/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+test -z "/usr/local/include/goocanvas-1.0" || /bin/mkdir -p "/usr/local/include/goocanvas-1.0"
+ /usr/bin/install -c -m 644 goocanvasellipse.h goocanvasgrid.h goocanvasgroup.h goocanvasimage.h goocanvasitem.h goocanvasitemmodel.h goocanvasitemsimple.h goocanvaspolyline.h goocanvaspath.h goocanvasrect.h goocanvasstyle.h goocanvastable.h goocanvastext.h goocanvasutils.h goocanvaswidget.h goocanvas.h goocanvasenumtypes.h goocanvasmarshal.h '/usr/local/include/goocanvas-1.0'
+make[3]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+Making install in demo
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+Making install in docs
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+make[2]: Nothing to be done for 'install-exec-am'.
+-- Installing ./html/ch01.html
+-- Installing ./html/ch02.html
+-- Installing ./html/ch03.html
+-- Installing ./html/ch04.html
+-- Installing ./html/ch05.html
+-- Installing ./html/goocanvas-architecture.html
+-- Installing ./html/goocanvas-coordinates.html
+-- Installing ./html/goocanvas-creating-items.html
+-- Installing ./html/goocanvas.devhelp
+-- Installing ./html/goocanvas.devhelp2
+-- Installing ./html/GooCanvasEllipse.html
+-- Installing ./html/GooCanvasEllipseModel.html
+-- Installing ./html/goocanvas-GooCanvas-Types.html
+-- Installing ./html/GooCanvasGrid.html
+-- Installing ./html/GooCanvasGridModel.html
+-- Installing ./html/GooCanvasGroup.html
+-- Installing ./html/GooCanvasGroupModel.html
+-- Installing ./html/GooCanvas.html
+-- Installing ./html/GooCanvasImage.html
+-- Installing ./html/GooCanvasImageModel.html
+-- Installing ./html/GooCanvasItem.html
+-- Installing ./html/GooCanvasItemModel.html
+-- Installing ./html/GooCanvasItemModelSimple.html
+-- Installing ./html/GooCanvasItemSimple.html
+-- Installing ./html/goocanvas-model-view-canvas.html
+-- Installing ./html/goocanvas-overview.html
+-- Installing ./html/GooCanvasPath.html
+-- Installing ./html/GooCanvasPathModel.html
+-- Installing ./html/GooCanvasPolyline.html
+-- Installing ./html/GooCanvasPolylineModel.html
+-- Installing ./html/GooCanvasRect.html
+-- Installing ./html/GooCanvasRectModel.html
+-- Installing ./html/goocanvas-simple-canvas.html
+-- Installing ./html/GooCanvasStyle.html
+-- Installing ./html/GooCanvasTable.html
+-- Installing ./html/GooCanvasTableModel.html
+-- Installing ./html/GooCanvasText.html
+-- Installing ./html/GooCanvasTextModel.html
+-- Installing ./html/GooCanvasWidget.html
+-- Installing ./html/goocanvas-wysiwyg.html
+-- Installing ./html/home.png
+-- Installing ./html/index.html
+-- Installing ./html/index.sgml
+-- Installing ./html/left.png
+-- Installing ./html/right.png
+-- Installing ./html/style.css
+-- Installing ./html/up.png
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+Making install in po
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/po'
+if test -r ".././mkinstalldirs"; then \
+  .././mkinstalldirs /usr/local/share; \
+else \
+  /bin/sh ../mkinstalldirs /usr/local/share; \
+fi
+installing en_GB.gmo as /usr/local/share/locale/en_GB/LC_MESSAGES/goocanvas.mo
+installing es.gmo as /usr/local/share/locale/es/LC_MESSAGES/goocanvas.mo
+installing ja.gmo as /usr/local/share/locale/ja/LC_MESSAGES/goocanvas.mo
+if test "goocanvas" = "glib"; then \
+  if test -r ".././mkinstalldirs"; then \
+    .././mkinstalldirs /usr/local/share/glib-2.0/gettext/po; \
+  else \
+    /bin/sh ../mkinstalldirs /usr/local/share/glib-2.0/gettext/po; \
+  fi; \
+  /usr/bin/install -c -m 644 ./Makefile.in.in \
+		  /usr/local/share/glib-2.0/gettext/po/Makefile.in.in; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/po'
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0'
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0'
+make[2]: Nothing to be done for 'install-exec-am'.
+test -z "/usr/local/lib/pkgconfig" || /bin/mkdir -p "/usr/local/lib/pkgconfig"
+ /usr/bin/install -c -m 644 goocanvas.pc '/usr/local/lib/pkgconfig'
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0'
+
+
+
+
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Goo::Canvas
+
+
+gnome-web-photo
+Goo::Canvas/libgoo-canvas-perl
+
+
+libgoo-canvas-perl这玩意不能通过deb安装了，编译安装好了
+
+wget http://deb.debian.org/debian/pool/main/libg/libgoo-canvas-perl/libgoo-canvas-perl_0.06.orig.tar.gz
+perl Makefile.PL （无视Unrecognized argument in LIBS ignored: '-pthread')
+make
+sudo make install
+
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Canvas.bs blib/arch/auto/Goo/Canvas/Canvas.bs 644
+Manifying 2 pod documents
+Manifying 29 pod documents
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/auto/Goo/Canvas/Canvas.so
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl.typemap
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas.typemap
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl-version.h
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl-autogen.h
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl.h
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/Files.pm
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas.pm
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Cairo/Matrix.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Cairo/Pattern.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/index.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Points.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/GroupModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/TableModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/RectModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/LineDash.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/TextModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Ellipse.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/ImageModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Text.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Polyline.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/PolylineModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Image.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Path.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Group.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Bounds.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/PathModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Style.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/EllipseModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/ItemModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Table.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Widget.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Rect.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/ItemSimple.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Item.pod
+Installing /home/andy/perl5/man/man1/perlmine.pl.1p
+Installing /home/andy/perl5/man/man1/perltetris.pl.1p
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Item.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Text.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::ItemModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::TableModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Widget.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::LineDash.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::index.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Bounds.3pm
+Installing /home/andy/perl5/man/man3/Goo::Cairo::Pattern.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Rect.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::PathModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Image.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::PolylineModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Cairo::Matrix.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::EllipseModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Polyline.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::RectModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Table.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::ImageModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::TextModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::GroupModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Ellipse.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Points.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::ItemSimple.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Path.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Style.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Group.3pm
+Installing /home/andy/perl5/bin/perltetris.pl
+Installing /home/andy/perl5/bin/perlmine.pl
+Appending installation info to /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/perllocal.pod
+
+
+
+
+
+##编译goocanvas-2.0.4
+sudo apt-get install gtk-doc-tools
+
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+
+sudo apt-get install libextutils-depends-perl libextutils-pkgconfig-perl
+sudo dpkg -i libgoocanvas-common_1.0.0-1_all.deb
+sudo dpkg -i libgoocanvas3_1.0.0-1_amd64.deb
+
+最后，尝试解决gnome-web-photo is missing
+sudo apt-get install libjavascriptcoregtk-4.0-dev libwebkit2gtk-4.0-dev gnome-common
+编译不行
+https://packages.debian.org/source/
+https://download.gnome.org/sources/gnome-web-photo/0.10/gnome-web-photo-0.10.6.tar.xz
+下载gnome-web-photo_0.10.6.orig.tar.gz
+这玩意是要一个网页截图工具，这样用 $ gnome-web-photo -t 0 --mode=photo http://www.linuxidc.com linuxidc.png
+编译依赖webkit而目前是webkit2，间接依赖TMD一大串，其实之前debian8也没有安装
+
+测试gnome-web-photo
+先从deb包提取bin和lib，放到/opt/gnome-web-photo
+├── bin
+│   ├── gnome-web-photo
+│   ├── gnome-web-print -> gnome-web-photo
+│   └── gnome-web-thumbnail -> gnome-web-photo
+└── lib
+    └── x86_64-linux-gnu
+        ├── libicudata.so.57 -> libicudata.so.57.1
+        ├── libicudata.so.57.1
+        ├── libicui18n.so.57 -> libicui18n.so.57.1
+        ├── libicui18n.so.57.1
+        ├── libicuio.so.57 -> libicuio.so.57.1
+        ├── libicuio.so.57.1
+        ├── libicule.so.57 -> libicule.so.57.1
+        ├── libicule.so.57.1
+        ├── libiculx.so.57 -> libiculx.so.57.1
+        ├── libiculx.so.57.1
+        ├── libicutest.so.57 -> libicutest.so.57.1
+        ├── libicutest.so.57.1
+        ├── libicutu.so.57 -> libicutu.so.57.1
+        ├── libicutu.so.57.1
+        ├── libicuuc.so.57 -> libicuuc.so.57.1
+        ├── libicuuc.so.57.1
+        ├── libjavascriptcoregtk-3.0.so.0 -> libjavascriptcoregtk-3.0.so.0.16.19
+        ├── libjavascriptcoregtk-3.0.so.0.16.19
+        ├── libwebkitgtk-3.0.so -> libwebkitgtk-3.0.so.0.22.17
+        ├── libwebkitgtk-3.0.so.0 -> libwebkitgtk-3.0.so.0.22.17
+        ├── libwebkitgtk-3.0.so.0.22.17
+        └── pkgconfig
+            └── webkitgtk-3.0.pc
+
+测试命令
+cd /opt/gnome-web-photo/bin
+export LD_LIBRARY_PATH=/opt/gnome-web-photo/lib/x86_64-linux-gnu
+./gnome-web-photo --mode=photo "http://www.163.com" ~/Pictures/ttt.jpg
+成功
+
+查看shutter调用时候传的参数
+gedit /usr/local/share/shutter/resources/modules/Shutter/Screenshot/Web.pm
+有5个
+
+cd /usr/local/bin
+sudo gedit gnome-web-photo
+---------------------------------
+#!/bin/bash
+export LD_LIBRARY_PATH=/opt/gnome-web-photo/lib/x86_64-linux-gnu
+cd /opt/gnome-web-photo/bin
+./gnome-web-photo $@
+---------------------------------
+sudo chmod +x gnome-web-photo
+
+完美运行shutter，目前的tab关闭图标不正常，不影响功能的
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Encode::X11
+(debian8,9的deb解开实际上还是不能运行的，只能运行git下来的shutter)
+
+
+shutter好就好在编辑方便易用
+简单图片编辑可以用flameshot和ksnip-1.7.3.deb
+
+
+
+
+
+
+bcompare4 更新之后要执行
+cd /usr/lib/beyondcompare/
+sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g" BCompare
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
