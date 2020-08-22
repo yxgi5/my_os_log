@@ -173,8 +173,10 @@ color3 = 'gray',
 }
 
 conky.text = [[
-${color2}${font sans:normal:size=9}CPU ${color1}
-${cpubar cpu0}
+#${pre_exec nproc}
+#${execi 86400 nproc}
+${color2}${font sans:normal:size=9}CPU ${cpu cpu0}%${color1}
+#${cpu cpu0} is the total usage
 ${cpubar cpu1}
 ${cpubar cpu2}
 ${cpubar cpu3}
@@ -182,6 +184,7 @@ ${cpubar cpu4}
 ${cpubar cpu5}
 ${cpubar cpu6}
 ${cpubar cpu7}
+${cpubar cpu8}
 ${color2}${font sans:normal:size=9}RAM ${color1}
 ${membar}
 NET1: wireless 
