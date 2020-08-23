@@ -13959,19 +13959,12 @@ sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+medusa
+medusa -M ssh -h 192.168.1.8 -u andy -P wordlist1.txt -e ns -F -O ssh.log
+hydra
+hydra -l andy -P wordlist.txt -t 4 ssh://192.168.1.8
+crunch
+crunch 3 4 "1234crunch "
 
 
 
@@ -13983,6 +13976,41 @@ sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT
 
 iconv -c -f utf-8 -t gb2312 BlogSohu_utf8.py >> BlogSohu_ansi_gb2312.py
 iconv -f utf-8 -t  gb18030 file1.txt -o file2.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
