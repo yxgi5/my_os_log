@@ -13982,8 +13982,24 @@ iconv -f utf-8 -t  gb18030 file1.txt -o file2.txt
 
 
 
+openocd invalid subcommand "newtap stm32f1x bs -irlen 5" in procedure 'script'
 
+/opt/openocd/0.10.0-12-20190422-2015/scripts/target/stm32f1x.cfg
+line 50
 
+if {[using_jtag]} {
+   jtag newtap $_CHIPNAME bs -irlen 5
+}
+
+change to 
+
+if {[using_jtag]} {
+   if {[using_hla]} {
+      hla newtap $_CHIPNAME bs -irlen 5
+   } else {
+      jtag newtap $_CHIPNAME bs -irlen 5
+   }
+}
 
 
 
