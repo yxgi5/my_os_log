@@ -46,7 +46,7 @@ Errors occurred, no packages were upgraded.
 #sudo pacman -S archlinux-keyring  && pacman -S archlinuxcn-keyring && sudo pacman -Syu
 
 $ sudo leafpad /etc/pacman.d/gnupg/gpg.conf
-change keyserver hkp://pool.sks-keyservers.net to hkp://keyserver.ubuntu.com:80
+keyserver hkp://keyserver.ubuntu.com:80
 $ sudo pacman-key -r 5F702428F70E0903
 就可以搞定
 
