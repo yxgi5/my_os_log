@@ -14004,9 +14004,17 @@ if {[using_jtag]} {
 
 
 
+Novatek SDK/ 据说RK3399也会碰到
+解决/bin/sh: lz4c: 未找到命令
+LZ4是一种压缩算法，解决方法如下：
 
+安装lz4:
+sudo apt-get update
+sudo apt-get install liblz4-tool
+重新编译 ok
 
-
+解lz4文件:
+lz4 -d 文件名
 
 
 
