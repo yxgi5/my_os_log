@@ -14023,7 +14023,7 @@ lz4 -d 文件名
 sudo apt-get install build-essential libc6-dev libncurses5-dev libncurses5:i386 libgl1-mesa-dev g++-multilib mingw-w64 tofrodos lib32z1 u-boot-tools zlib1g-dev bison libbison-dev flex mtd-utils vim squashfs-tools gawk cmake cmake-data liblz4-tool  libmpc3 libstdc++6 device-tree-compiler gcc-8-locales lib32ncurses6 lib32ncursesw6 lib32tinfo6 lib32ncurses5-dev openssh-server samba
 
 
-提示无libmpfr.so.4
+debian buster提示无libmpfr.so.4
 问题描述：使用arm-linux-gcc 编译.c文件时提示错误
 error while loading shared libraries:libmpfr.so.4: cannot open shared object file: No such file or directory.
 通过ldd查看cc1的库调用情况
