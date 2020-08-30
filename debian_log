@@ -14048,7 +14048,7 @@ sudo ln -s /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libm
 
 
 
-
+sudo apt-get install chromium chromium-l10n chromium-shell chromium-driver
 
 
 
