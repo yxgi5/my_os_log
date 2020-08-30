@@ -14020,7 +14020,7 @@ lz4 -d 文件名
 
 
 
-sudo apt-get install build-essential libc6-dev libncurses5-dev libncurses5:i386 libgl1-mesa-dev g++-multilib mingw-w64 tofrodos lib32z1 u-boot-tools zlib1g-dev bison libbison-dev flex mtd-utils vim squashfs-tools gawk cmake cmake-data liblz4-tool  libmpc3 libstdc++6 device-tree-compiler gcc-8-locales
+sudo apt-get install build-essential libc6-dev libncurses5-dev libncurses5:i386 libgl1-mesa-dev g++-multilib mingw-w64 tofrodos lib32z1 u-boot-tools zlib1g-dev bison libbison-dev flex mtd-utils vim squashfs-tools gawk cmake cmake-data liblz4-tool  libmpc3 libstdc++6 device-tree-compiler gcc-8-locales lib32ncurses6 lib32ncursesw6 lib32tinfo6 lib32ncurses5-dev
 
 
 
