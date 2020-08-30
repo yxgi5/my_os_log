@@ -14054,7 +14054,51 @@ sudo apt-get install chromium chromium-l10n chromium-shell chromium-driver
 
 error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet
 
+git config --global http.sslVerify false
 git config --global http.postBuffer 1048576000
+
+export GIT_TRACE_PACKET=1; export GIT_TRACE=1; export GIT_CURL_VERBOSE=1
+git pull
+
+$ sudo apt-get purge git
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  elpa-async elpa-dash elpa-ghub elpa-git-commit elpa-graphql elpa-let-alist
+  elpa-magit-popup elpa-treepy elpa-with-editor git-man
+  libdatetime-format-iso8601-perl libjs-modernizr libmediawiki-api-perl
+  libxdo3 python3-qtpy wipe xdotool xxdiff
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  elpa-magit* git* git-all* git-cola* git-cvs* git-el* git-email* git-gui*
+  git-lfs* git-mediawiki* git-svn* gitg* gitk* gitweb* keyringer*
+0 upgraded, 0 newly installed, 15 to remove and 1 not upgraded.
+After this operation, 65.4 MB disk space will be freed.
+
+
+sudo apt-get install git git-daemon-run git-el git-email git-gui gitk gitweb git-cvs git-mediawiki git-svn git-lfs git-cola git-all git-cvs git-el git-email git-gui git-mediawiki git-svn gitg gitk gitweb
+
+git config http.sslVerify false
+git config http.postBuffer 1048576000
+
+ssh方式可以获取超级大的repo
+proxychains进行代理 proxychains git clone xxx， proxychains git pull
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
