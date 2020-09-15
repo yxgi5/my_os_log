@@ -778,7 +778,9 @@ iptables -Z
 iptables -A INPUT -i lo -j ACCEPT 
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT 
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 81 -j ACCEPT
+iptables -A INPUT -p tcp --dport 82 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -p tcp --dport 222 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 322 -j ACCEPT 
