@@ -93,7 +93,7 @@ xdg-user-dirs-update
 
 arch无效
 
-修改user-dirs.dirs
+修改~/.config/user-dirs.dirs
 XDG_DESKTOP_DIR="$HOME/Desktop"
 XDG_DOWNLOAD_DIR="$HOME/Downloads"
 XDG_TEMPLATES_DIR="$HOME/Templates"
