@@ -89,10 +89,14 @@ xdg-user-dirs-update
 选 update
 export LANG=zh_CN.UTF-8
 xdg-user-dirs-update
+或xdg-user-dirs-gtk-update
 选“不要再提醒”和“保持原来的名称”
 
 arch无效
 
+
+
+echo en_US > ~/.config/user-dirs.locale
 修改~/.config/user-dirs.dirs
 XDG_DESKTOP_DIR="$HOME/Desktop"
 XDG_DOWNLOAD_DIR="$HOME/Downloads"

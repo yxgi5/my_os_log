@@ -1447,3 +1447,34 @@ sudo yum install yum-axelget htop gnome-system-monitor gitk
 
 
 
+
+sudo yum install xdg-user-dirs
+xdg-user-dirs-update
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
