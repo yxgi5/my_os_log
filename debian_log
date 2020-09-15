@@ -14048,7 +14048,71 @@ lz4 -d 文件名
 
 
 
+sudo apt-get install build-essential libc6-dev libncurses5-dev libncurses5:i386 libgl1-mesa-dev g++-multilib mingw-w64 tofrodos lib32z1 u-boot-tools zlib1g-dev bison libbison-dev flex mtd-utils vim squashfs-tools gawk cmake cmake-data liblz4-tool  libmpc3 libstdc++6 device-tree-compiler gcc-8-locales lib32ncurses6 lib32ncursesw6 lib32tinfo6 lib32ncurses5-dev openssh-server samba
 
+
+debian buster提示无libmpfr.so.4
+问题描述：使用arm-linux-gcc 编译.c文件时提示错误
+error while loading shared libraries:libmpfr.so.4: cannot open shared object file: No such file or directory.
+通过ldd查看cc1的库调用情况
+
+ldd /opt/arm/arm-ca53-linux-gnueabihf-4.9-2017.05/usr/bin/../libexec/gcc/arm-ca53-linux-gnueabihf/4.9.4/cc1
+	linux-vdso.so.1 (0x00007fff6e29f000)
+	libmpc.so.3 => /usr/lib/x86_64-linux-gnu/libmpc.so.3 (0x00007f74efa3d000)
+	libmpfr.so.4 => not found
+	libgmp.so.10 => /usr/lib/x86_64-linux-gnu/libgmp.so.10 (0x00007f74ef9ba000)
+	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f74ef9b5000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f74ef7f4000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f74efcd2000)
+	libmpfr.so.6 => /usr/lib/x86_64-linux-gnu/libmpfr.so.6 (0x00007f74ef770000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f74ef5ed000)
+
+
+发现这个库找不到，
+解决办法：
+
+sudo ln -s /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4
+
+
+
+
+sudo apt-get install chromium chromium-l10n chromium-shell chromium-driver
+
+
+
+error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet
+
+git config --global http.sslVerify false
+git config --global http.postBuffer 1048576000
+
+export GIT_TRACE_PACKET=1; export GIT_TRACE=1; export GIT_CURL_VERBOSE=1
+git pull
+
+$ sudo apt-get purge git
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  elpa-async elpa-dash elpa-ghub elpa-git-commit elpa-graphql elpa-let-alist
+  elpa-magit-popup elpa-treepy elpa-with-editor git-man
+  libdatetime-format-iso8601-perl libjs-modernizr libmediawiki-api-perl
+  libxdo3 python3-qtpy wipe xdotool xxdiff
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  elpa-magit* git* git-all* git-cola* git-cvs* git-el* git-email* git-gui*
+  git-lfs* git-mediawiki* git-svn* gitg* gitk* gitweb* keyringer*
+0 upgraded, 0 newly installed, 15 to remove and 1 not upgraded.
+After this operation, 65.4 MB disk space will be freed.
+
+
+sudo apt-get install git git-daemon-run git-el git-email git-gui gitk gitweb git-cvs git-mediawiki git-svn git-lfs git-cola git-all git-cvs git-el git-email git-gui git-mediawiki git-svn gitg gitk gitweb
+
+git config http.sslVerify false
+git config http.postBuffer 1048576000
+
+ssh方式可以获取超级大的repo
+proxychains进行代理 proxychains git clone xxx， proxychains git pull
 
 
 
