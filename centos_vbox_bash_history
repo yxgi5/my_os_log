@@ -1452,7 +1452,10 @@ sudo yum install xdg-user-dirs
 xdg-user-dirs-update
 
 
-
+修复引导
+启动光盘/U盘进入抢救模式，实际上就是带挂载的chroot
+grub2-install /dev/sdx
+grub2-mkconfig -o /boot/grub/grub.cfg
 
 
 
