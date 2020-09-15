@@ -25,6 +25,8 @@ $ sudo apt-get install openbox menu libxml2-dev tint2 openbox-menu openbox-gnome
 //  openbox openbox-gnome-session openbox-menu pkg-config scrot tint2
 
 
+$ tint2conf
+
 $ sudo apt-get install feh
 $ sudo apt-get install obmenu
 // The following NEW packages will be installed:
@@ -79,6 +81,34 @@ export PATH
 ////////////////////////////////////////////////////////////////////
 
 
+
+切换中文目录为英文目录 使用命令来转换中文目录为英文目录。
+即/home中的“桌面”、“下载”等等转换成“Desktop”、“Downloads”等等。
+export LANG=en_US
+xdg-user-dirs-update
+选 update
+export LANG=zh_CN.UTF-8
+xdg-user-dirs-update
+选“不要再提醒”和“保持原来的名称”
+
+arch无效
+
+修改user-dirs.dirs
+XDG_DESKTOP_DIR="$HOME/Desktop"
+XDG_DOWNLOAD_DIR="$HOME/Downloads"
+XDG_TEMPLATES_DIR="$HOME/Templates"
+XDG_PUBLICSHARE_DIR="$HOME/Public"
+XDG_DOCUMENTS_DIR="$HOME/Documents"
+XDG_MUSIC_DIR="$HOME/Music"
+XDG_PICTURES_DIR="$HOME/Pictures"
+XDG_VIDEOS_DIR="$HOME/Videos"
+
+
+mkdir Desktop Downloads Templates Public Documents Music Pictures Videos
+rm -rf 公共  视频  文档  音乐 模板  图片  下载  桌面
+
+
+
 // essential tools
 $ sudo apt-get install aptitude
 $ sudo apt-get install apt-file
@@ -101,6 +131,7 @@ $ sudo apt-get install subversion subversion-tools rapidsvn
 
 $ sudo apt-get install rdesktop grdesktop 
 $ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andy -f 192.168.1.99 &
+$ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:share=/home/andy -f 192.168.1.99 &
 退出全屏模式 :使用组合键ctrl+alt+enter
 
 $ sudo apt-get install xrdp vnc4server tightvncserver ssh
@@ -319,7 +350,9 @@ $ sudo aptitude install gtk-theme-switch gtk2-engines
 $ sudo aptitude install lxrandr
 $ sudo apt-get install volumeicon-alsa
 
+
 在 ~/.config/openbox/autostart 下加入
+(The autostart script is located at ~/.config/openbox/autostart.sh. If that file does not exist, then the system-wide default script, located at /etc/xdg/openbox/autostart.sh, is run instead)
 背景图片
 feh --bg-scale /path/to/your/background/image.jpg
 
@@ -483,7 +516,7 @@ env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
 
 
 
-pulseaudio会导致alsamixer的speaker开机静音
+pulseaudio会导致alsamixer的speaker开机静音 声音 音量
 修改
 /usr/share/pulseaudio/alsa-mixer/paths/analog-output.conf
 and change this:
@@ -1103,6 +1136,28 @@ Unknown media type in type 'uri/rtspu'
 
 $ sudo gedit /usr/share/mime/packages/kde.xml
 删除上面有关的部分内容
+
+类似的
+Unknown media type in type 'chemical
+...
+
+sudo rm /usr/share/mime/packages/chemical-mime-data.xml
+
+
+
+该错误源于KDE，自2008年以来一直没有修复：
+
+https://bugs.kde.org/show_bug.cgi?id=303627
+
+https://bugs.kde.org/show_bug.cgi?id=250924
+
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=469833
+
+https://bugs.launchpad.net/ubuntu/+source/shared-mime-info/+bug/289592
+
+https://askubuntu.com/questions/39852/how-to-remove-warnings-like-unknown-media-type
+
+
 
 
 
@@ -2924,11 +2979,12 @@ $ sudo make install
 unzip -O GBK test.zip
 unzip -O GB18030 test.zip
 unzip -O CP936 test.zip
-要一直生效就在/etc/environment中加入
-UNZIP=”-O CP936″
-ZIPINFO=”-O CP936″
-或者在$HOME/.bashrc里
-alias unzip='unzip -O cp936'
+要一直生效就在/etc/environment或者在$HOME/.bashrc里加入
+
+UNZIP="-O CP936"
+ZIPINFO="-O CP936"
+或者
+alias unzip='unzip -O cp936'  （有效）
 
 
 解压之后替换文件名
@@ -3011,8 +3067,8 @@ sudo apt-get install gpicview
 
 
 
-设置移动硬盘samba共享
-sudo vi /etc/samba/smb.conf
+设置移动硬盘samba共享share
+sudo gedit /etc/samba/smb.conf
 [dell]
     comment = Network Logon Service
     path = /media/andy
@@ -4513,6 +4569,14 @@ source spb166
 -------------------------------------------------
 sudo chmod +x allegro pad_designer concepthdl
 
+sudo gedit projmgr
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/projmgr
+-------------------------------------------------
+sudo chmod +x projmgr
 
 eagle 8.1.0
 cd /usr/local/bin
@@ -4742,7 +4806,7 @@ $ sudo apt-get install uget
     
     
     
-<log apt-get使用proxy代理>
+<log apt-get使用proxy代理加速>
 0.新建文件 apt_proxy_conf(文件名任意)内容如下：
 Acquire::http::proxy "http://127.0.0.1:8087";
 Acquire::ftp::proxy "http://127.0.0.1:8087";
@@ -12138,7 +12202,7 @@ display-setup-script=xhost +
 删掉
 sudo rm /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
 
-
+实际上在/etc/gdm3/Init/Default添加一行 xhost + 到头部
 
 
 
@@ -12487,6 +12551,1581 @@ proxychains apt-get source curl
 cd curl-7.38.0/
 //sudo dpkg-buildpackage -rfakeroot -b
 dpkg-buildpackage -rfakeroot -uc -b
+
+
+
+
+
+sudo gedit /etc/apt/apt.conf.d/apt.conf
+
+
+
+
+
+
+
+
+which virtualenv 
+/usr/local/bin/virtualenv
+
+virtualenv --no-site-packages venv
+最新的virtualenv没有--no-site-packages，默认就是
+最后支持--no-site-packages的virtualenv==16.7.9
+sudo pip3 install --upgrade virtualenv==16.7.9 -i https://mirrors.163.com/pypi/simple
+
+
+source venv/bin/activate
+
+pip install six==1.12.0 -i https://mirrors.163.com/pypi/simple
+pip install colorama==0.3.9 -i https://mirrors.163.com/pypi/simple
+pip install contextlib2==0.5.1 -i https://mirrors.163.com/pypi/simple
+pip install future==0.16.0 -i https://mirrors.163.com/pypi/simple
+pip install mutablerecords==0.4.1 -i https://mirrors.163.com/pypi/simple
+pip install oauth2client==1.5.2 -i https://mirrors.163.com/pypi/simple
+pip install protobuf==3.6.0 -i https://mirrors.163.com/pypi/simple
+pip install pyOpenSSL==17.1.0 -i https://mirrors.163.com/pypi/simple
+pip install PyYAML==3.13 -i https://mirrors.163.com/pypi/simple
+pip install sockjs-tornado==1.0.3 -i https://mirrors.163.com/pypi/simple
+pip install tornado==4.3 -i https://mirrors.163.com/pypi/simple
+pip install spintop-openhtf -i https://mirrors.163.com/pypi/simple
+
+git clone https://github.com/google/openhtf.git
+cd openhtf/
+python setup.py install
+cd examples/
+python frontend_example.py
+http://localhost:4444
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+串口助手
+sudo apt-get install cutecom
+
+
+
+
+
+
+
+
+
+
+
+
+安装ffmpy3
+https://ffmpy3.readthedocs.io/en/latest/
+sudo pip3 install ffmpy3 -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
+
+
+
+
+
+更新spb166到spb172
+cd /usr/local/bin
+
+sudo gedit allegro
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/allegro
+-------------------------------------------------
+sudo gedit concepthdl
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/concepthdl
+-------------------------------------------------
+sudo gedit pad_designer
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/padstack_editor
+-------------------------------------------------
+sudo chmod +x allegro pad_designer concepthdl
+
+sudo gedit projmgr
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/projmgr
+-------------------------------------------------
+sudo chmod +x projmgr
+
+
+
+
+
+cd /usr/local/bin
+sudo gedit diamond
+-------------------------------------------------
+#!/bin/bash
+cd /opt/lscc/diamond/3.9_x64/bin/lin64/
+#cd /opt/lscc/diamond/3.11_x64/bin/lin64/
+./diamond
+-------------------------------------------------
+
+
+
+
+
+v2ray
+原始的go.sh脚本需要修改
+已经修改好的go_mod.sh
+v2ray-linux-64.zip下载到相同目录就可以安装到本机
+然后
+sudo gedit /etc/v2ray/config.json
+sudo service v2ray start
+可以使用 service v2ray start|stop|status|reload|restart|force-reload 控制 V2Ray 的运行
+
+然后是opera和chrome等浏览器的代理自动切换设置，协议和端口查/etc/v2ray/config.json
+
+
+anti-g*f*w 20200630
+首先，用X-Tunnel或者tor-browser-linux64-9.5获取最新的free vmess
+虚拟机里贴进v2rayN
+再得到最新的uuid填入/etc/v2ray/config.json
+
+
+CC fucking P， 你丫拦得住俺？
+
+
+
+
+
+v2ray for terminal
+
+export ALL_PROXY="socks5://127.0.0.1:10808"
+或者
+export https_proxy="socks5://127.0.0.1:10808"
+export http_proxy="socks5://127.0.0.1:10808"
+export ftp_proxy="socks5://127.0.0.1:10808"
+
+
+
+
+Scientific_Toolworks_Understand
+
+
+
+
+
+magnetw现在还算好用吧
+
+使用文档
+https://magnetw.app/advanced/rule-apply.html
+
+下载地址
+https://github.com/xiandanin/magnetW/releases
+
+这样运行linux版本
+./magnetw-3.1.1-linux.AppImage --no-sandbox
+
+设置v2ray
+设置-->启用代理
+Socks5, 127.0.0.1:10808
+也可以设置为ss代理
+Socks5, 127.0.0.1:1080
+
+
+运行freecad最新版本
+./FreeCAD_0.18-16146-Linux-Conda_Py3Qt5_glibc2.12-x86_64.AppImage
+
+
+
+
+diagrams的AppImage版本这样运行
+chmod +x draw.io-x86_64-13.3.9.AppImage
+./draw.io-x86_64-13.3.9.AppImage --no-sandbox
+
+可以直接安装diagrams的deb包
+sudo dpkg -i draw.io-amd64-13.3.9.deb
+
+
+
+wine 一些游戏
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine age2.exe
+
+
+perl脚本 Can't locate autobox/Core.pm 之类的模块未安装问题
+cpan方式安装
+sudo cpanm autobox::Core
+sudo cpanm Try::Tiny
+sudo cpanm XML::TreePP
+sudo cpanm XML::TreePP::XMLPath
+sudo cpanm Text::Xslate
+sudo cpanm Readonly
+
+或者apt方式安装
+# 查找在哪个apt包 apt-cache search perl autobox::Core
+
+
+
+
+dos emulator dos模拟器
+sudo apt-get install dosbox dosemu
+
+
+
+
+
+ttf字体编辑工具
+sudo apt-get install fontforge
+
+
+
+
+
+
+
+source insight 中文显示等
+原理
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
+
+
+双击打开也想支持, 修改
+~/.local/share/applications/wine-extension-pr.desktop
+
+
+
+
+livecd+chroot维护系统（也可安装debootstrap安装包）
+cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
+su
+mount -o bind /dev dev
+chroot .
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devpts devpts /dev/pts
+mkdir -p /run/lock
+mount -t tmpfs tmpfs /run/lock
+mount /dev/sdx2 /home
+mount /dev/sdx3 /opt
+
+sudo grub-install /dev/sdx
+sudo grub-install --root-directory=/boot/ /dev/sdx
+grub-mkconfig -o /boot/grub/grub.cfg
+
+umount /dev/sdx3
+umount /dev/sdx2
+umount /run/lock
+rmdir /run/lock
+umount /dev/pts
+umount /sys
+umount /proc
+exit
+umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/var/lib/os-prober/mount
+umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/dev
+
+sudo dpkg -i baidunetdisk_3.3.2_amd64.deb
+cd /opt/baidunetdisk
+./baidunetdisk --no-sandbox
+
+cd /usr/local/bin
+sudo gedit baidunetdisk
+-------------------------------------------------
+#!/bin/bash
+cd /opt/baidunetdisk/
+./baidunetdisk --no-sandbox
+-------------------------------------------------
+sudo chmod +x baidunetdisk
+
+
+
+
+sudo gedit /etc/fstab
+-------------------------------------------------
+UUID=f5cd428a-7bcc-4026-80b7-9f570e5966cf	/               ext4    errors=remount-ro 0       1
+UUID=08D8BF9DD8BF8788	/mnt/c_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+UUID=0CC416CC0CC416CC	/mnt/d_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+UUID=0CC416BF0CC416BF	/mnt/e_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+UUID=bdeccf6e-c968-4741-86e0-e0b3f15e62ff	/home	ext4	errors=remount-ro 	0       1
+UUID=3bc97d5e-cdc7-49fc-aeeb-4b455100c5df	/opt	ext4	errors=remount-ro 	0       1
+-------------------------------------------------
+
+
+
+cat /etc/*-release
+
+
+
+gedit ~/Documents/apt_proxy_conf
+Acquire::http::proxy "http://127.0.0.1:10808";
+Acquire::ftp::proxy "ftp://127.0.0.1:10808";
+Acquire::https::proxy "https://127.0.0.1:10808";
+or
+Acquire::http::proxy "socks5://127.0.0.1:10808";
+Acquire::ftp::proxy "socks5://127.0.0.1:10808";
+Acquire::https::proxy "socks5://127.0.0.1:10808";
+
+sudo apt-get -c ~/Documents/apt_proxy_conf upgrade
+Proxy CONNECT aborted
+
+
+export -p
+查看有没有类似proxy的环境变量，例如
+
+declare -x ftp_proxy="127.0.0.1:8118"
+declare -x http_proxy="127.0.0.1:8118"
+declare -x https_proxy="127.0.0.1:8118"
+
+如果有，则全部删掉（具体名字要看你自己的终端显示）：
+
+export -n ftp_proxy 
+export -n http_proxy
+export -n https_proxy 
+
+然后再sudo apt-get update
+
+gedit ~/.bashrc
+set proxy
+export http_proxy="http://127.0.0.1:8118"
+export https_proxy="https://127.0.0.1:8118"
+export ftp_proxy="ftp://127.0.0.1:8118"
+
+还是不行算了
+
+
+
+
+
+不就是美国源 security.debian.org 慢的问题嘛
+下面的两个应该等效
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+
+
+
+
+pcmanfm的application为空处理
+/home/andy/.config/menus/lxde-applications.menu
+
+<!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN'
+ 'http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd'>
+<Menu>
+    <Name>Applications</Name>
+    <MergeFile type='parent'>/etc/xdg/menus/lxde-applications.menu</MergeFile>
+    <!-- added by LibFM -->
+    <Include>
+        <Filename>demo.ui.desktop</Filename>
+    </Include>
+    <!-- added by LibFM -->
+    <Include>
+        <Filename>compile-on-the-fly.pyw.desktop</Filename>
+    </Include>
+    <Menu>
+        <Name>C52ADCCD-884E-4EF7-A803-3DB9313A459C-dm365_jpegenc_01_00_00_05_production</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>08292447-1685-4FD9-BBE3-CCBBF48436A0-dsplib_3_1_1_1</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>6BF36CF3-26CB-453C-ABB0-686E833439E6-dvsdk</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>61297B0C-1FFA-41FF-B644-948D0D6C28A4-GraphicsSDK</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>08292447-1685-4FD9-BBE3-CCBBF48436A0-imglib_1_,__1</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>E02F7109-DD46-4DE9-B1DC-2186FB78EEA2-PrivateTI_IPNC_RDK</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>08292447-1685-4FD9-BBE3-CCBBF48436A0-TexasInstruments</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>MCSDK-1_01_00_02-TexasInstruments</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>Xilinx Design Tools</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+</Menu>
+
+
+
+
+
+
+
+
+
+xrandr --output default --gamma 1:1:1 --mode 1920x1080
+cvt
+lspci -vnn
+xrandr -q
+inxi -G
+sudo lshw -C display
+Xorg -configure
+xrandr --verbose
+lspci | grep VGA
+
+
+
+
+
+
+
+
+
+
+
+
+you should be able to repair your system by repeatedly running dpkg --configure --pending, apt-get -f install, and apt-get dist-upgrade until there are no errors.
+$ aptitude search '~i(!~ODebian)'
+$ apt-forktracer | sort
+# apt -f install
+# dpkg --configure --pending
+# dpkg -r --force-depends package_name
+# apt-get autoremove
+# apt purge $(dpkg -l | awk '/^rc/ { print $2 }')
+
+# aptitude search '~c'
+# aptitude purge '~c'
+# aptitude search '~o'
+# aptitude purge '~o'
+
+
+sudo dpkg --purge --force-depends xxx
+sudo apt-get install -f 
+
+dpkg --configure -a
+
+
+
+# dpkg --configure -a
+Setting up apt-listchanges (3.10) ...
+Traceback (most recent call last):
+  File "/tmp/tmp.mWbHTSdMcb.aptlc/debconf-helper.py", line 6, in <module>
+    import debconf
+ModuleNotFoundError: No module named 'debconf'
+dpkg: error processing package apt-listchanges (--configure):
+ subprocess installed post-installation script returned error exit status 1
+Errors were encountered while processing:
+ apt-listchanges
+
+
+
+dpkg --status debconf
+ls -l /usr/lib/python*/dist-packages/debconf.py
+cp /usr/lib/python3/dist-packages/debconf.py /usr/local/lib/python3.6/site-packages/
+cp /usr/lib/python3/dist-packages/debconf.py /usr/local/lib/python3.5/dist-packages/
+cp /usr/lib/python3/dist-packages/debconf.py /usr/local/lib/python3.4/dist-packages/
+//sudo gedit /etc/profile
+
+
+
+
+
+
+
+aptitude install -f
+
+Try 'xdg-icon-resource --help' for more information.
+dpkg: error processing package google-chrome-stable (--remove):
+ subprocess installed pre-removal script returned error exit status 1
+xdg-icon-resource: size argument must be numeric
+Try 'xdg-icon-resource --help' for more information.
+dpkg: error while cleaning up:
+ subprocess installed post-installation script returned error exit status 1
+Errors were encountered while processing:
+
+
+rm /var/lib/dpkg/info/google-chrome-stable.*
+sudo dpkg --purge --force-depends google-chrome-stable
+
+rm /var/lib/dpkg/info/jd-gui*
+sudo dpkg --purge --force-depends jd-gui
+
+
+
+
+
+dpkg --configure -a
+dpkg: dependency problems prevent configuration of va-driver-all:amd64:
+apt-get install -f
+trying to overwrite 'YYY', which is also in package xxx：[ver]
+dpkg --force-depends -r xxx
+
+
+
+
+
+
+ok
+
+ 更好啊
+aptitude update
+aptitude safe-upgrade
+aptitude full-upgrade
+
+
+
+
+关于xrandr 
+Failed to get size of gamma for output default
+
+启动参数加上i915.alpha_support=1
+未验证
+
+lspci -k | grep -iEA5 'vga|display|3d'
+sudo lshw -numeric -class video
+lspci -vnn 
+inxi -G
+inxi -Fxz
+
+
+
+
+
+
+-------strech---
+sudo apt-get install compiz
+
+ Debian 9系统下修改默认网卡为eth0的方法
+方法操作
+
+vim /etc/default/grub
+
+查找
+
+GRUB_CMDLINE_LINUX=""
+
+修改为
+
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+
+重新生成grub引导配置文件
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+最后重启即可恢复默认网卡为eth0，操作结束。
+
+
+
+sudo apt-get install libnet-ifconfig-wrapper-perl
+
+
+
+------------buster--------------------------------------
+
+not initialized in udev database even after waiting 10000000 microseconds
+mount --bind /run/lvm run/lvm  ??
+
+
+
+sudo apt-get install orage
+sudo apt-get purge dropbear
+
+
+sudo update-initramfs -u
+https://www.kutu66.com//ubuntu/article_164784
+
+
+dnsmasq 替代 bind9
+sudo systemctl stop bind9.service
+sudo systemctl status dnsmasq.service
+
+
+sudo rm /lib/systemd/system/bind9.service
+
+
+sudo apt-get dselect-upgrade
+
+
+
+https://bbs.archlinux.org/viewtopic.php?pid=1807200
+
+https://blog.csdn.net/weixin_42720824/article/details/104790247
+sudo apt-get install firmware-misc-nonfree
+??
+
+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/i915
+
+下载kbl_dmc_ver1_04.bin
+
+最后拷贝到/lib/firmware文件夹下：
+
+cd /lib/firmware
+sudo mkdir i915
+sudo cp Downloads/kbl_dmc_ver1_04.bin /lib/firmware/i915
+
+
+
+
+
+
+
+---------------jessie---------------
+cat /sys/class/scsi_host/host*/link_power_management_policy
+sudo blkid
+sudo systemctl status nxserver.service
+sudo rm /etc/systemd/system/multi-user.target.wants/nxserver.service
+sudo systemctl stop nxserver.service
+sudo cat /var/log/kern.log
+sudo journalctl -f _TRANSPORT=kernel
+
+
+ls /etc/apt/sources.list.d/
+docker.list          github_git-lfs.list  opera-stable.list
+rm /etc/apt/sources.list.d/*
+
+
+
+
+
+
+dmenu_run
+Missing menu entries
+$ rm ~/.dmenu_cache
+$ rm ~/.cache/dmenu_run    #这条有效，ref https://wiki.archlinux.org/index.php/Dmenu
+
+rc.xml
+修改
+    <keybind key="A-F3">
+      <action name="Execute">
+        <command>~/.config/dmenu/dmenu-bind.sh</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>dmenu</name>
+        </startupnotify>
+      </action>
+    </keybind>
+
+修改W-r组合键
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>~/.config/dmenu/dmenu-bind.sh</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>dmenu</name>
+        </startupnotify>
+      </action>
+    </keybind>
+
+
+
+
+
+/home/andy/.config/opera/Opera Add-ons Downloads
+sudo rm /usr/local/share/applications/CCSv5-ReleaseNote.desktop
+sudo rm /etc/xdg/menus/applications-merged/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments-60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.menu
+sudo rm /usr/share/desktop-directories/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.5.0.directory
+
+
+$ cat /etc/xdg/menus/applications-merged/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments-60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.menu 
+<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+    "http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd">
+<!-- Do not edit manually - generated and managed by xdg-desktop-menu -->
+<Menu>
+    <Name>Applications</Name>
+<Menu>
+    <Name>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments</Name>
+    <Directory>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments.directory</Directory>
+<Menu>
+    <Name>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5</Name>
+    <Directory>60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.5.0.directory</Directory>
+    <Include>
+        <Filename>Code</Filename>
+        <Filename>Composer</Filename>
+        <Filename>Studio</Filename>
+        <Filename>5.5.0-program.desktop</Filename>
+        <Filename>CCSv5-ReleaseNote.desktop</Filename>
+        <Filename>5.5.0-uninstall.desktop</Filename>
+    </Include>
+</Menu>
+</Menu>
+</Menu>
+
+
+
+sudo systemctl status dnsmasq.service
+sudo systemctl stop dnsmasq.service
+
+
+
+
+
+
+steam repair
+Unable to preload the following plugins:
+	libAsyncGPUReadbackPlugin.so
+	libresonanceaudio.so
+
+cd /home/andy/.local/share/Steam/steamapps/common/Universe\ Sandbox\ 2/Universe\ Sandbox_Data/Plugins
+ldd libAsyncGPUReadbackPlugin.so
+/usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.21' not found 
+
+
+strings /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21 | grep GLIBCXX
+strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
+
+
+
+
+
+
+
+------------------------buster----------------------------------
+安装opera并设置默认浏览器
+sudo update-alternatives --config x-www-browser
+
+sudo update-alternatives --config gnome-www-browser 
+
+
+安装bcompare
+
+
+
+
+cd .wine/drive_c/windows/
+wine regedit.exe
+cp /usr/share/doc/wine-development/examples/wine.desktop /home/andy/.local/share/applications
+xfce4-mime-settings
+这样就能右键wine可执行的windows的exe程序
+
+
+安装VNC-Server
+systemctl (enable|disable|start|stop) vncserver-virtuald.service
+systemctl (enable|disable|start|stop) vncserver-x11-serviced.service
+
+安装VNC-Viewer
+
+
+库里也没有leafpad了，编译安装好了
+sudo apt-get install build-essential checkinstall intltool libgtk2.0-dev
+
+mkdir -v $HOME/leafpad_build && cd $HOME/leafpad_build && \
+wget http://savannah.nongnu.org/download/leafpad/leafpad-0.8.18.1.tar.gz && \
+tar xvf leafpad-0.8.18.1.tar.gz && cd leafpad-0.8.18.1 && \
+./configure && make && \
+sudo checkinstall -D --install=yes --fstrans=no --pakdir "$HOME/leafpad_build" \
+     --pkgname leafpad --backup=no --deldoc=yes --deldesc=yes --delspec=yes \
+     --default --pkgversion "0.8.18.1" && \
+make distclean && sudo ldconfig
+
+
+安装vbox
+
+
+重新配置conky
+mv /home/andy/.conkyrc conkyrc.bk
+/------------------------
+background yes
+use_xft yes
+xftfont monospace:size=9
+xftalpha 1
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_colour black
+double_buffer yes
+minimum_size 1 1
+maximum_width 240
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color gray
+default_shade_color 000000
+default_outline_color d9d7d6
+alignment tr
+gap_x 12
+gap_y 12
+no_buffers yes
+uppercase no
+cpu_avg_samples 8
+override_utf8_locale no
+color1 red
+color2 gray
+##############################################
+#  Output
+##############################################
+TEXT
+CPU:
+#CPU0: $alignr${cpu cpu0}%
+#${cpubar cpu0}
+#CPU1: $alignr${cpu cpu1}%
+#${cpubar cpu1}
+#CPU2: $alignr${cpu cpu2}%
+#${cpubar cpu2}
+#CPU3: $alignr${cpu cpu3}%
+#${cpubar cpu3}
+#CPU4: $alignr${cpu cpu4}%
+#${cpubar cpu4}
+#CPU5: $alignr${cpu cpu5}%
+#${cpubar cpu5}
+#CPU6: $alignr${cpu cpu6}%
+#${cpubar cpu6}
+#CPU7: $alignr${cpu cpu7}%
+#${cpubar cpu7}
+${if_match "${cpu cpu0}"!=""}${cpubar cpu0}${endif}
+${if_match "${cpu cpu1}"!=""}${cpubar cpu1}${endif}
+${if_match "${cpu cpu2}"!=""}${cpubar cpu2}${endif}
+${if_match "${cpu cpu3}"!=""}${cpubar cpu3}${endif}
+${if_match "${cpu cpu4}"!=""}${cpubar cpu4}${endif}
+${if_match "${cpu cpu5}"!=""}${cpubar cpu5}${endif}
+${if_match "${cpu cpu6}"!=""}${cpubar cpu6}${endif}
+${if_match "${cpu cpu7}"!=""}${cpubar cpu7}${endif}
+${if_match "${cpu cpu8}"!=""}${cpubar cpu8}${endif}
+${if_match "${cpu cpu9}"!=""}${cpubar cpu9}${endif}
+${if_match "${cpu cpu10}"!=""}${cpubar cpu10}${endif}
+${if_match "${cpu cpu11}"!=""}${cpubar cpu11}${endif}
+${if_match "${cpu cpu12}"!=""}${cpubar cpu12}${endif}
+${if_match "${cpu cpu13}"!=""}${cpubar cpu13}${endif}
+${if_match "${cpu cpu14}"!=""}${cpubar cpu14}${endif}
+${if_match "${cpu cpu15}"!=""}${cpubar cpu15}${endif}
+RAM: $alignr$mem/$memmax
+$membar
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${font sans-serif:bold:size=8}SYSTEM ${hr 2}
+#${font sans-serif:normal:size=8}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#RUNNING:$alignr$running_processes
+#PROCESSES:$alignr${processes}
+#SWAP:$alignr${swapperc}
+#
+${font sans-serif:bold:size=8}TOP PROCESSES ${hr 2}
+${font sans-serif:normal:size=8}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+$font${top_mem name 3}${alignr}${top mem 3} %
+$font${top_mem name 4}${alignr}${top mem 4} %
+$font${top_mem name 5}${alignr}${top mem 5} %
+$font${top_mem name 6}${alignr}${top mem 6} %
+
+${font sans-serif:bold:size=8}SHORTCUT KEYS ${hr 2}
+${font sans-serif:normal:size=8}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize
+------------------------/
+
+mkdir -p /home/andy/.config/conky
+/home/andy/.config/conky/conky.conf
+/------------------------
+-- Conky config for ArchBang
+-- by Mr Green
+
+conky.config = {
+background = true,
+use_xft = true,
+font = 'monospace:size=9',
+xftalpha = 1,
+update_interval = 1.0,
+total_run_times = 0,
+own_window = true,
+own_window_transparent = true,
+own_window_type = 'desktop',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+double_buffer = true,
+minimum_height = 390,
+maximum_width = 340,
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+default_color = 'white',
+default_shade_color = '000000',
+default_outline_color = 'd9d7d6',
+alignment = 'top_right',
+gap_x = 12,
+gap_y = 12,
+no_buffers = true,
+uppercase = false,
+cpu_avg_samples = 2,
+override_utf8_locale = false,
+color1 = 'gray',
+color2 = 'gray',
+color3 = 'gray',
+}
+
+conky.text = [[
+#${pre_exec nproc}
+#${execi 86400 nproc}
+${color2}${font sans:normal:size=9}CPU ${cpu cpu0}%${color1}
+#${cpu cpu0} is the total usage
+${cpubar cpu1}
+${cpubar cpu2}
+${cpubar cpu3}
+${cpubar cpu4}
+${cpubar cpu5}
+${cpubar cpu6}
+${cpubar cpu7}
+${cpubar cpu8}
+${color2}${font sans:normal:size=9}RAM ${color1}
+${membar}
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${color2}${font sans:normal:size=9}SYSTEM ${color1}${hr 2}
+#${color1}${font sans:normal:size=9}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#
+${color2}${font sans:bold:size=9}TOP PROCESSES ${color1}${hr 2}
+${color1}${font sans:normal:size=9}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+
+${color2}${font sans:bold:size=9}SHORTCUT KEYS ${color1}${hr 2}${color1}${font sans:normal:size=9}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize]]
+------------------------/
+
+调试conky配置
+conky -DD -c ~/.config/conky/conky.conf
+ref
+http://conky.sourceforge.net/variables.html
+
+
+
+
+
+
+
+临时修改mac地址
+sudo ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+可能需要，debian 10 看来不需要这样
+sudo ifconfig eth0 down
+sudo ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+sudo ifconfig eth0 up
+
+重启也有效就在etc/rc.local添加
+ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+
+物理mac读取失败
+"ethtool -e wlan0" and "ethtool -E wlan0..." give the error "Cannot get EEPROM data: Operation not supported".
+
+
+
+
+
+
+sudo apt-get install ros-desktop-full ros-desktop-full-dev
+
+
+sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
+
+
+sudo apt-get install vlc
+
+替代shutter
+sudo apt-get install flameshot
+
+sudo apt install ufw
+sudo ufw default deny incoming
+sudo ufw default allow incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw enable
+sudo ufw status
+
+sudo apt-get install maxima fig2ps
+sudo apt-get install octave
+sudo apt-get install gimp shotwell zim gftp  network-manager-gnome
+sudo apt-get install libwnck-dev
+
+设置默认终端
+sudo update-alternatives --config  x-terminal-emulator
+
+
+恢复shutter
+https://shutter-project.org/downloads/source-code/
+https://launchpad.net/debian/buster/+source/shutter
+https://launchpad.net/shutter/+download
+git clone https://github.com/shutter-project/shutter.git
+cd shutter
+make install
+
+
+
+重新安装wps
+重新安装baidunetdisk
+
+sudo apt-get install libgtkimageview-dev libunique-dev libwnck-dev libgnomecanvas2-dev libgoocanvas-2.0-dev libgoocanvas2-perl libgoocanvasmm-2.0-dev
+sudo cpanm Number::Bytes::Human
+sudo cpanm Gnome2::Wnck
+sudo cpanm Gtk2::ImageView
+sudo cpanm Gtk2::Unique
+sudo cpanm Gnome2::Canvas
+sudo cpanm Gnome2
+sudo cpanm File::Copy::Recursive
+sudo cpanm Proc::Simple
+sudo cpanm Sort::Naturall
+sudo cpanm Proc::Killfam
+sudo cpanm Goo::Canvas
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Image::ExifTool
+也可以在vim ~/.bashrc中添加alias cpanm='cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only'使alias生效既可解决
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only App::cpanminus
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only JSON::MaybeXS
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only WWW::Mechanize
+
+sudo apt-get install libappindicator-dev gir1.2-appindicator-0.1
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Gtk2::AppIndicator
+
+echo $PKG_CONFIG_PATH 
+/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
+wget http://ftp.gnome.org/pub/GNOME/sources/goocanvas/1.0/goocanvas-1.0.0.tar.gz
+解压
+./configure
+make
+sudo make install
+
+Making install in src
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make  install-am
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make[3]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+test -z "/usr/local/lib" || /bin/mkdir -p "/usr/local/lib"
+ /bin/sh ../libtool   --mode=install /usr/bin/install -c   libgoocanvas.la '/usr/local/lib'
+libtool: install: /usr/bin/install -c .libs/libgoocanvas.so.3.5.0 /usr/local/lib/libgoocanvas.so.3.5.0
+libtool: install: (cd /usr/local/lib && { ln -s -f libgoocanvas.so.3.5.0 libgoocanvas.so.3 || { rm -f libgoocanvas.so.3 && ln -s libgoocanvas.so.3.5.0 libgoocanvas.so.3; }; })
+libtool: install: (cd /usr/local/lib && { ln -s -f libgoocanvas.so.3.5.0 libgoocanvas.so || { rm -f libgoocanvas.so && ln -s libgoocanvas.so.3.5.0 libgoocanvas.so; }; })
+libtool: install: /usr/bin/install -c .libs/libgoocanvas.lai /usr/local/lib/libgoocanvas.la
+libtool: install: /usr/bin/install -c .libs/libgoocanvas.a /usr/local/lib/libgoocanvas.a
+libtool: install: chmod 644 /usr/local/lib/libgoocanvas.a
+libtool: install: ranlib /usr/local/lib/libgoocanvas.a
+libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /usr/local/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+test -z "/usr/local/include/goocanvas-1.0" || /bin/mkdir -p "/usr/local/include/goocanvas-1.0"
+ /usr/bin/install -c -m 644 goocanvasellipse.h goocanvasgrid.h goocanvasgroup.h goocanvasimage.h goocanvasitem.h goocanvasitemmodel.h goocanvasitemsimple.h goocanvaspolyline.h goocanvaspath.h goocanvasrect.h goocanvasstyle.h goocanvastable.h goocanvastext.h goocanvasutils.h goocanvaswidget.h goocanvas.h goocanvasenumtypes.h goocanvasmarshal.h '/usr/local/include/goocanvas-1.0'
+make[3]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
+Making install in demo
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/demo'
+Making install in docs
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+make[2]: Nothing to be done for 'install-exec-am'.
+-- Installing ./html/ch01.html
+-- Installing ./html/ch02.html
+-- Installing ./html/ch03.html
+-- Installing ./html/ch04.html
+-- Installing ./html/ch05.html
+-- Installing ./html/goocanvas-architecture.html
+-- Installing ./html/goocanvas-coordinates.html
+-- Installing ./html/goocanvas-creating-items.html
+-- Installing ./html/goocanvas.devhelp
+-- Installing ./html/goocanvas.devhelp2
+-- Installing ./html/GooCanvasEllipse.html
+-- Installing ./html/GooCanvasEllipseModel.html
+-- Installing ./html/goocanvas-GooCanvas-Types.html
+-- Installing ./html/GooCanvasGrid.html
+-- Installing ./html/GooCanvasGridModel.html
+-- Installing ./html/GooCanvasGroup.html
+-- Installing ./html/GooCanvasGroupModel.html
+-- Installing ./html/GooCanvas.html
+-- Installing ./html/GooCanvasImage.html
+-- Installing ./html/GooCanvasImageModel.html
+-- Installing ./html/GooCanvasItem.html
+-- Installing ./html/GooCanvasItemModel.html
+-- Installing ./html/GooCanvasItemModelSimple.html
+-- Installing ./html/GooCanvasItemSimple.html
+-- Installing ./html/goocanvas-model-view-canvas.html
+-- Installing ./html/goocanvas-overview.html
+-- Installing ./html/GooCanvasPath.html
+-- Installing ./html/GooCanvasPathModel.html
+-- Installing ./html/GooCanvasPolyline.html
+-- Installing ./html/GooCanvasPolylineModel.html
+-- Installing ./html/GooCanvasRect.html
+-- Installing ./html/GooCanvasRectModel.html
+-- Installing ./html/goocanvas-simple-canvas.html
+-- Installing ./html/GooCanvasStyle.html
+-- Installing ./html/GooCanvasTable.html
+-- Installing ./html/GooCanvasTableModel.html
+-- Installing ./html/GooCanvasText.html
+-- Installing ./html/GooCanvasTextModel.html
+-- Installing ./html/GooCanvasWidget.html
+-- Installing ./html/goocanvas-wysiwyg.html
+-- Installing ./html/home.png
+-- Installing ./html/index.html
+-- Installing ./html/index.sgml
+-- Installing ./html/left.png
+-- Installing ./html/right.png
+-- Installing ./html/style.css
+-- Installing ./html/up.png
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/docs'
+Making install in po
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/po'
+if test -r ".././mkinstalldirs"; then \
+  .././mkinstalldirs /usr/local/share; \
+else \
+  /bin/sh ../mkinstalldirs /usr/local/share; \
+fi
+installing en_GB.gmo as /usr/local/share/locale/en_GB/LC_MESSAGES/goocanvas.mo
+installing es.gmo as /usr/local/share/locale/es/LC_MESSAGES/goocanvas.mo
+installing ja.gmo as /usr/local/share/locale/ja/LC_MESSAGES/goocanvas.mo
+if test "goocanvas" = "glib"; then \
+  if test -r ".././mkinstalldirs"; then \
+    .././mkinstalldirs /usr/local/share/glib-2.0/gettext/po; \
+  else \
+    /bin/sh ../mkinstalldirs /usr/local/share/glib-2.0/gettext/po; \
+  fi; \
+  /usr/bin/install -c -m 644 ./Makefile.in.in \
+		  /usr/local/share/glib-2.0/gettext/po/Makefile.in.in; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/po'
+make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0'
+make[2]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0'
+make[2]: Nothing to be done for 'install-exec-am'.
+test -z "/usr/local/lib/pkgconfig" || /bin/mkdir -p "/usr/local/lib/pkgconfig"
+ /usr/bin/install -c -m 644 goocanvas.pc '/usr/local/lib/pkgconfig'
+make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0'
+make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0'
+
+
+
+
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Goo::Canvas
+
+
+gnome-web-photo
+Goo::Canvas/libgoo-canvas-perl
+
+
+libgoo-canvas-perl这玩意不能通过deb安装了，编译安装好了
+
+wget http://deb.debian.org/debian/pool/main/libg/libgoo-canvas-perl/libgoo-canvas-perl_0.06.orig.tar.gz
+perl Makefile.PL （无视Unrecognized argument in LIBS ignored: '-pthread')
+make
+sudo make install
+
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Canvas.bs blib/arch/auto/Goo/Canvas/Canvas.bs 644
+Manifying 2 pod documents
+Manifying 29 pod documents
+Files found in blib/arch: installing files in blib/lib into architecture dependent library tree
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/auto/Goo/Canvas/Canvas.so
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl.typemap
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas.typemap
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl-version.h
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl-autogen.h
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/goocanvas-perl.h
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Install/Files.pm
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas.pm
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Cairo/Matrix.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Cairo/Pattern.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/index.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Points.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/GroupModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/TableModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/RectModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/LineDash.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/TextModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Ellipse.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/ImageModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Text.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Polyline.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/PolylineModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Image.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Path.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Group.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Bounds.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/PathModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Style.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/EllipseModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/ItemModel.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Table.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Widget.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Rect.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/ItemSimple.pod
+Installing /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/Goo/Canvas/Item.pod
+Installing /home/andy/perl5/man/man1/perlmine.pl.1p
+Installing /home/andy/perl5/man/man1/perltetris.pl.1p
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Item.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Text.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::ItemModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::TableModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Widget.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::LineDash.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::index.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Bounds.3pm
+Installing /home/andy/perl5/man/man3/Goo::Cairo::Pattern.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Rect.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::PathModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Image.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::PolylineModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Cairo::Matrix.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::EllipseModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Polyline.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::RectModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Table.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::ImageModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::TextModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::GroupModel.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Ellipse.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Points.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::ItemSimple.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Path.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Style.3pm
+Installing /home/andy/perl5/man/man3/Goo::Canvas::Group.3pm
+Installing /home/andy/perl5/bin/perltetris.pl
+Installing /home/andy/perl5/bin/perlmine.pl
+Appending installation info to /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/perllocal.pod
+
+
+
+
+
+##编译goocanvas-2.0.4
+sudo apt-get install gtk-doc-tools
+
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+
+sudo apt-get install libextutils-depends-perl libextutils-pkgconfig-perl
+sudo dpkg -i libgoocanvas-common_1.0.0-1_all.deb
+sudo dpkg -i libgoocanvas3_1.0.0-1_amd64.deb
+
+最后，尝试解决gnome-web-photo is missing
+sudo apt-get install libjavascriptcoregtk-4.0-dev libwebkit2gtk-4.0-dev gnome-common
+编译不行
+https://packages.debian.org/source/
+https://download.gnome.org/sources/gnome-web-photo/0.10/gnome-web-photo-0.10.6.tar.xz
+下载gnome-web-photo_0.10.6.orig.tar.gz
+这玩意是要一个网页截图工具，这样用 $ gnome-web-photo -t 0 --mode=photo http://www.linuxidc.com linuxidc.png
+编译依赖webkit而目前是webkit2，间接依赖TMD一大串，其实之前debian8也没有安装
+
+测试gnome-web-photo
+先从deb包提取bin和lib，放到/opt/gnome-web-photo
+├── bin
+│   ├── gnome-web-photo
+│   ├── gnome-web-print -> gnome-web-photo
+│   └── gnome-web-thumbnail -> gnome-web-photo
+└── lib
+    └── x86_64-linux-gnu
+        ├── libicudata.so.57 -> libicudata.so.57.1
+        ├── libicudata.so.57.1
+        ├── libicui18n.so.57 -> libicui18n.so.57.1
+        ├── libicui18n.so.57.1
+        ├── libicuio.so.57 -> libicuio.so.57.1
+        ├── libicuio.so.57.1
+        ├── libicule.so.57 -> libicule.so.57.1
+        ├── libicule.so.57.1
+        ├── libiculx.so.57 -> libiculx.so.57.1
+        ├── libiculx.so.57.1
+        ├── libicutest.so.57 -> libicutest.so.57.1
+        ├── libicutest.so.57.1
+        ├── libicutu.so.57 -> libicutu.so.57.1
+        ├── libicutu.so.57.1
+        ├── libicuuc.so.57 -> libicuuc.so.57.1
+        ├── libicuuc.so.57.1
+        ├── libjavascriptcoregtk-3.0.so.0 -> libjavascriptcoregtk-3.0.so.0.16.19
+        ├── libjavascriptcoregtk-3.0.so.0.16.19
+        ├── libwebkitgtk-3.0.so -> libwebkitgtk-3.0.so.0.22.17
+        ├── libwebkitgtk-3.0.so.0 -> libwebkitgtk-3.0.so.0.22.17
+        ├── libwebkitgtk-3.0.so.0.22.17
+        └── pkgconfig
+            └── webkitgtk-3.0.pc
+
+测试命令
+cd /opt/gnome-web-photo/bin
+export LD_LIBRARY_PATH=/opt/gnome-web-photo/lib/x86_64-linux-gnu
+./gnome-web-photo --mode=photo "http://www.163.com" ~/Pictures/ttt.jpg
+成功
+
+查看shutter调用时候传的参数
+gedit /usr/local/share/shutter/resources/modules/Shutter/Screenshot/Web.pm
+有5个
+
+cd /usr/local/bin
+sudo gedit gnome-web-photo
+---------------------------------
+#!/bin/bash
+export LD_LIBRARY_PATH=/opt/gnome-web-photo/lib/x86_64-linux-gnu
+cd /opt/gnome-web-photo/bin
+./gnome-web-photo $@
+---------------------------------
+sudo chmod +x gnome-web-photo
+
+完美运行shutter，目前的tab关闭图标不正常，不影响功能的
+
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Encode::X11
+(debian8,9的deb解开实际上还是不能运行的，只能运行git下来的shutter)
+
+
+shutter好就好在编辑方便易用
+简单图片编辑可以用flameshot和ksnip-1.7.3.deb
+
+
+
+
+
+
+bcompare4 更新之后要执行
+cd /usr/lib/beyondcompare/
+sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g" BCompare
+
+
+
+
+
+
+
+
+
+medusa
+medusa -M ssh -h 192.168.1.8 -u andy -P wordlist1.txt -e ns -F -O ssh.log
+hydra
+hydra -l andy -P wordlist.txt -t 4 ssh://192.168.1.8
+crunch
+crunch 3 4 "1234crunch "
+
+
+
+
+
+
+
+
+
+iconv -c -f utf-8 -t gb2312 BlogSohu_utf8.py >> BlogSohu_ansi_gb2312.py
+iconv -f utf-8 -t  gb18030 file1.txt -o file2.txt
+
+
+
+
+
+
+openocd invalid subcommand "newtap stm32f1x bs -irlen 5" in procedure 'script'
+
+/opt/openocd/0.10.0-12-20190422-2015/scripts/target/stm32f1x.cfg
+line 50
+
+if {[using_jtag]} {
+   jtag newtap $_CHIPNAME bs -irlen 5
+}
+
+change to 
+
+if {[using_jtag]} {
+   if {[using_hla]} {
+      hla newtap $_CHIPNAME bs -irlen 5
+   } else {
+      jtag newtap $_CHIPNAME bs -irlen 5
+   }
+}
+
+
+
+
+Novatek SDK/ 据说RK3399也会碰到
+解决/bin/sh: lz4c: 未找到命令
+LZ4是一种压缩算法，解决方法如下：
+
+安装lz4:
+sudo apt-get update
+sudo apt-get install liblz4-tool
+重新编译 ok
+
+解lz4文件:
+lz4 -d 文件名
+
+
+
+
+
+sudo apt-get install build-essential libc6-dev libncurses5-dev libncurses5:i386 libgl1-mesa-dev g++-multilib mingw-w64 tofrodos lib32z1 u-boot-tools zlib1g-dev bison libbison-dev flex mtd-utils vim squashfs-tools gawk cmake cmake-data liblz4-tool  libmpc3 libstdc++6 device-tree-compiler gcc-8-locales lib32ncurses6 lib32ncursesw6 lib32tinfo6 lib32ncurses5-dev openssh-server samba
+
+
+debian buster提示无libmpfr.so.4
+问题描述：使用arm-linux-gcc 编译.c文件时提示错误
+error while loading shared libraries:libmpfr.so.4: cannot open shared object file: No such file or directory.
+通过ldd查看cc1的库调用情况
+
+ldd /opt/arm/arm-ca53-linux-gnueabihf-4.9-2017.05/usr/bin/../libexec/gcc/arm-ca53-linux-gnueabihf/4.9.4/cc1
+	linux-vdso.so.1 (0x00007fff6e29f000)
+	libmpc.so.3 => /usr/lib/x86_64-linux-gnu/libmpc.so.3 (0x00007f74efa3d000)
+	libmpfr.so.4 => not found
+	libgmp.so.10 => /usr/lib/x86_64-linux-gnu/libgmp.so.10 (0x00007f74ef9ba000)
+	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f74ef9b5000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f74ef7f4000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f74efcd2000)
+	libmpfr.so.6 => /usr/lib/x86_64-linux-gnu/libmpfr.so.6 (0x00007f74ef770000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f74ef5ed000)
+
+
+发现这个库找不到，
+解决办法：
+
+sudo ln -s /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4
+
+
+
+
+sudo apt-get install chromium chromium-l10n chromium-shell chromium-driver
+
+
+
+error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet
+
+git config --global http.sslVerify false
+git config --global http.postBuffer 1048576000
+
+export GIT_TRACE_PACKET=1; export GIT_TRACE=1; export GIT_CURL_VERBOSE=1
+git pull
+
+$ sudo apt-get purge git
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  elpa-async elpa-dash elpa-ghub elpa-git-commit elpa-graphql elpa-let-alist
+  elpa-magit-popup elpa-treepy elpa-with-editor git-man
+  libdatetime-format-iso8601-perl libjs-modernizr libmediawiki-api-perl
+  libxdo3 python3-qtpy wipe xdotool xxdiff
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  elpa-magit* git* git-all* git-cola* git-cvs* git-el* git-email* git-gui*
+  git-lfs* git-mediawiki* git-svn* gitg* gitk* gitweb* keyringer*
+0 upgraded, 0 newly installed, 15 to remove and 1 not upgraded.
+After this operation, 65.4 MB disk space will be freed.
+
+
+sudo apt-get install git git-daemon-run git-el git-email git-gui gitk gitweb git-cvs git-mediawiki git-svn git-lfs git-cola git-all git-cvs git-el git-email git-gui git-mediawiki git-svn gitg gitk gitweb
+
+git config http.sslVerify false
+git config http.postBuffer 1048576000
+
+ssh方式可以获取超级大的repo
+proxychains进行代理 proxychains git clone xxx， proxychains git pull
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

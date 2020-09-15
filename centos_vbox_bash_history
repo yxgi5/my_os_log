@@ -734,6 +734,7 @@ sudo firewall-cmd --permanent --remove-port=8080/tcp
 #重启防火墙(修改配置后要重启防火墙)
 sudo firewall-cmd --reload
 
+firewall-cmd --state
 不行啊
 换成iptables
 
@@ -781,21 +782,33 @@ iptables -A INPUT -p tcp --dport 21 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 81 -j ACCEPT
 iptables -A INPUT -p tcp --dport 82 -j ACCEPT
+iptables -A INPUT -p tcp --dport 81 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 82 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 139 -j ACCEPT
+iptables -A INPUT -p tcp --dport 445 -j ACCEPT
+iptables -I INPUT -p tcp --dport 139 -j ACCEPT
+iptables -I INPUT -p tcp --dport 445 -j ACCEPT
+iptables -I INPUT -p udp --dport 137 -j ACCEPT
+iptables -I INPUT -p udp --dport 138 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -p tcp --dport 222 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 322 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 5901 -j ACCEPT 
-iptables -A INPUT -p tcp --dport 5902 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 5902 -j ACCEPT
+iptables -A INPUT -p tcp --dport 3680 -j ACCEPT
+iptables -A INPUT -p tcp --dport 3690 -j ACCEPT
 iptables -A INPUT -p tcp --dport 3306 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 8081 -j ACCEPT 
 iptables -A INPUT -p tcp --dport 8090 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 10000 -j ACCEPT
 iptables -A INPUT -p tcp --dport 50000 -j ACCEPT
 iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT 
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT 
 iptables -P INPUT DROP 
 iptables -P OUTPUT ACCEPT 
 iptables -P FORWARD DROP 
-service iptables save 
+service iptables save
+会更新/etc/sysconfig/iptables
 systemctl restart iptables.service 
 systemctl enable iptables.service
 systemctl restart  docker	# 更换防火墙之后要重启docker
@@ -962,8 +975,468 @@ docker run -d --name mediawiki -p 82:80 -v /home/docker/mediawiki:/var/www/html/
 设置sqlite数据库最简单
 docker stop mediawiki
 docker rm mediawiki
-docker run -d --name mediawiki -p 82:80 -v /home/docker/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php  -v /home/docker/mediawiki:/var/www/html/images -v /home/docker/mediawiki/data:/var/www/data mediawiki
+docker run -d --restart=always --name mediawiki -p 82:80 -v /home/docker/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php  -v /home/docker/mediawiki:/var/www/html/images -v /home/docker/mediawiki/data:/var/www/data mediawiki
 
+更换了ip的话，nextcloud要修改
+docker cp nextcloud:/var/www/html/config/config.php .
+修改
+docker cp config.php nextcloud:/var/www/html/config/config.php
+docker exec -it nextcloud bash
+chown www-data:root config.php
+
+
+
+
+
+排查ssh不能访问
+首先看ip是否有冲突
+sudo nbtscan -v -s : 192.168.1.0/24
+arp -a
+
+再查防火墙等
+最后查配置
+
+
+
+
+
+
+
+
+docker pull dperson/samba:latest
+mkdir -p /media/hhddata/Sambashare
+mkdir -p /media/hhddata/Sambashare/public
+mkdir -p /media/hhddata/Sambashare/rdc
+mkdir -p /media/hhddata/Sambashare/rde
+docker run -d --restart=always --name samba \
+    -it -p 139:139 -p 445:445 \
+    -d dperson/samba:latest -p \
+    -u "xx0;a" \
+    -u "xx1;xx1" \
+    -u "xx2;xx2" \
+    -u "xx3;xx3" \
+    -u "xx4;xx4" \
+    -s "public;/media/hhddata/Sambashare/public;yes;yes;no;all;xx0;xx0;公共共享文件夹" \
+    -s "rde;/media/hhddata/Sambashare/rde;yes;yes;no;all;xx1,xx2;xx0;电子共享文件夹" \
+    -s "rde;/media/hhddata/Sambashare/rde;yes;yes;no;all;xx3,xx4;xx0;机械共享文件夹"
+
+
+
+
+cd ~/Desktop/
+docker cp samba:/etc/samba/smb.conf .
+docker cp samba:/etc/group .
+docker cp samba:/etc/passwd .
+docker stop samba
+docker cp smb.conf samba:/etc/samba/smb.conf
+docker cp group samba:/etc/group
+docker cp passwd samba:/etc/passwd
+docker restart samba
+
+
+
+
+sudo docker run -it --name samba -p 139:139 -p 445:445 \
+            -v /media/hhddata/Sambashare/public:/mount \
+            -d dperson/samba -p \
+            -u "www;thisispasswd" \
+            -s "technofiend;/mount;yes;no;no;all;none"
+
+docker run --name samba \
+	-it -p 139:139 -p 445:445 \
+	-v /home/technofiend:/home/technofiend \
+	-d dperson/samba \
+	-u "www;thisispasswd" \
+	-s "technofiend;/home/technofiend/;yes;no;no;all;none"
+
+docker run --name samba \
+-it -p 139:139 -p 445:445 \
+-v /home/andy:/home/andy \
+-d dperson/samba \
+-u "andy;a" \
+-s "andy-home;/home/andy/;yes;no;no;all;none"
+
+docker exec -it samba sed -i 's/force user = smbuser/force user = andy/g' /etc/samba/smb.conf
+docker exec -it samba sed -i 's/force group = users/force group = andy/g' /etc/samba/smb.conf
+docker restart samba
+
+
+
+docker run -it -p 139:139 -p 445:445 --name samba -d --rm  \
+ -v /home/andy/:/mount \
+ dperson/samba \
+ -u "andy;a" \
+ -s "andy-share;/mount/;yes;no;yes;all;all;all" \
+ -w "WORKGROUP" \
+ -g "force user= andy" \
+ -g "guest account= andy" 
+
+
+好像没啥卵用，不用docker安装samba了
+docker stop samba
+docker rm samba
+
+
+
+
+
+
+
+
+yum -y install tree
+
+
+
+
+
+
+yum -y install samba
+
+samba管理tips
+新建系统用户
+新建系统组
+分配用户属组，一个用户可以属于多个组
+新建samba用户
+新建samba共享目录(一个共享对应一个共享根目录)，目录只有一个属主和属组
+共享根目录属性,一般设置2770
+samba config 一般设置这样
+
+create mask = 2770
+directory mask = 2770
+force create mode = 2770
+force directory mode = 2770
+
+
+关于权限，属性
+https://help.ubuntu.com/community/FilePermissions
+
+
+chmod 4777 temp是设sid，setuid标志只对文件有效， 等效于 chmod u+s temp
+chmod 2777 tempdir是设置gid， setgid标志对目录和文件有效， 等效于 chmod g+s tempdir
+chmod 1777 temp是设sticky，sticky标志只对文件有效， 等效于 chmod o+t temp
+
+ls -l 来查看
+rwsrw-r-- 表示有setuid标志
+rwxrwsrw- 表示有setgid标志
+rwxrw-rwt 表示有sticky标志
+
+找出所有危险的目录（设置目录所有人可读写却没有设置sticky位的目录）
+find / -perm -0007 -type d
+
+找出所有设置了suid的文件
+find / -perm -4000 -type f
+
+
+chmod有关字母
+chmod [-R] [ugoa] [+-=] [rwx] filename/filelist
+-R： Recursive，递归模式，修改该文件夹及其下所有文件和文件夹
+u、g、o表示用户、组、others，a = ugo =all users （user + group + others）
+r、w、x对于文件表示读、写、执行权限
++ add permission
+- remove permission
+= set permission
+
+比如
+chmod u-x file
+chmod u+x file
+chmod -R go+rwx file
+
+
+对于目录权限，如果允许samba访问至少要给x权限，不然目录都进不去的
+r、w、x
+r表示 view contents: i.e., ls command
+w表示 create or remove files from dir
+x表示 access for directories = cd into directory
+
+cd：a.语法 cd 目录名（进入目录）      b.所需权限x
+touch：a.语法 touch 文件名（创建文件）      b.所需权限wx
+ls：a.语法 ls （显示当前目录下的所有文件）      b.所需权限rx
+rm：a.语法 rm 文件名（删除文件）      b.所需权限wx
+mv：a.语法 mv 文件名1  文件名2（把文件名1修改为文件名2）      b.所需权限wx
+
+
+
+测试samba，如下展示进行根目录级权限管理的简单例子
+修改/etc/shells，在shell列表中添加一行/usr/sbin/nologin
+
+sudo useradd test -d /media/hhddata/Sambashare/home/test -s /usr/sbin/nologin
+sudo passwd test
+sudo useradd test2 -d /media/hhddata/Sambashare/home/test2 -s /usr/sbin/nologin
+sudo passwd test2
+sudo groupadd testgroup1
+sudo groupadd testgroup2
+sudo usermod -aG testgroup1 test
+sudo usermod -aG testgroup2 test2
+sudo usermod -aG testgroup1 andy
+sudo usermod -aG testgroup2 andy
+sudo smbpasswd -a test
+sudo smbpasswd -a test2
+sudo smbpasswd -a andy
+sudo gedit /etc/samba/smb.conf
+
+sudo chown andy:testgroup2  xx-dir
+
+如果想删除samba用户
+smbpasswd -x test
+
+# --------------------------- Logging Options -----------------------------
+#
+# Log File let you specify where to put logs and how to split them up.
+
+log file = /var/log/samba/log.%m                  
+                                                          
+# ----------------------- Standalone Server Options ------------------------
+#
+# Scurity can be set to user, share(deprecated) or server(deprecated)
+
+security = user 
+map to guest = Bad User                                 
+
+#============================ Share Definitions ==============================
+
+[public]
+   path = /media/hhddata/Sambashare/public
+   browsable = yes
+   read only = yes
+   guest ok = no
+   veto files = /._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+   admin users = xx0
+   write list = xx0
+   comment = 公共共享文件夹
+
+[rde]
+   path = /media/hhddata/Sambashare/rde
+   browsable = yes
+   read only = yes
+   guest ok = no
+   admin users = andy
+   write list = andy
+   valid users = @testgroup1
+   comment = 机械共享文件夹
+
+[rdc]
+   path = /media/hhddata/Sambashare/rde
+   browsable = yes
+   read only = yes
+   guest ok = no
+   admin users = andy
+   write list = andy
+   valid users = @testgroup2
+   comment = 机械共享文件夹
+
+
+
+
+groupadd 部门1
+groupadd 部门2
+
+sudo groupadd testgroup1
+sudo usermod -aG testgroup1 test
+sudo groupadd testgroup2
+sudo usermod -aG testgroup2 test2
+
+sudo chown andy:testgroup1 share
+
+sudo usermod -aG testgroup1 andy
+sudo usermod -aG testgroup2 andy
+
+
+
+samba server
+192.168.1.110
+
+
+普通用户有test，test2
+密码都是a
+
+群组(对应部门或项目)：testgroup1，testgroup2
+
+testgroup1成员：test
+testgroup2成员：test2
+
+全局共享目录： public
+普通用户可读不可写，不可修改
+
+
+群组共享目录：rde，rdc
+
+testgroup1共享目录：rde
+普通用户test可访问，不可修改
+普通用户test2不可访问
+
+testgroup2共享目录：rdc
+普通用户test2可访问，不可修改
+普通用户test不可访问
+
+
+个人目录
+不可见
+普通用户可读写、修改这个个人目录的内容
+
+
+TODO
+公共目录提交区，和定时移动到公共目录
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+为了更简化的管理samba等，可以用webmin
+yum -y install unzip
+yum -y install perl
+yum -y install perl-Net-SSLeay
+yum -y install perl-Encode-Detect
+rpm -ivh webmin-1.941-1.noarch.rpm
+sudo /usr/libexec/webmin/changepass.pl /etc/webmin root [密码]
+
+webmin管理samba简要
+system->建立用户和组，特别是组，对于权限管理很重要，比如组也要有层次
+Server->Samba建立分享的根目录，根目录的组是最高层次的组，意思是权限低，比较多的人能访问
+Others->Filemanager管理分享的根目录下文件和目录的权限，一般是子目录给不同的低层的组，权限更高
+
+tips: 
+Filemanager目录属性一般设置2770，子目录属组继承，可以列表。  如果设置成2660, 通过samba的授权用户(同一属组)，也没法打开了，见前面关于目录权限。
+https://xxx.xxx.xxx.xxx:10000
+
+
+
+
+
+sudo systemctl start smb
+sudo systemctl enable smb
+sudo systemctl restart smb
+sudo systemctl status smb
+
+
+
+
+
+
+docker search svn
+docker pull elleflorio/svn-server
+docker images
+
+
+docker run --restart always --name svn-server -d -v /home/svn:/home/svn -p 3680:80 -p 3690:3690 -e SVN_REPONAME=repository elleflorio/svn-server
+
+#docker run --restart always --name svn-server -d -v /home/svn:/var/opt/svn -p 3680:80 -p 3690:3690 -e SVN_REPONAME=repository elleflorio/svn-server
+#docker run -v /opt/data/svn/repo:/var/opt/svn --name svn-server -p 3690:3690 -e SVN_REPONAME=repository -d svn_configed
+
+docker exec -t svn-server htpasswd -b /etc/subversion/passwd admin 123456
+
+#docker exec -it svn-server /bin/sh
+#svnadmin create svn
+#cd svn/conf
+#vi svnserve.conf
+#vi passwd
+#vi authz
+#cd /etc/apache2
+#vi httpd.conf
+#cd /var/opt/svn
+
+#exit
+#chmod -R o+rw /home/svn
+#cd svn/conf
+
+#docker restart svn-server
+
+
+
+#docker run --name svn-server -d -v /home/andy/Downloads/tmp/svn:/home/svn -p 3680:80 -p 3690:3690 -e SVN_REPONAME=repository elleflorio/svn-server
+#docker exec -t svn-server htpasswd -b /etc/subversion/passwd admin 123456
+#docker exec -it svn-server /bin/sh
+#chmod -R 777 /home/svn
+#cd /home/svn/
+#cd svn/conf
+#vi svnserve.conf
+
+
+管理界面
+http://192.168.1.110:3680/svnadmin
+填入
+/etc/subversion/subversion-access-control
+/etc/subversion/passwd
+/home/svn
+/usr/bin/svn
+/usr/bin/svnadmin
+然后
+创建repo设置用户和组
+
+
+svn co http://192.168.1.110:3680/svn/svn-repo
+#svn co svn://192.168.1.110:3690/svn/svn-repo
+
+
+
+
+版本
+cat /etc/redhat-release
+
+
+
+
+
+sudo yum install tigervnc-server
+$ vncpasswd
+123456
+
+
+iptables -A INPUT -p tcp --dport 5901 -j ACCEPT #放行TCP 5901端口
+iptables -A INPUT -p tcp --dport 5902 -j ACCEPT #放行TCP 5902端口
+service iptables save # 保存规则
+service iptables restart #重启规则
+
+
+vim .vnc/xstartup
+
+==================================
+#!/bin/sh
+
+# Uncomment the following two lines for normal desktop:
+export XKL_XMODMAP_DISABLE=1
+unset SESSION_MANAGER
+# exec /etc/X11/xinit/xinitrc
+unset DBUS_SESSION_BUS_ADDRESS
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+vncconfig -iconic &
+xsetroot -solid grey
+
+x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+x-window-manager &
+
+#xfce4-session &
+startxfce4
+
+#gnome-session &
+#gnome-panel &
+#gnome-settings-daemon &
+#metacity &
+#nautilus &
+#gnome-terminal &
+===================================
+
+
+
+vncserver -kill :1
+vncserver :1 -geometry 1920x1080
+
+
+
+
+
+
+sudo yum install ibus-libpinyin
 
 
 
