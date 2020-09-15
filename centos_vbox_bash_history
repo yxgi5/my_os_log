@@ -1441,9 +1441,9 @@ sudo yum install ibus-libpinyin
 
 
 
+sudo rpm -Uvh ***.rpm
 
-
-
+sudo yum install yum-axelget htop gnome-system-monitor gitk
 
 
 
