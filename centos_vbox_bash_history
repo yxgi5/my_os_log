@@ -1462,6 +1462,84 @@ grub2-mkconfig -o /boot/grub/grub.cfg
 
 
 
+yum install httpd
+sudo rpm -ivh opera-stable_70.0.3728.178_amd64.rpm
+
+rpm --import https://rpm.opera.com/rpmrepo.key
+rpm -qa gpg-pubkey*
+rpm -qi gpg-pubkey-c105b9de-4e0fd3a3
+
+sudo yum install opera-stable_60.0.3255.27_amd64.rpm
+
+
+
+
+
+
+v2ray-linux-64.zip
+go_mod.sh
+
+sudo ./go_mod.sh
+sudo systemctl enable v2ray
+sudo systemctl start v2ray
+sudo systemctl status v2ray
+
+sudo vim /etc/v2ray/config.json
+
+
+sudo yum install bzip2
+
+
+
+sudo rpm --import https://www.virtualbox.org/download/oracle_vbox.asc
+wget https://download.virtualbox.org/virtualbox/6.1.14/VirtualBox-6.1-6.1.14_140239_el7-1.x86_64.rpm
+sudo yum install VirtualBox-6.1-6.1.14_140239_el7-1.x86_64.rpm
+
+
+https://wiki.centos.org/HowTos/Virtualization/VirtualBox
+yum --enablerepo=epel install dkms
+yum groupinstall "Development Tools"
+yum install kernel-devel
+usermod -a -G vboxusers username
+
+
+sudo yum install cmake cmake-gui python3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
