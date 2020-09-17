@@ -1424,6 +1424,7 @@ startxfce4
 #metacity &
 #nautilus &
 #gnome-terminal &
+#ibus-daemon &
 ===================================
 
 
@@ -1507,7 +1508,7 @@ sudo yum install cmake cmake-gui python3
 
 
 
-
+sudo /sbin/vboxconfig
 
 
 
