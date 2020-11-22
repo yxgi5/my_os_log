@@ -14137,8 +14137,8 @@ TimeoutStartSec=2sec
 
 
 
-
-
+systemd-analyze blame
+systemctl list-units --state=failed
 
 
 
