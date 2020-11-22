@@ -14125,6 +14125,20 @@ proxychains进行代理 proxychains git clone xxx， proxychains git pull
 
 
 
+ubuntu 18 / debian 10 (buster)
+开机时
+a start job is running for networking ...
+等太久了，可以修改
+sudo vim /etc/systemd/system/network-online.target.wants/networking.service
+
+TimeoutStartSec=5min
+修改为
+TimeoutStartSec=2sec
+
+
+
+
+
 
 
 
