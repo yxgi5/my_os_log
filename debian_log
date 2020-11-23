@@ -14125,10 +14125,10 @@ proxychains进行代理 proxychains git clone xxx， proxychains git pull
 
 
 
-ubuntu 18 / debian 10 (buster)
-开机时
-a start job is running for networking ...
-等太久了，可以修改
+##ubuntu 18 / debian 10 (buster)
+##开机时
+##a start job is running for networking ...
+##等太久了，可以修改
 sudo vim /etc/systemd/system/network-online.target.wants/networking.service
 
 TimeoutStartSec=5min
@@ -14142,6 +14142,23 @@ systemctl list-units --state=failed
 
 
 
+apt-get update --allow-releaseinfo-change
+
+
+
+sudo apt install -t buster-backports kicad kicad-demos kicad-footprints kicad-symbols kicad-templates libngspice0
+
+
+##ubuntu 18 / debian 10 (buster)
+##compile notepadqq
+
+git clone --recursive https://github.com/notepadqq/notepadqq.git
+cd notepadqq
+apt search Qt5WebChannel
+sudo apt install libqt5svg5-dev libqt5websockets5-dev libqt5webchannel5-dev libuchardet-dev uchardet libqt5webenginewidgets5 libqt5webenginewidgets5 libqt5webengine5 qt5-qmake
+sudo apt-get install -y libqt5webkit5-dev libqt5svg5-dev qttools5-dev-tools qtwebengine5-dev
+sudo apt-get install qt5-default qttools5-dev-tools qtwebengine5-dev libqt5websockets5-dev libqt5svg5 libqt5svg5-dev libuchardet-dev pkg-config
+./configure --prefix /usr
 
 
 
@@ -14150,6 +14167,116 @@ systemctl list-units --state=failed
 
 
 
+
+sudo apt-get purge kicad*
+
+The following packages were automatically installed and are no longer required:
+  libngspice0 python3-wxgtk4.0
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  kicad* kicad-demos* kicad-doc-en* kicad-footprints* kicad-libraries* kicad-symbols* kicad-templates*
+0 upgraded, 0 newly installed, 7 to remove and 1 not upgraded
+
+
+
+sudo apt-get install kicad
+The following package was automatically installed and is no longer required:
+  python3-wxgtk4.0
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  kicad-demos kicad-footprints kicad-libraries kicad-symbols kicad-templates
+Suggested packages:
+  kicad-doc-ca | kicad-doc-de | kicad-doc-en | kicad-doc-es | kicad-doc-fr | kicad-doc-id | kicad-doc-it | kicad-doc-ja | kicad-doc-nl | kicad-doc-pl | kicad-doc-ru | kicad-doc-zh
+  kicad-packages3d
+The following NEW packages will be installed:
+  kicad kicad-demos kicad-footprints kicad-libraries kicad-symbols kicad-templates
+
+
+sudo aptitude install kicad
+The following NEW packages will be installed:
+  kicad kicad-demos{a} kicad-footprints{a} kicad-libraries{a} kicad-symbols{a} kicad-templates{a} 
+The following packages will be REMOVED:
+  python3-wxgtk4.0{u} 
+0 packages upgraded, 6 newly installed, 1 to remove and 1 not upgraded.
+
+
+
+git clone git@gitlab.com:kicad/code/kicad.git
+https://docs.kicad.org/doxygen/md_Documentation_development_compiling.html#build_linux
+
+andy@debian-dell ~/Downloads
+$ git clone https://gitlab.com/kicad/code/kicad.git
+Cloning into 'kicad'...
+remote: Enumerating objects: 2883, done.
+remote: Counting objects: 100% (2883/2883), done.
+remote: Compressing objects: 100% (306/306), done.
+error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet.
+fatal: the remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+andy@debian-dell ~/Downloads
+$ git clone git@gitlab.com:kicad/code/kicad.git
+Cloning into 'kicad'...
+remote: Enumerating objects: 2883, done.
+remote: Counting objects: 100% (2883/2883), done.
+remote: Compressing objects: 100% (306/306), done.
+remote: Total 256899 (delta 2722), reused 2665 (delta 2576), pack-reused 254016
+Receiving objects: 100% (256899/256899), 238.83 MiB | 7.95 MiB/s, done.
+Resolving deltas: 100% (210957/210957), done.
+
+
+sudo aptitude install cmake doxygen libboost-context-dev libboost-dev \
+libboost-system-dev libboost-test-dev libcairo2-dev libcurl4-openssl-dev \
+libgl1-mesa-dev libglew-dev libglm-dev libngspice0 libngspice0-dev liboce-foundation-dev \
+liboce-ocaf-dev libssl-dev libwxbase3.0-dev libwxgtk3.0-dev python-dev \
+python-wxgtk3.0-dev swig wx-common
+
+
+cd kicad
+mkdir -p build/release
+cd build/release
+cmake -DCMAKE_BUILD_TYPE=Release \
+      ../../
+make
+sudo make install
+
+By default, CMake sets the install path on Linux to /usr/local. Use the CMAKE_INSTALL_PREFIX option to specify a different install pat
+
+cmake reports:
+-- Check for installed GLEW -- found
+-- Check for installed ZLIB -- found
+-- Boost version: 1.67.0
+-- Checking for module 'ngspice'
+--   Found ngspice, version 30
+-- Check for installed Python Interpreter -- found
+-- Python module install path: lib/python2.7/dist-packages
+-- Found wxPython 3.0.2.0/gtk3 (wxWidgets 3.0.2.0)
+CMake Error at /usr/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake:137 (message):
+  Could NOT find wxWidgets (missing: wxWidgets_LIBRARIES
+  wxWidgets_INCLUDE_DIRS) (Required is at least version "3.0.2.0")
+Call Stack (most recent call first):
+  /usr/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake:378 (_FPHSA_FAILURE_MESSAGE)
+  CMakeModules/FindwxWidgets.cmake:1019 (find_package_handle_standard_args)
+  CMakeLists.txt:863 (find_package)
+
+
+dpkg --get-selections | grep wx
+
+
+
+换kicad-5.1.7的源码
+-- Found GLM: /usr/include (found suitable version "0.9.9.3", minimum required is "0.9.5.1") 
+CMake Error at CMakeLists.txt:564 (MESSAGE):
+  
+
+  GLM version 0.9.9.3 is incompatible with KiCad using GCC.
+
+  Please downgrade to GLM version 0.9.9.2 or older or use clang instead
+
+
+-- Configuring incomplete, errors occurred!
+
+=====give it up===== :(
 
 
 
