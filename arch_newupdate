@@ -679,7 +679,7 @@ sudo pacman -S yay
 
 
 
-gpg: keyserver receive failed: General erro
+gpg: keyserver receive failed: General error
 https://wiki.archlinux.org/index.php/GnuPG#Use_a_keyserver
 ~/.gnupg/gpg.conf
 内容为
