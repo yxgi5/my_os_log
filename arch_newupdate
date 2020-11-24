@@ -667,3 +667,18 @@ sudo pacman -S linux-headers virtualbox-host-dkms linux-lts
 sudo pacman -S virtualbox-guest-dkms
 sudo fsck /dev/sdd3 -y
 
+
+
+
+
+sudo pacman -S yay
+修改/etc/pacman.conf
+启用color
+
+
+
+
+
+
+
+
