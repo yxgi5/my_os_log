@@ -679,6 +679,15 @@ sudo pacman -S yay
 
 
 
+gpg: keyserver receive failed: General erro
+https://wiki.archlinux.org/index.php/GnuPG#Use_a_keyserver
+~/.gnupg/gpg.conf
+内容为
+keyserver hkp://pool.sks-keyservers.net
+
+
+
+
 
 
 
