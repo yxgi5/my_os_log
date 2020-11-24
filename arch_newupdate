@@ -670,7 +670,7 @@ sudo fsck /dev/sdd3 -y
 
 
 
-
+安装yay，用于替代yaourt
 sudo pacman -S yay
 修改/etc/pacman.conf
 启用color
@@ -684,6 +684,19 @@ https://wiki.archlinux.org/index.php/GnuPG#Use_a_keyserver
 ~/.gnupg/gpg.conf
 内容为
 keyserver hkp://pool.sks-keyservers.net
+
+而不是修改/etc/pacman.d/gnupg/gpg.conf，太容易被覆盖了
+
+
+
+
+安装aurman
+yay aurman
+
+
+
+
+
 
 
 
