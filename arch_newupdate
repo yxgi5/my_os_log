@@ -692,7 +692,7 @@ keyserver hkp://pool.sks-keyservers.net
 
 安装aurman
 yay aurman
-
+yay的缓存在～/.cache
 
 
 
