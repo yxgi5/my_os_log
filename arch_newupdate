@@ -838,6 +838,16 @@ sudo cpanm Gtk2::AppIndicator
 shutter
 
 
+"Not authorized to perform operation." 问题
+sudo gedit /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy
+搜索字段
+<!-- Mount
+
+字段最后都改成
+      <allow_any>yes</allow_any>
+      <allow_inactive>yes</allow_inactive>
+      <allow_active>yes</allow_active>
+
 
 
 
