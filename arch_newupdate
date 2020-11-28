@@ -698,6 +698,42 @@ yay的缓存在～/.cache
 
 
 
+# pacman -S privoxy
+sudo gedit /etc/privoxy/config
+
+
+listen-address  localhost:8118
+forward-socks5 / 127.0.0.1:10808 .
+
+
+curl --proxy 'socks5://127.0.0.1:10808' https://netix.dl.sourceforge.net/project/archbang/ArchBang/archbang-rc-2211-x86_64.iso?viasf=1 --output archbang-rc-2211-x86_64.iso
+
+
+终端代理proxy加速还是proxychains好使
+# pacman -S proxychains
+sudo gedit /etc/proxychains.conf
+----------------------------
+[ProxyList]
+# add proxy here ...
+# meanwile
+# set to "v2ray"
+socks5  127.0.0.1 1081
+----------------------------
+使用方法
+proxychains [cmd]
+sudo proxychains [cmd]
+
+proxychains aria2c "https://netix.dl.sourceforge.net/project/archbang/ArchBang/archbang-rc-2211-x86_64.iso?viasf=1"
+
+
+
+
+
+
+
+
+
+
 
 
 
