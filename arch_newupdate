@@ -835,7 +835,7 @@ sudo cpanm Gnome2
 sudo cpanm Goo::Canvas/libgoo-canvas-perl
 sudo cpanm Gtk2::AppIndicator
 
-shutter
+shutter ok
 
 
 "Not authorized to perform operation." 问题
@@ -890,6 +890,125 @@ grub-mkconfig -o /boot/grub/grub.cfg
 yay retext haroopad pycharm vscode codeblocks geany-plugins geany
 
 
+登录tty显示
+append_path command not found
+是因为/etc/profile需要更新，简单点是
+/etc/profile => /etc/profile.old
+/etc/profile.pacnew => /etc/profile
+实际上需要合并，如下
+/etc/profile.pacnew有append_path命令的定义
+<-------------------------------------------
+# /etc/profile
+
+#Set our umask
+umask 022
+
+# Append "$1" to $PATH when not already in.
+# This function API is accessible to scripts in /etc/profile.d
+append_path () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${PATH:+$PATH:}$1"
+    esac
+}
+
+# Set our default path
+PATH="/usr/local/sbin:/usr/local/bin:/usr/bin"
+
+# Append our default paths
+append_path '/usr/local/sbin'
+append_path '/usr/local/bin'
+append_path '/usr/bin'
+
+# Force PATH to be environment
+export PATH
+
+# Load profiles from /etc/profile.d
+if test -d /etc/profile.d/; then
+	for profile in /etc/profile.d/*.sh; do
+		test -r "$profile" && . "$profile"
+	done
+	unset profile
+fi
+
+# Source global bash config
+#if test "$PS1" && test "$BASH" && test -r /etc/bash.bashrc; then
+#	. /etc/bash.bashrc
+#fi
+
+# Unload our profile API functions
+unset -f append_path
+
+# Source global bash config, when interactive but not posix or sh mode
+if test "$BASH" &&\
+   test "$PS1" &&\
+   test -z "$POSIXLY_CORRECT" &&\
+   test "${0#-}" != sh &&\
+   test -r /etc/bash.bashrc
+then
+	. /etc/bash.bashrc
+fi
+
+# Termcap is outdated, old, and crusty, kill it.
+unset TERMCAP
+
+# Man is much better than us at figuring this out
+unset MANPATH
+
+export XMODIFIERS="@im=fcitx"
+export GTK_IM_MODULE=xim
+export QT_IM_MODULE=xim
+#fcitx&
+alias cd..='cd ..'
+export PATH=$PATH:/opt/MATLAB/R2010b/bin
+
+#export JAVA_HOME=/usr/lib/jvm/java-8-jdk
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+
+------------------------------------------------------------->
+
+
+
+yay shadowsocks libqtshadowsocks shadowsocks-libev shadowsocks-qt5 shadowsocks-v2ray-plugin
+ 
+/usr/lib/systemd/system/shadowsocks@.service
+-------------------------------
+[Unit]
+Description=Shadowsocks Client Service
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+ExecStart=/usr/bin/sslocal -c /etc/shadowsocks/%i.json
+
+[Install]
+WantedBy=multi-user.target
+-------------------------------
+
+/etc/shadowsocks/config.json
+-------------------------------
+{
+    "server":"119.28.9.79",
+    "server_port":3588,
+    "local_address": "127.0.0.1",
+    "local_port":1081,
+    "password":"xinhai",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false,
+    "workers": 10
+}
+-------------------------------
+
+sudo systemctl start shadowsocks@config.service
+
+netstat -ntlp | grep 1081
 
 
 
