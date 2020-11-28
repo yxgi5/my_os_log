@@ -723,9 +723,51 @@ socks5  127.0.0.1 1081
 proxychains [cmd]
 sudo proxychains [cmd]
 
-proxychains aria2c "https://netix.dl.sourceforge.net/project/archbang/ArchBang/archbang-rc-2211-x86_64.iso?viasf=1"
+proxychains aria2c -x16 -s16 -j16 "https://netix.dl.sourceforge.net/project/archbang/ArchBang/archbang-rc-2211-x86_64.iso?viasf=1"
 
 
+
+
+
+
+
+sudo pacman -S pcmanfm-gtk3 lxpanel-gtk3
+
+
+
+
+更新
+/etc/fstab
+
+----------------------------------------------------------------
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# UUID=bcb49d8e-f32c-4c86-b893-ad3e54789ee6
+/dev/sda2           	/         	ext4      	rw,relatime,data=ordered	0 1
+
+# UUID=53342a56-b0b9-4c2f-b4aa-2774be57737c
+#/dev/sda4           	none      	swap      	defaults  	0 0
+
+
+#/dev/sda1 /mnt/windows	 	ntfs 	defaults,iocharset=utf8,umask=000,nls=utf8 0 0
+UUID=BE7654077653BEB9 /mnt/windows	 	ntfs-3g	users,auto,rw,dev,exec,uid=1000,locale=zh_CN.UTF-8      0      0
+
+#/dev/sda5 /media/win_d 	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
+#/dev/sdb1 /media/win_e 	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0 
+#/dev/sdb5 /mnt/win_d 		ntfs 	defaults,iocharset=utf8,umask=000,nls=utf8 0 0
+UUID=0009A4AB000F7A32 /mnt/win_d 		ntfs-3g	users,auto,rw,dev,exec,uid=1000,locale=zh_CN.UTF-8      0      0
+
+#/dev/sdb6 /mnt/win_e 		ntfs 	defaults,iocharset=utf8,umask=000,nls=utf8 0 0
+UUID=000712A300065507 /mnt/win_e 		ntfs-3g	users,auto,rw,dev,exec,uid=1000,locale=zh_CN.UTF-8      0      0
+
+#/dev/sdb7		/home		ext4		rw,relatime,data=ordered	0 1
+UUID=530b728d-490e-4970-91df-8a2cb1f9bd69		/home		ext4		rw,relatime,data=ordered	0 1
+
+#/dev/sdb8		/opt		ext4		rw,relatime,data=ordered	0 1
+UUID=85d8469d-ecb3-41d3-86f7-bd8c4f0600a5		/opt		ext4		rw,relatime,data=ordered	0 1
+---------------------------------------------------------------------
 
 
 
