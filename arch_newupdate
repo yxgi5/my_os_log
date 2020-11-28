@@ -1012,7 +1012,7 @@ netstat -ntlp | grep 1081
 
 
 
-修改打开文件的待选择程序
+修改右键打开文件的待选择程序
 /home/andy/.config/mimeapps.list
 
 
@@ -1021,7 +1021,7 @@ netstat -ntlp | grep 1081
 
 
 
-
+sudo pacman -R acroread
 
 
 
