@@ -853,9 +853,41 @@ sudo gedit /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy
 
 
 
+sudo pacman -S macchanger
 
 
 
+sudo gedit /etc/conf.d/net
+sudo gedit /etc/rc.local
+/etc/rc.d/rc.local
+-------------------------------------
+ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+
+-------------------------------------
+sudo systemctl restart NetworkManager.service
+
+
+
+
+vim /etc/default/grub
+
+查找
+
+GRUB_CMDLINE_LINUX=""
+
+修改为
+
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+
+重新生成grub引导配置文件
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+最后重启即可恢复默认网卡为eth0，操作结束。
+
+
+
+yay retext haroopad pycharm vscode codeblocks geany-plugins geany
 
 
 
