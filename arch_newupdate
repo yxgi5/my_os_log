@@ -1012,6 +1012,25 @@ netstat -ntlp | grep 1081
 
 
 
+修改打开文件的待选择程序
+/home/andy/.config/mimeapps.list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
