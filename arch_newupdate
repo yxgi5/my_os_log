@@ -775,6 +775,80 @@ UUID=85d8469d-ecb3-41d3-86f7-bd8c4f0600a5		/opt		ext4		rw,relatime,data=ordered	
 
 
 
+sudo dirmngr < /dev/null
+
+sudo touch /root/.gnupg/dirmngr_ldapservers.conf
+sudo killall dirmngr
+
+gpg --refresh-keys
+
+gpg --refresh-keys --keyserver hkp://keyserver.ubuntu.com
+
+rm -R /etc/pacman.d/gnupg/
+rm -R /root/.gnupg/
+
+pacman-key --init && pacman-key --populate archlinux
+pacman-key --refresh-keys --keyserver hkp://keyserver.ubuntu.com
+
+sudo pacman-key --keyserver keyserver.ubuntu.com -r 962DDE58
+
+
+
+
+
+pacman -S lxde-gtk3
+pacman -S lxappearance-gtk3 lxappearance-obconf-gtk3
+
+$ yaourt -S gnomecanvas-perl  
+$ yaourt -S gnome-vfs-perl  
+...
+perl
+perl-error
+cpanminus
+perl-canary-stability
+perl-parse-yapp
+perl-x11-protocol
+perl-cpanel-json-xs
+perl-json-maybexs
+perl-cpanel-json-xs
+perl-json-maybexs
+perl-module-cpanfile
+perl-authen-oath
+perl-module-cpants-analyse
+perl-text-bidi
+perl-text-multimarkdown-xs
+perl-lockfile-simple
+perl-io-termios
+...
+$ pacman -Qqo '/usr/lib/perl5/5.32/vendor_perl/' | xargs yaourt -S --noconfirm
+$ pacman -Qqo '/usr/lib/perl5/5.30/vendor_perl/' | xargs yaourt -S --noconfirm
+
+
+
+
+cd /usr/bin/
+ln -s /usr/bin/core_perl/cpan cpan
+ln -s /usr/bin/vendor_perl/cpanm cpanm
+sudo cpanm Gnome2::Wnck
+sudo cpanm Gtk2::ImageView
+sudo cpanm Gnome2
+sudo cpanm Goo::Canvas/libgoo-canvas-perl
+sudo cpanm Gtk2::AppIndicator
+
+shutter
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

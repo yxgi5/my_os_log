@@ -76,7 +76,9 @@ pacman -S gdm gnome gnome-extra gnome-shell
 # pacman -S xorg-xinit
 # systemctl set-default graphical.target
 
-pacman -S openbox menu-cache dmenu tint2 feh scrot lxappearance pcmanfm pcmanfm lxterminal conky leafpad pkg-config
+pacman -S lxde-gtk3
+pacman -S lxappearance-gtk3 lxappearance-obconf-gtk3
+pacman -S dmenu tint2 feh scrot conky leafpad
 pacman -S fcitx fcitx-googlepinyin htop bash-completion ntfs-3g
 
 
@@ -110,6 +112,6 @@ proxychains aria2c -x16 -s16 -j16 "https://netix.dl.sourceforge.net/project/arch
 
 
 
-
+Creating gzip-compressed initcpio image: /boot/initramfs-linux.img
 
 
