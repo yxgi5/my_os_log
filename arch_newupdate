@@ -825,7 +825,7 @@ $ pacman -Qqo '/usr/lib/perl5/5.30/vendor_perl/' | xargs yaourt -S --noconfirm
 
 
 
-
+没有cpan？见后面append_path问题才是最好的解决办法，这里只是暂时解决
 cd /usr/bin/
 ln -s /usr/bin/core_perl/cpan cpan
 ln -s /usr/bin/vendor_perl/cpanm cpanm
@@ -971,7 +971,10 @@ export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
 
 ------------------------------------------------------------->
-
+这样就不用链接cpan什么的了
+cd /usr/bin/
+sudo rm cpan
+sudo rm cpanm
 
 
 yay shadowsocks libqtshadowsocks shadowsocks-libev shadowsocks-qt5 shadowsocks-v2ray-plugin
@@ -1024,12 +1027,16 @@ netstat -ntlp | grep 1081
 sudo pacman -R acroread
 
 
+cpu压力测试
+sudo pacman -S stress s-gui sysstat
 
 
-
-
-
-
+cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
+watch -n 2 "cat /proc/cpuinfo |grep MHz|uniq"
+stress --cpu 16 --timeout 600
+mpstat -P ALL 5
+watch -n 2 uptime
+htop
 
 
 
