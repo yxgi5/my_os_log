@@ -318,7 +318,7 @@ sudo pacman -S xfce4 xfce4-goodies mousepad
 
 
 sunloginclient
-[andy@andy ~]$ xhost +
+[andy@andy ~]$ xhost +gedit /home/andy/.local/share/applications/mimeinfo.cache
 access control disabled, clients can connect from any host
 [andy@andy ~]$ which xhost 
 /usr/bin/xhost
@@ -1016,8 +1016,8 @@ netstat -ntlp | grep 1081
 
 
 修改右键打开文件的待选择程序
-/home/andy/.config/mimeapps.list
-
+gedit /home/andy/.config/mimeapps.list
+gedit /home/andy/.local/share/applications/mimeinfo.cache
 
 
 
