@@ -850,22 +850,51 @@ sudo gedit /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy
 
 
 
-
-
-
 sudo pacman -S macchanger
+https://wiki.archlinux.org/index.php/MAC_address_spoofing
+没啥意思，用下面的办法
+
+
+固化mac地址。mac addr
 
 
 
-sudo gedit /etc/conf.d/net
+###sudo gedit /etc/conf.d/net
 sudo gedit /etc/rc.local
-/etc/rc.d/rc.local
--------------------------------------
+#####/etc/rc.d/rc.local
+<-------------------------------------
+#!/bin/sh
 ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+exit 0
+------------------------------------->
+sudo chmod +x /etc/rc.local
 
--------------------------------------
-sudo systemctl restart NetworkManager.service
+sudo gedit /etc/systemd/system/rc-local.service
+<-------------------------------------
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
 
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionPathExists=/etc/rc.local
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+WantedBy=multi-user.target
+------------------------------------->
+sudo systemctl enable rc-local.service
+sudo systemctl start rc-local.service
 
 
 
@@ -887,8 +916,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 
 
-yay retext haroopad pycharm vscode codeblocks geany-plugins geany
-
+sudo pacman -S retext pycharm-community-edition vscode codeblocks geany-plugins geany
+yay haroopad
 
 登录tty显示
 append_path command not found
@@ -1008,10 +1037,10 @@ WantedBy=multi-user.target
     "workers": 10
 }
 -------------------------------
-
+sudo systemctl enable shadowsocks@config.service
 sudo systemctl start shadowsocks@config.service
 
-netstat -ntlp | grep 1081
+sudo netstat -ntlp | grep 1081
 
 
 
@@ -1028,7 +1057,7 @@ sudo pacman -R acroread
 
 
 cpu压力测试
-sudo pacman -S stress s-gui sysstat
+sudo pacman -S stress s-tui sysstat
 
 
 cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
@@ -1039,7 +1068,8 @@ watch -n 2 uptime
 htop
 
 
-
+sudo pacman -S teamviewer
+sudo systemctl disable teamviewerd
 
 
 
