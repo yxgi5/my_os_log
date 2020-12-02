@@ -1072,21 +1072,50 @@ sudo pacman -S teamviewer
 sudo systemctl disable teamviewerd
 
 
+pacman -Ql archon
+sudo pacman -R archon-exec
+sudo pacman -R archon
+
+
+还是用xz替换xz-git
+sudo pacman -S xz cpio file-roller unzip-iconv
+
+sudo pacman -S ark
+
+
+sudo pacman -S strace
 
 
 
 
 
 
+查看/var/log/pacman.log
+
+
+
+关于deb包的file-roller解压无效问题
+暂时的解决办法是修改为zip后缀再file-roller解压
+
+
+
+draw.io的命令启动
+cd /usr/local/bin
+sudo gedit drawio
+---------------------------------
+#!/bin/bash
+#export LD_LIBRARY_PATH=
+cd /opt/draw.io
+#./drawio $@
+./drawio
+---------------------------------
+sudo chmod +x drawio
 
 
 
 
-
-
-
-
-
+bash: fromdos: command not found 问题
+yay tofrodos
 
 
 
