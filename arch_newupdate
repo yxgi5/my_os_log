@@ -268,6 +268,8 @@ sudo systemctl enable lxdm.service
 
 /etc/systemd/system/...
 
+
+sudo systemctl disable lightdm.service
 sudo systemctl enable gdm.service
 sudo systemctl start gdm.service
 
@@ -717,7 +719,7 @@ sudo gedit /etc/proxychains.conf
 # add proxy here ...
 # meanwile
 # set to "v2ray"
-socks5  127.0.0.1 1081
+socks5  127.0.0.1 10808
 ----------------------------
 使用方法
 proxychains [cmd]
@@ -1081,7 +1083,8 @@ sudo pacman -R archon
 sudo pacman -S xz cpio file-roller unzip-iconv
 
 sudo pacman -S ark
-
+//sudo pacman -S engrampa caja p7zip unace unrar brotli
+sudo pacman -S engrampa caja p7zip unace brotli
 
 sudo pacman -S strace
 
@@ -1120,6 +1123,39 @@ yay tofrodos
 
 
 
+key "could not be locally signed"
+https://www.archlinux.org/news/gnupg-21-and-the-pacman-keyring/
+
+sudo pacman -Syu haveged
+sudo systemctl start haveged
+sudo systemctl enable havegedsudo pacman -S xfce4-goodies
+
+sudo rm -fr /etc/pacman.d/gnupg
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
+sudo pacman-key --populate archlinuxcn
+
+
+
+
+处理报错
+==> ERROR: Please remove the SigLevel= line of [archlinuxcn] from "/etc/pacman.conf" to use the default setting
+==> ERROR: 请删除 /etc/pacman.conf 中 [archlinuxcn] 下的 SigLevel= 行，以使用默认设
+
+sudo gedit /etc/pacman.conf
+删掉pacman.conf中[archlinuxcn]的siglevel一行
+
+
+
+sudo pacman -Qg xfce4
+sudo pacman -S xfce4
+sudo pacman -S xfce4-goodies
+cat /usr/share/xsessions/xfce.desktop
+
+
+
+指定加载库文件，而不是库路径的方法
+LD_PRELOAD=*.so ./runexe
 
 
 
@@ -1127,5 +1163,225 @@ yay tofrodos
 
 
 
+rm -rf ~/.wine
+WINEARCH=win32 WINEPREFIX=~/.wine winecfg
+
+
+这样取消mono
+wget https://dl.winehq.org/wine/wine-mono/5.1.1/wine-mono-5.1.1-x86.msi
+/home/andy/.cache/wine/wine-mono-5.1.1-x86.msi
+
+
+
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc40 mfc42 riched20 riched30 gdiplus msxml3
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks cmd gdiplus mfc42 vcrun2003 vcrun2005 riched20 riched30
+
+//env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 riched20 riched30
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks colorprofile corefonts d3dx9 fontfix fontsmooth-gray fontsmooth-rgb fontsmooth-bgr gdiplus msxml4 msxml6 riched20 riched30 tahoma urlmon vb6run allfonts msls31 sandbox isolate_home
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine proxychains winetricks mfc40 colorprofile corefonts d3dx9 fontfix fontsmooth-gray fontsmooth-rgb fontsmooth-bgr gdiplus  msxml4 msxml6 riched20 riched30 tahoma urlmon vb6run allfonts  msls31
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks ie8
+
+
+这个会fail的
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks flash
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vcrun2008 
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vcrun2010
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks dotnet11 
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks dotnet20 
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vjrun20
+
+会导致程序挂掉的，不要安装
+comctl32
+
+
+如果出现
+winetricks sha256sum mismatch!
+grep EUupdate.EXE /usr/bin/winetricks
+修改winetricks，这玩意是个脚本。。。
+sudo gedit /usr/bin/winetricks
+
+
+
+
+
+
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
+
+export WINEPREFIX=$HOME/.wine/
+export WINEARCH=win32
+export LANG=zh_CN.UTF-8
+wine xxx.exe
+==
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
+
+
+添加~/.bashrc
+alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine'
+
+
+
+sudo pacman -S wine-wechat
+sudo pacman -R wine-wechat
+rm -rf /home/andy/.local/lib/wine-wechat/default
+
+
+
+
+
+
+
+快捷方式在/home/andy/.local/share/applications
+桌面整合在/home/andy/.config/menus/applications-merged
+winetricks --gui
+
+
+wine几个工具 winrar，sourceinsight，
+
+
+rar文件关联
+perl-file-mimeinfo 调用 mimeopen 类似这样:
+mimeopen -d /path/to/file
+会提示用哪个程序来打开 /path/to/file:
+Please choose a default application for files of type text/plain
+       1) notepad  (wine-extension-txt)
+       2) Leafpad  (leafpad)
+       3) OpenOffice.org Writer  (writer)
+       4) gVim  (gvim)
+       5) Other...
+
+添加rar类型的
+/home/andy/.local/share/mime/application/x-wine-extension-rar.xml
+/home/andy/.local/share/mime/packages/x-wine-extension-rar.xml
+有关位置
+/home/andy/.local/share/mime/application/
+/home/andy/.local/share/mime/packages/
+/home/andy/.local/share/applications
+/usr/share/mime/packages
+/usr/share/mime/application
+
+其他有关mime的文件
+~/.config/mimeapps.list
+！！ 如果通过选择默认程选了wine里面的rar,会在这里体现,可以删掉pcmanfm多的openwith
+
+
+一个好的mime图形化工具
+xfce4-mime-settings
+
+
+
+wine安装ORCAD Capture 16.3精简版，只是为了看或者画16.2以上格式的原理图
+//首先，修改安装文件exe的名字，不要有中文
+
+//export LANG=zh_CN.utf8
+//wine capture.exe
+//这个屌货强制安装到d:盘哇
+先到虚拟机里安装一个复制出来好了
+
+
+以前wine过orcad10
+~/.local/share/applications/wine-extension-dsn.desktop
+查到Exec=env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
+OrCADDesign-FileType是在~/.wine/system.reg中定义的
+
+Z:\\home\\andy\\DOWN~NTG\\ORCA~RWC\\Capture\\Capture.exe
+Z:\\home\\andy\\Downloads\\OrCAD_Demo\\Capture\\Capture.exe
+替换成
+C:\\Program Files\\ORCAD16.3\\Capture.exe
+
+看上去是C:\\Program Files\\ORCAD16.3\\Capture.exe
+实际上gedit用C:\\\\Program Files\\\\ORCAD16.3\\\\Capture.exe注意区别
+
+重启wine
+wineboot
+
+试一下
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType  machxo3-9400_dev_board_schematic_source.DSN
+缺少 MFC80.DLL
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
+
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks win2k vcrun2005
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vcrun2005sp1
+env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks win2k vcrun2005sp1
+
+安装vcrun2005不能
+那么直接给mfc80.dll文件吧，可以运行了
+
+export CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType  machxo3-9400_dev_board_schematic_source.DSN
+
+
+修改一下~/.local/share/applications/wine-extension-dsn.desktop
+Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
+
+另外修改
+gedit ~/.local/share/applications/wine-extension-opj.desktop
+Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADProject-FileType %f
+
+
+
+解决wine程序打印问题
+sudo apt-get install cups-pdf
+The following NEW packages will be installed:
+  cups-pdf printer-driver-cups-pdf
+
+sudo apt install libcups2:i386
+重启之后可以打印到pdf什么的
+sudo systemctl status cups.service
+
+输出pdf用pdf打印机的话是输出到~/PDF目录，不用选输出到文件(prn格式)
+
+关于SystemPrinting
+https://wiki.debian.org/SystemPrinting
+管理SystemPrinting
+http://localhost:631
+
+
+
+
+
+
+wine运行pads9.3精简版
+假设放到
+/home/andy/.wine/drive_c/Program Files/MentorGraphics/
+
+license文件在/home/andy/.wine/drive_c/Program Files/MentorGraphics/flexlm
+需要修改mac地址
+
+需要修改比如/home/andy/.wine/drive_c/Program Files/MentorGraphics/9.3PADS/SDD_HOME/Programs/powerpcb.ini文件
+否则会出现: "The directory pointed by the FileDir INI file entry cannot be found.Aborting."
+
+
+然后按set.txt来设置linux环境变量和执行pads
+env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphics/flexlm/LICENSE.dat LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine powerpcb.exe
+
+修改
+gedit ~/.local/share/applications/wine-extension-pcb.desktop
+Exec=env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphics/flexlm/LICENSE.dat LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen PowerPCB.Design %f
+
+
+
+
+
+
+cd .wine/drive_c/windows/
+wine regedit.exe
+cp /usr/share/doc/wine-development/examples/wine.desktop /home/andy/.local/share/applications
+xfce4-mime-settings
+这样就能右键wine可执行的windows的exe程序
+
+
+
+
+
+
+
+
+
+
+
+
+
+sudo rm /usr/bin/wechat
+sudo pacman -S wine-wechat
 
 
