@@ -1237,6 +1237,22 @@ winetricks --gui
 
 wine几个工具 winrar，sourceinsight，
 
+快捷启动图标在
+/home/andy/.local/share/applications/wine/Programs/
+~/Desktop
+
+
+
+/home/andy/.local/share/mime/packages
+/home/andy/.local/share/mime/application
+
+
+update-desktop-database ~/.local/share/applications
+
+
+
+
+
 
 rar文件关联
 perl-file-mimeinfo 调用 mimeopen 类似这样:
@@ -1383,5 +1399,59 @@ xfce4-mime-settings
 
 sudo rm /usr/bin/wechat
 sudo pacman -S wine-wechat
+
+
+
+
+ext4分区删除文件不能建立trash can，这个问题没有解决。参照debian的挂载参数尝试修改fstab也没有搞定。
+sudo chown -R $USER .Trash-1000
+
+
+
+主动锁屏
+在~/.config/openbox/rc.xml 合适位置添加如下内容
+    <keybind key="W-l">
+      <action name="Execute">
+        <command>xscreensaver-command --lock</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+          <name>Lock Screen</name>
+        </startupnotify>
+      </action>
+    </keybind>
+
+
+
+
+
+sudo usermod -aG brlapi andy
+
+sudo pacman -R linux-lts
+sudo pacman -R linux-lts-headers
+
+
+
+sudo mv /etc/pipewire/pipewire.conf /etc/pipewire/pipewire.conf.bk
+sudo mv /etc/pipewire/pipewire.conf.pacnew /etc/pipewire/pipewire.conf
+
+
+
+
+
+
+sudo pacman -S dos2unix
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
