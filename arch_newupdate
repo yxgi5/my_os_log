@@ -1422,7 +1422,6 @@ sudo chown -R $USER .Trash-1000
 
 
 
-sudo pacman -S engrampa
 
 sudo usermod -aG brlapi andy
 
