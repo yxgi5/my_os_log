@@ -1468,10 +1468,22 @@ sudo pacman -S dos2unix
 yay DSView
 
 
+发现挂载的移动硬盘上的ext4分区，trash can又是正常的
 
+/usr/share/polkit-1/actions/org.freedesktop.policykit.policy
+/usr/share/polkit-1/actions/org.gtk.vfs.file-operations.policy
+看起来木有问题
 
+关于ntfs，设置对了uid是可以用trash can的
+sudo mount -t ntfs -o uid=1000,gid=10 /dev/sdc1 test/
 mkdir .Trash-1000
-chown 1000:1000 .Trash-1000
+chown 1000:10 .Trash-1000
+sudo mount -t ntfs -o uid=1000,gid=100 /dev/sdc1 test/
+mkdir .Trash-1000
+chown 1000:100 .Trash-1000
+用id命令查看当前用户的uid什么的
+
+
 
 gvfs-trash is deprecated:
 /////sudo vim /usr/bin/gvfs-trash
