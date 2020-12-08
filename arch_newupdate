@@ -1577,7 +1577,7 @@ update-mime-database ~/.local/share/mime
 
 sudo pacman -S lxpanel libfm pcmanfm
 sudo pacman -S lxpanel-gtk3 libfm-gtk3 pcmanfm-gtk3
-sudo pacman -S libfm-qt pcmanfm-qt
+sudo pacman -S libfm-qt pcmanfm-qt lxqt-archiver
 
 thunar目前看是最好的选择了
 
@@ -1606,6 +1606,19 @@ Optional dependencies for ranger
 补充安装
 atool lha elinks highlight mediainfo odt2txt ueberzug
 
+
+
+
+
+
+安装i3-gaps i3status dunst
+Optional dependencies for i3-gaps
+    rxvt-unicode: The terminal emulator used in the default config.
+    dmenu: As menu. [installed]
+    i3lock: For locking your screen.
+    i3status: To display system information with a bar.
+    perl-json-xs: For i3-save-tree [installed]
+    perl-anyevent-i3: For i3-save-tree
 
 
 
