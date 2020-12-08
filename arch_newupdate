@@ -1513,6 +1513,104 @@ g_unix_is_mount_path_system_internal(), they call to see if it's "system interna
 
 
 
+xdg-mime query filetype 4L4.pcb
+mimetype 4L4.pcb
+
+file --mime-type 4L4.pcb
+不一致
+
+update-mime-database ~/.local/share/mime
+gtk-update-icon-cache
+update-desktop-database ~/.local/share/applications/
+
+mime type 确实是正确的，但是，文件不显示icon，右键菜单的备选程序有icon。I don't have any idea.
+
+
+sudo update-mime-database /usr/share/mime
+
+
+根据
+https://wiki.archlinux.org/index.php/XDG_MIME_Applications
+~/.local/share/mime/packages/application-x-foobar.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-foobar">
+        <comment>foo file</comment>
+        <icon name="application-x-foobar"/>
+        <glob-deleteall/>
+        <glob pattern="*.foo"/>
+    </mime-type>
+</mime-info>
+
+
+
+gedit ~/.local/share/mime/packages/x-wine-extension-dsn.xml
+<-------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-wine-extension-dsn">
+    <generic-icon name="application-x-wine-extension-dsn"/>
+    <glob pattern="*.dsn"/>
+    <comment>OrCAD Capture Design File Type</comment>
+  </mime-type>
+</mime-info>
+------------------------------------------->
+update-mime-database ~/.local/share/mime
+locate application-x-wine-extension-dsn.png
+确实可以
+类似的办法opj弄了
+
+
+pcb格式呢
+sudo gedit /usr/share/mime/packages/pcb.xml
+加    <generic-icon name="application-x-pcb-layout"/>
+sudo update-mime-database /usr/share/mime
+update-mime-database ~/.local/share/mime
+无效。。。。
+[实际上在nautilus和thunar等都显示正常的，那么应该是pcmanfm的问题咯]
+
+cp /usr/share/mime/packages/pcb.xml ~/.local/share/mime/packages/
+update-mime-database ~/.local/share/mime
+
+
+
+
+sudo pacman -S lxpanel libfm pcmanfm
+sudo pacman -S lxpanel-gtk3 libfm-gtk3 pcmanfm-gtk3
+sudo pacman -S libfm-qt pcmanfm-qt
+
+thunar目前看是最好的选择了
+
+
+totem
+
+
+安装ranger
+Optional dependencies for ranger
+    atool: for previews of archives
+    elinks: for previews of html pages
+    ffmpegthumbnailer: for video previews [installed]
+    highlight: for syntax highlighting of code
+    libcaca: for ASCII-art image previews [installed]
+    lynx: for previews of html pages [installed]
+    mediainfo: for viewing information about media files
+    odt2txt: for OpenDocument texts
+    perl-image-exiftool: for viewing information about media files [installed]
+    poppler: for pdf previews [installed]
+    python-chardet: in case of encoding detection problems [installed]
+    sudo: to use the "run as root"-feature [installed]
+    transmission-cli: for viewing bittorrent information [installed]
+    ueberzug: for previews of images
+    w3m: for previews of images and html pages [installed]
+
+补充安装
+atool lha elinks highlight mediainfo odt2txt ueberzug
+
+
+
+
+
+
 
 
 
