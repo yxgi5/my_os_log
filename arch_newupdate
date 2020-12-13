@@ -1622,7 +1622,25 @@ Optional dependencies for i3-gaps
 
 
 
+编译libjaylink
+pacman安装stlink
+安装pandoc
 
+git clone https://github.com/stlink-org/stlink.git
+cd stlink
+make release
+sudo make install
+$ sudo cp -a config/udev/rules.d/* /etc/udev/rules.d/
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+
+st-info --probe
+st-util -1
+
+yaourt cutecom
+
+
+sudo pacman -S libpgf
 
 
 
