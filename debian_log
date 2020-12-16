@@ -14280,3 +14280,19 @@ CMake Error at CMakeLists.txt:564 (MESSAGE):
 
 
 
+
+
+sudo pip3.6 install tifffile==2018.10.18 -i https://mirrors.163.com/pypi/simple
+sudo pip3.6 install scikit-image==0.16.2 -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
+
+
+
+
+
+
+
