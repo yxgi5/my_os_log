@@ -1652,6 +1652,18 @@ yaourt cutecom
 sudo pacman -S libpgf
 
 
+20201216
+sudo pacman -Syu
+
+sudo systemctl disable qemu-ga.service
+sudo systemctl enable qemu-guest-agent.service
+
+sudo pacman -S qt5-charts vcdimager
+
+
+
+
+
 
 
 
