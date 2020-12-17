@@ -1633,6 +1633,7 @@ Optional dependencies for i3-gaps
 
 编译libjaylink
 pacman安装stlink
+////sudo cp -a /usr/lib/udev/rules.d/* /etc/udev/rules.d/
 安装pandoc
 
 git clone https://github.com/stlink-org/stlink.git
@@ -1681,35 +1682,123 @@ sudo pacman -S meld
 sudo pacman -S boost ogre mygui
 
 yay snapd
+makepkg -si  编译失败
+sudo pacman -S apparmor python-notify2 go-tools squashfuse
+makepkg --nocheck
+sudo pacman -U snapd-2.48.2-1-x86_64.pkg.tar.zst
 sudo systemctl enable --now snapd.socket
-sudo ln -s /var/lib/snapd/snap /snap
-编译失败
-
-sudo pacman -S apparmor go-tools python-notify2 sdl_net
 
 
+sudo systemctl restart snapd.service
+sudo systemctl restart apparmor.service
+sudo systemctl enable --now snapd.apparmor.service
+sudo systemctl daemon-reload && sudo systemctl restart snapd
+systemctl status snapd
 
-sudo pacman -S wireshark-qt
+snap version
+snap --version
+sudo snap install hello-world
+sudo journalctl -u snapd
+snap list
+//sudo snap remove hello-world
+snap find
+
+sudo pacman -S apparmor go-tools sdl_net
+
+
+
+
+
+
+wireshark-qt
 
 sudo pacman -S python2-pip python-pip
 
 sudo pip3.9 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+
+优先用pacman安装python module！！
 //sudo pip3.9 install tensorflow==1.5 -i https://mirrors.163.com/pypi/simple
 //sudo pip3.9 install mxnet==1.1 -i https://mirrors.163.com/pypi/simple
-sudo pip3.9 install Cython -i https://mirrors.163.com/pypi/simple
-sudo pip3.9 install numpy -i https://mirrors.163.com/pypi/simple
+sudo pacman -S python-numpy cython
+//sudo pip3.9 install Cython -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install numpy -i https://mirrors.163.com/pypi/simple
 sudo pip3.9 install mkl -i https://mirrors.163.com/pypi/simple
-sudo pip3.9 install scipy -i https://mirrors.163.com/pypi/simple
-sudo pip3.9 uninstall scipy
+//sudo pip3.9 install scipy -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 uninstall scipy
 
+sudo pip3.9 install pilutil -i https://mirrors.163.com/pypi/simple
+
+sudo pip3.9 install scipy==1.1.0 -i https://mirrors.163.com/pypi/simple
+check https://github.com/scipy/scipy/issues/6212
+python3.9
+from scipy.misc import imread
+cannot import ！
+imread is deprecated in SciPy 1.0.0, and will be removed in 1.2.0. Use imageio.imread instead
+python3.9
+from imageio import imread
+from matplotlib.pyplot import imread
 
 sudo pacman -S cfitsio gcc-fortran
 
 sudo pacman -S python-scipy python-scipy-doc
-sudo pip3.9 install matplotlib  -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install matplotlib -i https://mirrors.163.com/pypi/simple
+sudo pacman -S python-matplotlib
+sudo pacman -S python-notify2
+sudo pacman -S python-pilkit cython
+sudo pacman -S python-skorch python-scikit-image python-scikit-learn python-scikit-build python-pillow python-pillowfight python-pilkit
+//sudo pip3.9 install scikit-image -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 uninstall scikit-image
+//sudo pip3.9 uninstall tifffile pywavelets networkx imageio
 
-sudo pacman -S python-pilkit
-sudo pip3.9 install scikit-image -i https://mirrors.163.com/pypi/simple
+
+sudo pacman -S python-tensorflow python-opt_einsum python-tensorflow-estimator python-tensorflow-opt tensorflow tensorboard tensorflow-opt python-tensorboardx mxnet-git python-mxboard 
+//sudo pacman -S python-horovod 
+//sudo pacman -S python-pytorch-opt 
+sudo pacman -S python-pytorch
+
+
+
+
+//sudo pacman -S telegram-desktop ttf-opensans
+sudo pacman -R telegram-desktop
+
+
+
+yay fxload
+安装hotplug的hex
+/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/install_script/install_drivers/
+安装rules
+/opt/Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers
+修改rules
+sudo gedit /etc/udev/rules.d/52-xilinx-pcusb.rules
+<----------------------------------------------------------------------------------
+# version 0002
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0008", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0007", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0009", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="000d", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="000f", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0013", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0015", MODE="666"
+
+# version 0003
+ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0008", MODE="666"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0007", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusbdfwu.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0009", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xup.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="000d", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_emb.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="000f", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xlp.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0013", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xp2.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0015", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xse.hex -D $tempnode"
+---------------------------------------------------------------------------------->
+如果要更新hex文件
+//sudo cp /opt/Xilinx/Vivado/2017.4/data/xicom/xusb*.hex /etc/hotplug/usb/xusbdfwu.fw/
+
+
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+
+
+
 
 
 
