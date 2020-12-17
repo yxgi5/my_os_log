@@ -1624,6 +1624,58 @@ Optional dependencies for i3-gaps
 
 
 
+See 'git difftool --tool-help' or 'git help config' for more details.
+'git difftool' will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld kompare gvimdiff diffuse diffmerge ecmerge p4merge araxis bc codecompare emerge vimdiff
+
+
+xxdiff/meld工具看起来还不错gitk直接可以设置为比较工具
+gitk实际上可以比较任何两个commit之间的diff：先选old再在new上右键，再比较每一个文件的diff
+meld用来merge还行，只用来比较有点太花哨了。还是默认xxdiff好了
+
+
+
+yay xxdiff
+sudo pacman -S meld
+
+
+sudo pacman -S boost ogre mygui
+
+yay snapd
+sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+编译失败
+
+sudo pacman -S apparmor go-tools python-notify2 sdl_net
+
+
+
+sudo pacman -S wireshark-qt
+
+sudo pacman -S python2-pip python-pip
+
+sudo pip3.9 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install tensorflow==1.5 -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install mxnet==1.1 -i https://mirrors.163.com/pypi/simple
+sudo pip3.9 install Cython -i https://mirrors.163.com/pypi/simple
+sudo pip3.9 install numpy -i https://mirrors.163.com/pypi/simple
+sudo pip3.9 install mkl -i https://mirrors.163.com/pypi/simple
+sudo pip3.9 install scipy -i https://mirrors.163.com/pypi/simple
+sudo pip3.9 uninstall scipy
+
+
+sudo pacman -S cfitsio gcc-fortran
+
+sudo pacman -S python-scipy python-scipy-doc
+sudo pip3.9 install matplotlib  -i https://mirrors.163.com/pypi/simple
+
+sudo pacman -S python-pilkit
+sudo pip3.9 install scikit-image -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
 
 
 
