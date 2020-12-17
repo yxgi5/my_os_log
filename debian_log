@@ -14276,7 +14276,209 @@ CMake Error at CMakeLists.txt:564 (MESSAGE):
 
 -- Configuring incomplete, errors occurred!
 
+
+
+
+
+
+
+
+
+
+修改库运行原有的
+
+export LD_LIBRARY_PATH=/home/andy/Documents:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu:/opt/gnuarmeclipse/qemu/2.8.0-201703022210-head/bin/:$LD_LIBRARY_PATH
+
+
+
+export LD_LIBRARY_PATH=/media/andy/f5cd428a-7bcc-4026-80b7-9f570e5966cf/usr/lib/x86_64-linux-gnu/:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+
+export LD_LIBRARY_PATH=/home/andy/Documents:$LD_LIBRARY_PATH
+
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libGLEW.so.1.10 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libGLEW.so.1.10.0 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libssl.so.1.0.0 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libcrypto.so.1.0.0 /usr/lib/x86_64-linux-gnu/
+
+andy@debian-dell ~/Documents
+$ cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libcurl.so.4 .
+andy@debian-dell ~/Documents
+$ cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libcurl.so.4.2.0 .
+
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/librtmp.so.0 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libgnutls.so.26 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libgnutls.so.26.21.8 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libgcrypt.so.11 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libgcrypt.so.11.7.0 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libtasn1.so.3 /usr/lib/x86_64-linux-gnu/
+sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libtasn1.so.3.1.12 /usr/lib/x86_64-linux-gnu/
+
+$ Segmentation fault
+
 =====give it up===== :(
+
+cd /usr/lib/x86_64-linux-gnu/
+sudo rm libGLEW.so.1.10 libGLEW.so.1.10.0 libssl.so.1.0.0 libcrypto.so.1.0.0 librtmp.so.0 libgnutls.so.26 libgnutls.so.26.21.8 libgcrypt.so.11 libgcrypt.so.11.7.0 libtasn1.so.3 libtasn1.so.3.1.12
+=====clean up done===== :(
+
+后来发现
+其实，这个/usr/local/bin/kicad是编译的版本
+apt安装的其实在/usr/bin/kicad
+怎么删除老版本OS的编译版本呢，再编译一次咯
+/media/andy/M4B/software/kicad/installkicad-source-mirror-git.tar.xz解压到ext4分区的目录下
+
+sudo aptitude install libwxgtk3.0-gtk3-0v5 libwxgtk3.0-gtk3-dev libwxgtk3.0-dev
+libwxgtk-media3.0-dev libwxgtk-media3.0-0v5 libwxgtk-media3.0-gtk3-0v5 libwxgtk-media3.0-gtk3-dev libwxgtk-webview3.0-gtk3-0v5 libwxgtk-webview3.0-gtk3-dev 
+
+
+see https://forum.kicad.info/t/solved-linux-mint-19-3-build-problem-with-wxwidgets/23762
+$ sudo apt install libwxgtk3.0-gtk3-dev
+$ sudo update-alternatives --config wx-config
+There are 3 choices for the alternative wx-config (providing /usr/bin/wx-config).
+
+  Selection    Path                                                  Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/x86_64-linux-gnu/wx/config/gtk2-unicode-3.0   308       auto mode
+  1            /usr/lib/x86_64-linux-gnu/wx/config/base-unicode-3.0   306       manual mode
+  2            /usr/lib/x86_64-linux-gnu/wx/config/gtk2-unicode-3.0   308       manual mode
+  3            /usr/lib/x86_64-linux-gnu/wx/config/gtk3-unicode-3.0   307       manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 3
+update-alternatives: using /usr/lib/x86_64-linux-gnu/wx/config/gtk3-unicode-3.0 to provide /usr/bin/wx-config (wx-config) in manual mode
+
+
+cd kicad-source-mirror
+mkdir -p build/release
+cd build/release
+cmake -DCMAKE_BUILD_TYPE=Release \
+      ../../
+make -j8
+$ sudo make install
+这个时候产生了install_manifest.txt
+$ sudo make uninstall
+
+if CMake does not provide a sudo make uninstall target
+see https://wiki.codelite.org/pmwiki.php/Developers/Linux
+$ sudo xargs rm < install_manifest.txt
+
+
+
+sudo apt-get install --reinstall -t buster-backports kicad kicad-demos kicad-footprints kicad-symbols kicad-templates libngspice0 kicad-packages3d kicad-doc-en
+
+
+
+
+
+thunderbird启动
+
+XPCOMGlueLoad error for file /usr/lib/thunderbird/libmozgtk.so:
+liblzma.so.5: failed to map segment from shared object
+Couldn't load XPCOM.
+
+dpkg-query -S /usr/local/lib/liblzma.so.5
+解决办法
+sudo rm /usr/local/lib/liblzma.so.5 (这是个软链接，删掉也没事)
+
+
+
+
+
+
+
+
+
+sudo apt install dconf-editor
+依次点开->org->gnome->gedit->preferences->encodings
+改成
+['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+
+
+
+
+
+##ubuntu 18 / debian 10 (buster)
+uex 
+cd /opt/uex/bin
+cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libpng12.so.0 .
+cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libpng12.so.0.46.0 .
+
+cd /usr/local/bin
+sudo gedit uex
+---------------------------------
+#!/bin/bash
+cd /opt/uex/bin
+./uex
+---------------------------------
+sudo chmod +x uex
+
+alt+f3 启动不能
+终端启动可以
+修改
+sudo gedit /usr/local/bin/uex
+---------------------------------
+#!/bin/bash
+export LD_LIBRARY_PATH=/opt/uex/bin:$LD_LIBRARY_PATH
+cd /opt/uex/bin
+./uex
+---------------------------------
+这样alt+f3 启动就可以了
+
+
+sudo gedit /usr/local/bin/vsim
+---------------------------------
+#!/bin/bash
+export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
+cd /opt/modelsim/modeltech/bin
+./vsim
+---------------------------------
+sudo chmod +x /usr/local/bin/vsim
+alt+f3 启动不能
+sudo rm /usr/local/bin/vsim
+
+
+
+
+解决os升级后foxitreader多实例问题，我希望单实例打开多个文件
+参考arch的情况，解决办法如下
+/home/andy/.local/share/mime下搜索删除
+ppdf.xml
+pdf.xml
+FoxitReader.xml
+update-mime-database ~/.local/share/mime
+FoxitReader.desktop复制到/home/andy/.local/share/applications，保持一份就行
+这样就解决了
+
+
+
+关于vivado的xsct, xsdb, xmd, and tclsh/xtclsh运行报错
+Segmentation fault (core dumped) "$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap -rc -f "$RDI_APPROOT"/scripts/xsdb/xsdb/cmdlist -H "$HOME"/.xsctcmdhistory "$RDI_BINROOT"/loader -exec rdi_xsct "${RDI_ARGS[@]}"
+
+https://wiki.archlinux.org/index.php/Xilinx_Vivado#xsct,_xsdb,_xmd,_and_tclsh_segfault
+
+安装rlwrap后，类似于替换
+#"$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap -rc -f "$RDI_APPROOT"/scripts/xsdb/xsdb/cmdlist -H "$HOME"/.xsctcmdhistory "$RDI_BINROOT"/loader -exec rdi_xsct "${RDI_ARGS[@]}"
+为如下
+/usr/bin/rlwrap -rc -f "$RDI_APPROOT"/scripts/xsdb/xsdb/cmdlist -H "$HOME"/.xsctcmdhistory "$RDI_BINROOT"/loader -exec rdi_xsct "${RDI_ARGS[@]}"
+
+
+
+
+
+
+
+
+sudo pip3.6 install tifffile==2018.10.18 -i https://mirrors.163.com/pypi/simple
+sudo pip3.6 install scikit-image==0.16.2 -i https://mirrors.163.com/pypi/simple
+
+
+
+
+
+
+
+
+
 
 
 

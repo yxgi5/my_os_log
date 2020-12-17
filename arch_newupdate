@@ -1511,6 +1511,15 @@ g_unix_is_mount_path_system_internal(), they call to see if it's "system interna
 
 
 
+See 'git difftool --tool-help' or 'git help config' for more details.
+'git difftool' will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld kompare gvimdiff diffuse diffmerge ecmerge p4merge araxis bc codecompare emerge vimdiff
+
+
+xxdiff/meld工具看起来还不错gitk直接可以设置为比较工具
+gitk实际上可以比较任何两个commit之间的diff：先选old再在new上右键，再比较每一个文件的diff
+meld用来merge还行，只用来比较有点太花哨了。还是默认xxdiff好了
+
 
 
 xdg-mime query filetype 4L4.pcb
@@ -1620,6 +1629,36 @@ Optional dependencies for i3-gaps
     perl-json-xs: For i3-save-tree [installed]
     perl-anyevent-i3: For i3-save-tree
 
+
+
+编译libjaylink
+pacman安装stlink
+安装pandoc
+
+git clone https://github.com/stlink-org/stlink.git
+cd stlink
+make release
+sudo make install
+$ sudo cp -a config/udev/rules.d/* /etc/udev/rules.d/
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+
+st-info --probe
+st-util -1
+
+yaourt cutecom
+
+
+sudo pacman -S libpgf
+
+
+20201216
+sudo pacman -Syu
+
+sudo systemctl disable qemu-ga.service
+sudo systemctl enable qemu-guest-agent.service
+
+sudo pacman -S qt5-charts vcdimager
 
 
 
