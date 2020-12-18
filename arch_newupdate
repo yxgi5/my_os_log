@@ -1646,6 +1646,17 @@ $ sudo udevadm trigger
 
 st-info --probe
 st-util -1
+st-info --chipid
+sudo st-flash --reset erase
+sudo st-flash write file.bin 0x08000000
+sudo st-flash --debug write file.bin 0x08000000 > debug.log 2>&1
+st-flash read out.bin 0x8000000 1048576
+
+
+git clone https://github.com/stlink-org/stlink --branch v1.6.0
+
+git@github.com:EmBitz/EBlink.git
+
 
 yaourt cutecom
 
