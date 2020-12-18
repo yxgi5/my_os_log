@@ -1644,12 +1644,22 @@ $ sudo cp -a config/udev/rules.d/* /etc/udev/rules.d/
 $ sudo udevadm control --reload-rules
 $ sudo udevadm trigger
 
-st-info --probe
-st-util -1
-st-info --chipid
+sudo st-info --probe
+sudo st-util -1
+sudo st-info --chipid
 sudo st-flash --reset erase
 sudo st-flash write file.bin 0x08000000
 sudo st-flash --debug write file.bin 0x08000000 > debug.log 2>&1
+sudo st-flash reset
+
+st-info --probe
+st-util -1
+st-info --chipid
+st-flash --reset erase
+st-flash write file.bin 0x08000000
+st-flash --debug write file.bin 0x08000000 > debug.log 2>&1
+st-flash reset
+
 st-flash read out.bin 0x8000000 1048576
 
 
