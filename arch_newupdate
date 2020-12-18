@@ -1823,9 +1823,9 @@ $ sudo udevadm trigger
 
 
 
-
-
-
+yay debtap
+sudo debtap -u
+debtap xxx.deb
 
 
 
