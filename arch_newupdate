@@ -1827,6 +1827,16 @@ yay debtap
 sudo debtap -u
 debtap xxx.deb
 
+#已经安装过了 /opt/Ac6/SystemWorkbench/install_stlink_udev.sh
+/opt/Ac6/SystemWorkbench/stlinkserver/st-stlink-server-1.0.12-1-linux-amd64.deb经过debtap转换后
+安装st-stlink-server-1.0.12-1-x86_64.pkg.tar.zst
+
+
+
+
+
+
+
 
 
 
