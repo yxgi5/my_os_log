@@ -14473,11 +14473,14 @@ sudo pip3.6 install scikit-image==0.16.2 -i https://mirrors.163.com/pypi/simple
 
 
 
+sudo apt install zstd
+tar -I zstd -xvf archive.tar.zst
 
+Decompress from .zst: unzstd filename.tar.zst or zstd -d filename.tar.zst. filename.tar will be created.
+List compressed archive: tar tf filename.tar.
+Extract the compressed archive: tar xf filename.tar.
 
-
-
-
+从pacman包制作成ariang-allinone的deb包
 
 
 
