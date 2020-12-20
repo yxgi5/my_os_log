@@ -320,7 +320,7 @@ sudo pacman -S xfce4 xfce4-goodies mousepad
 
 
 sunloginclient
-[andy@andy ~]$ xhost +gedit /home/andy/.local/share/applications/mimeinfo.cache
+[andy@andy ~]$ xhost +
 access control disabled, clients can connect from any host
 [andy@andy ~]$ which xhost 
 /usr/bin/xhost
@@ -2222,21 +2222,46 @@ sudo nethogs wlan0
 
 
 
+yaourt ddd
+gpg --keyserver keyserver.ubuntu.com --recv-keys 6656C593E5158D1A
 
 
 
 
+sudo pacman -S rlwrap
+
+
+
+sudo gedit /usr/share/mime/packages/pcb.xml
+添加  
+<generic-icon name="application-x-pcb-layout"/>
+<glob pattern="*.pcb"/>
+
+sudo update-mime-database /usr/share/mime
+sudo update-desktop-database /usr/share/applications
+sudo gtk-update-icon-cache /usr/share/icons/hicolor
+cat /usr/share/mime/application/x-pcb-layout.xml
+
+pcmanfm下pcb文件还是没有图标，放弃了
 
 
 
 
+~.gtkrc-2.0
+/etc/gtk-2.0/gtkrc and add the following line:
+
+gtk-icon-theme-name = "gnome"
 
 
 
+sudo usermod -aG storage andy
 
+gtk3的版本运行不起来..
+sudo pacman -S lxappearance lxappearance-obconf 
 
+sudo pacman -S gnome-icon-theme gnome-icon-theme-extras mate-icon-theme mate-icon-theme-faenza xcursor-themes
 
-
+sudo pacman -S tango-icon-theme-extras tango-icon-theme
 
 
 
