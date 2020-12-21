@@ -14471,7 +14471,7 @@ https://wiki.archlinux.org/index.php/Xilinx_Vivado#xsct,_xsdb,_xmd,_and_tclsh_se
 sudo pip3.6 install tifffile==2018.10.18 -i https://mirrors.163.com/pypi/simple
 sudo pip3.6 install scikit-image==0.16.2 -i https://mirrors.163.com/pypi/simple
 
-
+sudo pip3.6 install libscrc==0.1.5  -i https://mirrors.163.com/pypi/simple
 
 sudo apt install zstd
 tar -I zstd -xvf archive.tar.zst
