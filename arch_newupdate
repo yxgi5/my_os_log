@@ -1832,7 +1832,8 @@ $ sudo udevadm trigger
 
 
 
-
+deb转pacman除了像st-stlink-server那样编写makepkg脚本
+还可以用转换工具
 yay debtap
 sudo debtap -u
 debtap xxx.deb
@@ -2262,6 +2263,33 @@ sudo pacman -S lxappearance lxappearance-obconf
 sudo pacman -S gnome-icon-theme gnome-icon-theme-extras mate-icon-theme mate-icon-theme-faenza xcursor-themes
 
 sudo pacman -S tango-icon-theme-extras tango-icon-theme
+
+
+
+
+创建百度网盘的命令启动
+cd /usr/local/bin
+sudo gedit baidunetdisk
+---------------------------------
+#!/bin/bash
+cd /opt/baidunetdisk
+./baidunetdisk
+---------------------------------
+sudo chmod +x baidunetdisk
+
+
+
+
+苦于gedit什么的没有掉电保存功能
+更新notepadqq
+邮件和快捷键的编辑器都设置成notepadqq
+
+
+
+sudo pacman -S pycharm-professional
+
+
+
 
 
 
