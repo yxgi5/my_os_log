@@ -1632,6 +1632,8 @@ Optional dependencies for i3-gaps
 
 
 编译libjaylink
+安装aur-libjaylink-git
+
 pacman安装stlink
 ////sudo cp -a /usr/lib/udev/rules.d/* /etc/udev/rules.d/
 安装pandoc
@@ -1670,7 +1672,7 @@ git clone https://github.com/stlink-org/stlink --branch v1.6.0
 
 确认stlink v1已经不能在最新的环境使用了
 stlink v2完全正常
-
+安装aur-stlink-git
 
 
 
@@ -1729,6 +1731,8 @@ systemctl status snapd
 snap version
 snap --version
 sudo snap install hello-world
+sudo proxychains snap install hello-world
+/var/lib/snapd/snap/bin/hello-world
 sudo journalctl -u snapd
 snap list
 //sudo snap remove hello-world
@@ -1741,11 +1745,11 @@ sudo pacman -S apparmor go-tools sdl_net
 
 
 
-wireshark-qt
+sudo pacman -S wireshark-qt
 
 sudo pacman -S python2-pip python-pip
 
-sudo pip3.9 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install --upgrade pip -i https://mirrors.163.com/pypi/simple
 
 优先用pacman安装python module！！
 //sudo pip3.9 install tensorflow==1.5 -i https://mirrors.163.com/pypi/simple
@@ -1753,13 +1757,13 @@ sudo pip3.9 install --upgrade pip -i https://mirrors.163.com/pypi/simple
 sudo pacman -S python-numpy cython
 //sudo pip3.9 install Cython -i https://mirrors.163.com/pypi/simple
 //sudo pip3.9 install numpy -i https://mirrors.163.com/pypi/simple
-sudo pip3.9 install mkl -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install mkl -i https://mirrors.163.com/pypi/simple
 //sudo pip3.9 install scipy -i https://mirrors.163.com/pypi/simple
 //sudo pip3.9 uninstall scipy
 
-sudo pip3.9 install pilutil -i https://mirrors.163.com/pypi/simple
+/sudo pip3.9 install pilutil -i https://mirrors.163.com/pypi/simple
 
-sudo pip3.9 install scipy==1.1.0 -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install scipy==1.1.0 -i https://mirrors.163.com/pypi/simple
 check https://github.com/scipy/scipy/issues/6212
 python3.9
 from scipy.misc import imread
@@ -1775,7 +1779,7 @@ sudo pacman -S python-scipy python-scipy-doc
 //sudo pip3.9 install matplotlib -i https://mirrors.163.com/pypi/simple
 sudo pacman -S python-matplotlib
 sudo pacman -S python-notify2
-sudo pacman -S python-pilkit cython
+sudo pacman -S python-pilkit cython python-qtpy
 sudo pacman -S python-skorch python-scikit-image python-scikit-learn python-scikit-build python-pillow python-pillowfight python-pilkit
 //sudo pip3.9 install scikit-image -i https://mirrors.163.com/pypi/simple
 //sudo pip3.9 uninstall scikit-image
@@ -2170,7 +2174,7 @@ TimeoutSec=0
 RemainAfterExit=yes
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ------------------------------------------------------>
 Type=forking情况下，要么配置文件设置成daemon=true，要么ExecStart加-D选项
 或者Type=simple，不过这样不太好
@@ -2188,7 +2192,7 @@ ok了
 
 aria2，也可添加-D选项，后台启动
 aria2c --conf-path=$HOME/.config/aria2/aria2.conf -D
-和前面的启动用户服务的方法是等效的
+和前面的启动用户服务的方法是等效的, 可以添加到自动启动脚本
 
 
 
@@ -2205,7 +2209,7 @@ aria2+curl
 http://localhost:6800/jsonrpc
 token:mytoken
 path:aria2c
-arguments:--conf-path=/etc/aria2/aria2.conf
+arguments:--conf-path=/home/andy/.config/aria2/aria2.conf
 
 
 
@@ -2290,6 +2294,251 @@ sudo pacman -S pycharm-professional
 
 
 
+
+sudo pacman -S libopenraw
+
+
+
+
+
+
+
+
+
+
+
+
+
+sudo pacman -S plasma-meta
+sudo pacman -Rns plasma-meta
+noto-fonts-cjk 
+noto-fonts-extra
+gnuplot
+plasma-workspace
+packagekit-qt5
+breeze-gtk
+qt5-virtualkeyboard
+plasma-workspace-wallpapers
+networkmanager-qt
+gpsd
+kdepim-addons
+appmenu-gtk-module
+baloo
+discover
+kross
+purpose
+quota-tools
+plasma-nm
+powerdevil
+ibus
+scim
+encfs
+cryfs
+gocryptfs
+packagekit-qt5
+fwupd
+breeze-grub
+
+
+sudo pacman -S plasma
+sudo pacman -S plasma-desktop
+sudo pacman -S plasma-wayland-session
+sudo pacman -Rns plasma-wayland-session
+opus-tools
+maxima
+octave
+r
+sagemath
+julia
+libdvdcss
+gnu-free-fonts
+live-media
+libgoom2
+aribb24
+aribb25
+libva-vdpau-driver
+kimageformats
+kipi-plugins
+kamera
+postgresql
+libetebase
+vorbis-tools
+python-language-server
+texlab
+rust
+sox
+movit
+rtaudio
+dvdauthor
+recordmydesktop
+xine-ui
+grammalecte
+libmediawiki
+libkvkontakte
+gnuchess
+libgadu
+mediastreamer
+python-random2
+python-pysol_cards
+languagetool
+libwlocate
+shapelib
+calligra
+udftools
+system-config-printer
+telepathy-gabble
+telepathy-haze
+telepathy-morse
+telepathy-salut
+lldb
+okteta
+cppcheck
+astyle
+heaptrack
+
+sudo pacman -S kde-applications
+sudo pacman -S kde-applications-meta 
+sudo pacman -Rns kde-applications-meta
+
+sudo pacman -Rns kdevelop kdevelop-php libksysguard umbrello plasma-workspace kget telepathy-kde-desktop-applets
+sudo pacman -Rns plasma
+
+sudo pacman -Rns baloo baloo-widgets dolphin konqueror elisa gwenview
+
+
+
+
+
+balooctl disable
+
+~/.config/kwalletrc
+[Wallet]
+Enabled=false
+Open=false
+
+
+
+
+opera
+inode/directory=pcmanfm.desktop
+sudo pacman -S gnome gnome-extra gnome-shell
+
+
+locate org.kde.kgpg.desktop
+sudo rm /etc/xdg/autostart/org.kde.kgpg.desktop
+sudo gedit /usr/share/dbus-1/services/org.gnome.OnlineAccounts.service
+注释掉goa-daemon
+
+
+
+dpms is the Display Power Management Signalling. For the xfce4-power-manager to disable it is a simple command mainly just to quit it.
+
+xfce4-power-manager -q
+To re-enable xfce4-power-manager it is:
+
+nohup xfce4-power-manager & 2>&1 >/dev/null
+To disable the dpms run the following command:
+
+xset -dpms
+To enable dpms it is just the opposite:
+
+xset dpms
+
+
+sudo gedit /usr/share/dbus-1/services/org.kde.kglobalaccel.service
+sudo gedit /usr/share/dbus-1/services/org.kde.activitymanager.service 
+cat /etc/xdg/autostart/xfce4-screensaver.desktop
+cat /etc/xdg/autostart/xfce4-power-manager.desktop
+都改成不执行或者添加Hidden=true
+
+sudo gedit /usr/share/kservices5/kglobalaccel5.desktop
+添加Hidden=true
+
+
+安装kde带来的配置冲突简直是个灾难
+从备份盘里恢复吧，需要恢复的有 /分区， /home的配置文件需要把目前的一些多余设置删除， 安装缺失的部分补上。很简单的。
+
+
+
+
+
+
+
+systemctl list-units | grep service
+systemctl list-unit-files
+systemctl is-enabled dbus.service
+systemd-analyze blame
+systemctl mask seems to be an effective way to disable services and is reversible with unmask eg. -
+Code: [Select]
+systemctl mask lvm2-activation.service
+
+creating an empty 'foo.service' file in ~/.local/share/dbus-1/services effectively disables the foo service by taking precedence over the (working) foo.service file in /usr/share
+
+
+/usr/share/dbus-1/system.conf and /usr/share/dbus-1/session.conf
+<policy group="lp">
+    <allow send_destination="org.bluez"/>
+    <allow send_destination="org.bluez.obex"/>
+  </policy>
+
+  <policy context="default">
+    <deny send_destination="org.bluez"/>
+    <deny send_destination="org.bluez.obex"/>
+  </policy>
+  
+ls /usr/share/dbus-1/services/
+
+goa-daemon
+/usr/share/dbus-1/services/org.gnome.OnlineAccounts.service
+goa-identity-service
+/usr/share/dbus-1/services/org.gnome.Identity.service
+gvfs-goa-volume-monitor
+/usr/share/dbus-1/services/org.gtk.vfs.GoaVolumeMonitor.service
+
+
+sudo gedit /usr/share/dbus-1/session.conf
+添加
+<------------------------------------
+  <policy context="default">
+    <deny send_destination="org.gnome.OnlineAccounts"/>
+    <deny send_destination="org.gtk.vfs.GoaVolumeMonitor"/>
+    <deny send_destination="org.gnome.Identity"/>
+  </policy>
+------------------------------------>
+放到最后的</busconfig> 之前
+无效
+
+下面的有效
+
+mkdir -p ~/.local/share/dbus-1/services
+
+cp /usr/share/dbus-1/services/org.gnome.Identity.service ~/.local/share/dbus-1/services/org.gnome.Identity.service
+
+cp /usr/share/dbus-1/services/org.gnome.OnlineAccounts.service ~/.local/share/dbus-1/services/org.gnome.OnlineAccounts.service
+
+cp /usr/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service ~/.local/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service
+
+replace the Exec=/usr/lib/gnome-online-accounts/..... line with Exec=exit
+
+xed ~/.local/share/dbus-1/services/org.gnome.Identity.service
+xed ~/.local/share/dbus-1/services/org.gnome.OnlineAccounts.service
+xed ~/.local/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service
+
+mkdir -p ~/.local/share/systemd/user/
+cp /usr/lib/systemd/user/gvfs-goa-volume-monitor.service ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
+gedit ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
+ExecStart=exit
+
+To revert
+CODE: SELECT ALL
+
+rm -r ~/.local/share/dbus-1/services
+
+
+
+sudo gedit /etc/xdg/autostart/xfce4-screensaver.desktop
+sudo gedit /etc/xdg/autostart/xfce4-power-manager.desktop
+都改成不执行或者添加Hidden=true
 
 
 
