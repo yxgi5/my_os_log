@@ -2233,7 +2233,23 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys 6656C593E5158D1A
 
 
 
+
+
+
+Xilin vivado sdk rlwrap使用native版本
 sudo pacman -S rlwrap
+修改tclsh，xmd，xstc，xsdb，xtclsh(不同版本稍有不同)
+替换
+"$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap
+为
+/usr/bin/rlwrap
+
+
+
+
+
+
+
 
 
 
@@ -2524,10 +2540,13 @@ xed ~/.local/share/dbus-1/services/org.gnome.Identity.service
 xed ~/.local/share/dbus-1/services/org.gnome.OnlineAccounts.service
 xed ~/.local/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service
 
+
 mkdir -p ~/.local/share/systemd/user/
 cp /usr/lib/systemd/user/gvfs-goa-volume-monitor.service ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
 gedit ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
 ExecStart=exit
+这个之后gedit，thunar等启动会变慢哦
+rm ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service 就好了
 
 To revert
 CODE: SELECT ALL
@@ -2539,6 +2558,80 @@ rm -r ~/.local/share/dbus-1/services
 sudo gedit /etc/xdg/autostart/xfce4-screensaver.desktop
 sudo gedit /etc/xdg/autostart/xfce4-power-manager.desktop
 都改成不执行或者添加Hidden=true
+
+
+
+
+busctl --user
+loginctl session-status
+echo $DBUS_SESSION_BUS_ADDRESS
+hostnamectl
+journalctl -xf
+pacman -Qikk gvfs
+pgrep -u andy -l
+systemctl --user list-unit-files |grep gvfs
+
+
+
+查看系统默认已有的keycode：
+xmodmap -pke
+
+查看keycode
+xev | grep keycode
+
+
+sudo pacman -S evtest
+sudo evtest
+
+
+
+sudo pacman -S wqy-microhei wqy-zenhei wqy-microhei-lite wqy-bitmapfont
+
+
+localectl list-x11-keymap-layouts
+
+//登陆打开NumLock键
+//$ gsettings set org.gnome.settings-daemon.peripherals.keyboard numlock-state on
+
+
+
+localectl status
+
+localectl list-keymaps
+localectl list-keymaps | grep -i search_term
+
+setxkbmap -print -verbose 10
+
+
+loadkeys 工具临时修改键盘布局
+
+
+sudo localectl set-keymap --no-convert us
+同时修改了/etc/vconsole.conf 和当前会话中的 KEYMAP
+us
+jp106
+
+
+yaourt xkb-switch 
+yaourt xkblayout-state
+
+xkblayout-state print "%s"
+xkb-switch -s jp106
+xkblayout-state print "%s"
+xkb-switch -l
+怎么就一个？
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
