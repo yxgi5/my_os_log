@@ -2625,6 +2625,26 @@ xkb-switch -l
 
 
 
+sudo pacman -S eclipse-ecj
+
+
+
+安装包默认不覆盖已经存在的文件，比如python就比较常见这样的现象
+...
+python-setuptools: /usr/lib/python3.9/site-packages/setuptools/tests/textwrap.py exists in filesystem
+Errors occurred, no packages were upgraded.
+error installing repo packages
+
+
+
+办法，强制覆盖
+pacman -S <package> --overwrite=*
+
+这里具体就是
+sudo pacman -Syu --overwrite=*
+
+
+
 
 
 
