@@ -1794,8 +1794,9 @@ sudo pacman -S python-pytorch
 
 
 
-//sudo pacman -S telegram-desktop ttf-opensans
-sudo pacman -R telegram-desktop
+sudo pacman -S telegram-desktop ttf-opensans
+
+
 
 
 
@@ -2268,6 +2269,10 @@ pcmanfm下pcb文件还是没有图标，放弃了
 
 
 
+
+
+
+
 ~.gtkrc-2.0
 /etc/gtk-2.0/gtkrc and add the following line:
 
@@ -2277,7 +2282,7 @@ gtk-icon-theme-name = "gnome"
 
 sudo usermod -aG storage andy
 
-gtk3的版本运行不起来..
+gtk3版本的lxappearance运行不起来..
 sudo pacman -S lxappearance lxappearance-obconf 
 
 sudo pacman -S gnome-icon-theme gnome-icon-theme-extras mate-icon-theme mate-icon-theme-faenza xcursor-themes
@@ -2324,6 +2329,9 @@ sudo pacman -S libopenraw
 
 
 
+
+！目前千万不要
+！安装kde
 
 sudo pacman -S plasma-meta
 sudo pacman -Rns plasma-meta
@@ -2555,9 +2563,14 @@ rm -r ~/.local/share/dbus-1/services
 
 
 
+
 sudo gedit /etc/xdg/autostart/xfce4-screensaver.desktop
 sudo gedit /etc/xdg/autostart/xfce4-power-manager.desktop
-都改成不执行或者添加Hidden=true
+添加Hidden=true木有用
+都改成不执行，比如
+Exec=xfce4-power-manager
+改成
+#Exec=xfce4-power-manager
 
 
 
@@ -2642,6 +2655,50 @@ pacman -S <package> --overwrite=*
 
 这里具体就是
 sudo pacman -Syu --overwrite=*
+
+
+
+
+
+
+
+
+
+
+替换wine的版本
+sudo pacman -S wine-staging
+sudo pacman -S dosbox cups lib32-vkd3d vkd3d
+sudo pacman -S foomatic-db antiword docx2txt
+sudo pacman -S playonlinux
+
+
+
+
+检查/lib/systemd/system/miredo.service
+<------------------------------------------
+[Unit]
+Description=Teredo IPv6 tunneling
+After=network-online.target
+
+[Service]
+ExecStartPre=/usr/bin/miredo-checkconf -f /etc/miredo/miredo.conf
+ExecStart=/usr/bin/miredo -f
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+------------------------------------------>
+sudo systemctl enable systemd-networkd-wait-online.service
+sudo systemctl enable miredo.service
+
+
+
+
+
+
+
+
+
 
 
 
