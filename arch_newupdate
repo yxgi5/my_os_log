@@ -727,7 +727,9 @@ sudo gedit /etc/proxychains.conf
 # add proxy here ...
 # meanwile
 # set to "v2ray"
-socks5  127.0.0.1 10808
+#socks5  127.0.0.1 10808
+# set to "SS"
+#socks5  127.0.0.1 1081
 ----------------------------
 使用方法
 proxychains [cmd]
@@ -2690,6 +2692,66 @@ WantedBy=multi-user.target
 ------------------------------------------>
 sudo systemctl enable systemd-networkd-wait-online.service
 sudo systemctl enable miredo.service
+
+
+
+
+
+
+
+env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" XMODIFIERS=@im=fcitx GTK_IM_MODULE=fcitx QT4_IM_MODULE=fcitx QT_IM_MODULE=fcitx WINEARCH=win32 WINEPREFIX="/home/andy/.wine" wine C:\\\\Program\\ Files\\\\Source\\ Insight\\ 4.0\\\\sourceinsight4.exe 
+还是不能在si4输入中文
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+failed to read config files: [/etc/v2ray/config.json] > v2ray.com/core/infra/conf: unknown cipher method: aes-256-cfb
+v2ray-desktop
+
+git-lfs
+
+qwt
+botan1.10
+
+
+
+
+
+
+
+20210114
+sudo pacman -Syu
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing wxgtk2 (3.0.5.1-2) breaks dependency 'wxgtk' required by gspiceui
+:: installing wxgtk2 (3.0.5.1-2) breaks dependency 'wxgtk' required by pyuv
+sudo pacman -R gspiceui
+sudo pacman -R pyuv
+yay gspiceui
+yay pyuv
+:: There are 3 providers available for wxgtk:
+:: Repository AUR
+    1) wxgtk-git 2) wxgtk2-dev 3) wxgtk2-light 
+选2
+
+更新了
+wxgtk-common --> wxgtk-common-dev
+wxgtk2 --> wxgtk2-dev
+
+
+
+图片有(1).jpg之类的重复，删除
+rm *\)\.jpg
 
 
 
