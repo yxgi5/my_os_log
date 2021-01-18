@@ -2754,9 +2754,17 @@ wxgtk2 --> wxgtk2-dev
 rm *\)\.jpg
 
 
+WARNING: Possibly missing firmware for module: aic94xx
+WARNING: Possibly missing firmware for module: wd719x
+modinfo wd719x
 
-
-
+git clone https://aur.archlinux.org/aic94xx-firmware.git
+cd aic94xx-firmware
+makepkg -sri
+git clone https://aur.archlinux.org/wd719x-firmware.git
+cd wd719x-firmware
+makepkg -sri
+yay upd72020x-fw
 
 
 
