@@ -2766,6 +2766,52 @@ cd wd719x-firmware
 makepkg -sri
 yay upd72020x-fw
 
+yay ltspice
+
+
+
+
+
+
+
+
+cd /usr/local/bin
+sudo gedit zoom
+<--------------------------------------------
+#!/bin/bash
+cd /opt/zoom
+export LD_LIBRARY_PATH=.
+./zoom
+-------------------------------------------->
+sudo chmod +x zoom
+
+
+sudo rm zoom
+God damn zoom!
+
+
+
+https://cdn.zoom.us/prod/5.4.57862.0110/zoom_x86_64.pkg.tar.xz
+
+sudo pacman -U zoom_x86_64.pkg.tar.xz --overwrite=*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
