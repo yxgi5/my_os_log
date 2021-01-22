@@ -2914,6 +2914,138 @@ ok， 是不是该考虑升级成spp170？
 
 
 
+DraftSight因为库依赖问题不能用
+yay DraftSight
+http://dl-ak.solidworks.com/nonsecure/draftsight/2019SP3/draftSight.rpm
+404了。
+直接解决库问题吧
+/opt/dassault-systemes/DraftSight/Linux/DraftSight
+ymbol lookup error: /usr/lib/libfontconfig.so.1: undefined symbol: FT_Done_MM_Var
+ldd /opt/dassault-systemes/DraftSight/Linux/DraftSight
+locate libfontconfig.so.1
+
+
+cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.4.4 /opt/dassault-systemes/DraftSight/Libraries
+cd /opt/dassault-systemes/DraftSight/Libraries
+ln -s libfontconfig.so.1.4.4 libfontconfig.so.1
+
+用户配置文件在
+~/.config/dassault-systemes
+
+active不了啊，狗日的达索
+
+还是查aur吧，
+https://aur.archlinux.org/packages/draftsight/?O=10&PP=10
+有人post出来存档的链接。。。。。。
+
+那么就用makepkg编译一个呗，也纳入pacman的管理
+draftSight.rpm名字修改成draftsight-2019SP3
+
+这样就剩下产品过期问题，参考
+cd /opt/dassault-systemes/DraftSight/Linux/
+env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' ./DraftSight
+（export LIBGL_DEBUG=verbose 据说 will have probably errors with DRI）
+
+desktop文件修改一下，加一个 faketime 变量
+<-------------------------------------------------------------------
+[Desktop Entry]
+Name=DraftSight
+Comment=Freeware CAD software for your DWG/DXF files.
+GenericName=DraftSight
+Exec=env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' /opt/dassault-systemes/DraftSight/Linux/DraftSight %U
+Path=/opt/dassault-systemes/DraftSight/Linux
+Type=Application
+Terminal=false
+Icon=draftsight
+MimeType=image/vnd.dwg;image/vnd.dwt;image/vnd.dxf;application-vnd.dassault-systemes.draftsight-dwg;application-vnd.dassault-systemes.draftsight-dwt;application-vnd.dassault-systemes.draftsight-dxf
+Categories=Application;Graphics;2DGraphics;RasterGraphics;
+------------------------------------------------------------------>
+就大功告成
+注意，达索已经不更新linux版本了。
+
+
+
+
+类似的
+graebert-gmbh
+rpm包已经准备好，参照上面的aur配置可以自己生成一个pacman包... 有时间再弄了
+
+
+
+qcad是pacman仓库就已经有的，暂时不安装
+//sudo pacman -S qcad
+不过这玩意的命令用起来不方便，还是上面法国佬和德国佬的两个好。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
