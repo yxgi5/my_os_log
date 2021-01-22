@@ -2983,6 +2983,14 @@ qcad是pacman仓库就已经有的，暂时不安装
 
 
 
+openproj已经安装了运行有点问题
+解决：
+确保/usr/lib/jvm/java-8-openjdk已经有java8
+修改$HOME/.openproj/run.conf，
+将JAVA_OPTS="-Xms128m -Xmx768m"改为JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，重启openproj
+
+
+
 
 
 
