@@ -2801,6 +2801,21 @@ sudo pacman -U zoom_x86_64.pkg.tar.xz --overwrite=*
 
 
 
+allegro display err
+
+ldd /opt/cadence/SPB166/tools.lnx86/pcb/bin/allegro.exe
+export LD_LIBRARY_PATH=/usr/lib32:/usr/lib:/usr/lib64:$CDS_ROOT/tools/lib64:$CDS_ROOT/tools.lnx86/mainwin540_64/mw/lib-amd64_linux_optimized:$CDS_ROOT/tools.lnx86/lib:$CDS_ROOT/tools.lnx86/mainwin540/mw/lib-linux_optimized:$LD_LIBRARY_PATH
+ldd /opt/cadence/SPB166/tools.lnx86/pcb/bin/allegro.exe
+
+附加的库路径有和系统库路径冲突的库，懒得一个个补成系统库，去掉冲突的就好了哇
+/opt/cadence/SPB166/tools.lnx86/lib目录下的
+libgcc_s.so.1 -> libgcc_s.so.1.bk
+libstdc++.so.6 -> libstdc++.so.6.bk
+
+ok， 是不是该考虑升级成spp170？
+
+
+
 
 
 
