@@ -2992,7 +2992,85 @@ openproj已经安装了运行有点问题
 
 
 
+sudo pip3.6 uninstall sip
+cd sip-4.19.12/
+python3 configure.py	## 这次是配置 编译PyQt 要用的SIP v4 (i.e. the sip.sipconfig module)
+make
+sudo make install
 
+PyQt4_gpl_x11-4.12.3编译
+compiling this package failed because of $[QT_INSTALL_LIBS] = 0 PLease replace '$[QT_INSTALL_LIBS]' with ‘/usr/lib’.
+
+gedit configure.py
+修改
+        pyqt_modules.append("QtCore")
+为
+        pyqt_modules.append("QtCore")
+        pyqt_modules.append("QtGui")
+        pyqt_modules.append("QtHelp")
+        pyqt_modules.append("QtMultimedia")
+        pyqt_modules.append("QtNetwork")
+        pyqt_modules.append("QtDBus")
+        pyqt_modules.append("QtDeclarative")
+        pyqt_modules.append("QtScript")
+        pyqt_modules.append("QtScriptTools")
+        pyqt_modules.append("QtOpenGL")
+        pyqt_modules.append("QtSql")
+        pyqt_modules.append("QtSvg")
+        pyqt_modules.append("QtTest")
+        pyqt_modules.append("QtWebKit")
+        pyqt_modules.append("QtXml")
+        pyqt_modules.append("QtXmlPatterns")
+        pyqt_modules.append("phonon")
+        pyqt_modules.append("QtDesigner")
+
+
+for files in `find . -type f -name "Makefile"`
+do
+sed -i 's/$$\[QT_INSTALL_LIBS\]/\/usr\/lib/' $files
+done
+
+python3 configure.py
+make -j $(nproc)
+sudo make install
+
+cd ../sip-4.19.12/
+make clean
+## python3 configure.py --sip-module PyQt4.sip --no-dist-info --no-tools ## 可能造成报错PyCapsule_GetPointer called with incorrect name
+python3 configure.py --sip-module PyQt4.sip
+make	## 这次是配置运行 import PyQt4 所需要的 PyQt4.sip
+sudo make install
+
+
+安装时出现报错：Error: This version of PyQt4 and the commercial version of Qt have incompatible licenses.
+解决方法：注释掉configure-ng.py下面语句即可：
+if introspecting and target_config.qt_licensee not in OPEN_SOURCE_LICENSEES and ltype == 'GPL':
+        error(
+                "This version of PyQt4 and the commercial version of Qt have "
+                "incompatible licenses.")
+
+
+error: ‘waitForEvents’ is not a member of ‘QTest’
+gedit PyQt4_gpl_x11-4.12.3/sip/QtTest/qtestmouse.sip
+去掉waitForEvents那一段
+
+fatal error: abstractaudiooutput.h: No such file or directory
+PyQt4_gpl_x11-4.12.3/phonon/Makefile
+引入/usr/include/phonon4qt5/phonon
+
+/usr/bin/ld: cannot find -lQt5onon
+我实在找不着这个鸡巴库
+PyQt4_gpl_x11-4.12.3/phonon/Makefile
+删掉-lQt5onon
+
+fatal error: qassistantclient.h: No such file or directory
+这个没辙，不要编译QtAssistant模块就好了嘛
+
+/usr/bin/ld: cannot find -lQt5xContainer
+我也实在找不着这个鸡巴库
+去掉QAxContainer的编译
+
+这样总算把Pyqt4安装得差不多了。
 
 
 
