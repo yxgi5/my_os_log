@@ -2748,6 +2748,8 @@ yay pyuv
 wxgtk-common --> wxgtk-common-dev
 wxgtk2 --> wxgtk2-dev
 
+[实际上，不需要替换的，修改编译配置为依赖wxgtk-common就可以了]
+
 
 
 图片有(1).jpg之类的重复，删除
@@ -3074,13 +3076,57 @@ fatal error: qassistantclient.h: No such file or directory
 
 
 
+删除多余的snap包
+su
+snap list --all | while read snapname ver rev trk pub notes; do if [[ $notes = *disabled* ]]; then snap remove "$snapname" --revision="$rev"; fi; done
+安置一个游戏
+sudo snap install 0ad
+sudo snap install openra
+sudo snap install warzone2100
+维护参考
+https://snapcraft.io/docs/getting-started
 
 
 
 
 
+安装一些多媒体编辑工具
+yay shotcut
+yay rtaudio
+yay vidcutter
+yay mkvtoolnix-gui
+yay mkvtoolnix-cli
+yay audacity
+
+矢量图制作
+yay inkscape
 
 
+记账工具
+yay gnucash-docs
+yay gnucash
+
+
+更新
+wxgtk-common
+wxgtk2
+取代wxgtk-common-dev和wxgtk2-dev
+测试用 gspiceui，audacity和pyuv
+pacman -Qs wxgtk
+
+既然都删了wxgtk2-dev和以此库依赖编译的pyuv，那么按pyuv的要求选wxgtk-git依赖
+but，wxgtk-git编译失败
+解决办法
+修改pyuv的依赖为wxgtk-common
+重新编译
+这样pyuv也是可以用的。
+
+
+安装
+cppunit，libmspack
+
+安装vlc
+附加libdvdcss gnu-free-fonts live-media libgoom2 aribb24 aribb25
 
 
 
