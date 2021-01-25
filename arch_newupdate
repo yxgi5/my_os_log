@@ -3129,10 +3129,11 @@ cppunit，libmspack
 附加libdvdcss gnu-free-fonts live-media libgoom2 aribb24 aribb25
 
 
-
-
-
-
+yay cunit
+yay bcunit
+yay splint
+yay cmocka
+yay gtest
 
 
 
