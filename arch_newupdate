@@ -3137,20 +3137,28 @@ yay gtest
 
 
 
+yay picom
+mkdir ~/.config/picom/
+cp /etc/xdg/picom.conf ~/.config/picom/picom.conf
+gedit ~/.config/picom/picom.conf
+
+opacity-rule = [
+  "100:class_g = 'Lxterminal' && focused",
+  "100:class_g = 'Lxterminal' && !focused"
+];
+
+picom --config ~/.config/picom/picom.conf
+
+效果不是我想要的，不启用
+rm ~/.config/picom/picom.conf
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+更新wps
+yay wps-office
+yay wps-office-mime
 
 
 
