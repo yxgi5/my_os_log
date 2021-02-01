@@ -3162,11 +3162,26 @@ yay wps-office-mime
 
 
 
+更新exfat工具集
+exfat-utils -> exfatprogs
 
 
 
 
+sudo mv /etc/php/php.ini /etc/php/php.ini.bk
+sudo mv /etc/php/php.ini.pacnew /etc/php/php.ini
 
+sudo mv /etc/privoxy/config /etc/privoxy/config.bk
+sudo mv /etc/privoxy/config.pacnew /etc/privoxy/config
+add @ 1449
+forward-socks5t   / 127.0.0.1:1081 . 
+
+
+Default Java environment is already set to 'java-15-jdk'
+See 'archlinux-java help' to change it
+
+
+yay python-certifi
 
 
 
