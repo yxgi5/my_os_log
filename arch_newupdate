@@ -3187,8 +3187,69 @@ yay python-certifi
 
 
 
+libtool
+libtool --finish /usr/lib
 
 
+
+更新gnucap
+为gnucap-git版本
+
+
+更新miredo
+
+
+更新peco，参考https://goproxy.cn和https://github.com/ethereum/go-ethereum/issues/21129
+$ go env -w GO111MODULE=on
+$ go env -w GOPROXY=https://goproxy.cn,direct
+makepkg
+
+
+更新gaw
+为gaw3
+
+
+更新foxitreader
+
+
+更新obmenu
+
+
+更新obmenu-generator
+The schema file has been installed as: /etc/xdg/obmenu-generator/schema.pl
+yay perl-gtk3
+
+
+更新spacefm
+New optional dependencies for spacefm
+    curlftpfs: mount FTP shares [installed]
+    dbus: dbus integration [installed]
+    fuseiso: mount ISO files
+    gphotofs: mount cameras
+    ifuse: mount your iPhone/iPod Touch
+    jmtpfs: mount MTP devices
+    pmount: mount as non-root user
+    util-linux: disk eject support [installed]
+
+
+
+
+yay pv
+
+
+
+
+
+看到opt目录下有个mygui文件夹，里面的玩意运行又缺乏库，aur的git版本cmake报错，编译不了，啥鸡巴玩意，删！
+sudo pacman -Rs mygui
+
+
+
+更新提示了
+>>> It's now located under /usr/lib/rp-pppoe/rp-pppoe.so
+>>> Change LINUX_PLUGIN to the new path in your /etc/ppp/pppoe.conf
+就是
+LINUX_PLUGIN=/usr/lib/rp-pppoe/rp-pppoe.so
 
 
 
