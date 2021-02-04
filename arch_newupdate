@@ -3254,7 +3254,14 @@ LINUX_PLUGIN=/usr/lib/rp-pppoe/rp-pppoe.so
 
 
 
+今日系统无法启动
+fsck修复，后能启动，发现/etc/ppp/pppoe.conf已经被莫名二进制文件替代，其他配置文件可能也会有类似问题
+解决方法有二
+一。幸好老子的laptop有个备份系统，直接更新到最新然后把前面的update都搞好，复制到移动系统盘，包括home分区都以laptop为准。
+二。深度更新，https://wiki.archlinux.org/index.php/pacman#Skip_package_from_being_upgraded， pacman -S $(pacman -Qnq)，之后一个个查/etc下的文件的Qo(属于哪个软件包)，全部对比重置。
 
+本来的laptop是否也存在配置文件无效问题，需要有时间按方法二也检查。
+目前移动系统盘起码还能凑合用，先拖到春节放假。
 
 
 
