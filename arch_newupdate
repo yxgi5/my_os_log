@@ -2797,7 +2797,7 @@ https://cdn.zoom.us/prod/5.4.57862.0110/zoom_x86_64.pkg.tar.xz
 
 sudo pacman -U zoom_x86_64.pkg.tar.xz --overwrite=*
 
-
+sudo pacman -S xcompmgr
 
 
 
@@ -3100,7 +3100,7 @@ yay audacity
 
 矢量图制作
 yay inkscape
-
+yay scour
 
 记账工具
 yay gnucash-docs
@@ -3134,7 +3134,7 @@ yay bcunit
 yay splint
 yay cmocka
 yay gtest
-
+yay python-pylint
 
 
 yay picom
@@ -3262,6 +3262,76 @@ fsck修复，后能启动，发现/etc/ppp/pppoe.conf已经被莫名二进制文
 
 本来的laptop是否也存在配置文件无效问题，需要有时间按方法二也检查。
 目前移动系统盘起码还能凑合用，先拖到春节放假。
+
+
+
+
+
+
+
+gperf
+
+
+yay asco
+yay obmenu2-git
+
+qucs
+http://downloads.sourceforge.net/project/qucs/qucs/0.0.20/qucs-0.0.20-rc2.tar.gz
+
+
+
+AUR 镜像使用帮助
+https://mirror.tuna.tsinghua.edu.cn/help/AUR/
+
+yaourt 用户
+修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为
+
+AURURL="https://aur.tuna.tsinghua.edu.cn"
+yay 用户
+执行以下命令修改 aururl :
+
+yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+修改的配置文件位于 ~/.config/yay/config.json ，还可通过以下命令查看修改过的配置：
+yay -P -g
+
+
+
+
+
+
+Optional dependencies for shutter-git
+    gnome-web-photo: web screenshot support
+    perl-image-exiftool: read and write EXIF data [installed]
+    nautilus-sendto: send screenshots via mail [installed]
+    perl-goo-canvas: editing screenshots [installed]
+    perl-gtk2-appindicator: AppIndicators support
+    perl-path-class: Imgur and Dropbox upload support [installed]
+    perl-lwp-protocol-https: Imgur and Dropbox upload support [installed]
+    perl-net-oauth: Imgur and Dropbox upload support [installed]
+    bc: 3D Rotate and 3D Reflection plugins support [installed]
+    perl-webservice-gyazo-b: Gyazo upload support
+
+
+
+yay gnome-web-photo
+需要更新webkitgtk和webkitgtk2
+
+yay perl-gtk2-appindicator
+
+yay perl-webservice-gyazo-b
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
