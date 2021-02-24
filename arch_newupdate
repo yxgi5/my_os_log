@@ -3730,3 +3730,58 @@ texlive-pictures texlive-publishers texlive-science texlive-latexextra texstudio
 texworks texmaker texlive-langcyrillic texlive-langgreek texlive-pstricks dblatex
 okular rcs kdegraphics-mobipocket calligra pstoedit doxygen-docs
 
+
+yay xmind-pro
+
+virt-manager virt-viewer x11-ssh-askpass dnsmasq ebtables
+systemctl status libvirtd.service
+sudo systemctl start libvirtd.service
+sudo systemctl enable libvirtd.service
+sudo usermod -a -G libvirt andy
+
+不能连接，
+
+查org.libvirt.unix.manage
+https://wiki.archlinux.org/index.php/libvirt
+
+/usr/share/polkit-1/actions/org.libvirt.unix.policy  
+已经确认修改字段
+        <allow_any>yes</allow_any>
+        <allow_inactive>yes</allow_inactive>
+        <allow_active>yes</allow_active>
+就可以有效允许普通用户连接
+/usr/share/polkit-1/rules.d/50-default.rules
+/etc/polkit-1/rules.d/50-libvirt.rules
+<----------------------------------------------------------------
+/* Allow users in kvm group to manage the libvirt
+daemon without authentication */
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.libvirt.unix.manage" &&
+        subject.isInGroup("kvm")) {
+            return polkit.Result.YES;
+    }
+});
+---------------------------------------------------------------->
+sudo usermod -a -G kvm andy
+
+virt-manager
+
+·增加权限启动配置未验证(没有效果)，还是用上面的办法
+vi /etc/polkit-1/localauthority/50-local.d/50-org.libvirtd-group-access.pkla
+[libvirtd group Management Access]
+Identity=unix-group:libvirtd
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+
+
+sudo systemctl restart libvirtd.service
+
+
+
+
+
+
+
+
