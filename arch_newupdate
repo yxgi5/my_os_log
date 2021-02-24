@@ -792,15 +792,15 @@ sudo dirmngr < /dev/null
 sudo touch /root/.gnupg/dirmngr_ldapservers.conf
 sudo killall dirmngr
 
-gpg --refresh-keys
-
-gpg --refresh-keys --keyserver hkp://keyserver.ubuntu.com
 
 rm -R /etc/pacman.d/gnupg/
 rm -R /root/.gnupg/
-
+gpg --refresh-keys
+gpg --refresh-keys --keyserver hkp://keyserver.ubuntu.com
 pacman-key --init && pacman-key --populate archlinux
 pacman-key --refresh-keys --keyserver hkp://keyserver.ubuntu.com
+pacman-key --refresh-keys
+
 
 sudo pacman-key --keyserver keyserver.ubuntu.com -r 962DDE58
 
@@ -3321,33 +3321,412 @@ yay perl-gtk2-appindicator
 yay perl-webservice-gyazo-b
 
 
+yay ozone
+yay lucidor
+yay libcurl-openssl-1.0
+yay lib32-unixodbc
+yay jlink-systemview
+yay jlink-systemview-target-src
+yay jlink-software-and-documentation
+yay idnkit
+yay gcc6
+yay smath
+yay asco
+yay lib32-fakechroot 失败
+yay microchip-mplabx-bin 依赖失败
+yay stcgal
+dropbox
+
+rarcrack
+tcllib
+autofs
+R rpmextract
+python2-qrtools失败
+python2-werkzeug失败
+sssd
+R qt5-enginio
+qt5-enginio-git失败
+
+sudo debtap -u
+
+dumpet-2.1.tar.bz2 ... FAILED (unknown public key 8C004C2F93481F6B)
+
+gpg --keyserver keyserver.ubuntu.com --recv 8C004C2F93481F6B
+
+
+It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+uex升级后无限试用
+rm -rf ~/.idm/*.spl
+rm -rf /tmp/*.spl
+rm -rf ~/.idm/uex/*.spl
+
+参考
+alias ue='rm -rf ~/.idm/uex/*.spl | rm -rf ~/.idm/uex/*.spl |rm -rf /tmp/*.spl | /usr/bin/uex &'
+
+启动加入
+Exec=env faketime '2020-02-29 08:15:42' uex %U
+
+
+
+
+NOTE: It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+bcompare升级后无限试用
+/home/andy/.config/bcompare
+
+参考：
+bcompare Linux版 无限试用
+需要root权限。
+ 
+# mv /usr/bin/bcompare /usr/bin/bcompare.real
+# cat /usr/bin/bcompare
+#!/bin/sh
+rm "${HOME}/.config/bcompare/registry.dat"
+/usr/bin/bcompare.real $@
+# chmod a+x /usr/bin/bcompare
+
+就知道删掉${HOME}/.config/bcompare/registry.dat这个文件就可以继续试用呗
+
+懒得用
+cd /usr/lib/beyondcompare/
+sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g" BCompare
+
+
+
+一个好主意是每次开机就执行，或者放到一个脚本里，一起删掉
+rm -rf ~/.idm/*.spl
+rm -rf /tmp/*.spl
+rm -rf ~/.idm/uex/*.spl
+rm "${HOME}/.config/bcompare/registry.dat"
+
+网页编辑器
+bluefish
+komodo
+gtksourceview libgtkhtml libgnomeprintui enchant1.6 gnome-menus2 rarian addinclude
+screem
+kompozer不能用了，可以snap重新安装一个
+sudo snap install kompozer
+也可以使用/opt目录下那个
+删掉pacman安装的那个就好了
+sudo pacman -R kompozer
+
+
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc16-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC16_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC16 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc16-bin/LICENSE
+
+For using MPLAB_XC16 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC16_TOOLCHAIN_ROOT/bin
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc32-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC32_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC32 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc32-bin/LICENSE
+
+For using MPLAB_XC32 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC32_TOOLCHAIN_ROOT/bin
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc8-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC8_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC8 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc8-bin/LICENSE
+
+For using MPLAB_XC8 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC8_TOOLCHAIN_ROOT/bin
+
+
+
+
+xulrunner需要先删旧版本再编译
+xulrunner修改一下，依赖libpng，原来这玩意被lucidor依赖
+lucidor修改一下，到最新版本，AUR里的包链接失效，找不到了。
+
+yay icu57
+
+Missing AUR Packages: 查看信息，一般不用删掉的
+pacman -Qi automake1.11
+
+
+
+https://wiki.archlinux.org/index.php/Apache_HTTP_Server
+
+[andy@archlinux ~]$ sudo systemctl status httpd.service
+● httpd.service - Apache Web Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+     Active: failed (Result: exit-code) since Thu 2021-02-18 15:42:19 CST; 7s ago
+    Process: 354727 ExecStart=/usr/bin/httpd -k start -DFOREGROUND (code=exited, status=1/FAILURE)
+   Main PID: 354727 (code=exited, status=1/FAILURE)
+
+Feb 18 15:42:19 archlinux systemd[1]: Started Apache Web Server.
+Feb 18 15:42:19 archlinux httpd[354727]: httpd: Syntax error on line 184 of /etc/httpd/conf/httpd.conf: Cannot load modules/libphp7.so into server: /etc/httpd/modules/libphp7.so: cannot ope>
+Feb 18 15:42:19 archlinux systemd[1]: httpd.service: Main process exited, code=exited, status=1/FAILURE
+Feb 18 15:42:19 archlinux systemd[1]: httpd.service: Failed with result 'exit-code'.
+
+修改
+sudo gedit /etc/httpd/conf/httpd.conf
+主要是php7修改为php什么的
 
 
 
 
 
 
+sudo pip2 install service_identity  -i https://mirrors.163.com/pypi/simple
+python2-mechanize在test地方出错，test你妹啊，去掉check()就好了，我只是要成功产生安装包而已。
+
+
+
+
+一个基于firefox改进的web浏览器
+palemoon
+
+
+日语输入法
+gxkb
+fcitx-mozc
+ttf-kochi-substitute
+
+
+epub编辑器
+sigil pageedit hyphen-en hunspell-en_US
+
+
+
+bibletime
+
+geogebra
+
+google-earth-pro 好像无法登录服务器
+
+celestia
+
+chemtool
+
+sagemath
+
+maple2020
+Activate Maple
+When prompted, activate Maple using your activation code/purchase code:
+NZ3DP9ZX6L4GPNUH
+Your evaluation will expire in 15 days (March 06, 2021).
+
+
+maxima 之前引入有 maxima-ecl
+
+
+
+
+
+dosbox
+
+
+ekho
+foliate     ekho -f '-'
+festival
+espeak-ng
+dictd
+xclip
+
+error: ekho: key "83F817213361BF5F02E7E124F9F9FA97A403F63E" is unknown
+gpg --keyserver keyserver.ubuntu.com --recv 83F817213361BF5F02E7E124F9F9FA97A403F63E
+
+ekho "hello 123"
+
+
+
+archlinuxcn-keyring python-keyring libgnome-keyring gnome-keyring archlinux-keyring
+
+
+
+
+warning: /etc/sane.d/canon_lide70.conf installed as /etc/sane.d/canon_lide70.conf.pacnew
+warning: /etc/sane.d/escl.conf installed as /etc/sane.d/escl.conf.pacnew
+
+sudo mv /etc/sane.d/canon_lide70.conf.pacnew /etc/sane.d/canon_lide70.conf
+sudo mv /etc/sane.d/escl.conf.pacnew /etc/sane.d/escl.conf
+
+
+
+
+sudo pacman -Rns tor-browser-en
+rm -rf ~/.tor-browser-en
+gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org   这个公钥是 EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+gpg --keyserver keyserver.ubuntu.com --recv  4E2C6E8793298290
+yay tor-browser
+
+
+systemctl list-timers
+sudo pacman -S pkgstats
+
+
+konsole (dolphin需要)
+
+
+manjaro? 可能有一些有趣的附加工具，but 老子用不着，至少目前用不着
+
+
+lattice diamond 下载线驱动识别
+sudo gedit /etc/udev/rules.d/10-local.rules
+<----------------------------------------------------------
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="andy",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andy",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'
+---------------------------------------------------------->
+sudo chmod 755 /etc/udev/rules.d/10-local.rules
+sudo udevadm control --reload-rules
+
+
+
+
+error: key "F9F9FA97A403F63E" could not be looked up remotely
+sudo pacman -S archlinuxcn-keyring
+有报错
+ERROR: 90403E12F4CE5E0E950E4AD2C96492E347202001 could not be locally signed
+之类， 参考https://www.archlinuxcn.org/gnupg-2-1-and-the-pacman-keyring/
+
+su
+pacman -Syu haveged
+systemctl start haveged
+systemctl enable haveged
+rm -fr /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
+pacman-key --populate archlinuxcn
+
+这样就 sudo pacman -S archlinuxcn-keyring 无报错
+
+
+
+
+yay repacman2
+repacman -h
+
+
+
+yay caja-open-terminal
+change mate-terminal to lxterminal
+https://github.com/mate-desktop/caja-extensions/issues/31
+可以配置F4快捷键打开terminal
+
+~/.config/caja/scripts/open-terminal-here
+<------------------------------------------------------------------
+#!/bin/sh
+#
+# This script opens a gnome-terminal in the current directory.
+#
+# Distributed under the terms of GNU GPL version 2 or later
+#
+# Original author: Keith Conger <acid@twcny.rr.com>
+#
+# Sourced from
+# https://forums.linuxmint.com/viewtopic.php?p=773382&sid=9939ce160bd97313f849367231eb721a#p773382
+# http://g-scripts.sourceforge.net/nautilus-scripts/Execute/Open%20terminal/terminal-here
+#
+# Put this file in your ~/.config/caja/scripts/ directory.
+# You need to have caja-actions installed to use scripts.
+
+cd $CAJA_SCRIPT_CURRENT_URI
+exec gnome-terminal
+------------------------------------------------------------------>
+chmod +x ~/.config/caja/scripts/open-terminal-here
+
+gedit ~/.config/caja/accels        添加
+"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+有效，以后pcmanfm不好使了就可以用caja取代
+
+
+
+
+dconf-editor
+Then navigate to org > gnome > nautilus > preferences and check always-use-location-entry.
+Then navigate to org > gnome > caja > preferences and check always-use-location-entry.
 
 
 
 
 
 
+sudo pacman -S handbrake-cli handbrake intel-media-sdk intel-compute-runtime
+
+sudo pacman -S asciinema peek gifski lib32-simplescreenrecorder simplescreenrecorder vokoscreen
+
+yay green-recorder
+yay kazam
+cinelerra-cv toolame
+需要修改cinelerra/transportque.inc的#define CHANGE_ALL 0xffffffffu为#define CHANGE_ALL 0xff
+
+sudo pacman -S log4cxx
+davinci-resolve-studio
+davinci-resolve
+这两个需要从这里收动下载原始包
+http://www.blackmagicdesign.com/hk/products/davinciresolve/
+
+[andy@archlinux ~]$ /opt/resolve/bin/resolve 
+ActCCMessage Already in Table: Code= c005, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= c006, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= c007, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= 2282, Mode=  0, Level=  0, CmdKey= 8, Option= 0
+PnlMsgActionStringAdapter Already in Table: Code= 615e, Mode=  0, Level=  0, CmdKey= -1, Option= 0
+log4cxx: No appender could be found for logger (BtCommon).
+log4cxx: Please initialize the log4cxx system properly.
+
+启动失败了
+https://forum.manjaro.org/t/davinci-resolve-doesnt-open/30065
+https://wiki.archlinux.org/index.php/DaVinci_Resolve
+哦，驱动是个大问题。intel显卡看来用不了这个软件， 删掉这个/home/andy/.local/share/DaVinciResolve
+
+PKGEXT='.pkg.tar' yay -S davinci-resolve 可以不压缩makepkg生成的包
+
+opencl-clhpp opencl-mesa lib32-opencl-nvidia lib32-opencl-mesa
 
 
+/sbin/lspci | grep -e VGA
+pactl info
+inxi bluez-utils-compat tree wmctrl ell
+yay perl-xml-dumper
+inxi -Fxz
+opencl-amd
+clinfo
 
 
+flowblade
+vidcutter
 
 
+xdot xdotool
 
 
-
-
-
-
-
-
-
-
-
+http://wiki.archlinux.org/index.php/TeX_Live
+texlive-core texlive-bin texlive-bibtexextra texlive-fontsextra texlive-formatsextra
+qtikz tikzit ed biber perl-tk psutils t1utils dot2tex gnuplot yasm
+texlive-latexextra latex2html git-latexdiff texlive-langchinese texlive-langextra texlive-langjapanese texlive-langkorean 
+texlive-pictures texlive-publishers texlive-science texlive-latexextra texstudio texlive-humanities lyx
+texworks texmaker texlive-langcyrillic texlive-langgreek texlive-pstricks dblatex
+okular rcs kdegraphics-mobipocket calligra pstoedit doxygen-docs
 
