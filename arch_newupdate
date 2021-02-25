@@ -3854,16 +3854,26 @@ dcmtk   (dicom)
 
 
 
+pari-elldata
+pari-galdata
+pari-seadata
+
+不安装catalyst-utils
+不安装pipewire-pulse
+不安装openblas
+不安装espeak-ng-espeak
+yay -S pari-galpol texlive-bin python-symengine swi-prolog pipewire-alsa
+yay -S clinfo gap-packages gap-doc dsdp polymake python-pkgconfig jmol sagemath-doc
+yay -S python-igraph sage-numerical-backends-coin coin-or-csdp buckygen plantri benzene coxeter rubiks lrs python-pynormaliz
+yay -S latte-integrale python-jupymake shared_meataxe sirocco primecount dot2tex cryptominisat5 python-pycosat sagemath-jupyter
+yay -S kdialog keditbookmarks perl-xml-dumper c-xsc libsemigroups python-pycurl jsmol sage-notebook-exporter
+yay perl-xml-dumper
 
 
 
-
-
-
-
-
-
-
+sudo gedit /etc/default/grub.pacnew
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+sudo mv /etc/default/grub.pacnew /etc/default/grub
 
 
 
