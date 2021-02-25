@@ -3652,12 +3652,12 @@ https://github.com/mate-desktop/caja-extensions/issues/31
 # You need to have caja-actions installed to use scripts.
 
 cd $CAJA_SCRIPT_CURRENT_URI
-exec gnome-terminal
+exec lxterminal
 ------------------------------------------------------------------>
 chmod +x ~/.config/caja/scripts/open-terminal-here
 
 gedit ~/.config/caja/accels        添加
-"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sUSER\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
 有效，以后pcmanfm不好使了就可以用caja取代
 
 
@@ -3665,7 +3665,7 @@ gedit ~/.config/caja/accels        添加
 
 dconf-editor
 Then navigate to org > gnome > nautilus > preferences and check always-use-location-entry.
-Then navigate to org > gnome > caja > preferences and check always-use-location-entry.
+Then navigate to org > mate > caja > preferences and check always-use-location-entry.
 
 
 
@@ -3777,6 +3777,119 @@ ResultActive=yes
 
 
 sudo systemctl restart libvirtd.service
+
+
+
+su
+ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
+fc-cache && mkfontscale && mkfontdir
+fc-list :lang=zh-cn
+fc-list | grep sim
+
+cd /usr/share/texmf-dist/fonts/truetype
+mkfontdir
+mkfontscale
+fc-cache -f -s -v
+fc-cache -fv
+fc-cache
+fc-list :lang=zh-cn
+fc-list | grep sim
+
+
+
+# systemctl disable qemu-ga.service
+# systemctl enable qemu-guest-agent.service
+
+
+
+心血来潮，在滚动更新的当前系统编译一下dvsdk玩
+/home/andy/ti-dvsdk_dm368-evm_4_02_00_06
+make clean 
+
+错误1
+valid arguments to ‘-mabi=’ are: ms sysv
+
+修改 Makefile 
+linux_clean:
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) mrproper
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) clean
+
+-->
+
+linux_clean:
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) mrproper
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) clean
+
+错误2
+Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at kernel/timeconst.pl line 373
+修改
+if (!defined(@val)) {
+-->
+if (!@val) {
+
+到这里kernel是编译成功了。未在板验证
+
+错误3
+error: redefinition of ‘struct fdt_header’
+看来即include了系统的又include了uboot源码的
+未解决
+
+错误4
+errno: TLS definition in /lib64/libc.so.6 section .tbss mismatches non-TLS reference
+extern int errno;
+I replaced this line with #include <errno.h>
+未成功，如果不inlcude系统的，那么就include了uboot源码的，又不能改errno.h，否则循环引入;如果引入系统的，那么由于错误3又编译不过。
+
+结论：
+u-boot的老代码在新版本glibc下还真有问题。包括海思的u-boot版本比较新了吧，还是有问题。
+
+可能的办法，暂时删掉fdt之类的dev包，先编译通过了再说。未验证。不如用虚拟机呢。
+
+
+
+
+downgrader-git
+
+dcmtk   (dicom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
