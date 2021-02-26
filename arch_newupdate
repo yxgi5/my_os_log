@@ -3927,14 +3927,16 @@ https://github.com/aur-archive
 7z x -p'fuckya' 'DLI 课程目录202004.7z'
 
 
+python-sip-pyqt4 python-pyqt4 暂时不一致
+yay -S addinclude bitrock-unpacker chrpath cksfv debhelper dejagnu electron6 enchant1.6 extra-cmake-modules festival gnome-common gnu-netcat gperf gtksourceview guvcview-common ibus itstool jlink-systemview-target-src jq libgnomeprint libgnomeprintui libgtkhtml libmspack libpng lrs mallard-ducktype mkvtoolnix-cli ois opencl-nvidia perl-cpan-perl-releases perl-devel-patchperl perl-file-path-tiny perl-file-pushd perl-io-socket-socks perl-local-lib perl-lwp-protocol-socks perl-module-pluggable perl-uri-simple po-debconf po4a polymake postgresql python-apipkg python-certifi python-filelock python-iniconfig python-pluggy python-py python-tox python-virtualenv python2-nose python2-pillow python2-pyqt4 python2-pytest-timeout python2-werkzeug rarian setconf sip4 termcap wine wxgtk-common wxgtk2 xorg-util-macros xulrunner yelp-tools
+tclkit
+
+baidunetdisk是否替换为AUR的版本？ wine-wechat是否替换？
+base caja-image-converter geogebra perlbrew 
 
 
 
-
-
-
-
-
+yay -S antiword balena-etcher cdate downgrade dsdp foomatic-db gap-doc gap-packages gcc8-fortran gnu-netcat gstreamer0.10-good-plugins gstreamer-docs gtksourceview2 guvcview guvcview-common jmol jq lib32-vkd3d memtester playonlinux python2-pillow python2-werkzeug python-pkgconfig sagemath-doc scour ttf-kochi-substitute vkd3d xcompmgr
 
 
 
