@@ -3877,11 +3877,54 @@ sudo mv /etc/default/grub.pacnew /etc/default/grub
 
 
 
+repacman utorrent
+sudo pacman -Rn utorrent
+yay rutorrent
+yay mod_scgi
+cp /usr/share/doc/rtorrent/rtorrent.rc ~/.rtorrent.rc
+gedit ~/.rtorrent.rc
+yay qrtorrent-git
+
+暂时不启动服务。现在懒得配置了，以后需要再按这些资料配置好了
+https://wiki.archlinux.org/index.php/RTorrent
+https://github.com/Novik/ruTorrent
+
+
+pacman -Qeq > pacqeq.txt   <一般来说关心这个>
+pacman -Qdq > pacqdq.txt
+pacman -Qmq > pacqmq.txt   <一般n和m的就是全部了>
+pacman -Qnq > pacqnq.txt
+
+pacman -Qtd 可以保留这些
+pacman -Qmq
 
 
 
+yay -S memtester
+memtester 1900M 10
+
+yay balena-etcher
+yay -S cdate downgrade
 
 
+有些小工具挺好的，因为一些依赖关系被弃用，甚至从AUR移除， 已经安装的表现为无法升级，直到有一天什么库不见了，就不能再用了，未安装的AUR里都搜不到
+以orage为例子进行弃用包的 编译使用
+orage已经被xfce(4.16)弃用
+https://archive.xfce.org/src/apps/orage/4.12/
+https://github.com/balena/orage
+可以下载源码
+https://archive.archlinux.org/packages/
+可以获取被移除出官方repo的旧安装包
+https://github.com/aur-archive
+可以找到在aur中出现过的包的存档
+稍加修改，依然可以编译通过，正常运行，不需要配合xfce4
+还是能延续相当长时代的
+
+
+
+7z的命令行操作
+7z a -p'fuckya' 'DLI 课程目录202004.7z' 'DLI 课程目录202004.pdf'
+7z x -p'fuckya' 'DLI 课程目录202004.7z'
 
 
 
