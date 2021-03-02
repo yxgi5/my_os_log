@@ -4,6 +4,11 @@
 更换源为 mirrors.163.com
 sudo update
 
+安装vbox增强后
+sudo vi /etc/fstab
+share /mnt/share vboxsf rw,gid=100,uid=1000,auto 0 0
+
+
 https://developer.nvidia.com/nvsdk-manager
 
 sudo dpkg -i sdkmanager_1.4.1-7402_amd64.deb
@@ -133,8 +138,12 @@ mesg n
 tty -s && mesg n
 ```
 
+sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev
 sudo apt install build-essential cpanminus git
+
+sudo cpan install YAML Gtk2 Pango
 sudo cpan install Linux::DesktopFiles Data::Dump
+
 git clone git://github.com/trizen/obmenu-generator
 sudo cp obmenu-generator/obmenu-generator /usr/bin
 mkdir ~/.config/obmenu-generator/
@@ -145,18 +154,43 @@ sudo chmod 777 /usr/bin/obmenu-generator
 
 obmenu-generator -i
 
-sudo cpan install YAML
-Gtk2 Pango
+sudo apt install conky conky-all tk-dev
+sudo apt install volumeicon-alsa
+
+sudo apt install gnome-icon-theme
+lxappearance
+
+sudo apt install parcellite 
+sudo apt install shutter
+sudo apt install net-tools
+sudo apt install rar p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack jlha-utils arj cabextract file-roller xz-utils
+sudo apt install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
+sudo apt install git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake libgst-dev autoconf libtool automake
+sudo apt install cmake cmake-gui
+sudo apt install python-pip
+sudo apt install gtk-theme-switch gtk2-engines
+sudo apt install openbox-dev
+sudo apt install lxappearance-obconf adwaita-icon-theme-full
 
 
-libpango-perl libpango1.0-dev
+obconf
+导入carbon.obt
 
+sudo apt install network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig
+sudo apt install fcitx-table-wubi libreoffice-l10n-en-za hyphen-en-gb hunspell-en-ca libreoffice-l10n-en-gb thunderbird-locale-en-gb mythes-en-au libreoffice-help-en-gb fcitx-sunpinyin hunspell-en-za gimp-help-en kde-l10n-engb hunspell-en-au hunspell-en-gb kde-l10n-zhcn
+sudo apt install fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus
+sudo im-config
 
+sudo apt install xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf
 
-/etc/fstab
+$ git clone https://github.com/valr/cbatticon
+$ cd cbatticon
+$ make WITH_GTK3=0 WITH_NOTIFY=0
+$ sudo make install
+$ cbatticon &
 
-share /mnt/share vboxsf rw,gid=100,uid=1000,auto 0 0
-
+https://www.pixelstalk.net/ubuntu-logo-wallpapers/
+背景放到/usr/share/wallpapers/
 
 
 
