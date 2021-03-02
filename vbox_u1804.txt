@@ -138,6 +138,17 @@ mesg n
 tty -s && mesg n
 ```
 
+恢复默认网卡为eth0
+vim /etc/default/grub
+查找
+GRUB_CMDLINE_LINUX=""
+修改为
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+重新生成grub引导配置文件
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
 sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev
 sudo apt install build-essential cpanminus git
 
