@@ -182,7 +182,8 @@ sudo apt install python-pip
 sudo apt install gtk-theme-switch gtk2-engines
 sudo apt install openbox-dev
 sudo apt install lxappearance-obconf adwaita-icon-theme-full
-
+sudo apt install opera
+sudo apt install chromium-browser  chromium-browser-l10n
 
 obconf
 导入carbon.obt
