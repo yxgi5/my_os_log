@@ -926,6 +926,24 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 最后重启即可恢复默认网卡为eth0，操作结束。
 
+修改grub
+set default="3" 的索引号可以这样查
+sudo awk -F\' '/menuentry / { print i++, $2}' /boot/grub/grub.cfg
+
+0 Arch Linux
+1 Arch Linux, with Linux linux-lts
+2 Arch Linux, with Linux linux-lts (fallback initramfs)
+3 Arch Linux, with Linux linux
+4 Arch Linux, with Linux linux (fallback initramfs)
+5 Debian GNU/Linux 8 (jessie) (on /dev/sda1)
+6 Debian GNU/Linux (on /dev/sda1)
+
+
+tips 另外一个引导程序 syslinux
+config file in /boot/syslinux/syslinux.cfg
+
+
+
 
 
 sudo pacman -S retext pycharm-community-edition vscode codeblocks geany-plugins geany
@@ -1449,8 +1467,9 @@ sudo chown -R $USER .Trash-1000
 
 sudo usermod -aG brlapi andy
 
-sudo pacman -R linux-lts
-sudo pacman -R linux-lts-headers
+lts对于滚挂的情况很有用不要删
+//sudo pacman -R linux-lts
+//sudo pacman -R linux-lts-headers
 
 
 
@@ -3938,18 +3957,45 @@ base caja-image-converter geogebra perlbrew
 
 yay -S antiword balena-etcher cdate downgrade dsdp foomatic-db gap-doc gap-packages gcc8-fortran gnu-netcat gstreamer0.10-good-plugins gstreamer-docs gtksourceview2 guvcview guvcview-common jmol jq lib32-vkd3d memtester playonlinux python2-pillow python2-werkzeug python-pkgconfig sagemath-doc scour ttf-kochi-substitute vkd3d xcompmgr
 
+foomatic-db-ppds
+
+
+
+
+thunderbird最小化
+yay -S birdtray
+目前版本无效
+yay -Rn birdtray
+先用addon最小化替代关闭吧，等MinimizeToTray支持再说
+
+
+
+yay freedownloadmanager
+运行命令是fdm
+也不能导入cookie
+
+yay -S jdownloader2
+也不行
+
+yay -Rn freedownloadmanager jdownloader2
 
 
 
 
 
+滚动升级过程因为vbox原因突然死机，内核没有重建完毕
+
+在其他系统引导进来，尽量完成升级
+但是内核失效，boot目录没有镜像
+那么安装lts吧，进native系统
 
 
+yay -S linux linux-headers --force
+error: could not open file /var/lib/pacman/local/linux-5.11.2.arch1-1/desc
+等报错
+sudo touch /var/lib/pacman/local/linux-5.11.2.arch1-1/desc
+sudo touch /var/lib/pacman/local/linux-5.11.2.arch1-1/files
+yay -S linux linux-headers --force
 
-
-
-
-
-
-
-
+所以，lts作为备用还是很有必要的
+yay -S linux-lts linux-lts-headers
