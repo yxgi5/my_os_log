@@ -165,6 +165,10 @@ sudo chmod 777 /usr/bin/obmenu-generator
 
 obmenu-generator -i
 
+
+～/config/dmenu目录
+
+
 sudo apt install conky conky-all tk-dev
 sudo apt install volumeicon-alsa
 
@@ -217,7 +221,7 @@ sudo updatedb
 
 
 
-
+sudo apt install iptux
 
 
 

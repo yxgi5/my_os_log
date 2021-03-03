@@ -183,30 +183,83 @@ sudo apt-get install libcanberra-gtk-module
 
 
 
+sudo apt install fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus
+sudo im-config
+需要重启板子在tray里面设置添加googlepinyin
+
+
+sudo apt install parcellite
+cp /usr/share/applications/parcellite.desktop /home/andy/.config/autostart/
+
+
+
+把～/.ssh打包通过scp推到目标板，这样可以git://
+
+
+设置PC的pycharm远程连接目标板
+需要安装professional版本，试用就好
+
+新建project时候
+设置解释器为目标板的解释器
+然后在settings-->Project...-->Python Interpreter下拉选show all编辑框设置sudo
+
+
+
+sudo apt install p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils
+
+
+
+目标板上也可以安装pycharm
+https://www.jetbrains.com/pycharm/download/
 
 
 
 
+sudo apt install i2c-tools libi2c-dev 
+查看有机组i2c adapter
+andy@andy-desktop:~/Downloads$ i2cdetect -l
+i2c-3	i2c       	7000c700.i2c                    	I2C adapter
+i2c-1	i2c       	7000c400.i2c                    	I2C adapter
+i2c-8	i2c       	i2c-6-mux (chan_id 1)           	I2C adapter
+i2c-6	i2c       	Tegra I2C adapter               	I2C adapter
+i2c-4	i2c       	7000d000.i2c                    	I2C adapter
+i2c-2	i2c       	7000c500.i2c                    	I2C adapter
+i2c-0	i2c       	7000c000.i2c                    	I2C adapter
+i2c-7	i2c       	i2c-6-mux (chan_id 0)           	I2C adapter
+i2c-5	i2c       	7000d100.i2c                    	I2C adapter
 
+查看总线上器件
+andy@andy-desktop:~/Downloads$ i2cdetect -r -y 2
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: 50 -- -- -- -- -- -- 57 -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- -- --  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+查看某设备所有寄存器的值
+andy@andy-desktop:~/Downloads$ i2cdump -f -y 2 0x50
+No size specified (using byte-data access)
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f    0123456789abcdef
+00: 01 00 fc 00 78 0d 00 00 04 46 00 00 00 00 00 00    ?.?.x?..?F......
+10: 00 00 00 00 36 39 39 2d 31 33 34 34 38 2d 30 30    ....699-13448-00
+20: 30 30 2d 34 30 30 20 46 2e 30 00 00 00 00 00 00    00-400 F.0......
+30: 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff    ................
+40: ff ff ff ff 84 40 ec 4b 04 00 31 34 32 34 37 32    ....?@?K?.142472
+50: 30 30 36 38 32 35 30 00 00 00 00 00 00 00 00 00    0068250.........
+60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+90: 00 00 00 00 00 00 4e 56 43 42 1c 00 4d 31 00 00    ......NVCB?.M1..
+a0: ff ff ff ff ff ff ff ff ff ff ff ff 84 40 ec 4b    ............?@?K
+b0: 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ?...............
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 33    ...............3
 
 
 

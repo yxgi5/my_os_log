@@ -3553,6 +3553,9 @@ When prompted, activate Maple using your activation code/purchase code:
 NZ3DP9ZX6L4GPNUH
 Your evaluation will expire in 15 days (March 06, 2021).
 
+无限期试用maple可以像这样，确认可用
+faketime '2021-02-25 08:15:42' xmaple
+
 
 maxima 之前引入有 maxima-ecl
 
@@ -4005,6 +4008,59 @@ yay -S linux-lts linux-lts-headers
 
 
 https://www.pixelstalk.net/download-free-arch-linux-background/
+
+
+
+编译gcc时候直接把 make check 删了 再编译！！否则漫长的过程哦
+
+
+
+
+为了用pycharm远程连接目标板，应使用pycharm-professional
+yay -S ipython2 python2-coverage python-coverage docker-machine docker-compose cython2 vagrant python-pytest python2-tox
+下面无限期试用方法待验证
+faketime '2021-03-03 08:15:42' pycharm
+
+
+
+nvidia sdkmanager 这上面不能用
+yay -Rn sdkmanager
+
+cat /etc/lsb-release
+
+LSB_VERSION=1.4
+DISTRIB_ID=Arch
+DISTRIB_RELEASE=rolling
+DISTRIB_DESCRIPTION="Arch Linux"
+
+
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.5 LTS"
+
+
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+
+添加当前用户到docker组
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ groups
+$ docker run hello-world
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: yxgi5
+Password: 
+WARNING! Your password will be stored unencrypted in /home/andy/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+$ docker pull nvidia-sdk
+失败
+
+
+
 
 
 
