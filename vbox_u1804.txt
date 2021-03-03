@@ -171,10 +171,7 @@ obmenu-generator -i
 
 sudo apt install conky conky-all tk-dev
 sudo apt install volumeicon-alsa
-
 sudo apt install gnome-icon-theme
-lxappearance
-
 sudo apt install parcellite 
 sudo apt install shutter
 sudo apt install net-tools
@@ -191,6 +188,7 @@ sudo apt install chromium-browser  chromium-browser-l10n
 
 obconf
 导入carbon.obt
+lxappearance
 
 sudo apt install network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig
 sudo apt install fcitx-table-wubi libreoffice-l10n-en-za hyphen-en-gb hunspell-en-ca libreoffice-l10n-en-gb thunderbird-locale-en-gb mythes-en-au libreoffice-help-en-gb fcitx-sunpinyin hunspell-en-za gimp-help-en kde-l10n-engb hunspell-en-au hunspell-en-gb kde-l10n-zhcn
