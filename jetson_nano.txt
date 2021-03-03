@@ -267,7 +267,7 @@ f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 33    ...............3
 查看主板上的PCI插槽
 sudo dmidecode | grep --color "PCI"
 
-
+lspci -tv
 
 
 
