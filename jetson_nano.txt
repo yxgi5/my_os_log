@@ -265,13 +265,33 @@ f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 33    ...............3
 
 
 查看主板上的PCI插槽
-sudo dmidecode | grep --color "PCI"
+sudo apt install dmidecode
 
-lspci -tv
+andy@andy-desktop:~$ sudo dmidecode | grep --color "PCI"
+andy@andy-desktop:~$ lspci
+00:01.0 PCI bridge: NVIDIA Corporation Device 0fae (rev a1)
+00:02.0 PCI bridge: NVIDIA Corporation Device 0faf (rev a1)
+01:00.0 Network controller: Intel Corporation Wireless 8265 / 8275 (rev 78)
+02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)
+andy@andy-desktop:~$ lspci -tv
+-[0000:00]-+-01.0-[01]----00.0  Intel Corporation Wireless 8265 / 8275
+           \-02.0-[02]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
 
 
 
+https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
+sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
+sudo apt-get install virtualenv
+$ python3 -m virtualenv -p python3 <chosen_venv_name>
+$ source <chosen_venv_name>/bin/activate
+pip3 install -U numpy==1.19.5 grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications -i https://mirrors.163.com/pypi/simple
+
+keras-pr 
 
 
+sudo apt install python3.8 python3.8-dev python3.8-distutils python3.8-examples python3.8-gdbm  python3.8-lib2to3 python3.8-minimal python3.8-venv python3:any
+sudo python3.8 -m pip install --upgrade pip -i https://mirrors.163.com/pypi/simple
+sudo python3.8 -m pip install --upgrade setuptools -i https://mirrors.163.com/pypi/simple
+sudo pip3.8 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications -i https://mirrors.163.com/pypi/simple
 
 
