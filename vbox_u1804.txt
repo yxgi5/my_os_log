@@ -18,7 +18,7 @@ sudo apt install vim-gtk vim ctags vim-doc vim-scripts exuberant-ctags libtempla
 sudo apt install shadowsocks shadowsocks-libev privoxy proxychains
 
 
-/lib/systemd/system/shadowsocks@.service
+sudo gedit /lib/systemd/system/shadowsocks@.service
 -------------------------------
 [Unit]
 Description=Shadowsocks Client Service
@@ -33,7 +33,7 @@ ExecStart=/usr/bin/sslocal -c /etc/shadowsocks/%i.json
 WantedBy=multi-user.target
 -------------------------------
 
-/etc/shadowsocks/config.json
+sudo gedit /etc/shadowsocks/config.json
 -------------------------------
 {
     "server":"119.28.9.79",
@@ -185,7 +185,7 @@ sudo apt install gtk-theme-switch gtk2-engines
 sudo apt install openbox-dev
 sudo apt install lxappearance-obconf adwaita-icon-theme-full
 sudo apt install opera
-sudo apt install chromium-browser  chromium-browser-l10n
+sudo apt install chromium-browser  chromium-browser-l10n firefox
 
 obconf
 导入carbon.obt
