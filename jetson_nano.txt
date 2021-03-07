@@ -155,8 +155,8 @@ https://help.ubuntu.com/community/VNC/Servers
 
 5. 安装其他一些工具
 
-安装个iptux
-安装个aptitude
+sudo apt install iptux
+sudo apt install aptitude apt-file apt-utils
 sudo apt install cmake-gui libopencv-dev
 sudo apt install python3-pip python-pip
 pip3 list
@@ -293,5 +293,77 @@ sudo apt install python3.8 python3.8-dev python3.8-distutils python3.8-examples 
 sudo python3.8 -m pip install --upgrade pip -i https://mirrors.163.com/pypi/simple
 sudo python3.8 -m pip install --upgrade setuptools -i https://mirrors.163.com/pypi/simple
 sudo pip3.8 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications -i https://mirrors.163.com/pypi/simple
+
+
+
+
+dpkg-reconfigure tzdata
+
+
+声音输出到HDMI
+select sound setting -> output source to HDMI
+
+sudo apt install alsamixergui volumeicon-alsa alsa-oss alsa-tools-gui
+sudo apt install mkchromecast-pulseaudio pulseaudio-equalizer pulseaudio-esound-compat pulseaudio-module-gconf xfce4-pulseaudio-plugin
+sudo apt purge gnome-alsamixer
+
+设置调用从
+xterm -e 'alsamixer'
+改成
+alsamixergui
+
+aplay -l
+
+**** List of PLAYBACK Hardware Devices ****
+card 0: tegrahda [tegra-hda], device 3: HDMI 0 [HDMI 0]
+  Subdevices: 0/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 0: ADMAIF1 CIF ADMAIF1-0 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 1: ADMAIF2 CIF ADMAIF2-1 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 2: ADMAIF3 CIF ADMAIF3-2 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 3: ADMAIF4 CIF ADMAIF4-3 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 4: ADMAIF5 CIF ADMAIF5-4 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 5: ADMAIF6 CIF ADMAIF6-5 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 6: ADMAIF7 CIF ADMAIF7-6 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 7: ADMAIF8 CIF ADMAIF8-7 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 8: ADMAIF9 CIF ADMAIF9-8 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: tegrasndt210ref [tegra-snd-t210ref-mobile-rt565x], device 9: ADMAIF10 CIF ADMAIF10-9 []
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+
+结果显示，0号卡上的设备3是NVIDIA的HDMI声卡
+
+sudo alsamixer -c 0
+aplay -D plughw:0,3 /usr/share/sounds/alsa/Front_Center.wav
+plughw:0,3的含义很明确了，就是刚才列出的card 0、device 3，后面这个wav文件可以是任意的wav格式的音频文件。
+
+编辑/etc/asound.conf文件，这个文件本来不存在的，没关系，新建一个就好。然后输入下面的内容保存：
+pcm.!default {
+type hw
+card 0
+device 3
+}
+
+
+
+
 
 

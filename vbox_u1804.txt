@@ -175,7 +175,8 @@ sudo apt install gnome-icon-theme
 sudo apt install parcellite 
 sudo apt install shutter
 sudo apt install net-tools
-sudo apt install rar p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack jlha-utils arj cabextract file-roller xz-utils
+sudo apt install rar 
+sudo apt install p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils
 sudo apt install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
 sudo apt install git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake libgst-dev autoconf libtool automake
 sudo apt install cmake cmake-gui
@@ -226,8 +227,16 @@ sudo apt install iptux
 PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ "
 
 
+～/.xprofile中加入：(不要在/etc/environment)
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export QT4_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
 
 
 
 
+nvidia默认的usb网口
+目标板：192.168.55.1
+PC：192.168.55.100
 

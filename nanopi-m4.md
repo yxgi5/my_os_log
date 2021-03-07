@@ -58,12 +58,21 @@ sudo update-alternatives --config x-terminal-emulator
 /usr/bin/lxterminal  
 ```  
 
-# 中文输入法(ibus更好)
+# 中文输入法, fcitx要注意设置～/.xprofile， 这个可以从fcitx-diagnose看出来，其他地方设置没有用。
 ```
 sudo apt-get install fcitx fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-sunpinyin   
 fcitx-autostart  
 ```
-发现fcitx在这个平台不好使, 换成ibus, 先删除fcitx  
+gedit ～/.xprofile
+```
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export QT4_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+```
+
+update:其实是好用的，没配置好而已
+// 发现fcitx在这个平台不好使, 换成ibus, 先删除fcitx  
 sudo apt purge fcitx*  
 ```
 The following packages will be REMOVED:
@@ -98,7 +107,7 @@ export XMODIFIERS=@im=ibus
 ```
   
 本地配置也添加  
-gedit ~/.xinitrc  
+gedit ~/.xprofile
 ```
 export GTK_IM_MODULE=ibus
 export QT4_IM_MODULE=ibus
@@ -439,6 +448,14 @@ cmake -DBUILD_SHARED_LIBS=on ..
 make
 sudo make install
 ```  
+
+
+# openbox的nm-applet消失问题
+NetworkManager图标无法显示，可在/etc/gdm/Init/Default增加killall nm-applet && nohup nm-applet --sm-disable 1&>/dev/null &;
+
+或者在openbox的autostart里对应位置先killall nm-applet，再运行nm-applet
+
+
 
 
 
