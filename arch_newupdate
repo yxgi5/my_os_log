@@ -4087,6 +4087,18 @@ yay alsamixergui 编译失败
 yay cuda-tools
 
 
+zst文件怎么解压缩
+win下面 下载一个peazip
+linux下面 # tar -I zstd -xvf file.zst
+
+
+
+replace electron9 with electron9-bin
+$ yay -S electron9-bin
+$ yay -S kde-cli-tools xdg-utils
+
+
+$ yay -S pamixer
 
 
 

@@ -112,7 +112,7 @@ http://172.17.0.1/Jetson_Linux_R32.5.1_aarch64.tbz2?fid=xPaCAOd6Io9uzil11Ik8wMSQ
 
 
 
-sudo apt install aptitude
+sudo apt install aptitude curl aria2 wget
 sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm obmenu feh dmenu fonts-dejavu
 sudo apt install lxappearance pcmanfm libfm-tools lxterminal leafpad
 
@@ -227,7 +227,7 @@ sudo apt install iptux
 PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ "
 
 
-～/.xprofile中加入：(不要在/etc/environment)
+~/.xprofile中加入：(不要在/etc/environment)
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export QT4_IM_MODULE=fcitx
@@ -239,4 +239,139 @@ export XMODIFIERS=@im=fcitx
 nvidia默认的usb网口
 目标板：192.168.55.1
 PC：192.168.55.100
+
+
+
+sudo apt install ubuntu-desktop
+sudo apt install ubuntu-restricted-extras
+sudo apt install ubuntu-unity-desktop
+需要重启
+sudo shutdown -r now
+
+
+
+sudo cp /usr/share/applications/fcitx.desktop ~/.config/autostart/fcitx.desktop
+或者
+sudo cp /usr/share/fcitx/xdg/autostart/fcitx-autostart.desktop /etc/xdg/autostart/
+
+
+
+
+
+cat /etc/apt/sources.list
+
+# deb cdrom:[Ubuntu 18.04.5 LTS _Bionic Beaver_ - Release amd64 (20200806.1)]/ bionic main restricted
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://mirrors.163.com/ubuntu/ bionic main restricted
+# deb-src http://mirrors.163.com/ubuntu/ bionic main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://mirrors.163.com/ubuntu/ bionic-updates main restricted
+# deb-src http://mirrors.163.com/ubuntu/ bionic-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://mirrors.163.com/ubuntu/ bionic universe
+# deb-src http://mirrors.163.com/ubuntu/ bionic universe
+deb http://mirrors.163.com/ubuntu/ bionic-updates universe
+# deb-src http://mirrors.163.com/ubuntu/ bionic-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to 
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://mirrors.163.com/ubuntu/ bionic multiverse
+# deb-src http://mirrors.163.com/ubuntu/ bionic multiverse
+deb http://mirrors.163.com/ubuntu/ bionic-updates multiverse
+# deb-src http://mirrors.163.com/ubuntu/ bionic-updates multiverse
+
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
+# deb-src http://mirrors.163.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+deb http://archive.canonical.com/ubuntu bionic partner
+# deb-src http://archive.canonical.com/ubuntu bionic partner
+
+deb http://security.ubuntu.com/ubuntu bionic-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu bionic-security main restricted
+deb http://security.ubuntu.com/ubuntu bionic-security universe
+# deb-src http://security.ubuntu.com/ubuntu bionic-security universe
+deb http://security.ubuntu.com/ubuntu bionic-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu bionic-security multiverse
+deb http://archive.ubuntu.com/ubuntu bionic main universe restricted multiverse
+
+
+
+sudo dpkg-reconfigure lightdm
+sudo dpkg-reconfigure gdm3
+unity --version
+sudo apt install unity-tweak-tool
+sudo apt install screenfetch
+
+sudo apt install gitk
+The remote end hung up unexpectedly 解决方案
+git config --global http.postBuffer 1048576000
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999  单位 秒
+
+
+
+
+~/.bashrc
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+修改为
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
+
+
+
+
+Recommended packages:
+  libgoo-canvas-perl libgtk2-appindicator-perl acpi-support gir1.2-gmenu
+  memtest86+ unity-webapps-common usb-creator-gtk
+The following packages will be REMOVED:
+  libavcodec57
+
+
+
+
+unity-control-center
+gnome-control-center
+都空白哦
+这样就可以显示了
+
+env XDG_CURRENT_DESKTOP=GNOME gnome-control-center
+
+可以修改/usr/share/applications/unity-control-center.desktop
+unity-control-center应该也类似，XDG_CURRENT_DESKTOP=Unity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -44,6 +44,8 @@ gst-launch-1.0 nvarguscamerasrc sensor_id=0 ! \
 
 方法3
 https://github.com/JetsonHacksNano/CSI-Camera/
+把～/.ssh打包通过scp推到目标板，这样可以git://
+git clone git@github.com:JetsonHacksNano/CSI-Camera.git
 
 cd CSI-Camera
 g++ -std=c++11 -Wall -I/usr/include/opencv4 simple_camera.cpp -L/usr/lib -lopencv_core -lopencv_highgui -lopencv_videoio -o simple_camera
@@ -83,13 +85,17 @@ ifconfig -a找到wifi的ip
 
 VNC配置
 sudo apt update
-sudo apt install vino        （现在不叫vino-server了）
+sudo apt install vino       （现在不叫vino-server了）
+sudo apt install dconf-editor
 mkdir -p ~/.config/autostart
 cp /usr/share/applications/vino-server.desktop ~/.config/autostart
 gsettings set org.gnome.Vino prompt-enabled false
 gsettings set org.gnome.Vino require-encryption false
 gsettings set org.gnome.Vino authentication-methods "['vnc']"
 gsettings set org.gnome.Vino vnc-password $(echo -n '123456'|base64)
+
+dconf-editor也可以修改
+
 sudo vim /usr/share/glib-2.0/schemas/org.gnome.Vino.gschema.xml
 
 在</schema>之前插入
@@ -155,12 +161,106 @@ https://help.ubuntu.com/community/VNC/Servers
 
 5. 安装其他一些工具
 
-sudo apt install iptux
+sudo apt install iptux dconf-editor
 sudo apt install aptitude apt-file apt-utils
+sudo apt-file update
 sudo apt install cmake-gui libopencv-dev
 sudo apt install python3-pip python-pip
 pip3 list
+DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
+apt-clone (0.2.1)
+apturl (0.5.2)
+asn1crypto (0.24.0)
+beautifulsoup4 (4.6.0)
+blinker (1.4)
+Brlapi (0.6.6)
+certifi (2018.1.18)
+chardet (3.0.4)
+cryptography (2.1.4)
+cupshelpers (1.0)
+decorator (4.1.2)
+defer (1.0.6)
+distro-info (0.18ubuntu0.18.04.1)
+feedparser (5.2.1)
+graphsurgeon (0.4.5)
+html5lib (0.999999999)
+httplib2 (0.9.2)
+idna (2.6)
+Jetson.GPIO (2.0.16)
+keyring (10.6.0)
+keyrings.alt (3.0)
+language-selector (0.1)
+launchpadlib (1.10.6)
+lazr.restfulclient (0.13.5)
+lazr.uri (1.0.3)
+louis (3.5.0)
+lxml (4.2.1)
+macaroonbakery (1.1.3)
+Mako (1.0.7)
+MarkupSafe (1.0)
+numpy (1.13.3)
+oauth (1.0.1)
+oauthlib (2.0.6)
+onboard (1.4.1)
+PAM (0.4.2)
+pandas (0.22.0)
+pip (9.0.1)
+protobuf (3.0.0)
+pycairo (1.16.2)
+pycrypto (2.6.1)
+pycups (1.9.73)
+pygobject (3.26.1)
+PyICU (1.9.8)
+PyJWT (1.5.3)
+pymacaroons (0.13.0)
+PyNaCl (1.1.2)
+pyRFC3339 (1.0)
+python-apt (1.6.5+ubuntu0.5)
+python-dateutil (2.6.1)
+python-debian (0.1.32)
+pytz (2018.3)
+pyxattr (0.6.0)
+pyxdg (0.25)
+PyYAML (3.12)
+requests (2.18.4)
+requests-unixsocket (0.1.5)
+scipy (0.19.1)
+SecretStorage (2.3.1)
+setuptools (39.0.1)
+simplejson (3.13.2)
+six (1.11.0)
+ssh-import-id (5.7)
+system-service (0.3)
+systemd-python (234)
+tensorrt (7.1.3.0)
+ubuntu-drivers-common (0.0.0)
+uff (0.6.9)
+unity-scope-calculator (0.1)
+unity-scope-chromiumbookmarks (0.1)
+unity-scope-colourlovers (0.1)
+unity-scope-devhelp (0.1)
+unity-scope-firefoxbookmarks (0.1)
+unity-scope-manpages (0.1)
+unity-scope-openclipart (0.1)
+unity-scope-texdoc (0.1)
+unity-scope-tomboy (0.1)
+unity-scope-virtualbox (0.1)
+unity-scope-yelp (0.1)
+unity-scope-zotero (0.1)
+urllib3 (1.22)
+urwid (2.0.1)
+wadllib (1.3.2)
+webencodings (0.5)
+wheel (0.30.0)
+xkit (0.0.0)
+youtube-dl (2018.3.14)
+zope.interface (4.3.2)
+
+pip3升级到21.0.1
 sudo -H pip3 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+sudo python3 -m pip install --upgrade setuptools -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install launchpadlib -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install testresources -i https://mirrors.163.com/pypi/simple
 sudo -H pip3 install numpy==1.19.5 -i https://mirrors.163.com/pypi/simple
 sudo -H pip3 install opencv-python==4.5.1.48 -i https://mirrors.163.com/pypi/simple
 ModuleNotFoundError: No module named ‘skbuild’
@@ -186,14 +286,26 @@ sudo apt-get install libcanberra-gtk-module
 sudo apt install fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus
 sudo im-config
 需要重启板子在tray里面设置添加googlepinyin
+sudo cp /usr/share/fcitx/xdg/autostart/fcitx-autostart.desktop /etc/xdg/autostart/
+~/.xprofile中加入：(不要在/etc/environment)
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export QT4_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
+
+~/.bashrc
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+修改为
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
 
 
 sudo apt install parcellite
+mkdir -p /home/andy/.config/autostart/
 cp /usr/share/applications/parcellite.desktop /home/andy/.config/autostart/
 
 
 
-把～/.ssh打包通过scp推到目标板，这样可以git://
 
 
 设置PC的pycharm远程连接目标板
@@ -364,6 +476,165 @@ device 3
 
 
 
+sudo apt-get install tightvncserver
+# 安装vncserver
+ref:   
+<http://wiki.friendlyarm.com/wiki/index.php/How_to_setup_VNC_server_on_NanoPC-T4/zh>  
 
+## 安装VNC Server
+```
+sudo apt-get install tightvncserver
+tips: 不要用VNC-Server-6.5.0-Linux-ARM.deb 
+```  
+万一安装了就  
+```
+sudo apt purge realvnc
+sudo apt purge VNC-Server-6.5.0-Linux-ARM.deb 
+sudo apt purge realvnc-vnc-server
+sudo apt autoremove
+```  
+
+## 设置密码
+运行一次tightvncserver  
+```
+tightvncserver :1
+tightvncserver -kill :1
+```  
+这里冒号前有空格
+
+
+## 配置VNC server
+编辑~/.vnc/xstartup文件，在尾部添加:  
+```
+#!/bin/sh
+
+xrdb $HOME/.Xresources
+xsetroot -solid grey
+#x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#x-window-manager &
+# Fix to make GNOME work
+export XKL_XMODMAP_DISABLE=1
+/etc/X11/Xsession
+#lxterminal &
+#/usr/bin/lxsession -s LXDE &
+#ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3 &
+openbox-session &
+```  
+chmod +x ~/.vnc/xstartup
+
+## 手动启动VNC Server
+```
+vncserver -geometry 1280x800
+```  
+
+## 设置开机自动启动VNC server
+/etc/systemd/system/vncserver@.service  
+```
+[Unit]
+Description=Start TightVNC server at startup
+After=syslog.target network.target
+ 
+[Service]
+Type=forking
+User=andy
+#PAMName=andy  #有这句服务启动失败
+PIDFile=/home/andy/.vnc/%H:%i.pid
+#ExecStart=/sbin/runuser -l root -c "/usr/bin/vncserver -depth 24 -geometry 1600x900 :%i" 
+ExecStartPre=-/usr/bin/vncserver -kill :%i > /dev/null 2>&1
+ExecStart=/usr/bin/vncserver -depth 24 -geometry 1600x900 :%i
+ExecStop=/usr/bin/vncserver -kill :%i
+ 
+[Install]
+WantedBy=multi-user.target
+```
+
+普通用户的ExecStart不同于root，加/sbin/runuser则会在启动服务时报以下错误
+Job for vncserver@:2.service failed because the control process exited with error code. See "systemctl status vncserver@:2.service" and "journalctl -xe" for details.
+
+创建符号链接以实现开机自启动：  
+```
+sudo ln -s /etc/systemd/system/vncserver@.service /etc/systemd/system/multi-user.target.wants/vncserver@1.service
+```
+
+修改了服务配置文件需要
+```
+sudo systemctl daemon-reload
+sudo systemctl start vncserver@1.service
+systemctl status vncserver@1.service
+```
+  
+
+查看VNC端口占用
+```
+sudo netstat -tlup | grep vnc
+```
+
+
+重启开发板：  
+```
+sudo reboot
+```
+
+vncviewer这样访问
+192.168.1.30:1
+这里冒号前没有空格
+
+
+
+sudo apt install firefox 
+https://addons.mozilla.org/firefox/downloads/file/1056777/proxy_switchyomega-2.5.20-an+fx.xpi
+https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+
+
+
+sudo apt install stress stress-ng sysstat netstress
+
+
+
+sudo apt install lm-sensors
+sensors
+sudo -H pip3 install jetson-stats -i https://mirrors.163.com/pypi/simple
+sudo jtop
+
+
+sudo nvpmodel --query
+sudo nvpmodel -m 0
+sudo nvpmodel -m 3
+
+sudo jetson_clocks
+
+// for agx
+sudo jetson_clocks --fan
+cat /sys/devices/pwm-fan/target-pwm
+sudo sh -c "echo 100 > /sys/devices/pwm-fan/target_pwm"
+
+
+
+
+
+sudo aptitude install libgtk2.0-dev libpango-perl libpango1.0-dev build-essential cpanminus git conky conky-all tk-dev volumeicon-alsa gnome-icon-theme parcellite shutter net-tools p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake libgst-dev autoconf libtool automake cmake cmake-gui python-pip gtk-theme-switch gtk2-engines openbox-dev lxappearance-obconf adwaita-icon-theme-full chromium-browser  chromium-browser-l10n firefox network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig fcitx-table-wubi libreoffice-l10n-en-za hyphen-en-gb hunspell-en-ca libreoffice-l10n-en-gb thunderbird-locale-en-gb mythes-en-au libreoffice-help-en-gb fcitx-sunpinyin hunspell-en-za gimp-help-en kde-l10n-engb hunspell-en-au hunspell-en-gb kde-l10n-zhcn fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf ubuntu-desktop ubuntu-restricted-extras ubuntu-unity-desktop unity-tweak-tool screenfetch gitk
+
+
+
+
+unity-control-center
+gnome-control-center
+都空白哦
+这样就可以显示了
+
+env XDG_CURRENT_DESKTOP=GNOME gnome-control-center
+
+可以修改/usr/share/applications/unity-control-center.desktop
+unity-control-center应该也类似，XDG_CURRENT_DESKTOP=Unity
+
+
+
+sudo apt install busybox pciutils
+
+sudo apt install strace
+
+git clone git@github.com:NVIDIA/jetson-gpio.git
+sudo -H pip3 install Jetson.GPIO -i https://mirrors.163.com/pypi/simple
+sudo /opt/nvidia/jetson-io/jetson-io.py
 
 
