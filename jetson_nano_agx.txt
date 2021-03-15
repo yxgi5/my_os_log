@@ -51,7 +51,7 @@ cd CSI-Camera
 g++ -std=c++11 -Wall -I/usr/include/opencv4 simple_camera.cpp -L/usr/lib -lopencv_core -lopencv_highgui -lopencv_videoio -o simple_camera
 
 Failed to load module "canberra-gtk-module"
-sudo apt-get install libcanberra-gtk-module
+sudo apt install libcanberra-gtk-module
 
 用这个测双目摄像头硬件很方便啊
 
@@ -258,10 +258,11 @@ zope.interface (4.3.2)
 
 pip3升级到21.0.1
 sudo -H pip3 install --upgrade pip -i https://mirrors.163.com/pypi/simple
-sudo python3 -m pip install --upgrade setuptools -i https://mirrors.163.com/pypi/simple
 sudo -H pip3 install launchpadlib -i https://mirrors.163.com/pypi/simple
 sudo -H pip3 install testresources -i https://mirrors.163.com/pypi/simple
+sudo python3 -m pip install --upgrade setuptools -i https://mirrors.163.com/pypi/simple
 sudo -H pip3 install numpy==1.19.5 -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install protobuf==3.3.0 -i https://mirrors.163.com/pypi/simple
 sudo -H pip3 install opencv-python==4.5.1.48 -i https://mirrors.163.com/pypi/simple
 ModuleNotFoundError: No module named ‘skbuild’
 sudo -H pip3 install scikit-build -i https://mirrors.163.com/pypi/simple
@@ -271,6 +272,7 @@ sudo -H pip3 install cmake -i https://mirrors.163.com/pypi/simple
 ##sudo -H pip3 install scikit-learn -i https://mirrors.163.com/pypi/simple
 //pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple cmake
 
+sudo -H pip3 install numpy==1.19.5 grpcio absl-py py-cpuinfo psutil portpicker six==1.11.0 mock requests gast h5py astor termcolor protobuf  -i https://mirrors.163.com/pypi/simple
 sudo -H /usr/bin/python3 -m pip install --upgrade pip
 sudo -H /usr/bin/python3 -m pip install --upgrade setuptools
 sudo -H pip3 install testresources  -i https://mirrors.163.com/pypi/simple
@@ -396,10 +398,9 @@ sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip li
 sudo apt-get install virtualenv
 $ python3 -m virtualenv -p python3 <chosen_venv_name>
 $ source <chosen_venv_name>/bin/activate
-pip3 install -U numpy==1.19.5 grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications -i https://mirrors.163.com/pypi/simple
+pip3 install numpy==1.19.5 grpcio absl-py py-cpuinfo psutil portpicker six==1.11.0 mock requests gast h5py astor termcolor protobuf  -i https://mirrors.163.com/pypi/simple
 
-keras-pr 
-
+keras-pr keras-applications
 
 sudo apt install python3.8 python3.8-dev python3.8-distutils python3.8-examples python3.8-gdbm  python3.8-lib2to3 python3.8-minimal python3.8-venv python3:any
 sudo python3.8 -m pip install --upgrade pip -i https://mirrors.163.com/pypi/simple
@@ -483,7 +484,7 @@ ref:
 
 ## 安装VNC Server
 ```
-sudo apt-get install tightvncserver
+sudo apt-get install tightvncserver //或者 vnc4server
 tips: 不要用VNC-Server-6.5.0-Linux-ARM.deb 
 ```  
 万一安装了就  
@@ -607,12 +608,12 @@ sudo jetson_clocks
 sudo jetson_clocks --fan
 cat /sys/devices/pwm-fan/target-pwm
 sudo sh -c "echo 100 > /sys/devices/pwm-fan/target_pwm"
+echo 255 | sudo tee /sys/devices/pwm-fan/target_pwm
 
 
 
 
-
-sudo aptitude install libgtk2.0-dev libpango-perl libpango1.0-dev build-essential cpanminus git conky conky-all tk-dev volumeicon-alsa gnome-icon-theme parcellite shutter net-tools p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake libgst-dev autoconf libtool automake cmake cmake-gui python-pip gtk-theme-switch gtk2-engines openbox-dev lxappearance-obconf adwaita-icon-theme-full chromium-browser  chromium-browser-l10n firefox network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig fcitx-table-wubi libreoffice-l10n-en-za hyphen-en-gb hunspell-en-ca libreoffice-l10n-en-gb thunderbird-locale-en-gb mythes-en-au libreoffice-help-en-gb fcitx-sunpinyin hunspell-en-za gimp-help-en kde-l10n-engb hunspell-en-au hunspell-en-gb kde-l10n-zhcn fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf ubuntu-desktop ubuntu-restricted-extras ubuntu-unity-desktop unity-tweak-tool screenfetch gitk
+sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev build-essential cpanminus git conky conky-all tk-dev volumeicon-alsa gnome-icon-theme parcellite shutter net-tools p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake libgst-dev autoconf libtool automake cmake cmake-gui python-pip gtk-theme-switch gtk2-engines openbox-dev lxappearance-obconf adwaita-icon-theme-full chromium-browser  chromium-browser-l10n firefox network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig fcitx-table-wubi libreoffice-l10n-en-za hyphen-en-gb hunspell-en-ca libreoffice-l10n-en-gb thunderbird-locale-en-gb mythes-en-au libreoffice-help-en-gb fcitx-sunpinyin hunspell-en-za gimp-help-en kde-l10n-engb hunspell-en-au hunspell-en-gb kde-l10n-zhcn fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf ubuntu-desktop ubuntu-restricted-extras ubuntu-unity-desktop unity-tweak-tool screenfetch gitk
 
 
 
@@ -624,7 +625,7 @@ gnome-control-center
 
 env XDG_CURRENT_DESKTOP=GNOME gnome-control-center
 
-可以修改/usr/share/applications/unity-control-center.desktop
+可以修改/usr/share/applications/gnome-control-center.desktop
 unity-control-center应该也类似，XDG_CURRENT_DESKTOP=Unity
 
 
@@ -636,5 +637,53 @@ sudo apt install strace
 git clone git@github.com:NVIDIA/jetson-gpio.git
 sudo -H pip3 install Jetson.GPIO -i https://mirrors.163.com/pypi/simple
 sudo /opt/nvidia/jetson-io/jetson-io.py
+
+
+
+
+
+
+
+
+
+sudo gedit /etc/init.d/fan
+<---------------------------
+#!/bin/bash 
+ 
+### BEGIN INIT INFO
+# Provides: fan
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start fan
+# Description: start fan
+### END INIT INFO
+
+echo '用户密码' | sudo -S su
+sleep 2
+echo 150 > /sys/devices/pwm-fan/target_pwm
+exit 0
+--------------------------->
+sudo chmod 777 /etc/init.d/fan
+sudo update-rc.d fan defaults 90
+sudo reboot #开机查看
+
+也可以用这里面的fan.sh根据温度自动改转速
+git clone git@github.com:yqlbu/fan-control/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

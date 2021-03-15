@@ -152,8 +152,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev
 sudo apt install build-essential cpanminus git
 
-sudo cpan install YAML Gtk2 Pango
-sudo cpan install Linux::DesktopFiles Data::Dump
+sudo cpan install YAML Gtk2 Pango Linux::DesktopFiles Data::Dump
 
 git clone git://github.com/trizen/obmenu-generator
 sudo cp obmenu-generator/obmenu-generator /usr/bin
