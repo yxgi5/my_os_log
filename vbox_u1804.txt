@@ -363,13 +363,83 @@ unity-control-center应该也类似，XDG_CURRENT_DESKTOP=Unity
 
 
 
+sudo apt install qtqr tor
+
+sudo apt install wine-stable winetricks playonlinux
+
+
+sudo apt install gtk3-nocsd
+gedit ~/.bashrc
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+
+sudo apt-get purge gtk3-nocsd
+修改这个地方吧
+cat /etc/X11/Xsession.d/51gtk3-nocsd-detect
+
+
+
+https://download.virtualbox.org/virtualbox/6.1.18
+virtualbox-6.1_6.1.18-142142_Ubuntu_bionic_amd64.deb
+libqt5opengl5 libqt5x11extras5
+
+
+
+//这样版本低 sudo apt install virtualbox virtualbox-guest-additions-iso virtualbox-qt virtualbox-guest-dkms
+
+systemctl status virtualbox.service
+sudo usermod -a -G vboxusers <andreas>
+cat /etc/group | grep vbox
+
+/var/lib/update-notifier/package-data-downloads/partial/
+
+
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian bionic contrib"
 
 
 
 
+su
+proxychains apt install virtualbox-6.1
+sudo modinfo vboxdrv
+sudo apt purge virtualbox-dkms
+sudo apt purge virtualbox-guest-dkms
+sudo apt install dkms
+sudo /sbin/vboxconfig
 
 
 
+sudo virtualbox
+安装extension包
+或者用命令行添加
+VBoxManage extpack install [--replace] <tarball> |
+                   uninstall [--force] <name> |
+                   cleanup
+
+
+
+
+ERROR: ld.so: object 'libproxychains.so.3' from LD_PRELOAD cannot be preloaded: ignored.
+sudo gedit /usr/bin/proxychains
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libproxychains.so.3
+
+proxychains-ng？？
+
+
+sudo apt install openocd
+Ac6
+
+
+foxitreader
+sudo apt install retext
+
+wps
+
+sudo apt install science-electronics
+
+
+cliplt 与 parcellite
 
 
 

@@ -14485,3 +14485,12 @@ Extract the compressed archive: tar xf filename.tar.
 
 
 
+sudo apt install snap
+不能用，也没有snapd
+
+
+
+
+
+
+

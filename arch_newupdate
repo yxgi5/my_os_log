@@ -274,7 +274,7 @@ sudo systemctl enable gdm.service
 sudo systemctl start gdm.service
 
 
-
+/software/OS_system_images/linux/archlinux/
 
 
 sudo pacman -S hwloc aircrack-ng gdm alsa-topology-conf alsa-lib hwloc aircrack-ng alsa-topology-conf alsa-ucm-conf alsa-lib libsidplayfp libmaxminddb bind audacious-plugins python-patiencediff breezy brltty liblouis ceph python-bcrypt python-cmd2 deluge-gtk deluge=2.0.4.dev38+g23a48dd01-2 libmicrohttpd elfutils libspf2 exim openmpi fftw fluidsynth gimp libinstpatch-1.0.so=2-64 mypaint-brushes1 gst-plugins-bad-libs=1.16.2 gst-plugins-bad lilv gst-plugins-bad gst-plugin-gtk gthumb netpbm gts kactivities-stats kio-extras kdsoap-ws-discovery-client kio-extras lib32-brotli lib32-libsoup java-openjfx mujs mpv perl-clone perl-http-message perl-cgi perl-http-server-simple python2-importlib_resources python2-jaraco python2-ordered-set python2-setuptools libslirp qemu liburing qemu yaml-cpp qtcreator ruby-irb ruby lsof steam lib32-vulkan-icd-loader steam lib32-vulkan-icd-loader steam-native-runtime xf86-video-vmware virtualbox-guest-utils xdg-dbus-proxy webkit2gtk 
@@ -4099,6 +4099,56 @@ $ yay -S kde-cli-tools xdg-utils
 
 
 $ yay -S pamixer
+
+
+
+https://wiki.archlinux.org/index.php/Backlight
+journalctl -xf
+实际上BRTUP/BRTDN按键是可以的
+xbacklight -set 50
+cat /sys/class/backlight/intel_backlight/brightness
+sudo tee /sys/class/backlight/intel_backlight/brightness <<< 2000
+
+
+
+
+yay -S aarch64-linux-gnu-binutils binutils
+
+
+lscpu
+
+
+snap
+make[1]: Leaving directory '/home/andy/.cache/yay/snapd/src/snapd-2.49.1/cmd'
+==> Starting check()...
+snap-exec is not a static binary
+error making: snapd
+
+/etc/ld.so.conf
+/etc/ld.so.conf.d/*
+/usr/bin/ldd
+strace -f ldd src/go/bin/snap-exec
+
+ldd src/go/bin/snap-exec
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+
+ldd /usr/libx32/ld-linux-x32.so.2
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+
+file /usr/libx32/ld-linux-x32.so.2
+/usr/libx32/ld-linux-x32.so.2: symbolic link to ld-2.23.so
+
+
+yay libx32-glibc
+:: There are 2 providers available for gcc-multilib-x32>=5.2:
+:: Repository AUR
+    1) gcc-multilib-x32 2) gcc-x32-seed
+选1失败，就选2了
+
+
+
 
 
 
