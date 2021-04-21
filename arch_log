@@ -4530,9 +4530,20 @@ cp /usr/lib32/libgcc_s.so.1 /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1
 
 
 
-
-
-
+$ ldd snap-exec 
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+$ ldd /usr/libx32/ld-2.23.so
+ld-linux-x32.so.2: cannot execute binary file: Exec format error
+$ pacman -Qo /usr/libx32/ld-2.23.so
+/usr/libx32/ld-2.23.so is owned by libx32-glibc 2.23-1.1
+:: There are 2 providers available for gcc-multilib-x32>=5.2:
+:: Repository AUR
+    1) gcc-multilib-x32 2) gcc-x32-seed
+    
+    选1 失败
+    
+    选2？
 
 
 
