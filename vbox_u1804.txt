@@ -139,13 +139,13 @@ tty -s && mesg n
 ```
 
 恢复默认网卡为eth0
-vim /etc/default/grub
+sudo vim /etc/default/grub
 查找
 GRUB_CMDLINE_LINUX=""
 修改为
 GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
 重新生成grub引导配置文件
-grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 
 
@@ -365,16 +365,20 @@ unity-control-center应该也类似，XDG_CURRENT_DESKTOP=Unity
 
 sudo apt install qtqr tor
 
-sudo apt install wine-stable winetricks playonlinux
+//sudo apt install wine-stable winetricks playonlinux
 
-
+ERROR: ld.so: object 'libgtk3-nocsd.so.0' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
 sudo apt install gtk3-nocsd
-gedit ~/.bashrc
-export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+sudo apt-get install libgtk3-nocsd0:i386
+sudo apt-get install libgtk3-nocsd0
+//gedit ~/.bashrc
+//export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
 
 sudo apt-get purge gtk3-nocsd
-修改这个地方吧
+关于wine修改这个地方吧
 cat /etc/X11/Xsession.d/51gtk3-nocsd-detect
+
+
 
 
 
@@ -442,5 +446,295 @@ sudo apt install science-electronics
 cliplt 与 parcellite
 
 
+
+sudo ubuntu-drivers devices
+sudo apt install nvidia-driver-390
+sudo apt install nvidia-utils-390
+
+sudo apt-get install mesa-common-dev
+
+
+nvidia-settings
+
+sudo apt install xserver-xorg-video-nouveau
+
+sudo apt install linux-headers-$(uname -r)
+
+
+
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/11.2.2/local_installers/cuda-repo-ubuntu1804-11-2-local_11.2.2-460.32.03-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804-11-2-local_11.2.2-460.32.03-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu1804-11-2-local/7fa2af80.pub
+sudo apt-get update
+sudo apt-get install cuda
+
+sudo apt install ubuntu-desktop ubuntu-unity-desktop xserver-xorg-input-all
+
+sudo add-apt-repository ppa:notepadqq-team/notepadqq
+sudo apt-get update
+sudo apt-get install notepadqq
+
+
+
+
+gedit /var/log/apt/term.log
+
+//sudo aptitude install xserver-xorg-input-all-hwe-18.04 xserver-xorg-input-libinput-hwe-18.04 xserver-xorg-video-ati-hwe-18.04 xserver-xorg-video-fbdev-hwe-18.04 xserver-xorg-video-intel-hwe-18.04 xserver-xorg-video-nouveau-hwe-18.04 xserver-xorg-video-qxl-hwe-18.04 xserver-xorg-video-radeon-hwe-18.04 xserver-xorg-video-vesa-hwe-18.04 xserver-xorg-core-hwe-18.04 ubuntu-desktop ubuntu-unity-desktop xorg xserver-xorg-hwe-18.04 xserver-xorg-video-all-hwe-18.04 xserver-xorg-video-vmware-hwe-18.04 xserver-xorg-video-amdgpu-hwe-18.04 xserver-xorg-input-wacom-hwe-18.04 
+
+sudo aptitude install xserver-xorg-input-all xserver-xorg-input-libinput xserver-xorg-video-ati xserver-xorg-video-fbdev xserver-xorg-video-intel xserver-xorg-video-nouveau xserver-xorg-video-qxl xserver-xorg-video-radeon xserver-xorg-video-vesa xserver-xorg-core ubuntu-desktop ubuntu-unity-desktop xorg xserver-xorg xserver-xorg-video-all xserver-xorg-video-vmware xserver-xorg-video-amdgpu xserver-xorg-input-wacom libqtwebkit4
+
+
+
+
+drawio
+matlab 2017
+
+
+
+
+./petalinux-v2020.1-final-installer.run -d /opt/petalinux
+$ sudo apt-get install u-boot-tools lrzsz minicom nfs-kernel-server tftpd xinetd libncurses5-dev
+$ sudo apt-get install slang-xfig
+$ sudo apt-get install quilt
+$ sudo apt-get install e2fsck-static
+sudo apt-get install build-essential vim tofrodos iproute2 gawk gcc git make net-tools zlib1g-dev libssl-dev flex bison libselinux1 libncurses5-dev tftpd lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6 xvfb chrpath socat autoconf libtool
+sudo apt-get install screen pax gzip tar
+sudo apt-get install tftp
+
+
+sudo apt-get install tftpd
+
+/etc/xinetd.d/tftp
+
+service tftp
+{
+protocol = udp
+port = 69
+socket_type = dgram
+wait = yes
+user = nobody
+server = /usr/sbin/in.tftpd
+server_args = /tftpboot
+disable = no
+}
+
+
+sudo mkdir -p /tftpboot
+sudo chmod 777 /tftpboot
+sudo chown nobody /tftpboot
+sudo /etc/init.d/xinetd stop
+sleep 1
+sudo /etc/init.d/xinetd start
+
+确认tftp服务是否已经开启
+netstat -au | grep tftp
+
+本机测试,需要tftp客户端
+tftp <ip>
+get <testfile>
+
+目标板上
+tftp -g -r <testfile> <ip>
+
+
+
+sudo apt-get install nfs-kernel-server nfs-common portmap
+sudo apt install rpcbind
+sudo gedit /etc/default/portmap
+内容是
+-i 127.0.0.1
+
+sudo gedit /etc/hosts.allow
+内容是
+portmap lockd rquotad mountd statd:ALL
+
+$ sudo exportfs -ra
+$ sudo service portmap restart
+或者sudo /etc/init.d/rpcbind restart
+
+sudo gedit /etc/exports
+内容是
+/home/andreas/targetfs *(rw,nohide,insecure,no_subtree_check,async,no_root_squash)
+
+$ sudo /etc/init.d/nfs-kernel-server restart
+
+sudo showmount -e localhost
+
+showmount
+rpcinfo
+exportfs
+nfsstat
+
+
+服务器端nfs-kernel-server自动安装nfs-common、rpcbind等13个软件包
+
+mount到本机nfs目录的客户端机器。
+sudo showmount -e localhost
+
+将配置文件中的目录全部重新export一次！无需重启服务。
+sudo exportfs -rv
+
+
+查看NFS的运行状态
+sudo nfsstat
+
+查看rpc执行信息，可以用于检测rpc运行情况
+sudo rpcinfo
+
+查看网络端口，NFS默认是使用111端口。
+sudo netstat -tu -4
+
+客户端nfs-common自动安装nfs-common、rpcbind等12个软件包
+
+显示指定的（192.168.3.167）NFS服务器上export出来的目录
+sudo showmount -e 192.168.3.167
+
+创建本地挂载目录
+sudo mkdir -p /mnt/data
+将NFS服务器192.168.3.167上的目录，挂载到本地的/mnt/目录下
+sudo mount -t nfs 192.168.3.167:/data /mnt/data
+
+
+
+为了安装Xilinx vitis
+sudo gedit /etc/lsb-release
+其中Description:	Ubuntu 18.04.5 LTS
+先暂时修改成Description:	Ubuntu 18.04.4 LTS
+
+
+sudo apt install blt 
+sudo apt install lib32asan4 lib32atomic1 lib32cilkrts5 lib32gcc-7-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx2 lib32quadmath0 lib32stdc++6 lib32ubsan0 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32asan4 libx32atomic1 libx32cilkrts5 libx32gcc-7-dev libx32gcc1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 libx32ubsan0 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+sudo apt install gcc-7-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev
+
+sudo apt install gcc-multilib
+冲突删除了一些包，安装完petalinux再换回来
+sudo apt install cuda-cross-aarch64-10-2 g++-7-aarch64-linux-gnu g++-aarch64-linux-gnu gcc-7-aarch64-linux-gnu gcc-aarch64-linux-gnu vpi1-cross-aarch64-l4t
+vpi1-cross-aarch64-l4t是nvidia的sdk包里的
+
+vitis后续
+sudo /opt/Xilinx/.xinstall/Vitis_2020.1/scripts/installAIeDepLibs.sh
+sudo /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/install_drivers
+
+这些包还是留着，不要auto remove了
+sudo apt install binutils-aarch64-linux-gnu cpp-7-aarch64-linux-gnu cpp-aarch64-linux-gnu cuda-cudart-cross-aarch64-10-2 cuda-cufft-cross-aarch64-10-2 cuda-cupti-cross-aarch64-10-2 cuda-curand-cross-aarch64-10-2 cuda-cusolver-cross-aarch64-10-2 cuda-cusparse-cross-aarch64-10-2 cuda-driver-cross-aarch64-10-2 cuda-misc-headers-cross-aarch64-10-2 cuda-npp-cross-aarch64-10-2 cuda-nsight-compute-addon-l4t-10-2 cuda-nvgraph-cross-aarch64-10-2 cuda-nvml-cross-aarch64-10-2 cuda-nvrtc-cross-aarch64-10-2 gcc-7-aarch64-linux-gnu-base gcc-7-cross-base gcc-8-cross-base libasan4-arm64-cross libatomic1-arm64-cross libc6-arm64-cross libc6-dev-arm64-cross libcublas-cross-aarch64 libgcc-7-dev-arm64-cross libgcc1-arm64-cross libgomp1-arm64-cross libitm1-arm64-cross liblsan0-arm64-cross libstdc++-7-dev-arm64-cross libstdc++6-arm64-cross libtsan0-arm64-cross libubsan0-arm64-cross linux-libc-dev-arm64-cross nsight-compute-addon-l4t-2019.5.0
+
+
+
+
+sudo apt install qtcreator
+sudo apt install qtbase5-dev qtbase5-dev-tools qtbase5-doc qtbase5-doc-html qtbase5-examples qtbase5-private-dev qt5-qmake qt5-default qt5-doc qt5-doc-html qt5-assistant qt5ct qtcreator-data qtcreator-doc qtchooser libevdev-doc qt5-style-plugins default-libmysqlclient-dev firebird-dev libpq-dev libsqlite3-dev unixodbc-dev
+
+
+sudo apt install sqlite sqlitebrowser sqlite-doc libqscintilla2-doc sqlite3-doc
+
+
+sudo apt install hwinfo
+
+
+
+sudo apt install ubuntu-restricted-extras ttf-mscorefonts-installer --reinstall
+
+
+~/.Xresources
+-----------------------------------
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+Xft.rgba: rgb
+Xft.dpi:   107
+-----------------------------------
+
+
+sudo apt install rlwrap
+
+
+
+
+## for allegro
+sudo apt install lsb
+sudo apt install ksh lsb-core
+sudo apt install vlc-bin
+sudo apt install libxmu-dev:i386
+
+cd /usr/local/bin
+sudo gedit allegro
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/allegro
+-------------------------------------------------
+sudo gedit concepthdl
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/concepthdl
+-------------------------------------------------
+sudo gedit pad_designer
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/pad_designer
+-------------------------------------------------
+sudo chmod +x allegro pad_designer concepthdl
+
+sudo gedit projmgr
+-------------------------------------------------
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/projmgr
+-------------------------------------------------
+sudo chmod +x projmgr
+
+eagle 8.1.0
+cd /usr/local/bin
+sudo gedit eagle
+-------------------------------------------------
+#!/bin/bash
+cd /opt/eagle-8.1.0/
+./eagle
+-------------------------------------------------
+sudo chmod +x eagle
+ls eagle -l
+
+
+
+
+sudo aptitude install libssl1.0-dev
+sudo aptitude install npm
+sudo npm install -g cnpm --registry=https://registry.npm.taobao.org
+sudo npm config set registry https://registry.npm.taobao.org
+
+sudo npm install n -g
+sudo npm install -g cnpm
+sudo n stable
+sudo node -v      ###shuould>10
+sudo cnpm install -g electron
+electron -v
+
+
+test
+git clone https://github.com/electron/electron-quick-start
+cd electron-quick-start
+cnpm install
+cnpm start
+
+sudo cnpm install -g electron@9
+electron --version
+
+/media/andreas/4be7143e-a6ab-4c1d-8456-e571b77a1014/usr/lib/electronic-wechat
+$ exec electron . "$@"
+运行ok
+可以复制到
+/usr/lib/electronic-wechat
+
+
+sudo apt install libevince-dev
 
 
