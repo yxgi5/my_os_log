@@ -873,7 +873,7 @@ https://wiki.archlinux.org/index.php/MAC_address_spoofing
 
 ###sudo gedit /etc/conf.d/net
 sudo gedit /etc/rc.local
-#####/etc/rc.d/rc.local
+#####或者/etc/rc.d/rc.local
 <-------------------------------------
 #!/bin/sh
 ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
@@ -4146,6 +4146,71 @@ yay libx32-glibc
 :: Repository AUR
     1) gcc-multilib-x32 2) gcc-x32-seed
 选1失败，就选2了
+
+
+
+
+
+sudo mkinitcpio -p linux
+
+
+
+yay -R python2-incremental python2-twisted
+yay -S python-twisted 
+yay -S python-incremental
+
+yay -S mesa #确保安装了这个基础显卡驱动
+yay -S nvidia #安装N卡驱动
+yay -S bumblebee #提供守护进程以及程序的主要安装包
+
+yay -S nvidia-settings	#配置工具
+yay -S xorg-server-devel	#nvidia-xconfig
+yay -S opencl-nvidia	#提供opencl支持
+yay -S bbswitch	#开启或者关闭显卡驱动
+
+
+
+
+java切换成oracle版本
+$ archlinux-java status
+Available Java environments:
+  java-11-openjdk
+  java-15-openjdk
+  java-16-jdk
+  java-8-openjdk (default)
+$ sudo archlinux-java set java-16-jdk
+$ archlinux-java status
+Available Java environments:
+  java-11-openjdk
+  java-15-openjdk
+  java-16-jdk (default)
+  java-8-openjdk
+
+
+Default Java environment is already set to 'java-16-jdk'
+See 'archlinux-java help' to change it.
+When you use a non-reparenting window manager,
+set _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
+
+yay -S jre11 jdk11
+$ sudo archlinux-java set java-11-jdk
+$ sudo archlinux-java set java-16-jdk
+
+
+
+https://wiki.archlinux.org/index.php/Xilinx_Vivado
+yay -S pod2man libselinux debianutils multilib-devel
+
+yay -S tftp-hpa
+$ sudo systemctl enable tftpd.service
+$ sudo systemctl start tftpd.service
+
+
+
+yay -S mlocate
+
+
+
 
 
 
