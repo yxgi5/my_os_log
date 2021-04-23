@@ -876,7 +876,8 @@ sudo gedit /etc/rc.local
 #####或者/etc/rc.d/rc.local
 <-------------------------------------
 #!/bin/sh
-ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+#ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+ifconfig eth0 hw ether 00:d8:61:a6:62:b7
 exit 0
 ------------------------------------->
 sudo chmod +x /etc/rc.local
@@ -4187,6 +4188,8 @@ Available Java environments:
   java-8-openjdk
 
 
+
+
 Default Java environment is already set to 'java-16-jdk'
 See 'archlinux-java help' to change it.
 When you use a non-reparenting window manager,
@@ -4194,8 +4197,12 @@ set _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
 
 yay -S jre11 jdk11
 $ sudo archlinux-java set java-11-jdk
-$ sudo archlinux-java set java-16-jdk
 
+yay -S jdk8 jre8
+sudo archlinux-java set java-8-jdk
+//sudo archlinux-java set java-8-jre/jre
+
+sudo archlinux-java set java-16-jdk
 
 
 https://wiki.archlinux.org/index.php/Xilinx_Vivado
