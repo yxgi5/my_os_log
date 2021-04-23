@@ -748,5 +748,5 @@ sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin
 sudo apt install caja engrampa meld mate-desktop-environment lzip lzop ncompress rzip unalz fonts-mathjax-extras fonts-stix libjs-mathjax-doc mate-desktop-environment-extras rss-glx synaptic python-configobj-doc python-psutil-doc heimdal-clients  mate-sensors-applet-nvidia
 
 
-
+sudo apt install geany geany-common geany-plugins geany-plugins-common
 
