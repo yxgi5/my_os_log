@@ -675,11 +675,14 @@ git clone git@github.com:yqlbu/fan-control/
 
 
 
+Jetson Setup | Apache MXNet.html
+docker-compose
+git submodule update --init --recursive
 
-
-
-
-
+添加当前用户到docker组
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ groups
 
 
 
