@@ -14485,3 +14485,35 @@ Extract the compressed archive: tar xf filename.tar.
 
 
 
+
+
+buster:
+sudo apt install electronics-all
+expeyes-web
+systemctl reload apache2
+
+sudo apt install pbuilder debootstrap devscripts
+sudo apt install dpkg-repack
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
