@@ -274,7 +274,7 @@ sudo systemctl enable gdm.service
 sudo systemctl start gdm.service
 
 
-
+/software/OS_system_images/linux/archlinux/
 
 
 sudo pacman -S hwloc aircrack-ng gdm alsa-topology-conf alsa-lib hwloc aircrack-ng alsa-topology-conf alsa-ucm-conf alsa-lib libsidplayfp libmaxminddb bind audacious-plugins python-patiencediff breezy brltty liblouis ceph python-bcrypt python-cmd2 deluge-gtk deluge=2.0.4.dev38+g23a48dd01-2 libmicrohttpd elfutils libspf2 exim openmpi fftw fluidsynth gimp libinstpatch-1.0.so=2-64 mypaint-brushes1 gst-plugins-bad-libs=1.16.2 gst-plugins-bad lilv gst-plugins-bad gst-plugin-gtk gthumb netpbm gts kactivities-stats kio-extras kdsoap-ws-discovery-client kio-extras lib32-brotli lib32-libsoup java-openjfx mujs mpv perl-clone perl-http-message perl-cgi perl-http-server-simple python2-importlib_resources python2-jaraco python2-ordered-set python2-setuptools libslirp qemu liburing qemu yaml-cpp qtcreator ruby-irb ruby lsof steam lib32-vulkan-icd-loader steam lib32-vulkan-icd-loader steam-native-runtime xf86-video-vmware virtualbox-guest-utils xdg-dbus-proxy webkit2gtk 
@@ -727,7 +727,9 @@ sudo gedit /etc/proxychains.conf
 # add proxy here ...
 # meanwile
 # set to "v2ray"
-socks5  127.0.0.1 10808
+#socks5  127.0.0.1 10808
+# set to "SS"
+#socks5  127.0.0.1 1081
 ----------------------------
 使用方法
 proxychains [cmd]
@@ -790,15 +792,15 @@ sudo dirmngr < /dev/null
 sudo touch /root/.gnupg/dirmngr_ldapservers.conf
 sudo killall dirmngr
 
-gpg --refresh-keys
-
-gpg --refresh-keys --keyserver hkp://keyserver.ubuntu.com
 
 rm -R /etc/pacman.d/gnupg/
 rm -R /root/.gnupg/
-
+gpg --refresh-keys
+gpg --refresh-keys --keyserver hkp://keyserver.ubuntu.com
 pacman-key --init && pacman-key --populate archlinux
 pacman-key --refresh-keys --keyserver hkp://keyserver.ubuntu.com
+pacman-key --refresh-keys
+
 
 sudo pacman-key --keyserver keyserver.ubuntu.com -r 962DDE58
 
@@ -871,10 +873,11 @@ https://wiki.archlinux.org/index.php/MAC_address_spoofing
 
 ###sudo gedit /etc/conf.d/net
 sudo gedit /etc/rc.local
-#####/etc/rc.d/rc.local
+#####或者/etc/rc.d/rc.local
 <-------------------------------------
 #!/bin/sh
-ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+#ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+ifconfig eth0 hw ether 00:d8:61:a6:62:b7
 exit 0
 ------------------------------------->
 sudo chmod +x /etc/rc.local
@@ -923,6 +926,24 @@ GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
 grub-mkconfig -o /boot/grub/grub.cfg
 
 最后重启即可恢复默认网卡为eth0，操作结束。
+
+修改grub
+set default="3" 的索引号可以这样查
+sudo awk -F\' '/menuentry / { print i++, $2}' /boot/grub/grub.cfg
+
+0 Arch Linux
+1 Arch Linux, with Linux linux-lts
+2 Arch Linux, with Linux linux-lts (fallback initramfs)
+3 Arch Linux, with Linux linux
+4 Arch Linux, with Linux linux (fallback initramfs)
+5 Debian GNU/Linux 8 (jessie) (on /dev/sda1)
+6 Debian GNU/Linux (on /dev/sda1)
+
+
+tips 另外一个引导程序 syslinux
+config file in /boot/syslinux/syslinux.cfg
+
+
 
 
 
@@ -1447,8 +1468,9 @@ sudo chown -R $USER .Trash-1000
 
 sudo usermod -aG brlapi andy
 
-sudo pacman -R linux-lts
-sudo pacman -R linux-lts-headers
+lts对于滚挂的情况很有用不要删
+//sudo pacman -R linux-lts
+//sudo pacman -R linux-lts-headers
 
 
 
@@ -1794,8 +1816,9 @@ sudo pacman -S python-pytorch
 
 
 
-//sudo pacman -S telegram-desktop ttf-opensans
-sudo pacman -R telegram-desktop
+sudo pacman -S telegram-desktop ttf-opensans
+
+
 
 
 
@@ -2233,7 +2256,23 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys 6656C593E5158D1A
 
 
 
+
+
+
+Xilin vivado sdk rlwrap使用native版本
 sudo pacman -S rlwrap
+修改tclsh，xmd，xstc，xsdb，xtclsh(不同版本稍有不同)
+替换
+"$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap
+为
+/usr/bin/rlwrap
+
+
+
+
+
+
+
 
 
 
@@ -2252,6 +2291,10 @@ pcmanfm下pcb文件还是没有图标，放弃了
 
 
 
+
+
+
+
 ~.gtkrc-2.0
 /etc/gtk-2.0/gtkrc and add the following line:
 
@@ -2261,7 +2304,7 @@ gtk-icon-theme-name = "gnome"
 
 sudo usermod -aG storage andy
 
-gtk3的版本运行不起来..
+gtk3版本的lxappearance运行不起来..
 sudo pacman -S lxappearance lxappearance-obconf 
 
 sudo pacman -S gnome-icon-theme gnome-icon-theme-extras mate-icon-theme mate-icon-theme-faenza xcursor-themes
@@ -2308,6 +2351,9 @@ sudo pacman -S libopenraw
 
 
 
+
+！目前千万不要
+！安装kde
 
 sudo pacman -S plasma-meta
 sudo pacman -Rns plasma-meta
@@ -2524,10 +2570,13 @@ xed ~/.local/share/dbus-1/services/org.gnome.Identity.service
 xed ~/.local/share/dbus-1/services/org.gnome.OnlineAccounts.service
 xed ~/.local/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service
 
+
 mkdir -p ~/.local/share/systemd/user/
 cp /usr/lib/systemd/user/gvfs-goa-volume-monitor.service ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
 gedit ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
 ExecStart=exit
+这个之后gedit，thunar等启动会变慢哦
+rm ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service 就好了
 
 To revert
 CODE: SELECT ALL
@@ -2536,9 +2585,1637 @@ rm -r ~/.local/share/dbus-1/services
 
 
 
+
 sudo gedit /etc/xdg/autostart/xfce4-screensaver.desktop
 sudo gedit /etc/xdg/autostart/xfce4-power-manager.desktop
-都改成不执行或者添加Hidden=true
+添加Hidden=true木有用
+都改成不执行，比如
+Exec=xfce4-power-manager
+改成
+#Exec=xfce4-power-manager
+
+
+
+
+busctl --user
+loginctl session-status
+echo $DBUS_SESSION_BUS_ADDRESS
+hostnamectl
+journalctl -xf
+pacman -Qikk gvfs
+pgrep -u andy -l
+systemctl --user list-unit-files |grep gvfs
+
+
+
+查看系统默认已有的keycode：
+xmodmap -pke
+
+查看keycode
+xev | grep keycode
+
+
+sudo pacman -S evtest
+sudo evtest
+
+
+
+sudo pacman -S wqy-microhei wqy-zenhei wqy-microhei-lite wqy-bitmapfont
+
+
+localectl list-x11-keymap-layouts
+
+//登陆打开NumLock键
+//$ gsettings set org.gnome.settings-daemon.peripherals.keyboard numlock-state on
+
+
+
+localectl status
+
+localectl list-keymaps
+localectl list-keymaps | grep -i search_term
+
+setxkbmap -print -verbose 10
+
+
+loadkeys 工具临时修改键盘布局
+
+
+sudo localectl set-keymap --no-convert us
+同时修改了/etc/vconsole.conf 和当前会话中的 KEYMAP
+us
+jp106
+
+
+yaourt xkb-switch 
+yaourt xkblayout-state
+
+xkblayout-state print "%s"
+xkb-switch -s jp106
+xkblayout-state print "%s"
+xkb-switch -l
+怎么就一个？
+
+
+
+
+
+sudo pacman -S eclipse-ecj
+
+
+
+安装包默认不覆盖已经存在的文件，比如python就比较常见这样的现象
+...
+python-setuptools: /usr/lib/python3.9/site-packages/setuptools/tests/textwrap.py exists in filesystem
+Errors occurred, no packages were upgraded.
+error installing repo packages
+
+
+
+办法，强制覆盖
+pacman -S <package> --overwrite=*
+
+这里具体就是
+sudo pacman -Syu --overwrite=*
+
+
+
+
+
+
+
+
+
+
+替换wine的版本
+sudo pacman -S wine-staging
+sudo pacman -S dosbox cups lib32-vkd3d vkd3d
+sudo pacman -S foomatic-db antiword docx2txt
+sudo pacman -S playonlinux
+
+
+
+
+检查/lib/systemd/system/miredo.service
+<------------------------------------------
+[Unit]
+Description=Teredo IPv6 tunneling
+After=network-online.target
+
+[Service]
+ExecStartPre=/usr/bin/miredo-checkconf -f /etc/miredo/miredo.conf
+ExecStart=/usr/bin/miredo -f
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+------------------------------------------>
+sudo systemctl enable systemd-networkd-wait-online.service
+sudo systemctl enable miredo.service
+
+
+
+
+
+
+
+env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" XMODIFIERS=@im=fcitx GTK_IM_MODULE=fcitx QT4_IM_MODULE=fcitx QT_IM_MODULE=fcitx WINEARCH=win32 WINEPREFIX="/home/andy/.wine" wine C:\\\\Program\\ Files\\\\Source\\ Insight\\ 4.0\\\\sourceinsight4.exe 
+还是不能在si4输入中文
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+failed to read config files: [/etc/v2ray/config.json] > v2ray.com/core/infra/conf: unknown cipher method: aes-256-cfb
+v2ray-desktop
+
+git-lfs
+
+qwt
+botan1.10
+
+
+
+
+
+
+
+20210114
+sudo pacman -Syu
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing wxgtk2 (3.0.5.1-2) breaks dependency 'wxgtk' required by gspiceui
+:: installing wxgtk2 (3.0.5.1-2) breaks dependency 'wxgtk' required by pyuv
+sudo pacman -R gspiceui
+sudo pacman -R pyuv
+yay gspiceui
+yay pyuv
+:: There are 3 providers available for wxgtk:
+:: Repository AUR
+    1) wxgtk-git 2) wxgtk2-dev 3) wxgtk2-light 
+选2
+
+更新了
+wxgtk-common --> wxgtk-common-dev
+wxgtk2 --> wxgtk2-dev
+
+[实际上，不需要替换的，修改编译配置为依赖wxgtk-common就可以了]
+
+
+
+图片有(1).jpg之类的重复，删除
+rm *\)\.jpg
+
+
+WARNING: Possibly missing firmware for module: aic94xx
+WARNING: Possibly missing firmware for module: wd719x
+modinfo wd719x
+
+git clone https://aur.archlinux.org/aic94xx-firmware.git
+cd aic94xx-firmware
+makepkg -sri
+git clone https://aur.archlinux.org/wd719x-firmware.git
+cd wd719x-firmware
+makepkg -sri
+yay upd72020x-fw
+
+yay ltspice
+
+
+
+
+
+
+
+
+cd /usr/local/bin
+sudo gedit zoom
+<--------------------------------------------
+#!/bin/bash
+cd /opt/zoom
+export LD_LIBRARY_PATH=.
+./zoom
+-------------------------------------------->
+sudo chmod +x zoom
+
+
+sudo rm zoom
+God damn zoom!
+
+
+
+https://cdn.zoom.us/prod/5.4.57862.0110/zoom_x86_64.pkg.tar.xz
+
+sudo pacman -U zoom_x86_64.pkg.tar.xz --overwrite=*
+
+sudo pacman -S xcompmgr
+
+
+
+
+
+
+
+
+
+
+
+
+
+allegro display err
+
+ldd /opt/cadence/SPB166/tools.lnx86/pcb/bin/allegro.exe
+export LD_LIBRARY_PATH=/usr/lib32:/usr/lib:/usr/lib64:$CDS_ROOT/tools/lib64:$CDS_ROOT/tools.lnx86/mainwin540_64/mw/lib-amd64_linux_optimized:$CDS_ROOT/tools.lnx86/lib:$CDS_ROOT/tools.lnx86/mainwin540/mw/lib-linux_optimized:$LD_LIBRARY_PATH
+ldd /opt/cadence/SPB166/tools.lnx86/pcb/bin/allegro.exe
+
+附加的库路径有和系统库路径冲突的库，懒得一个个补成系统库，去掉冲突的就好了哇
+/opt/cadence/SPB166/tools.lnx86/lib目录下的
+libgcc_s.so.1 -> libgcc_s.so.1.bk
+libstdc++.so.6 -> libstdc++.so.6.bk
+到这里可以运行
+
+
+命令行运行会看到缺drirc
+以前从fedora哪个包存档的，懒得找arch的包了。那么建立：
+～/.drirc和/etc/drirc，内容一样如下
+<-----------------------------------------------------------
+<!--
+
+============================================
+Application bugs worked around in this file:
+============================================
+
+* Various Unigine products don't use the #version and #extension GLSL
+  directives, meaning they only get GLSL 1.10 and no extensions for their
+  shaders.
+  Enabling all extensions for Unigine fixes most issues, but the GLSL version
+  is still 1.10.
+
+* Unigine Heaven 3.0 with ARB_texture_multisample uses a "ivec4 * vec4"
+  expression, which fails to compile with GLSL 1.10.
+  Adding "#version 130" fixes this.
+
+* Unigine Heaven 3.0 with ARB_shader_bit_encoding uses the uint keyword, which
+  fails to compile with GLSL 1.10.
+  Adding "#version 130" fixes this.
+
+* Unigine Heaven 3.0 with ARB_shader_bit_encoding uses a "uint & int"
+  expression, which fails (and should fail) to compile with any GLSL version.
+  Disabling ARB_shader_bit_encoding fixes this.
+
+TODO: document the other workarounds.
+
+-->
+
+<driconf>
+    <!-- Please always enable app-specific workarounds for all drivers and
+         screens. -->
+    <device>
+        <application name="Unigine Sanctuary" executable="Sanctuary">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Unigine Tropics" executable="Tropics">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Unigine Heaven (32-bit)" executable="heaven_x86">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+            <option name="force_glsl_version" value="130" />
+            <option name="disable_shader_bit_encoding" value="true" />
+	</application>
+
+        <application name="Unigine Heaven (64-bit)" executable="heaven_x64">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+            <option name="force_glsl_version" value="130" />
+            <option name="disable_shader_bit_encoding" value="true" />
+	</application>
+
+        <application name="Unigine OilRush (32-bit)" executable="OilRush_x86">
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Unigine OilRush (64-bit)" executable="OilRush_x64">
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Savage 2" executable="savage2.bin">
+            <option name="disable_glsl_line_continuations" value="true" />
+        </application>
+
+        <application name="Topogun (32-bit)" executable="topogun32">
+            <option name="always_have_depth_buffer" value="true" />
+        </application>
+
+        <application name="Topogun (64-bit)" executable="topogun64">
+            <option name="always_have_depth_buffer" value="true" />
+        </application>
+    </device>
+</driconf>
+----------------------------------------------------------->
+
+ok， 是不是该考虑升级成spp170？
+
+
+
+
+
+
+
+
+DraftSight因为库依赖问题不能用
+yay DraftSight
+http://dl-ak.solidworks.com/nonsecure/draftsight/2019SP3/draftSight.rpm
+404了。
+直接解决库问题吧
+/opt/dassault-systemes/DraftSight/Linux/DraftSight
+ymbol lookup error: /usr/lib/libfontconfig.so.1: undefined symbol: FT_Done_MM_Var
+ldd /opt/dassault-systemes/DraftSight/Linux/DraftSight
+locate libfontconfig.so.1
+
+
+cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.4.4 /opt/dassault-systemes/DraftSight/Libraries
+cd /opt/dassault-systemes/DraftSight/Libraries
+ln -s libfontconfig.so.1.4.4 libfontconfig.so.1
+
+用户配置文件在
+~/.config/dassault-systemes
+
+active不了啊，狗日的达索
+
+还是查aur吧，
+https://aur.archlinux.org/packages/draftsight/?O=10&PP=10
+有人post出来存档的链接。。。。。。
+
+那么就用makepkg编译一个呗，也纳入pacman的管理
+draftSight.rpm名字修改成draftsight-2019SP3
+
+这样就剩下产品过期问题，参考
+cd /opt/dassault-systemes/DraftSight/Linux/
+env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' ./DraftSight
+（export LIBGL_DEBUG=verbose 据说 will have probably errors with DRI）
+
+desktop文件修改一下，加一个 faketime 变量
+<-------------------------------------------------------------------
+[Desktop Entry]
+Name=DraftSight
+Comment=Freeware CAD software for your DWG/DXF files.
+GenericName=DraftSight
+Exec=env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' /opt/dassault-systemes/DraftSight/Linux/DraftSight %U
+Path=/opt/dassault-systemes/DraftSight/Linux
+Type=Application
+Terminal=false
+Icon=draftsight
+MimeType=image/vnd.dwg;image/vnd.dwt;image/vnd.dxf;application-vnd.dassault-systemes.draftsight-dwg;application-vnd.dassault-systemes.draftsight-dwt;application-vnd.dassault-systemes.draftsight-dxf
+Categories=Application;Graphics;2DGraphics;RasterGraphics;
+------------------------------------------------------------------>
+就大功告成
+注意，达索已经不更新linux版本了。
+
+
+
+
+类似的
+graebert-gmbh
+rpm包已经准备好，参照上面的aur配置可以自己生成一个pacman包... 有时间再弄了
+
+
+
+qcad是pacman仓库就已经有的，暂时不安装
+//sudo pacman -S qcad
+不过这玩意的命令用起来不方便，还是上面法国佬和德国佬的两个好。
+
+
+
+
+
+
+
+
+openproj已经安装了运行有点问题
+解决：
+确保/usr/lib/jvm/java-8-openjdk已经有java8
+修改$HOME/.openproj/run.conf，
+将JAVA_OPTS="-Xms128m -Xmx768m"改为JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，重启openproj
+
+
+
+
+sudo pip3.6 uninstall sip
+cd sip-4.19.12/
+python3 configure.py	## 这次是配置 编译PyQt 要用的SIP v4 (i.e. the sip.sipconfig module)
+make
+sudo make install
+
+PyQt4_gpl_x11-4.12.3编译
+compiling this package failed because of $[QT_INSTALL_LIBS] = 0 PLease replace '$[QT_INSTALL_LIBS]' with ‘/usr/lib’.
+
+gedit configure.py
+修改
+        pyqt_modules.append("QtCore")
+为
+        pyqt_modules.append("QtCore")
+        pyqt_modules.append("QtGui")
+        pyqt_modules.append("QtHelp")
+        pyqt_modules.append("QtMultimedia")
+        pyqt_modules.append("QtNetwork")
+        pyqt_modules.append("QtDBus")
+        pyqt_modules.append("QtDeclarative")
+        pyqt_modules.append("QtScript")
+        pyqt_modules.append("QtScriptTools")
+        pyqt_modules.append("QtOpenGL")
+        pyqt_modules.append("QtSql")
+        pyqt_modules.append("QtSvg")
+        pyqt_modules.append("QtTest")
+        pyqt_modules.append("QtWebKit")
+        pyqt_modules.append("QtXml")
+        pyqt_modules.append("QtXmlPatterns")
+        pyqt_modules.append("phonon")
+        pyqt_modules.append("QtDesigner")
+
+
+for files in `find . -type f -name "Makefile"`
+do
+sed -i 's/$$\[QT_INSTALL_LIBS\]/\/usr\/lib/' $files
+done
+
+python3 configure.py
+make -j $(nproc)
+sudo make install
+
+cd ../sip-4.19.12/
+make clean
+## python3 configure.py --sip-module PyQt4.sip --no-dist-info --no-tools ## 可能造成报错PyCapsule_GetPointer called with incorrect name
+python3 configure.py --sip-module PyQt4.sip
+make	## 这次是配置运行 import PyQt4 所需要的 PyQt4.sip
+sudo make install
+
+
+安装时出现报错：Error: This version of PyQt4 and the commercial version of Qt have incompatible licenses.
+解决方法：注释掉configure-ng.py下面语句即可：
+if introspecting and target_config.qt_licensee not in OPEN_SOURCE_LICENSEES and ltype == 'GPL':
+        error(
+                "This version of PyQt4 and the commercial version of Qt have "
+                "incompatible licenses.")
+
+
+error: ‘waitForEvents’ is not a member of ‘QTest’
+gedit PyQt4_gpl_x11-4.12.3/sip/QtTest/qtestmouse.sip
+去掉waitForEvents那一段
+
+fatal error: abstractaudiooutput.h: No such file or directory
+PyQt4_gpl_x11-4.12.3/phonon/Makefile
+引入/usr/include/phonon4qt5/phonon
+
+/usr/bin/ld: cannot find -lQt5onon
+我实在找不着这个鸡巴库
+PyQt4_gpl_x11-4.12.3/phonon/Makefile
+删掉-lQt5onon
+
+fatal error: qassistantclient.h: No such file or directory
+这个没辙，不要编译QtAssistant模块就好了嘛
+
+/usr/bin/ld: cannot find -lQt5xContainer
+我也实在找不着这个鸡巴库
+去掉QAxContainer的编译
+
+这样总算把Pyqt4安装得差不多了。
+
+
+
+删除多余的snap包
+su
+snap list --all | while read snapname ver rev trk pub notes; do if [[ $notes = *disabled* ]]; then snap remove "$snapname" --revision="$rev"; fi; done
+安置一个游戏
+sudo snap install 0ad
+sudo snap install openra
+sudo snap install warzone2100
+维护参考
+https://snapcraft.io/docs/getting-started
+
+
+
+
+
+安装一些多媒体编辑工具
+yay shotcut
+yay rtaudio
+yay vidcutter
+yay mkvtoolnix-gui
+yay mkvtoolnix-cli
+yay audacity
+
+矢量图制作
+yay inkscape
+yay scour
+
+记账工具
+yay gnucash-docs
+yay gnucash
+
+
+更新
+wxgtk-common
+wxgtk2
+取代wxgtk-common-dev和wxgtk2-dev
+测试用 gspiceui，audacity和pyuv
+pacman -Qs wxgtk
+
+既然都删了wxgtk2-dev和以此库依赖编译的pyuv，那么按pyuv的要求选wxgtk-git依赖
+but，wxgtk-git编译失败
+解决办法
+修改pyuv的依赖为wxgtk-common
+重新编译
+这样pyuv也是可以用的。
+
+
+安装
+cppunit，libmspack
+
+安装vlc
+附加libdvdcss gnu-free-fonts live-media libgoom2 aribb24 aribb25
+
+
+yay cunit
+yay bcunit
+yay splint
+yay cmocka
+yay gtest
+yay python-pylint
+
+
+yay picom
+mkdir ~/.config/picom/
+cp /etc/xdg/picom.conf ~/.config/picom/picom.conf
+gedit ~/.config/picom/picom.conf
+
+opacity-rule = [
+  "100:class_g = 'Lxterminal' && focused",
+  "100:class_g = 'Lxterminal' && !focused"
+];
+
+picom --config ~/.config/picom/picom.conf
+
+效果不是我想要的，不启用
+rm ~/.config/picom/picom.conf
+
+
+
+
+
+更新wps
+yay wps-office
+yay wps-office-mime
+
+
+
+更新exfat工具集
+exfat-utils -> exfatprogs
+
+
+
+
+sudo mv /etc/php/php.ini /etc/php/php.ini.bk
+sudo mv /etc/php/php.ini.pacnew /etc/php/php.ini
+
+sudo mv /etc/privoxy/config /etc/privoxy/config.bk
+sudo mv /etc/privoxy/config.pacnew /etc/privoxy/config
+add @ 1449
+forward-socks5t   / 127.0.0.1:1081 . 
+
+
+Default Java environment is already set to 'java-15-jdk'
+See 'archlinux-java help' to change it
+
+
+yay python-certifi
+
+
+
+
+
+libtool
+libtool --finish /usr/lib
+
+
+
+更新gnucap
+为gnucap-git版本
+
+
+更新miredo
+
+
+更新peco，参考https://goproxy.cn和https://github.com/ethereum/go-ethereum/issues/21129
+$ go env -w GO111MODULE=on
+$ go env -w GOPROXY=https://goproxy.cn,direct
+makepkg
+
+
+更新gaw
+为gaw3
+
+
+更新foxitreader
+
+
+更新obmenu
+
+
+更新obmenu-generator
+The schema file has been installed as: /etc/xdg/obmenu-generator/schema.pl
+yay perl-gtk3
+
+
+更新spacefm
+New optional dependencies for spacefm
+    curlftpfs: mount FTP shares [installed]
+    dbus: dbus integration [installed]
+    fuseiso: mount ISO files
+    gphotofs: mount cameras
+    ifuse: mount your iPhone/iPod Touch
+    jmtpfs: mount MTP devices
+    pmount: mount as non-root user
+    util-linux: disk eject support [installed]
+
+
+
+
+yay pv
+
+
+
+
+
+看到opt目录下有个mygui文件夹，里面的玩意运行又缺乏库，aur的git版本cmake报错，编译不了，啥鸡巴玩意，删！
+sudo pacman -Rs mygui
+
+
+
+更新提示了
+>>> It's now located under /usr/lib/rp-pppoe/rp-pppoe.so
+>>> Change LINUX_PLUGIN to the new path in your /etc/ppp/pppoe.conf
+就是
+LINUX_PLUGIN=/usr/lib/rp-pppoe/rp-pppoe.so
+
+
+
+
+今日系统无法启动
+fsck修复，后能启动，发现/etc/ppp/pppoe.conf已经被莫名二进制文件替代，其他配置文件可能也会有类似问题
+解决方法有二
+一。幸好老子的laptop有个备份系统，直接更新到最新然后把前面的update都搞好，复制到移动系统盘，包括home分区都以laptop为准。
+二。深度更新，https://wiki.archlinux.org/index.php/pacman#Skip_package_from_being_upgraded， pacman -S $(pacman -Qnq)，之后一个个查/etc下的文件的Qo(属于哪个软件包)，全部对比重置。
+
+本来的laptop是否也存在配置文件无效问题，需要有时间按方法二也检查。
+目前移动系统盘起码还能凑合用，先拖到春节放假。
+
+
+
+
+
+
+
+gperf
+
+
+yay asco
+yay obmenu2-git
+
+qucs
+http://downloads.sourceforge.net/project/qucs/qucs/0.0.20/qucs-0.0.20-rc2.tar.gz
+
+
+
+AUR 镜像使用帮助
+https://mirror.tuna.tsinghua.edu.cn/help/AUR/
+
+yaourt 用户
+修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为
+
+AURURL="https://aur.tuna.tsinghua.edu.cn"
+yay 用户
+执行以下命令修改 aururl :
+
+yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+修改的配置文件位于 ~/.config/yay/config.json ，还可通过以下命令查看修改过的配置：
+yay -P -g
+
+
+
+
+
+
+Optional dependencies for shutter-git
+    gnome-web-photo: web screenshot support
+    perl-image-exiftool: read and write EXIF data [installed]
+    nautilus-sendto: send screenshots via mail [installed]
+    perl-goo-canvas: editing screenshots [installed]
+    perl-gtk2-appindicator: AppIndicators support
+    perl-path-class: Imgur and Dropbox upload support [installed]
+    perl-lwp-protocol-https: Imgur and Dropbox upload support [installed]
+    perl-net-oauth: Imgur and Dropbox upload support [installed]
+    bc: 3D Rotate and 3D Reflection plugins support [installed]
+    perl-webservice-gyazo-b: Gyazo upload support
+
+
+
+yay gnome-web-photo
+需要更新webkitgtk和webkitgtk2
+
+yay perl-gtk2-appindicator
+
+yay perl-webservice-gyazo-b
+
+
+yay ozone
+yay lucidor
+yay libcurl-openssl-1.0
+yay lib32-unixodbc
+yay jlink-systemview
+yay jlink-systemview-target-src
+yay jlink-software-and-documentation
+yay idnkit
+yay gcc6
+yay smath
+yay asco
+yay lib32-fakechroot 失败
+yay microchip-mplabx-bin 依赖失败
+yay stcgal
+dropbox
+
+rarcrack
+tcllib
+autofs
+R rpmextract
+python2-qrtools失败
+python2-werkzeug失败
+sssd
+R qt5-enginio
+qt5-enginio-git失败
+
+sudo debtap -u
+
+dumpet-2.1.tar.bz2 ... FAILED (unknown public key 8C004C2F93481F6B)
+
+gpg --keyserver keyserver.ubuntu.com --recv 8C004C2F93481F6B
+
+
+It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+uex升级后无限试用
+rm -rf ~/.idm/*.spl
+rm -rf /tmp/*.spl
+rm -rf ~/.idm/uex/*.spl
+
+参考
+alias ue='rm -rf ~/.idm/uex/*.spl | rm -rf ~/.idm/uex/*.spl |rm -rf /tmp/*.spl | /usr/bin/uex &'
+
+启动加入
+Exec=env faketime '2020-02-29 08:15:42' uex %U
+
+
+
+
+NOTE: It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+bcompare升级后无限试用
+/home/andy/.config/bcompare
+
+参考：
+bcompare Linux版 无限试用
+需要root权限。
+ 
+# mv /usr/bin/bcompare /usr/bin/bcompare.real
+# cat /usr/bin/bcompare
+#!/bin/sh
+rm "${HOME}/.config/bcompare/registry.dat"
+/usr/bin/bcompare.real $@
+# chmod a+x /usr/bin/bcompare
+
+就知道删掉${HOME}/.config/bcompare/registry.dat这个文件就可以继续试用呗
+
+懒得用
+cd /usr/lib/beyondcompare/
+sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g" BCompare
+
+
+
+一个好主意是每次开机就执行，或者放到一个脚本里，一起删掉
+rm -rf ~/.idm/*.spl
+rm -rf /tmp/*.spl
+rm -rf ~/.idm/uex/*.spl
+rm "${HOME}/.config/bcompare/registry.dat"
+
+网页编辑器
+bluefish
+komodo
+gtksourceview libgtkhtml libgnomeprintui enchant1.6 gnome-menus2 rarian addinclude
+screem
+kompozer不能用了，可以snap重新安装一个
+sudo snap install kompozer
+也可以使用/opt目录下那个
+删掉pacman安装的那个就好了
+sudo pacman -R kompozer
+
+
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc16-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC16_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC16 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc16-bin/LICENSE
+
+For using MPLAB_XC16 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC16_TOOLCHAIN_ROOT/bin
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc32-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC32_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC32 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc32-bin/LICENSE
+
+For using MPLAB_XC32 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC32_TOOLCHAIN_ROOT/bin
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc8-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC8_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC8 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc8-bin/LICENSE
+
+For using MPLAB_XC8 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC8_TOOLCHAIN_ROOT/bin
+
+
+
+
+xulrunner需要先删旧版本再编译
+xulrunner修改一下，依赖libpng，原来这玩意被lucidor依赖
+lucidor修改一下，到最新版本，AUR里的包链接失效，找不到了。
+
+yay icu57
+
+Missing AUR Packages: 查看信息，一般不用删掉的
+pacman -Qi automake1.11
+
+
+
+https://wiki.archlinux.org/index.php/Apache_HTTP_Server
+
+[andy@archlinux ~]$ sudo systemctl status httpd.service
+● httpd.service - Apache Web Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+     Active: failed (Result: exit-code) since Thu 2021-02-18 15:42:19 CST; 7s ago
+    Process: 354727 ExecStart=/usr/bin/httpd -k start -DFOREGROUND (code=exited, status=1/FAILURE)
+   Main PID: 354727 (code=exited, status=1/FAILURE)
+
+Feb 18 15:42:19 archlinux systemd[1]: Started Apache Web Server.
+Feb 18 15:42:19 archlinux httpd[354727]: httpd: Syntax error on line 184 of /etc/httpd/conf/httpd.conf: Cannot load modules/libphp7.so into server: /etc/httpd/modules/libphp7.so: cannot ope>
+Feb 18 15:42:19 archlinux systemd[1]: httpd.service: Main process exited, code=exited, status=1/FAILURE
+Feb 18 15:42:19 archlinux systemd[1]: httpd.service: Failed with result 'exit-code'.
+
+修改
+sudo gedit /etc/httpd/conf/httpd.conf
+主要是php7修改为php什么的
+
+
+
+
+
+
+sudo pip2 install service_identity  -i https://mirrors.163.com/pypi/simple
+python2-mechanize在test地方出错，test你妹啊，去掉check()就好了，我只是要成功产生安装包而已。
+
+
+
+
+一个基于firefox改进的web浏览器
+palemoon
+
+
+日语输入法
+gxkb
+fcitx-mozc
+ttf-kochi-substitute
+
+
+epub编辑器
+sigil pageedit hyphen-en hunspell-en_US
+
+
+
+bibletime
+
+geogebra
+
+google-earth-pro 好像无法登录服务器
+
+celestia
+
+chemtool
+
+sagemath
+
+maple2020
+Activate Maple
+When prompted, activate Maple using your activation code/purchase code:
+NZ3DP9ZX6L4GPNUH
+Your evaluation will expire in 15 days (March 06, 2021).
+
+无限期试用maple可以像这样，确认可用
+faketime '2021-02-25 08:15:42' xmaple
+
+
+maxima 之前引入有 maxima-ecl
+
+
+
+
+
+dosbox
+
+
+ekho
+foliate     ekho -f '-'
+festival
+espeak-ng
+dictd
+xclip
+
+error: ekho: key "83F817213361BF5F02E7E124F9F9FA97A403F63E" is unknown
+gpg --keyserver keyserver.ubuntu.com --recv 83F817213361BF5F02E7E124F9F9FA97A403F63E
+
+ekho "hello 123"
+
+
+
+archlinuxcn-keyring python-keyring libgnome-keyring gnome-keyring archlinux-keyring
+
+
+
+
+warning: /etc/sane.d/canon_lide70.conf installed as /etc/sane.d/canon_lide70.conf.pacnew
+warning: /etc/sane.d/escl.conf installed as /etc/sane.d/escl.conf.pacnew
+
+sudo mv /etc/sane.d/canon_lide70.conf.pacnew /etc/sane.d/canon_lide70.conf
+sudo mv /etc/sane.d/escl.conf.pacnew /etc/sane.d/escl.conf
+
+
+
+
+sudo pacman -Rns tor-browser-en
+rm -rf ~/.tor-browser-en
+gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org   这个公钥是 EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+gpg --keyserver keyserver.ubuntu.com --recv  4E2C6E8793298290
+yay tor-browser
+
+
+systemctl list-timers
+sudo pacman -S pkgstats
+
+
+konsole (dolphin需要)
+
+
+manjaro? 可能有一些有趣的附加工具，but 老子用不着，至少目前用不着
+
+
+lattice diamond 下载线驱动识别
+sudo gedit /etc/udev/rules.d/10-local.rules
+<----------------------------------------------------------
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="andy",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andy",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'
+---------------------------------------------------------->
+sudo chmod 755 /etc/udev/rules.d/10-local.rules
+sudo udevadm control --reload-rules
+
+
+
+
+error: key "F9F9FA97A403F63E" could not be looked up remotely
+sudo pacman -S archlinuxcn-keyring
+有报错
+ERROR: 90403E12F4CE5E0E950E4AD2C96492E347202001 could not be locally signed
+之类， 参考https://www.archlinuxcn.org/gnupg-2-1-and-the-pacman-keyring/
+
+su
+pacman -Syu haveged
+systemctl start haveged
+systemctl enable haveged
+rm -fr /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
+pacman-key --populate archlinuxcn
+
+这样就 sudo pacman -S archlinuxcn-keyring 无报错
+
+
+
+
+yay repacman2
+repacman -h
+
+
+
+yay caja-open-terminal
+change mate-terminal to lxterminal
+https://github.com/mate-desktop/caja-extensions/issues/31
+可以配置F4快捷键打开terminal
+
+~/.config/caja/scripts/open-terminal-here
+<------------------------------------------------------------------
+#!/bin/sh
+#
+# This script opens a gnome-terminal in the current directory.
+#
+# Distributed under the terms of GNU GPL version 2 or later
+#
+# Original author: Keith Conger <acid@twcny.rr.com>
+#
+# Sourced from
+# https://forums.linuxmint.com/viewtopic.php?p=773382&sid=9939ce160bd97313f849367231eb721a#p773382
+# http://g-scripts.sourceforge.net/nautilus-scripts/Execute/Open%20terminal/terminal-here
+#
+# Put this file in your ~/.config/caja/scripts/ directory.
+# You need to have caja-actions installed to use scripts.
+
+cd $CAJA_SCRIPT_CURRENT_URI
+exec lxterminal
+------------------------------------------------------------------>
+chmod +x ~/.config/caja/scripts/open-terminal-here
+
+gedit ~/.config/caja/accels        添加
+"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+有效，以后pcmanfm不好使了就可以用caja取代
+
+
+
+
+dconf-editor
+Then navigate to org > gnome > nautilus > preferences and check always-use-location-entry.
+Then navigate to org > mate > caja > preferences and check always-use-location-entry.
+
+
+
+
+
+
+sudo pacman -S handbrake-cli handbrake intel-media-sdk intel-compute-runtime
+
+sudo pacman -S asciinema peek gifski lib32-simplescreenrecorder simplescreenrecorder vokoscreen
+
+yay green-recorder
+yay kazam
+cinelerra-cv toolame
+需要修改cinelerra/transportque.inc的#define CHANGE_ALL 0xffffffffu为#define CHANGE_ALL 0xff
+
+sudo pacman -S log4cxx
+davinci-resolve-studio
+davinci-resolve
+这两个需要从这里收动下载原始包
+http://www.blackmagicdesign.com/hk/products/davinciresolve/
+
+[andy@archlinux ~]$ /opt/resolve/bin/resolve 
+ActCCMessage Already in Table: Code= c005, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= c006, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= c007, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= 2282, Mode=  0, Level=  0, CmdKey= 8, Option= 0
+PnlMsgActionStringAdapter Already in Table: Code= 615e, Mode=  0, Level=  0, CmdKey= -1, Option= 0
+log4cxx: No appender could be found for logger (BtCommon).
+log4cxx: Please initialize the log4cxx system properly.
+
+启动失败了
+https://forum.manjaro.org/t/davinci-resolve-doesnt-open/30065
+https://wiki.archlinux.org/index.php/DaVinci_Resolve
+哦，驱动是个大问题。intel显卡看来用不了这个软件， 删掉这个/home/andy/.local/share/DaVinciResolve
+
+PKGEXT='.pkg.tar' yay -S davinci-resolve 可以不压缩makepkg生成的包
+
+opencl-clhpp opencl-mesa lib32-opencl-nvidia lib32-opencl-mesa
+
+
+/sbin/lspci | grep -e VGA
+pactl info
+inxi bluez-utils-compat tree wmctrl ell
+yay perl-xml-dumper
+inxi -Fxz
+opencl-amd
+clinfo
+
+
+flowblade
+vidcutter
+
+
+xdot xdotool
+
+
+http://wiki.archlinux.org/index.php/TeX_Live
+texlive-core texlive-bin texlive-bibtexextra texlive-fontsextra texlive-formatsextra
+qtikz tikzit ed biber perl-tk psutils t1utils dot2tex gnuplot yasm
+texlive-latexextra latex2html git-latexdiff texlive-langchinese texlive-langextra texlive-langjapanese texlive-langkorean 
+texlive-pictures texlive-publishers texlive-science texlive-latexextra texstudio texlive-humanities lyx
+texworks texmaker texlive-langcyrillic texlive-langgreek texlive-pstricks dblatex
+okular rcs kdegraphics-mobipocket calligra pstoedit doxygen-docs
+
+
+yay xmind-pro
+
+virt-manager virt-viewer x11-ssh-askpass dnsmasq ebtables
+systemctl status libvirtd.service
+sudo systemctl start libvirtd.service
+sudo systemctl enable libvirtd.service
+sudo usermod -a -G libvirt andy
+
+不能连接，
+
+查org.libvirt.unix.manage
+https://wiki.archlinux.org/index.php/libvirt
+
+/usr/share/polkit-1/actions/org.libvirt.unix.policy  
+已经确认修改字段
+        <allow_any>yes</allow_any>
+        <allow_inactive>yes</allow_inactive>
+        <allow_active>yes</allow_active>
+就可以有效允许普通用户连接
+/usr/share/polkit-1/rules.d/50-default.rules
+/etc/polkit-1/rules.d/50-libvirt.rules
+<----------------------------------------------------------------
+/* Allow users in kvm group to manage the libvirt
+daemon without authentication */
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.libvirt.unix.manage" &&
+        subject.isInGroup("kvm")) {
+            return polkit.Result.YES;
+    }
+});
+---------------------------------------------------------------->
+sudo usermod -a -G kvm andy
+
+virt-manager
+
+·增加权限启动配置未验证(没有效果)，还是用上面的办法
+vi /etc/polkit-1/localauthority/50-local.d/50-org.libvirtd-group-access.pkla
+[libvirtd group Management Access]
+Identity=unix-group:libvirtd
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+
+
+sudo systemctl restart libvirtd.service
+
+
+
+su
+ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
+fc-cache && mkfontscale && mkfontdir
+fc-list :lang=zh-cn
+fc-list | grep sim
+
+cd /usr/share/texmf-dist/fonts/truetype
+mkfontdir
+mkfontscale
+fc-cache -f -s -v
+fc-cache -fv
+fc-cache
+fc-list :lang=zh-cn
+fc-list | grep sim
+
+
+
+# systemctl disable qemu-ga.service
+# systemctl enable qemu-guest-agent.service
+
+
+
+心血来潮，在滚动更新的当前系统编译一下dvsdk玩
+/home/andy/ti-dvsdk_dm368-evm_4_02_00_06
+make clean 
+
+错误1
+valid arguments to ‘-mabi=’ are: ms sysv
+
+修改 Makefile 
+linux_clean:
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) mrproper
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) clean
+
+-->
+
+linux_clean:
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) mrproper
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) clean
+
+错误2
+Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at kernel/timeconst.pl line 373
+修改
+if (!defined(@val)) {
+-->
+if (!@val) {
+
+到这里kernel是编译成功了。未在板验证
+
+错误3
+error: redefinition of ‘struct fdt_header’
+看来即include了系统的又include了uboot源码的
+未解决
+
+错误4
+errno: TLS definition in /lib64/libc.so.6 section .tbss mismatches non-TLS reference
+extern int errno;
+I replaced this line with #include <errno.h>
+未成功，如果不inlcude系统的，那么就include了uboot源码的，又不能改errno.h，否则循环引入;如果引入系统的，那么由于错误3又编译不过。
+
+结论：
+u-boot的老代码在新版本glibc下还真有问题。包括海思的u-boot版本比较新了吧，还是有问题。
+
+可能的办法，暂时删掉fdt之类的dev包，先编译通过了再说。未验证。不如用虚拟机呢。
+
+
+
+
+downgrader-git
+
+dcmtk   (dicom)
+
+
+
+pari-elldata
+pari-galdata
+pari-seadata
+
+不安装catalyst-utils
+不安装pipewire-pulse
+不安装openblas
+不安装espeak-ng-espeak
+yay -S pari-galpol texlive-bin python-symengine swi-prolog pipewire-alsa
+yay -S clinfo gap-packages gap-doc dsdp polymake python-pkgconfig jmol sagemath-doc
+yay -S python-igraph sage-numerical-backends-coin coin-or-csdp buckygen plantri benzene coxeter rubiks lrs python-pynormaliz
+yay -S latte-integrale python-jupymake shared_meataxe sirocco primecount dot2tex cryptominisat5 python-pycosat sagemath-jupyter
+yay -S kdialog keditbookmarks perl-xml-dumper c-xsc libsemigroups python-pycurl jsmol sage-notebook-exporter
+yay perl-xml-dumper
+
+
+
+sudo gedit /etc/default/grub.pacnew
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+sudo mv /etc/default/grub.pacnew /etc/default/grub
+
+
+
+repacman utorrent
+sudo pacman -Rn utorrent
+yay rutorrent
+yay mod_scgi
+cp /usr/share/doc/rtorrent/rtorrent.rc ~/.rtorrent.rc
+gedit ~/.rtorrent.rc
+yay qrtorrent-git
+
+暂时不启动服务。现在懒得配置了，以后需要再按这些资料配置好了
+https://wiki.archlinux.org/index.php/RTorrent
+https://github.com/Novik/ruTorrent
+
+
+pacman -Qeq > pacqeq.txt   <一般来说关心这个>
+pacman -Qdq > pacqdq.txt
+pacman -Qmq > pacqmq.txt   <一般n和m的就是全部了>
+pacman -Qnq > pacqnq.txt
+
+pacman -Qtd 可以保留这些
+pacman -Qmq
+
+
+
+yay -S memtester
+memtester 1900M 10
+
+yay balena-etcher
+yay -S cdate downgrade
+
+
+有些小工具挺好的，因为一些依赖关系被弃用，甚至从AUR移除， 已经安装的表现为无法升级，直到有一天什么库不见了，就不能再用了，未安装的AUR里都搜不到
+以orage为例子进行弃用包的 编译使用
+orage已经被xfce(4.16)弃用
+https://archive.xfce.org/src/apps/orage/4.12/
+https://github.com/balena/orage
+可以下载源码
+https://archive.archlinux.org/packages/
+可以获取被移除出官方repo的旧安装包
+https://github.com/aur-archive
+可以找到在aur中出现过的包的存档
+稍加修改，依然可以编译通过，正常运行，不需要配合xfce4
+还是能延续相当长时代的
+
+
+
+7z的命令行操作
+7z a -p'fuckya' 'DLI 课程目录202004.7z' 'DLI 课程目录202004.pdf'
+7z x -p'fuckya' 'DLI 课程目录202004.7z'
+
+
+python-sip-pyqt4 python-pyqt4 暂时不一致
+yay -S addinclude bitrock-unpacker chrpath cksfv debhelper dejagnu electron6 enchant1.6 extra-cmake-modules festival gnome-common gnu-netcat gperf gtksourceview guvcview-common ibus itstool jlink-systemview-target-src jq libgnomeprint libgnomeprintui libgtkhtml libmspack libpng lrs mallard-ducktype mkvtoolnix-cli ois opencl-nvidia perl-cpan-perl-releases perl-devel-patchperl perl-file-path-tiny perl-file-pushd perl-io-socket-socks perl-local-lib perl-lwp-protocol-socks perl-module-pluggable perl-uri-simple po-debconf po4a polymake postgresql python-apipkg python-certifi python-filelock python-iniconfig python-pluggy python-py python-tox python-virtualenv python2-nose python2-pillow python2-pyqt4 python2-pytest-timeout python2-werkzeug rarian setconf sip4 termcap wine wxgtk-common wxgtk2 xorg-util-macros xulrunner yelp-tools
+tclkit
+
+baidunetdisk是否替换为AUR的版本？ wine-wechat是否替换？
+base caja-image-converter geogebra perlbrew 
+
+
+
+yay -S antiword balena-etcher cdate downgrade dsdp foomatic-db gap-doc gap-packages gcc8-fortran gnu-netcat gstreamer0.10-good-plugins gstreamer-docs gtksourceview2 guvcview guvcview-common jmol jq lib32-vkd3d memtester playonlinux python2-pillow python2-werkzeug python-pkgconfig sagemath-doc scour ttf-kochi-substitute vkd3d xcompmgr
+
+foomatic-db-ppds
+
+
+
+
+thunderbird最小化
+yay -S birdtray
+目前版本无效
+yay -Rn birdtray
+先用addon最小化替代关闭吧，等MinimizeToTray支持再说
+
+
+
+yay freedownloadmanager
+运行命令是fdm
+也不能导入cookie
+
+yay -S jdownloader2
+也不行
+
+yay -Rn freedownloadmanager jdownloader2
+
+
+
+
+
+滚动升级过程因为vbox原因突然死机，内核没有重建完毕
+
+在其他系统引导进来，尽量完成升级
+但是内核失效，boot目录没有镜像
+那么安装lts吧，进native系统
+
+
+yay -S linux linux-headers --force
+error: could not open file /var/lib/pacman/local/linux-5.11.2.arch1-1/desc
+等报错
+sudo touch /var/lib/pacman/local/linux-5.11.2.arch1-1/desc
+sudo touch /var/lib/pacman/local/linux-5.11.2.arch1-1/files
+yay -S linux linux-headers --force
+
+所以，lts作为备用还是很有必要的
+yay -S linux-lts linux-lts-headers
+
+
+
+
+
+https://www.pixelstalk.net/download-free-arch-linux-background/
+
+
+
+编译gcc时候直接把 make check 删了 再编译！！否则漫长的过程哦
+
+
+
+
+为了用pycharm远程连接目标板，应使用pycharm-professional
+yay -S ipython2 python2-coverage python-coverage docker-machine docker-compose cython2 vagrant python-pytest python2-tox
+下面无限期试用方法待验证
+faketime '2021-03-03 08:15:42' pycharm
+
+Y005GUAO33-eyJsaWNlbnNlSWQiOiJZMDA1R1VBTzMzIiwibGljZW5zZWVOYW1lIjoiSmF2YeWkp+WSliBKYXZh5aSn5ZKWIiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IiIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IklJIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJEQiIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUk0iLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IldTIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU1YiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUlNVIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJQQyIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUkMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJEIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiQ0wiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTMCIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUlNDIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IkdPIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU0YiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRQTiIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiQUMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlBEQiIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQV1MiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUEdPIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBQUyIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQUEMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFJCIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBTVyIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQU0kiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiRFAiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUlMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX1dLCJtZXRhZGF0YSI6IjAxMjAyMTAzMDRQUEFNMDAyMDA1IiwiaGFzaCI6IjIyOTc1OTE3LzA6LTE2MDcwNDgxODAiLCJncmFjZVBlcmlvZERheXMiOjcsImF1dG9Qcm9sb25nYXRlZCI6ZmFsc2UsImlzQXV0b1Byb2xvbmdhdGVkIjpmYWxzZX0=-QL1hirx6cWN58aNWeJrDB8k+pWNX43LRPQ54/VLVYq9dwsuzphmd3ZxQoQt3RVG+P4+yGlPDzBJVas6SXl7wO1Lm8igHXgeG8bEGub5EN4P/JY/gkC0XlXQSnNS93VI4qBTts1gbXA4JgD2Qfz0V32VR32vek9fHY2vqlKpfjIrmUJYan5XFrTDK+N68zckgyZzdMXapRHd0PbpK3/7m/JpmJgkBsWRzAY/USfGuiC6TZ1Grf2lqYeaoJz2wngpwwgTVvYeguWSYlarrFM68QCSKqt/qCHb7nXE2e4XHrvlbwQRMZHWTuktFZtvR18SOKV+s8ujPhz48gm3UQwRQlA==-MIIETDCCAjSgAwIBAgIBDTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTIwMTAxOTA5MDU1M1oXDTIyMTAyMTA5MDU1M1owHzEdMBsGA1UEAwwUcHJvZDJ5LWZyb20tMjAyMDEwMTkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDCP4uk4SlVdA5nuA3DQC+NsEnZS9npFnO0zrmMWcz1++q2UWJNuGTh0rwi+3fUJIArfvVh7gNtIp93rxjtrQAuf4/Fa6sySp4c32MeFACfC0q+oUoWebhOIaYTYUxm4LAZ355vzt8YeDPmvWKxA81udqEk4gU9NNAOz1Um5/8LyR8SGsSc4EDBRSjcMWMwMkYSauGqGcEUK8WhfplsyF61lKSOFA6VmfUmeDK15rUWWLbOMKgn2cxFA98A+s74T9Oo96CU7rp/umDXvhnyhAXSukw/qCGOVhwKR8B6aeDtoBWQgjnvMtPgOUPRTPkPGbwPwwDkvAHYiuKJ7Bd2wH7rAgMBAAGjgZkwgZYwCQYDVR0TBAIwADAdBgNVHQ4EFgQUJNoRIpb1hUHAk0foMSNM9MCEAv8wSAYDVR0jBEEwP4AUo562SGdCEjZBvW3gubSgUouX8bOhHKQaMBgxFjAUBgNVBAMMDUpldFByb2ZpbGUgQ0GCCQDSbLGDsoN54TATBgNVHSUEDDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBaAwDQYJKoZIhvcNAQELBQADggIBAB2J1ysRudbkqmkUFK8xqhiZaYPd30TlmCmSAaGJ0eBpvkVeqA2jGYhAQRqFiAlFC63JKvWvRZO1iRuWCEfUMkdqQ9VQPXziE/BlsOIgrL6RlJfuFcEZ8TK3syIfIGQZNCxYhLLUuet2HE6LJYPQ5c0jH4kDooRpcVZ4rBxNwddpctUO2te9UU5/FjhioZQsPvd92qOTsV+8Cyl2fvNhNKD1Uu9ff5AkVIQn4JU23ozdB/R5oUlebwaTE6WZNBs+TA/qPj+5/wi9NH71WRB0hqUoLI2AKKyiPw++FtN4Su1vsdDlrAzDj9ILjpjJKA1ImuVcG329/WTYIKysZ1CWK3zATg9BeCUPAV1pQy8ToXOq+RSYen6winZ2OO93eyHv2Iw5kbn1dqfBw1BuTE29V2FJKicJSu8iEOpfoafwJISXmz1wnnWL3V/0NxTulfWsXugOoLfv0ZIBP1xH9kmf22jjQ2JiHhQZP7ZDsreRrOeIQ/c4yR8IQvMLfC0WKQqrHu5ZzXTH4NO3CwGWSlTY74kE91zXB5mwWAx1jig+UXYc2w4RkVhy0//lOmVya/PEepuuTTI4+UJwC7qbVlh5zfhj8oTNUXgN0AOc+Q0/WFPl1aw5VV/VrO8FCoB15lFVlpKaQ1Yh+DVU8ke+rt9Th0BCHXe0uZOEmH0nOnH/0onD
+
+
+nvidia sdkmanager 这上面不能用
+yay -Rn sdkmanager
+
+cat /etc/lsb-release
+
+LSB_VERSION=1.4
+DISTRIB_ID=Arch
+DISTRIB_RELEASE=rolling
+DISTRIB_DESCRIPTION="Arch Linux"
+
+
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.5 LTS"
+
+
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+
+添加当前用户到docker组
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ groups
+$ docker run hello-world
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: yxgi5
+Password: 
+WARNING! Your password will be stored unencrypted in /home/andy/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+$ docker pull nvidia-sdk
+失败
+
+
+
+~/.bashrc添加一句
+PS1="\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;33m\]\w\[\033[00m\]\n\$ "
+
+
+
+各种分辨率的wallpapers
+http://wallpaperswide.com/ubuntu_metal_style_logo-wallpapers.html
+http://wallpaperswide.com/arch_linux-wallpapers.html
+http://wallpaperswide.com/debian_2-wallpapers.html
+
+
+
+
+yay hwinfo
+yay nmap
+nmap -sP 192.168.1.0/24
+
+
+yay alsamixergui 编译失败
+
+
+
+yay cuda-tools
+
+
+zst文件怎么解压缩
+win下面 下载一个peazip
+linux下面 # tar -I zstd -xvf file.zst
+
+
+
+replace electron9 with electron9-bin
+$ yay -S electron9-bin
+$ yay -S kde-cli-tools xdg-utils
+
+
+$ yay -S pamixer
+
+
+
+https://wiki.archlinux.org/index.php/Backlight
+journalctl -xf
+实际上BRTUP/BRTDN按键是可以的
+xbacklight -set 50
+cat /sys/class/backlight/intel_backlight/brightness
+sudo tee /sys/class/backlight/intel_backlight/brightness <<< 2000
+
+
+
+
+yay -S aarch64-linux-gnu-binutils binutils
+
+
+lscpu
+
+
+snap
+make[1]: Leaving directory '/home/andy/.cache/yay/snapd/src/snapd-2.49.1/cmd'
+==> Starting check()...
+snap-exec is not a static binary
+error making: snapd
+
+/etc/ld.so.conf
+/etc/ld.so.conf.d/*
+/usr/bin/ldd
+strace -f ldd src/go/bin/snap-exec
+
+ldd src/go/bin/snap-exec
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+
+ldd /usr/libx32/ld-linux-x32.so.2
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+
+file /usr/libx32/ld-linux-x32.so.2
+/usr/libx32/ld-linux-x32.so.2: symbolic link to ld-2.23.so
+
+
+yay libx32-glibc
+:: There are 2 providers available for gcc-multilib-x32>=5.2:
+:: Repository AUR
+    1) gcc-multilib-x32 2) gcc-x32-seed
+选1失败，就选2了
+
+
+
+
+
+sudo mkinitcpio -p linux
+
+
+
+yay -R python2-incremental python2-twisted
+yay -S python-twisted 
+yay -S python-incremental
+
+yay -S mesa #确保安装了这个基础显卡驱动
+yay -S nvidia #安装N卡驱动
+yay -S bumblebee #提供守护进程以及程序的主要安装包
+
+yay -S nvidia-settings	#配置工具
+yay -S xorg-server-devel	#nvidia-xconfig
+yay -S opencl-nvidia	#提供opencl支持
+yay -S bbswitch	#开启或者关闭显卡驱动
+
+
+
+
+java切换成oracle版本
+$ archlinux-java status
+Available Java environments:
+  java-11-openjdk
+  java-15-openjdk
+  java-16-jdk
+  java-8-openjdk (default)
+$ sudo archlinux-java set java-16-jdk
+$ archlinux-java status
+Available Java environments:
+  java-11-openjdk
+  java-15-openjdk
+  java-16-jdk (default)
+  java-8-openjdk
+
+
+
+
+Default Java environment is already set to 'java-16-jdk'
+See 'archlinux-java help' to change it.
+When you use a non-reparenting window manager,
+set _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
+
+yay -S jre11 jdk11
+$ sudo archlinux-java set java-11-jdk
+
+yay -S jdk8 jre8
+sudo archlinux-java set java-8-jdk
+//sudo archlinux-java set java-8-jre/jre
+
+sudo archlinux-java set java-16-jdk
+
+
+https://wiki.archlinux.org/index.php/Xilinx_Vivado
+yay -S pod2man libselinux debianutils multilib-devel
+
+yay -S tftp-hpa
+$ sudo systemctl enable tftpd.service
+$ sudo systemctl start tftpd.service
+
+
+
+yay -S mlocate
+
 
 
 

@@ -2371,7 +2371,7 @@ Download openproj from http://sourceforge.net/projects/openproj/ Yes, you can on
 错误
 Your Java vendor is "Oracle Corporation". To run OpenProj, you need the Sun Java implementation. The auto-detected Java Runtime used is..
 解决办法
-修改$HOME/.openproj/run.conf，将JAVA_OPTS="-Xms128m -Xmx768m"改为AVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，最后重启openproj
+修改$HOME/.openproj/run.conf，将JAVA_OPTS="-Xms128m -Xmx768m"改为JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，最后重启openproj
 
 
 
@@ -14486,7 +14486,6 @@ Extract the compressed archive: tar xf filename.tar.
 
 
 
-
 buster:
 sudo apt install electronics-all
 expeyes-web
@@ -14496,19 +14495,8 @@ sudo apt install pbuilder debootstrap devscripts
 sudo apt install dpkg-repack
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+sudo apt install snap
+不能用，也没有snapd
 
 
 
