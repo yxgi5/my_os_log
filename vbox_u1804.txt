@@ -750,3 +750,11 @@ sudo apt install caja engrampa meld mate-desktop-environment lzip lzop ncompress
 
 sudo apt install geany geany-common geany-plugins geany-plugins-common
 
+sudo apt install rlwrap
+
+sudo apt install libpoppler-glib-dev poppler-utils browser-plugin-evince
+
+
+
+
+
