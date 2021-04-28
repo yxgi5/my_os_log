@@ -14485,12 +14485,23 @@ Extract the compressed archive: tar xf filename.tar.
 
 
 
+
+buster:
+sudo apt install electronics-all
+expeyes-web
+systemctl reload apache2
+
+sudo apt install pbuilder debootstrap devscripts
+sudo apt install dpkg-repack
+
+
 sudo apt install snap
 不能用，也没有snapd
 
 
 
 
+sudo apt install libpoppler-glib-dev libpoppler-qt5-dev libpopplerkit-dev libpoppler-cpp-dev libpoppler-cil-dev xpdf
 
 
 
