@@ -755,6 +755,6 @@ sudo apt install rlwrap
 sudo apt install libpoppler-glib-dev poppler-utils browser-plugin-evince
 
 
-
+git config --global http.postBuffer 2000000000
 
 
