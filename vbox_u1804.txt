@@ -754,7 +754,47 @@ sudo apt install rlwrap
 
 sudo apt install libpoppler-glib-dev poppler-utils browser-plugin-evince
 
-
+error: RPC failed; curl 56 GnuTLS recv error (-9): A TLS packet with unexpected length was received.
 git config --global http.postBuffer 2000000000
+not ok
+git config --global https.postBuffer 2000000000
+sudo apt install gnutls-bin
+git config --global http.sslVerify false
+git config --global core.longpaths true
+anyway ok
+
+
+sudo cpanm Goo::Canvas/libgoo-canvas-perl
+not ok
+sudo apt install libgoocanvas2-perl
+not ok
+https://launchpad.net/ubuntu/+archive/primary/+files/libgoocanvas-common_1.0.0-1_all.deb
+https://launchpad.net/ubuntu/+archive/primary/+files/libgoocanvas3_1.0.0-1_amd64.deb
+https://launchpad.net/ubuntu/+archive/primary/+files/libgoo-canvas-perl_0.06-2ubuntu3_amd64.deb
+
+sudo dpkg -i ~/Downloads/libgoocanvas3_1.0.0-1_amd64.deb
+sudo dpkg -i ~/Downloads/libgoocanvas-common_1.0.0-1_all.deb
+sudo dpkg -i ~/Downloads/libgoo-canvas-perl_0.06-2ubuntu3_amd64.deb
+sudo apt-get -f install
+shutter 编辑功能ok了
+
+https://launchpad.net/ubuntu/+archive/primary/+files/gnome-web-photo_0.10.6-1_amd64.deb
+sudo dpkg -i ~/Downloads/gnome-web-photo_0.10.6-1_amd64.deb
+sudo apt-get -f install
+
+sudo cpanm Image::ExifTool
+sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Gtk2::AppIndicator
+not ok
+sudo apt install libgtk2-appindicator-perl
+not ok
+sudo apt install libappindicator-dev libgtk2.0-dev
+//sudo cpan -i Gtk2::AppIndicator
+sudo cpanm Gtk2::AppIndicator
+
+
+
+sudo apt install miredo
+
+
 
 
