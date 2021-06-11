@@ -274,7 +274,7 @@ sudo systemctl enable gdm.service
 sudo systemctl start gdm.service
 
 
-
+/software/OS_system_images/linux/archlinux/
 
 
 sudo pacman -S hwloc aircrack-ng gdm alsa-topology-conf alsa-lib hwloc aircrack-ng alsa-topology-conf alsa-ucm-conf alsa-lib libsidplayfp libmaxminddb bind audacious-plugins python-patiencediff breezy brltty liblouis ceph python-bcrypt python-cmd2 deluge-gtk deluge=2.0.4.dev38+g23a48dd01-2 libmicrohttpd elfutils libspf2 exim openmpi fftw fluidsynth gimp libinstpatch-1.0.so=2-64 mypaint-brushes1 gst-plugins-bad-libs=1.16.2 gst-plugins-bad lilv gst-plugins-bad gst-plugin-gtk gthumb netpbm gts kactivities-stats kio-extras kdsoap-ws-discovery-client kio-extras lib32-brotli lib32-libsoup java-openjfx mujs mpv perl-clone perl-http-message perl-cgi perl-http-server-simple python2-importlib_resources python2-jaraco python2-ordered-set python2-setuptools libslirp qemu liburing qemu yaml-cpp qtcreator ruby-irb ruby lsof steam lib32-vulkan-icd-loader steam lib32-vulkan-icd-loader steam-native-runtime xf86-video-vmware virtualbox-guest-utils xdg-dbus-proxy webkit2gtk 
@@ -873,10 +873,11 @@ https://wiki.archlinux.org/index.php/MAC_address_spoofing
 
 ###sudo gedit /etc/conf.d/net
 sudo gedit /etc/rc.local
-#####/etc/rc.d/rc.local
+#####或者/etc/rc.d/rc.local
 <-------------------------------------
 #!/bin/sh
-ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+#ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+ifconfig eth0 hw ether 00:d8:61:a6:62:b7
 exit 0
 ------------------------------------->
 sudo chmod +x /etc/rc.local
@@ -4021,6 +4022,7 @@ yay -S ipython2 python2-coverage python-coverage docker-machine docker-compose c
 下面无限期试用方法待验证
 faketime '2021-03-03 08:15:42' pycharm
 
+Y005GUAO33-eyJsaWNlbnNlSWQiOiJZMDA1R1VBTzMzIiwibGljZW5zZWVOYW1lIjoiSmF2YeWkp+WSliBKYXZh5aSn5ZKWIiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IiIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IklJIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJEQiIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUk0iLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IldTIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU1YiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUlNVIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJQQyIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUkMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJEIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiQ0wiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTMCIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUlNDIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IkdPIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU0YiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRQTiIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiQUMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlBEQiIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQV1MiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUEdPIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBQUyIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQUEMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFJCIiwicGFpZFVwVG8iOiIyMDIxLTA0LTAxIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBTVyIsInBhaWRVcFRvIjoiMjAyMS0wNC0wMSIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQU0kiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiRFAiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUlMiLCJwYWlkVXBUbyI6IjIwMjEtMDQtMDEiLCJleHRlbmRlZCI6dHJ1ZX1dLCJtZXRhZGF0YSI6IjAxMjAyMTAzMDRQUEFNMDAyMDA1IiwiaGFzaCI6IjIyOTc1OTE3LzA6LTE2MDcwNDgxODAiLCJncmFjZVBlcmlvZERheXMiOjcsImF1dG9Qcm9sb25nYXRlZCI6ZmFsc2UsImlzQXV0b1Byb2xvbmdhdGVkIjpmYWxzZX0=-QL1hirx6cWN58aNWeJrDB8k+pWNX43LRPQ54/VLVYq9dwsuzphmd3ZxQoQt3RVG+P4+yGlPDzBJVas6SXl7wO1Lm8igHXgeG8bEGub5EN4P/JY/gkC0XlXQSnNS93VI4qBTts1gbXA4JgD2Qfz0V32VR32vek9fHY2vqlKpfjIrmUJYan5XFrTDK+N68zckgyZzdMXapRHd0PbpK3/7m/JpmJgkBsWRzAY/USfGuiC6TZ1Grf2lqYeaoJz2wngpwwgTVvYeguWSYlarrFM68QCSKqt/qCHb7nXE2e4XHrvlbwQRMZHWTuktFZtvR18SOKV+s8ujPhz48gm3UQwRQlA==-MIIETDCCAjSgAwIBAgIBDTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTIwMTAxOTA5MDU1M1oXDTIyMTAyMTA5MDU1M1owHzEdMBsGA1UEAwwUcHJvZDJ5LWZyb20tMjAyMDEwMTkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDCP4uk4SlVdA5nuA3DQC+NsEnZS9npFnO0zrmMWcz1++q2UWJNuGTh0rwi+3fUJIArfvVh7gNtIp93rxjtrQAuf4/Fa6sySp4c32MeFACfC0q+oUoWebhOIaYTYUxm4LAZ355vzt8YeDPmvWKxA81udqEk4gU9NNAOz1Um5/8LyR8SGsSc4EDBRSjcMWMwMkYSauGqGcEUK8WhfplsyF61lKSOFA6VmfUmeDK15rUWWLbOMKgn2cxFA98A+s74T9Oo96CU7rp/umDXvhnyhAXSukw/qCGOVhwKR8B6aeDtoBWQgjnvMtPgOUPRTPkPGbwPwwDkvAHYiuKJ7Bd2wH7rAgMBAAGjgZkwgZYwCQYDVR0TBAIwADAdBgNVHQ4EFgQUJNoRIpb1hUHAk0foMSNM9MCEAv8wSAYDVR0jBEEwP4AUo562SGdCEjZBvW3gubSgUouX8bOhHKQaMBgxFjAUBgNVBAMMDUpldFByb2ZpbGUgQ0GCCQDSbLGDsoN54TATBgNVHSUEDDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBaAwDQYJKoZIhvcNAQELBQADggIBAB2J1ysRudbkqmkUFK8xqhiZaYPd30TlmCmSAaGJ0eBpvkVeqA2jGYhAQRqFiAlFC63JKvWvRZO1iRuWCEfUMkdqQ9VQPXziE/BlsOIgrL6RlJfuFcEZ8TK3syIfIGQZNCxYhLLUuet2HE6LJYPQ5c0jH4kDooRpcVZ4rBxNwddpctUO2te9UU5/FjhioZQsPvd92qOTsV+8Cyl2fvNhNKD1Uu9ff5AkVIQn4JU23ozdB/R5oUlebwaTE6WZNBs+TA/qPj+5/wi9NH71WRB0hqUoLI2AKKyiPw++FtN4Su1vsdDlrAzDj9ILjpjJKA1ImuVcG329/WTYIKysZ1CWK3zATg9BeCUPAV1pQy8ToXOq+RSYen6winZ2OO93eyHv2Iw5kbn1dqfBw1BuTE29V2FJKicJSu8iEOpfoafwJISXmz1wnnWL3V/0NxTulfWsXugOoLfv0ZIBP1xH9kmf22jjQ2JiHhQZP7ZDsreRrOeIQ/c4yR8IQvMLfC0WKQqrHu5ZzXTH4NO3CwGWSlTY74kE91zXB5mwWAx1jig+UXYc2w4RkVhy0//lOmVya/PEepuuTTI4+UJwC7qbVlh5zfhj8oTNUXgN0AOc+Q0/WFPl1aw5VV/VrO8FCoB15lFVlpKaQ1Yh+DVU8ke+rt9Th0BCHXe0uZOEmH0nOnH/0onD
 
 
 nvidia sdkmanager 这上面不能用
@@ -4157,10 +4159,145 @@ onclick=xterm -bg black -e 'alsamixer'
 
 
 
+yay hwinfo
+yay nmap
+nmap -sP 192.168.1.0/24
+
+
+yay alsamixergui 编译失败
+
+
+
+yay cuda-tools
+
+
+zst文件怎么解压缩
+win下面 下载一个peazip
+linux下面 # tar -I zstd -xvf file.zst
+
+
+
+replace electron9 with electron9-bin
+$ yay -S electron9-bin
+$ yay -S kde-cli-tools xdg-utils
+
+
+$ yay -S pamixer
+
+
+
+https://wiki.archlinux.org/index.php/Backlight
+journalctl -xf
+实际上BRTUP/BRTDN按键是可以的
+xbacklight -set 50
+cat /sys/class/backlight/intel_backlight/brightness
+sudo tee /sys/class/backlight/intel_backlight/brightness <<< 2000
 
 
 
 
+yay -S aarch64-linux-gnu-binutils binutils
+
+
+lscpu
+
+
+snap
+make[1]: Leaving directory '/home/andy/.cache/yay/snapd/src/snapd-2.49.1/cmd'
+==> Starting check()...
+snap-exec is not a static binary
+error making: snapd
+
+/etc/ld.so.conf
+/etc/ld.so.conf.d/*
+/usr/bin/ldd
+strace -f ldd src/go/bin/snap-exec
+
+ldd src/go/bin/snap-exec
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+
+ldd /usr/libx32/ld-linux-x32.so.2
+/usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
+ldd: exited with unknown exit code (126)
+
+file /usr/libx32/ld-linux-x32.so.2
+/usr/libx32/ld-linux-x32.so.2: symbolic link to ld-2.23.so
+
+
+yay libx32-glibc
+:: There are 2 providers available for gcc-multilib-x32>=5.2:
+:: Repository AUR
+    1) gcc-multilib-x32 2) gcc-x32-seed
+选1失败，就选2了
+
+
+
+
+
+sudo mkinitcpio -p linux
+
+
+
+yay -R python2-incremental python2-twisted
+yay -S python-twisted 
+yay -S python-incremental
+
+yay -S mesa #确保安装了这个基础显卡驱动
+yay -S nvidia #安装N卡驱动
+yay -S bumblebee #提供守护进程以及程序的主要安装包
+
+yay -S nvidia-settings	#配置工具
+yay -S xorg-server-devel	#nvidia-xconfig
+yay -S opencl-nvidia	#提供opencl支持
+yay -S bbswitch	#开启或者关闭显卡驱动
+
+
+
+
+java切换成oracle版本
+$ archlinux-java status
+Available Java environments:
+  java-11-openjdk
+  java-15-openjdk
+  java-16-jdk
+  java-8-openjdk (default)
+$ sudo archlinux-java set java-16-jdk
+$ archlinux-java status
+Available Java environments:
+  java-11-openjdk
+  java-15-openjdk
+  java-16-jdk (default)
+  java-8-openjdk
+
+
+
+
+Default Java environment is already set to 'java-16-jdk'
+See 'archlinux-java help' to change it.
+When you use a non-reparenting window manager,
+set _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
+
+yay -S jre11 jdk11
+$ sudo archlinux-java set java-11-jdk
+
+yay -S jdk8 jre8
+sudo archlinux-java set java-8-jdk
+//sudo archlinux-java set java-8-jre/jre
+
+sudo archlinux-java set java-16-jdk
+
+
+https://wiki.archlinux.org/index.php/Xilinx_Vivado
+yay -S pod2man libselinux debianutils multilib-devel
+
+yay -S tftp-hpa
+$ sudo systemctl enable tftpd.service
+$ sudo systemctl start tftpd.service
+
+
+
+yay -S mlocate
 
 
 
