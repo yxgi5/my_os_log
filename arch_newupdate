@@ -4073,6 +4073,89 @@ http://wallpaperswide.com/debian_2-wallpapers.html
 
 
 
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+
+
+
+yay -S rust lldb
+
+
+
+
+$ yay
+:: Synchronizing package databases...
+ core is up to date
+ extra is up to date
+ community is up to date
+ multilib is up to date
+ archlinuxcn is up to date
+:: Starting full system upgrade...
+:: Replace libcanberra-pulse with extra/libcanberra? [Y/n] y
+:: Replace libgiac with community/giac? [Y/n] y
+:: Replace qca with extra/qca-qt5? [Y/n] y
+:: Replace sagemath-jupyter with community/sagemath? [Y/n] y
+:: Replace virtualbox-guest-dkms with community/virtualbox-guest-utils? [Y/n] y
+:: Replace virtualbox-guest-dkms with community/virtualbox-guest-utils-nox? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'libblocksruntime' from target list because it conflicts with 'libdispatch'
+error: unresolvable package conflicts detected
+error: failed to prepare transaction (conflicting dependencies)
+:: virtualbox-guest-utils and virtualbox-guest-utils-nox are in conflict
+error installing repo packages
+
+
+
+
+sudo pacman -S giac --overwrite=*
+sudo pacman -S lxmusic --overwrite=*
+sudo pacman -S qca-qt5 --overwrite=*
+sudo pacman -S sagemath --overwrite=*
+yay -S jupyter-jsmol
+yay -S virtualbox-guest-utils
+yay -S virtualbox-guest-utils-nox
+sudo pacman -Rdd libcanberra-pulse
+sudo pacman -Rdd libgiac
+sudo pacman -Rdd perl-gtk2-unique
+sudo pacman -S archlinuxcn-keyring
+yay -S libdispatch
+
+/etc/pacman.d/mirrorlist installed as /etc/pacman.d/mirrorlist.pacnew
+/etc/pacman.conf installed as /etc/pacman.conf.pacnew
+
+
+
+archlinux-java status
+sudo archlinux-java set java-11-openjdk
+archlinux-java status
+
+yay -S android-tools
+
+
+xterm 背景色现在默认是白色，volumeicon看起来很难看，修改背景色
+gedit ～/.config/volumeicon/volumeicon
+
+onclick=xterm -e 'alsamixer'
+修改为
+onclick=xterm -bg black -e 'alsamixer'
+
+也可以在volumeicon的右键 reference修改
+
+全局修改~/.Xdefaults似乎没有用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
