@@ -854,7 +854,7 @@ sudo /etc/init.d/udev restart
 
 sudo apt install tree
 
-
+sudo apt install ninja-build
 
 sudo apt install cutecom
 
