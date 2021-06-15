@@ -797,4 +797,76 @@ sudo apt install miredo
 
 
 
+cat /tmp/.mount_Logic-cLBdoK/resources/linux/99-SaleaeLogic.rules | sudo tee /etc/udev/rules.d/99-SaleaeLogic.rules > /dev/null && echo "finished installing /etc/udev/rules.d/99-SaleaeLogic.rules"
+
+
+sudo apt install zstd libzstd-dev libzstd1-dev
+tar -I zstd -xvf dsview-1.12-2-x86_64.pkg.tar.zst
+
+
+sudo apt-get install git-core build-essential cmake autoconf automake libtool pkg-config \
+   libglib2.0-dev libzip-dev libudev-dev libusb-1.0-0-dev \
+   python3-dev qt5-default libboost-dev libboost-test-dev libboost-thread-dev libboost-system-dev libboost-filesystem-dev check libfftw3-dev
+
+/etc/udev/rules.d/DreamSourceLab.rules
+
+
+
+
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+
+Android Studio: /dev/kvm device permission denied
+sudo apt install qemu-kvm
+ls -al /dev/kvm
+grep kvm /etc/group
+sudo adduser $USER kvm
+grep kvm /etc/group
+
+vbox downgrade为vbox6.1.14
+
+
+
+
+maybe don‘t need this adb shit
+sudo apt-get install android-tools-adb
+
+andreas@Vostro-5880:/opt/Android
+$ ./android-sdk/platform-tools/adb --version
+Android Debug Bridge version 1.0.41
+Version 31.0.2-7242960
+Installed as /opt/Android/android-sdk/platform-tools/adb
+andreas@Vostro-5880:/opt/Android
+$ adb --version
+Android Debug Bridge version 1.0.39
+Version 1:8.1.0+r23-5~18.04
+Installed as /usr/lib/android-sdk/platform-tools/adb
+
+check
+~/.android/adb_usb.ini
+/etc/udev/rules.d/50-android.rules
+
+after modify rules don't forget
+sudo /etc/init.d/udev restart
+
+
+sudo apt install tree
+
+
+
+sudo apt install cutecom
+
+
+
+
+
+
+
+
+
+
+
+
 
