@@ -4300,7 +4300,7 @@ $ sudo systemctl start tftpd.service
 yay -S mlocate
 
 
-
+yay -S gradle
 
 
 
