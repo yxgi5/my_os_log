@@ -4346,7 +4346,7 @@ yay -S mlocate
 yay -S gradle gradle-doc gradle-src
 
 
-
-
+设置git默认编辑器
+git config --global core.editor "vim"
 
 
