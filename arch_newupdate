@@ -737,7 +737,10 @@ sudo proxychains [cmd]
 
 proxychains aria2c -x16 -s16 -j16 "https://netix.dl.sourceforge.net/project/archbang/ArchBang/archbang-rc-2211-x86_64.iso?viasf=1"
 
-
+测试
+export PROXY_DNS_SERVER=8.8.8.8
+PROXYCHAINS_SOCKS5=1081 proxychains4 -f /etc/proxychains.conf curl www.google.com
+proxychains curl www.google.com
 
 
 
@@ -1038,7 +1041,11 @@ sudo rm cpanm
 
 
 sudo pacman -S shadowsocks libqtshadowsocks shadowsocks-libev shadowsocks-qt5 shadowsocks-v2ray-plugin
- 
+
+可以命令运行
+nohup sslocal -c /etc/shadowsocks.json /dev/null 2>&1 &
+也可以设置服务
+
 /usr/lib/systemd/system/shadowsocks@.service
 <-------------------------------
 [Unit]
@@ -3193,8 +3200,44 @@ sudo mv /etc/php/php.ini.pacnew /etc/php/php.ini
 
 sudo mv /etc/privoxy/config /etc/privoxy/config.bk
 sudo mv /etc/privoxy/config.pacnew /etc/privoxy/config
-add @ 1449
-forward-socks5t   / 127.0.0.1:1081 . 
+sudo gedit /etc/privoxy/config
+------
+listen-address  localhost:8118
+forward-socks5 / 127.0.0.1:1081 .
+------
+privoxy /etc/privoxy/config启动
+systemctl status privoxy.service
+sudo systemctl start privoxy.service
+sudo systemctl enable privoxy.service
+Created symlink /etc/systemd/system/multi-user.target.wants/privoxy.service → /usr/lib/systemd/system/privoxy.service.
+
+
+
+类似于这样
+aria2c --all-proxy='http://127.0.0.1:8118' -D
+
+
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+(可以添加到类似/etc/profile的地方去)
+
+测试
+curl www.google.com
+
+
+yay
+就可以加速了
+
+
+
+
+
+
+
+
+
+
+
 
 
 Default Java environment is already set to 'java-15-jdk'
@@ -4300,7 +4343,7 @@ $ sudo systemctl start tftpd.service
 yay -S mlocate
 
 
-yay -S gradle
+yay -S gradle gradle-doc gradle-src
 
 
 
