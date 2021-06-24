@@ -894,14 +894,20 @@ sudo apt install ninja-build
 sudo apt install cutecom
 
 
+~/.bashrc
+
+export LM_LICENSE_FILE=/opt/modelsim/license.dat:/opt/altera/license.dat:/opt/lscc/license.dat:/opt/synopsys/synopsys.dat
+export PATH=$PATH:/opt/modelsim/modeltech/bin:/opt/modelsim/modeltech/linux_x86_64:/opt/altera/11.0/quartus/bin:/opt/altera/11.0/nios2eds/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64
 
 
 
+/opt/modelsim/modeltech/bin/../linux_x86_64/vish: error while loading shared libraries: libpng12.so.0: cannot open shared object file: No such file or directory
+cp /opt/modelsim/modeltech/linux_x86_64 libpng12.so.0* /opt/modelsim/modeltech/lib
 
 
 
-
-
+sudo apt install gradle gradle-doc gradle-completion
 
 
 
