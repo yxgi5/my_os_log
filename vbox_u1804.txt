@@ -873,6 +873,13 @@ cp /opt/modelsim/modeltech/linux_x86_64 libpng12.so.0* /opt/modelsim/modeltech/l
 
 
 sudo apt install gradle gradle-doc gradle-completion
+sudo apt purge gradle gradle-doc
 
+sudo snap install gradle  # version 7.0.2, or
+sudo apt  install gradle
+
+See 'snap info gradle' for additional versions.
+
+sudo snap install gradle --classic
 
 
