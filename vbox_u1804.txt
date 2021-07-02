@@ -918,3 +918,20 @@ See 'snap info gradle' for additional versions.
 sudo snap install gradle --classic
 
 
+https://github.com/freemed/tty0tty
+sudo apt-get update && sudo apt-get install -y dh-make dkms build-essential
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
