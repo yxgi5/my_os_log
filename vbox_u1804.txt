@@ -923,8 +923,8 @@ sudo apt-get install devscripts
 sudo apt-get update && sudo apt-get install -y dh-make dkms build-essential
 
 
-
-
+sudo apt-get install libqt5serialport5
+sudo apt-get install libqt5serialport5-dev
 
 
 
