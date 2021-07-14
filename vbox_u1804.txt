@@ -935,4 +935,142 @@ sudo apt install binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 g++-mingw-w64
 
 
 
+sudo apt install kazam
+sudo apt install gimp
+
+
+
+sudo -H pip3 install numpy==1.8.2 -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install scipy==1.1.0 -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install imageio -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install matplotlib==2.2.4 -i https://mirrors.163.com/pypi/simple
+
+
+
+
+sudo apt install faketime
+
+
+gedit ~/.config/JetBrains/PyCharm2020.3/pycharm64.vmoptions
+rm -rf ~/.config/JetBrains/PyCharm*
+rm -rf ~/.local/share/JetBrains/PyCharm*
+rm -rf ~/.jetbrains/
+rm -rf ~/.local/share/JetBrains
+rm -rf ~/.cache/JetBrains
+
+pycharm-professional.desktop
+-------------------------------------------
+[Desktop Entry]
+Name=Pycharm Professional
+Comment=Pycharm IDE
+Exec=faketime '2021-03-03 08:15:42' /opt/pycharm-professional/bin/pycharm.sh
+Icon=/opt/pycharm-professional/bin/pycharm.png
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Development;
+StartupNotify=true
+-------------------------------------------
+
+
+VUN5DND42O-eyJsaWNlbnNlSWQiOiJWVU41RE5ENDJPIiwibGljZW5zZWVOYW1lIjoi5r+A5rS75p2l5rqQIHd3d8K3YWppaHVvwrdjb20iLCJhc3NpZ25lZU5hbWUiOiIiLCJhc3NpZ25lZUVtYWlsIjoiIiwibGljZW5zZVJlc3RyaWN0aW9uIjoiIiwiY2hlY2tDb25jdXJyZW50VXNlIjpmYWxzZSwicHJvZHVjdHMiOlt7ImNvZGUiOiJEUE4iLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkRCIiwicGFpZFVwVG8iOiIyMDIxLTA3LTEwIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJQUyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiSUkiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTQyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJHTyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiRE0iLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTRiIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQQyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUkMiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkNMIiwicGFpZFVwVG8iOiIyMDIxLTA3LTEwIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJXUyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUkQiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTMCIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiUk0iLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IkFDIiwicGFpZFVwVG8iOiIyMDIxLTA3LTEwIiwiZXh0ZW5kZWQiOmZhbHNlfSx7ImNvZGUiOiJSU1YiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6ZmFsc2V9LHsiY29kZSI6IlJTVSIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjpmYWxzZX0seyJjb2RlIjoiRFAiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUERCIiwicGFpZFVwVG8iOiIyMDIxLTA3LTEwIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBXUyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQU0kiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUENXTVAiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFBTIiwicGFpZFVwVG8iOiIyMDIxLTA3LTEwIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBHTyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJQUEMiLCJwYWlkVXBUbyI6IjIwMjEtMDctMTAiLCJleHRlbmRlZCI6dHJ1ZX0seyJjb2RlIjoiUFJCIiwicGFpZFVwVG8iOiIyMDIxLTA3LTEwIiwiZXh0ZW5kZWQiOnRydWV9LHsiY29kZSI6IlBTVyIsInBhaWRVcFRvIjoiMjAyMS0wNy0xMCIsImV4dGVuZGVkIjp0cnVlfSx7ImNvZGUiOiJSUyIsInBhaWRVcFRvIjoiMjAy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
+
+
+激活码也没啥用
+
+不如用无限试用呢
+
+无限试用有两种方法，一种是上面那么删配置文件，另一种是ide-eval-resetter插件
+插件一般在~/.local/share/JetBrains/PyCharm*
+
+
+
+
+
+
+
+sudo apt install peco
+
+sudo apt install virtualenv
+
+sudo -H pip3 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyinstaller -i https://mirrors.163.com/pypi/simple
+//sudo -H pip3 install pyQt5==5.12.0 -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyQt5 -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyQt5-tools -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyqtdoc -i https://mirrors.163.com/pypi/simple
+
+sudo apt install qt5-default qttools5-dev-tools
+sudo apt install pyqt5* 
+
+
+
+
+
+
+
+cd /usr/local/bin
+sudo gedit uex
+---------------------------------
+#!/bin/bash
+rm ${HOME}/.idm/*.spl
+rm /tmp/*.spl
+rm ${HOME}/.idm/uex/*.spl
+cd /opt/uex/bin
+./uex
+---------------------------------
+sudo chmod +x uex
+
+sudo gedit pycharm
+---------------------------------
+#!/bin/bash
+/opt/pycharm-professional/bin/pycharm.sh
+---------------------------------
+sudo chmod +x pycharm
+
+sudo gedit android-studio
+---------------------------------
+#!/bin/bash
+/opt/android-studio/bin/studio.sh
+---------------------------------
+sudo chmod +x android-studio
+
+sudo gedit baidunetdisk
+---------------------------------
+#!/bin/bash
+/opt/baidunetdisk/baidunetdisk  --no-sandbox %U
+---------------------------------
+sudo chmod +x baidunetdisk
+
+sudo gedit genymotion
+---------------------------------
+#!/bin/bash
+/opt/genymotion/genymotion/genymotion
+---------------------------------
+sudo chmod +x genymotion
+
+sudo gedit electronic-wechat
+---------------------------------
+#!/bin/bash
+/opt/electronic-wechat-linux-x64/electronic-wechat
+---------------------------------
+sudo chmod +x electronic-wechat
+
+sudo gedit vivado
+---------------------------------
+#!/bin/bash
+/opt/Xilinx/Vivado/2020.1/bin/vivado
+---------------------------------
+sudo chmod +x vivado
+
+sudo gedit vitis
+---------------------------------
+#!/bin/bash
+/opt/Xilinx/Vitis/2020.1/bin/vitis 
+---------------------------------
+sudo chmod +x vitis
+
+
+
+
+
 
