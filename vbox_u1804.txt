@@ -852,6 +852,20 @@ sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
 
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+
+
+sudo tar zxvf jdk-8u291-linux-x64.tar.gz -C /usr/lib/jvm
+sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_291/bin/java" 1112
+sudo update-alternatives --config java
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_291/bin/javac" 1112
+sudo update-alternatives --config javac
+sudo update-alternatives --install "/usr/bin/javah" "javah" "/usr/lib/jvm/jdk1.8.0_291/bin/javah" 1112
+sudo update-alternatives --config javah
+
+
+
 
 Android Studio: /dev/kvm device permission denied
 sudo apt install qemu-kvm
