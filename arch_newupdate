@@ -4350,3 +4350,10 @@ yay -S gradle gradle-doc gradle-src
 git config --global core.editor "vim"
 
 
+
+
+gpg --keyserver keyserver.ubuntu.com --recv-keys  7C0135FB088AAF6C66C650B9BB5869F064EA74AB
+yay -S mingw-w64-gdb
+
+
+
