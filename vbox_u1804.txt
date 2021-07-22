@@ -1106,5 +1106,5 @@ sudo apt-get install build-essential clang bison flex \
 
 sudo apt-get install orage stopwatch gnome-clocks
 
-
+sudo apt-get install inkscape dia
 
