@@ -4356,4 +4356,17 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys  7C0135FB088AAF6C66C650B9BB5869
 yay -S mingw-w64-gdb
 
 
+yay -S stopwatch
+
+
+
+
+
+
+
+
+
+
+
+
 
