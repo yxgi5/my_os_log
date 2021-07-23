@@ -1108,3 +1108,171 @@ sudo apt-get install orage stopwatch gnome-clocks
 
 sudo apt-get install inkscape dia
 
+
+sudo apt-get install qt4-demos
+The following NEW packages will be installed:
+  libqt4-declarative-gestures libqt4-declarative-particles libqt4-designer libqt4-dev libqt4-dev-bin libqt4-help libqt4-opengl-dev libqt4-qt3support libqt4-scripttools libqt4-test qt4-demos qt4-designer
+  qt4-dev-tools qt4-doc qt4-linguist-tools qt4-qmake
+
+
+sudo apt-get install libsqlite0-dev qt4-qmlviewer qt4-doc-html
+
+
+
+
+
+qt-everywhere-src-5.15.2
+
+ubuntu18.04/static_gcc
+
+./configure -confirm-license -opensource -platform linux-g++ -c++std c++11 -static -release -fontconfig -system-freetype -opengl desktop -pkg-config -dbus-linked  -ltcg -prefix /opt/Qt5.15_static OPENSSL_LIBS="-lssl -lcrypto -ldl -lpthread" -qt-sqlite -qt-pcre -plugin-sql-sqlite -qt-zlib -qt-harfbuzz -qt-libpng -qt-libjpeg -qt-libpng -qt-tiff -qt-webp -skip qtwayland -skip qtscript -no-compile-examples
+
+gmake -j$(nproc)
+gmake install
+
+
+sudo apt-get install libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686
+
+
+sudo add-apt-repository ppa:cybermax-dexter/mingw-w64-backport
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo aptitude install gcc-mingw-w64-base
+      Remove the following packages:                                          
+1)      g++-mingw-w64 [9.3.0-11ubuntu0~18.04.1+22~exp1ppa5 (bionic, now)]     
+2)      g++-mingw-w64-i686 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]         
+3)      g++-mingw-w64-x86-64 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]       
+4)      gcc-mingw-w64 [9.3.0-11ubuntu0~18.04.1+22~exp1ppa5 (bionic, now)]     
+5)      gcc-mingw-w64-i686 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]         
+6)      gcc-mingw-w64-x86-64 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]       
+7)      gfortran-mingw-w64 [9.3.0-11ubuntu0~18.04.1+22~exp1ppa5 (bionic, now)]
+8)      gfortran-mingw-w64-i686 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]    
+9)      gfortran-mingw-w64-x86-64 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]  
+10)     gnat-mingw-w64 [9.3.0-11ubuntu0~18.04.1+22~exp1ppa5 (bionic, now)]    
+11)     gnat-mingw-w64-i686 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]        
+12)     gnat-mingw-w64-x86-64 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]      
+13)     gobjc++-mingw-w64 [9.3.0-11ubuntu0~18.04.1+22~exp1ppa5 (bionic, now)] 
+14)     gobjc++-mingw-w64-i686 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]     
+15)     gobjc++-mingw-w64-x86-64 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]   
+16)     gobjc-mingw-w64 [9.3.0-11ubuntu0~18.04.1+22~exp1ppa5 (bionic, now)]   
+17)     gobjc-mingw-w64-i686 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]       
+18)     gobjc-mingw-w64-x86-64 [7.3.0-11ubuntu1+20.2build1 (bionic, now)]     
+19)     mingw-w64 [8.0.0-1ppa1 (bionic, now)] 
+
+
+
+sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64
+sudo aptitude install gcc-mingw-w64 mingw-w64 
+libgcc-s1 (>= 4.2) which is a virtual package and is not provided by any available package
+
+download gcc-10-base
+wget http://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/gcc-10-base_10-20200411-0ubuntu1_amd64.deb
+download libgcc-s1
+wget http://mirrors.xmission.com/ubuntu/pool/main/g/gcc-10/libgcc-s1_10-20200411-0ubuntu1_amd64.deb
+
+
+sudo aptitude install mingw-w64 gcc-mingw-w64
+The following NEW packages will be installed:
+  g++-mingw-w64{a} g++-mingw-w64-i686{a} g++-mingw-w64-x86-64{a} gcc-mingw-w64 gcc-mingw-w64-i686{a} gcc-mingw-w64-xmingw-w6486-64{a} mingw-w64
+
+
+sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64
+ok
+
+sudo apt-get install mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-w64-i686-dev mingw-ocaml
+
+
+这个版本也是Thread model: win32
+不是POSIX，会报错‘mutex’ is not a member of ‘QtPrivate’ 之类
+
+Always build with -nomake tests -nomake examples especially when doing a static build
+也还是报这个错
+
+sudo apt-get purge mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-w64-i686-dev mingw-ocaml gcc-mingw-w64-base
+sudo apt-get purge g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64
+
+恢复 7.3 的 mingw-w64
+sudo apt purge gcc-10-base
+sudo apt-get install libgcc1 --reinstall
+sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-w64-i686-dev mingw-ocaml gcc-mingw-w64-base binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 gcc-mingw-w64-i686 gcc-mingw-w64-x86-64  gcc-mingw-w64-base g++-mingw-w64 gcc-mingw-w64 binutils-mingw-w64 gdb-mingw-w64 gdb-mingw-w64-target gfortran-mingw-w64 gfortran-mingw-w64-i686 gfortran-mingw-w64-x86-64 gnat-mingw-w64 gnat-mingw-w64-i686 gnat-mingw-w64-x86-64 gobjc++-mingw-w64 gobjc++-mingw-w64-i686 gobjc++-mingw-w64-x86-64 gobjc-mingw-w64 gobjc-mingw-w64-i686 gobjc-mingw-w64-x86-64 mingw-w64 mingw-w64-common mingw-w64-i686-dev mingw-w64-tools mingw-w64-x86-64-dev
+sudo apt-get install libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686
+sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64
+
+sudo apt-get install linux-headers-5.4.0-74-generic linux-hwe-5.4-headers-5.4.0-74 linux-image-5.4.0-74-generic linux-modules-5.4.0-74-generic
+保留老内核
+
+
+
+
+
+
+
+
+
+
+
+
+目前libmysqlclient-dev libmysqlclient20不更新/安装，其他apt未报错
+
+
+tar 命令显示进度条
+sudo apt-get install pv
+
+解压
+pv question.tar.gz | tar -zxf -
+pv qt-everywhere-src-5.15.2.tar.xz | tar -Jxpf -
+
+压缩
+tar -cf - questions.sql | pv -s $(du -sk questions.sql | awk '{print $1}') | gzip > question.tar.gz
+tar -cf - questions.sql | pv -s $(($(du -sk questions.sql | awk '{print $1}') * 1024)) | gzip > question.tar.gz
+
+
+
+
+sudo apt install qtdeclarative5-dev qml-module-qtquick-scene2d qml-module-qtquick-scene3d qmlscene
+sudo apt install lldb
+qt4
+/usr/lib/x86_64-linux-gnu/qt4/bin/qmake
+qt5
+/usr/lib/qt5/bin/qmake
+qt5_static
+/opt/Qt5.15_static/bin/qmake
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
