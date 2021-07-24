@@ -1134,6 +1134,7 @@ gmake install
 sudo apt-get install libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686
 
 
+https://launchpad.net/~cybermax-dexter/+archive/ubuntu/mingw-w64-backport
 sudo add-apt-repository ppa:cybermax-dexter/mingw-w64-backport
 sudo apt-get update
 sudo apt-get upgrade
@@ -1242,6 +1243,9 @@ qt5_static
 
 
 
+sudo add-apt-repository ppa:savoury1/backports
+sudo apt-get update
+sudo apt-get upgrade
 
 
 
@@ -1250,23 +1254,152 @@ qt5_static
 
 
 
+重新打包deb
+
+mkdir extract
+mkdir extract/DEBIAN
+mkdir build
+dpkg -X mingw-w64-binutils_2.36.1-1_amd64.deb extract
+dpkg -e mingw-w64-binutils_2.36.1-1_amd64.deb extract/DEBIAN/
+这里修改deb包内容
+打包出deb(从已有的可以执行文件，同样按照这个方法可以打包出deb)
+dpkg-deb -b extract/ build/
+生成的deb在build目录
 
 
 
 
 
+从源码编译生成deb包
+
+方法一: 使用checkinstall方法创建deb包
+checkinstall不仅可以生成deb包，还可以生成rpm包，使用简单，但是不灵活，功能粗糙，只做介绍，不推荐使用
+目录格式要求是x.x.x 这样的版本格式，其中x为数字
+
+example1： 
+$ tar xvjf fceu-0.98.12.src.tar.bz2 // 解包
+$ cd fceu;./configure;make // 编译
+$ checkinstall -D -y -install=no --pkgversion-0.98 --pkgname=fceuxy --pkgcource=./ --showinstall=no -default make install // 制作deb包
+此时当前目录下生成了deb包
+
+example2： 
+cd xxx-1.0
+make distclean
+./configure
+make
+checkinstall -D -y --install=no --pkgversion=1.0 --maintainer=xxx@yyy.com --requires=libc6,libnessus2,libssl0.9.8,bison,libxml2,libcurl3,libinotifytools0
+--requires指定依赖的包，这里需要注意两个包的名字之间没有空格
+
+
+checkinstall详细例程
+https://www.ibm.com/developerworks/cn/linux/l-cn-checkinstall/index.html
+
+方法二: 使用dpkg方法创建deb包
+dpkg是最基本的制作deb包的方法，推荐使用
+
+example1： 非debian修改源码
+$ tar xvjf fceu-0.98.12.src.tar.bz2 // 解包
+$ mv fceu fceu-0.98 // 改目录名为 包名-版本号
+$ cd fceu-0.98
+$ dh_make -s -e xieyan0811@sina.com.cn -f ../fceu-0.98.12.src.tar.bz2 // 生成制作deb包所需的默认信息， 这里的-s是single binary的意思，我一般都是制作single binary，不给出的话会让你选择[s/i/m/l/k/n/b]
+
+此时当前目录下生成了debian目录，此时通常修改两个文件：
+　　修改debian/control文件，配置你的信息，具体字段见参考部分
+　　修改debian/rules脚本，它决定编译参数(也可以不改)，文件末尾要以空行结束
+        比如修改override_dh_auto_configure:
+         ./configure --prefix=/opt/xxx --enable-static
+
+意思是覆盖默认的 ./configure 行为
+$ dpkg-buildpackage -rfakeroot
+此时可以看到，上一层目录(../)中已建立了deb包
+
+官方的debian制作手册（比较长）
+https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html
+
+
+example2：
+# cd c-icap-0.2.2
+# ./configure --enable-static --prefix=/opt/c-icap
+# make dist
+将会把源码打包为 c-icap-0.2.2.tar.gz
+# mv c-icap-0.2.2.tar.gz ..
+# dh_make -f ../c-icap-0.2.2.tar.gz
+将会在本目录生成 debian 目录，里面是 deb 包的模板。
+修改 debian 里的 rules 文件，在文件最后追加下列内容，文件末尾要以空行结束：
+override_dh_auto_configure:
+ ./configure --prefix=/opt/c-icap --enable-static
+意思是覆盖默认的 ./configure 行为。最后，生成 deb 安装包：
+dpkg-buildpackage
+deb 文件将被生成在父目录下。
+
+example3：
+生成 zlib 的 deb 安装包
+由于 zlib 的源码包不支持 make dist 进行源码打包，所以步骤有所变更：
+1. 生成模板：
+# cd zlib-1.2.7
+# dh_make -native
+2. 修改 debian/rules 文件，覆盖默认的 ./configure 行为：
+override_dh_auto_configure:
+ ./configure --prefix=/opt/zlib
+3. 生成 deb 安装包：
+# dpkg-buildpackage
+注意：为 squid 生成 deb 包时，需要安装 cppuint：
+apt-get install libcppunit-dev
+
+
+example4：经过debian修改源码
+git_2.11.0.orig.tar.xz
+git_2.11.0-3+deb9u5.debian.tar.xz
+git_2.11.0-3+deb9u5.dsc
+sudo apt-get install dh-exec dh-apache2
+dpkg-source -x git_2.11.0-3+deb9u5.dsc
+cd git-2.11.0
+dpkg-buildpackage -rfakeroot -uc -b
+
+这里'-rfakeroot'指定命令使用fakeroot程序来模仿root权限(来实现所有者(ownership)目的)，'-uc'表示"Don't cryptographically sign the changelog"，'-b'代表只建立二进制包。
 
 
 
+example5：直接拉取仓库里的源码
+apt-get source git
+修改debian/control
+Replace all the occurences of “libcurl4-gnutls-dev” to “libcurl4-openssl-dev”
+修改debian/rules
+delete the line “TEST =test”
+sudo dpkg-buildpackage -rfakeroot -b
+sudo dpkg -i git_... 
 
 
+方法三: 模仿makepkg的工具
+makedeb 或者 unipkg
+最简单，编写或修改PKGBUILD文件
+
+比如安装makedeb
+makedeb_all_5.9.1-1.deb
+makepkg_all_6.0.0-3.1.deb
+获得合适的cflags和cxxflags
+python3-config --cflags
+修改cflags和cxxflags到
+/etc/makepkg.conf
+另外修改/usr/bin/makedeb
+DEFAULT VALUES的
+export INSTALL='FALSE'
+换到793行去，防止configure找不到install工具路径(可以看config.log是否有/usr/bin/install，不能是0,否则无法生成deb，对比直接用makepkg的config.log)
+可以在arch包网址或者AUR获得参照的PKGBUILD文件
+这样基本上可以用makedeb编译出deb包
 
 
+arch转换到deb包
+从makedeb修改出了凑合用的convert_arch_to_deb
+跳过编译，但是还是需要PKGBUILD文件提供少量信息
+由于arch的基本库如glibc什么的，还有编译器，都比ubuntu/debian的LTS版本新，所以很多转换的包都无法运行，
+从arch迁移软件到deb系列，主要还是用源码编译靠谱。
+反之，从deb迁移到arch（debtap 或者 makepkg配合PKGBUILD文件 都可以进行这种转换），基本上都能直接用。
 
 
-
-
-
+将rpm包转为deb包 
+使用alien
+fakeroot alien name.rpm
 
 
 

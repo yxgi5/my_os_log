@@ -4359,6 +4359,26 @@ yay -S mingw-w64-gdb
 yay -S stopwatch
 
 
+从PKGBUILD产生deb包
+makedeb (https://github.com/makedeb/makedeb)
+unipkg
+都可以实现
+
+从makedeb修改得到convert_arch_to_deb，配合写个简单的PKGBUILD文件提供一下信息就好了，转换是可以的。。。。。
+
+
+
+/sbin/rcvboxadd quicksetup all
+
+
+echo "void main(){printf(\"hello world\n\");}" |gcc -x c - -o /tmp/hello;/tmp/hello
+
+
+
+
+
+
+
 
 
 
