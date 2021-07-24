@@ -1376,15 +1376,30 @@ makedeb 或者 unipkg
 
 比如安装makedeb
 makedeb_all_5.9.1-1.deb
+依赖
 makepkg_all_6.0.0-3.1.deb
+makepkg 需要 bash4.4以上才支持 local -
+官方的PPA仓库bash源码， 16.04 Xenial 只到 4.3
+https://launchpad.net/ubuntu/+source/bash
+下面有可选PPA仓库
+比如https://launchpad.net/~savoury1/+archive/ubuntu/backports就很合适
+更新bash
+sudo add-apt-repository ppa:savoury1/backports
+sudo apt-get update
+sudo apt-get upgrade 
+bash --version
+
 获得合适的cflags和cxxflags
 python3-config --cflags
+
 修改cflags和cxxflags到
 /etc/makepkg.conf
+
 另外修改/usr/bin/makedeb
 DEFAULT VALUES的
 export INSTALL='FALSE'
 换到793行去，防止configure找不到install工具路径(可以看config.log是否有/usr/bin/install，不能是0,否则无法生成deb，对比直接用makepkg的config.log)
+
 可以在arch包网址或者AUR获得参照的PKGBUILD文件
 这样基本上可以用makedeb编译出deb包
 
@@ -1400,10 +1415,6 @@ arch转换到deb包
 将rpm包转为deb包 
 使用alien
 fakeroot alien name.rpm
-
-
-
-
 
 
 
