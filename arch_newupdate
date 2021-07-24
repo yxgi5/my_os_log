@@ -4334,9 +4334,125 @@ sudo archlinux-java set java-16-jdk
 https://wiki.archlinux.org/index.php/Xilinx_Vivado
 yay -S pod2man libselinux debianutils multilib-devel
 
-yay -S tftp-hpa
-$ sudo systemctl enable tftpd.service
-$ sudo systemctl start tftpd.service
+yay -S tftp-hpa xinetd
+
+https://wiki.archlinux.org/title/TFTP
+sudo gedit /etc/conf.d/tftpd
+```
+TFTPD_ARGS="--secure /srv/tftp/"
+```
+change to
+```
+TFTPD_ARGS="--user=nobody --secure /tftpboot/ -c"
+```
+为啥是TFTPD_ARGS？看看
+cat /usr/lib/systemd/system/tftpd.service
+
+sudo mkdir -p /tftpboot
+sudo chmod 777 /tftpboot
+sudo chown nobody:nobody /tftpboot
+sudo systemctl enable tftpd.service
+sudo systemctl start tftpd.service
+sudo systemctl status tftpd.service
+sudo systemctl enable tftpd.socket
+sudo systemctl restart tftpd.service
+
+确认tftp服务是否已经开启
+```
+netstat -an | more | grep udp | grep 69
+```
+显示
+```
+udp        0      0 0.0.0.0:69              0.0.0.0:*
+```
+
+```
+netstat -au | grep tftp
+```
+显示
+```
+udp        0      0 *:tftp                  *:*
+```
+
+sudo gedit /etc/xinetd.d/tftp
+service tftp
+{
+	socket_type	= dgram
+	protocol	= udp
+	wait		= yes
+	user		= nobody
+	server		= /usr/bin/tftpd
+	server_args	= /usr/var/tftpboot
+	disable		= yes
+}
+
+service tftp
+{
+	socket_type	= dgram
+	protocol	= udp
+	port        = 69
+	wait		= yes
+	user		= nobody
+	server		= /usr/bin/in.tftpd
+	server_args	= /tftpboot
+	disable		= no
+}
+
+server_args	= -s /tftpboot -c -l
+server_args	= /tftpboot -c
+怎么都不能下载上传
+server_args	= /tftpboot
+可以下载不能上传
+
+sudo systemctl disable tftpd.service
+sudo systemctl disable tftpd.socket
+sudo systemctl stop tftpd.service
+sudo systemctl status tftpd.service
+sudo systemctl start xinetd.service
+sudo systemctl status xinetd.service
+sudo systemctl enable xinetd.service
+sudo systemctl restart xinetd.service
+cat /usr/lib/systemd/system/xinetd.service
+其实用tftpd比用xinetd好。
+sudo systemctl stop xinetd.service
+sudo systemctl status xinetd.service
+sudo systemctl disable xinetd.service
+sudo systemctl enable tftpd.service
+sudo systemctl start tftpd.service
+sudo systemctl status tftpd.service
+sudo systemctl enable tftpd.socket
+
+
+
+本机测试,需要tftp客户端
+```
+tftp <ip>
+put <testfile>
+get <testfile>
+quit
+```
+tftp 127.0.0.1
+tftp localhost
+
+curl -T E6-AOK7VkAA7cy6.jpeg tftp://localhost
+curl -o cmd.txt tftp://localhost/cmd.txt
+
+目标板上
+```
+tftp -c put -l <testfile> <ip>
+tftp -c get -r <testfile> <ip>
+```
+tftp –p –r 目标文件名  -l 源文件名 服务器地址
+tftp –g –l/-r 源文件名(不更名)   服务器地址  
+（此时参数-l与-r等效，使用时只使用其中一个）
+tftp –p –l/-r 源文件名(不更名)   服务器地址   
+
+-l  是local的缩写，后跟存在于Client的源文件名，或下载Client后  重命名的文件名。
+-r   是remote的缩写，后跟Server即PC机tftp服务器根目录中的源文 件名，或上传Server后重命名后的文件名。
+-g  是get的缩写，下载文件时用，
+-p  是put的缩写，上传文件时用，
+tftp 默认占用的是69端口。
+
 
 
 
