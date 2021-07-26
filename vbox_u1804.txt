@@ -1242,15 +1242,15 @@ qt5_static
 
 
 
+sudo apt install libmpc3 libmpc-dev
 
+sudo apt install meson ninja-build
 
+sudo apt install --reinstall bash-completion
 
-
-
-
-
-
-
+sudo apt install libarchive-tools
+sudo dpkg -i makepkg_all_6.0.0-3.1.deb
+sudo dpkg -i makedeb_all_5.9.1-1.deb
 
 
 
