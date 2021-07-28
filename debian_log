@@ -3955,9 +3955,19 @@ $ dpkg-query -s nano
 查看某个文件的归属包:
 $ dpkg-query -S nano
 $ dpkg -S nano
-
-
-
+移除deb包
+$ dpkg -r debname
+安装deb包
+$ dpkg -i xxx.deb
+ 查看deb包含有哪些文件(不安装)
+$ dpkg -c xxx.deb // 安装前根据deb文件查看
+$ dpkg -L debname // 安装后根据包名查看
+释放安装内容
+dpkg -X mingw-w64-binutils_2.36.1-1_amd64.deb extract
+释放控制信息
+dpkg -e mingw-w64-binutils_2.36.1-1_amd64.deb extract/DEBIAN/
+重新打包到build目录
+dpkg-deb -b extract/ build/
 
 
 
@@ -12430,7 +12440,32 @@ git config --global --unset http.proxy
 sudo proxychains aptitude install r-base r-base-core r-base-dev
 
 
+sudo apt-get install privoxy
+sudo gedit /etc/privoxy/config
+------
+listen-address  localhost:8118
+forward-socks5 / 127.0.0.1:1081 .
+------
+privoxy /etc/privoxy/config启动
+systemctl status privoxy.service
+sudo systemctl start privoxy.service
+sudo systemctl enable privoxy.service
+Created symlink /etc/systemd/system/multi-user.target.wants/privoxy.service → /usr/lib/systemd/system/privoxy.service.
 
+类似于这样
+aria2c --all-proxy='http://127.0.0.1:8118' -D
+
+
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+(可以添加到类似/etc/profile的地方去)
+
+测试
+curl www.google.com
+
+
+yay
+就可以加速了
 
 
 
@@ -13348,6 +13383,7 @@ mkdir -v $HOME/leafpad_build && cd $HOME/leafpad_build && \
 wget http://savannah.nongnu.org/download/leafpad/leafpad-0.8.18.1.tar.gz && \
 tar xvf leafpad-0.8.18.1.tar.gz && cd leafpad-0.8.18.1 && \
 ./configure && make && \
+制作deb包
 sudo checkinstall -D --install=yes --fstrans=no --pakdir "$HOME/leafpad_build" \
      --pkgname leafpad --backup=no --deldoc=yes --deldesc=yes --delspec=yes \
      --default --pkgversion "0.8.18.1" && \

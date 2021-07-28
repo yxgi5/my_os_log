@@ -1134,6 +1134,7 @@ gmake install
 sudo apt-get install libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686
 
 
+https://launchpad.net/~cybermax-dexter/+archive/ubuntu/mingw-w64-backport
 sudo add-apt-repository ppa:cybermax-dexter/mingw-w64-backport
 sudo apt-get update
 sudo apt-get upgrade
@@ -1193,11 +1194,10 @@ sudo apt-get purge mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-
 sudo apt-get purge g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64
 
 恢复 7.3 的 mingw-w64
-sudo apt purge gcc-10-base
 sudo apt-get install libgcc1 --reinstall
-sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-w64-i686-dev mingw-ocaml gcc-mingw-w64-base binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 gcc-mingw-w64-i686 gcc-mingw-w64-x86-64  gcc-mingw-w64-base g++-mingw-w64 gcc-mingw-w64 binutils-mingw-w64 gdb-mingw-w64 gdb-mingw-w64-target gfortran-mingw-w64 gfortran-mingw-w64-i686 gfortran-mingw-w64-x86-64 gnat-mingw-w64 gnat-mingw-w64-i686 gnat-mingw-w64-x86-64 gobjc++-mingw-w64 gobjc++-mingw-w64-i686 gobjc++-mingw-w64-x86-64 gobjc-mingw-w64 gobjc-mingw-w64-i686 gobjc-mingw-w64-x86-64 mingw-w64 mingw-w64-common mingw-w64-i686-dev mingw-w64-tools mingw-w64-x86-64-dev
-sudo apt-get install libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686
-sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64
+sudo apt remove gcc-10-base
+sudo apt remove g++-mingw-w64* g++-mingw-w64-i686* g++-mingw-w64-x86-64* gcc-10-base* gcc-mingw-w64* gcc-mingw-w64-i686* gcc-mingw-w64-x86-64* gfortran-mingw-w64* gfortran-mingw-w64-i686* gfortran-mingw-w64-x86-64* gnat-mingw-w64* gnat-mingw-w64-i686* gnat-mingw-w64-x86-64* gobjc++-mingw-w64* gobjc++-mingw-w64-i686* gobjc++-mingw-w64-x86-64* gobjc-mingw-w64* gobjc-mingw-w64-i686* gobjc-mingw-w64-x86-64* libgcc-s1* mingw-w64* gcc-mingw-w64-base
+sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-w64-i686-dev mingw-ocaml gcc-mingw-w64-base binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 gcc-mingw-w64-i686 gcc-mingw-w64-x86-64  gcc-mingw-w64-base g++-mingw-w64 gcc-mingw-w64 binutils-mingw-w64 gdb-mingw-w64 gdb-mingw-w64-target gfortran-mingw-w64 gfortran-mingw-w64-i686 gfortran-mingw-w64-x86-64 gnat-mingw-w64 gnat-mingw-w64-i686 gnat-mingw-w64-x86-64 gobjc++-mingw-w64 gobjc++-mingw-w64-i686 gobjc++-mingw-w64-x86-64 gobjc-mingw-w64 gobjc-mingw-w64-i686 gobjc-mingw-w64-x86-64 mingw-w64 mingw-w64-common mingw-w64-i686-dev mingw-w64-tools mingw-w64-x86-64-dev libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686 g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64
 
 sudo apt-get install linux-headers-5.4.0-74-generic linux-hwe-5.4-headers-5.4.0-74 linux-image-5.4.0-74-generic linux-modules-5.4.0-74-generic
 保留老内核
@@ -1242,11 +1242,22 @@ qt5_static
 
 
 
+
+
+
+sudo add-apt-repository ppa:savoury1/backports
+sudo apt-get update
+sudo apt-get upgrade
+
+
+
 sudo apt install libmpc3 libmpc-dev
+
 
 sudo apt install meson ninja-build
 
 sudo apt install --reinstall bash-completion
+
 
 sudo apt install libarchive-tools
 sudo dpkg -i makepkg_all_6.0.0-3.1.deb
@@ -1257,6 +1268,280 @@ sudo dpkg -i makedeb_all_5.9.1-1.deb
 
 
 
+重新打包deb
+
+mkdir extract
+mkdir extract/DEBIAN
+mkdir build
+dpkg -X mingw-w64-binutils_2.36.1-1_amd64.deb extract
+dpkg -e mingw-w64-binutils_2.36.1-1_amd64.deb extract/DEBIAN/
+这里修改deb包内容
+打包出deb(从已有的可以执行文件，同样按照这个方法可以打包出deb)
+dpkg-deb -b extract/ build/
+生成的deb在build目录
+
+
+
+
+从源码编译生成deb包
+
+方法一: 使用checkinstall方法创建deb包
+checkinstall不仅可以生成deb包，还可以生成rpm包，使用简单，但是不灵活，功能粗糙，只做介绍，不推荐使用
+目录格式要求是x.x.x 这样的版本格式，其中x为数字
+
+example1： 
+$ tar xvjf fceu-0.98.12.src.tar.bz2 // 解包
+$ cd fceu;./configure;make // 编译
+$ checkinstall -D -y -install=no --pkgversion-0.98 --pkgname=fceuxy --pkgcource=./ --showinstall=no -default make install // 制作deb包
+此时当前目录下生成了deb包
+
+example2： 
+cd xxx-1.0
+make distclean
+./configure
+make
+checkinstall -D -y --install=no --pkgversion=1.0 --maintainer=xxx@yyy.com --requires=libc6,libnessus2,libssl0.9.8,bison,libxml2,libcurl3,libinotifytools0
+--requires指定依赖的包，这里需要注意两个包的名字之间没有空格
+
+
+checkinstall详细例程
+https://www.ibm.com/developerworks/cn/linux/l-cn-checkinstall/index.html
+
+方法二: 使用dpkg方法创建deb包
+dpkg是最基本的制作deb包的方法，推荐使用
+
+example1： 非debian修改源码
+$ tar xvjf fceu-0.98.12.src.tar.bz2 // 解包
+$ mv fceu fceu-0.98 // 改目录名为 包名-版本号
+$ cd fceu-0.98
+$ dh_make -s -e xieyan0811@sina.com.cn -f ../fceu-0.98.12.src.tar.bz2 // 生成制作deb包所需的默认信息， 这里的-s是single binary的意思，我一般都是制作single binary，不给出的话会让你选择[s/i/m/l/k/n/b]
+
+此时当前目录下生成了debian目录，此时通常修改两个文件：
+　　修改debian/control文件，配置你的信息，具体字段见参考部分
+　　修改debian/rules脚本，它决定编译参数(也可以不改)，文件末尾要以空行结束
+        比如修改override_dh_auto_configure:
+         ./configure --prefix=/opt/xxx --enable-static
+
+意思是覆盖默认的 ./configure 行为
+$ dpkg-buildpackage -rfakeroot
+此时可以看到，上一层目录(../)中已建立了deb包
+
+官方的debian制作手册（比较长）
+https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html
+
+
+example2：
+# cd c-icap-0.2.2
+# ./configure --enable-static --prefix=/opt/c-icap
+# make dist
+将会把源码打包为 c-icap-0.2.2.tar.gz
+# mv c-icap-0.2.2.tar.gz ..
+# dh_make -f ../c-icap-0.2.2.tar.gz
+将会在本目录生成 debian 目录，里面是 deb 包的模板。
+修改 debian 里的 rules 文件，在文件最后追加下列内容，文件末尾要以空行结束：
+override_dh_auto_configure:
+ ./configure --prefix=/opt/c-icap --enable-static
+意思是覆盖默认的 ./configure 行为。最后，生成 deb 安装包：
+dpkg-buildpackage
+deb 文件将被生成在父目录下。
+
+example3：
+生成 zlib 的 deb 安装包
+由于 zlib 的源码包不支持 make dist 进行源码打包，所以步骤有所变更：
+1. 生成模板：
+# cd zlib-1.2.7
+# dh_make -native
+2. 修改 debian/rules 文件，覆盖默认的 ./configure 行为：
+override_dh_auto_configure:
+ ./configure --prefix=/opt/zlib
+3. 生成 deb 安装包：
+# dpkg-buildpackage
+注意：为 squid 生成 deb 包时，需要安装 cppuint：
+apt-get install libcppunit-dev
+
+
+example4：经过debian修改源码
+git_2.11.0.orig.tar.xz
+git_2.11.0-3+deb9u5.debian.tar.xz
+git_2.11.0-3+deb9u5.dsc
+sudo apt-get install dh-exec dh-apache2
+dpkg-source -x git_2.11.0-3+deb9u5.dsc
+cd git-2.11.0
+dpkg-buildpackage -rfakeroot -uc -b
+
+这里'-rfakeroot'指定命令使用fakeroot程序来模仿root权限(来实现所有者(ownership)目的)，'-uc'表示"Don't cryptographically sign the changelog"，'-b'代表只建立二进制包。
+
+
+
+example5：直接拉取仓库里的源码
+apt-get source git
+修改debian/control
+Replace all the occurences of “libcurl4-gnutls-dev” to “libcurl4-openssl-dev”
+修改debian/rules
+delete the line “TEST =test”
+sudo dpkg-buildpackage -rfakeroot -b
+sudo dpkg -i git_... 
+
+
+方法三: 模仿makepkg的工具
+makedeb 或者 unipkg
+最简单，编写或修改PKGBUILD文件
+
+比如安装makedeb
+makedeb_all_5.9.1-1.deb
+依赖
+makepkg_all_6.0.0-3.1.deb
+makepkg 需要 bash4.4以上才支持 local -
+官方的PPA仓库bash源码， 16.04 Xenial 只到 4.3
+https://launchpad.net/ubuntu/+source/bash
+下面有可选PPA仓库
+比如https://launchpad.net/~savoury1/+archive/ubuntu/backports就很合适
+更新bash
+sudo add-apt-repository ppa:savoury1/backports
+sudo apt-get update
+sudo apt-get upgrade 
+bash --version
+
+获得合适的cflags和cxxflags
+python3-config --cflags
+修改cflags和cxxflags到
+/etc/makepkg.conf
+
+修改/etc/makepkg.conf的
+#MAKEFLAGS="-j2"
+为
+MAKEFLAGS="-j$(nproc)"
+
+另外修改/usr/bin/makedeb
+DEFAULT VALUES的
+export INSTALL='FALSE'
+换到793行去，防止configure找不到install工具路径(可以看config.log是否有/usr/bin/install，不能是0,否则无法生成deb，对比直接用makepkg的config.log)
+
+可以在arch包网址或者AUR获得参照的PKGBUILD文件
+这样基本上可以用makedeb编译出deb包
+
+
+arch转换到deb包
+从makedeb修改出了凑合用的convert_arch_to_deb
+跳过编译，但是还是需要PKGBUILD文件提供少量信息
+由于arch的基本库如glibc什么的，还有编译器，都比ubuntu/debian的LTS版本新，所以很多转换的包都无法运行，
+从arch迁移软件到deb系列，主要还是用源码编译靠谱。
+反之，从deb迁移到arch（debtap 或者 makepkg配合PKGBUILD文件 都可以进行这种转换），基本上都能直接用。
+
+
+将rpm包转为deb包 
+使用alien
+fakeroot alien name.rpm
+
+
+
+为避免麻烦，尽量升级gcc
+sudo update-alternatives --config gcc
+update-alternatives: error: no alternatives for gcc
+
+sudo apt-get install -y \
+                   g++-8 \
+                   gcc-8 \
+                   libc-dev \
+                   make \
+                   xz-utils \
+                   ca-certificates \
+                   libtool \
+                   pkg-config \
+                   wget
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 10
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 10
+sudo apt install gnat-8
+
+
+
+mingw-w64编译顺序
+1.mingw-w64-headers
+mingw-w64编译好之后安装问题
+sudo aptitude remove gcc-mingw-w64-i686
+The following packages will be REMOVED:
+  binutils-mingw-w64-i686{u} g++-mingw-w64{a} g++-mingw-w64-i686{a} gcc-mingw-w64{a} gcc-mingw-w64-i686 libgeos-3.6.2{u} libntfs-3g88{u} libsensors4:i386{u} mingw-w64{a} mingw-w64-i686-dev{u} 
+sudo dpkg -i mingw-w64-headers_9.0.0-2_all.deb
+
+2.mingw-w64-binutils
+3.mingw-w64-gcc fail
+4.mingw-w64-crt fail
+5.mingw-w64-winpthreads fail
+
+
+
+
+sudo add-apt-repository ppa:savoury1/build-tools
+sudo apt-get update
+安装7.5版本（原始是7.3，比较新那个是8.3)
+
+sudo apt-get install libgcc1 --reinstall
+sudo apt remove gcc-10-base
+sudo apt remove g++-mingw-w64* g++-mingw-w64-i686* g++-mingw-w64-x86-64* gcc-10-base* gcc-mingw-w64* gcc-mingw-w64-i686* gcc-mingw-w64-x86-64* gfortran-mingw-w64* gfortran-mingw-w64-i686* gfortran-mingw-w64-x86-64* gnat-mingw-w64* gnat-mingw-w64-i686* gnat-mingw-w64-x86-64* gobjc++-mingw-w64* gobjc++-mingw-w64-i686* gobjc++-mingw-w64-x86-64* gobjc-mingw-w64* gobjc-mingw-w64-i686* gobjc-mingw-w64-x86-64* libgcc-s1* mingw-w64* gcc-mingw-w64-base
+sudo apt-get install g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64 gdb-mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev  mingw-w64-i686-dev mingw-ocaml gcc-mingw-w64-base binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 g++-mingw-w64-i686 g++-mingw-w64-x86-64 gcc-mingw-w64-i686 gcc-mingw-w64-x86-64  gcc-mingw-w64-base g++-mingw-w64 gcc-mingw-w64 binutils-mingw-w64 gdb-mingw-w64 gdb-mingw-w64-target gfortran-mingw-w64 gfortran-mingw-w64-i686 gfortran-mingw-w64-x86-64 gnat-mingw-w64 gnat-mingw-w64-i686 gnat-mingw-w64-x86-64 gobjc++-mingw-w64 gobjc++-mingw-w64-i686 gobjc++-mingw-w64-x86-64 gobjc-mingw-w64 gobjc-mingw-w64-i686 gobjc-mingw-w64-x86-64 mingw-w64 mingw-w64-common mingw-w64-i686-dev mingw-w64-tools mingw-w64-x86-64-dev libz-mingw-w64 libz-mingw-w64-dev libgcrypt-mingw-w64-dev ocaml-mingw-w64 ocaml-mingw-w64-x86-64 ocaml-mingw-w64-i686 g++-mingw-w64 gcc-mingw-w64 gfortran-mingw-w64 gnat-mingw-w64 gobjc++-mingw-w64 gobjc-mingw-w64 mingw-w64 gcc-mingw-w64
+
+
+
+
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 1
+sudo update-alternatives --config gcc
+sudo update-alternatives --config g++
+
+
+
+
+
+静态编译的qt程序无法运行
+$ QT_DEBUG_PLUGINS=1 ./HelloWorld 
+QFactoryLoader::QFactoryLoader() ignoring "org.qt-project.Qt.QPA.QPlatformIntegrationFactoryInterface.5.3" since plugins are disabled in static builds
+qt.qpa.plugin: Could not find the Qt platform plugin "xcb" in ""
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+Aborted (core dumped)
+
+sudo apt install xcb libqt5dxcb-plugin  qt5dxcb-plugin
+没有啥用
+
+cat /usr/lib/x86_64-linux-gnu/qt5/qt.conf
+/usr/lib/x86_64-linux-gnu/qt5/plugins
+
+sudo apt install libxkbcommon-dev
+sudo apt install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev
+
+
+
+
+office project
+安装openproj
+安装
+Download openproj from http://sourceforge.net/projects/openproj/ Yes, you can only download the rpm file. But you can also install it in Ubuntu via alien. sudo apt-get install alien sudo alien -i openproj.rpm
+错误
+Your Java vendor is "Oracle Corporation". To run OpenProj, you need the Sun Java implementation. The auto-detected Java Runtime used is..
+解决办法
+修改$HOME/.openproj/run.conf，将JAVA_OPTS="-Xms128m -Xmx768m"改为JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，
+[也可也修改/usr/bin/openproj脚本的
+run_openproj() {
+
+if [ "$LOG_LEVEL" ] && [ "x$LOG_LEVEL" = "xDEBUG" ]; then
+    "$JAVA_EXE" $JAVA_OPTS -Djava.vendor="Sun Microsystems Inc."  -jar "$OPENPROJ_HOME/openproj.jar" $ARGS > "$LOG_FILE"
+else
+    "$JAVA_EXE" $JAVA_OPTS -Djava.vendor="Sun Microsystems Inc."  -jar "$OPENPROJ_HOME/openproj.jar" $ARGS > /dev/null 2>&1
+fi
+}
+]
+
+sudo gedit /usr/bin/openproj
+在头部添加
+export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_291/
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JRE_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+
+我这里安装了jdk8,实际上也还是能用。
+
+
+不过呢，用wps的et，group功能也是个简单的project工具嘛
 
 
 
@@ -1265,10 +1550,52 @@ sudo dpkg -i makedeb_all_5.9.1-1.deb
 
 
 
+HDL opencv_gcc 报错 libpng12.so.0 => not found
+
+andreas@Vostro-5880:/opt/Xilinx/Vivado/2018.3/lnx64/tools/opencv/opencv_gcc
+$ ldd libopencv_highgui.so
+	linux-vdso.so.1 (0x00007fff3d908000)
+	libgtk3-nocsd.so.0 => /usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0 (0x00007f896412f000)
+	libopencv_core.so.2.4 (0x00007f8963cb5000)
+	libopencv_imgproc.so.2.4 (0x00007f89637c8000)
+	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f89635c4000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f89633a5000)
+	librt.so.1 => /lib/x86_64-linux-gnu/librt.so.1 (0x00007f896319d000)
+	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f8962f80000)
+	libjpeg.so.62 => /usr/lib/x86_64-linux-gnu/libjpeg.so.62 (0x00007f8962d5c000)
+	libpng12.so.0 => not found
+	libOpenCL.so.1 => /usr/local/cuda/targets/x86_64-linux/lib/libOpenCL.so.1 (0x00007f8962b55000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f89627b7000)
+	libstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f896242e000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f8962216000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f8961e25000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f896473b000)
+
+$ locate libpng12.so.0
+/opt/MATLAB/R2010b/bin/glnxa64/libpng12.so.0
+/opt/MATLAB/R2010b/bin/glnxa64/libpng12.so.0.39.0
+/opt/MATLAB/R2010b/toolbox/sl3d/orbisnap/bin/glnxa64/libpng12.so.0
+/opt/MATLAB/R2010b/toolbox/sl3d/orbisnap/bin/glnxa64/libpng12.so.0.39.0
+/opt/MATLAB/R2017b/bin/glnxa64/libpng12.so.0
+/opt/MATLAB/R2017b/bin/glnxa64/libpng12.so.0.39.0
+/opt/MATLAB/R2017b/toolbox/sl3d/orbisnap/bin/glnxa64/libpng12.so.0
+/opt/MATLAB/R2017b/toolbox/sl3d/orbisnap/bin/glnxa64/libpng12.so.0.39.0
+/opt/kingsoft/wps-office/office6/libpng12.so.0
+/opt/kingsoft/wps-office/office6/libpng12.so.0.50.0
+/opt/modelsim/modeltech/lib/libpng12.so.0
+/opt/modelsim/modeltech/lib/libpng12.so.0.50.0
+/opt/modelsim/modeltech/linux_x86_64/libpng12.so.0
+/opt/modelsim/modeltech/linux_x86_64/libpng12.so.0.50.0
+/opt/uex/bin/libpng12.so.0
+/opt/uex/bin/libpng12.so.0.46.0
+/opt/uex4/bin/libpng12.so.0
+/opt/uex4/bin/libpng12.so.0.46.0
 
 
+cp /opt/uex/bin/libpng12.so.0 .
+cp /opt/uex/bin/libpng12.so.0.46.0 .
 
-
+ok，反正可以用了
 
 
 
