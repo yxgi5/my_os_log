@@ -3994,8 +3994,7 @@ https://github.com/aur-archive
 
 
 python-sip-pyqt4 python-pyqt4 暂时不一致
-yay -S addinclude bitrock-unpacker chrpath cksfv debhelper dejagnu electron6 enchant1.6 extra-cmake-modules festival gnome-common gnu-netcat gperf gtksourceview guvcview-common ibus itstool jlink-systemview-target-src jq libgnomeprint libgnomeprintui libgtkhtml libmspack libpng lrs mallard-ducktype mkvtoolnix-cli ois opencl-nvidia perl-cpan-perl-releases perl-devel-patchperl perl-file-path-tiny perl-file-pushd perl-io-socket-socks perl-local-lib perl-lwp-protocol-socks perl-module-pluggable perl-uri-simple po-debconf po4a polymake postgresql python-apipkg python-certifi python-filelock python-iniconfig python-pluggy python-py python-tox python-virtualenv python2-nose python2-pillow python2-pyqt4 python2-pytest-timeout python2-werkzeug rarian setconf sip4 termcap wine wxgtk-common wxgtk2 xorg-util-macros xulrunner yelp-tools
-tclkit
+yay -S addinclude bitrock-unpacker chrpath cksfv debhelper dejagnu electron6 enchant1.6 extra-cmake-modules festival gnome-common gnu-netcat gperf gtksourceview guvcview-common ibus itstool jlink-systemview-target-src jq libgnomeprint libgnomeprintui libgtkhtml libmspack libpng lrs mallard-ducktype mkvtoolnix-cli ois opencl-nvidia perl-cpan-perl-releases perl-devel-patchperl perl-file-path-tiny perl-file-pushd perl-io-socket-socks perl-local-lib perl-lwp-protocol-socks perl-module-pluggable perl-uri-simple po-debconf po4a polymake postgresql python-apipkg python-certifi python-filelock python-iniconfig python-pluggy python-py python-tox python-virtualenv python2-nose python2-pillow python2-pyqt4 python2-pytest-timeout python2-werkzeug rarian setconf sip4 termcap wine wxgtk-common wxgtk2 xorg-util-macros xulrunner yelp-tools tclkit
 
 baidunetdisk是否替换为AUR的版本？ wine-wechat是否替换？
 base caja-image-converter geogebra perlbrew 
@@ -4124,9 +4123,20 @@ If you run into trouble with CUDA not being available, run nvidia-modprobe first
 
 yay -S rust lldb
 
+yay -S android-sdk android-studio genymotion android-emulator
+make sure to have this modules loaded: 
+	vboxdrv
+	vboxnetflt
+	vboxnetadp
+	vboxpci
+you can simply add them to /etc/modules-load.d/virtualbox.conf with this command:
+# echo -e "vboxdrv\nvboxnetflt\nvboxnetadp\nvboxpci" > /etc/modules-load.d/virtualbox.conf
 
+sudo chown -R andy:users /opt/android-studio
+sudo chown -R andy:users /opt/android-sdk
+sudo chown -R andy:users /opt/genymotion
 
-
+=====
 $ yay
 :: Synchronizing package databases...
  core is up to date
@@ -4178,7 +4188,7 @@ yay -S android-tools
 
 
 xterm 背景色现在默认是白色，volumeicon看起来很难看，修改背景色
-gedit ～/.config/volumeicon/volumeicon
+gedit ~/.config/volumeicon/volumeicon
 
 onclick=xterm -e 'alsamixer'
 修改为
@@ -4498,6 +4508,210 @@ unipkg
 echo "void main(){printf(\"hello world\n\");}" |gcc -x c - -o /tmp/hello;/tmp/hello
 
 
+
+
+
+
+
+
+=====
+$ yay
+:: Synchronizing package databases...
+ core is up to date
+ extra is up to date
+ community is up to date
+ multilib              149.9 KiB  2.57 MiB/s 00:00 [######################] 100%
+ archlinuxcn is up to date
+:: Starting full system upgrade...
+:: Replace gpicview-gtk3 with community/gpicview? [Y/n] y
+:: Replace jack with extra/jack2? [Y/n] y
+:: Replace libcanberra-pulse with extra/libcanberra? [Y/n] y
+:: Replace libgiac with community/giac? [Y/n] y
+:: Replace lxmusic-gtk3 with community/lxmusic? [Y/n] y
+:: Replace qca with extra/qca-qt5? [Y/n] y
+:: Replace sagemath-jupyter with community/sagemath? [Y/n] y
+:: Replace virtualbox-guest-dkms with community/virtualbox-guest-utils? [Y/n] y
+:: Replace virtualbox-guest-dkms with community/virtualbox-guest-utils-nox? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'libblocksruntime' from target list because it conflicts with 'libdispatch'
+error: unresolvable package conflicts detected
+error: failed to prepare transaction (conflicting dependencies)
+:: virtualbox-guest-utils and virtualbox-guest-utils-nox are in conflict
+error installing repo packages
+
+
+强制安装冲突的包
+sudo pacman -S gpicview --overwrite=*
+gpicview-gtk3-0.2.5-5 [removal]  gpicview-0.2.5-6
+
+sudo pacman -S jack2 --overwrite=*
+jack-0.125.0-9 [removal]  jack2-1.9.19-2
+Optional dependencies for jack2
+    a2jmidid: for ALSA MIDI to JACK MIDI bridging
+    libffado: for firewire support using FFADO
+    jack2-dbus: for dbus integration
+    realtime-privileges: for realtime privileges
+    zita-ajbridge: for using multiple ALSA devices
+
+
+sudo pacman -S libcanberra --overwrite=*
+looking for conflicting packages...
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing libcanberra (0.30+2+gc0620e4-5) breaks dependency 'libcanberra=0.30+2+gc0620e4-3' required by libcanberra-pulse
+
+sudo pacman -Rdd libcanberra-pulse
+
+sudo pacman -S giac --overwrite=*
+giac-1.7.0.21-1
+
+sudo pacman -S lxmusic --overwrite=*
+lxmusic-gtk3-0.4.7-3 [removal]  lxmusic-0.4.7-5
+
+sudo pacman -S qca-qt5 --overwrite=*
+qca-2.3.2-2 [removal]  qca-qt5-2.3.3-1
+
+sudo pacman -S sagemath --overwrite=*
+sagemath-jupyter-9.2-16 [removal]  sagemath-9.3-11
+New optional dependencies for sagemath
+    jupyter-jsmol: alternative 3D plot engine in the Jupyter notebook
+    sage-notebook-exporter: convert flask notebooks to Jupyter [installed]
+
+yay -S jupyter-jsmol
+
+yay -S virtualbox-guest-utils
+virtualbox-guest-dkms-6.1.20-1 [removal]  virtualbox-guest-utils-6.1.24-1
+
+yay -S virtualbox-guest-utils-nox
+virtualbox-guest-utils-6.1.24-1 [removal]  virtualbox-guest-utils-nox-6.1.24-1
+
+
+sudo pacman -S archlinuxcn-keyring
+yay -S libdispatch
+
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing alsa-lib (1.2.5.1-3) breaks dependency 'alsa-lib=1.2.4' required by lib32-alsa-lib
+:: installing expat (2.4.1-1) breaks dependency 'expat=2.3.0' required by lib32-expat
+:: installing libcap (2.51-1) breaks dependency 'libcap=2.49' required by lib32-libcap
+:: installing libelf (0.185-1) breaks dependency 'libelf=0.183' required by lib32-libelf
+:: installing libpcap (1.10.1-1) breaks dependency 'libpcap=1.10.0' required by lib32-libpcap
+:: installing perl (5.34.0-2) breaks dependency 'perl<5.33' required by perl-gtk2-unique
+error installing repo packages
+
+sudo pacman -Rdd perl-gtk2-unique
+sudo pacman -Rdd libgiac
+sudo pacman -Rdd lib32-alsa-lib
+sudo pacman -Rdd lib32-expat
+sudo pacman -Rdd lib32-libcap
+sudo pacman -Rdd lib32-libelf
+sudo pacman -Rdd lib32-libpcap
+
+error: failed to commit transaction (conflicting files)
+gcc10-libs: /usr/lib/gcc/x86_64-pc-linux-gnu/lib/libgcc_s.so exists in filesystem (owned by gcc6-gcj)
+gcc10-libs: /usr/lib/gcc/x86_64-pc-linux-gnu/lib/libgcc_s.so.1 exists in filesystem (owned by gcc6-gcj)
+texlive-core: /usr/bin/git-latexdiff exists in filesystem (owned by git-latexdiff)
+
+yay -Syu --overwrite=*
+
+/etc/pacman.d/mirrorlist installed as /etc/pacman.d/mirrorlist.pacnew
+/etc/pacman.conf installed as /etc/pacman.conf.pacnew
+
+MariaDB was updated to a new feature release. To update the data run:
+   systemctl restart mariadb.service && mariadb-upgrade -u root -p
+
+warning: /etc/pipewire/media-session.d/media-session.conf saved as /etc/pipewire/media-session.d/media-session.conf.pacsave
+warning: /etc/pipewire/media-session.d/alsa-monitor.conf saved as /etc/pipewire/media-session.d/alsa-monitor.conf.pacsave
+
+New optional dependencies for python-dulwich
+    python-fastimport: for fast-import support
+    python-gpgme: for PGP signature support
+    python-idna: for HTTPS support via urllib3 [installed]
+    python-pyinotify: to watch for changes to refs [installed]
+    python-pyopenssl: for HTTPS support via urllib3 [installed]
+    python-lxml: for GraphML XML format [installed]
+    python-pydot: for graph drawing and graph layout algorithms via GraphViz
+    python-yaml: for YAML format reading and writing [installed]
+    zeitgeist: Zeitgeist logging plugin
+    mlocate: locator filter [installed]
+    qt6-declarative: for QtGraphicalEffects [installed]
+    python-pyqt5-webengine: recommended for plugins [installed]
+    python-pygments: for pygmentex [installed]
+
+    
+qemu-ga.service was renamed to qemu-guest-agent.service
+You might want to switch to the new service name:
+# systemctl disable qemu-ga.service
+# systemctl enable qemu-guest-agent.service
+
+warning: /etc/ppp/pppoe.conf installed as /etc/ppp/pppoe.conf.pacnew
+>>> The kernel-mode plugin has a new place.
+>>> It's now located under /usr/lib/rp-pppoe/rp-pppoe.so
+>>> Change LINUX_PLUGIN to the new path in your /etc/ppp/pppoe.conf
+
+:: PGP keys need importing:
+ -> 3FEF9748469ADBE15DA7CA80AC2D62742012EA22, required by: 1password
+ -> 3059E09144F56804F0FBF4E126B40624BDBFD9F3, required by: palemoon
+ -> 3DAD8CD107197488D2A2A0BD40481E7B8FCF9CEC, required by: palemoon
+==> Import? [Y/n] y
+:: Importing keys with gpg...
+gpg: keyserver receive failed: No name
+problem importing keys
+
+gpg --keyserver keyserver.ubuntu.com --recv-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
+gpg --keyserver keyserver.ubuntu.com --recv-keys 3059E09144F56804F0FBF4E126B40624BDBFD9F3
+gpg --keyserver keyserver.ubuntu.com --recv-keys 3DAD8CD107197488D2A2A0BD40481E7B8FCF9CEC
+
+yay -S python-fastimport python-gpgme python-pydot
+sudo systemctl disable qemu-ga.service
+sudo systemctl enable qemu-guest-agent.service
+sudo gedit /etc/ppp/pppoe.conf
+
+sudo pacman -S lib32-alsa-lib
+sudo pacman -S lib32-expat
+sudo pacman -S lib32-libcap
+sudo pacman -S lib32-libelf
+sudo pacman -S lib32-libpcap
+
+yay -S python-zstandard gambas3-gb-compress
+
+yay -S stlink-git
+You may have to reload the usb-storage module.
+To do this use
+    modprobe -r usb-storage && modprobe usb-storage
+    
+    
+
+先配置好shadowsocks
+
+sudo gedit /etc/privoxy/config
+------
+listen-address  localhost:8118
+forward-socks5 / 127.0.0.1:1081 .
+------
+privoxy /etc/privoxy/config启动
+systemctl status privoxy.service
+sudo systemctl start privoxy.service
+sudo systemctl enable privoxy.service
+Created symlink /etc/systemd/system/multi-user.target.wants/privoxy.service → /usr/lib/systemd/system/privoxy.service.
+
+
+类似于这样
+aria2c --all-proxy='http://127.0.0.1:8118' -D
+
+
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+(可以添加到类似/etc/profile的地方去)
+
+测试
+curl www.google.com
+
+
+yay
+就可以加速了
+
+snapd
+makepkg --nocheck
 
 
 
