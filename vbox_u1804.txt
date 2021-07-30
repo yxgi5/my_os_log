@@ -1601,5 +1601,91 @@ ok，反正可以用了
 
 
 
+apt list --upgradable
+sudo apt upgrade
+报错
+$ sudo apt --fix-broken install
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Correcting dependencies... Done
+The following additional packages will be installed:
+  libegl-dev libgl-dev libglx-dev
+The following NEW packages will be installed:
+  libegl-dev libgl-dev libglx-dev
+0 upgraded, 3 newly installed, 0 to remove and 64 not upgraded.
+7 not fully installed or removed.
+Need to get 0 B/137 kB of archives.
+After this operation, 1,599 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+(Reading database ... 713247 files and directories currently installed.)
+Preparing to unpack .../libglx-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb ...
+Unpacking libglx-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+dpkg: error processing archive /var/cache/apt/archives/libglx-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb (--unpack):
+ trying to overwrite '/usr/include/GL/glx.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+Preparing to unpack .../libgl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb ...
+Unpacking libgl-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+dpkg: error processing archive /var/cache/apt/archives/libgl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb (--unpack):
+ trying to overwrite '/usr/include/GL/gl.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg-deb: error: paste subprocess was killed by signal (Broken pipe)
+Preparing to unpack .../libegl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb ...
+Unpacking libegl-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+dpkg: error processing archive /var/cache/apt/archives/libegl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb (--unpack):
+ trying to overwrite '/usr/include/EGL/egl.h', which is also in package libegl1-mesa-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+Errors were encountered while processing:
+ /var/cache/apt/archives/libglx-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb
+ /var/cache/apt/archives/libgl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb
+ /var/cache/apt/archives/libegl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+andreas@Vostro-5880:~
+$ sudo dpkg -i --force-all /var/cache/apt/archives/libglx-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb
+(Reading database ... 713247 files and directories currently installed.)
+Preparing to unpack .../libglx-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb ...
+Unpacking libglx-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/GL/glx.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/GL/glxext.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+Setting up libglx-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+andreas@Vostro-5880:~
+$ sudo dpkg -i --force-all /var/cache/apt/archives/libgl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb
+(Reading database ... 713254 files and directories currently installed.)
+Preparing to unpack .../libgl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb ...
+Unpacking libgl-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/GL/gl.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/GL/glcorearb.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/GL/glext.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/KHR/khrplatform.h', which is also in package mesa-common-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+Setting up libgl-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+andreas@Vostro-5880:~
+$ sudo dpkg -i --force-all /var/cache/apt/archives/libegl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb
+(Reading database ... 713261 files and directories currently installed.)
+Preparing to unpack .../libegl-dev_1.3.2-1~ubuntu0.18.04.1sav1_amd64.deb ...
+Unpacking libegl-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/EGL/egl.h', which is also in package libegl1-mesa-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/EGL/eglext.h', which is also in package libegl1-mesa-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/include/EGL/eglplatform.h', which is also in package libegl1-mesa-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/lib/x86_64-linux-gnu/pkgconfig/egl.pc', which is also in package libegl1-mesa-dev:amd64 20.0.8-0ubuntu1~18.04.1sav0
+Setting up libegl-dev:amd64 (1.3.2-1~ubuntu0.18.04.1sav1) ...
+
+sudo apt --fix-broken install
+sudo apt upgrade
+apt list --upgradable
+
+
+libfilezilla0
+libfilezilla13
+libhfstospell9 
+libhfstospell11
+
+
 
 
