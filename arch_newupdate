@@ -4497,9 +4497,9 @@ unipkg
 
 echo "void main(){printf(\"hello world\n\");}" |gcc -x c - -o /tmp/hello;/tmp/hello
 
-
-
-
+yay -S python-pydot python-olefile
+yay -S android-emulator --overwrite=*
+yay -Rdd signon-kwallet-extension kwallet
 
 
 
