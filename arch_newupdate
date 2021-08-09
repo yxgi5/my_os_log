@@ -4830,7 +4830,8 @@ sudo dkms autoinstall -k    （当前运行内核和更新后的不一致的，�
 或者明确指定内核版本
 sudo dkms autoinstall -k 5.13.9-arch1-1
 sudo udevadm control --reload-rules
-
+sudo modprobe -r tty0tty
+sudo modprobe tty0tty
 
 
 
