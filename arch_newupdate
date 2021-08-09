@@ -4811,8 +4811,8 @@ extundelete /dev/sdxx --restore-inode 13,14
 yay -S qt4-serialport
 
 
-
-
+yay -S tty0tty
+dkms install --no-depmod -m tty0tty -v git -k 5.13.9-arch1-1
 
 
 
