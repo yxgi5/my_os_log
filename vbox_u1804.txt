@@ -1686,6 +1686,78 @@ libfilezilla13
 libhfstospell9 
 libhfstospell11
 
+sudo apt-get install ufraw gimp-ufraw
 
+
+修复matlab2010b
+
+/opt/MATLAB/R2010b/bin/util/oscheck.sh
+ver=`/lib64/libc.so.6 | head -n 1 | sed -e "s/^[^0-9]*//" -e "s/[ ,].*$//"`
+==> ver=`getconf GNU_LIBC_VERSION | awk '{print $2}'`
+ver=`/lib/libc.so.6 | head -n 1 | sed -e "s/^[^0-9]*//" -e "s/[ ,].*$//"`
+==> ver=`getconf GNU_LIBC_VERSION | awk '{print $2}'`
+
+
+ldd /opt/MATLAB/R2010b/bin/glnxa64/MATLAB
+sudo apt install apt-file
+sudo apt update
+apt-file search libXp.so.6
+无
+https://askubuntu.com/questions/944838/libxp-so-6-missing-for-ubuntu-17-04
+可以用libXpm.so替代 sudo ln -s libXpm.so.4.11.0 libXp.so.6
+为了迁移可用，复制过来
+cp /usr/lib/x86_64-linux-gnu/libXpm.so.4.11.0 /opt/MATLAB/R2010b/bin/glnxa64/libXp.so.6
+成功修复
+
+
+
+编译产生 tty0tty-git_1.2.1-1_amd64.deb
+----------------------------------------------------
+# Maintainer: foo <foo(at)gmail(dot)com>
+# Contributor: bar <bar(at)gmai(dot)com>
+
+_pkgbase=tty0tty
+pkgname=tty0tty-git
+pkgver=1.2.1
+pkgrel=1
+pkgdesc="tty0tty Virtual Serial Cable (DKMS)"
+arch=('i686' 'x86_64')
+url="https://github.com/freemed/tty0tty"
+license=('GPL2/Apache2')
+depends=('dkms')
+conflicts=("${_pkgbase}")
+source=("git+https://github.com/freemed/tty0tty")
+sha256sums=("SKIP")
+
+build() {
+  cd ${_pkgbase}
+}
+
+package() {
+  # Install
+  msg2 "Copying DKMS module..."
+
+  # Copy dkms.conf
+  install -Dm644 "${_pkgbase}"/debian/tty0tty-dkms.dkms "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
+
+  # Set name and version
+  sed -e "s/\#MODULE_VERSION\#/${pkgver}/" \
+      -i "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
+
+  # Copy sources (including Makefile)
+  cp -r ${_pkgbase}/module/* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
+}
+------------------------------------------------------
+
+ls /usr/src/tty0tty-1.2.1/
+sudo dkms add -m tty0tty -v 1.2.1
+sudo dkms build -m tty0tty -v 1.2.1
+sudo dkms install -m tty0tty -v 1.2.1
+
+这个没有测试
+sudo dkms autoinstall
+
+
+sudo pip3.6 install libscrc -i https://mirrors.163.com/pypi/simple
 
 
