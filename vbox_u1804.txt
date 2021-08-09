@@ -1748,14 +1748,38 @@ package() {
   cp -r ${_pkgbase}/module/* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
 }
 ------------------------------------------------------
-
+更新内核模块的依赖
 ls /usr/src/tty0tty-1.2.1/
 sudo dkms add -m tty0tty -v 1.2.1
 sudo dkms build -m tty0tty -v 1.2.1
 sudo dkms install -m tty0tty -v 1.2.1
 
-这个没有测试
-sudo dkms autoinstall
+
+arch有/usr/share/libalpm/hooks/70-dkms-install.hook
+
+
+- 使dkms服务自动启动？？
+# systemctl enable dkms.service
+
+- 编译所有已经注册的模块？？
+# dkms install
+sudo dkms autoinstall -k      （看起来啥也没有输出）
+
+- 显示所有模块的状态，ok
+# dkms status
+
+- 移除一个内核模块
+# dkms remove -m XXXXX -v 331.49 --all
+# dkms remove XXXXX/331.49 --all
+
+
+更新内存盘镜像
+sudo update-initramfs -u
+
+
+DKMS注册和更新内核模块
+sudo dkms add -m tty0tty -v 1.2.1
+sudo /etc/kernel/postinst.d/dkms
 
 
 

@@ -4287,9 +4287,9 @@ yay libx32-glibc
 
 
 
-
+编译内核模块及生成内存盘镜像
 sudo mkinitcpio -p linux
-
+https://wiki.archlinux.org/title/Mkinitcpio_(简体中文)
 
 
 yay -R python2-incremental python2-twisted
@@ -4814,12 +4814,22 @@ yay -S qt4-serialport
 yay -S tty0tty
 dkms install --no-depmod -m tty0tty -v git -k 5.13.9-arch1-1
 
+sudo dkms autoinstall -k
+Error! Could not locate dkms.conf file.
+File: /var/lib/dkms/vboxguest/5.0.14/source/dkms.conf does not exist.
 
-
-
-
-
-
+$ for i in /var/lib/dkms/*/[^k]*/source; do [ -e "$i" ] || echo "$i";done
+/var/lib/dkms/vboxguest/5.0.14/source
+/var/lib/dkms/vboxhost/5.0.14/source
+其实已经用不着这个版本的东西，yay -Qo  /var/lib/dkms/vboxhost/5.0.14/source 都查询不到所属的包了
+删掉
+sudo rm -rf /var/lib/dkms/vboxhost/5.0.14/
+sudo rm /var/lib/dkms/vboxguest/ -rf
+再次运行
+sudo dkms autoinstall -k    （当前运行内核和更新后的不一致的，比如刚更新了内核，需要明确指定内核版本 ）
+或者明确指定内核版本
+sudo dkms autoinstall -k 5.13.9-arch1-1
+啥也没有提示。。。。
 
 
 
