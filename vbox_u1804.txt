@@ -1797,6 +1797,7 @@ sudo apt install libqt4-dbus libqt4-declarative libqt4-designer libqt4-dev libqt
 编译安装
 qt4-serialport_4.8.7-2_amd64
 
+PKGBUILD的Maintainer要符合 xx <yy@zz> 格式，最好是解包修改
 ----------------------------------------------------------------------
 # Maintainer: Berk Demirkır <berk at demirkir dot me>
 
