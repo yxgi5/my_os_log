@@ -4832,7 +4832,7 @@ sudo dkms autoinstall -k 5.13.9-arch1-1
 sudo udevadm control --reload-rules
 sudo modprobe -r tty0tty
 sudo modprobe tty0tty
-
+sudo chmod 666 /dev/tnt*
 
 
 
