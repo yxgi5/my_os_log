@@ -4760,6 +4760,61 @@ gcc6
 makepkg --nocheck
 
 
+//eclipse-java
+
+
+
+xsct在运行一些命令时候
+# Problematic frame:
+# C  [libstdc++.so.6+0x8e907]  std::_Hash_bytes(void const*, unsigned long, unsigned long)+0x37
+...
+
+
+yay -S jre
+
+把16的伪装成9
+/opt/Xilinx/Vitis/2020.1/tps/lnx64/jre9.0.4
+
+修改/opt/Xilinx/Vitis/2020.1/bin/unwrapped/lnx64.o/rdi_vitis
+--add-modules jdk.incubator.httpclient    OR      --add-modules java.net.http
+https://docs.oracle.com/en/java/javase/16/docs/api/jdk.incubator.foreign/module-summary.html
+https://docs.oracle.com/en/java/javase/16/docs/api/jdk.incubator.vector/module-summary.html
+jdk.incubator.vector     jdk.base
+jdk.incubator.foreign    jdk.base
+还是不行
+没办法
+
+大概结论是一些系统基础库依赖在arch上过于新的库会导致错误，没有分析出导致错误的关键。各种尝试失败
+不过也要说xilinx几个版本还在用java9这样的过渡版本，有点操蛋。
+arch神教反正是激进的环境，只能在使用上注意
+可以在目标workspace用vitis中的xsct来运行脚本，开其他的workspace没有用(xsct会莫名挂掉，pwd都不输出)
+
+
+
+
+
+
+extundelete
+df -lh
+umount /dev/partition 
+mount -o remount,ro /dev/partition
+extundelete /dev/sdxx --inode 2
+开始
+extundelete /dev/sdxx --inode xxx
+extundelete --restore-file pic.jpg /dev/sdxx
+extundelete /dev/sdxx --restore-inode 13,14
+文件位于当前目录下
+的RECOVERED_FILES/$filename
+
+
+
+yay -S qt4-serialport
+
+
+
+
+
+
 
 
 
