@@ -1687,5 +1687,10 @@ libhfstospell9
 libhfstospell11
 
 
+1604
+sudo apt install qt5-default qt5-doc libqt5serialport5 libqt5qml5 qmlscene libqt5serialport5-dev qt4-default qt4-doc qt4-dev-tools qt4-designer qt4-demos
+
+
+
 
 
