@@ -4829,7 +4829,7 @@ sudo rm /var/lib/dkms/vboxguest/ -rf
 sudo dkms autoinstall -k    （当前运行内核和更新后的不一致的，比如刚更新了内核，需要明确指定内核版本 ）
 或者明确指定内核版本
 sudo dkms autoinstall -k 5.13.9-arch1-1
-啥也没有提示。。。。
+sudo udevadm control --reload-rules
 
 
 
