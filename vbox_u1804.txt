@@ -1711,14 +1711,14 @@ cp /usr/lib/x86_64-linux-gnu/libXpm.so.4.11.0 /opt/MATLAB/R2010b/bin/glnxa64/lib
 
 
 
-编译产生 tty0tty-git_1.2.1-1_amd64.deb
+编译产生 tty0tty-git_xxx.deb
 ----------------------------------------------------
 # Maintainer: foo <foo(at)gmail(dot)com>
 # Contributor: bar <bar(at)gmai(dot)com>
 
 _pkgbase=tty0tty
 pkgname=tty0tty-git
-pkgver=1.2.1
+pkgver=1.2.r25.g5f8d18d
 pkgrel=1
 pkgdesc="tty0tty Virtual Serial Cable (DKMS)"
 arch=('i686' 'x86_64')
@@ -1726,8 +1726,18 @@ url="https://github.com/freemed/tty0tty"
 license=('GPL2/Apache2')
 depends=('dkms')
 conflicts=("${_pkgbase}")
-source=("git+https://github.com/freemed/tty0tty")
-sha256sums=("SKIP")
+source=("git+https://github.com/freemed/tty0tty"
+        "95-tty0tty.rules"
+        "tty0tty.conf"
+	"postinst"
+	"prerm"
+        )
+sha256sums=("SKIP" "SKIP" "SKIP" "SKIP" "SKIP")
+
+pkgver() {
+  cd ${_pkgbase}
+  git describe --tags | sed 's/-/.r/; s/-/./'
+}
 
 build() {
   cd ${_pkgbase}
@@ -1739,47 +1749,190 @@ package() {
 
   # Copy dkms.conf
   install -Dm644 "${_pkgbase}"/debian/tty0tty-dkms.dkms "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
+  install -Dm644 "${srcdir}/95-tty0tty.rules" -t "${pkgdir}/etc/udev/rules.d/"
+  install -Dm644 "${srcdir}/tty0tty.conf" -t "${pkgdir}/etc/modules-load.d/"
+  install -Dm644 "${_pkgbase}"/README -t "${pkgdir}/usr/share/doc/tty0tty/"
+  install -Dm755 "${srcdir}"/postinst -t "${pkgdir}/DEBIAN/"
+  install -Dm755 "${srcdir}"/prerm -t "${pkgdir}/DEBIAN/"
 
   # Set name and version
   sed -e "s/\#MODULE_VERSION\#/${pkgver}/" \
       -i "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
+  sed -e "s/\#MODULE_VERSION\#/${pkgver}/" \
+      -i "${pkgdir}"/DEBIAN/postinst
+  sed -e "s/\#MODULE_VERSION\#/${pkgver}/" \
+      -i "${pkgdir}"/DEBIAN/prerm
 
   # Copy sources (including Makefile)
   cp -r ${_pkgbase}/module/* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
 }
 ------------------------------------------------------
+
+下面是手动 添加、编译、删除 模块操作，上面添加了 postinst 和 prerm 脚本，制作出的包实际上就 不用 手动操作 (而 arch 就由pacman提供 post hook 来实现类似的功能 却不用在 制作arch包的时候提供， arch 大法好！ )
+
 更新内核模块的依赖
-ls /usr/src/tty0tty-1.2.1/
-sudo dkms add -m tty0tty -v 1.2.1
-sudo dkms build -m tty0tty -v 1.2.1
-sudo dkms install -m tty0tty -v 1.2.1
+ls /usr/src/tty0tty-1.2.r25.g5f8d18d/
+
+	$ sudo dkms add -m tty0tty -v 1.2.r25.g5f8d18d 
+
+	Creating symlink /var/lib/dkms/tty0tty/1.2.r25.g5f8d18d/source ->
+		         /usr/src/tty0tty-1.2.r25.g5f8d18d
+
+	DKMS: add completed.
+
+	$ sudo dkms build -m tty0tty -v 1.2.r25.g5f8d18d
+
+	Kernel preparation unnecessary for this kernel.  Skipping...
+
+	Building module:
+	cleaning build area...
+	make -j16 KERNELRELEASE=5.4.0-80-generic -C /lib/modules/5.4.0-80-generic/build M=/var/lib/dkms/tty0tty/1.2.r25.g5f8d18d/build...
+	Signing module:
+	 - /var/lib/dkms/tty0tty/1.2.r25.g5f8d18d/5.4.0-80-generic/x86_64/module/tty0tty.ko
+	Secure Boot not enabled on this system.
+	cleaning build area...
+
+	DKMS: build completed.
+
+
+- 编译所有已经注册的模块？？
+# dkms install
+//sudo dkms autoinstall -k      （看起来啥也没有输出）
+
+
+	$ sudo dkms install -m tty0tty -v 1.2.r25.g5f8d18d
+
+	tty0tty:
+	Running module version sanity check.
+	 - Original module
+	   - No original module exists within this kernel
+	 - Installation
+	   - Installing to /lib/modules/5.4.0-80-generic/updates/dkms/
+
+	depmod...
+
+	DKMS: install completed.
+
 
 
 arch有/usr/share/libalpm/hooks/70-dkms-install.hook
 
 
-- 使dkms服务自动启动？？
+- 使dkms服务自动启动？？没有，1804不存在这个玩意
 # systemctl enable dkms.service
 
-- 编译所有已经注册的模块？？
-# dkms install
-sudo dkms autoinstall -k      （看起来啥也没有输出）
+
 
 - 显示所有模块的状态，ok
 # dkms status
+	$ dkms status
+	nvidia, 460.32.03, 5.4.0-73-generic, x86_64: installed
+	nvidia, 460.32.03, 5.4.0-74-generic, x86_64: installed
+	nvidia, 460.32.03, 5.4.0-77-generic, x86_64: installed
+	nvidia, 460.32.03, 5.4.0-80-generic, x86_64: installed
+	tty0tty, 1.2.r25.g5f8d18d, 5.4.0-80-generic, x86_64: installed
+
 
 - 移除一个内核模块
 # dkms remove -m XXXXX -v 331.49 --all
 # dkms remove XXXXX/331.49 --all
+	$ sudo dkms remove -m tty0tty -v 1.2.r25.g5f8d18d --all
 
+	-------- Uninstall Beginning --------
+	Module:  tty0tty
+	Version: 1.2.r25.g5f8d18d
+	Kernel:  5.4.0-80-generic (x86_64)
+	-------------------------------------
 
-更新内存盘镜像
-sudo update-initramfs -u
+	Status: Before uninstall, this module version was ACTIVE on this kernel.
+
+	tty0tty.ko:
+	 - Uninstallation
+	   - Deleting from: /lib/modules/5.4.0-80-generic/updates/dkms/
+	 - Original module
+	   - No original module was found for this module on this kernel.
+	   - Use the dkms install command to reinstall any previous module version.
+
+	depmod...
+
+	DKMS: uninstall completed.
+
+	------------------------------
+	Deleting module version: 1.2.r25.g5f8d18d
+	completely from the DKMS tree.
+	------------------------------
+	Done.
+
+- 查看有关文件
+ls -l /var/lib/dkms/tty0tty/1.2.r25.g5f8d18d
+ls /lib/modules/5.4.0-80-generic/updates/dkms/
+ls /var/lib/dkms/tty0tty/1.2.r25.g5f8d18d/5.4.0-80-generic/x86_64/module/
 
 
 DKMS注册和更新内核模块
 sudo dkms add -m tty0tty -v 1.2.1
 sudo /etc/kernel/postinst.d/dkms
+==
+sudo /usr/lib/dkms/dkms_autoinstaller start $(uname -r)
+
+更新dkms模块(借鉴其他deb的postinst脚本)
+	$ sudo /usr/lib/dkms/common.postinst tty0tty 1.2.r25.g5f8d18d
+	Removing old tty0tty-1.2.r25.g5f8d18d DKMS files...
+
+	-------- Uninstall Beginning --------
+	Module:  tty0tty
+	Version: 1.2.r25.g5f8d18d
+	Kernel:  5.4.0-80-generic (x86_64)
+	-------------------------------------
+
+	Status: Before uninstall, this module version was ACTIVE on this kernel.
+
+	tty0tty.ko:
+	 - Uninstallation
+	   - Deleting from: /lib/modules/5.4.0-80-generic/updates/dkms/
+	 - Original module
+	   - No original module was found for this module on this kernel.
+	   - Use the dkms install command to reinstall any previous module version.
+
+	depmod...
+
+	DKMS: uninstall completed.
+
+	------------------------------
+	Deleting module version: 1.2.r25.g5f8d18d
+	completely from the DKMS tree.
+	------------------------------
+	Done.
+	Loading new tty0tty-1.2.r25.g5f8d18d DKMS files...
+	Building for 5.4.0-80-generic
+	Building initial module for 5.4.0-80-generic
+	Secure Boot not enabled on this system.
+	Done.
+
+	tty0tty:
+	Running module version sanity check.
+	 - Original module
+	   - No original module exists within this kernel
+	 - Installation
+	   - Installing to /lib/modules/5.4.0-80-generic/updates/dkms/
+
+	depmod...
+
+	DKMS: install completed.
+
+
+
+
+
+更新内存盘镜像
+$ sudo update-initramfs -u
+update-initramfs: Generating /boot/initrd.img-5.4.0-80-generic
+
+
+
+
+
+
 
 
 
