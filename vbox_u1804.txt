@@ -1993,25 +1993,225 @@ makedeb
 
 
 
+sudo apt install mono-runtime
+sudo apt install mono-complete
+http://dl.winehq.org/wine/wine-mono/4.9.4/wine-mono-4.9.4.msi
+http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86_64.msi
+放到/home/ubuntu1804/.wine/的目录下面执行安装
+wine   msiexec /i  wine-mono-4.9.4.msi
+wine   msiexec /i  wine_gecko-2.47-x86_64.msi
+wine   start /i  wine-mono-4.9.4.msi
+wine   start /i  wine_gecko-2.47-x86_64.msi
+都不成啊
+
+sudo add-apt-repository ppa:ubuntu-wine/ppa
+无效了呀
+
+wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+sudo apt update
+
+https://wiki.winehq.org/Mono
+https://wiki.winehq.org/Gecko
+http://mirrors.ustc.edu.cn/wine/wine/wine-mono/
+http://mirrors.ustc.edu.cn/wine/wine/wine-gecko/
+https://dl.winehq.org/wine/wine-gecko/2.47/
+https://dl.winehq.org/wine/wine-mono/
+
+sudo apt-get  install wine
+sudo apt-get  install winehq-staging
+
+$ sudo apt remove wine64 wine-stable wine1.6 wine-development winetricks
+
+$ sudo aptitude install winehq-staging
+The following NEW packages will be installed:
+  glib-networking:i386{a} i965-va-driver:i386{a} libatk-bridge2.0-0:i386{a} libatk1.0-0:i386{a} libatspi2.0-0:i386{a} libcairo-gobject2:i386{a} libcolord2:i386{a} libdatrie1:i386{a} libepoxy0:i386{a} 
+  libgdk-pixbuf2.0-0:i386{a} libgraphite2-3:i386{a} libgtk-3-0:i386{a} libharfbuzz0b:i386{a} libjson-glib-1.0-0:i386{a} libpango-1.0-0:i386{a} libpangocairo-1.0-0:i386{a} libpangoft2-1.0-0:i386{a} 
+  libproxy1v5:i386{a} librest-0.7-0:i386{a} libsdl2-2.0-0:i386{a} libsoup-gnome2.4-1:i386{a} libsoup2.4-1:i386{a} libthai0:i386{a} libva-drm2:i386{a} libva-x11-2:i386{a} libva2:i386{a} 
+  libwayland-client0:i386{a} libwayland-cursor0:i386{a} libwayland-egl1:i386{a} libxcb-xfixes0:i386{a} libxkbcommon0:i386{a} libxss1:i386{a} mesa-va-drivers:i386{a} va-driver-all:i386{a} wine-staging{a} 
+  wine-staging-amd64{a} wine-staging-i386:i386{ab} winehq-staging 
+The following packages will be REMOVED:
+  fuseiso{u} libwine{u} libwine-development{u} libwine-development:i386{u} wine32-development:i386{u} wine64-development{u} 
+
+
+$ sudo apt remove fuseiso libwine-development libwine-development:i386 wine32-development:i386 wine64-development libwine
+
+
+
+wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/amd64/libfaudio0_19.07-0~bionic_amd64.deb
+$ sudo dpkg -i libfaudio0_19.07-0_bionic_amd64.deb
+wget https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/i386/libfaudio0_19.07-0~bionic_i386.deb
+$ sudo dpkg -i libfaudio0_19.07-0_bionic_i386.deb 
+$ sudo apt install -f
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Correcting dependencies... Done
+The following packages were automatically installed and are no longer required:
+  libcapi20-3 libosmesa6
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libegl-mesa0:i386 libegl1:i386 libgbm1:i386 libsdl2-2.0-0:i386
+  libwayland-client0:i386 libwayland-cursor0:i386 libwayland-egl1:i386
+  libwayland-egl1-mesa:i386 libwayland-server0:i386 libxcb-xfixes0:i386
+  libxkbcommon0:i386 libxss1:i386
+The following NEW packages will be installed:
+  libegl-mesa0:i386 libegl1:i386 libgbm1:i386 libsdl2-2.0-0:i386
+  libwayland-client0:i386 libwayland-cursor0:i386 libwayland-egl1:i386
+  libwayland-egl1-mesa:i386 libwayland-server0:i386 libxcb-xfixes0:i386
+  libxkbcommon0:i386 libxss1:i386
+0 upgraded, 12 newly installed, 0 to remove and 9 not upgraded.
+
+$ sudo aptitude install winehq-staging
+The following NEW packages will be installed:
+  glib-networking:i386{a} i965-va-driver:i386{a} libatk-bridge2.0-0:i386{a} libatk1.0-0:i386{a} libatspi2.0-0:i386{a} libcairo-gobject2:i386{a} libcolord2:i386{a} libdatrie1:i386{a} libepoxy0:i386{a} 
+  libgdk-pixbuf2.0-0:i386{a} libgraphite2-3:i386{a} libgtk-3-0:i386{a} libharfbuzz0b:i386{a} libjson-glib-1.0-0:i386{a} libpango-1.0-0:i386{a} libpangocairo-1.0-0:i386{a} libpangoft2-1.0-0:i386{a} 
+  libproxy1v5:i386{a} librest-0.7-0:i386{a} libsoup-gnome2.4-1:i386{a} libsoup2.4-1:i386{a} libthai0:i386{a} libva-drm2:i386{a} libva-x11-2:i386{a} libva2:i386{a} mesa-va-drivers:i386{a} 
+  va-driver-all:i386{a} wine-staging{a} wine-staging-amd64{a} wine-staging-i386:i386{a} winehq-staging 
+0 packages upgraded, 31 newly installed, 0 to remove and 9 not upgraded.
+
+
+$ sudo apt install winetricks
+The following NEW packages will be installed:
+  fuseiso winetricks
+
+$ sudo apt install mono-runtime
+$ sudo apt install mono-complete
 
 
 
 
 
+emulator: ERROR: unknown skin name 'nexus_10'
+/opt/android-sdk/emulator/emulator -list-avds
+/opt/android-sdk/emulator/emulator -avd Nexus_10_API_22
+cd ~/.android/avd/Nexus_10_API_22.avd/
+gedit config.ini
+
+
+ioctl(KVM_CREATE_VM) failed: 16 Device or resource busy
+rm /home/andreas/.android/avd/Nexus_10_API_22.avd/*.lock
+
+$ /opt/android-sdk/emulator/emulator -avd Nexus_10_API_22
+emulator: Android emulator version 30.7.5.0 (build_id 7491168) (CL:N/A)
+emulator: WARNING: encryption is off
+handleCpuAcceleration: feature check for hvf
+cannot add library /opt/android-sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so: failed
+added library /opt/android-sdk/emulator/lib64/vulkan/libvulkan.so
+ioctl(KVM_CREATE_VM) failed: 16 Device or resource busy
+qemu-system-i386: failed to initialize KVM: Device or resource busy
+
+
+sudo apt install libvulkan1 mesa-vulkan-drivers vulkan-utils
+sudo apt install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
+sudo kvm-ok
+折腾啥，新建一个最好了哇
+
+$ /opt/android-sdk/emulator/emulator -avd Nexus_10_API_22 -verbose -qemu -serial /dev/tnt0
+$ /opt/android-sdk/platform-tools/adb devices
+List of devices attached
+emulator-5554	device
+
+$ /opt/android-sdk/platform-tools/adb -s emulator-5554 shell
+root@generic_x86:/ # ls /dev/tty* -l
+
+经测试是/dev/ttyS1被映射出来到host的/dev/tnt0
 
 
 
 
 
+https://download-cdn.jetbrains.com/cpp/CLion-2021.2.tar.gz
+https://download-cdn.jetbrains.com/idea/ideaIU-2021.2.tar.gz
+sudo apt install netbeans
+sudo apt install eclipse-platform
+The following additional packages will be installed:
+  eclipse-jdt eclipse-pde eclipse-platform-data eclipse-rcp fastjar jarwrapper
+  libasm3-java libcommons-dbcp-java libcommons-httpclient-java
+  libcommons-pool-java libdb-java libdb-je-java libdb5.3-java
+  libdb5.3-java-jni libeasymock-java libecj-java
+  libfelix-bundlerepository-java libfelix-gogo-command-java
+  libfelix-gogo-shell-java libfelix-shell-java libfelix-utils-java
+  libicu4j-4.2-java libicu4j-49-java libjavascriptcoregtk-1.0-0 libjetty9-java
+  libjline-java libjtidy-java liblucene2-java libswt-cairo-gtk-3-jni
+  libswt-glx-gtk-3-jni libswt-gtk-3-java libswt-gtk-3-jni
+  libswt-webkit-gtk-3-jni libtomcat8-java libwebkitgtk-1.0-0 sat4j
+Suggested packages:
+  eclipse libcommons-dbcp-java-doc libcommons-httpclient-java-doc
+  libeasymock-java-doc ecj libfelix-bundlerepository-java-doc
+  libfelix-gogo-command-java-doc libfelix-gogo-shell-java-doc
+  libfelix-shell-java-doc libfelix-utils-java-doc jetty9 libjline-java-doc
+  libjtidy-java-doc tomcat8
+Recommended packages:
+  libswt-gnome-gtk-3-jni
+The following NEW packages will be installed:
+  eclipse-jdt eclipse-pde eclipse-platform eclipse-platform-data eclipse-rcp
+  fastjar jarwrapper libasm3-java libcommons-dbcp-java
+  libcommons-httpclient-java libcommons-pool-java libdb-java libdb-je-java
+  libdb5.3-java libdb5.3-java-jni libeasymock-java libecj-java
+  libfelix-bundlerepository-java libfelix-gogo-command-java
+  libfelix-gogo-shell-java libfelix-shell-java libfelix-utils-java
+  libicu4j-4.2-java libicu4j-49-java libjavascriptcoregtk-1.0-0 libjetty9-java
+  libjline-java libjtidy-java liblucene2-java libswt-cairo-gtk-3-jni
+  libswt-glx-gtk-3-jni libswt-gtk-3-java libswt-gtk-3-jni
+  libswt-webkit-gtk-3-jni libtomcat8-java libwebkitgtk-1.0-0 sat4j
+0 upgraded, 37 newly installed, 0 to remove and 9 not upgraded.
+sudo apt install eclipse
+这个eclipse不能运行啊
+
+sudo apt purge eclipse*
+sudo apt purge eclipse-platform*
+The following packages were automatically installed and are no longer required:
+  eclipse-rcp fastjar jarwrapper libasm3-java libcommons-httpclient-java
+  libdb-java libdb-je-java libdb5.3-java libdb5.3-java-jni libeasymock-java
+  libfelix-bundlerepository-java libfelix-gogo-command-java
+  libfelix-gogo-shell-java libfelix-shell-java libfelix-utils-java
+  libicu4j-4.2-java libicu4j-49-java libjavascriptcoregtk-1.0-0 libjline-java
+  libjtidy-java liblucene2-java libswt-cairo-gtk-3-jni libswt-glx-gtk-3-jni
+  libswt-gtk-3-java libswt-gtk-3-jni libswt-webkit-gtk-3-jni
+  libwebkitgtk-1.0-0 sat4j
+
+
+$ sudo apt install eclipse
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  eclipse-jdt eclipse-pde eclipse-platform eclipse-platform-data
+The following NEW packages will be installed:
+  eclipse eclipse-jdt eclipse-pde eclipse-platform eclipse-platform-data
+0 upgraded, 5 newly installed, 0 to remove and 9 not upgraded.
+
+$ sudo apt purge eclipse
+$ sudo apt purge eclipse-platform
+$ sudo apt autoremove
+
+java版本全部替换成8
+eclipse-jee-neon-3-linux-gtk-x86_64.tar.gz还是可以运行的
+https://ftp.jaist.ac.jp/pub/eclipse/technology/epp/downloads/release/neon/3/eclipse-jee-neon-3-linux-gtk-x86_64.tar.gz
 
 
 
+https://cdn.mysql.com/archives/mysql-workbench/mysql-workbench-community_8.0.20-1ubuntu18.04_amd64.deb
+sudo dpkg -i mysql-workbench-community_8.0.20-1ubuntu18.04_amd64.deb
+
+
+https://ftp.jaist.ac.jp/pub/eclipse/technology/epp/downloads/release/neon/3/eclipse-jee-neon-3-linux-gtk-x86_64.tar.gz
+https://ftp.jaist.ac.jp/pub/eclipse/technology/epp/downloads/release/2021-06/R/eclipse-jee-2021-06-R-linux-gtk-x86_64.tar.gz
 
 
 
-
-
-
+jetbrains全家桶
+https://download-cdn.jetbrains.com/idea/ideaIU-2021.2.tar.gz
+https://download-cdn.jetbrains.com/cpp/CLion-2021.2.tar.gz
+https://download-cdn.jetbrains.com/datagrip/datagrip-2021.2.tar.gz
+https://download-cdn.jetbrains.com/go/goland-2021.2.tar.gz
+https://download-cdn.jetbrains.com/ruby/RubyMine-2021.2.tar.gz
+https://download-cdn.jetbrains.com/rider/JetBrains.Rider-2021.2.tar.gz
+https://download-cdn.jetbrains.com/webstorm/WebStorm-2021.2.tar.gz
+https://download-cdn.jetbrains.com/webide/PhpStorm-2021.2.tar.gz
+https://download-cdn.jetbrains.com/python/pycharm-professional-2021.2.tar.gz
+https://download-cdn.jetbrains.com/objc/AppCode-2021.2.dmg
 
 
 
