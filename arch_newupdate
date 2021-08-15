@@ -4836,15 +4836,9 @@ sudo chmod 666 /dev/tnt*
 
 
 
-
-
-
-
-
-
-
-
-
+yay -S intellij-idea-ultimate-edition clion datagrip goland rubymine rider webstorm phpstorm
+yay -S intellij-idea-ultimate-edition-jre clion-cmake clion-jre clion-gdb clion-lldb biicode swift-language goland-jre webstorm-jre
+yay -S mysql-workbench
 
 
 
