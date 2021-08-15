@@ -51,7 +51,7 @@ $ sudo pacman-key -r 5F702428F70E0903
 就可以搞定
 
 
-sudo gedit //etc/locale.conf
+sudo gedit /etc/locale.conf
 LANG=en_US.UTF-8
 sudo gedit /etc/locale
 sudo gedit /etc/locale.gen
@@ -3689,7 +3689,7 @@ pacman-key --populate archlinuxcn
 
 
 
-
+重新打包，提取
 yay repacman2
 repacman -h
 
@@ -4842,7 +4842,73 @@ yay -S mysql-workbench
 
 
 
+xulrunner编译依赖引入了已安装版本的库引用，会造成错误，先删已经安装的包
+ldconfig -p | grep libicui18n.so
+yay -Rdd xulrunner
+makepkg
 
+swift-language
+------------------------
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:30: error: no member named 'numeric_limits' in namespace 'std'
+  static const T kmax = std::numeric_limits<T>::max();
+                        ~~~~~^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:45: error: 'T' does not refer to a value
+  static const T kmax = std::numeric_limits<T>::max();
+                                            ^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:8:20: note: declared here
+template <typename T>
+                   ^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:47: error: no member named 'max' in the global namespace; did you mean 'kmax'?
+  static const T kmax = std::numeric_limits<T>::max();
+                                              ^~~~~
+                                              kmax
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:18: note: 'kmax' declared here
+  static const T kmax = std::numeric_limits<T>::max();
+                 ^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:18: error: default initialization of an object of const type 'const long'
+  static const T kmax = std::numeric_limits<T>::max();
+                 ^
+                      = 0
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.cc:270:3: note: in instantiation of function template specialization 'AddRange<long>' requested here
+  AddRange(&arglist, start, limit, range_multiplier_);
+  ^
+In file included from /home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.cc:15:
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:18: error: default initialization of an object of const type 'const int'
+  static const T kmax = std::numeric_limits<T>::max();
+                 ^
+                      = 0
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.cc:417:3: note: in instantiation of function template specialization 'AddRange<int>' requested here
+  AddRange(&thread_counts_, min_threads, max_threads, 2);
+  ^
+5 errors generated.
+
+---------------------
+#include <limits>
+
+
+add CXXFLAGS option to /etc/makepkg.conf
+-include /usr/include/c++/11*/limits
+好像解决不了
+
+
+
+
+
+
+
+
+
+
+
+修复wine打开路径乱码问题
+
+检查LC_ALL="zh_CN.UTF-8"
+sudo gedit /etc/locale.conf
+sudo gedit /etc/locale.gen
+这里如果升级可能覆盖掉zh_CN.UTF-8，重新打开
+sudo locale-gen
+随便找一个中文路径或者中文名的pdf来实验
+LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" wine start /ProgIDOpen FoxitReader.Document "$PWD/疯狂Android讲义(第4版)_ISBN9787121360091.pdf"
 
 
 
