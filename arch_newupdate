@@ -4835,10 +4835,32 @@ sudo modprobe tty0tty
 sudo chmod 666 /dev/tnt*
 
 
+sudo gedit /etc/modules-load.d/tty0tty.conf
+------------------
+tty0tty
+------------------
+#sudo gedit /etc/udev/rules.d/95-tty0tty.rules
+sudo gedit /usr/lib/udev/rules.d/95-tty0tty.rules
+------------------
+KERNEL=="tnt[0-7]", SUBSYSTEM=="tty", GROUP="uucp", MODE="0660"
+------------------
+sudo udevadm control --reload-rules
+
+
+
+
+
+
+
+jetbrains全家桶
 
 yay -S intellij-idea-ultimate-edition clion datagrip goland rubymine rider webstorm phpstorm
 yay -S intellij-idea-ultimate-edition-jre clion-cmake clion-jre clion-gdb clion-lldb biicode swift-language goland-jre webstorm-jre
 yay -S mysql-workbench
+
+rubymine是jetbrains-rubymine运行
+
+
 
 
 
@@ -4883,13 +4905,18 @@ In file included from /home/andy/.cache/yay/swift-language/src/llvm-project/llvm
 5 errors generated.
 
 ---------------------
-#include <limits>
-
 
 add CXXFLAGS option to /etc/makepkg.conf
 -include /usr/include/c++/11*/limits
 好像解决不了
 
+～/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h
+添加
+#include <limits>
+
+其实下载编译好的就可以
+https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.03.25.a.r463.g54a0e1901d4-1-x86_64.pkg.tar.zst
+https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-5.4-1-x86_64.pkg.tar.zst
 
 
 
@@ -4909,6 +4936,19 @@ sudo gedit /etc/locale.gen
 sudo locale-gen
 随便找一个中文路径或者中文名的pdf来实验
 LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" wine start /ProgIDOpen FoxitReader.Document "$PWD/疯狂Android讲义(第4版)_ISBN9787121360091.pdf"
+
+
+
+
+
+
+
+
+
+yay -S virtualbox virtualbox-ext-vnc virtualbox-guest-iso virtualbox-ext-oracle virtualbox-host-dkms
+// virtualbox-host-modules-arch
+dkms install --no-depmod -m vboxhost -v 6.1.26_OSE -k
+
 
 
 
