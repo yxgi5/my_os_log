@@ -4917,7 +4917,8 @@ add CXXFLAGS option to /etc/makepkg.conf
 其实下载编译好的就可以
 https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.03.25.a.r463.g54a0e1901d4-1-x86_64.pkg.tar.zst
 https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-5.4-1-x86_64.pkg.tar.zst
-
+https://github.com/ProfFan/swift-aur/releases
+https://github.com/ProfFan/swift-aur/releases/download/swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274/swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274.g038af80a880-1-x86_64.pkg.tar.zst
 
 
 
