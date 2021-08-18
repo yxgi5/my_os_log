@@ -4920,9 +4920,11 @@ https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-5.
 https://github.com/ProfFan/swift-aur/releases
 https://github.com/ProfFan/swift-aur/releases/download/swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274/swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274.g038af80a880-1-x86_64.pkg.tar.zst
 
-
-
-
+也可以打包这个
+yay -S swift-bin
+yay -S patchelf
+修改PKGBUILD，python36修改成python
+https://swift.org/builds/swift-5.4.2-release/centos8/swift-5.4.2-RELEASE/swift-5.4.2-RELEASE-centos8.tar.gz
 
 
 
@@ -4949,6 +4951,36 @@ LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" wine start /ProgIDOpen FoxitReader.Docum
 yay -S virtualbox virtualbox-ext-vnc virtualbox-guest-iso virtualbox-ext-oracle virtualbox-host-dkms
 // virtualbox-host-modules-arch
 dkms install --no-depmod -m vboxhost -v 6.1.26_OSE -k
+
+
+
+yay -S python-latexcodec
+
+
+
+clion安装swift plugin，然后设置swift path，
+https://youtrack.jetbrains.com/issue/CPP-19371
+https://caelis.medium.com/install-and-configure-swift-on-arch-linux-for-clion-ee72908bc105
+应该这样
+mkdir ~/Swift
+cd ~/Swift
+ln -s /usr/lib/swift-git usr
+
+clion的settings->swift path: ~/Swift
+ldd /home/andy/Swift/usr/bin/swift-package
+	libicuuc.so.68 => not found
+	libicuuc.so.68 => not found
+	libicui18n.so.68 => not found
+一个主意是把69的改名成68放到/home/andy/Swift/usr/lib之类的地方
+干脆这样，更新为
+swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274.g038af80a880-1-x86_64.pkg.tar.zst
+就ok了
+
+编译
+～/.cache/yay/swift-language-git
+makepkg --nocheck
+然后在install阶段之前把pkg目录的权限修改为777，否则报错，无法生成安装包
+
 
 
 
