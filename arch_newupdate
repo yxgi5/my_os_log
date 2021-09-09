@@ -51,7 +51,7 @@ $ sudo pacman-key -r 5F702428F70E0903
 就可以搞定
 
 
-sudo gedit //etc/locale.conf
+sudo gedit /etc/locale.conf
 LANG=en_US.UTF-8
 sudo gedit /etc/locale
 sudo gedit /etc/locale.gen
@@ -4844,14 +4844,15 @@ yay -S mysql-workbench
 
 
 
+makepkg有关key缺失问题
+gpg --keyserver keyserver.ubuntu.com --recv-keys 3AB00996FC26A641
+gpg --keyserver keyserver.ubuntu.com --recv-keys F3691687D867B81B51CE07D9BBE43771487328A9
+gpg --keyserver keyserver.ubuntu.com --recv-keys 86CFFCA918CF3AF47147588051E8B148A9999C34
+yay -U gcc6 gcc6-fortran gcc6-gcj gcc6-libs gcc8 gcc8-fortran gcc8-libs gcc9 gcc9-fortran gcc9-libs
 
 
 
-
-
-
-
-
+yay -S qt6-doc qt6-examples qt6-translations
 
 
 
