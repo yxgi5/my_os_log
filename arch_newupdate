@@ -3689,7 +3689,7 @@ pacman-key --populate archlinuxcn
 
 
 
-
+重新打包，提取
 yay repacman2
 repacman -h
 
@@ -4835,12 +4835,151 @@ sudo modprobe tty0tty
 sudo chmod 666 /dev/tnt*
 
 
+sudo gedit /etc/modules-load.d/tty0tty.conf
+------------------
+tty0tty
+------------------
+#sudo gedit /etc/udev/rules.d/95-tty0tty.rules
+sudo gedit /usr/lib/udev/rules.d/95-tty0tty.rules
+------------------
+KERNEL=="tnt[0-7]", SUBSYSTEM=="tty", GROUP="uucp", MODE="0660"
+------------------
+sudo udevadm control --reload-rules
+
+
+
+
+
+
+
+jetbrains全家桶
 
 yay -S intellij-idea-ultimate-edition clion datagrip goland rubymine rider webstorm phpstorm
 yay -S intellij-idea-ultimate-edition-jre clion-cmake clion-jre clion-gdb clion-lldb biicode swift-language goland-jre webstorm-jre
 yay -S mysql-workbench
 
+rubymine是jetbrains-rubymine运行
 
+
+
+
+
+xulrunner编译依赖引入了已安装版本的库引用，会造成错误，先删已经安装的包
+ldconfig -p | grep libicui18n.so
+yay -Rdd xulrunner
+makepkg
+
+swift-language
+------------------------
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:30: error: no member named 'numeric_limits' in namespace 'std'
+  static const T kmax = std::numeric_limits<T>::max();
+                        ~~~~~^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:45: error: 'T' does not refer to a value
+  static const T kmax = std::numeric_limits<T>::max();
+                                            ^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:8:20: note: declared here
+template <typename T>
+                   ^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:47: error: no member named 'max' in the global namespace; did you mean 'kmax'?
+  static const T kmax = std::numeric_limits<T>::max();
+                                              ^~~~~
+                                              kmax
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:18: note: 'kmax' declared here
+  static const T kmax = std::numeric_limits<T>::max();
+                 ^
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:18: error: default initialization of an object of const type 'const long'
+  static const T kmax = std::numeric_limits<T>::max();
+                 ^
+                      = 0
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.cc:270:3: note: in instantiation of function template specialization 'AddRange<long>' requested here
+  AddRange(&arglist, start, limit, range_multiplier_);
+  ^
+In file included from /home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.cc:15:
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h:17:18: error: default initialization of an object of const type 'const int'
+  static const T kmax = std::numeric_limits<T>::max();
+                 ^
+                      = 0
+/home/andy/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.cc:417:3: note: in instantiation of function template specialization 'AddRange<int>' requested here
+  AddRange(&thread_counts_, min_threads, max_threads, 2);
+  ^
+5 errors generated.
+
+---------------------
+
+add CXXFLAGS option to /etc/makepkg.conf
+-include /usr/include/c++/11*/limits
+好像解决不了
+
+～/.cache/yay/swift-language/src/llvm-project/llvm/utils/benchmark/src/benchmark_register.h
+添加
+#include <limits>
+
+其实下载编译好的就可以
+https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.03.25.a.r463.g54a0e1901d4-1-x86_64.pkg.tar.zst
+https://github.com/soloturn/swift-aur/releases/download/latest/swift-language-5.4-1-x86_64.pkg.tar.zst
+https://github.com/ProfFan/swift-aur/releases
+https://github.com/ProfFan/swift-aur/releases/download/swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274/swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274.g038af80a880-1-x86_64.pkg.tar.zst
+
+也可以打包这个
+yay -S swift-bin
+yay -S patchelf
+修改PKGBUILD，python36修改成python
+https://swift.org/builds/swift-5.4.2-release/centos8/swift-5.4.2-RELEASE/swift-5.4.2-RELEASE-centos8.tar.gz
+
+
+
+
+
+修复wine打开路径乱码问题
+
+检查LC_ALL="zh_CN.UTF-8"
+sudo gedit /etc/locale.conf
+sudo gedit /etc/locale.gen
+这里如果升级可能覆盖掉zh_CN.UTF-8，重新打开
+sudo locale-gen
+随便找一个中文路径或者中文名的pdf来实验
+LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" wine start /ProgIDOpen FoxitReader.Document "$PWD/疯狂Android讲义(第4版)_ISBN9787121360091.pdf"
+
+
+
+
+
+
+
+
+
+yay -S virtualbox virtualbox-ext-vnc virtualbox-guest-iso virtualbox-ext-oracle virtualbox-host-dkms
+// virtualbox-host-modules-arch
+dkms install --no-depmod -m vboxhost -v 6.1.26_OSE -k
+
+
+
+yay -S python-latexcodec
+
+
+
+clion安装swift plugin，然后设置swift path，
+https://youtrack.jetbrains.com/issue/CPP-19371
+https://caelis.medium.com/install-and-configure-swift-on-arch-linux-for-clion-ee72908bc105
+应该这样
+mkdir ~/Swift
+cd ~/Swift
+ln -s /usr/lib/swift-git usr
+
+clion的settings->swift path: ~/Swift
+ldd /home/andy/Swift/usr/bin/swift-package
+	libicuuc.so.68 => not found
+	libicuuc.so.68 => not found
+	libicui18n.so.68 => not found
+一个主意是把69的改名成68放到/home/andy/Swift/usr/lib之类的地方
+干脆这样，更新为
+swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274.g038af80a880-1-x86_64.pkg.tar.zst
+就ok了
+
+编译
+～/.cache/yay/swift-language-git
+makepkg --nocheck
+然后在install阶段之前把pkg目录的权限修改为777，否则报错，无法生成安装包
 
 
 
