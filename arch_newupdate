@@ -4994,4 +4994,23 @@ yay -U gcc6 gcc6-fortran gcc6-gcj gcc6-libs gcc8 gcc8-fortran gcc8-libs gcc9 gcc
 yay -S qt6-doc qt6-examples qt6-translations
 
 
+cd /usr/local/bin
+sudo gedit vivado
+---------------------------------
+#!/bin/bash
+/opt/Xilinx/Vivado/2020.1/bin/vivado
+---------------------------------
+sudo chmod +x vivado
+
+sudo gedit vitis
+---------------------------------
+#!/bin/bash
+/opt/Xilinx/Vitis/2020.1/bin/vitis 
+---------------------------------
+sudo chmod +x vitis
+
+
+
+
+
 
