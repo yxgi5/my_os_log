@@ -4985,7 +4985,10 @@ makepkg --nocheck
 
 
 
-
+DSView在滚升系统经常因为库依赖挂掉
+	libboost_filesystem.so.1.76.0 => not found
+	libboost_system.so.1.76.0 => not found
+	libboost_thread.so.1.76.0 => not found
 
 
 
