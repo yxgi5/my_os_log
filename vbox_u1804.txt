@@ -1104,6 +1104,7 @@ sudo apt-get install build-essential clang bison flex \
 	libboost-python-dev libboost-filesystem-dev zlib1g-dev
 
 
+秒表
 sudo apt-get install orage stopwatch gnome-clocks
 
 sudo apt-get install inkscape dia
@@ -2217,5 +2218,15 @@ https://download-cdn.jetbrains.com/objc/AppCode-2021.2.dmg
 
 
 
+
+sudo apt install libqt5svg5-dev libqt5webkit5-dev uchardet libuchardet-dev qttools5-dev libqt5websockets5 libqt5websockets5-dev libqt5webengine5 qtwebengine5-dev
+The following NEW packages will be installed:
+  libqt5positioning5-plugins libqt5webchannel5-dev libqt5webengine-data
+  libqt5webengine5 libqt5webenginecore5 libqt5webenginewidgets5 libre2-4
+  qtpositioning5-dev qtwebengine5-dev
+
+
+sudo apt remove notepadqq notepadqq-common
+sudo dpkg -i notepadqq-git_2.0.0.beta.r12.gd8000f25-1_amd64.deb
 
 
