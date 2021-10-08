@@ -5011,6 +5011,44 @@ sudo chmod +x vitis
 
 
 
+vhd2vl-git
+v2x-git
+covered
+sv2v      (fail)
+verilator
+jedi-language-server
+systemc
+
+	Reenable any per-user enabled pipewire-media-session.service
+       	manually to establish a new service alias for
+       	pipewire-session-manager.service added with 0.3.38.
+Removed /etc/systemd/user/pipewire.service.wants/pipewire-media-session.service.
+
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+with relevant options, to initialize the database cluster.
+
+
+
+https://archlinux.org/packages/community/x86_64/haskell-githash/
+haskell-hpack haskell-hspec haskell-unliftio
+sv2v $ makepkg --skipchecksums 
+
+
+sv2v
+sv2v.cabal(patch)
+@@ -105,7 +105,7 @@
+ 
+     build-depends:
+         array >=0.5.4.0 && <0.6,
+-        base >=4.14.1.0 && <4.15,
++        base >=4,
+         cmdargs >=0.10.21 && <0.11,
+         containers >=0.6.2.1 && <0.7,
+         directory >=1.3.6.0 && <1.4,
+#@@ -113,1 +113,0 @@
+#-        githash >=0.1.6.1 && <0.2,
 
 
 
