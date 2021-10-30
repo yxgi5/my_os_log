@@ -5058,3 +5058,19 @@ sv2v.cabal(patch)
 
 
 
+
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing x264 (3:0.163.r3060.5db6aa6-1) breaks dependency 'x264=3:0.161.r3039.544c61f' required by lib32-x264
+
+yay -Rdd lib32-x264
+
+yay -S pyside2 edk2-armvirt qt5-scxml qt5-remoteobjects qt5-datavis3d
+
+yay -S pipewire-session-manager pipewire-v4l2 pipewire-media-session-docs lib32-pipewire-v4l2 
+
+removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
+
+yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray 
+
+
+
