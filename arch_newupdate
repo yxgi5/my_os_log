@@ -5072,5 +5072,15 @@ removing 'python-mistune' from target list because it conflicts with 'python-mis
 
 yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray 
 
+yay -S yt-dlp
+
+yay -S anydesk
+sudo teamviewer --daemon start
+
+
+
+
+
+
 
 
