@@ -2351,7 +2351,7 @@ ForwardX11Trusted yes
 # systemctl restart sshd
 
 
-
+sudo apt install adacontrol
 
 
 
