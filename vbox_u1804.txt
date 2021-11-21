@@ -2351,9 +2351,9 @@ ForwardX11Trusted yes
 # systemctl restart sshd
 
 
-
-
-
+sudo apt install adacontrol
+sudo apt purge adacontrol
+sudo apt install gnat-8
 
 
 
