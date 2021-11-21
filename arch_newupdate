@@ -5152,5 +5152,9 @@ gmtool admin start myNexus
 
 
 
+yay -s socat libsepol libselinux 
+org.eclipse.tcf.core_1.5.0.202005280226.jar
+//yay xrt
+
 
 

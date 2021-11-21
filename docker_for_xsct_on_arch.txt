@@ -1,0 +1,240 @@
+/var/lib/snapd/snap/core/10823
+
+ln -s 
+
+docker container ls
+docker container ls --all
+docker container rm --force ubuntu
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ ubuntu
+docker run -d --name ubuntu_container -v /opt/:/opt/ ubuntu
+docker run --name ubuntu -v /opt/:/opt/ ubuntu
+docker run ubuntu bash -v
+docker run -t -i --rm ubuntu bash
+docker run -t -i --privileged ubuntu bash
+docker run -v /opt/:/opt/ -v /home/andy/Documents/:/Documents -w
+
+docker run -v /opt/:/opt/ -i -t ubuntu bash
+
+
+docker run -d --name ubuntu_container -v /opt/:/opt/ -i -t ubuntu bash
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -i -t ubuntu bash
+docker ps
+docker exec -it ubuntu_container /bin/bash
+apt update
+apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude
+dpkg-reconfigure locales
+159 and 3
+cd /opt/Xilinx/Vitis/2020.1
+source ./settings64.sh
+xsct
+adduser andy
+
+
+docker pull ubuntu:16.04
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu:16.04
+
+docker exec -it ubuntu_container /bin/bash
+
+apt update
+apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev 
+dpkg-reconfigure locales
+149 and 3
+dpkg-reconfigure dash
+adduser andy
+
+cd /opt/Xilinx/Vitis/2020.1
+source ./settings64.sh
+xsct
+
+
+
+
+The following additional packages will be installed:
+  automake autotools-dev binutils bzip2 ca-certificates cpp cpp-5 cron dpkg-dev fakeroot g++ g++-5 gcc gcc-5 gcc-5-multilib git-man
+  krb5-locales less lib32asan2 lib32atomic1 lib32cilkrts5 lib32gcc-5-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx0 lib32quadmath0
+  lib32stdc++6 lib32ubsan0 libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan2 libasn1-8-heimdal
+  libasound2 libasound2-data libasound2-dev libasyncns0 libatomic1 libauthen-sasl-perl libbison-dev libc-dev-bin libc6-dev
+  libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libcaca0 libcc1-0 libcilkrts5 libcurl3-gnutls libdpkg-perl libdrm-dev
+  liberror-perl libestr0 libfakeroot libfile-copy-recursive-perl libfile-fcntllock-perl libfile-listing-perl libfl-dev libflac8
+  libfont-afm-perl libgcc-5-dev libgl1-mesa-dev libglib2.0-0 libglib2.0-bin libglib2.0-data libglu1-mesa libglu1-mesa-dev libgmp10
+  libgnutls30 libgomp1 libgssapi-krb5-2 libgssapi3-heimdal libhcrypto4-heimdal libheimbase1-heimdal libheimntlm0-heimdal libhogweed4
+  libhtml-form-perl libhtml-format-perl libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-negotiate-perl
+  libhx509-5-heimdal libicu55 libidn11 libio-socket-ssl-perl libisl15 libitm1 libjson-c2 libk5crypto3 libkeyutils1 libkrb5-26-heimdal
+  libkrb5-3 libkrb5support0 libldap-2.4-2 liblsan0 libltdl-dev libltdl7 liblwp-protocol-https-perl libmailtools-perl libmpc3 libmpfr4
+  libmpx0 libnet-http-perl libnet-smtp-ssl-perl libnet-ssleay-perl libnettle6 libogg0 libp11-kit0 libpcre16-3 libpcre3-dev
+  libpcre32-3 libpcrecpp0v5 libpng12-dev libpopt0 libpthread-stubs0-dev libpulse-dev libpulse-mainloop-glib0 libpulse0
+  libpython-stdlib libpython2.7-minimal libpython2.7-stdlib libquadmath0 libroken18-heimdal librtmp1 libsasl2-2 libsasl2-modules
+  libsasl2-modules-db libsdl1.2debian libsigsegv2 libslang2 libslang2-dev libsndfile1 libssl-doc libstdc++-5-dev libtasn1-6
+  libtext-unidecode-perl libtinfo-dev libtsan0 libubsan0 libutempter0 libvorbis0a libvorbisenc2 libwind0-heimdal libwrap0 libwww-perl
+  libwww-robotrules-perl libx11-dev libx11-doc libx11-xcb-dev libx32asan2 libx32atomic1 libx32cilkrts5 libx32gcc-5-dev libx32gcc1
+  libx32gomp1 libx32itm1 libx32quadmath0 libx32stdc++6 libx32ubsan0 libxau-dev libxcb-dri2-0-dev libxcb-dri3-dev libxcb-glx0-dev
+  libxcb-present-dev libxcb-randr0 libxcb-randr0-dev libxcb-render0 libxcb-render0-dev libxcb-shape0-dev libxcb-sync-dev
+  libxcb-xfixes0 libxcb-xfixes0-dev libxcb1-dev libxdamage-dev libxdmcp-dev libxext-dev libxfixes-dev libxml-libxml-perl
+  libxml-namespacesupport-perl libxml-parser-perl libxml-sax-base-perl libxml-sax-expat-perl libxml-sax-perl libxml2 libxshmfence-dev
+  libxxf86vm-dev linux-libc-dev logrotate m4 manpages manpages-dev mesa-common-dev openssh-client openssl patch pkg-config python
+  python-minimal python2.7 python2.7-minimal rsync rsyslog sgml-base shared-mime-info tcpd tex-common update-inetd x11proto-core-dev
+  x11proto-damage-dev x11proto-dri2-dev x11proto-fixes-dev x11proto-gl-dev x11proto-input-dev x11proto-kb-dev x11proto-xext-dev
+  x11proto-xf86vidmode-dev xbitmaps xdg-user-dirs xinetd xml-core xorg-sgml-doctools xtrans-dev xz-utils
+Suggested packages:
+  autoconf-archive gnu-standards autoconf-doc gettext binutils-doc bison-doc bzip2-doc cpp-doc gcc-5-locales anacron checksecurity
+  exim4 | postfix | mail-transport-agent debian-keyring g++-multilib g++-5-multilib gcc-5-doc libstdc++6-5-dbg gdb gcc-doc
+  libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg libasan2-dbg liblsan0-dbg libtsan0-dbg libubsan0-dbg libcilkrts5-dbg
+  libmpx0-dbg libquadmath0-dbg gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-el git-email git-gui gitk gitweb
+  git-arch git-cvs git-mediawiki git-svn libasound2-plugins alsa-utils libasound2-doc libdigest-hmac-perl libgssapi-perl glibc-doc
+  libglib2.0-doc gnutls-bin krb5-doc krb5-user libtool-doc libcrypt-ssleay-perl ncurses-doc pulseaudio libsasl2-modules-otp
+  libsasl2-modules-ldap libsasl2-modules-sql libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal libstdc++-5-doc gfortran
+  | fortran95-compiler gcj-jdk libauthen-ntlm-perl libxcb-doc libxext-doc mailx make-doc man-browser ssh-askpass libpam-ssh keychain
+  monkeysphere ed diffutils-doc python-doc python-tk python2.7-doc binfmt-support openssh-server rsyslog-mysql | rsyslog-pgsql
+  rsyslog-doc rsyslog-gnutls rsyslog-gssapi rsyslog-relp apparmor iselect | screenie | byobu ncurses-term sgml-base-doc debhelper
+  texlive-base texlive-latex-base texlive-generic-recommended texinfo-doc-nonfree zip xfonts-cyrillic
+The following NEW packages will be installed:
+  autoconf automake autotools-dev binutils bison build-essential bzip2 ca-certificates chrpath cpp cpp-5 cron diffstat dpkg-dev
+  fakeroot flex g++ g++-5 gcc gcc-5 gcc-5-multilib gcc-multilib git git-man krb5-locales less lib32asan2 lib32atomic1 lib32cilkrts5
+  lib32gcc-5-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx0 lib32quadmath0 lib32stdc++6 lib32ubsan0 libalgorithm-diff-perl
+  libalgorithm-diff-xs-perl libalgorithm-merge-perl libasan2 libasn1-8-heimdal libasound2 libasound2-data libasound2-dev libasyncns0
+  libatomic1 libauthen-sasl-perl libbison-dev libc-dev-bin libc6-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev
+  libcaca0 libcc1-0 libcilkrts5 libcurl3-gnutls libdpkg-perl libdrm-dev liberror-perl libestr0 libfakeroot
+  libfile-copy-recursive-perl libfile-fcntllock-perl libfile-listing-perl libfl-dev libflac8 libfont-afm-perl libgcc-5-dev
+  libgl1-mesa-dev libglib2.0-0 libglib2.0-bin libglib2.0-data libglib2.0-dev libglu1-mesa libglu1-mesa-dev libgmp10 libgnutls30
+  libgomp1 libgssapi-krb5-2 libgssapi3-heimdal libhcrypto4-heimdal libheimbase1-heimdal libheimntlm0-heimdal libhogweed4
+  libhtml-form-perl libhtml-format-perl libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-negotiate-perl
+  libhx509-5-heimdal libicu55 libidn11 libio-socket-ssl-perl libisl15 libitm1 libjson-c2 libk5crypto3 libkeyutils1 libkrb5-26-heimdal
+  libkrb5-3 libkrb5support0 libldap-2.4-2 liblsan0 libltdl-dev libltdl7 liblwp-protocol-https-perl libmailtools-perl libmpc3 libmpfr4
+  libmpx0 libncurses5-dev libnet-http-perl libnet-smtp-ssl-perl libnet-ssleay-perl libnettle6 libogg0 libp11-kit0 libpcre16-3
+  libpcre3-dev libpcre32-3 libpcrecpp0v5 libpng12-dev libpopt0 libpthread-stubs0-dev libpulse-dev libpulse-mainloop-glib0 libpulse0
+  libpython-stdlib libpython2.7-minimal libpython2.7-stdlib libquadmath0 libroken18-heimdal librtmp1 libsasl2-2 libsasl2-modules
+  libsasl2-modules-db libsdl1.2-dev libsdl1.2debian libsigsegv2 libslang2 libslang2-dev libsndfile1 libssl-dev libssl-doc
+  libstdc++-5-dev libtasn1-6 libtext-unidecode-perl libtinfo-dev libtool libtsan0 libubsan0 libutempter0 libvorbis0a libvorbisenc2
+  libwind0-heimdal libwrap0 libwww-perl libwww-robotrules-perl libx11-dev libx11-doc libx11-xcb-dev libx32asan2 libx32atomic1
+  libx32cilkrts5 libx32gcc-5-dev libx32gcc1 libx32gomp1 libx32itm1 libx32quadmath0 libx32stdc++6 libx32ubsan0 libxau-dev
+  libxcb-dri2-0-dev libxcb-dri3-dev libxcb-glx0-dev libxcb-present-dev libxcb-randr0 libxcb-randr0-dev libxcb-render0
+  libxcb-render0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0 libxcb-xfixes0-dev libxcb1-dev libxdamage-dev libxdmcp-dev
+  libxext-dev libxfixes-dev libxml-libxml-perl libxml-namespacesupport-perl libxml-parser-perl libxml-sax-base-perl
+  libxml-sax-expat-perl libxml-sax-perl libxml2 libxshmfence-dev libxxf86vm-dev linux-libc-dev logrotate m4 make manpages
+  manpages-dev mesa-common-dev net-tools openssh-client openssl patch pax pkg-config python python-minimal python2.7
+  python2.7-minimal rsync rsyslog screen sgml-base shared-mime-info socat tcpd tex-common texinfo tftpd unzip update-inetd wget
+  x11proto-core-dev x11proto-damage-dev x11proto-dri2-dev x11proto-fixes-dev x11proto-gl-dev x11proto-input-dev x11proto-kb-dev
+  x11proto-xext-dev x11proto-xf86vidmode-dev xbitmaps xdg-user-dirs xinetd xml-core xorg-sgml-doctools xterm xtrans-dev xz-utils
+  zlib1g-dev
+0 upgraded, 251 newly installed, 0 to remove and 0 not upgraded.
+
+
+The following additional packages will be installed:
+  libboost-chrono1.58.0 libboost-system1.58.0 libboost-timer1.58-dev libboost-timer1.58.0
+The following NEW packages will be installed:
+  libboost-chrono1.58.0 libboost-system1.58.0 libboost-timer-dev libboost-timer1.58-dev libboost-timer1.58.0
+0 upgraded, 5 newly installed, 0 to remove and 0 not upgraded.
+
+
+The following additional packages will be installed:
+  coinor-libcoinutils3v5 gfortran gfortran-5 libblas-common libblas-dev libblas3 libgfortran-5-dev libgfortran3 liblapack-dev
+  liblapack3
+Suggested packages:
+  gfortran-multilib gfortran-doc gfortran-5-multilib gfortran-5-doc libgfortran3-dbg liblapack-doc-man liblapack-doc
+The following NEW packages will be installed:
+  coinor-libcoinutils-dev coinor-libcoinutils3v5 gfortran gfortran-5 libblas-common libblas-dev libblas3 libgfortran-5-dev
+  libgfortran3 liblapack-dev liblapack3
+0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
+
+The following additional packages will be installed:
+  icu-devtools libboost-atomic-dev libboost-atomic1.58-dev libboost-atomic1.58.0 libboost-chrono-dev libboost-chrono1.58-dev
+  libboost-context-dev libboost-context1.58-dev libboost-context1.58.0 libboost-coroutine-dev libboost-coroutine1.58-dev
+  libboost-coroutine1.58.0 libboost-date-time-dev libboost-date-time1.58-dev libboost-date-time1.58.0 libboost-exception-dev
+  libboost-exception1.58-dev libboost-filesystem-dev libboost-filesystem1.58-dev libboost-filesystem1.58.0 libboost-graph-dev
+  libboost-graph-parallel-dev libboost-graph-parallel1.58-dev libboost-graph-parallel1.58.0 libboost-graph1.58-dev
+  libboost-graph1.58.0 libboost-iostreams-dev libboost-iostreams1.58-dev libboost-locale-dev libboost-locale1.58-dev
+  libboost-locale1.58.0 libboost-log-dev libboost-log1.58-dev libboost-log1.58.0 libboost-math-dev libboost-math1.58-dev
+  libboost-math1.58.0 libboost-mpi-dev libboost-mpi-python-dev libboost-mpi-python1.58-dev libboost-mpi-python1.58.0
+  libboost-mpi1.58-dev libboost-mpi1.58.0 libboost-program-options-dev libboost-program-options1.58-dev
+  libboost-program-options1.58.0 libboost-python-dev libboost-python1.58-dev libboost-python1.58.0 libboost-random-dev
+  libboost-random1.58-dev libboost-random1.58.0 libboost-regex-dev libboost-regex1.58-dev libboost-regex1.58.0
+  libboost-serialization-dev libboost-serialization1.58-dev libboost-serialization1.58.0 libboost-signals-dev
+  libboost-signals1.58-dev libboost-signals1.58.0 libboost-system-dev libboost-system1.58-dev libboost-test-dev libboost-test1.58-dev
+  libboost-test1.58.0 libboost-thread-dev libboost-thread1.58-dev libboost-thread1.58.0 libboost-wave-dev libboost-wave1.58-dev
+  libboost-wave1.58.0 libexpat1-dev libhwloc-dev libhwloc-plugins libhwloc5 libibverbs-dev libibverbs1 libicu-dev libnuma-dev
+  libnuma1 libopenmpi-dev libopenmpi1.10 libpython-dev libpython2.7 libpython2.7-dev mpi-default-bin mpi-default-dev
+  ocl-icd-libopencl1 openmpi-bin openmpi-common python-dev python2.7-dev
+Suggested packages:
+  graphviz libboost1.58-doc gccxml libhwloc-contrib-plugins icu-doc opennmpi-doc opencl-icd openmpi-checkpoint
+The following NEW packages will be installed:
+  icu-devtools libboost-all-dev libboost-atomic-dev libboost-atomic1.58-dev libboost-atomic1.58.0 libboost-chrono-dev
+  libboost-chrono1.58-dev libboost-context-dev libboost-context1.58-dev libboost-context1.58.0 libboost-coroutine-dev
+  libboost-coroutine1.58-dev libboost-coroutine1.58.0 libboost-date-time-dev libboost-date-time1.58-dev libboost-date-time1.58.0
+  libboost-exception-dev libboost-exception1.58-dev libboost-filesystem-dev libboost-filesystem1.58-dev libboost-filesystem1.58.0
+  libboost-graph-dev libboost-graph-parallel-dev libboost-graph-parallel1.58-dev libboost-graph-parallel1.58.0 libboost-graph1.58-dev
+  libboost-graph1.58.0 libboost-iostreams-dev libboost-iostreams1.58-dev libboost-locale-dev libboost-locale1.58-dev
+  libboost-locale1.58.0 libboost-log-dev libboost-log1.58-dev libboost-log1.58.0 libboost-math-dev libboost-math1.58-dev
+  libboost-math1.58.0 libboost-mpi-dev libboost-mpi-python-dev libboost-mpi-python1.58-dev libboost-mpi-python1.58.0
+  libboost-mpi1.58-dev libboost-mpi1.58.0 libboost-program-options-dev libboost-program-options1.58-dev
+  libboost-program-options1.58.0 libboost-python-dev libboost-python1.58-dev libboost-python1.58.0 libboost-random-dev
+  libboost-random1.58-dev libboost-random1.58.0 libboost-regex-dev libboost-regex1.58-dev libboost-regex1.58.0
+  libboost-serialization-dev libboost-serialization1.58-dev libboost-serialization1.58.0 libboost-signals-dev
+  libboost-signals1.58-dev libboost-signals1.58.0 libboost-system-dev libboost-system1.58-dev libboost-test-dev libboost-test1.58-dev
+  libboost-test1.58.0 libboost-thread-dev libboost-thread1.58-dev libboost-thread1.58.0 libboost-wave-dev libboost-wave1.58-dev
+  libboost-wave1.58.0 libexpat1-dev libhwloc-dev libhwloc-plugins libhwloc5 libibverbs-dev libibverbs1 libicu-dev libnuma-dev
+  libnuma1 libopenmpi-dev libopenmpi1.10 libpython-dev libpython2.7 libpython2.7-dev mpi-default-bin mpi-default-dev
+  ocl-icd-libopencl1 openmpi-bin openmpi-common python-dev python2.7-dev
+0 upgraded, 94 newly installed, 0 to remove and 0 not upgraded.
+
+
+The following additional packages will be installed:
+  acl adwaita-icon-theme at-spi2-core bsdmainutils colord colord-data dconf-gsettings-backend dconf-service debhelper
+  dh-strip-nondeterminism fontconfig gettext gettext-base gir1.2-atk-1.0 gir1.2-atspi-2.0 gir1.2-freedesktop gir1.2-gdkpixbuf-2.0
+  gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-pango-1.0 glib-networking glib-networking-common glib-networking-services groff-base
+  gsettings-desktop-schemas hicolor-icon-theme humanity-icon-theme intltool-debian libarchive-zip-perl libasprintf-dev libasprintf0v5
+  libatk-bridge2.0-0 libatk-bridge2.0-dev libatk1.0-0 libatk1.0-data libatk1.0-dev libatspi2.0-0 libatspi2.0-dev libavahi-client3
+  libavahi-common-data libavahi-common3 libcairo-gobject2 libcairo-script-interpreter2 libcairo2 libcairo2-dev libcapnp-0.5.3
+  libcolord2 libcolorhug2 libcroco3 libcups2 libdatrie1 libdbus-1-dev libdconf1 libegl1-mesa libegl1-mesa-dev libepoxy-dev libepoxy0
+  libexif12 libfile-stripnondeterminism-perl libfontconfig1-dev libfreetype6-dev libgbm1 libgd3 libgdk-pixbuf2.0-0
+  libgdk-pixbuf2.0-common libgdk-pixbuf2.0-dev libgettextpo-dev libgettextpo0 libgirepository-1.0-1 libgmp-dev libgmpxx4ldbl
+  libgphoto2-6 libgphoto2-l10n libgphoto2-port12 libgraphite2-3 libgtk-3-0 libgtk-3-bin libgtk-3-common libgudev-1.0-0 libgusb2
+  libharfbuzz-dev libharfbuzz-gobject0 libharfbuzz-icu0 libharfbuzz0b libice-dev libieee1284-3 libjbig0 libjpeg-turbo8 libjpeg8
+  libjson-glib-1.0-0 libjson-glib-1.0-common liblcms2-2 liblzo2-2 libmail-sendmail-perl libmirclient-dev libmirclient9
+  libmircommon-dev libmircommon7 libmircookie-dev libmircookie2 libmircore-dev libmircore1 libmirprotobuf3 libpam-systemd
+  libpango-1.0-0 libpango1.0-dev libpangocairo-1.0-0 libpangoft2-1.0-0 libpangoxft-1.0-0 libpipeline1 libpixman-1-dev
+  libpolkit-agent-1-0 libpolkit-backend-1-0 libpolkit-gobject-1-0 libprotobuf-dev libprotobuf-lite9v5 libprotobuf9v5 libproxy1v5
+  librest-0.7-0 librsvg2-2 librsvg2-common libsane libsane-common libsm-dev libsoup-gnome2.4-1 libsoup2.4-1 libsys-hostname-long-perl
+  libthai-data libthai0 libtiff5 libunistring0 libusb-1.0-0 libvpx3 libwayland-bin libwayland-client0 libwayland-cursor0
+  libwayland-dev libwayland-egl1-mesa libwayland-server0 libxcb-shm0 libxcb-shm0-dev libxcomposite-dev libxcursor-dev libxcursor1
+  libxft-dev libxi-dev libxinerama-dev libxkbcommon-dev libxkbcommon0 libxrandr-dev libxrender-dev libxtst-dev man-db nettle-dev
+  po-debconf policykit-1 ubuntu-mono x11proto-composite-dev x11proto-randr-dev x11proto-record-dev x11proto-render-dev
+  x11proto-xinerama-dev
+Suggested packages:
+  wamerican | wordlist whois vacation colord-sensor-argyll dh-make gettext-doc autopoint groff libcairo2-doc cups-common libgd-tools
+  gmp-doc libgmp10-doc libmpfr-dev gphoto2 gvfs libgtk-3-doc libice-doc liblcms2-utils imagemagick libpango1.0-doc librsvg2-bin
+  avahi-daemon hplip libsane-extras sane-utils libsm-doc www-browser libmail-box-perl
+The following NEW packages will be installed:
+  acl adwaita-icon-theme at-spi2-core bsdmainutils colord colord-data dconf-gsettings-backend dconf-service debhelper
+  dh-strip-nondeterminism fontconfig gettext gettext-base gir1.2-atk-1.0 gir1.2-atspi-2.0 gir1.2-freedesktop gir1.2-gdkpixbuf-2.0
+  gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-pango-1.0 glib-networking glib-networking-common glib-networking-services groff-base
+  gsettings-desktop-schemas hicolor-icon-theme humanity-icon-theme intltool-debian libarchive-zip-perl libasprintf-dev libasprintf0v5
+  libatk-bridge2.0-0 libatk-bridge2.0-dev libatk1.0-0 libatk1.0-data libatk1.0-dev libatspi2.0-0 libatspi2.0-dev libavahi-client3
+  libavahi-common-data libavahi-common3 libcairo-gobject2 libcairo-script-interpreter2 libcairo2 libcairo2-dev libcapnp-0.5.3
+  libcolord2 libcolorhug2 libcroco3 libcups2 libdatrie1 libdbus-1-dev libdconf1 libegl1-mesa libegl1-mesa-dev libepoxy-dev libepoxy0
+  libexif12 libfile-stripnondeterminism-perl libfontconfig1-dev libfreetype6-dev libgbm1 libgd3 libgdk-pixbuf2.0-0
+  libgdk-pixbuf2.0-common libgdk-pixbuf2.0-dev libgettextpo-dev libgettextpo0 libgirepository-1.0-1 libgmp-dev libgmpxx4ldbl
+  libgphoto2-6 libgphoto2-l10n libgphoto2-port12 libgraphite2-3 libgtk-3-0 libgtk-3-bin libgtk-3-common libgtk-3-dev libgudev-1.0-0
+  libgusb2 libharfbuzz-dev libharfbuzz-gobject0 libharfbuzz-icu0 libharfbuzz0b libice-dev libieee1284-3 libjbig0 libjpeg-turbo8
+  libjpeg8 libjson-glib-1.0-0 libjson-glib-1.0-common liblcms2-2 liblzo2-2 libmail-sendmail-perl libmirclient-dev libmirclient9
+  libmircommon-dev libmircommon7 libmircookie-dev libmircookie2 libmircore-dev libmircore1 libmirprotobuf3 libpam-systemd
+  libpango-1.0-0 libpango1.0-dev libpangocairo-1.0-0 libpangoft2-1.0-0 libpangoxft-1.0-0 libpipeline1 libpixman-1-dev
+  libpolkit-agent-1-0 libpolkit-backend-1-0 libpolkit-gobject-1-0 libprotobuf-dev libprotobuf-lite9v5 libprotobuf9v5 libproxy1v5
+  librest-0.7-0 librsvg2-2 librsvg2-common libsane libsane-common libsm-dev libsoup-gnome2.4-1 libsoup2.4-1 libsys-hostname-long-perl
+  libthai-data libthai0 libtiff5 libunistring0 libusb-1.0-0 libvpx3 libwayland-bin libwayland-client0 libwayland-cursor0
+  libwayland-dev libwayland-egl1-mesa libwayland-server0 libxcb-shm0 libxcb-shm0-dev libxcomposite-dev libxcursor-dev libxcursor1
+  libxft-dev libxi-dev libxinerama-dev libxkbcommon-dev libxkbcommon0 libxrandr-dev libxrender-dev libxtst-dev man-db nettle-dev
+  po-debconf policykit-1 ubuntu-mono x11proto-composite-dev x11proto-randr-dev x11proto-record-dev x11proto-render-dev
+  x11proto-xinerama-dev
+
+
+
+
+
+
+
+
+
+
+export LD_PRELOAD=/opt/Xilinx/.xinstall/Vitis_2020.1/lib/lnx64.o/Ubuntu/18/libstdc++.so.6.0.25
+./proj_build.sh
+
