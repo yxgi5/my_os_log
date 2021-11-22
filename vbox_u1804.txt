@@ -2357,6 +2357,447 @@ sudo apt install gnat-8
 
 
 
+python保存网页全部内容的调查
+
+sudo -H pip3 install selenium -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install webdriver-manager -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pywebcopy -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyautogui -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install bencoder -i https://mirrors.163.com/pypi/simple
+
+
+
+from webdriver_manager.firefox import GeckoDriverManager
+
+try:
+    driver = webdriver.Firefox()
+except Exception:
+    driver = webdriver.Firefox(GeckoDriverManager().install())
+
+
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+
+br = webdriver.Firefox()
+br.get('http://www.baidu.com/')
+
+save_me = ActionChains(br).key_down(Keys.CONTROL)\
+         .key_down('s').key_up(Keys.CONTROL).key_up('s')
+save_me.perform()
+
+
+
+https://github.com/operasoftware/operachromiumdriver/releases
+
+解压后+x，放到/usr/bin
+
+
+sudo apt-get install chromium-chromedriver firefox-geckodriver
+
+
+To use the default Chrome Profile:
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = webdriver.ChromeOptions()
+options.add_argument("user-data-dir=C:\\Users\\AtechM_03\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
+driver = webdriver.Chrome(executable_path=r'C:\path\to\chromedriver.exe', chrome_options=options)
+driver.get("https://www.google.co.in")
+
+
+Note: Your default chrome profile would contain a lot of bookmarks, extensions, theme, cookies etc. Selenium may fail to load it. So as per the best practices create a new chrome profile for your @Test and store/save/configure within the profile the required data.
+
+To use the customized Chrome Profile:
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = Options()
+options.add_argument("user-data-dir=C:\\Users\\AtechM_03\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 2")
+driver = webdriver.Chrome(executable_path=r'C:\path\to\chromedriver.exe', chrome_options=options)
+driver.get("https://www.google.co.in")
+
+
+
+options = webdriver.ChromeOptions()
+options.add_argument("user-data-dir=/home/andreas/.config/opera")
+br=webdriver.Opera(options=options)
+br.get("https://www.javbus.com/ja/BNST-035")
+save_me = ActionChains(br).key_down(Keys.CONTROL)\
+         .key_down('s').key_up(Keys.CONTROL).key_up('s')
+save_me.perform()
+
+
+
+## 好像没有啥用，存不了啊
+
+ActionChains(driver).key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.Firefox()
+driver.get('http://www.baidu.com/')
+#driver.maximize_window()
+driver.switch_to.window(driver.current_window_handle)
+
+time.sleep(1) # Pause to allow you to inspect the browser.
+
+#save_me = ActionChains(driver).key_down(Keys.CONTROL)\
+#         .key_down('s').key_up(Keys.CONTROL).key_up('s')
+#save_me.perform()
+
+#ActionChains(driver).key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+ActionChains(driver).key_down(Keys.CONTROL).key_down('s').key_up(Keys.CONTROL).key_up('s').perform()
+#body = driver.find_element_by_tag_name('body')
+#body.send_keys(Keys.CONTROL, "s")  # on Mac: body.send_keys(Keys.COMMAND, "s")
+#ActionChains(driver).key_down(Keys.LEFT_CONTROL).key_down('s').key_up(Keys.LEFT_CONTROL).key_up('s').perform()
+
+#save = ActionChains(driver).key_down(Keys.CONTROL).send_keys('s').perform()
+#save = ActionChains(driver).key_down(Keys.CONTROL).send_keys('s').key_up(Keys.CONTROL).perform()
+
+#ActionChains(driver).send_keys(Keys.CONTROL + "s").perform()
+#ActionChains(driver).key_down(Keys.CONTROL).send_keys("s").perform()
+#ActionChains(driver).send_keys(Keys.CONTROL + 's').perform()
+#ActionChains(driver).send_keys(Keys.CONTROL).send_keys('s').perform()
+#ActionChains(driver).send_keys('Test').perform()
+
+#这几个有效啊
+#webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
+#ActionChains(driver).key_down(Keys.CONTROL).send_keys('a').perform()
+#ActionChains(driver).key_down(Keys.CONTROL).key_down('a').key_up(Keys.CONTROL).key_up('a').perform()
+
+
+
+#ActionChains(driver).key_down(Keys.CONTROL).perform()
+#ActionChains(driver).key_down('s').perform()
+#ActionChains(driver).key_up(Keys.CONTROL).perform()
+#ActionChains(driver).key_up('s').perform()
+
+#ActionChains(driver).key_down(Keys.ALT).perform()
+#ActionChains(driver).key_up(Keys.ALT).perform()
+
+
+# create action chain object
+#action = ActionChains(driver)
+ 
+# perform the operation
+#action.key_down(Keys.CONTROL).send_keys('F').key_up(Keys.CONTROL).perform()
+
+time.sleep(5) # Pause to allow you to inspect the browser.
+driver.quit()
+
+
+///////////////////////////////////////////////////////////////////////////////////
+谁知道呢，反正ctrl+a可以，ctrl+s不行
+
+///////////////////////////////////////////////////////////////////////////////////
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
+options = webdriver.ChromeOptions()
+options.add_argument("user-data-dir=/home/andreas/.config/opera")
+driver = webdriver.Opera(options=options)
+driver.get('http://www.baidu.com/')
+#driver.maximize_window()
+driver.switch_to.window(driver.current_window_handle)
+
+time.sleep(1) # Pause to allow you to inspect the browser.
+
+#save_me = ActionChains(driver).key_down(Keys.CONTROL)\
+#         .key_down('s').key_up(Keys.CONTROL).key_up('s')
+#save_me.perform()
+
+#ActionChains(driver).key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+#ActionChains(driver).key_down(Keys.CONTROL).key_down('s').key_up(Keys.CONTROL).key_up('s').perform()
+#body = driver.find_element_by_tag_name('body')
+#body.send_keys(Keys.CONTROL, "s")  # on Mac: body.send_keys(Keys.COMMAND, "s")
+#ActionChains(driver).key_down(Keys.LEFT_CONTROL).key_down('s').key_up(Keys.LEFT_CONTROL).key_up('s').perform()
+
+#save = ActionChains(driver).key_down(Keys.CONTROL).send_keys('s').perform()
+#save = ActionChains(driver).key_down(Keys.CONTROL).send_keys('s').key_up(Keys.CONTROL).perform()
+
+#ActionChains(driver).send_keys(Keys.CONTROL + "s").perform()
+#ActionChains(driver).key_down(Keys.CONTROL).send_keys("s").perform()
+#ActionChains(driver).send_keys(Keys.CONTROL + 's').perform()
+#ActionChains(driver).send_keys(Keys.CONTROL).send_keys('s').perform()
+#ActionChains(driver).send_keys('Test').perform()
+
+#这几个有效啊
+#webdriver.ActionChains(driver).key_down(Keys.CONTROL).send_keys("a").perform()
+#ActionChains(driver).key_down(Keys.CONTROL).send_keys('a').perform()
+#ActionChains(driver).key_down(Keys.CONTROL).key_down('a').key_up(Keys.CONTROL).key_up('a').perform()
+
+
+
+#ActionChains(driver).key_down(Keys.CONTROL).perform()
+#ActionChains(driver).key_down('s').perform()
+#ActionChains(driver).key_up(Keys.CONTROL).perform()
+#ActionChains(driver).key_up('s').perform()
+
+#ActionChains(driver).key_down(Keys.ALT).perform()
+#ActionChains(driver).key_up(Keys.ALT).perform()
+
+
+# create action chain object
+action = ActionChains(driver)
+ 
+# perform the operation
+#action.key_down(Keys.CONTROL).send_keys('F').key_up(Keys.CONTROL).perform()
+
+action.key_down(Keys.CONTROL).key_down('s').key_up(Keys.CONTROL).key_up('s').perform()
+
+time.sleep(5) # Pause to allow you to inspect the browser.
+driver.quit()
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
+#options = webdriver.ChromeOptions()
+#options.add_argument("user-data-dir=/home/andreas/.config/opera")
+#driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome()
+driver.get('http://www.google.com/')
+#driver.maximize_window()
+driver.switch_to.window(driver.current_window_handle)
+
+time.sleep(1) # Pause to allow you to inspect the browser.
+driver.find_element_by_xpath('//body').send_keys(Keys.CONTROL+"f")
+
+time.sleep(5) # Pause to allow you to inspect the browser.
+driver.quit()
+////////////////////////////////////////////////////////////////////////////////////////
+
+这也不行。回去试试arch的情况了。
+
+
+tips：
+driver.get('http://www.baidu.com/')
+view_source_code = driver.execute_script('return document.documentElement.outerHTML')
+print(view_source_code)
+
+
+
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+# Proxy test
+curl --proxy 127.0.0.1:8118 google.com >/dev/null 2>&1 && echo success || echo fail
+success
+////////////////////////////////////////////////////////////////////////////////////////
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import time
+import pyautogui
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
+#options = webdriver.ChromeOptions()
+#options.add_argument("user-data-dir=/home/andreas/.config/opera")
+#driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome()
+driver.get('http://www.baidu.com/')
+#driver.maximize_window()
+driver.switch_to.window(driver.current_window_handle)
+
+time.sleep(2) # Pause to allow you to inspect the browser.
+
+pyautogui.hotkey('ctrl','s')
+pyautogui.press('enter')
+
+#save_me = ActionChains(driver).key_down(Keys.CONTROL)\
+#         .key_down('s').key_up(Keys.CONTROL).key_up('s')
+#save_me.perform()
+
+
+time.sleep(3) # Pause to allow you to inspect the browser.
+driver.quit()
+////////////////////////////////////////////////////////////////////////////////////////
+用pyautogui才能行。。。。
+
+
+# title操作
+get_title = driver.title
+print(get_title)
+words=get_title.split()
+a=" ".join(words[0:2])
+driver.execute_script('document.title = a')
+driver.execute_script('document.title = "%s"' % a)
+
+# tab操作
+tab1 = driver.window_handles[1]
+driver.switch_to.window(tab1)
+driver.execute_script('document.title = "My New Title"')
+
+
+最终的单链接版本
+////////////////////////////////////////////////////////////////////////////////////////
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import os
+import subprocess
+import sys
+
+os.environ ['https_proxy']='127.0.0.1:8118'
+os.environ ['http_proxy']='127.0.0.1:8118'
+
+
+import time
+import pyautogui
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
+#options = webdriver.ChromeOptions()
+#options.add_argument("user-data-dir=/home/andreas/.config/opera")
+#driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome()
+driver.get('https://www.javbus.com/ja/BNST-036')
+#driver.maximize_window()
+driver.switch_to.window(driver.current_window_handle)
+
+#time.sleep(2) # Pause to allow you to inspect the browser.
+
+get_title = driver.title
+print(get_title)
+words=get_title.split()
+a=" ".join(words[0:2])
+driver.execute_script('document.title = "%s"' % a)
+
+pyautogui.hotkey('ctrl','s')
+pyautogui.press('enter')
+
+#save_me = ActionChains(driver).key_down(Keys.CONTROL)\
+#         .key_down('s').key_up(Keys.CONTROL).key_up('s')
+#save_me.perform()
+
+time.sleep(3) # Pause to allow you to inspect the browser.
+driver.quit()
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+sudo npm install -g npm
+sudo npm install -g npm@8.1.3
+
+sudo apt install nodejs-mozilla
+sudo apt install libqt5xmlpatterns5-dev
+sudo apt install libqjson-dev libxml++2.6-dev libxmlsec1-dev libxmltok1-dev qml-module-qtwebengine
+sudo apt install redis redis-tools
+
+
+https://chrome.google.com/webstore/detail/magnetar-磁力聚合搜索/aelfbedmomigndkbpbpplblbgeaaghnf/related?hl=zh-CN
+
+
+
+
+
+
+
+$ sudo apt install libssl1.0-dev
+[sudo] password for andreas: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  gyp libgcrypt20-dev libgnat-7 libgnatcoll16.1.0 libgnatvsn7 libgnutls-openssl27 libgnutls28-dev libgnutlsxx28 libgpg-error-dev libgpr16.1.2016 libhogweed4:i386 libidn2-dev libjs-async libjs-inherits
+  libjs-node-uuid libnettle6:i386 libnspr4-dev libnss3-dev libp11-kit-dev libqrencode3 libtasn1-6-dev libtasn1-doc libunbound2 libusbmuxd4 libuv1-dev libxmlada-dom4.6 libxmlada-input4.6 libxmlada-sax4.6.2016
+  libxmlada-schema4.6.2016 libxmlada-unicode4.6.2016 libxmlsec1-gcrypt libxmlsec1-gnutls libxmlsec1-openssl libxslt1-dev linux-hwe-5.4-headers-5.4.0-77 linux-hwe-5.4-headers-5.4.0-81
+  linux-hwe-5.4-headers-5.4.0-87 nettle-dev node-abbrev node-ansi node-ansi-color-table node-archy node-async node-balanced-match node-block-stream node-brace-expansion node-builtin-modules
+  node-combined-stream node-concat-map node-cookie-jar node-delayed-stream node-forever-agent node-form-data node-fs.realpath node-fstream node-fstream-ignore node-github-url-from-git node-glob
+  node-graceful-fs node-hosted-git-info node-inflight node-inherits node-ini node-is-builtin-module node-isexe node-json-stringify-safe node-lockfile node-lru-cache node-mime node-minimatch node-mkdirp
+  node-mute-stream node-node-uuid node-nopt node-normalize-package-data node-npmlog node-once node-osenv node-path-is-absolute node-pseudomap node-qs node-read node-read-package-json node-request node-retry
+  node-rimraf node-semver node-sha node-slide node-spdx-correct node-spdx-expression-parse node-spdx-license-ids node-tar node-tunnel-agent node-underscore node-validate-npm-package-license node-which
+  node-wrappy node-yallist nodejs nodejs-doc shim
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  default-libmysqlclient-dev libmysqlclient-dev libssl-dev libxmlsec1-dev
+The following NEW packages will be installed:
+  libssl1.0-dev
+0 upgraded, 1 newly installed, 4 to remove and 10 not upgraded.
+Need to get 1,366 kB of archives.
+After this operation, 10.1 MB disk space will be freed.
+Do you want to continue? [Y/n] 
+
+
+$ sudo apt install default-libmysqlclient-dev libmysqlclient-dev libssl-dev libxmlsec1-dev
+
+
+
+安装docker
+see 
+https://docs.docker.com/engine/install/linux-postinstall/
+https://docs.docker.com/engine/install/ubuntu/
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
+$ sudo apt-get update
+$ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+Add Docker’s official GPG key:
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+$ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+$ sudo groupadd docker
+$ docker version
+$ sudo docker run hello-world
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ docker run hello-world
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
