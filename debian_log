@@ -12851,6 +12851,8 @@ env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
 
 
 livecd+chroot维护系统（也可安装debootstrap安装包）
+//sudo fdisk -l
+//sudo mount /dev/sda1 /mnt
 cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
 su
 mount -o bind /dev dev
@@ -12863,9 +12865,14 @@ mount -t tmpfs tmpfs /run/lock
 mount /dev/sdx2 /home
 mount /dev/sdx3 /opt
 
+sudo fdisk -l
 sudo grub-install /dev/sdx
 sudo grub-install --root-directory=/boot/ /dev/sdx
 sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
+(
+sudo apt-get -y purge grub
+sudo apt-get install grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed
+)
 grub-mkconfig -o /boot/grub/grub.cfg
 
 umount /dev/sdx3

@@ -96,13 +96,42 @@ $ pacman -Q -n > pacqn.txt
 
 // restore grub  |  grub修复
 
+grub>root (hd0,0)
+命令含义：从的硬盘第一个分区C盘启动
+
+grub>chainloader (hd0,0)+1
+命令含义：指示GRUB读取分区的第一个扇区的引导记录
+
+grub>boot
+命令含义：启动GRUB
+
+//sudo fdisk -l
+//sudo mount /dev/sda1 /mnt
+
+cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
+su
+mount -o bind /dev dev
+chroot .
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devpts devpts /dev/pts
+mkdir -p /run/lock
+mount -t tmpfs tmpfs /run/lock
+mount /dev/sdx2 /home
+mount /dev/sdx3 /opt
+
+//or
+
 mount --bind /dev /mnt/dev 
 mount --bind /proc /mnt/proc
 mount --bind /sys /mnt/sys 
 
+//or
+
 mount -t proc proc /mnt/proc
 mount --rbind /sys /mnt/sys
 mount --rbind /dev /mnt/dev
+
 
 sudo chroot /path/to/mounted/
 //or
