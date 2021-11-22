@@ -12865,6 +12865,7 @@ mount /dev/sdx3 /opt
 
 sudo grub-install /dev/sdx
 sudo grub-install --root-directory=/boot/ /dev/sdx
+sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
 grub-mkconfig -o /boot/grub/grub.cfg
 
 umount /dev/sdx3

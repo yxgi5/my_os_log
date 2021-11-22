@@ -94,11 +94,27 @@ $ pacman -Q -e > pacqe.txt
 $ pacman -Q -m > pacqm.txt
 $ pacman -Q -n > pacqn.txt
 
-// restore grub
+// restore grub  |  grub修复
+
+mount --bind /dev /mnt/dev 
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys 
+
+mount -t proc proc /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --rbind /dev /mnt/dev
+
 sudo chroot /path/to/mounted/
+//or
+sudo chroot /mnt /bin/bash
+
+// use grub-install or grub2-install
 sudo grub-install /dev/sda
 // or 
-sudo grub-install --root-directory=/path/to/mounted/ /dev/sda
+sudo grub-install --root-directory=/mnt/boot /dev/sda
+// or if sda3 is a EFI partition
+mount /dev/sda3 /mnt/boot/efi
+sudo grub-install /dev/sda --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
 
 //generate new grub.cfg
 grub2-mkconfig -o /boot/grub2/grub.cfg
