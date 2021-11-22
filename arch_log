@@ -96,6 +96,11 @@ $ pacman -Q -n > pacqn.txt
 
 // restore grub  |  grub修复
 
+grub命令见
+最新Grub2全面教程.pdf
+
+常用的有
+
 grub>root (hd0,0)
 命令含义：从的硬盘第一个分区C盘启动
 
@@ -105,13 +110,19 @@ grub>chainloader (hd0,0)+1
 grub>boot
 命令含义：启动GRUB
 
+查看挂载目录
 //sudo fdisk -l
+挂载，比如载到/mnt
 //sudo mount /dev/sda1 /mnt
-
+在livecd切换到目标根目录
 cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
 su
 mount -o bind /dev dev
 chroot .
+// or 
+// chroot . /bin/bash
+
+挂载根目录特殊节点
 mount -t proc proc /proc
 mount -t sysfs sysfs /sys
 mount -t devpts devpts /dev/pts
@@ -132,7 +143,7 @@ mount -t proc proc /mnt/proc
 mount --rbind /sys /mnt/sys
 mount --rbind /dev /mnt/dev
 
-
+chroot和mount根目录特殊节点先后无关？最好在mount之前之后？
 sudo chroot /path/to/mounted/
 //or
 sudo chroot /mnt /bin/bash
