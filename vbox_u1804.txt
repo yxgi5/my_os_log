@@ -2783,8 +2783,35 @@ $ newgrp docker
 $ docker run hello-world
 
 
+$ docker pull ubuntu
+-- or "docker pull ubuntu:16.04"
+$ docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andreas/:/home/andreas/ -i -t ubuntu bash
+$ docker exec -it ubuntu_container /bin/bash
+
+# apt update
+# apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd
+# dpkg-reconfigure locales
+> choose en_US.UTF-8 UTF-8, at about number 149 ... 159
+> and choose num 3, en_US.UTF-8
+# dpkg-reconfigure dash
+> choose no
+# adduser andreas
+> ...
+# su andreas
+$ cd /opt/Xilinx/Vitis/2020.1
+$ source ./settings64.sh
+$ xsct
 
 
+docker ps -a
+docker stop ubuntu_container
+docker start ubuntu_container
+
+sudo docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+sudo systemctl stop docker.service 
+
+sudo systemctl start docker.service 
+sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
 
 
 

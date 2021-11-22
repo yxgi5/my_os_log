@@ -5158,3 +5158,76 @@ org.eclipse.tcf.core_1.5.0.202005280226.jar
 
 
 
+为了解决 xsct 在 archlinux 中管理 vitis/sdk 工程过程的 fail，各种办法都没有解决问题，那么就用 docker run a ubuntu container
+
+docker pull ubuntu:16.04
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu:16.04 bash
+
+docker exec -it ubuntu_container /bin/bash
+
+apt update
+--apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude
+apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev 
+dpkg-reconfigure locales
+>149 and 3
+dpkg-reconfigure dash
+>choose no
+adduser andy
+
+docker exec -it ubuntu_container /bin/bash
+
+cd /opt/Xilinx/Vitis/2020.1
+source ./settings64.sh
+xsct
+
+
+$ docker pull ubuntu
+-- or "docker pull ubuntu:16.04"
+$ docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu bash
+$ docker exec -it ubuntu_container /bin/bash
+
+# apt update
+# apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd
+# dpkg-reconfigure locales
+> choose en_US.UTF-8 UTF-8, at about number 149 ... 159
+> and choose num 3, en_US.UTF-8
+# dpkg-reconfigure dash
+> choose no
+# adduser andy
+> ...
+# su andy
+$ cd /opt/Xilinx/Vitis/2020.1
+$ source ./settings64.sh
+$ xsct
+
+
+几个常用操作
+
+docker stop ubuntu_container
+docker start ubuntu_container
+
+sudo docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+sudo systemctl stop docker.service 
+
+sudo systemctl start docker.service 
+sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+
+
+这下，可以间接使用vitis/xsct有关tcl了！！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
