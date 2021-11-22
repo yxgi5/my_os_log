@@ -2818,8 +2818,8 @@ sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
 
 
 
-
-
+$ sudo grep -r LD_PRELOAD /etc $HOME
+sudo apt-get purge gtk3-nocsd
 
 
 
