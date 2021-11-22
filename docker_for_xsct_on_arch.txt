@@ -1,7 +1,6 @@
 /var/lib/snapd/snap/core/10823
 
-ln -s 
-
+docker pull ubuntu
 docker container ls
 docker container ls --all
 docker container rm --force ubuntu
