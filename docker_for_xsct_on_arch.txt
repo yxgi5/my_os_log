@@ -30,7 +30,7 @@ adduser andy
 
 
 docker pull ubuntu:16.04
-docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu:16.04
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu:16.04 bash
 
 docker exec -it ubuntu_container /bin/bash
 
