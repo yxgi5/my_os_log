@@ -5129,9 +5129,9 @@ yay -S pipewire-session-manager pipewire-v4l2 pipewire-media-session-docs lib32-
 
 removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
 
-yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray 
+yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray level-zero-loader benchmark
 
-yay -S yt-dlp
+yay -S yt-dlp atomicparsley
 
 yay -S anydesk
 sudo teamviewer --daemon start
@@ -5211,7 +5211,7 @@ gmtool admin start myNexus
 
 
 
-yay -s socat libsepol libselinux 
+yay -S socat libsepol libselinux 
 org.eclipse.tcf.core_1.5.0.202005280226.jar
 //yay xrt
 
