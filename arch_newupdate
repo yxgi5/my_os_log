@@ -5058,3 +5058,63 @@ sv2v.cabal(patch)
 
 
 
+
+:: Synchronizing package databases...
+ core                  137.5 KiB  1785 KiB/s 00:00 [######################] 100%
+ extra                1567.3 KiB  6.86 MiB/s 00:00 [######################] 100%
+ community               5.8 MiB  7.40 MiB/s 00:01 [######################] 100%
+ multilib              150.3 KiB  4.32 MiB/s 00:00 [######################] 100%
+ archlinuxcn          1921.0 KiB  4.77 MiB/s 00:00 [######################] 100%
+:: Starting full system upgrade...
+:: Replace python-sgmllib with extra/python-sgmllib3k? [Y/n] y
+:: Replace wine-wechat with archlinuxcn/wine-wechat-setup? [Y/n] y
+:: Replace xdg-desktop-portal-gtk with extra/xdg-desktop-portal-gnome? [Y/n] y
+:: Replace xmlrpc-c with community/libxmlrpc? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
+:: python-mistune1 and python-mistune are in conflict. Remove python-mistune? [y/N] y
+warning: dependency cycle detected:
+warning: freetype2 will be installed before its harfbuzz dependency
+warning: dependency cycle detected:
+warning: libglvnd will be installed before its mesa dependency
+warning: dependency cycle detected:
+warning: nvidia-utils will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: xorg-server will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: egl-wayland will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: smbclient will be installed before its cifs-utils dependency
+warning: dependency cycle detected:
+warning: rubygems will be installed before its ruby dependency
+warning: dependency cycle detected:
+warning: jupyter-nbconvert will be installed before its jupyter dependency
+warning: dependency cycle detected:
+warning: lib32-mesa will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-nvidia-utils will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-harfbuzz will be installed before its lib32-freetype2 dependency
+warning: dependency cycle detected:
+warning: tensorboard will be installed before its python-tensorboard_plugin_wit dependency
+warning: dependency cycle detected:
+warning: python-keras will be installed before its python-tensorflow-opt dependency
+The Teamviewer daemon must be running for Teamviewer to work.
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+==> WeChat data will be put into ~/.local/lib/wine-wechat when needed.
+==> You need to download WeChat setup program yourself.
+==> run 'wechat -i path/to/WeChatSetup.exe' to install / update.
+==> run 'wechat --config' if you want to adjust DPI settings.
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+
+libdecor lesspipe libjxl python-curio python-sniffio python-trio criu pipewire-v4l2 pipewire-session-manager jedi-language-server python-pyppeteer lib32-pipewire-v4l2 yt-dlp adios2 cgns libharu liblas openimagedenoise openvdb openvr ospray gvfs pyside2 edk2-armvirt python-database-knotinfo yt-dlp libotr libotr wine-for-wechat python-plyvel
+
+
+anydesk
+
+
+
