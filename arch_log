@@ -94,11 +94,67 @@ $ pacman -Q -e > pacqe.txt
 $ pacman -Q -m > pacqm.txt
 $ pacman -Q -n > pacqn.txt
 
-// restore grub
+// restore grub  |  grub修复
+
+grub命令见
+最新Grub2全面教程.pdf
+
+常用的有
+
+grub>root (hd0,0)
+命令含义：从的硬盘第一个分区C盘启动
+
+grub>chainloader (hd0,0)+1
+命令含义：指示GRUB读取分区的第一个扇区的引导记录
+
+grub>boot
+命令含义：启动GRUB
+
+查看挂载目录
+//sudo fdisk -l
+挂载，比如载到/mnt
+//sudo mount /dev/sda1 /mnt
+在livecd切换到目标根目录
+cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
+su
+mount -o bind /dev dev
+chroot .
+// or 
+// chroot . /bin/bash
+
+挂载根目录特殊节点
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devpts devpts /dev/pts
+mkdir -p /run/lock
+mount -t tmpfs tmpfs /run/lock
+mount /dev/sdx2 /home
+mount /dev/sdx3 /opt
+
+//or
+
+mount --bind /dev /mnt/dev 
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys 
+
+//or
+
+mount -t proc proc /mnt/proc
+mount --rbind /sys /mnt/sys
+mount --rbind /dev /mnt/dev
+
+chroot和mount根目录特殊节点先后无关？最好在mount之前之后？
 sudo chroot /path/to/mounted/
+//or
+sudo chroot /mnt /bin/bash
+
+// use grub-install or grub2-install
 sudo grub-install /dev/sda
 // or 
-sudo grub-install --root-directory=/path/to/mounted/ /dev/sda
+sudo grub-install --root-directory=/mnt/boot /dev/sda
+// or if sda3 is a EFI partition
+mount /dev/sda3 /mnt/boot/efi
+sudo grub-install /dev/sda --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
 
 //generate new grub.cfg
 grub2-mkconfig -o /boot/grub2/grub.cfg

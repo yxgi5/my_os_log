@@ -5118,3 +5118,176 @@ anydesk
 
 
 
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing x264 (3:0.163.r3060.5db6aa6-1) breaks dependency 'x264=3:0.161.r3039.544c61f' required by lib32-x264
+
+yay -Rdd lib32-x264
+
+yay -S pyside2 edk2-armvirt qt5-scxml qt5-remoteobjects qt5-datavis3d
+
+yay -S pipewire-session-manager pipewire-v4l2 pipewire-media-session-docs lib32-pipewire-v4l2 
+
+removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
+
+yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray 
+
+yay -S yt-dlp
+
+yay -S anydesk
+sudo teamviewer --daemon start
+
+
+
+sudo -H pip3 install selenium -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install webdriver-manager -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pywebcopy -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyautogui -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install bencoder -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install requests docopt requests beautifulsoup4 lxml future pysocks -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install PySide6 loguru Pillow html5lib qrcode incremental -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install ndg-httpsclient pyopenssl pyasn1 -i https://mirrors.163.com/pypi/simple
+
+
+
+
+genymotion command line research
+
+
+VBoxManage list vms
+"win7" {a476458e-c12a-4541-8453-5d0120b14e89}
+"XP" {4e009271-4819-4487-82dd-92f96ed822cb}
+"ubuntu1604" {1fa17739-4ddc-40b6-909c-d79368dd2cbe}
+"Google Nexus 7" {e48922a5-f560-4cbe-aceb-8f6f9356f0b5}
+"Google Nexus 10" {5b406e20-9e6a-4e5d-b9d6-4d9ac239b4f8}
+"Amazon Fire HD 10" {6a2d46d1-ac4f-4752-ab51-11fa0fb56703}
+"manjaro" {52e3916f-9117-4afd-99d5-93205a5144a6}
+
+/opt/genymotion/genymotion-shell
+genymotion-shell
+genymotion>player --vm-name "6a2d46d1-ac4f-4752-ab51-11fa0fb56703"
+
+/opt/genymotion/player --vm-name "6a2d46d1-ac4f-4752-ab51-11fa0fb56703"
+
+Genymotion Shell > help                                                                   
+
+List of available commands:
+---------------------------
+android             information related to the Android system included in Genymotion distribution
+battery             actions and information related to the battery widget
+devices             generic actions related to virtual devices (listing, selection, ...)
+diskio              actions and information related to the disk throughput
+exit                quit this application
+genymotion          information related to the Genymotion system
+gps                 actions and information related to the Global Positioning System widget
+help                display this help and display help for each verb
+network             actions and information related to the network quality of service
+pause               perform a pause (useful for automatic tests)
+phone               actions related to the phone widget
+quit                quit this application
+rotation            actions related to the rotation of virtual devices
+version             version number of the running Genymotion Shell application
+
+Genymotion Shell > devices list
+Available devices:
+
+ Id | Select |    Status     |   Type   |   IP Address    |      Name
+----+--------+---------------+----------+-----------------+---------------
+  0 |    *   |            On |  virtual |  192.168.56.104 | Amazon Fire HD 10
+  1 |        |           Off |  virtual |         0.0.0.0 | Google Nexus 10
+  2 |        |           Off |  virtual |         0.0.0.0 | Google Nexus 7
+
+Genymotion Shell > devices select 0    
+Selecting device id 0
+Genymotion device selected: Amazon Fire HD 10
+
+
+
+
+genyshell -c "devices list"
+
+gmtool admin create "Google Nexus 5 - 4.4.4 - API 19 - 1080x1920" myNexus
+gmtool admin start myNexus
+
+
+
+
+yay -s socat libsepol libselinux 
+org.eclipse.tcf.core_1.5.0.202005280226.jar
+//yay xrt
+
+
+
+为了解决 xsct 在 archlinux 中管理 vitis/sdk 工程过程的 fail，各种办法都没有解决问题，那么就用 docker run a ubuntu container
+
+docker pull ubuntu:16.04
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu:16.04 bash
+
+docker exec -it ubuntu_container /bin/bash
+
+apt update
+--apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude
+apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev 
+dpkg-reconfigure locales
+>149 and 3
+dpkg-reconfigure dash
+>choose no
+adduser andy
+
+docker exec -it ubuntu_container /bin/bash
+
+cd /opt/Xilinx/Vitis/2020.1
+source ./settings64.sh
+xsct
+
+
+$ docker pull ubuntu
+-- or "docker pull ubuntu:16.04"
+$ docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu bash
+$ docker exec -it ubuntu_container /bin/bash
+
+# apt update
+# apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd
+# dpkg-reconfigure locales
+> choose en_US.UTF-8 UTF-8, at about number 149 ... 159
+> and choose num 3, en_US.UTF-8
+# dpkg-reconfigure dash
+> choose no
+# adduser andy
+> ...
+# su andy
+$ cd /opt/Xilinx/Vitis/2020.1
+$ source ./settings64.sh
+$ xsct
+
+
+几个常用操作
+
+docker stop ubuntu_container
+docker start ubuntu_container
+
+sudo docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+sudo systemctl stop docker.service 
+
+sudo systemctl start docker.service 
+sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+
+
+这下，可以间接使用vitis/xsct有关tcl了！！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
