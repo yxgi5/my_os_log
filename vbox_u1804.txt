@@ -2823,6 +2823,35 @@ sudo apt-get purge gtk3-nocsd
 
 
 
+anydesk
+安装在/opt/anydesk-5.1.1
+作为服务运行
+
+sudo gedit /lib/systemd/systemanydesk.service
+<--------------------------------------------
+[Unit]
+Description=AnyDesk
+Requires=network.target
+After=systemd-user-sessions.service
+
+[Service]
+Type=simple
+ExecStart=/opt/anydesk-5.1.1/anydesk --service
+PIDFile=/var/run/anydesk.pid
+KillMode=mixed
+TimeoutStopSec=30
+User=root
+LimitNOFILE=100000
+
+[Install]
+WantedBy=multi-user.target
+-------------------------------------------/>
+sudo systemctl enable anydesk.service
+sudo systemctl start anydesk.service
+
+
+
+
 
 
 
