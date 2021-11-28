@@ -5059,6 +5059,65 @@ sv2v.cabal(patch)
 
 
 
+:: Synchronizing package databases...
+ core                  137.5 KiB  1785 KiB/s 00:00 [######################] 100%
+ extra                1567.3 KiB  6.86 MiB/s 00:00 [######################] 100%
+ community               5.8 MiB  7.40 MiB/s 00:01 [######################] 100%
+ multilib              150.3 KiB  4.32 MiB/s 00:00 [######################] 100%
+ archlinuxcn          1921.0 KiB  4.77 MiB/s 00:00 [######################] 100%
+:: Starting full system upgrade...
+:: Replace python-sgmllib with extra/python-sgmllib3k? [Y/n] y
+:: Replace wine-wechat with archlinuxcn/wine-wechat-setup? [Y/n] y
+:: Replace xdg-desktop-portal-gtk with extra/xdg-desktop-portal-gnome? [Y/n] y
+:: Replace xmlrpc-c with community/libxmlrpc? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
+:: python-mistune1 and python-mistune are in conflict. Remove python-mistune? [y/N] y
+warning: dependency cycle detected:
+warning: freetype2 will be installed before its harfbuzz dependency
+warning: dependency cycle detected:
+warning: libglvnd will be installed before its mesa dependency
+warning: dependency cycle detected:
+warning: nvidia-utils will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: xorg-server will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: egl-wayland will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: smbclient will be installed before its cifs-utils dependency
+warning: dependency cycle detected:
+warning: rubygems will be installed before its ruby dependency
+warning: dependency cycle detected:
+warning: jupyter-nbconvert will be installed before its jupyter dependency
+warning: dependency cycle detected:
+warning: lib32-mesa will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-nvidia-utils will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-harfbuzz will be installed before its lib32-freetype2 dependency
+warning: dependency cycle detected:
+warning: tensorboard will be installed before its python-tensorboard_plugin_wit dependency
+warning: dependency cycle detected:
+warning: python-keras will be installed before its python-tensorflow-opt dependency
+The Teamviewer daemon must be running for Teamviewer to work.
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+==> WeChat data will be put into ~/.local/lib/wine-wechat when needed.
+==> You need to download WeChat setup program yourself.
+==> run 'wechat -i path/to/WeChatSetup.exe' to install / update.
+==> run 'wechat --config' if you want to adjust DPI settings.
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+
+libdecor lesspipe libjxl python-curio python-sniffio python-trio criu pipewire-v4l2 pipewire-session-manager jedi-language-server python-pyppeteer lib32-pipewire-v4l2 yt-dlp adios2 cgns libharu liblas openimagedenoise openvdb openvr ospray gvfs pyside2 edk2-armvirt python-database-knotinfo yt-dlp libotr libotr wine-for-wechat python-plyvel
+
+
+anydesk
+
+
+
 error: failed to prepare transaction (could not satisfy dependencies)
 :: installing x264 (3:0.163.r3060.5db6aa6-1) breaks dependency 'x264=3:0.161.r3039.544c61f' required by lib32-x264
 
@@ -5070,9 +5129,9 @@ yay -S pipewire-session-manager pipewire-v4l2 pipewire-media-session-docs lib32-
 
 removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
 
-yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray 
+yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray level-zero-loader benchmark
 
-yay -S yt-dlp
+yay -S yt-dlp atomicparsley
 
 yay -S anydesk
 sudo teamviewer --daemon start
@@ -5152,7 +5211,7 @@ gmtool admin start myNexus
 
 
 
-yay -s socat libsepol libselinux 
+yay -S socat libsepol libselinux 
 org.eclipse.tcf.core_1.5.0.202005280226.jar
 //yay xrt
 
@@ -5187,7 +5246,7 @@ $ docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home
 $ docker exec -it ubuntu_container /bin/bash
 
 # apt update
-# apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd
+# apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
 # dpkg-reconfigure locales
 > choose en_US.UTF-8 UTF-8, at about number 149 ... 159
 > and choose num 3, en_US.UTF-8
@@ -5233,6 +5292,13 @@ sudo systemctl enable teamviewerd.service
 
 yay -S python-pycups x11docker gst-python kwin nxagent weston xorg-server-xwayland
 yay -S appstream-qt breeze-gtk maliit-keyboard  packagekit-qt5 anthy libpinyin libchewing chewing-editor
+
+yay -S python-rdflib python-brotli python-fs python-lz4 python-reportlab python-unicodedata2 python-zopfli pyside6 python-pyqt6 rtaudio-docs qt6-svg qt6-3d qt6-scxml qt6-datavis3d qt6-charts qt6-multimedia qt6-serialport qt6-webengine qt6-remoteobjects qt6-sensors qt6-websockets qt6-networkauth qt6-webchannel qt6-location qt6-connectivity qt6-declarative qt6-shadertools
+
+
+
+
+
 
 
 
