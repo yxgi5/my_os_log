@@ -5296,8 +5296,8 @@ yay -S appstream-qt breeze-gtk maliit-keyboard  packagekit-qt5 anthy libpinyin l
 yay -S python-rdflib python-brotli python-fs python-lz4 python-reportlab python-unicodedata2 python-zopfli pyside6 python-pyqt6 rtaudio-docs qt6-svg qt6-3d qt6-scxml qt6-datavis3d qt6-charts qt6-multimedia qt6-serialport qt6-webengine qt6-remoteobjects qt6-sensors qt6-websockets qt6-networkauth qt6-webchannel qt6-location qt6-connectivity qt6-declarative qt6-shadertools
 
 
-
-
+屏幕录像工具
+yay -S simplescreenrecorder peek deepin-screen-recorder
 
 
 
