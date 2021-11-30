@@ -5301,6 +5301,72 @@ yay -S simplescreenrecorder peek deepin-screen-recorder
 
 
 
+aur里有个LabVIEW-2020，正好我这也有个LabVIEW2020pro-linux-mac.iso, 修改一下PKGBUILD来makepkg一个安装包
+
+安装完毕的后续处理
+
+原始rpm包的libniPythonInterface.so和libNILVRuntimeManager.so预装位置在
+/usr/local/natinst/niPythonInterface/lib64/
+/usr/local/lib64/LabVIEW-2020-64/
+
+生成arch包之后
+libniPythonInterface.so.3.0.0在
+/opt/natinst/niPythonInterface/lib64/
+建立一个软链接
+
+libNILVRuntimeManager.so在
+/opt/natinst/LabVIEW-2020-64/AppLibs/
+
+su
+echo "/opt/natinst/niPythonInterface/lib64/" > /etc/ld.so.conf.d/ni-python-interface.conf
+echo "/opt/natinst/LabVIEW-2020-64/AppLibs/" > /etc/ld.so.conf.d/labview.conf
+ldconfig
+exit
+
+好像没起作用，那么这样
+sudo rm /etc/ld.so.conf.d/ni-python-interface.conf
+sudo rm /etc/ld.so.conf.d/labview.conf
+sudo /sbin/ldconfig
+export LD_LIBRARY_PATH=/opt/natinst/LabVIEW-2020-64/AppLibs/:/opt/natinst/niPythonInterface/lib64/:$LD_LIBRARY_PATH
+添加到~/.bashrc
+
+
+启动器 natinst-labview-2020.desktop
+[Desktop Entry]
+Name=LabVIEW 2020 64-bit
+Comment=LabVIEW Graphical Dataflow Programming Environment
+Exec=/opt/natinst/LabVIEW-2020-64/labview -launch %F
+StartupWMClass=LabVIEW64-2020
+Icon=natinst-labview
+Terminal=false
+Type=Application
+Categories=Application;Development;natinst;
+MimeType=application/x-labview-vi;application/x-labview-llb;application/x-labview-ctl;application/x-labview-vit;application/x-labview-ctt;application/x-labview-lvclass;application/x-labview-lvproj;application/x-labview-lvlib;application/x-labview-xnode;application/x-labview-xctl;application/x-labview-lvrbt;application/x-labview-vim
+
+运行正常
+后面有空再弄 driver 和 add-on 之类的
+
+
+
+AC6 临时笔记
+- startup_stm32f10x_ld_vl.s: for STM32 Low density Value line devices
+- startup_stm32f10x_ld.s: for STM32 Low density devices
+- startup_stm32f10x_md_vl.s: for STM32 Medium density Value line devices
+- startup_stm32f10x_md.s: for STM32 Medium density devices
+- startup_stm32f10x_hd.s: for STM32 High density devices
+- startup_stm32f10x_xl.s: for STM32 XL density devices
+- startup_stm32f10x_cl.s: for STM32 Connectivity line devices
+cl：互联型产品，stm32f105/107系列
+vl：超值型产品，stm32f100系列
+xl：超高密度产品，stm32f101/103系列
+ld：低密度产品，FLASH小于64K
+md：中等密度产品，FLASH=64 or 128
+hd：高密度产品，FLASH大于128
+
+
+
+
+
 
 
 
