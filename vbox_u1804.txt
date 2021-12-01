@@ -2852,6 +2852,229 @@ sudo systemctl start anydesk.service
 
 
 
+根目录和/home的共同分区大小不够了，迁移实际存储位置
+/home/andreas/Documents/XilinxDocs，复制到/opt/Xilinx
+然后用软链接代替原位置
+ln -s /opt/Xilinx/XilinxDocs/ ~/Documents/XilinxDocs
+用baobab分析占用大户，删除多余或者转移位置
+
+
+
+自己编译的notepadqq-git版本崩溃了，安装系统repo的吧，好像有点缺陷
+那么安装ppa的版本吧
+sudo add-apt-repository ppa:notepadqq-team/notepadqq
+sudo apt-get update
+sudo apt-get install notepadqq
+好像也没有啥不同，如果想卸载就这样
+sudo apt-get remove notepadqq notepadqq-common
+sudo add-apt-repository --remove ppa:notepadqq-team/notepadqq
+
+
+通过PKGBUILD和makedeb产生labview2020的安装包，然后安装
+添加~/.bashrc
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/natinst/LabVIEW-2020-64/AppLibs:/opt/natinst/niPythonInterface/lib64
+
+sudo dpkg -i ni-software-2020-bionic_20.1.0.49152-0+f0_all.deb
+然后update，然后安装ni*,libni*
+
+The following additional packages will be installed:
+  libni1045tr1 libniapxipm215 libnicmm1 libnicntdrv1 libnicpcie1 libnidaqmx libnidaqmx-devel libnidaqmx-doc libnidimu1 libnidrumc1 libnidrumc1-bin libnimru2u2 libnimxi1 libnimximgr1 libnimximgr1-data
+  libnimximgr1-errors libnip2p1 libnipcibrd1 libnipcibrd1-bin libnipcibrd1-errors libnipxices1 libnipxicid1 libnipxiepmu15 libnipxigp15 libnipxirm1 libnipxisvc2 libniqpxi1 libnirocoapi1 libnismbus2
+  libnismbus2-errors libnixlator1 libusb-ni1 nicurli nisslcerts nissli nixercesdelayloadi system-report
+The following NEW packages will be installed:
+  libni1045tr1 libniapxipm215 libnicmm1 libnicntdrv1 libnicpcie1 libnidaqmx libnidaqmx-devel libnidaqmx-doc libnidimu1 libnidrumc1 libnidrumc1-bin libnimru2u2 libnimxi1 libnimximgr1 libnimximgr1-data
+  libnimximgr1-errors libnip2p1 libnipcibrd1 libnipcibrd1-bin libnipcibrd1-errors libnipxices1 libnipxicid1 libnipxiepmu15 libnipxigp15 libnipxirm1 libnipxisvc2 libniqpxi1 libnirocoapi1 libnismbus2
+  libnismbus2-errors libnixlator1 libusb-ni1 ni-apal-errors ni-avahi-client ni-bds ni-bds-dkms ni-controllerdriver ni-controllerdriver-errors ni-controllerdriver-libs ni-daqmx ni-daqmx-dsa ni-daqmx-dsa-libs
+  ni-daqmx-ef ni-daqmx-errors ni-daqmx-fsl-libs ni-daqmx-libs ni-daqmx-mio ni-daqmx-mio-libs ni-daqmx-nicartenum-dkms ni-daqmx-nicdcc-dkms ni-daqmx-nicdr-dkms ni-daqmx-nichenum-dkms ni-daqmx-nicmr-dkms
+  ni-daqmx-nicondr-dkms ni-daqmx-nicsr-dkms ni-daqmx-nidmxf-dkms ni-daqmx-nidsar-dkms ni-daqmx-niesr-dkms ni-daqmx-nifdr-dkms ni-daqmx-nifresnelmbdc-dkms ni-daqmx-nifsl-dkms ni-daqmx-nihorbr-dkms
+  ni-daqmx-nilms-dkms ni-daqmx-nimsdr-dkms ni-daqmx-niraptr-dkms ni-daqmx-nisdig-dkms ni-daqmx-nissr-dkms ni-daqmx-nistc2-dkms ni-daqmx-nistc3r-dkms ni-daqmx-nistcr-dkms ni-daqmx-nitior-dkms
+  ni-daqmx-niwfr-dkms ni-daqmx-nixsr-dkms ni-daqmx-notices ni-dim ni-dim-dkms ni-dim-libs ni-dim-sysapi ni-euladepot ni-fpga-interface ni-kal ni-mdbg ni-mdbg-dkms ni-mdbg-errors ni-mru ni-mru-dkms ni-mxdf
+  ni-mxdf-dkms ni-mxdf-errors ni-mximanager ni-mximanager-libs ni-mximanager-nicpciek-dkms ni-mxs ni-networkdiscoverysvc ni-orb ni-orb-dkms ni-orb-errors ni-orb-tools ni-p2p ni-p2p-devel ni-p2p-dkms
+  ni-p2p-errors ni-pal ni-pal-dkms ni-pal-errors ni-pal-support ni-pxi-tools ni-pxihw-ni1045-dkms ni-pxihw-nicntdrv-dkms ni-pxihw-nimxi-dkms ni-pxihw-nipxicid-dkms ni-pxihw-nipxicmm-dkms
+  ni-pxihw-nipxiethernet-dkms ni-pxihw-nipxim2-dkms ni-pxihw-nismbus-dkms ni-pxipf-errors ni-pxipf-nipxifp-dkms ni-pxipf-nipxigp-dkms ni-pxipf-nipxirm-bin ni-pxipf-nipxirm-dkms ni-pxiplatformframework
+  ni-pxiplatformframework-data ni-pxiplatformhwsupport ni-pxiplatformhwsupport-bin ni-pxiplatformhwsupport-data ni-pxiplatformhwsupport-errors ni-pxiplatformhwsupport-libs ni-pxiplatformservices
+  ni-pxiplatformservices-bin ni-pxiplatformservices-data ni-pxiplatformservices-libs ni-pxiplatformsoftware-errors ni-pxisa-compliance ni-qpxi ni-qpxi-libs ni-rio ni-rio-dkms ni-rio-fpga-ids ni-rio-server
+  ni-roco ni-routing-errors ni-rtsi-libs ni-rtsi-pal-libs ni-service-locator ni-software-action-services ni-syncdomain-service ni-sysapi ni-syscfg-devel ni-syscfg-runtime ni-targetcfg ni-usrp-rio
+  ni-usrp-rio-dkms ni-usrp-rio-libs ni-wsrepl ni-xlator nicurli nisslcerts nissli nixercesdelayloadi system-report
+0 upgraded, 160 newly installed, 0 to remove and 19 not upgraded.
+
+其实这时候还是没有visa和4882(GPIB)的驱动.
+
+上面apt方式安装的所有包，另外做了一个PKGBUILD，全部makedeb打包成一个大的labview-debs-2020_0f1-1_amd64.deb，另外makepkg生成一个大的arch安装包
+
+
+那么从http://download.ni.com/ni-linux-desktop/2020.07/rpm/ni/lp151/   这个是opensuse的
+抓下来所有的rpm包，写个PKGBUILD来转换一下
+
+PKGBUILD
+<--------------------------------------------------
+# Maintainer: Andreas Zhang
+# Contributor: Andreas Zhang <denglitsch@gmail.com>
+
+_release='2020'
+_short_release="${_release:2:4}"
+_service_pack='0'
+pkgname="labview-visa-${_release}"
+pkgver="${_service_pack}f1"
+pkgrel=1
+pkgdesc='A system-design platform and development environment for a visual programming language from National Instruments.'
+url="https://www.ni.com/labview/release-archive/${_release}/"
+arch=('x86_64')
+license=("custom:LabVIEW-${_release}")
+depends=('xdg-utils' 'hicolor-icon-theme' 'desktop-file-utils' 'shared-mime-info')
+makedepends=('sed' 'libarchive')
+options=('!strip') # Avoid time consuming operations.
+source=("file://libivivisa0-7.0.0-1.x86_64.rpm"
+        "file://libivivisa0-devel-7.0.0-1.x86_64.rpm"
+        "file://libivivisa-confmgr0-7.0.0-1.x86_64.rpm"
+        "file://libivivisa-utilities0-7.0.0-1.x86_64.rpm"
+        "file://ni-visa-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-config-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-ddw-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-devel-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-doc-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-errors-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-headers-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-interactive-control-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-labview-2020-support-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-labview-filter-dialog-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-labview-io-control-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-labview-rc-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-lxi-discovery-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-enet-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-enet-serial-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-gpib-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-pxi-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-pxi-dkms-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-remote-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-serial-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-passport-usb-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://ni-visa-runtime-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-server-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://libvisa-20.0.0.49152-0+f0.x86_64.rpm"
+        "file://libvisa-data-20.0.0.49152-0+f0.noarch.rpm"
+        "file://ni-visa-sysapi-20.0.0.49152-0+f0.x86_64.rpm")
+sha256sums=('SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP')
+
+prepare() {
+    cd ${srcdir}
+    for file in ${source[@]}; do if [ ${file: -4} == ".rpm" ]; then bsdtar -xf "${file#file://}"; fi; done
+}
+            
+            
+package() {
+  mkdir -p "${pkgdir}/opt"
+  cp -rp "${srcdir}/usr/local/natinst" "${pkgdir}/opt/"
+  mkdir -p "${pkgdir}/usr/bin/"
+  cp -rp "${srcdir}/usr/bin" "${pkgdir}/usr/"
+  mkdir -p "${pkgdir}/usr/include/"
+  cp -rp "${srcdir}/usr/include" "${pkgdir}/usr/"
+  mkdir -p "${pkgdir}/usr/lib/"
+  cp -rp "${srcdir}/usr/lib" "${pkgdir}/usr/"
+  mkdir -p "${pkgdir}/usr/lib64/"
+  cp -rp "${srcdir}/usr/lib64" "${pkgdir}/usr/"
+  mkdir -p "${pkgdir}/usr/share/"
+  cp -rp "${srcdir}/usr/share" "${pkgdir}/usr/"
+  mkdir -p "${pkgdir}/usr/src/"
+  cp -rp "${srcdir}/usr/src" "${pkgdir}/usr/"
+  mkdir -p "${pkgdir}/etc"
+  cp -rp "${srcdir}/etc" "${pkgdir}/"
+  mkdir -p "${pkgdir}/var"
+  cp -rp "${srcdir}/var" "${pkgdir}/"
+}
+
+# vim:set et sw=2 sts=2:
+---------------------------------------/>
+
+sudo dpkg -i labview-visa-2020_0f1-1_amd64.deb
+sudo dkms install -m NiViPciK -v 20.0.0f0
+sudo /usr/lib/dkms/common.postinst NiViPciK 20.0.0f0
+sudo dkms install -m NiRioSrv -v 20.0.1f0
+sudo /usr/lib/dkms/common.postinst NiRioSrv 20.0.1f0
+sudo /sbin/ldconfig
+sudo -H pip3 install pyvisa -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyvisa-py -i https://mirrors.163.com/pypi/simple
+sudo reboot
+driverwizard是否正常
+缺失liblvrt.so.20.0
+sudo alien labview-2020-rte-20.0.0-1.x86_64.rpm
+sudo dpkg -i labview-2020-rte_20.0.0-2_amd64.deb
+sudo apt remove labview-2020-rte
+
+cd /opt/natinst
+$ find . -name "liblvrt.so*"
+./LabVIEW-2020-64/AppLibs/liblvrt.so.20.0.0
+./LabVIEW-2020-64/AppLibs/liblvrt.so
+
+再strace driverwizard
+cd /opt/natinst/LabVIEW-2020-64/AppLibs
+sudo ln -s liblvrt.so.20.0.0 liblvrt.so.20.0
+sudo mkdir English
+cp lvapp.rsc English/
+sudo cp ../resource/tdtable.tdr .
+
+driverwizard等几个起码能打开了
+libvisa-20.0.0.49152-0+f0.x86_64.rpm
+libvisa-data-20.0.0.49152-0+f0.noarch.rpm
+添加到PKGBUILD很重要，已经更新
+
+
+$ su
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/natinst/LabVIEW-2020-64/AppLibs:/opt/natinst/niPythonInterface/lib64:/opt/natinst/share/NI-VISA:/opt/natinst/LabVIEW-2020-64/resource
+# visaconf
+初始化一下有关的driver配置
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
