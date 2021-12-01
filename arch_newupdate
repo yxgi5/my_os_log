@@ -5313,6 +5313,8 @@ aur里有个LabVIEW-2020，正好我这也有个LabVIEW2020pro-linux-mac.iso, �
 libniPythonInterface.so.3.0.0在
 /opt/natinst/niPythonInterface/lib64/
 建立一个软链接
+cd /opt/natinst/niPythonInterface/lib64/
+sudo ln -s libniPythonInterface.so.3.0.0 libniPythonInterface.so
 
 libNILVRuntimeManager.so在
 /opt/natinst/LabVIEW-2020-64/AppLibs/
@@ -5327,7 +5329,7 @@ exit
 sudo rm /etc/ld.so.conf.d/ni-python-interface.conf
 sudo rm /etc/ld.so.conf.d/labview.conf
 sudo /sbin/ldconfig
-export LD_LIBRARY_PATH=/opt/natinst/LabVIEW-2020-64/AppLibs/:/opt/natinst/niPythonInterface/lib64/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/natinst/LabVIEW-2020-64/AppLibs:/opt/natinst/niPythonInterface/lib64
 添加到~/.bashrc
 
 
