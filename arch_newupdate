@@ -5365,8 +5365,30 @@ hd：高密度产品，FLASH大于128
 
 
 
+----------------------------------------------------------------------------------
+===> NOTES FOR USAGE
+===>
+===> 1) Please logout & login to renew environment variable before first use.
+===>
+===> 2) If Usb-raw devices do not work, try following (as root) and restart your PC:
+===>    # AddUsbRawPermissions.sh
+===>    # gpasswd -a <user> usbraw
+===>
+===> 3) If USB-TMC devices do not work, try following (as root) and restart your PC:
+===>    # gpasswd -a <user> usbtmc
+===>    # rmmod usbtmc
+===>    # echo 'blacklist usbtmc' > /etc/modprobe.d/nousbtmc.conf
+===> refs: http://digital.ni.com/public.nsf/allkb/A10090850FF0887A86257926007A7E96
+===>       https://github.com/python-ivi/python-usbtmc#configuring-udev
+===>
+----------------------------------------------------------------------------------
 
 
+Optional dependencies for ni-visa
+    python2-pyvisa: python 2 frontend
+    python-pyvisa: python 3 frontend
+
+yay -S python2-pyvisa python-pyvisa linux-gpib python2-linux-gpib python-gpib-ctypes python-linux-gpib linux-gpib-dkms
 
 
 
