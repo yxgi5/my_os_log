@@ -3109,6 +3109,20 @@ sudo -H pip3 install --no-deps PyQt5-stubs==5.15.2.0 -i https://mirrors.163.com/
 
 
 
+apt临时加速(shadowsocks通过privoxy把socks5映射为http/https..,默认privoxy的端口8118)
+sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8118/" upgrade
+sudo apt-get -o Acquire::https::proxy="http://127.0.0.1:8118/" upgrade
+sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8118/" install xxx
+sudo apt-get -o Acquire::https::proxy="http://127.0.0.1:8118/" install xxx
+
+
+
+
+
+
+
+
+
 
 
 
