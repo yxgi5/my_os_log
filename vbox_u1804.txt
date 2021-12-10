@@ -3118,6 +3118,11 @@ sudo apt-get -o Acquire::https::proxy="http://127.0.0.1:8118/" install xxx
 
 
 
+inotify_add_watch("/home/andreas/.config/qt5ct") failed: "No such file or directory"
+那么运行一下qt5ct,就产生了~/.config/qt5ct目录及下面的文件
+
+
+
 
 
 
