@@ -1799,7 +1799,8 @@ ls /usr/src/tty0tty-1.2.r25.g5f8d18d/
 - 编译所有已经注册的模块？？
 # dkms install
 //sudo dkms autoinstall -k      （看起来啥也没有输出）
-
+输出更多信息
+sudo dkms --debug autoinstal
 
 	$ sudo dkms install -m tty0tty -v 1.2.r25.g5f8d18d
 
@@ -3038,8 +3039,9 @@ $ find . -name "liblvrt.so*"
 再strace driverwizard
 cd /opt/natinst/LabVIEW-2020-64/AppLibs
 sudo ln -s liblvrt.so.20.0.0 liblvrt.so.20.0
+sudo ln -s ../resource/libniCPULib.so.20.0.0 libniCPULib.so
 sudo mkdir English
-cp lvapp.rsc English/
+sudo cp lvapp.rsc English/
 sudo cp ../resource/tdtable.tdr .
 
 driverwizard等几个起码能打开了

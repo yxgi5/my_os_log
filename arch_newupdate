@@ -4812,7 +4812,8 @@ yay -S qt4-serialport
 
 
 yay -S tty0tty
-dkms install --no-depmod -m tty0tty -v git -k 5.13.9-arch1-1
+sudo dkms install --no-depmod -m tty0tty -v git -k 5.13.9-arch1-1
+移除dkms模块想这样 sudo dkms remove -m tty0tty -v 1.2.r25.g5f8d18d --all
 
 sudo dkms autoinstall -k
 Error! Could not locate dkms.conf file.
@@ -5367,6 +5368,113 @@ hd：高密度产品，FLASH大于128
 
 
 
+
+
+
+
+sudo dkms install --no-depmod nikal/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nimxik/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipalk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipxicidk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicntdrk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicmmk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicpciek/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod ni1045tr/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nibds/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod niorbk/20.0.0f1 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nismbus/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nistreamk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nimdbgk/20.0.0f2 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nidimk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicartenumk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nifresnelmbdc/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nifslk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nimxdfk/20.0.0f1 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nidmxfk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod niesrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipxiethernet/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipxim2/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nistc2k/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod niusrpriok/20.1 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipxirmk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipxifpk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nipxigpk/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nimru2k/20.0.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nimsdrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nilmsk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicdcck/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicdrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nichenumk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nistc3rk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicmrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nisdigk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nistcrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nitiork/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nidsark/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod niraptrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod niwfrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nixsrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicsrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nicondrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nifdrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nihorbrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod nissrk/20.1.0f0 -k 5.15.5-arch1-1
+sudo dkms install --no-depmod NiRioSrv/20.0.1f0 -k 5.15.5-arch1-1
+
+sudo dkms install --no-depmod NiViPciK/20.0.0f0 -k 5.15.5-arch1-1
+
+$ find ni* -name "Makefile" | xargs grep "MODDEPS="
+#ni1045tr-20.0.0f0/Makefile:MODDEPS=nikal 
+#nibds-20.0.0f0/Makefile:MODDEPS=nikal 
+#nicartenumk-20.1.0f0/Makefile:MODDEPS=nibds nikal nimdbgk nipalk 
+#nicdcck-20.1.0f0/Makefile:MODDEPS=nikal nimdbgk nimxdfk niorbk nipalk 
+#nicdrk-20.1.0f0/Makefile:MODDEPS=nidmxfk nikal nimdbgk nimxdfk niorbk nipalk 
+#nichenumk-20.1.0f0/Makefile:MODDEPS=nibds nifslk nikal nimdbgk nipalk 
+#nicmmk-20.0.0f0/Makefile:MODDEPS=nikal 
+#nicmrk-20.1.0f0/Makefile:MODDEPS=nidmxfk nikal nimdbgk nimru2k nimxdfk niorbk nipalk nistc3rk 
+#nicntdrk-20.0.0f0/Makefile:MODDEPS=nikal 
+nicondrk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nisdigk nistc3rk 
+#nicpciek-20.0.0f0/Makefile:MODDEPS=nikal 
+#nicsrk-20.1.0f0/Makefile:MODDEPS=nicdcck nicdrk nichenumk nidimk nidmxfk nifresnelmbdc nifslk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nistc3rk 
+#nidimk-20.0.0f0/Makefile:MODDEPS=nikal niorbk nipalk 
+#nidmxfk-20.1.0f0/Makefile:MODDEPS=nikal nimdbgk nimxdfk niorbk nipalk 
+#nidsark-20.1.0f0/Makefile:MODDEPS=nidimk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nistc2k nistcrk 
+#niesrk-20.1.0f0/Makefile:MODDEPS=nikal nimdbgk nimxdfk niorbk nipalk 
+#nifdrk-20.1.0f0/Makefile:MODDEPS=nicdcck nicdrk nichenumk nidimk nidmxfk nifresnelmbdc nifslk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nistc3rk 
+#nifresnelmbdc-20.1.0f0/Makefile:MODDEPS=nikal nimdbgk nipalk 
+#nifslk-20.0.0f0/Makefile:MODDEPS=nikal nimdbgk nipalk 
+#nihorbrk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nimdbgk nimru2k nimxdfk niorbk nipalk nisdigk nistc3rk 
+#nilmsk-20.1.0f0/Makefile:MODDEPS=nidmxfk nikal nimdbgk nimxdfk niorbk nipalk 
+#nimdbgk-20.0.0f2/Makefile:MODDEPS=nikal niorbk nipalk 
+#nimru2k-20.0.0f0/Makefile:MODDEPS=nidimk nikal nimdbgk nimxdfk niorbk nipalk 
+#nimsdrk-20.1.0f0/Makefile:MODDEPS=nidmxfk nikal nimdbgk nimxdfk niorbk nipalk 
+#nimxdfk-20.0.0f1/Makefile:MODDEPS=nikal nimdbgk niorbk nipalk 
+#nimxik-20.0.0f0/Makefile:MODDEPS=nikal 
+#niorbk-20.0.0f1/Makefile:MODDEPS=nikal nipalk 
+#nipalk-20.0.0f0/Makefile:MODDEPS=nikal 
+#nipxicidk-20.0.0f0/Makefile:MODDEPS=nikal 
+#nipxiethernet-20.0.0f0/Makefile:MODDEPS=nikal 
+#nipxifpk-20.0.0f0/Makefile:MODDEPS=nikal nimdbgk nimxdfk niorbk nipalk nipxirmk 
+#nipxigpk-20.0.0f0/Makefile:MODDEPS=nikal nimdbgk nimxdfk niorbk nipalk nipxirmk 
+#nipxim2-20.0.0f0/Makefile:MODDEPS=nikal 
+#nipxirmk-20.0.0f0/Makefile:MODDEPS=nidimk nikal nimdbgk niorbk nipalk 
+#niraptrk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nimdbgk nimru2k nimxdfk niorbk nipalk nisdigk nistc3rk 
+#nisdigk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nimdbgk nimru2k nimxdfk niorbk nipalk 
+#nismbus-20.0.0f0/Makefile:MODDEPS=nikal 
+#nissrk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nisdigk nistc2k nistcrk nitiork 
+#nistc2k-20.1.0f0/Makefile:MODDEPS=nikal nimdbgk nipalk 
+#nistc3rk-20.1.0f0/Makefile:MODDEPS=nicdcck nidimk nidmxfk nifslk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk 
+#nistcrk-20.1.0f0/Makefile:MODDEPS=nidmxfk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nistc2k 
+#nistreamk-20.0.0f0/Makefile:MODDEPS=nikal 
+#nitiork-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk 
+#niusrpriok-20.1/Makefile:MODDEPS=nibds nikal nistreamk 
+#niwfrk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nistc2k nistcrk 
+#nixsrk-20.1.0f0/Makefile:MODDEPS=nicdrk nidimk nidmxfk nifslk nikal nilmsk nimdbgk nimru2k nimxdfk niorbk nipalk nisdigk nitiork 
+
+
+
+
+
 ----------------------------------------------------------------------------------
 ===> NOTES FOR USAGE
 ===>
@@ -5391,6 +5499,101 @@ Optional dependencies for ni-visa
     python-pyvisa: python 3 frontend
 
 yay -S python2-pyvisa python-pyvisa linux-gpib python2-linux-gpib python-gpib-ctypes python-linux-gpib linux-gpib-dkms
+
+
+mv libnipalu.so.20.0.0 libnipalu.so.20.0.0.bk
+visaconf
+cd /usr/lib/x86_64-linux-gnu
+$ su
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/natinst/LabVIEW-2020-64/AppLibs:/opt/natinst/niPythonInterface/lib64:/opt/natinst/share/NI-VISA:/opt/natinst/LabVIEW-2020-64/resource
+# visaconf
+
+
+
+sudo dkms install --no-depmod nikal/20.0.0f0
+sudo dkms install --no-depmod nimxik/20.0.0f0
+sudo dkms install --no-depmod nipalk/20.0.0f0
+sudo dkms install --no-depmod nipxicidk/20.0.0f0
+sudo dkms install --no-depmod nicntdrk/20.0.0f0
+sudo dkms install --no-depmod nicmmk/20.0.0f0
+sudo dkms install --no-depmod nicpciek/20.0.0f0
+sudo dkms install --no-depmod ni1045tr/20.0.0f0
+sudo dkms install --no-depmod nibds/20.0.0f0
+sudo dkms install --no-depmod niorbk/20.0.0f1
+sudo dkms install --no-depmod nismbus/20.0.0f0
+sudo dkms install --no-depmod nistreamk/20.0.0f0
+sudo dkms install --no-depmod nimdbgk/20.0.0f2
+sudo dkms install --no-depmod nidimk/20.0.0f0
+sudo dkms install --no-depmod nicartenumk/20.1.0f0
+sudo dkms install --no-depmod nifresnelmbdc/20.1.0f0
+sudo dkms install --no-depmod nifslk/20.0.0f0
+sudo dkms install --no-depmod nimxdfk/20.0.0f1
+sudo dkms install --no-depmod nidmxfk/20.1.0f0
+sudo dkms install --no-depmod niesrk/20.1.0f0
+sudo dkms install --no-depmod nipxiethernet/20.0.0f0
+sudo dkms install --no-depmod nipxim2/20.0.0f0
+sudo dkms install --no-depmod nistc2k/20.1.0f0
+sudo dkms install --no-depmod niusrpriok/20.1
+sudo dkms install --no-depmod nipxirmk/20.0.0f0
+sudo dkms install --no-depmod nipxifpk/20.0.0f0
+sudo dkms install --no-depmod nipxigpk/20.0.0f0
+sudo dkms install --no-depmod nimru2k/20.0.0f0
+sudo dkms install --no-depmod nimsdrk/20.1.0f0
+sudo dkms install --no-depmod nilmsk/20.1.0f0
+sudo dkms install --no-depmod nicdcck/20.1.0f0
+sudo dkms install --no-depmod nicdrk/20.1.0f0
+sudo dkms install --no-depmod nichenumk/20.1.0f0
+sudo dkms install --no-depmod nistc3rk/20.1.0f0
+sudo dkms install --no-depmod nicmrk/20.1.0f0
+sudo dkms install --no-depmod nisdigk/20.1.0f0
+sudo dkms install --no-depmod nistcrk/20.1.0f0
+sudo dkms install --no-depmod nitiork/20.1.0f0
+sudo dkms install --no-depmod nidsark/20.1.0f0
+sudo dkms install --no-depmod niraptrk/20.1.0f0
+sudo dkms install --no-depmod niwfrk/20.1.0f0
+sudo dkms install --no-depmod nixsrk/20.1.0f0
+sudo dkms install --no-depmod nicsrk/20.1.0f0
+sudo dkms install --no-depmod nicondrk/20.1.0f0
+sudo dkms install --no-depmod nifdrk/20.1.0f0
+sudo dkms install --no-depmod nihorbrk/20.1.0f0
+sudo dkms install --no-depmod nissrk/20.1.0f0
+sudo dkms install --no-depmod NiRioSrv/20.0.1f0
+
+sudo dkms install --no-depmod NiViPciK/20.0.0f0
+
+
+cat /usr/share/libalpm/hooks/70-dkms-install.hook
+
+
+
+
+pacman -Qo /usr/bin/idle
+/usr/bin/idle is owned by python 3.9.9-1
+yay -S idle3-tools
+
+pip国内镜像
+长期的话可以这样
+~/.pip/ 下创建文件 pip.conf
+[global]
+timeout = 600
+index-url = http://pypi.v2ex.com/simple
+[install]
+use-mirrors = true
+mirrors = https://pypi.tuna.tsinghua.edu.cn/simple/
+
+临时的就加上参数"-i https://pypi.tuna.tsinghua.edu.cn/simple/"
+例如
+pip install --upgrade tensorflow -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+其他国内镜像还有
+http://pypi.hustunique.com/
+http://pypi.sdutlinux.org/
+https://pypi.mirrors.ustc.edu.cn/simple/
+http://mirrors.aliyun.com/pypi/simple/
+http://pypi.douban.com/simple/
+
+
+
+
 
 
 

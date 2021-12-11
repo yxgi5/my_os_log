@@ -2695,7 +2695,7 @@ pacman -Sw package #下载但不安装包
 pacman -U /path/package.pkg.tar.gz #安装本地包
 pacman -Scc #清理包缓存，下载的包会在/var/cache 这个目录
 pacman -Sf pacman #重新安装包
-pacman -Qo /usr/lib/*** #查询库文件所属的软件包
+pacman -Qo /usr/lib/*** #查询库文件所属于的软件包
 
 其实要容易记的话可以自己在bashrc里配置一下alias就好。
 
