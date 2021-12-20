@@ -5594,6 +5594,93 @@ http://pypi.douban.com/simple/
 
 
 
+pacman -S python2-virtualenv
+$ virtualenv -p /usr/bin/python2 --system-site-packages ~/env # (Or wherever you want your environment to live)
+如果只想使用本地安装的软件包(例如，使用pip安装的软件包，而不是使用pacman安装的软件包)，则在创建环境时请删除--system-site-packages选项
+~/.bash_profile或~/.profile(或任何您喜欢的shell配置文件)中，进行如下设置：
+source ~/env/bin/activate
+关闭虚拟环境：
+deactivate
+
+
+sudo pacman -S openssl
+sudo pacman -S openssl-1.0
+sudo pacman -S python-pyopenssl
+sudo pacman -S python2-pyopenssl
+LDFLAGS="-L/usr/lib/openssl-1.0" \
+CFLAGS="-I/usr/include/openssl-1.0" \
+pyenv install -v 3.4.3
+echo alias pyenv='LDFLAGS="-L/usr/lib/openssl-1.0" \
+    CFLAGS="-I/usr/include/openssl-1.0" \
+    pyenv' >> ~/.bashrc
+
+
+pyenv可以这样
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+安装脚本有可能会提示你手动把几行命令添加到shell的配置文件中,如果你用的是zsh的话，别忘了替换命令中的bash。将来如果要删除的话，需要在.zshrc文件中删除。如果你用oh-my-zsh的话，不需要在.zshrc中添加那几行（加了也没用），而是在.zshrc中启用pyenv插件
+进行更新：
+$ pyenv update
+要卸载pyenv，直接删除目录即可:
+$ rm -fr ~/.pyenv
+    别忘了把.bashrc中的这几行也一并删掉：
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+当执行命令的时候，系统会在环境变量中从左到右依次寻找匹配的命令并执行。环境变量中是一组以冒号:分隔的路径,pyenv的工作原理其实很简单，将它自己管理的Python目录插到环境变量的最前面，这样一来系统在搜索Python的时候第一个找到的就是pyenv管理的Python环境。这个插到最前面的路径就叫做垫片（shims）
+
+选择Python版本
+1.使用PYENV_VERSION环境变量(如果存在). 你可以使用pyenv shell 命令来在当前shell环境中设置该环境变量.
+2.当前目录中应用程序指定的.python-version文件(如果存在). 你可以用pyenv local 命令来修改当前目录的.python-version文件.
+3.自底向上搜索各层上级目录，找到的第一个.python-version, 直到到达文件系统根目录.
+4.全局的$(pyenv root)/version文件. 可以使用 pyenv global 命令来修改. 如果全局版本文件不存在, pyenv假设你使用系统安装的Python. (换句话说就是未安装pyenv时环境变量中找到的Python.)
+
+pyenv常用命令
+1.列出所有可安装的Python版本：
+pyenv install -l|--list
+$ pyenv install -l
+2.安装某个Python：
+pyenv install <version>
+3.卸载某个Python，-f参数指定是否强制卸载，如果强制卸载的话不会弹出提示，而且如果版本不存在的话也不会显示错误信息：
+pyenv uninstall [-f|--force] <version>
+4.列出所有已安装的Python，当前使用的Python会用星号标出：
+$ pyenv versions
+5.通过写~/.pyenv/version文件的方式设置全局Python：
+$ pyenv global 2.7.6
+6.通过在当前目录写.python-version文件的方式设置当前目录下的Python：
+$ pyenv local 2.7.6
+    当不再需要本地Python的时候，用--unset来清除：
+$ pyenv local --unset
+7.指定当前shell使用的Python：
+$ pyenv shell pypy-2.2.1
+    当不再需要的时候，用--unset来清除：
+$ pyenv local --unset
+更多见
+https://github.com/pyenv/pyenv/blob/master/COMMANDS.md
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
