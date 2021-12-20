@@ -5622,16 +5622,55 @@ libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
 xz-utils tk-dev libffi-dev liblzma-dev libedit-dev
 
 pyenv可以这样安装, 仅作为参考记录
+
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 安装脚本有可能会提示你手动把几行命令添加到shell的配置文件中,如果你用的是zsh的话，别忘了替换命令中的bash。将来如果要删除的话，需要在.zshrc文件中删除。如果你用oh-my-zsh的话，不需要在.zshrc中添加那几行（加了也没用），而是在.zshrc中启用pyenv插件
+
+
+确定你想把 pyenv 安装在哪。推荐安装在 $HOME/.pyenv，但你也可以安装在任意位置。
+$ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+定义你 PYENV_ROOT 的环境变量来指定你把 pyenv 仓库克隆到了哪，并把 $PYENV_ROOT/bin 添加到你的 $PATH 中，这样就能在命令行使用 pyenv 命令。
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+$ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+设置启动 shell 时自动加载 pyenv 脚本。在 shell 配置文件的最后面加上 eval "$(pyenv init -)"
+$ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+OR
+$ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+重启 shell，使脚本生效。
+$ exec $SHELL
+安装不同的 python 版本到 $(pyenv root)/versions 文件夹。
+在 pyenv 安装之前的所有 python 版本都归为 system 版本。 （可以用 pyenv versions 查看当前安装的 python 版本）
+在安装 python 之前，可以使用 pyenv install -l 查看当前可以安装哪些 python 版本。
+然后使用 pyenv install 选择的版本 来安装你所选择的 python 版本。比如 pyenv install 3.6.1 安装 python 官网的版本
+使用 git 更新 pyenv
+如果你是按照上面的方法安装的 pyenv，那你可以使用 git 来更新
+更新为最新的开发版
+$ cd $(pyenv root)
+$ git pull
+更新为指定的版本
+$ cd $(pyenv root)
+$ git fetch
+$ git tag
+v0.1.0
+$ git checkout v0.1.0
+
 进行更新：
 $ pyenv update
+
 要卸载pyenv，直接删除目录即可:
 $ rm -fr ~/.pyenv
     别忘了把.bashrc中的这几行也一并删掉：
 export PATH="~/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+完整卸载 pyenv:
+pyenv 的根目录删除即可全部删除 pyenv（通过 pyenv install ... 安装的 python 版本都会删除）。
+rm -rf $(pyenv root)
+
+
+只是禁用 pyenv:
+那么把 pyenv init 从 shell 的配置文件中移除，然后重启 shell 就行了（移除后 pyenv 命令仍然能使用，但是版本切换命令不会生效）
+
 
 当执行命令的时候，系统会在环境变量中从左到右依次寻找匹配的命令并执行。环境变量中是一组以冒号:分隔的路径,pyenv的工作原理其实很简单，将它自己管理的Python目录插到环境变量的最前面，这样一来系统在搜索Python的时候第一个找到的就是pyenv管理的Python环境。这个插到最前面的路径就叫做垫片（shims）
 
@@ -5649,6 +5688,7 @@ $ pyenv install -l
 pyenv install <version>
 3.卸载某个Python，-f参数指定是否强制卸载，如果强制卸载的话不会弹出提示，而且如果版本不存在的话也不会显示错误信息：
 pyenv uninstall [-f|--force] <version>
+等同于直接删除 versions 文件夹下的对应 python 版本文件夹
 4.列出所有已安装的Python，当前使用的Python会用星号标出：
 $ pyenv versions
 5.通过写~/.pyenv/version文件的方式设置全局Python：
@@ -5663,6 +5703,35 @@ $ pyenv shell pypy-2.2.1
 $ pyenv local --unset
 更多见
 https://github.com/pyenv/pyenv/blob/master/COMMANDS.md
+
+安装 pyenv-virtualenv
+pyenv-virtualenv 是 pyenv 的一个插件, 克隆 pyenv-virtual 仓库到 plugin 文件夹下
+如果 pyenv 的安装目录不是 $HOME/.pyenv 需要确保克隆下来的仓库位于你所安装的 pyenv 目录下的 plugin 文件夹下
+添加 pyenv virtualenv-init 到你的 shell 配置文件中，这样进入指定文件夹自动进入虚拟环境，离开文件夹退出虚拟环境。
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+重启 shell
+$ exec $SHELL
+
+创建 pyenv-virtualenv 虚拟环境
+pyenv virtualenv [指定python版本] 虚拟环境名字
+如果不指定 python 版本，则默认使用当前 pyenv version 的 python 版本。
+创建的虚拟环境位于 $(pyenv root)/versions/ 下的指定 python 版本的文件夹中 envs/ 文件夹下
+
+激活虚拟环境
+自动激活环境：
+在 .bashrc 文件的最后添加 eval "$(pyenv virtualenv-init -)"，然后在 shell 中输入 exec "$SHELL" 重启 shell
+在想要激活虚拟环境的文件夹中新建 .python-version 文件，并写入虚拟环境的名字（pyenv local python版本 该命令也是通过创建该文件来达到进入该文件夹后自动使用指定 python 版本的目的）
+以后进入该的文件夹就会自动激活虚拟环境，离开该文件夹就会退出虚拟环境
+
+手动激活环境：
+pyenv activate 虚拟环境名字
+手动退出虚拟环境：
+pyenv deactivate
+
+删除虚拟环境：
+有 2 种方法：
+1.删除 $(pyenv root)/versions 和 $(pyenv root)/versions/{version}/envs 的相关文件夹即可。
+2.命令行运行 pyenv uninstall 虚拟环境的名字
 
 
 
