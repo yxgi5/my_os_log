@@ -5615,7 +5615,13 @@ echo alias pyenv='LDFLAGS="-L/usr/lib/openssl-1.0" \
     pyenv' >> ~/.bashrc
 
 
-pyenv可以这样
+
+ubuntu的pyenv依赖, 仅作为参考记录
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev libedit-dev
+
+pyenv可以这样安装, 仅作为参考记录
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 安装脚本有可能会提示你手动把几行命令添加到shell的配置文件中,如果你用的是zsh的话，别忘了替换命令中的bash。将来如果要删除的话，需要在.zshrc文件中删除。如果你用oh-my-zsh的话，不需要在.zshrc中添加那几行（加了也没用），而是在.zshrc中启用pyenv插件
 进行更新：
