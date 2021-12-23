@@ -3247,3 +3247,96 @@ pyenv deactivate
 
 
 
+安装qtserialbus
+
+# Overkill: get all qt-stuff
+sudo apt install qml-module-qt-labs-folderlistmodel qml-module-qtquick-extras qml-module-qtquick-controls2 qt5-default libqt5quickcontrols2-5 qtquickcontrols2-5-dev qtcreator qtcreator-doc libqt5serialport5-dev build-essential qml-module-qt3d qt3d5-dev qtdeclarative5-dev qtconnectivity5-dev qtmultimedia5-dev
+# To get rid of the private/qobject_p.h error
+sudo apt-get install qtbase5-private-dev
+# Build and install qtserialbus
+git clone git://code.qt.io/qt/qtserialbus.git
+cd qtserialbus
+git checkout 5.9.8
+qmake
+make -j6
+sudo make install
+
+为了方便管理还是制作一个deb包
+PKGBUILD
+<------------------------------------
+# Maintainer: Chocobo1 <chocobo1 AT archlinux DOT net>
+
+pkgname=qt5-serialbus-git
+pkgver=5.9.8
+pkgrel=1
+pkgdesc="Qt5 serial bus module"
+arch=('i686' 'x86_64')
+url="https://www.qt.io/"
+license=('FDL' 'GPL' 'LGPL3')
+depends=('libqt5serialport5'
+    'libqt5serialport5-dev')
+makedepends=('git')
+provides=('qt5-serialbus')
+conflicts=('qt5-serialbus')
+source=("git+https://code.qt.io/qt/qtserialbus.git#branch=5.9.8")
+sha256sums=('SKIP')
+
+
+prepare() {
+  cd "$srcdir"
+  echo "$srcdir"
+  echo "$PWD"
+  mkdir -p "_build"
+}
+
+build() {
+  cd "_build"
+
+  qmake ../qtserialbus
+  make
+}
+
+package() {
+  cd "_build"
+
+  make INSTALL_ROOT="$pkgdir" install
+
+  # Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+  find "$pkgdir/usr/lib" -type f -name '*.prl' \
+    -exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+}
+----------------------------------/>
+makedeb生产deb包,安装即可
+
+打开qt5serialbus的debug信息
+
+#include <QLoggingCategory>
+main()添加
+QLoggingCategory::setFilterRules(QStringLiteral("qt.modbus* = true"));
+
+
+fix master timeout bug
+Master接收很快响应的情况状态切换不及时导致的假timeout错误
+https://bugreports.qt.io/browse/QTBUG-69188
+修改PKGBUILD增加一个patch文件
+然后再编译一版, 就解决了
+
+
+
+另一个不依赖qt的modbus库
+sudo apt-get install libmodbus-dev libmodbus5
+slave和master的测试代码已经实验存档
+
+
+
+
+
+
+
+
+
+
+
+
+
+
