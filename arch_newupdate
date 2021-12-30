@@ -5593,6 +5593,60 @@ http://pypi.douban.com/simple/
 
 
 
+yay -S python-pygame docker-scan
+
+
+https://www.oracle.com/java/technologies/downloads/#java8
+https://www.oracle.com/java/technologies/downloads/#java11
+
+
+
+
+python安装第三方库报错
+Cannot uninstall '***'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall
+
+sudo -H pip3 install ${PACKAGE_NAME} -i https://mirrors.163.com/pypi/simple --ignore-installed
+
+sudo -H pip3 install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.1.0-cp27-none-linux_x86_64.whl
+sudo python3 -m pip install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.12.0-py3-none-any.whl
+sudo -H pip3 install shadowsocks -i https://mirrors.163.com/pypi/simple --ignore-installed --upgrade
+sudo python3 -m pip install -U setuptools -i https://mirrors.163.com/pypi/simple --ignore-installed
+
+
+python 3.10 修复 shadowsocks
+
+修改1：
+解决
+/usr/bin/sslocal -c /etc/shadowsocks/config.json
+AttributeError: module 'collections' has no attribute 'MutableMapping'
+根据
+https://stackoverflow.com/questions/69512672/getting-attributeerror-module-collections-has-no-attribute-mutablemapping-w
+
+sudo gedit /usr/lib/python3.10/site-packages/shadowsocks/lru_cache.py
+line 34， change from
+class LRUCache(collections.MutableMapping):
+to
+class LRUCache(collections.abc.MutableMapping):
+
+
+修改2：
+解决
+/usr/bin/sslocal -c /etc/shadowsocks/config.json
+AttributeError: /usr/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup. Did you mean: 'EVP_CIPHER_CTX_new'?
+sudo gedit /usr/lib/python3.10/site-packages/shadowsocks/crypto/openssl.py
+将所有
+EVP_CIPHER_CTX_cleanup
+替换成为
+EVP_CIPHER_CTX_reset
+
+
+
+
+
+
+
+
+
 
 
 
