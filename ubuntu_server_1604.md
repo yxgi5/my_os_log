@@ -12,6 +12,7 @@ andy ALL=(ALL:ALL) ALL
 
 
 ## 安装gnome ##
+```
 alex@iZ8vb9hu2kftezexm9ehyiZ:~$ sudo apt-get install gnome
 Reading package lists... Done
 Building dependency tree       
@@ -308,6 +309,7 @@ The following packages will be upgraded:
 Need to get 638 MB of archives.
 After this operation, 2,557 MB of additional disk space will be used.
 Do you want to continue? [Y/n] 
+```
 
 
 
@@ -315,9 +317,7 @@ Do you want to continue? [Y/n]
 
 
 
-
-
-
+```
 sudo apt-get install x11vnc
 Reading package lists... Done
 Building dependency tree
@@ -335,28 +335,27 @@ The following NEW packages will be installed:
 Need to get 2,926 kB of archives.
 After this operation, 9,674 kB of additional disk space will be used.
 Do you want to continue? [Y/n]
+```
 
 
 
-
-vnc密码
+* * *
+# vnc密码
+```
 sudo x11vnc -storepasswd /etc/x11vnc.pass
-
-
+```
 上面的无效，删掉
 
-
-
-
-
-
+* * *
+# 进入桌面环境
+```
 startx
 sudo apt-get install xinit
+```
 
-
-
-
-
+* * *
+# 安装 tightvncserver
+```
 sudo apt-get install tightvncserver 
 Reading package lists... Done
 Building dependency tree       
@@ -371,8 +370,8 @@ The following NEW packages will be installed:
   tightvncserver
 0 upgraded, 1 newly installed, 0 to remove and 78 not upgraded.
 Need to get 633 kB of archives.
-
-
+```
+```
 sudo apt-get install vnc4server tightvncserver vnc4server
 Reading package lists... Done
 Building dependency tree       
@@ -392,9 +391,9 @@ The following NEW packages will be installed:
 Need to get 2,345 kB of archives.
 After this operation, 8,164 kB of additional disk space will be used.
 Do you want to continue? [Y/n] 
-
+```
 删掉
-
+```
 $ sudo apt-get install xrdp vnc4server xbase-clients
 Reading package lists... Done
 Building dependency tree       
@@ -408,12 +407,18 @@ Suggested packages:
   vnc-java mesa-utils x11-xfs-utils
 The following NEW packages will be installed:
   vnc4server x11-apps x11-session-utils xbase-clients xbitmaps xrdp
+```
 
-
+* * *
+# dconf
+```
 sudo dconf-editor
+```
 依次展开org->gnome->desktop->remote-access，然后取消 “requlre-encryption”的勾选
 
-
+* * *
+# vncserver 启动
+```
 $ vncserver
 sudo netstat -tlup | grep vnc
 sudo netstat -anp | grep 5900
@@ -422,23 +427,24 @@ sudo /etc/init.d/xrdp restart
 sudo iptables -I INPUT -p tcp --dport 5901 -j ACCEPT
 
 nc -z -w 1 47.92.87.217 5901
-
+```
 
 可以使用如下的方法启动多个桌面的VNC：
-
+```
 vncserver :1
 vncserver :2
 vncserver :3
-
-
+```
+```
 sudo  vncserver -kill :1       
 sudo  vncserver -kill :2
+```
 数字 1 为桌面号，对应客户端的端口为5901，以此类推2,3,4.... 
 
- nano ~/.vnc/xstartup
+nano ~/.vnc/xstartup
 
 替换为如下内容：
-
+```
 #!/bin/shxrdb $HOME/.Xresources
 
 xsetroot -solid grey
@@ -449,18 +455,19 @@ x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
 
 gnome-session &
 
-
-
 gnome&
-
+```
 （使用GNOME桌面）
-
+```
+tightvncserver -kill :1
 tightvncserver -geometry 1024x720 :1
+```
 
 
-
-
- sudo apt-get install xinetd
+* * *
+# 其他
+```
+sudo apt-get install xinetd
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
@@ -475,27 +482,29 @@ The following NEW packages will be installed:
 0 upgraded, 3 newly installed, 0 to remove and 78 not upgraded.
 Need to get 147 kB of archives.
 After this operation, 493 kB of additional disk space will be used.
+```
 
 
 
-
-
-最后，就是使RealVNC Server服务生效并启动了。如果你想使用RealVNC 的Server模式，则使用如下命令：
-
+* * *
+# RealVNC
+如果你想使用RealVNC 的Server模式，则使用如下命令：
+```
 # systemctl enable vncserver-x11-serviced.service
 # systemctl start vncserver-x11-serviced.service
-
+```
 如果你想使用Virtual模式，则使用如下命令：
-
+```
 # systemctl enable vncserver-virtuald.service
 # systemctl start vncserver-virtuald.service
+```
 
 
 
 
-
-
-
+* * *
+# 其他
+```
 sudo apt-get install x-window-system-core
 Reading package lists... Done
 Building dependency tree       
@@ -515,16 +524,24 @@ The following NEW packages will be installed:
 Need to get 374 kB of archives.
 After this operation, 702 kB of additional disk space will be used.
 Do you want to continue? [Y/n] 
-
-
+```
+* * *
+# gdm
+```
 sudo apt-get install gdm
+```
 
-
+* * *
+# 其他
+```
 ssh alex@192.168.0.82
 vnc4server -kill :1
 vnc4server :1 -geometry 1920x1080
+```
 
-
+* * *
+# XX-Net
+```
 XX-Net version:3.12.10
 Installing pyOpenSSL for your system... Please type in your password if requested
 [sudo] password for alex: 
@@ -543,10 +560,11 @@ The following NEW packages will be installed:
 0 upgraded, 9 newly installed, 0 to remove and 61 not upgraded.
 Need to get 579 kB of archives.
 After this operation, 3,815 kB of additional disk space will be used.
+```
 
-
-
-
+* * *
+# torbrowser
+```
 $ sudo apt-get install torbrowser-launcher 
 Reading package lists... Done
 Building dependency tree       
@@ -566,31 +584,31 @@ The following NEW packages will be installed:
   python-twisted-bin python-twisted-core python-txsocksx python-zope.interface
   tor tor-geoipdb torbrowser-launcher torsocks wmctrl
 0 upgraded, 18 newly installed, 0 to remove and 61 not upgraded.
+```
 
 
-
-
-
+* * *
+# 其他
+```
 vncserver -geometry 1366x768 :1
 vncserver -geometry 1920x1080 :1
+```
 
-
-
-添加用户
+## 添加用户
+```
 sudo unity-control-center
-
 sudo adduser xxx
-修改group和passwd
-
+```
+## 修改group和passwd for smb
+```
 sudo smbpasswd -a xxx
-
+```
 smb://192.168.0.82/
 
 
-
-
-
- sudo apt-get install cifs-utils 
+## samba
+```
+sudo apt-get install cifs-utils 
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
@@ -601,11 +619,11 @@ Suggested packages:
 The following NEW packages will be installed:
   cifs-utils keyutils
 0 upgraded, 2 newly installed
-
-
+```
+```
 sudo apt-get install samba samba-common samba-client
-
-
+```
+```
 sudo apt-get install aptitude
 Reading package lists... Done
 Building dependency tree       
@@ -618,10 +636,12 @@ Suggested packages:
 The following NEW packages will be installed:
   aptitude aptitude-common libcwidget3v5
 0 upgraded, 3 newly installed
+```
 
 
 
-
+* * *
+# 其他
 
 Xlib extension “RANDR” missing on display “:1”
 
@@ -630,14 +650,12 @@ https://stackoverflow.com/questions/18940380/xlib-extension-randr-missing-on-dis
 The vnc server you're using does not provide support for dynamically resizing/rotating the screen. midori seems to require this.
 You should use a specific vnc server that supports this extension e.g. vnc4server, and the exception will not be thrown.
 
-
-
-
-
-
+* * *
+# 其他
+```
 sudo chgrp -c -R transmission csd
 sudo chgrp -c vision trasmission csd
-
+```
 
 
 
