@@ -5928,6 +5928,18 @@ post_install() {
 
 
 
+libgnomecups
+format not a string literal and no format arguments format-security
+
+获得合适的cflags和cxxflags
+```
+python3-config --cflags
+```
+修改cflags和cxxflags到
+```
+/etc/makepkg.conf
+
+
 
 
 
