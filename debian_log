@@ -14714,4 +14714,15 @@ make -j8
 sudo make install
 
 
+sudo apt-get install libjudy-dev
+PKGBUILD gtkwave
+
+
+
+
+
+
+
+
+
 
