@@ -5940,6 +5940,79 @@ python3-config --cflags
 /etc/makepkg.conf
 
 
+lightdm  time has expired
+cat /usr/bin/xflock4
+```
+...
+for lock_cmd in \
+    "$LOCK_CMD" \
+    "xfce4-screensaver-command --lock" \
+    "xscreensaver-command -lock" \
+    "gnome-screensaver-command --lock"
+...
+```
+cat /usr/share/xscreensaver/config/abstractile.xml
+ls /usr/share/applications/screensavers
+fgrep -r screensaver /etc/xdg/ | fgrep Exec
+/etc/xdg/autostart/org.gnome.SettingsDaemon.ScreensaverProxy.desktop:Exec=/usr/lib/gsd-screensaver-proxy
+/etc/xdg/autostart/xscreensaver.desktop:Exec=xscreensaver -no-splash
+/etc/xdg/autostart/xscreensaver.desktop:TryExec=xscreensaver
+/etc/xdg/autostart/xfce4-screensaver.desktop:Exec=xfce4-screensaver
+
+ps awux|grep screen
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1957658
+https://bugzilla.redhat.com/show_bug.cgi?id=1944011
+https://dev.to/nabbisen/keyboard-is-freezed-by-xfce4-screensaver-and-light-locker-f3n
+
+sudo mv /etc/xdg/autostart/xfce4-screensaver.desktop ~/Desktop/
+xfce4-settings-manager
+xscreensaver-demo
+
+disable xfce4-screensaver:
+xfce4-screensaver-preferences
+
+sudo mv ~/Desktop/xfce4-screensaver.desktop /etc/xdg/autostart/
+
+先按上面修改
+
+作为参考：
+
+This might happen if someone enters the wrong password more than three times. The log-in manager locks the user from logging-in for 10 minutes. But the remaining time is shown only for a few milliseconds. So user hardly can realize the issue.
+
+CTR+ALT+F5
+
+Then login with username: root then type root password…
+
+Then:
+vim /etc/security/faillock.conf
+set from
+#deny =3
+to
+deny=0
+
+Yes, remove the hashtag ahhaha
+
+Done !!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
