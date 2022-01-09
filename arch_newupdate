@@ -5997,8 +5997,10 @@ Done !!
 
 
 
+error: GPGME error: No data
 
-
+$ sudo rm -R /var/lib/pacman/sync
+$ sudo pacman -Syu
 
 
 
