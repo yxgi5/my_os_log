@@ -6022,9 +6022,11 @@ exit 会退出容器
 启动容器 docker start [容器id]
 启动容器后进入容器 docker exec -it [容器id] bash
 
-
-
-
+docker pull phyzli/centos8_xfce4_tigervnc_virtuosoic617_mmsim15_calibre2015
+docker pull phyzli/centos8_xfce4_tigervnc_hspice2016
+docker pull phyzli/centos8_xfce4_tigervnc_hspice2010
+docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys
+docker pull phyzli/ubuntu20.04_xfce4_tigervnc_alsrac
 
 
 
