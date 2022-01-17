@@ -5278,9 +5278,9 @@ root@1f7e6c346eca:/# apt install libgtk2.0
 
 
 这下，可以间接使用vitis/xsct有关tcl了！！
-
-
-
+$ docker exec -it ubuntu_container /bin/bash
+# su andy
+$ cd ~
 
 
 
@@ -6005,9 +6005,22 @@ $ sudo pacman -Syu
 
 
 
+/etc/docker/daemon.json，加上如下的键值:
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
 
+docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
+docker run -it -p 5902:5902 -p 1234:22 --hostname lizhen --mac-address 02:42:ac:11:00:02 -v /home/andy/mydata:/mnt/mydata phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
+vncserver -geometry 1920x1080 :2
+vncviewer，配置连接，地址是127.0.0.1:5902, 连接密码为 zhenchen
+passwd 创建root密码
+ssh -p 1234 root@127.0.0.1
+scp -P 1234 root@127.0.0.1:/usr/synopsys2016.tar.gz .
 
-
+exit 会退出容器
+启动容器 docker start [容器id]
+启动容器后进入容器 docker exec -it [容器id] bash
 
 
 
