@@ -6009,6 +6009,8 @@ $ sudo pacman -Syu
 {
   "registry-mirrors": ["https://registry.docker-cn.com"]
 }
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 
 docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
 docker run -it -p 5902:5902 -p 1234:22 --hostname lizhen --mac-address 02:42:ac:11:00:02 -v /home/andy/mydata:/mnt/mydata phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
