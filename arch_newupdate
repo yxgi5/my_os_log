@@ -5018,13 +5018,13 @@ sudo chmod +x vitis
 
 
 
-vhd2vl-git
-v2x-git
-covered
-sv2v      (fail)
-verilator
-jedi-language-server
-systemc
+yay -S vhd2vl-git
+yay -S abc v2x-git python-pytest-runner yosys python-vtr-xml-utils-git
+yay -S covered
+yay -S sv2v alex ghc happy haskell-githash 
+yay -S verilator
+yay -S jedi-language-server
+yay -S systemc
 
 	Reenable any per-user enabled pipewire-media-session.service
        	manually to establish a new service alias for
@@ -5115,7 +5115,7 @@ If you run into trouble with CUDA not being available, run nvidia-modprobe first
 libdecor lesspipe libjxl python-curio python-sniffio python-trio criu pipewire-v4l2 pipewire-session-manager jedi-language-server python-pyppeteer lib32-pipewire-v4l2 yt-dlp adios2 cgns libharu liblas openimagedenoise openvdb openvr ospray gvfs pyside2 edk2-armvirt python-database-knotinfo yt-dlp libotr libotr wine-for-wechat python-plyvel
 
 
-anydesk
+
 
 
 
@@ -5135,6 +5135,7 @@ yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray leve
 yay -S yt-dlp atomicparsley
 
 yay -S anydesk
+sudo systemctl start anydesk.service
 sudo teamviewer --daemon start
 
 
@@ -5639,8 +5640,8 @@ EVP_CIPHER_CTX_cleanup
 替换成为
 EVP_CIPHER_CTX_reset
 
-
-
+sudo systemctl start shadowsocks@config.service
+sudo systemctl status shadowsocks@config.service
 
 
 
@@ -5794,7 +5795,7 @@ pyenv deactivate
 error: android-emulator: key "83F817213361BF5F02E7E124F9F9FA97A403F63E" is unknown
 gpg --keyserver keyserver.ubuntu.com --recv  F9F9FA97A403F63E
 
-yay -S ghdl-gcc python-pyghdl
+yay -S ghdl-gcc python-pyghdl python-objgraph
 
 
 
@@ -5938,6 +5939,100 @@ python3-config --cflags
 修改cflags和cxxflags到
 ```
 /etc/makepkg.conf
+
+
+
+yay -S python-pygame docker-scan mesa-utils qt6-quick3d qt6-positioning bliss
+su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+sudo systemctl enable teamviewerd
+
+/etc/pacman.d/mirrorlist.pacnew
+/etc/privoxy/config.pacnew
+/etc/speech-dispatcher/modules/espeak-ng.conf.pacnew
+/etc/default/grub.pacnew
+
+t is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+# archlinux-java set java-8-jre/jre
+$ archlinux-java status
+# archlinux-java set java-8-jdk
+
+
+yay -S pyenv
+yay -S gcc-ada libiconv python-funcy python-stevedore syslog-ng librabbitmq-c libesmtp mongo-c-driver 
+yay -S gprbuild-bootstrap libgpr xmlada ada_language_server libadalang libadalang-tools (fail)
+yay -S gnat-gps (fail)
+yay -S tkgate (fail)
+yay -S tkgate-beta
+yay -S tclreadline 
+yay -S gprbuild-bootstrap-git xmlada-git
+yay -S autopep8 yapf
+yay -S gnatcoll-gmp-git gnatcoll-core-git gnatcoll-iconv-git libgpr-git gprbuild-git
+yay -S ada_language_server libvss ada-libfswatch fswatch (fail)
+yay -S gnat-gps (fail)
+
+
+yay -S qucs iverilog freehdl ngspice yosys
+
+
+yay -S mpdecimal
+yay -S python39
+
+tkcon
+
+pkgname=tkcon
+pkgver=2.7.10
+pkgrel=1
+pkgdesc='Enhanced Tk Console for all Tk platforms'
+arch=('x86_64')
+arch+=('i686')
+license=('GPL3')
+depends=('tcl' 'tk')
+makedepends=('git')
+provides=("tkcon=${pkgver%%.r*}")
+conflicts=('tkcon')
+#install="${pkgname#-git}.install"
+_srcdir="${pkgname%-git}"
+source=(
+  'git://github.com/KarlCHansen/tkcon.git'
+)
+md5sums=('SKIP')
+
+prepare() {
+  mkdir -p "$pkgdir/usr/local/bin/"
+  mkdir -p "$pkgdir/usr/share/applications/"
+}
+
+build() {
+  cd "${_srcdir}"
+  #./configure --prefix=/usr
+}
+
+package() {
+  #cd "${_srcdir}"
+  #make INSTALL_ROOT="$pkgdir" install
+  #cp -r ${_pkgbase}/module/* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
+  install -Dm755 "${srcdir}/tkcon/tkcon.tcl" "$pkgdir/usr/local/bin/tkcon"
+  install -Dm644 "${srcdir}/tkcon/tkcon-console.desktop" -t "$pkgdir/usr/share/applications/"
+}
+
+makepkg -si
+
+
+##yay -S ghdl-yosys-plugin-git ghdl-gcc-git
+yay -Rdd ghdl-yosys-plugin-git ghdl-gcc-git
+yay -S ghdl-gcc
+
+
+
+
+
+create the file /etc/doas.conf with the following content:
+
+	permit :wheel
+
+
+
 
 
 
