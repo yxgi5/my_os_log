@@ -5279,9 +5279,9 @@ root@1f7e6c346eca:/# apt install libgtk2.0
 
 
 这下，可以间接使用vitis/xsct有关tcl了！！
-
-
-
+$ docker exec -it ubuntu_container /bin/bash
+# su andy
+$ cd ~
 
 
 
@@ -5939,6 +5939,98 @@ python3-config --cflags
 修改cflags和cxxflags到
 ```
 /etc/makepkg.conf
+
+
+lightdm  time has expired
+cat /usr/bin/xflock4
+```
+...
+for lock_cmd in \
+    "$LOCK_CMD" \
+    "xfce4-screensaver-command --lock" \
+    "xscreensaver-command -lock" \
+    "gnome-screensaver-command --lock"
+...
+```
+cat /usr/share/xscreensaver/config/abstractile.xml
+ls /usr/share/applications/screensavers
+fgrep -r screensaver /etc/xdg/ | fgrep Exec
+/etc/xdg/autostart/org.gnome.SettingsDaemon.ScreensaverProxy.desktop:Exec=/usr/lib/gsd-screensaver-proxy
+/etc/xdg/autostart/xscreensaver.desktop:Exec=xscreensaver -no-splash
+/etc/xdg/autostart/xscreensaver.desktop:TryExec=xscreensaver
+/etc/xdg/autostart/xfce4-screensaver.desktop:Exec=xfce4-screensaver
+
+ps awux|grep screen
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1957658
+https://bugzilla.redhat.com/show_bug.cgi?id=1944011
+https://dev.to/nabbisen/keyboard-is-freezed-by-xfce4-screensaver-and-light-locker-f3n
+
+sudo mv /etc/xdg/autostart/xfce4-screensaver.desktop ~/Desktop/
+xfce4-settings-manager
+xscreensaver-demo
+
+disable xfce4-screensaver:
+xfce4-screensaver-preferences
+
+sudo mv ~/Desktop/xfce4-screensaver.desktop /etc/xdg/autostart/
+
+先按上面修改
+
+作为参考：
+
+This might happen if someone enters the wrong password more than three times. The log-in manager locks the user from logging-in for 10 minutes. But the remaining time is shown only for a few milliseconds. So user hardly can realize the issue.
+
+CTR+ALT+F5
+
+Then login with username: root then type root password…
+
+Then:
+vim /etc/security/faillock.conf
+set from
+#deny =3
+to
+deny=0
+
+Yes, remove the hashtag ahhaha
+
+Done !!
+
+
+
+error: GPGME error: No data
+
+$ sudo rm -R /var/lib/pacman/sync
+$ sudo pacman -Syu
+
+
+
+
+/etc/docker/daemon.json，加上如下的键值:
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
+docker run -it -p 5902:5902 -p 1234:22 --hostname lizhen --mac-address 02:42:ac:11:00:02 -v /home/andy/mydata:/mnt/mydata phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
+vncserver -geometry 1920x1080 :2
+vncviewer，配置连接，地址是127.0.0.1:5902, 连接密码为 zhenchen
+passwd 创建root密码
+ssh -p 1234 root@127.0.0.1
+scp -P 1234 root@127.0.0.1:/usr/synopsys2016.tar.gz .
+
+exit 会退出容器
+启动容器 docker start [容器id]
+启动容器后进入容器 docker exec -it [容器id] bash
+
+docker pull phyzli/centos8_xfce4_tigervnc_virtuosoic617_mmsim15_calibre2015
+docker pull phyzli/centos8_xfce4_tigervnc_hspice2016
+docker pull phyzli/centos8_xfce4_tigervnc_hspice2010
+docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys
+docker pull phyzli/ubuntu20.04_xfce4_tigervnc_alsrac
+
 
 
 
