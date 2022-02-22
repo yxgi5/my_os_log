@@ -1495,6 +1495,7 @@ sudo pacman -S dos2unix
 
 
 yay DSView
+dsview 1.12-2 Segmentation fault： libusb downgrading to 1.0.24 makes it work just fine.
 
 
 发现挂载的移动硬盘上的ext4分区，trash can又是正常的
