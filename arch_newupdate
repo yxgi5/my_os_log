@@ -6126,6 +6126,11 @@ create the file /etc/doas.conf with the following content:
 
 
 conky 自动显示cpu核心数目对应的bar条
+
+查看是否支持lua
+
+conky -v 
+
 gedit ~/cpu.lua
 ```
 function conky_mycpus()
