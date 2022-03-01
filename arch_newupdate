@@ -6257,6 +6257,54 @@ Alt+Super+Arrow$alignr Resize]]
 ```
 
 
+yay -S feeluown feeluown-kuwo feeluown-local feeluown-netease feeluown-qqmusic feeluown-ytmusic feeluown-bilibili
+yay -S yapf
+mkdir feeluown-download && cd feeluown-download
+```
+# Maintainer: Andreas Zhang <denglitsch@gmail.com>
+
+_pkgbase=feeluown-download
+pkgname=feeluown-download
+pkgver=0.3
+pkgrel=1
+pkgdesc="FeelUOwn mp3 download plugin"
+arch=('any')
+license=('GPL3')
+depends=('feeluown' 'python-aiohttp' 'python-bilibili-api')
+makedepends=('python-setuptools' 'python-pip')
+source=("git+https://github.com/feeluown/feeluown-download")
+sha512sums=('SKIP')
+
+build() {
+  cd ${_pkgbase}
+  python setup.py build
+}
+
+package() {
+  cd ${_pkgbase}
+  python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
+}
+```
+makepkg -si
+
+yay -S gunicorn python-aiodns python-eventlet python-gevent python-httplib2 python-psycopg2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
