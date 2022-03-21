@@ -6292,11 +6292,131 @@ yay -S gunicorn python-aiodns python-eventlet python-gevent python-httplib2 pyth
 
 
 
+yay Bluetooth 
+blueman-applet
+pacman -Qo /usr/lib/systemd/system/pulseaudio.service
+yay pulseaudio
+yay pulsemixer
+yay pulseaudio-alsa
+yay pulseaudio
+blueman-applet --loglevel debug
+pair
+yay bluetoothctl
+head -1 $(which blueman-applet)
+sudo dmesg -w
+yay rtl8761
+bluetoothctl list
+sudo bluetoothctl list
+sudo bluetoothctl show
+sudo bluetoothctl devices
+find /lib/firmware | grep rtl8761b | xargs ls -ln
+modinfo btusb
+sudo systemctl status bluetooth
+sudo systemctl enable bluetooth
+sudo systemctl restart bluetooth
+sudo systemctl status bluetooth
+sudo pacman -S pulseaudio-bluetooth
+blueman-manager
+sudo dmesg | grep Bluetooth
+sudo dmesg | grep hci
+sudo dmesg | grep hci0
+ls /usr/lib/firmware/rtl_bt/
+sudo systemctl status bluetooth
+ls /lib/modules/`uname -r`/kernel/drivers/bluetooth/
+
+hwinfo --bluetooth
+hciconfig -a
+bluetoothctl
+rfkill list
+yay pulseaudio-modules-bt
+yay pulseaudio-modules
+yay pulseaudio
+yay bluez
+yay pipewire
+
+sudo systemctl restart bluetooth
+sudo reboot
+
+/lib/firmware/rtl_bt
+sudo lsusb -v -d 2550:8761
 
 
 
+sudo dmesg | egrep -i bluetooth
 
 
+
+rtl8761b蓝牙适配器
+
+https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1955916
+sudo lsusb
+Bus 003 Device 005: ID 2550:8761 Realtek Bluetooth Radio
+sudo dmesg
+[ 6281.078926] usb 3-3: new full-speed USB device number 3 using xhci_hcd
+[ 6281.223202] usb 3-3: New USB device found, idVendor=2550, idProduct=8761, bcdDevice= 2.00
+[ 6281.223214] usb 3-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 6281.223219] usb 3-3: Product: Bluetooth Radio
+[ 6281.223222] usb 3-3: Manufacturer: Realtek
+[ 6281.223224] usb 3-3: SerialNumber: 00E04C239987
+[ 6281.283830] Bluetooth: Core ver 2.22
+[ 6281.283865] NET: Registered PF_BLUETOOTH protocol family
+[ 6281.283866] Bluetooth: HCI device and connection manager initialized
+[ 6281.283870] Bluetooth: HCI socket layer initialized
+[ 6281.283871] Bluetooth: L2CAP socket layer initialized
+[ 6281.283874] Bluetooth: SCO socket layer initialized
+[ 6281.308335] usbcore: registered new interface driver btusb
+[ 6281.324814] audit: type=1130 audit(1647874795.280:289): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-rfkill comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 6281.342327] audit: type=1130 audit(1647874795.300:290): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=bluetooth comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 6281.351268] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[ 6281.351272] Bluetooth: BNEP filters: protocol multicast
+[ 6281.351276] Bluetooth: BNEP socket layer initialized
+[ 6281.367202] audit: type=1334 audit(1647874795.323:291): prog-id=70 op=LOAD
+[ 6281.367333] audit: type=1334 audit(1647874795.323:292): prog-id=71 op=LOAD
+[ 6281.367372] audit: type=1334 audit(1647874795.323:293): prog-id=72 op=LOAD
+[ 6281.386126] NET: Registered PF_ALG protocol family
+[ 6281.415784] audit: type=1130 audit(1647874795.373:294): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-hostnamed comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 6281.419139] Bluetooth: RFCOMM TTY layer initialized
+[ 6281.419149] Bluetooth: RFCOMM socket layer initialized
+[ 6281.419153] Bluetooth: RFCOMM ver 1.11
+
+已经通过aur编译安装了驱动（不带dmks的那个）， blueman-applet 找不到 蓝牙外设
+
+经过查找和实验， 确认是btusb.ko需要修改，大概在/lib/modules/`uname -r`/kernel/drivers/bluetooth/btusb.ko.zst， 解压了
+（pacman -Qo /lib/modules/5.16.14-arch1-1/kernel/drivers/bluetooth/btusb.ko.zst 
+/usr/lib/modules/5.16.14-arch1-1/kernel/drivers/bluetooth/btusb.ko.zst is owned by linux 5.16.14.arch1-1
+知道如果btusb.ko.zst不见了，就重新安装内核
+）
+xxd btusb.ko | grep ca04 确认有被替换字符串
+xxd btusb.ko | sed 's/ca04 0540/5025 6187/g' | xxd -r > btusb.ko.mod
+xxd btusb.ko | grep 5025 确认修改好了
+这个修改后的btusb.ko再打包成btusb.ko.zst放回原位，
+sudo modprobe -r btusb && sudo modprobe btusb
+
+插入适配器之后 dmesg | tail
+hciconfig -a
+
+sudo dmesg
+[ 7198.775764] usb 3-3: new full-speed USB device number 4 using xhci_hcd
+[ 7198.916531] usb 3-3: New USB device found, idVendor=2550, idProduct=8761, bcdDevice= 2.00
+[ 7198.916542] usb 3-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 7198.916547] usb 3-3: Product: Bluetooth Radio
+[ 7198.916550] usb 3-3: Manufacturer: Realtek
+[ 7198.916553] usb 3-3: SerialNumber: 00E04C239987
+[ 7198.919273] Bluetooth: hci0: RTL: examining hci_ver=0a hci_rev=000b lmp_ver=0a lmp_subver=8761
+[ 7198.920314] Bluetooth: hci0: RTL: rom_version status=0 version=1
+[ 7198.920328] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_fw.bin
+[ 7198.927758] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_config.bin
+[ 7198.929732] Bluetooth: hci0: RTL: cfg_sz 6, total sz 27814
+[ 7198.967615] audit: type=1130 audit(1647875712.933:392): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-rfkill comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 7199.069380] Bluetooth: hci0: RTL: fw version 0x09a98a6b
+
+
+这样就TMD可以找到BT外设了。。。。。
+
+添加ID也可以修改内核源码drivers/bluetooth/btusb.c
+。。。
+
+blueman-applet 大概是需要安装的， pasystray 不需要， 其他的只做了个事后记录， 看着办吧
 
 
 
