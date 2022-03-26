@@ -6456,7 +6456,44 @@ git fetch --unshallow
 git fetch origin
 cd trunk/
 gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
+
+
+简单修改PKGBUILD文件，添加一个patch
+bluetooth_driver.patch
+```
+diff -Naur a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+--- a/drivers/bluetooth/btrtl.c	2022-01-05 19:40:34.000000000 +0800
++++ b/drivers/bluetooth/btrtl.c	2022-03-26 20:44:24.447750477 +0800
+@@ -140,8 +140,8 @@
+ 	{ IC_INFO(RTL_ROM_LMP_8761A, 0xb),
+ 	  .config_needed = false,
+ 	  .has_rom_version = true,
+-	  .fw_name  = "rtl_bt/rtl8761b_fw.bin",
+-	  .cfg_name = "rtl_bt/rtl8761b_config" },
++	  .fw_name  = "rtl_bt/rtl8761bu_fw.bin",
++	  .cfg_name = "rtl_bt/rtl8761bu_config" },
+ 
+ 	/* 8822C with UART interface */
+ 	{ .match_flags = IC_MATCH_FL_LMPSUBV | IC_MATCH_FL_HCIREV |
+diff -Naur a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+--- a/drivers/bluetooth/btusb.c	2022-01-05 19:40:34.000000000 +0800
++++ b/drivers/bluetooth/btusb.c	2022-03-26 20:45:14.218661516 +0800
+@@ -411,6 +411,9 @@
+ 	{ USB_DEVICE(0x13d3, 0x3416), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3459), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3494), .driver_info = BTUSB_REALTEK },
++	
++	/* Additional Realtek 8761BU Bluetooth devices */
++	{ USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK },
+ 
+ 	/* Additional Realtek 8723BU Bluetooth devices */
+ 	{ USB_DEVICE(0x7392, 0xa611), .driver_info = BTUSB_REALTEK },
+
+```
+
+
 makepkg -si
+
 产生目标安装文件为
 linux-lts-5.10.90-1-x86_64.pkg.tar.zst
 linux-lts-headers-5.10.90-1-x86_64.pkg.tar.zst
@@ -6467,6 +6504,8 @@ yay -U *.pkg.tar.zst
 编译整个内核时间比较长
 
 简单只编译ko
+先 makepkg -si把之前补丁打完， 然后推出makepkg编译
+
 cd drivers/bluetooth
 make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
 （/lib/modules/5.10.90-1-lts/build）
