@@ -6431,7 +6431,16 @@ git checkout -b tmp 3b39577d
 
 
 
+yay python-pyqt6-webengine catdoc wdiff 
 
+sudo gedit /etc/default/grub
+enable this line
+GRUB_DISABLE_OS_PROBER=false
+
+5.15.31-1-lts、5.16.16等内核对博通ath9k无线网卡，都出现断流问题， 降级到linux-lts-5.4.98-1， 安装linux-zen
+linux-lts-5.10.90-1-x86_64.pkg.tar.zst
+linux-lts-headers-5.10.90-1-x86_64.pkg.tar.zst
+yay -S crda linux-zen linux-zen-header
 
 
 
