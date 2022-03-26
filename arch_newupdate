@@ -6379,7 +6379,7 @@ sudo dmesg
 [ 6281.419149] Bluetooth: RFCOMM socket layer initialized
 [ 6281.419153] Bluetooth: RFCOMM ver 1.11
 
-已经通过aur编译安装了驱动（不带dmks的那个）， blueman-applet 找不到 蓝牙外设
+已经通过aur编译安装了驱动（不带dmks的那个）， blueman-applet 找不到 蓝牙外设, 其实就是 linux-firmware 里面就有的  pacman -Qo /usr/lib/firmware/rtl_bt/rtl8761bu_fw.bin
 
 经过查找和实验， 确认是btusb.ko需要修改，大概在/lib/modules/`uname -r`/kernel/drivers/bluetooth/btusb.ko.zst， 解压了
 （pacman -Qo /lib/modules/5.16.14-arch1-1/kernel/drivers/bluetooth/btusb.ko.zst 
@@ -6428,8 +6428,13 @@ git clone git@github.com:archlinux/svntogit-packages.git
 git clone --depth 6 --single-branch --branch packages/linux git@github.com:archlinux/svntogit-packages.git
 cd svntogit-packages/trunk/
 git checkout -b tmp 3b39577d
+git fetch --depth 100 origin packages/linux
+git fetch --unshallow
+git fetch origin
 
-
+git fetch --unshallow
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git fetch origin
 
 yay python-pyqt6-webengine catdoc wdiff 
 
@@ -6441,6 +6446,38 @@ GRUB_DISABLE_OS_PROBER=false
 linux-lts-5.10.90-1-x86_64.pkg.tar.zst
 linux-lts-headers-5.10.90-1-x86_64.pkg.tar.zst
 yay -S crda linux-zen linux-zen-header
+
+python-sphinx_rtd_theme
+
+git clone --depth 6 --single-branch --branch packages/linux-lts git@github.com:archlinux/svntogit-packages.git
+cd svntogit-packages/
+git checkout -b tmp f21f0cb2c
+git fetch --unshallow
+git fetch origin
+cd trunk/
+gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
+makepkg -si
+产生目标安装文件为
+linux-lts-5.10.90-1-x86_64.pkg.tar.zst
+linux-lts-headers-5.10.90-1-x86_64.pkg.tar.zst
+linux-lts-docs-5.10.90-1-x86_64.pkg.tar.zst
+安装
+yay -U *.pkg.tar.zst
+
+编译整个内核时间比较长
+
+简单只编译ko
+cd drivers/bluetooth
+make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
+（/lib/modules/5.10.90-1-lts/build）
+然后只把 btrtl.ko 和 btusb.ko 打包成 .zx 替换 /lib/modules/5.10.90-1-lts/kernel/drivers/bluetooth/里的
+sudo modprobe -r btusb && sudo modprobe btusb
+就可以了
+
+
+
+
+
 
 
 
