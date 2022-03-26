@@ -6388,7 +6388,9 @@ sudo dmesg
 ）
 xxd btusb.ko | grep ca04 确认有被替换字符串
 xxd btusb.ko | sed 's/ca04 0540/5025 6187/g' | xxd -r > btusb.ko.mod
-xxd btusb.ko | grep 5025 确认修改好了
+xxd btusb.ko.mod | grep 5025 确认修改好了
+strip --strip-debug btusb.ko.mod
+mv btusb.ko.mod btusb.ko
 这个修改后的btusb.ko再打包成btusb.ko.zst放回原位，
 sudo modprobe -r btusb && sudo modprobe btusb
 
@@ -6420,8 +6422,12 @@ blueman-applet 大概是需要安装的， pasystray 不需要， 其他的只�
 
 
 
-
-
+修改内核源码(linux 5.16.arch1-1)添加蓝牙ID
+git clone git@github.com:archlinux/svntogit-packages.git
+或
+git clone --depth 6 --single-branch --branch packages/linux git@github.com:archlinux/svntogit-packages.git
+cd svntogit-packages/trunk/
+git checkout -b tmp 3b39577d
 
 
 
