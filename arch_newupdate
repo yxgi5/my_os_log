@@ -1128,7 +1128,7 @@ sudo pacman -S strace
 
 
 
-
+pacman安装历史
 查看/var/log/pacman.log
 
 
@@ -1868,6 +1868,27 @@ $ sudo udevadm trigger
 
 
 deb转pacman除了像st-stlink-server那样编写makepkg脚本
+```
+pkgname=st-stlink-server
+pkgver=1.0.12
+pkgrel=1
+pkgdesc="st-link-server"
+arch=('x86_64')
+license=('custom')
+depends=('libusb')
+source=("${pkgname}-${pkgver}-${pkgrel}-linux-amd64.deb")
+sha1sums=('434ec9bf507122fbd995a134bc6a94d1fa70a1ae')
+
+build() {
+	cd "${srcdir}"
+	tar -Jxf data.tar.xz
+}
+
+package() {
+	cd "${srcdir}"
+	cp -r "${srcdir}/usr" "${pkgdir}/usr"
+}
+```
 还可以用转换工具
 yay debtap
 sudo debtap -u
