@@ -6611,7 +6611,36 @@ export PATH=/opt/115pc:$PATH
 ```
 
 
+
+sudo pip3 install libscrc -i https://mirrors.163.com/pypi/simple
+
+
+
+yay -Rdd polymake
+:: Replace crda with core/wireless-regdb? [Y/n] y
+:: Replace jupyter with community/jupyter-notebook? [Y/n] y
+:: Replace maxima-ecl with extra/maxima? [Y/n] y
+:: espeak-ng and espeak are in conflict. Remove espeak? [y/N] y
+
+yay -S kde-cli-tools python-asgiref python-bottleneck python-fsspec python-numexpr python-openpyxl python-pyarrow
+yay -S python-pymysql python-pytables python-snappy python-sqlalchemy python-xarray python-xlrd python-xlwt xsel python-netcdf4 python-cftime python-dask python-distributed python-seaborn python-pint python-blosc python-statsmodels python-nose
+
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+
+
+
+
+
+Please add your user to the brlapi group.
+sudo usermod -aG brlapi andy
+
+yay -S python-curio python-trio jupyter-server-mathjax	jupyterlab-widgets qt6-languageserver refind-docs --overwrite=*
+
+su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+
 准备玩玩看deepin-anything
+
 
 
 
