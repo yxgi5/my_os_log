@@ -6640,6 +6640,8 @@ yay -S python-curio python-trio jupyter-server-mathjax	jupyterlab-widgets qt6-la
 su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
 
 准备玩玩看deepin-anything
+yay -S deepin-anything
+deepin-anything-dkms
 
 
 
@@ -6647,6 +6649,55 @@ su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
 
 
 
+yay -S planner-git projectlibre ganttproject granite gtk-theme-elementary jd-gui-bin
+
+
+需要修改planner-git的PKGBUILD
+```
+# Maintainer:
+# Contributor: Mark Wagie <mark dot wagie at tutanota dot com>
+# Contributor: Lubosz <lubosz at gmail dot com>
+pkgname=planner-git
+pkgver=0.14.6.r349.56b03b1
+pkgrel=1
+pkgdesc="A project management tool for planning, scheduling and tracking projects."
+arch=('i686' 'x86_64')
+url="https://wiki.gnome.org/Apps/Planner"
+license=('GPL')
+depends=('libgnomecanvas' 'gnome-vfs' 'libxslt' 'pygtk')
+makedepends=('git' 'gnome-common' 'rarian')
+provides=("${pkgname%-git}" 'libplanner-1.so')
+conflicts=("${pkgname%-git}")
+source=('git+https://gitlab.gnome.org/GNOME/planner.git')
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${pkgname%-git}"
+	git describe --long | sed 's/^PLANNER_//;s/\([^-]*-\)g/r\1/;s/_/./;s/_/./;s/-/./g'
+}
+
+prepare() {
+	cd "$srcdir/${pkgname%-git}"
+	sed -i 's/python/python2/g' tests/python/task-test.py
+}
+
+build() {
+	cd "$srcdir/${pkgname%-git}"
+	export CFLAGS=-Wno-error
+
+	meson build --prefix=/usr
+	ninja -C build
+}
+
+package() {
+	cd "$srcdir/${pkgname%-git}"
+	DESTDIR="$pkgdir/" ninja -C build install
+
+	# Remove conflicting files
+	#cd "$pkgdir/usr/local/share/mime"
+	#find . -maxdepth 1 -type f -exec rm "{}" \;
+}
+```
 
 
 
