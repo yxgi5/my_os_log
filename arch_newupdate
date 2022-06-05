@@ -6704,5 +6704,51 @@ package() {
 
 
 
+yay -S picocom
+
+串口设置
+sudo gpasswd -a $USER uucp    [反向操作： sudo gpasswd -d $USER uucp]
+或者sudo usermod -aG uucp $USER
+cat /etc/group | grep uucp
+groups $USER
+
+yay -S vofa+
+
+
+假mac，未试验
+Load the relevant kernel module and create the interface with the MAC address:
+# modprobe dummy
+# ip link add bond0 type dummy
+# ifconfig bond0 hw ether 10:22:33:44:55:66
+Cleanup for after Diamond exits:
+# ip link delete bond0 type dummy
+# rmmod dummy
+
+
+https://aur.archlinux.org/cgit/aur.git/log/?h=xilinx-vivado-dummy
+git clone https://aur.archlinux.org/xilinx-vivado-dummy.git
+
+
+
+
+全局github代理加速
+git config --global http.proxy 'socks5://127.0.0.1:1081'
+git config --global https.proxy 'socks5://127.0.0.1:1081'
+or
+git config --global http.proxy 'socks5://127.0.0.1:10808'
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+查询是否启用代理
+git config --global http.proxy
+git config --list
+取消代理
+git config --global --unset http.proxy
+
+
+
+
+
+
+
+
 
 
