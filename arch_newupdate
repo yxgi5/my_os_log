@@ -3935,7 +3935,9 @@ u-boot的老代码在新版本glibc下还真有问题。包括海思的u-boot版
 
 
 
-
+$ yaourt downgrader
+降级firefox
+downgrader -h firefox
 downgrader-git
 
 dcmtk   (dicom)
