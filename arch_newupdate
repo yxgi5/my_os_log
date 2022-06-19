@@ -6745,10 +6745,13 @@ git config --global --unset http.proxy
 
 
 
-
-
-
-
-
-
+pip3 --version
+broken!
+sudo python3 -m ensurepip --default-pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python3 get-pip.py
+pip3 --version
+pip 22.1.2 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+sudo -H pip3 install -i https://mirrors.163.com/pypi/simple opencv-contrib-python opencv-python
+sudo -H pip3 install -i https://mirrors.163.com/pypi/simple alive_progress
 
