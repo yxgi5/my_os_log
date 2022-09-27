@@ -1018,8 +1018,26 @@ yay -S python-jdcal python-nose python-olefile python-patsy python-pyvisa python
 yay -S python-tensorflow-opt ## python-tensorflow
 # yay -S nvidia
 yay -S nvidia-dkms nvidia-prime
-yay -S linux-lts-docs # linux-zen / linux-zen-headers
+# yay -S linux-lts-docs # linux-zen / linux-zen-headers
+yay -R linux-lts-docs
 
+
+
+* * *
+# update vivado/vitis from 2020.1 to 2020.2
+
+sudo gedit /usr/local/bin/vivado
+```
+#!/bin/bash
+/opt/Xilinx/Vivado/2020.2/bin/vivado
+```
+sudo chmod +x /usr/local/bin/vivado
+sudo gedit /usr/local/bin/vitis
+```
+#!/bin/bash
+/opt/Xilinx/Vitis/2020.2/bin/vitis 
+```
+sudo chmod +x /usr/local/bin/vitis
 
 
 
