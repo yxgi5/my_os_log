@@ -6745,10 +6745,94 @@ git config --global --unset http.proxy
 
 
 
+pip3 --version
+broken!
+sudo python3 -m ensurepip --default-pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python3 get-pip.py
+pip3 --version
+pip 22.1.2 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+sudo -H pip3 install -i https://mirrors.163.com/pypi/simple opencv-contrib-python opencv-python
+sudo -H pip3 install -i https://mirrors.163.com/pypi/simple alive_progress
 
 
 
 
 
+:: Starting full system upgrade...
+:: Replace absl-py with community/python-absl? [Y/n] y
+warning: gcc10: local (1:10.3.0-2) is newer than archlinuxcn (10.4.0-1)
+warning: gcc10-libs: local (1:10.3.0-2) is newer than archlinuxcn (10.4.0-1)
+:: Replace intel-mkl with community/intel-oneapi-mkl? [Y/n] y
+:: Replace kwayland-server with extra/kwin? [Y/n] y
+:: Replace wxgtk-common with extra/wxwidgets-common? [Y/n] y
+:: Replace wxgtk3 with extra/wxwidgets-gtk3? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+:: python-mistune and python-mistune1 are in conflict. Remove python-mistune1? [y/N] y
+error: failed to prepare transaction (could not satisfy dependencies)
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by pcbdraw
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by pyuv
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk2
 
+pactree -r python-mistune1
+
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by jupyter-nbconvert
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by pcbdraw
+yay -Rdd python-mistune1
+yay -S python-mistune
+
+yay -R wxgtk-common
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by pyuv
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk2
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk3
+yay -Rdd wxgtk-common
+yay -S wxwidgets-common
+
+:: Replace intel-mkl with community/intel-oneapi-mkl? [Y/n] y
+:: Replace kwayland-server with extra/kwin? [Y/n] y
+:: Replace wxgtk3 with extra/wxwidgets-gtk3? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+yay -R pipewire-media-session
+checking dependencies...
+error: failed to prepare transaction (could not satisfy dependencies)
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by gst-plugin-pipewire
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by kwin
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by pipewire-alsa
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by pipewire-v4l2
+yay -S wireplumber
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+
+yay -S python-absl
+[sudo] password for andy: 
+resolving dependencies...
+looking for conflicting packages...
+:: python-absl and absl-py are in conflict. Remove absl-py? [y/N] y
+
+yay -S intel-oneapi-mkl
+resolving dependencies...
+looking for conflicting packages...
+:: intel-oneapi-mkl and intel-mkl are in conflict. Remove intel-mkl? [y/N] y
+warning: dependency cycle detected:
+warning: intel-oneapi-openmp will be installed before its intel-oneapi-compiler-dpcpp-cpp-runtime dependency
+
+Packages (8) intel-mkl-2020.4.304-1 [removal]  intel-oneapi-common-2022.1.0-3
+             intel-oneapi-compiler-dpcpp-cpp-runtime-2022.1.0-7
+             intel-oneapi-compiler-shared-runtime-2022.1.0-8
+             intel-oneapi-openmp-2022.1.0-8  intel-oneapi-tbb-2021.6.0-4
+             level-zero-loader-1.8.1-1  intel-oneapi-mkl-2022.1.0_223-4
+
+yay -S kwin wxwidgets-gtk3 --overwrite=*
+
+yay -S gcc10 gcc10-libs
+:: Import PGP key F9F9FA97A403F63E
+sudo pacman-key -r F9F9FA97A403F63E
+gpg --keyserver keyserver.ubuntu.com --recv-keys F9F9FA97A403F63E
+
+sudo pacman -Syu --overwrite=*
 

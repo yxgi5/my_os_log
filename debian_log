@@ -12865,10 +12865,19 @@ mount -t tmpfs tmpfs /run/lock
 mount /dev/sdx2 /home
 mount /dev/sdx3 /opt
 
+efi分区fat32格式512MB，flag：boot，esp
+ls -l显示
+drwx------  3 root root     4096 1月   1  1970 efi/
+mount | grep efi 显示
+/dev/nvme0n1p1 on /boot/efi type vfat (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+
 sudo fdisk -l
 sudo grub-install /dev/sdx
-sudo grub-install --root-directory=/boot/ /dev/sdx
+磁盘mbr分区才可以BIOS引导+EFI引导
+?sudo grub-install --root-directory=/boot/ /dev/sdx
+sudo grub-install --boot-directory=/boot/ /dev/sdx
 sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
+sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot --removable
 (
 sudo apt-get -y purge grub
 sudo apt-get install grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed
