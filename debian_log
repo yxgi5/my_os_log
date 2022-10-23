@@ -12864,7 +12864,8 @@ mkdir -p /run/lock
 mount -t tmpfs tmpfs /run/lock
 mount /dev/sdx2 /home
 mount /dev/sdx3 /opt
-
+//mount -t vfat /dev/sdx1 /boot/efi/
+//grub-install /dev/sdx --efi-directory=/boot/efi/ --boot-directory=/boot --removable
 efi分区fat32格式512MB，flag：boot，esp
 ls -l显示
 drwx------  3 root root     4096 1月   1  1970 efi/
