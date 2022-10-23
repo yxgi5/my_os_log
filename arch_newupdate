@@ -6836,3 +6836,23 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys F9F9FA97A403F63E
 
 sudo pacman -Syu --overwrite=*
 
+
+/etc/locale.gen installed as /etc/locale.gen.pacnew
+warning: directory permissions differ on /usr/lib/mysql/plugin/auth_pam_tool_dir/
+filesystem: 700  package: 755
+warning: directory permissions differ on /var/lib/samba/private/
+filesystem: 755  package: 700
+The Teamviewer daemon must be running for Teamviewer to work.
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+(780/793) upgrading virtualbox-ext-oracle                                         [##############################################] 100%
+0%...
+Progress state: NS_ERROR_FAILURE
+VBoxManage: error: Failed to install "/usr/share/virtualbox/extensions/Oracle_VM_VirtualBox_Extension_Pack-7.0.2.vbox-extpack"
+VBoxManage: error: Failed to load the main module ('/usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/linux.amd64/VBoxPuelMain.so'): VERR_FILE_NOT_FOUND - /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/linux.amd64/VBoxPuelMain.so: undefined symbol: RTUtf16NCmp
+VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component ExtPackManagerWrap, interface IExtPackManager
+VBoxManage: error: Context: "RTEXITCODE handleExtPack(HandlerArg*)" at line 1424 of file VBoxManageMisc.cpp
+error: command failed to execute correctly
+
+yay -S qt6-speech qemu-user-binfmt python-database-cubic-hecke
+
+
