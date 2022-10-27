@@ -676,13 +676,139 @@ git clone git@github.com:yqlbu/fan-control/
 
 
 Jetson Setup | Apache MXNet.html
+https://mxnet.apache.org/versions/1.8.0/get_started/jetson_setup
 docker-compose
+git clone --recursive https://github.com/apache/incubator-mxnet.git mxnet
+or
+bash git clone --recursive -b v1.6.x https://github.com/apache/incubator-mxnet.git mxnet
 git submodule update --init --recursive
 
 添加当前用户到docker组
 $ sudo usermod -aG docker $USER
 $ newgrp docker
 $ groups
+
+gedit ~/.profile
+----
+export PATH=/usr/local/cuda/bin:$PATH
+export MXNET_HOME=$HOME/mxnet/
+export PYTHONPATH=$MXNET_HOME/python:$PYTHONPATH
+----
+
+nvcc --version
+10.2
+//sudo rm /usr/local/cuda
+//sudo ln -s /usr/local/cuda-10.2 /usr/local/cuda
+
+上面的编译应该在pc上进行，取消对.profile的修改，免得对后面安装的mxnet有影响。
+
+
+升级之后docker.io的server不能启动
+
+
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
+The following packages will be REMOVED:
+  containerd docker docker.io nvidia-docker2 runc
+$ sudo apt-get update
+$ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+Add Docker’s official GPG key:
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+$ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io nvidia-docker2
+$ sudo groupadd docker
+$ docker version
+$ sudo docker run hello-world
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ docker run hello-world
+$ docker version
+
+
+解决:Jetson系列python3 import 报错 "Illegal instruction[cpre dumped]"
+
+gedit ~/.bashrc
+```
+export OPENBLAS_CORETYPE=ARMV8
+```
+source ~/.bashrc
+
+
+
+sudo apt-get update
+sudo apt-get install -y git build-essential libopenblas-dev python3-pip
+sudo pip3 install -U pip
+wget https://mxnet-public.s3.us-east-2.amazonaws.com/install/jetson/1.6.0/mxnet_cu102-1.6.0-py2.py3-none-linux_aarch64.whl
+sudo pip3 install mxnet_cu102-1.6.0-py2.py3-none-linux_aarch64.whl
+python3 -c 'import mxnet'
+sudo apt-get update
+sudo apt-get install -y python3-scipy python3-pil python3-matplotlib
+sudo apt autoremove -y
+sudo pip3 install gluoncv
+export MXNET_CUDNN_AUTOTUNE_DEFAULT=0
+
+
+```
+from gluoncv import model_zoo, data, utils
+from matplotlib import pyplot as plt
+import mxnet as mx
+
+# set context
+# ctx = mx.cpu()
+ctx = mx.gpu()
+
+# load model
+net = model_zoo.get_model('yolo3_darknet53_voc', pretrained=True, ctx=ctx)
+
+# load input image
+# im_fname = utils.download('https://raw.githubusercontent.com/zhreshold/' +
+                        'mxnet-ssd/master/data/demo/dog.jpg',
+                        path='dog.jpg')
+im_fname = '[path/]dog.jpg'
+x, img = data.transforms.presets.yolo.load_test(im_fname, short=512)
+x = x.as_in_context(ctx)
+
+# call forward and show plot
+class_IDs, scores, bounding_boxs = net(x)
+ax = utils.viz.plot_bbox(img, bounding_boxs[0], scores[0],
+                        class_IDs[0], class_names=net.classes)
+plt.show()
+```
+
+
+
+
+sudo -H pip3 install parsel -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pillow -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyecharts -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install jupyter -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install ipykernel -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install notedown -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install d2l==1.0.0a1.post0
+mkdir d2l-en && cd d2l-en
+curl https://d2l.ai/d2l-en.zip -o d2l-en.zip
+unzip d2l-en.zip && rm d2l-en.zip
+$ jupyter notebook
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
