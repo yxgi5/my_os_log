@@ -794,6 +794,7 @@ sudo -H pip3 install d2l==1.0.0a1.post0
 mkdir d2l-en && cd d2l-en
 curl https://d2l.ai/d2l-en.zip -o d2l-en.zip
 unzip d2l-en.zip && rm d2l-en.zip
+cd pytorch
 $ jupyter notebook
 
 
