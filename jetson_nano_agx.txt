@@ -674,6 +674,35 @@ git clone git@github.com:yqlbu/fan-control/
 
 
 
+* * *
+# visionworks sample 1.6
+
+https://github.com/shahin198/Build-VisionWorks--Library-And-Run-Sample
+
+https://developer.nvidia.com/embedded/downloads#?search=JetPack
+
+https://docs.nvidia.com/jetson/index.html
+
+https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/SD/GraphicsProgramming/SampleApplications.html
+
+```
+$ /usr/share/visionworks/sources/install-samples.sh ~/
+$ cd ~/VisionWorks-1.6-Samples/
+$ make -j4 # add dbg=1 to make debug build
+$ cd ~/VisionWorks-Tracking-<ver>-Samples/bin/<arch>/linux/release
+$ ./nvx_sample_object_tracker
+...
+$ /usr/share/visionworks-sfm/sources/install-samples.sh ~/
+$ cd ~/VisionWorks-Sfm-1.6-Samples/
+$ make -j4 # add dbg=1 to make debug build
+$ cd ~/VisionWorks-Sfm-<ver>-Samples/bin/<arch>/linux/release
+$ ./nvx_sample_sfm
+...
+
+$ cd/usr/src/nvidia/graphics_demos/bin
+```
+
+
 
 Jetson Setup | Apache MXNet.html
 https://mxnet.apache.org/versions/1.8.0/get_started/jetson_setup
@@ -802,8 +831,8 @@ $ jupyter notebook
 
 
 
-
-
+sudo dmidecode -t 2
+nvidia-smi
 
 
 
