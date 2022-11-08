@@ -843,10 +843,9 @@ $ sudo pacman -S acl
 ```
 
 
-///////////////////////////////////////////////////////////////////////
-backup0927
-///////////////////////////////////////////////////////////////////////
-
+* * *
+# backup0927
+```
 $ sudo pacman -S openvpn
 $ sudo pacman -S pptpclient
 $ sudo pacman -S networkmanager-vpnc networkmanager-openvpn networkmanager-pptp
@@ -856,14 +855,20 @@ https://www.igreenvpn.net
 $ sudo pacman -S axel
 $ sudo pacman -S tls
 $ sudo pacman -S xscreensaver
+```
 
-
-// gstreamer
-// 设置环境变量的脚本
+* * *
+# gstreamer
+设置环境变量的脚本
+```
 /opt/gstreamer-sdk/bin/gst-sdk-shell
-// gcc 参数
+```
+gcc 参数
+```
 -Wl,-rpath=/opt/gstreamer-sdk/lib `pkg-config --cflags --libs gstreamer-0.10`
-// 例子
+```
+例子
+```
 $ gcc `pkg-config --cflags --libs gstreamer-0.10` basic-tutorial-1.c -o basic-tutorial-1
 $ gcc `pkg-config --cflags --libs gstreamer-interfaces-0.10 gtk+-2.0 gstreamer-0.10` basic-tutorial-5.c -o basic-tutorial-5
 
@@ -894,26 +899,27 @@ gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tut
 gst-launch-0.10 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! audioresample ! audio/x-raw-float,rate=4000 ! audioconvert ! autoaudiosink
 gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm ! audioresample ! audio/x-raw-float,rate=4000 ! audioconvert ! autoaudiosink
 gst-launch-0.10 audiotestsrc ! tee name=t ! queue ! audioconvert ! autoaudiosink t. ! queue ! wavescope ! ffmpegcolorspace ! autovideosink
+```
+<http://docs.gstreamer.com/display/GstSDK/Tutorials>
 
-http://docs.gstreamer.com/display/GstSDK/Tutorials
-
-// ./basic-tutorial-5 有告警
-//Failed to load module "canberra-gtk-module"
+`./basic-tutorial-5` 有告警 Failed to load module "canberra-gtk-module"
+```
 $ pacman -Qm
 $ env
 $ pacman -Qo /usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so
 $ sudo vim /etc/ld.so.conf.d/gtk-2.0.conf
 /usr/lib/gtk-2.0/modules 
 $ sudo ldconfig
-// ok，解决
-// 其他，GTK_PATH=:/usr/lib/gtk-2.0，不知道行不行。反正上面的办法解决了，不试了。
-http://www.cnblogs.com/day/archive/2013/08/06/3242211.html
-https://bbs.archlinux.org/viewtopic.php?id=120761
+ok，解决
+```
+其他，`GTK_PATH=:/usr/lib/gtk-2.0`，不知道行不行。反正上面的办法解决了，不试了。
+<http://www.cnblogs.com/day/archive/2013/08/06/3242211.html>
+<https://bbs.archlinux.org/viewtopic.php?id=120761>
 
 
-
-
-
+* * *
+# 监控网速
+```
 $ sudo pacman -S iftop
 $ sudo iftop -N -n -i wlp24s0
 //下面这个网络流量监控更方便操作
@@ -935,24 +941,39 @@ $ yaourt -S speedometer
 python2-packaging-15.3-1  python2-setuptools-1:18.3.1-1  python2-urwid-1.3.0-2
 $ speedometer -rx wlp24s0 -tx wlp24s0
 $ speedometer -r wlp24s0 -c -t wlp24s0
+```
 
-//一个pgp server
-http://pgp.mit.edu/
+* * *
+# pgp server
+<http://pgp.mit.edu/>
 
 
+
+* * *
+# gvim
+```
 // gvim就包含了cli的vim的，所以替换掉吧
 $ sudo pacman -S gvim
+```
+
+* * *
+# wine 一个 winrar
 
 
-// wine 一个 winrar
-
+* * *
+# lua and cairo ?
+```
 // 没用
 //$ sudo pacman -S lua
 //$ sudo pacman -S lua-expat lua-filesystem
 //$ sudo pacman -S cairo-perl
 //$ sudo pacman -S cairomm
+```
 
 
+* * *
+# nfs
+```
 $ sudo pacman -S nfs-utils
 $ sudo systemctl restart rpcbind
 $ sudo systemctl status rpcbind
@@ -960,22 +981,20 @@ $ sudo vim /etc/iptables/iptables.rules
 $ sudo systemctl restart nfs-server iptables
 $ sudo systemctl status nfs-server iptables
 $ showmount -e
+```
 
-
+* * *
+# minicom
 minicom只限sudo，所以也有不同
 
 
 
+* * *
+# something
 
-
-
+```
 $ sudo pacman -S ccache
 $ sudo pacman -S vala
-$ sudo pacman -S btsync
-
-
-
-
 $ sudo pacman -S btsync
 	WebGUI can be accessed via following URL: http://localhost:8888
 	
@@ -1039,63 +1058,86 @@ http://127.0.0.1:8888/gui/
 $ sudo gvim /etc/btsync.conf
 $ sudo systemctl restart btsync
 $ journalctl -xe
-------------------------------------------------------
+```
+
 打开putty
-./btsync --webui.listen 0.0.0.0:8888
+`./btsync --webui.listen 0.0.0.0:8888`
 把其中0.0.0.0 换成你MC的IP就行
-------------------------------------------------------
+
 arch的log目录
-AFWWVHNX5KZ4BW6HZTQXMB25ISELTE7HF
+`AFWWVHNX5KZ4BW6HZTQXMB25ISELTE7HF`
 
-
+* * *
+# putty
+```
 $ sudo pacman -S putty
+```
 
+* * *
+# something
 // 后面会安装iptux
 // wine ipmsg
-
+```
 $ makepkg
 $ sudo pacman -U rar-5.3.b4-1-x86_64.pkg.tar.xz
 
 $ sudo pacman -S adobe-source-code-pro-fonts
-
-http://wallpaperswide.com/arch_linux-wallpapers.html
+```
+<http://wallpaperswide.com/arch_linux-wallpapers.html>
 在aotustart里设置wallpaper
 
+`$ git clone git://pkgbuild.com/aur-mirror.git`
 
 
-
-$ git clone git://pkgbuild.com/aur-mirror.git
-
-
-
+```
 $ sudo pacman -S gnome-control-center
 $ sudo pacman -S system-config-printer rygel vino gst-plugins-ugly gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav tracker
 $ sudo pacman -S gnome-calculator gnome-clocks
 $ sudo pacman -S gnome-shell-extensions
+```
 
-//安装飞秋，那么ipmsg就不用了
-$ yaourt -S iptux
+* * *
+# 安装飞秋
+那么ipmsg就不用了
+`$ yaourt -S iptux`
 注意，只能传文件夹
 
 
 
-//百度云
+* * *
+# 百度云
+```
 $ sudo pacman -S bcloud kwplayer
 //python-mutagenx plyvel python3-keybinder
 
 //$ yaourt python-cairo-git 
 $ yaourt -S python-cairo-git
 $ yaourt -S python-gobject-patched
+```
 
 
-
-// mathomatic
+* * *
+# mathomatic
+```
 $ sudo pacman -S mathomatic gnuplot rlwrap
-//$ sudo pacman -S stellarium
+```
+
+* * *
+# stellarium
+```
+$ sudo pacman -S stellarium
+```
+
+* * *
+# 几个数学工具
+```
 $ sudo pacman -S freemat octave
+```
 运行FreeMat
 
-
+* * *
+# something
+```
 $ sudo pacman -S filelight
 $ sudo pacman -S baobab
 $ sudo pacman -S colordiff hardinfo
@@ -1111,33 +1153,42 @@ $ yaourt gspiceui gaw wxgtk pangox
 http://ports.ubuntu.com/pool/universe/g/geda-xgsch2pcb/geda-xgsch2pcb_0.1.3.orig.tar.gz
 $ yaourt intltool
 手动安装xgsch2pcb
+```
 
 
+* * *
+# quartus ii
 //网盘7上存有linux下的qii\matlab\modelsimse
 //这个qii其实可以到网站去下载
 
 
 
-// 修改默认浏览器,这三句works
+* * *
+# 修改默认浏览器
+这三句works
+```
 $ xdg-mime default browser.desktop x-scheme-handler/http
 $ xdg-mime default browser.desktop x-scheme-handler/https
 $ xdg-mime default browser.desktop text/html
-https://wiki.archlinux.org/index.php/Xdg-open#Set_the_default_browser
+```
+<https://wiki.archlinux.org/index.php/Xdg-open#Set_the_default_browser>
 
 // Alternatively, run:   // it dosen't work
-//$ xdg-settings set default-web-browser browser.desktop
-
+`//$ xdg-settings set default-web-browser browser.desktop`
+```
 //cat /usr/bin/xdg-open
 //~/.local/share/applications/mimeapps.list says:
 //x-scheme-handler/http=opera.desktop
 //x-scheme-handler/https=opera.desktop
-
+```
 // 参见default app
-https://wiki.archlinux.org/index.php/Default_applications#MIME_types_and_desktop_entries
+<https://wiki.archlinux.org/index.php/Default_applications#MIME_types_and_desktop_entries>
 
 
-用ff设置默认浏览器
-~/.config/mimeapps.list发生变化
+* * *
+# 用ff设置默认浏览器
+`~/.config/mimeapps.list`发生变化
+```
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
 x-scheme-handler/ftp=firefox.desktop
@@ -1148,43 +1199,58 @@ application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
-
+```
 
 删除下列文件夹多余的
+```
 /home/andy/.local/share/mime/application
 update-mime-database ~/.local/share/mime
+```
 
-
-// 删除btsync
+* * *
+# 删除btsync
+```
 $ sudo pacman -Rc btsync
 $ sudo pacman -Rc btsync-gui
+```
 
-
-// 查看显卡
+* * *
+# 查看显卡
+```
 $ lspci | grep -e VGA -e 3D
+```
 
 
-
-
+* * *
+# gtkwave
+```
 $ sudo pacman -S gtkwave
 copy the /usr/share/gtkwave/examples/gtkwaverc file to
 your home directory (as .gtkwaverc)
 $ sudo cp /usr/share/gtkwave/examples/gtkwaverc ~/.gtkwaverc
 $ sudo pacman -S freehdl
+```
 
-
+* * *
+# 电池电量监控
 // 选择两款笔记本电量监控，battery监视
+```
 $ pacman -Ss battery
 $ sudo pacman -S acpi cbatticon
+```
 
 
-
-//安装VLC
+* * *
+# 安装VLC
+```
 $ sudo pacman -S vlc
 $ cvlc
 $ vlc
+```
 
-
+* * *
+# conky
+```
 $ yaourt conky
 // 选择支持lua的，安装后没有效果	
 //$ sudo pacman -Sconky-manager
@@ -1192,95 +1258,122 @@ $ yaourt conky
 
 $ sudo pacman -S tolua++
 $ sudo pacman -S lua51-expat
-
-
+```
+* * *
+# scons
 $ sudo pacman -S scons
 sudo ./configure --enable-lua-cairo --enable-lua-imlib2 --enable-imlib2
 // 完全失败
 
 
 
-
+* * *
+# tolua
 // 试着编译tolua-5.2.0，修改config文件
-WARN= -ansi -Wall -g -DLUA_32BITS
+`WARN= -ansi -Wall -g -DLUA_32BITS`
 可以编译完毕
 
 
-// 操作mdb文件
+* * *
+# 操作mdb文件
+```
 $ sudo pacman -S unixodbc
 $ yaourt -S mdbtools-git
 $ yaourt -S gmdb
+```
 
-
-//bypy
+* * *
+# bypy
+```
 $ yaourt bypy
 $ bypygui.pyw 
 c4c129458f6696f143123d8bd8fd30dd
+```
 
 
-
-
+* * *
+# chrome
+```
 $ yaourt -S google-chrome
 $ google-chrome-stable
+```
 
 
-
-// 安装modelsim
+* * *
+# 安装modelsim
+```
 $ yaourt libxtst
 $ yaourt libxp
 $ yaourt libxt
+```
 都选32位元的，会请求把gcc等都换成multilib的
+```
 $ cd /opt
 $ sudo mkdir modelsim
 $ sudo chmod 777 modelsim
+```
 安装完毕之后
+```
 $ chmod 777 -R modelsim
 $ sudo ./sfk6 rep -yes -pat -bin /5589E557565381ECD00000008B5508/31C0C357565381ECD00000008B5508/ -dir .
-
-$ yaourt libstdc++
+```
+`$ yaourt libstdc++`
 选择64和32位元的
 
-$ wine cmd
+`$ wine cmd`
 去产生license, 似乎invalid，不管，先跑vsim
 需要更新freetype到freetype2-ubuntu
 参考《Altera Design Software在linux安装指南》
-http://bbs.eeworld.com.cn/thread-455341-1-1.html
-https://wiki.archlinux.org/index.php/Altera_Design_Software
-$ yaourt freetype
+<http://bbs.eeworld.com.cn/thread-455341-1-1.html
+https://wiki.archlinux.org/index.php/Altera_Design_Software>
+`$ yaourt freetype`
 选freetype2-ubuntu就可以运行vsim。再想办法破解license
-
+```
 $ cd /opt/modelsim/modeltech/linux_x86_64
 $ export LANG=en_EN.UTF-8 
 $ wineconsole cmd 
 > patch_dll.bat
-
-// 查看license
-$ lmutil lmdiag
+```
+查看license
+`$ lmutil lmdiag`
 // 信息显示hostid不符，但是确实是一样的。
 // 那么从网卡名称着手，修改为eth0
-https://wiki.archlinux.org/index.php/Network_configuration
-
+<https://wiki.archlinux.org/index.php/Network_configuration>
+```
 $ sudo leafpad /etc/udev/rules.d/10-network.rules
 SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="00:17:42:f4:8e:1c", NAME="eth0"
 $ sudo reboot
 $ vsim
 // 成功，到此破解完成
 // 这里没有给无线网卡改名字，算是把系统更改减少到最小，conky配置也不用动了
+```
 
+* * *
+# veriwell
+```
 $ yaourt veriwell
+```
 
-// 安装有道词典
+* * *
+# 安装有道词典
+```
 $ yaourt python-xlib
 $ yaourt youdao-dict
 $ pacman -Ss tesseract-data-*
 // so easy!
-
+```
+* * *
+# mounter
+```
 $ yaourt mounter
 archive-mounter
 automounter
 //gvfs-archive
+```
 
-
+* * *
+# something
+```
 yaourt gedit
 yaourt gnome-terminal
 
@@ -1289,11 +1382,13 @@ yaourt gnome-terminal
 
 
 yaourt xz-git
+```
 
-// 安装Qii 11
+
+* * *
+# 安装Quatus ii 11
+```
 $ sudo pacman -S tcsh
-
-
 $ sudo pacman -S expat fontconfig xorg-fonts-type1 glibc gtk2 libcanberra libpng libice libsm util-linux ncurses tcl tcllib zlib libx11 libxau libxdmcp libxext libxft libxrender libxt libxtst
 //yaourt freetype2
 yaourt libpng12
@@ -1302,30 +1397,32 @@ $ sudo pacman -S lib32-expat lib32-fontconfig lib32-freetype2 lib32-glibc lib32-
 
 $ sudo pacman -S lib32-libice lib32-libsm lib32-util-linux lib32-ncurses lib32-zlib lib32-libx11 lib32-libxau lib32-libxdmcp lib32-libxext
 $ sudo pacman -S lib32-libxft lib32-libxrender lib32-libxt lib32-libxtst
+```
 
+`find /usr/ -name "libpng*"`
 
-find /usr/ -name "libpng*"
-
-// 安装包所在目录名称不能有空格哦
+安装包所在目录名称不能有空格哦
+```
 $ sh 11.0_devices_linux.sh --noexec
 $ sh 11.0_dsp_builder_linux.sh --noexec
 $ sh 11.0_legacy_nios2_linux.sh --noexec
 $ sh 11.0_modelsim_ae_linux.sh --noexec
 $ sh 11.0_quartus_linux.sh --noexec
 $ sh 11.0_programmer_linux.sh --noexec
-
-//实际是安装包自己带的一些东西太旧了，archlinux这是libz.so.1，mv出去就能进安装界面
-http://www.linuxidc.com/Linux/2011-10/46280.htm
-http://www.linuxidc.com/Linux/2014-05/101212.htm
+```
+实际是安装包自己带的一些东西太旧了，archlinux这是libz.so.1，mv出去就能进安装界面
+<http://www.linuxidc.com/Linux/2011-10/46280.htm>
+<http://www.linuxidc.com/Linux/2014-05/101212.htm>
 
 运行altera的vsim有问题
-$ sudo yaourt ncurses5-compat-libs
+`$ sudo yaourt ncurses5-compat-libs`
 安装相关的包
+```
 $ ./lmutil lmdiag
 $ ./vsim
 // key就以后需要的时候再更新吧
-
-
+```
+```
 //export LM_LICENSE_FILE=/opt/modelsim/license.dat
 //export PATH=$PATH:/opt/MATLAB/R2010b/bin:/opt/modelsim/modeltech/linux_x86_64:/opt/altera/11.0/quartus/linux64:/opt/altera/11.0/nios2eds/bin:/opt/altera/11.0/quartus/dsp_builder
 //export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64
@@ -1337,40 +1434,44 @@ alias cd..='cd ..'
 export LM_LICENSE_FILE=/opt/modelsim/license.dat:/opt/altera/license.dat
 export PATH=$PATH:/opt/MATLAB/R2010b/bin:/opt/modelsim/modeltech/bin:/opt/altera/11.0/quartus/bin:/opt/altera/11.0/nios2eds/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64
-
+```
 
 
 
 
 /etc/udev/rules.d/51-altera-usb-blaster.rules
-
+```
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
+```
+`sudo udevadm control --reload`
 
-sudo udevadm control --reload
 
+* * *
+# arch_bk151007.tar.xz
 
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-arch_bk151007.tar.xz
-/////////////////////////////////////////////////////////
 备份前
-删除/home/andy/.cache/tracker/meta.db，媒体缓存超大且没啥用
+删除`/home/andy/.cache/tracker/meta.db`，媒体缓存超大且没啥用
 清空回收站
 
-$ xz --threads=0 -z arch_bk.tar 
-//$ xz -T 0 -z arch_bk.tar
+`$ xz --threads=0 -z arch_bk.tar `
+`//$ xz -T 0 -z arch_bk.tar`
 
 
-// 控制台中文显示
+* * *
+# 控制台中文显示
+```
 $ yaourt zhcon
 然后在ttyn（Ctrl+Alt+Fn）下:
 $ zhcon --utf8
+```
 
-
+* * *
+# Something
+```
 $ sudo pacman -S quilt
 $ yaourt perl-expect
 $ yaourt perl-crypt-ssleay
@@ -1382,10 +1483,12 @@ $ yaourt xterm
 $ yaourt linux-headers
 
 $ sudo pacman -Syu
+```
+check /var/lib/dkms/vboxhost/5.0.6/source
 
-// check /var/lib/dkms/vboxhost/5.0.6/source
-$ sudo dkms install vboxhost/5.0.6
-$ systemctl enable dkms.service
+`$ sudo dkms install vboxhost/5.0.6`
+`$ systemctl enable dkms.service`
+```
 ==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
 Authentication is required to manage system service or unit files.
 Authenticating as: andy
@@ -1397,8 +1500,8 @@ Authentication is required to reload the systemd state.
 Authenticating as: andy
 Password: 
 ==== AUTHENTICATION COMPLETE ===
-
-
+```
+```
 $ sudo vboxreload
 $ yaourt virtualbox-ext-oracle
 # modprobe -r vboxdrv
@@ -1408,10 +1511,11 @@ $ sudo vboxreload
 $ sudo pacman -S virtualbox-ext-oracle
 # modprobe -r vboxdrv
 # modprobe vboxdrv
+```
 virtualbox扩展包位置在
-/usr/share/virtualbox/extensions/
+`/usr/share/virtualbox/extensions/`
 
-
+```
 $ yaourt ddd
 $ yaourt asteroid
 //freeglut cmake jsoncpp vor smpeg sdl_mixer libmikmod sdl_net
@@ -1422,9 +1526,12 @@ $ yaourt acroread-fonts
 $ sudo pacman -S wesnoth wesnoth-data
 $ sudo pacman -S openra
 $ yaourt xeyes
+```
 
 
-
+* * *
+# uboot
+```
 uboot
     编译:
     #make distclean
@@ -1438,34 +1545,49 @@ make CROSS_COMPILE=arm-none-eabi-
     将u-boot镜像写入SD卡
     #dd iflag=dsync oflag=dsync if=spl/tiny210-spl.bin of=/dev/sdb seek=1
     #dd iflag=dsync oflag=dsync if=u-boot.bin of=/dev/sdb  seek=49
+```
 
 
-
-// 从iso镜像制作启动u盘的工具
+* * *
+# 从iso镜像制作启动u盘的工具
+```
 $ yaourt unetbootin
-
-// 硬盘加密工具
+```
+* * *
+# 硬盘加密工具
+```
 $ yaourt truecrypt
 $ yaourt veracrypt
+```
 
-// 支持delta sync的网盘
+* * *
+# 支持delta sync的网盘
+```
 $ yaourt dropbox
 $ yaourt dropbox-cli
 $ yaourt nautilus-dropbox
 //$ yaourt dropbox-gtk2
 $ yaourt dropbox-index
+```
 
-//2/16进制查看和编辑
+* * *
+# 2/16 hex进制查看和编辑
+```
 xxd
+
 hexdump
+
 //$ yaourt biew
+
 $ yaourt hexedit
 $ yaourt dhex
 $ yaourt ultraedit
 uex
 $ yaourt okteta
-
-
+```
+* * *
+# something
+```
 $ yaourt bcompare
 $ yaourt acetoneiso2
 $ yaourt dmg2dir
@@ -1484,6 +1606,7 @@ $ yaourt pointdownload
 $ yaourt magnet2torrent
 $ yaourt rtorrent
 $ yaourt deluge
+```
 
 
 
@@ -1491,8 +1614,8 @@ $ yaourt deluge
 
 
 
-
-//全面采用lxterminal，设置显示菜单和控制条
+* * *
+# 全面采用lxterminal，设置显示菜单和控制条
 快捷键
 弹出菜单
 文件管理器
@@ -1500,31 +1623,40 @@ $ yaourt deluge
 
 
 
-//解决依赖冲突一个例子
-https://www.archlinux.org/news/java-users-manual-intervention-required-before-upgrade/
-# pacman -Sydd --asdeps java-runtime-common
+* * *
+# 解决依赖冲突一个例子
+<https://www.archlinux.org/news/java-users-manual-intervention-required-before-upgrade/>
+`# pacman -Sydd --asdeps java-runtime-common`
+```
 :: java-runtime-common and java-common are in conflict. Remove java-common? [y/N] y
+```
 
 
-
-安装wps缺失的字体
-将整个wps_symbol_fonts目录拷贝到 /usr/share/fonts/  目录下
+* * *
+# 安装wps缺失的字体
+将整个wps_symbol_fonts目录拷贝到 `/usr/share/fonts/`  目录下
 注意，wps_symbol_fonts目录要有可读可执行权限
 1.权限设置,执行命令如下
+```
     cd /usr/share/fonts/
     chmod 755 wps_symbol_fonts
     cd /usr/share/fonts/wps_symbol_fonts 
     chmod 644 *
+```
 2.生成缓存配置信息
     进入字体目录  
-    cd /usr/share/fonts/wps_symbol_fonts
+    `cd /usr/share/fonts/wps_symbol_fonts`
     生成
+```
     mkfontdir
     mkfontscale
     fc-cache
+```
 
 
-
+* * *
+# something
+```
 $ yaourt parcellite
 $ yaourt audio-convert
 $ yaourt kmplayer
@@ -1536,23 +1668,38 @@ $ sudo pacman -U tor-browser-en-6.0.5-1-x86_64.pkg.tar.xz
 
 $ yaourt smplayer
 $ yaourt mpv
+```
 
-// 截图工具
+* * *
+# 截图工具
+```
 $ yaourt shutter
 // 再搭配gimp，也很牛逼啊
 $ yaourt gnome-screenshot
 设置openbox键盘截屏rc.xml
+```
 
-
+* * *
+# eclipsetrader
+```
 $ yaourt eclipsetrader
 $ sudo pacman -R eclipsetrader
+```
 
 
+* * *
+# epub 等
+```
 $ yaourt epub
 ppub lucidor
 $ yaourt calibre
-http://peco.github.io/
-https://github.com/peco/peco
+```
+
+* * *
+# peco 等
+<http://peco.github.io/>
+<https://github.com/peco/peco>
+```
 $ yaourt eaglemode
 $ yaourt synapse
 
@@ -1560,8 +1707,12 @@ $ yaourt peco
 $ yaourt agrep
 $ yaourt pick
 $ yaourt fasd
+```
 
-https://github.com/AlexTuduran/Locator
+* * *
+# locator 等
+<https://github.com/AlexTuduran/Locator>
+```
 $ yaourt locator
 sudo /opt/locator/locator
 $ sudo updatedb
@@ -1573,8 +1724,13 @@ $ find . -iname '*.xx' | peco
 
 $ yaourt catfish
 sudo catfish
+```
 
 
+
+* * *
+# something
+```
 $ yaourt wxPython
 
 
@@ -1597,10 +1753,13 @@ barcode
 //notepad++或者notepadqq
 $ yaourt notepadqq
 // tip：ctrl+alt可以进行列编辑
+```
 
-
+* * *
+# iptux
 // 处理aur-iptux安装的iptux传输（准确说是发送）文件大小为0的问题
 需要预装git libgtk2.0-dev libgconf2-dev g++ make autoconf libtool automake等
+```
 git clone git://github.com/iptux-src/iptux.git
 cd iptux
 ./configure
@@ -1608,37 +1767,43 @@ make
 sudo make install
 iptux
 // 已经修改aur-iptux，可以直接打包成pacman安装包，便于管理
-
-
+```
+* * *
+# 计算器
 // 计算器老外观更顺眼一点
+```
 $ yaourt gcalctool-oldgui
+```
 //gcalctool-oldgui 与 gnome-calculator 有冲突。删除 gnome-calculator
 
 
-
+* * *
+# ？
+```
 ==> If you experience sound problems try setting your SDL_AUDIODRIVER environment variable to "dma"
 ==> eg. export SDL_AUDIODRIVER="dma" ; wesnoth
 ==> If "dma" doesn't work,other options are: dsp,alsa,artsc,esd,nas try to find the right output.
+```
 
 
-
-
-
-
+* * *
+# Something
+```
 $ yaourt cpu-x
 
-
-
 $ yaourt wpa2
+```
 
 
-
-
+* * *
+# apache server
+```
 $ sudo pacman -S apache
 或者
 $ yaourt apache-tools
-$ sudo gedit /etc/httpd/conf/httpd.conf 
-
+```
+`$ sudo gedit /etc/httpd/conf/httpd.conf `
+```
 #DocumentRoot "/srv/http"
 #<Directory "/srv/http">
 DocumentRoot "/mnt/sdd1"
@@ -1672,12 +1837,14 @@ DefaultLanguage zh-CN
     #
     Require all granted
 </Directory>
+```
+
+`$ sudo systemctl restart httpd.service`
 
 
-$ sudo systemctl restart httpd.service
-
-
-
+* * *
+# Something
+```
 $ yaourt -S chromium-pepper-flash
 $ yaourt -S acroread (太垃圾)
 acroread 的可选依赖
@@ -1687,118 +1854,139 @@ acroread 的可选依赖
 
 $ yaourt -S foxitreader
 
-
 $ yaourt iceweasel
 
 $ yaourt genymotion
 /home/andy/.Genymobile/Genymotion/ova
-
-
-
 
 $ yaourt masterpdfeditor
 
 $ yaourt amule
 
 $ yaourt rtorrent
+```
 
-
-ftp client
+* * *
+# ftp client
+```
 $ yaourt filezilla
+```
 
-ssh server
+* * *
+# ssh server
+```
 sudo pacman -S openssh
 sudo systemctl start sshd.service
 ps -e | grep ssh
 ps -ef | grep sshd
 sudo iptables -L
+```
 
 
-
-
+* * *
+# jwm
 yaourt jwm
 
 
-
-
-安装 openproj
+* * *
+# 安装 openproj
+```
 $ makepkg
 $ sudo pacman -U openproj-1.4-2-x86_64.pkg.tar.xz
+```
+
+* * *
+# 百度文库下载
+`idocdown_v29`
 
 
-百度文库下载
-idocdown_v29
+* * *
+# 一个iso信息查看工具
+```
+$ yaourt dumpet
 
-
-一个iso信息查看工具
-yaourt dumpet
 $ makepkg
 $ sudo pacman -U dumpet-2.1-5-x86_64.pkg.tar.xz
+```
 
-
-一个iso制作工具
+* * *
+# 一个iso制作工具
+```
 yaourt xorriso
+```
 
-
+* * *
+# alien 包转换
 用于转换安装包，比如从rpm包到deb包
+```
 yaourt alien
+```
 
 
-Framebuffer setup utility
+* * *
+# Framebuffer setup utility
+```
 yaourt fbset
+```
 
-
-一个版本控制工具
+* * *
+# 一个版本控制工具
+```
 yaourt bzr
+```
 
+* * *
+# Something
+```
 //暂时不安装这个东西
 yaourt lazarus
 
-
-
-
 yaourt wine-git
-
-
-
 
 yaourt libstdc++
 选5
+```
 
 
+* * *
+# 显示 显卡 有关
+```
 #yaourt glxinfo
-
-https://wiki.archlinux.org/index.php/Intel_graphics#Installation
+```
+<https://wiki.archlinux.org/index.php/Intel_graphics#Installation>
+```
 yaourt lib32-mesa-libgl mesa-libgl xf86-video-intel mesa-demos lib32-mesa-demos
-
+```
 /etc/X11/xorg.conf.d/20-intel.conf
-
+```
 Section "Device"
    Identifier  "Intel Graphics"
    Driver      "intel"
 EndSection
-
-https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Installing_VA-API
+```
+<https://wiki.archlinux.org/index.php/Hardware_video_acceleration#Installing_VA-API>
+```
 yaourt libva-intel-driver libvdpau-va-gl
+```
 
-
+```
 glxinfo
 lspci | grep VGA
+```
 
+* * *
+# Something
+```
 yaourt lib32-tcl
 
 yaourt ksh ld-lsb
 
-
-
 killall xeyes
+```
 
-
-
+```
 为了update
 删除iceweasel、lib32-ffmpeg-1:3.0.2-2  lib32-libvdpau-va-gl-0.3.4-1
-
-
 
 sudo pacman -Rdd openjpeg2
 
@@ -1820,141 +2008,144 @@ libvpx不指定版本
 为运行quartus
 安装lib32-libpng12
 
+```
 
 
 
-
-exfat格式支持
+* * *
+# exfat格式支持
+```
 $ sudo pacman -S exfat-utils
+```
 
 
 
 
-
-
-
+* * *
+# mime
+```
 文件打开
 mime
 /home/andy/.local/share/applications/mimeinfo.cache等文件有关
+```
 
 
-
-
+* * *
+# opera
+```
 yaourt opera
+```
 
 
-
-安装永中office
+* * *
+# 安装永中office
+```
 EIOffice_Personal_Lin.tar.gz
 sudo ./setup.sh
 指向/opt
 命令是eio
 
-
 wps能够满足大部分需求，如果需要急用一些ms office的功能，就用eio顶一下啦
+```
 
 
-
-
-yaourt lm_sensors
+* * *
+# sensors + conkey配置
+```
+$ yaourt lm_sensors
 $ sensors
-
+```
 结合sensors监测cpu温度并显示在conkey中，要清除掉摄氏度前的A字符
-
+```
 CPU0: ${exec sensors | grep "Core 0" | cut -c16-19}${exec sensors | grep "Core 0" | cut -c21-21}C$alignr${cpu cpu0}%
 ${cpubar cpu0}
 #CPU1: ${exec sensors | grep "Core 1" | tail -n 1 | awk '{print $3}'| cut -c1,2,3,4,5,7}C$alignr${cpu cpu1}%
 CPU1: ${exec sensors | grep "Core 1" | awk '{print $3}'| cut -c2,3,4,5,7}C$alignr${cpu cpu1}%
 ${cpubar cpu1}
-
+```
 
 如果.conkyrc中的
-override_utf8_locale 修改为yes
+`override_utf8_locale` 修改为yes
 那么可以简化
+```
 CPU0: ${exec sensors | grep "Core 0" | cut -c16-22}$alignr${cpu cpu0}%
 ${cpubar cpu0}
 CPU1: ${exec sensors | grep "Core 1" | awk '{print $3}'| cut -c2-8}$alignr${cpu cpu1}%
 ${cpubar cpu1}
+```
 
 
 
-
-
-###yaourt qtchooser
-
-
-
-
+* * *
+# Something
+```
+yaourt qtchooser
 
 yaourt alsa-plugins
 选lib32
-
-
-
 
 ccs6
 lib32-dbus-glib
 lib32-libgcrypt
 lib32-gconf
 lib32-libgcrypt15
+```
 
-
-
-
-
-
-
-坚果云
+* * *
+# 坚果云
+```
 yaourt nutstore
+```
 
-
-
-
-安装flash-plugin
-https://wiki.archlinux.org/index.php/Chromium#Default_applications
+* * *
+# 安装flash-plugin
+<https://wiki.archlinux.org/index.php/Chromium#Default_applications>
+```
 yaourt pepper-flash
+```
 对opera、chromiun有效，查看和启用都在
-chrome://plugins/
+`chrome://plugins/`
 
 chrome自带
 
 firefox和iceweasel
-https://wiki.archlinux.org/index.php/Browser_plugins#Flash_Player
+<https://wiki.archlinux.org/index.php/Browser_plugins#Flash_Player>
+```
 yaourt ttf-ms-fonts
 yaourt freshplayerplugin
 cp /usr/share/freshplayerplugin/freshwrapper.conf.example ~/.config/freshwrapper.conf
-
-
-
-
-
-
+```
+* * *
+# curlftpfs
+```
 yaourt curlftpfs
 
 curlftpfs -o codepage=utf8 ftp://username:password@192.168.192.168 /ftp
+```
 
-
-
+* * *
+# url encode tools
+```
 yaourt url encode # 没有必要安装的
 perl-url-encode
-
+```
 URL字符编码可以用在线工具去解码
-http://tool.chinaz.com/tools/urlencode.aspx
-http://old.tool.chinaz.com/Tools/URLEncode.aspx
-http://www.w3school.com.cn/tags/html_ref_urlencode.html
-http://search.cpan.org/~chansen/URL-Encode-0.03/lib/URL/Encode.pod
+<http://tool.chinaz.com/tools/urlencode.aspx>
+<http://old.tool.chinaz.com/Tools/URLEncode.aspx>
+<http://www.w3school.com.cn/tags/html_ref_urlencode.html>
+<http://search.cpan.org/~chansen/URL-Encode-0.03/lib/URL/Encode.pod>
 
-http://tech.mclarian.com/a/557
+<http://tech.mclarian.com/a/557>
 纯解码
 url串保存到keywords.list
-$ perl -pe 's/%(..)/pack("c", hex($1))/eg' keywords.list
+`$ perl -pe 's/%(..)/pack("c", hex($1))/eg' keywords.list`
 
 ！！！或者通过命令进行url encode and decode
-echo "%E9%B2%81" | perl -pe 's/%(..)/pack("c", hex($1))/eg'
-echo "%E9%B2%81%E5%85%8B%EF%BC%9A%E4%B8%AA%E4%BD%93%E4%B8%BB%E4%B9%89%E4%BC%A6%E7%90%86(20161019)" | perl -pe 's/%(..)/pack("c", hex($1))/eg'
+`echo "%E9%B2%81" | perl -pe 's/%(..)/pack("c", hex($1))/eg'`
+`echo "%E9%B2%81%E5%85%8B%EF%BC%9A%E4%B8%AA%E4%BD%93%E4%B8%BB%E4%B9%89%E4%BC%A6%E7%90%86(20161019)" | perl -pe 's/%(..)/pack("c", hex($1))/eg'`
 
 那么对应的编码就是
-echo 鲁 | perl -pe 's/([^\w\-\.\@])/$1 eq "\n" ? "\n":sprintf("%%%2.2x",ord($1))/eg'
+`echo 鲁 | perl -pe 's/([^\w\-\.\@])/$1 eq "\n" ? "\n":sprintf("%%%2.2x",ord($1))/eg'`
 
 用脚本编码
 http://www.perlhowto.com/encode_and_decode_url_strings
