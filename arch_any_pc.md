@@ -169,30 +169,35 @@ chroot /mnt
 
 就可以通过pacman等修复软件，grub修复启动等
 
-
+* * *
+# 初步配置
+```
 //$ sudo leafpad /etc/locale.conf 
 //$ sudo leafpad /etc/locale.gen
 //$ sudo locale-gen
-$ sudo leafpad /etc/pacman.d/mirrorlist 
-mirrors.ustc.edu.cn or mirrors.163.com
+```
+
+`$ sudo leafpad /etc/pacman.d/mirrorlist `
+用 `mirrors.ustc.edu.cn` or `mirrors.163.com`
 
 download .db file and put into
 /var/lib/pacman/sync
-
+``
 $ sudo pacman -S archlinux-keyring && sudo pacman -Syu
 or
 $ sudo pacman -S archlinux-keyring && sudo pacman -Syy
+``
 
 已损坏 (无效或已损坏的软件包 (PGP 签名))
-$ sudo pacman-key --refresh-keys
+`$ sudo pacman-key --refresh-keys`
 
-
+```
 $ pacman-key --export > all_keys
 $ sudo pacman-key --add all_keys
 $ pacman-key --list-keys
+```
 
-
-
+```
 $ sudo pacman -Syu
 $ sudo pacman-key --init
 $ sudo leafpad /etc/pacman.d/gnupg/gpg.conf
@@ -200,41 +205,47 @@ change keyserver hkp://pool.sks-keyservers.net to hkp://keyserver.ubuntu.com
 $ sudo dirmngr < /dev/null
 $ sudo pacman-key -r <key-no>
 $ sudo pacman-key --refresh-keys
-
-$ sudo leafpad /etc/pacman.conf
+```
+`$ sudo leafpad /etc/pacman.conf`
+```
 [archlinuxcn]
 SigLevel = Optional TrustAll
 #Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 Server = http://mirrors.163.com/archlinux-cn/$arch
-
+```
+```
 $ sudo pacman -Sy
 $ sudo pacman -S archlinuxcn-keyring
 $ sudo pacman -S opencc
 $ sudo sudo pacman -S yaourt 
 $ yaourt -S fcitx-sogoupinyin wps-office
-
 // 切莫安装sogoupinyin
+```
 
-$ sudo leafpad ~/.xinitrc
+`$ sudo leafpad ~/.xinitrc`
+```
 exec dbus-launch startxfce4
 to
 exec dbus-launch startxfce4 nm-applet &
 or
 exec dbus-launch startxfce4 nm-applet xfce4-panel &
-
+```
+```
 $ sudo sudo pacman -S wqy-zenhei
+```
+`$ leafpad /home/andy/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml/xfce4-desktop.xml`
 
-$ leafpad /home/andy/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml/xfce4-desktop.xml
-check the path is /usr/share/backgrounds/xfce
-
+check the path is `/usr/share/backgrounds/xfce`
+```
 $ sudo sudo cp /usr/share/backgrounds/*.jpg /usr/share/backgrounds/xfce/
 
 $ sudo pacman -Syu
+```
 
-
-$ sudo leafpad ~/.xinitrc
+`$ sudo leafpad ~/.xinitrc`
 back to
 exec dbus-launch startxfce4 
+```
 $ sudo pacman -S samba
 $ sudo pacman -S nautilus
 //only keep xfce4-panel
@@ -248,8 +259,8 @@ $ sudo pacman -S firefox chromium liferea thunderbird transmission-gtk brasero g
 $ sudo pacman -S lftp file-roller gedit ttf-arphic-uming ttf-arphic-ukai ttf-bitstream-vera
 
 $ sudo pacman -S base-devel
-
-
+```
+```
 //sfs extractor
 //Squashfs
 squashfs-tools
@@ -257,7 +268,8 @@ mksquashfs
 unsquashfs
 
 //extra .sfs file from livecd and mount .img file as ext4 format
-
+```
+```
 $ pacman -Q --help
 
 //find installed packages
@@ -265,28 +277,31 @@ $ pacman -Q -d > pacqd.txt
 $ pacman -Q -e > pacqe.txt
 $ pacman -Q -m > pacqm.txt
 $ pacman -Q -n > pacqn.txt
+```
 
-// restore grub  |  grub修复
+* * *
+# restore grub  |  grub修复
 
 grub命令见
-最新Grub2全面教程.pdf
+`最新Grub2全面教程.pdf`
 
 常用的有
 
-grub>root (hd0,0)
+`grub>root (hd0,0)`
 命令含义：从的硬盘第一个分区C盘启动
 
-grub>chainloader (hd0,0)+1
+`grub>chainloader (hd0,0)+1`
 命令含义：指示GRUB读取分区的第一个扇区的引导记录
 
-grub>boot
+`grub>boot`
 命令含义：启动GRUB
 
 查看挂载目录
-//sudo fdisk -l
+`sudo fdisk -l`
 挂载，比如载到/mnt
-//sudo mount /dev/sda1 /mnt
+`sudo mount /dev/sda1 /mnt`
 在livecd切换到目标根目录
+```
 cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
 su
 mount -o bind /dev dev
@@ -319,38 +334,53 @@ chroot和mount根目录特殊节点先后无关？最好在mount之前之后？
 sudo chroot /path/to/mounted/
 //or
 sudo chroot /mnt /bin/bash
+```
 
 // use grub-install or grub2-install
-sudo grub-install /dev/sda
+`sudo grub-install /dev/sda`
 // or 
-sudo grub-install --root-directory=/mnt/boot /dev/sda
+`sudo grub-install --root-directory=/mnt/boot /dev/sda`
 // or if sda3 is a EFI partition
+```
 mount /dev/sda3 /mnt/boot/efi
 sudo grub-install /dev/sda --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
+```
 
 //generate new grub.cfg
+```
 grub2-mkconfig -o /boot/grub2/grub.cfg
 or
 grub-mkconfig -o /boot/grub/grub.cfg
+```
 
-// backup and restore system
+* * *
+#  backup and restore system
 // boot into livecd, cd to mountpoint
+```
 tar -jcvpf backup.tar.bz2 .
 // or
 tar -jxvpf backup.tar.bz2 .
+```
 
-// backup pkgs
+* * *
+# backup pkgs
+```
 $ sudo mv ~/Downloads/* /var/cache/pacman/pkg/
 $ sudo cp /var/lib/pacman/sync/* /mnt/win_e/arch_boot/sync/
 $ sudo cp /var/cache/pacman/pkg/* /mnt/win_e/TDDOWNLOAD/arch_repo/pkg/
 or
 $ sudo mv /var/cache/pacman/pkg/* /mnt/win_e/TDDOWNLOAD/arch_repo/pkg/
+```
 
-// remote desktop
+* * *
+# remote desktop
+```
 $ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andy -f 192.168.1.99 &
+```
 
-
-// vbox
+* * *
+# 安装 vbox | virtualbox
+```
 $ sudo pacman -S xorg-server xorg-xinit xorg-utils xorg-server-utils
 $ sudo pacman -S virtualbox
 ===> You must load vboxdrv module before starting VirtualBox:
@@ -369,90 +399,131 @@ $ sudo modprobe vboxnetadp
 $ sudo modprobe vboxpci
 $ sudo pacman -S linux-lts linux linux-lts-headers linux-headers
 $ sudo dkms autoinstall
-
-$ sudo leafpad /etc/modules-load.d/virtualbox.conf
+```
+`$ sudo leafpad /etc/modules-load.d/virtualbox.conf`
+```
 vboxdrv
 vboxnetadp
 vboxnetflt
 vboxpci
-
-
-// setup vim
+```
+```
 $ sudo vboxreload
-$ sudo pacman -S ctags cscope
-$ leafpad .vimrc
-set termencoding=utf-8
+```
 
-// arm tool chain
+* * *
+# setup vim
+```
+$ sudo pacman -S ctags cscope
+```
+`$ leafpad .vimrc`
+```
+set termencoding=utf-8
+```
+
+* * *
+# arm tool chain
+```
 $ sudo pacman -S arm arm-none-eabi-binutils arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib
 $ arm-none-eabi-gcc --target-help
+```
 
-// music player
+* * *
+# music player
+```
 $ sudo pacman -S audacious rhythmbox
 //$  sudo pacman -S banshee
+```
 
-// wine
+* * *
+# wine
+```
 $ sudo pacman -S wine wine_gecko wine-mono winetricks
+```
 
+* * *
+# busybox
+```
 $ sudo pacman -S busybox
 $ sudo chmod 4555 /usr/bin/busybox
+```
 
-// openbox
+
+* * *
+# openbox
+```
 // scrot是截图工具
 $ sudo pacman -S wbar feh scrot obmenu
 $ sudo pacman -S lxappearance pcmanfm
 $ tint2conf
-
-$ leafpad ~/.config/openbox/autostart
+```
+`$ leafpad ~/.config/openbox/autostart`
+```
 (sleep 2 && spacefm -d) &
 to
 (sleep 2 && pcmanfm -d) &
-
-$ leafpad ~/.config/obmenu-generator/schema.pl
+```
+`$ leafpad ~/.config/obmenu-generator/schema.pl`
+```
 {item => ['spacefm',           'File Manager',      'file-manager']},
 to
 {item => ['pcmanfm',           'File Manager',      'file-manager']},
-
+```
+```
 $ pcmanfm --desktop
 $ pcmanfm --desktop-pref
 $ pcmanfm --desktop-off
-
+```
 
 pcmanfm的bookmarks在
-~/.config/gtk-3.0/bookmarks
+`~/.config/gtk-3.0/bookmarks`
 
 pcmanfm右键新建清理，其实就是在模板里面
 ~/Templates/
 
 
 
-// java
+* * *
+# java
+```
 $ sudo pacman -S jdk
+```
 
-// eclipse + cdt
+* * *
+# eclipse + cdt
+```
 $ sudo pacman -S eclipse
 $ sudo pacman -S openocd
-http://ftp.yzu.edu.tw/eclipse/tools/cdt/releases/8.7/cdt-8.7.0.zip
-http://avr-eclipse.sourceforge.net/wiki/index.php/The_AVR_Eclipse_Plugin
-http://sourceforge.net/projects/gnuarmeclipse
-http://opensource.zylin.com/embeddedcdt.html
-http://opensource.zylin.com/zylincdt
+```
+<http://ftp.yzu.edu.tw/eclipse/tools/cdt/releases/8.7/cdt-8.7.0.zip>
+<http://avr-eclipse.sourceforge.net/wiki/index.php/The_AVR_Eclipse_Plugin>
+<http://sourceforge.net/projects/gnuarmeclipse>
+<http://opensource.zylin.com/embeddedcdt.html>
+<http://opensource.zylin.com/zylincdt>
 
-// version control
+* * *
+# version control
+```
 $ sudo pacman -S subversion git
 $ git config --global user.name "Andreas Zhang"
 $ git config --global user.email denglitsch@gmail.com
+```
 
-
-// qemu
+* * *
+# qemu
+```
 $ sudo pacman -S qemu qemu-arch-extra qemu-block-gluster qemu-block-iscsi qemu-block-rbd qemu-guest-agent qemu-launcher 
+```
 
-// avr tools
+* * *
+# avr tools
+```
 $ sudo pacman -S avr-binutils avrdude avr-gcc avr-gdb avr-libc
-
-http://sourceware.org/insight/downloads.php
-ftp://sourceware.org/pub/insight/releases/
-ftp://sourceware.org/pub/insight/releases/insight-6.8-1a.tar.bz2
+```
+<http://sourceware.org/insight/downloads.php>
+<ftp://sourceware.org/pub/insight/releases/>
+<ftp://sourceware.org/pub/insight/releases/insight-6.8-1a.tar.bz2>
+```
 cd ~
 tar jxvf insight-6.8-1a.tar.bz2
 mkdir /home/andy/insight-arm
@@ -460,7 +531,6 @@ mkdir /home/andy/insight-arm
 // add '-' before the line 1090 of bfd/Makefile
 
 --disable-stage1-checking
-
 
 $ sudo pacman -S gdb
 $ gdb -tui
@@ -478,20 +548,20 @@ mkdir /home/andy/insight-avr
 // expect, tclsh and wish
 $ sudo pacman -S tcl tk expect
 http://tcl.activestate.com/software/tcltk/
+```
 
 
-
-////////////////////////////////////////backup0919////////////////////////////////////////////////
-//设置文件管理器终端为
-lxterminal
+* * *
+# backup0919
+//设置文件管理器终端为 `lxterminal`
 
 fcitx候选字改成7
 
 导入key
-$ sudo pacman-key --add all_keys
+`$ sudo pacman-key --add all_keys`
 
-$ sudo leafpad /etc/pacman.d/mirrorlist
-
+`$ sudo leafpad /etc/pacman.d/mirrorlist`
+```
 ## Score: 1.3, China
 Server = http://mirrors.hustunique.com/archlinux/$repo/os/$arch
 ## Score: 3.0, China
@@ -504,11 +574,14 @@ Server = http://mirrors.hustunique.com/archlinux/$repo/os/$arch
 #Server = http://mirrors.hust.edu.cn/archlinux/$repo/os/$arch
 ## Score: 7.3, China
 #Server = http://mirrors.163.com/archlinux/$repo/os/$arch
-
+```
+```
 $ sudo pacman -Syy
+```
 
-
-// install rar
+* * *
+# install rar
+```
 $ wget http://www.rarsoft.com/rar/rarlinux-x64-5.3.b4.tar.gz
 $ tar zxvf rarlinux-x64-5.3.b4.tar.gz
 $ cd rar
@@ -517,60 +590,103 @@ $ cd ..
 $ rm -rf rar
 $ rm rarlinux-x64-5.3.b4.tar.gz
 通过samba，从window 7
-复制一份rarreg.key到～
-
-
+复制一份rarreg.key到~
+```
+rarreg.key
+```
+RAR registration data
+Andreas Zhang
+Unlimited Company License
+UID=95d88025e605e7f69a7d
+64122122509a7d8fe151cac66f48da9a7eba775d78b0928b03d738
+409ffd2cdd69047f79b560fce6cb5ffde62890079861be57638717
+7131ced835ed65cc743d9777f2ea71a8e32c7e593cf66794343565
+b41bcf56929486b8bcdac33d50ecf7739960cf9a562353a49af6f9
+69d97d19b1c2fb9c0a37971376ad4e3d6a18705e8f9b541bdffccf
+bfcd3a6fe09f73b6f6ead20f2606d79374df1160d8db0a1f603850
+4e86565158c437a7ff6ea0b2a21104b968ad6ddc336e0342949312
+```
+```
 $ sudo pacman -S ncurses
 $ sudo pacman -S mono-tools
+```
 
-
-// 修改yaourt默认编辑器
-$ sudo leafpad /etc/yaourtrc
+* * *
+# 修改yaourt默认编辑器
+`$ sudo leafpad /etc/yaourtrc`
+```
 EDITOR="vim"
+```
 没有用？
 
-// yaourt下载的位置在/tmp
+yaourt下载的位置在/tmp
 
-// for crosstool-ng
+* * *
+# for crosstool-ng
+```
 //sudo pacman -S cvs gawk
 //cd /usr/bin
 //mv mawk mawk.bak
 //cd /home
 sudo pacman -S cvs
 //sudo ln -s gawk mawk
+```
 
+* * *
+# gnome tools
+```
 $ sudo pacman -S gnome-system-monitor
 $ sudo pacman -S gnome-mines
-
-
+```
+* * *
+# friendlyarm repos
+```
 git clone https://github.com/friendlyarm/sd-fuse_nanopi.git
 git clone https://github.com/friendlyarm/prebuilts.git
 git clone https://github.com/friendlyarm/uboot_nanopi.git
 git clone https://github.com/friendlyarm/linux-4.x.y.git
+```
 
-
+* * *
+# net tools
 // ifconfig,route在net-tools中，nslookup,dig在dnsutils中，ftp,telnet等在inetutils中,ip命令在iproute2中
+```
 $ sudo pacman -S net-tools dnsutils inetutils iproute2
+```
+
+* * *
+# ?
+`# dirmngr </dev/null`
 
 
-# dirmngr </dev/null
-
-
-$ sudo leafpad /etc/pacman.d/gnupg/gpg.conf
+* * *
+# key 操作
+`$ sudo leafpad /etc/pacman.d/gnupg/gpg.conf`
+```
 change keyserver hkp://pool.sks-keyservers.net to hkp://keyserver.ubuntu.com:80
+```
+```
 $ sudo pacman-key -r 0940E3F9
 $ pacman-key --export > all_keys
+```
+
+* * *
+# 远程桌面工具
+```
 $ sudo pacman -S xrdp remmina freerdp telepathy-glib nxproxy xorg-server-xephyr libvncserver
-
-
+```
+```
 //$ vncserver -geometry 1440x900 -alwaysshared -dpi 96 :1
 $ x0vncserver -display :0 -passwordfile ~/.vnc/passwd
+```
 需要的话添加到自启动里面
 
-// 创建一下密码123456,就是第一次运行的时候vncserver，或者调用vncpasswd
-$ vncserver
+创建一下密码123456,就是第一次运行的时候vncserver，或者调用vncpasswd
+`$ vncserver`
 
-// mingw
+* * *
+# mingw
+```
 $ sudo pacman -S mingw-w64-gcc mingw-w64-binutils mingw-w64-crt mingw-w64-headers mingw-w64-headers-bootstrap mingw-w64-winpthreads
 $ gcc -o main main.c
 $ i686-w64-mingw32-gcc -o main1 main.c
@@ -578,13 +694,29 @@ $ x86_64-w64-mingw32-gcc -o main2 main.c
 $ file main*
 $ wine ./main1
 $ wine ./main2
+```
+main.c
+```
+#include <stdio.h>
 
+int main(void)
+{
+   printf("Hello, World!\n\r");
+   return 0;
+}
+```
 
-// 安装pdfstudio到～
+* * *
+# 安装pdfstudio到~
 复制图标到app目录
+```
 $ sudo cp pdfstudio9.desktop /usr/share/applications/
 $ cp pdfstudio9.desktop ~/Desktop
+```
 
+* * *
+# openbox 环境配置
+```
 // 修改schema.pl文件,添加
 {cat => ['wine',        'Wine',        'applications-wine']},
 
@@ -604,9 +736,11 @@ $ sudo pacman -S qt
 
 // 不要安装kde
 //$ sudo pacman -S plasma kde-applications kde-l10n-zh_cn
+```
 
-
-
+* * *
+# samba 设置
+```
 $ mkdir ~/share
 $ sudo leafpad /etc/samba/smb.conf
 
@@ -641,22 +775,31 @@ sudo systemctl stop smbd.service nmbd.service winbindd.service
 $ testparm -s
 $ smbclient -L hostname -U%
 
+//危险，会破坏对smb://的解析
+//$ sudo pacman -S dbus
+```
 
-
+* * *
+# 安装 cpan
+```
 $ sudo cpan
 $ sudo cpan install Linux::DesktopFiles Data::Dump
+```
 
+* * *
+# dconf 配置 gedit encodings
+```
 $ sudo pacman -S dconf-editor
 $ dconf-editor
 依次点开->org->gnome->gedit->preferences->encodings
 改成
 ['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+```
 
 
-//危险，会破坏对smb://的解析
-//$ sudo pacman -S dbus
-
-// for winetricks
+* * *
+# for winetricks
+```
 $ sudo pacman -S zenity
 $ rm -rf ~/.wine
 WINEARCH=win32 WINEPREFIX=~/.wine winecfg
@@ -677,22 +820,27 @@ http://sourceforge.net/projects/wine/files/Wine Mono
 http://sourceforge.net/projects/wine/files/Wine%20Gecko/
 /usr/share/wine/mono
 /usr/share/wine/gecko
+```
 
-
-安装foxit reader，beyond compare，source insight
+* * *
+# 安装foxit reader，beyond compare，source insight
 source insight出现打开项目错误时候，Documents/Source Insight/Settings/GLOBAL.CF3
 实在不行就删掉Documents目录下的配置目录就可以恢复
 
 
-最后保护根目录关键文件
+* * *
+# 保护根目录关键文件
+```
 //chmod 1777 *
 $ sudo chattr +i rarreg.key
 $ lsattr -a
+```
 
-
-使用ACL进行访问控制
+* * *
+# 使用ACL进行访问控制
+```
 $ sudo pacman -S acl
-
+```
 
 
 ///////////////////////////////////////////////////////////////////////
