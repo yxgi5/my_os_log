@@ -8256,6 +8256,68 @@ $ su
 yay -S bash-language-server libcamera-tools libcamera-docs gst-plugin-libcamera shellcheck
 
 
+yay -S python-fqdn python-isoduration python-rfc3339-validator python-webcolors python-jsonpointer python-fastnumbers python-pyicu python-installer python-build xfce4-dev-tools
+
+
+v2x-git
+makepkg -si
+报错
+  -> Creating working copy of python-symbiflow-v2x git repo...
+fatal: invalid reference: origin/HEAD
+
+对比正常clone出来的repo
+发现默认branch名字为master而不是main，但应该是main
+那么在PKGBUILD指定brach
+
+
+makepkg应退出conda环境
+例如speedometer
+
+
+You must run at least once "debtap -u"
+with root privileges (preferably recently),
+before running this script
+==> Syntax: debtap [option] package_filename
+==> Run "debtap -h" for help
+
+
+
+The schema file has been installed as: /etc/xdg/obmenu-generator/schema.pl
+
+
+
+yay -S bcompare bcompare-cinnamon bcompare-kde4 bcompare-kde5 bcompare-mate bcompare-nautilus bcompare-thunar
+NOTE: It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+yay -S python-flup python-memcached python-oauth2client erlang-unixodbc rabbitmqadmin lksctp-tools python-gflags
+
+
+:: mono-msbuild and msbuild-stable are in conflict (msbuild). Remove msbuild-stable? [y/N]
+
+
+$ sudo npm --help
+node: error while loading shared libraries: libicui18n.so.71: cannot open shared object file: No such file or directory
+$ yay -S node   //而不是nodejs-lts-erbium
+$ yay -S ax25-tools soundmodem
+
+
+从 https://archive.archlinux.org/packages/n/nodejs-lts-erbium/ 下载 nodejs-lts-erbium-12.22.11-1-x86_64.pkg.tar.zst
+yay -S nodejs-lts-erbium
+yay -Rdd nodejs-lts-erbium
+yay -Rdd node
+yay -R npm
+yay -R node-gyp
+yay -R nodejs-nopt
+
+
+yay -S nodejs npm
+nodejs-lts-gallium>nodejs-lts-fermium
+
+//yay -S fcron
+yay -S cronie kcron 
+
+
+
 
 
 
