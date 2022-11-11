@@ -2148,9 +2148,9 @@ url串保存到keywords.list
 `echo 鲁 | perl -pe 's/([^\w\-\.\@])/$1 eq "\n" ? "\n":sprintf("%%%2.2x",ord($1))/eg'`
 
 用脚本编码
-http://www.perlhowto.com/encode_and_decode_url_strings
+<http://www.perlhowto.com/encode_and_decode_url_strings>
 保存成.pl文件并chmod
-
+```
 #!/usr/bin/perl
 use URI::Escape;
  
@@ -2159,11 +2159,11 @@ my $encode = uri_escape($string);
  
 print "Original string: $string\n";
 print "URL Encoded string: $encode\n";
-
+```
 ！！受此启发，写两个脚本
 
 url-decode.pl
-/---------------------------
+```
 #!/usr/bin/perl
  
 use URI::Escape;
@@ -2175,10 +2175,10 @@ print "\nOriginal string:\n$string\n";
 my $encode = uri_escape($string);
 print "URL Encoded string:\n$encode\n\n";
 
----------------------------/
+```
 
 url-encode.pl
-/---------------------------
+```
 #!/usr/bin/perl
  
 use URI::Escape;
@@ -2192,7 +2192,7 @@ print "URL Decoded string:\n$decode\n";
 
 my $encode = uri_escape($decode);
 print "URL Encoded string:\n$encode\n\n";
----------------------------/
+```
 
 都chmod 777，就可以转换了
 复制到/bin去
@@ -2203,46 +2203,55 @@ print "URL Encoded string:\n$encode\n\n";
 
 
 安装steam
-https://wiki.archlinux.org/index.php/Steam
-https://wiki.archlinux.org/index.php/Steam/Troubleshooting#Debugging_Steam
-yaourt steam-native-runtime
-yaourt steam
+<https://wiki.archlinux.org/index.php/Steam>
+<https://wiki.archlinux.org/index.php/Steam/Troubleshooting#Debugging_Steam>
+```
+$ yaourt steam-native-runtime
+$ yaourt steam
 $ steam-native
 或者
 $ LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1 /usr/$LIB/libxcb.so.1 /usr/$LIB/libgpg-error.so' /usr/bin/steam
+```
 
-
-安装unar
+* * *
+# 安装unar
+```
 yaourt unarchiver
 yaourt unzip-iconv
-
+```
 
 deb转pacman安装包
-/mnt/win_e/boot/arch_doc/pacman
+`/mnt/win_e/boot/arch_doc/pacman`
 一个例子是uex_4.0.0.7，在hexeditor目录
 注册时候断网之后任意输入，就点出离线注册了
 
 
 
 
-##双击载iso
-##yaourt automounter
-
+* * *
+# 双击加载iso镜像
+``
+//yaourt automounter
+``
 ！！！！！！！iso挂载最好还是用gnome-disk-image-mounter
+``
 yaour gnome-disk-utility
+``
 
 
 
-
-光盘烧录
+* * *
+# 光盘烧录
+```
 yaourt k3b
+```
 
-
-
-
+* * *
+# 仿 searcheverything
 据说angrysearch山寨了searcheverything
+```
 yaourt angrysearch
-
+```
 
 
 
