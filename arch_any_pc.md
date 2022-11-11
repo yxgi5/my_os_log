@@ -2255,12 +2255,17 @@ yaourt angrysearch
 
 
 
-提供crc32
+* * *
+# 提供crc32
+```
 yaourt perl-archive-zip
+```
 
-
-查看.db文件
+* * *
+# 查看sqlite格式的.db文件
+```
 yaourt sqlitebrowser
+```
 
 
 
@@ -2268,22 +2273,15 @@ yaourt sqlitebrowser
 
 
 
-
-课题
-本地有xserver
-如何把远程桌面在本地运行？
-
+* * *
+# 课题
+本地有xserver，如何把远程桌面在本地运行？
 
 
 
-
-
-
-
-
-
-
-
+* * *
+# 安装 modelsim/vsim
+```
 $ vsim
 Error in startup script:
 Initialization problem, exiting.
@@ -2298,40 +2296,39 @@ Initialization problem, exiting.
 "ncFyP12 -+"
    (file "/opt/questasim/linux_x86_64/../tcl/vsim/vsim" line 1)
 ** Fatal: Read failure in vlm process (0,0)
+```
+ref to <https://wiki.archlinux.org/index.php/Altera_Design_Software>
 
-gedit /opt/modelsim/modeltech/vco
+`gedit /opt/modelsim/modeltech/vco`
+
 add near the top (after the #!/bin/sh)
-/////////////////
+```
 export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
-
-//////////////////////////////////////////////////////////
-ref to https://wiki.archlinux.org/index.php/Altera_Design_Software
+```
 
 
 
-
-
-
-
-
-QR Code generator and decoder
+* * *
+# QR Code generator and decoder
+```
 yaourt qtqr kqrcode
+```
 
 
 
-
-
-
-
-
+* * *
+# 安装 eaglemode
+```
 yaourt eaglemode
+```
 
 
 
-
-
-
+* * *
+# smath等
+```
 yaourt smath
+```
 Octave、Scilab、Maxima就不安装了
 
 
