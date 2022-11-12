@@ -2337,219 +2337,230 @@ Octave、Scilab、Maxima就不安装了
 
 
 
-
+* * *
+# 修改 /opt 目录 owner 和 权限
+```
 sudo chown andy:users opt/
+```
 
-
-
-cd /usr/local/bin
-sudo gedit xxnet
-sudo chmod +x xxnet
--------------------------------------------------
+* * *
+# 添加 xxnet 到 dmenu 支持的 path
+`cd /usr/local/bin`
+`sudo gedit xxnet`
+```
 #!/bin/bash
 
 /opt/XX-Net/start
--------------------------------------------------
+```
+`sudo chmod +x xxnet`
 
-$ leafpad ~/.config/openbox/autostart
+开机启动 xxnet
+`$ leafpad ~/.config/openbox/autostart`
 添加
+```
 (sleep 2 && xxnet) &
+```
 
 
+* * *
+# cadence快速运行
 
-cadence快速运行
-
-cd /usr/local/bin
-sudo gedit allegro
--------------------------------------------------
+`cd /usr/local/bin`
+`sudo gedit allegro`
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/pcb/bin/allegro
--------------------------------------------------
-sudo gedit concepthdl
--------------------------------------------------
+```
+`sudo gedit concepthdl`
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/bin/concepthdl
--------------------------------------------------
-sudo gedit pad_designer
--------------------------------------------------
+```
+`sudo gedit pad_designer`
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/pcb/bin/pad_designer
--------------------------------------------------
-sudo chmod +x allegro pad_designer concepthdl
+```
+`sudo chmod +x allegro pad_designer concepthdl`
 
 
-
-
-
-
-
-
-
-
-
-sudo pacman -Qdt
-sudo pacman -Rc geoclue
-
-
-
-
-
+* * *
+# 配置 btsync
+```
 sudo pacman -S btsync
 
 mkdir -p ~/.config/btsync
 sudo chmod +r /etc/btsync.conf
 cp /etc/btsync.conf ~/.config/btsync/btsync.conf
 gedit ~/.config/btsync/btsync.conf
+```
 
-systemctl --user daemon-reload
-systemctl --user start btsync
-
-
-
-
-#yaourt pdf-xchange
+`systemctl --user daemon-reload`
+`systemctl --user start btsync`
 
 
-https://wiki.archlinux.org/index.php/Default_applications_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
-/usr/share/applications
-~/.local/share/applications
-/usr/share/applications/mimeinfo.cache
-~/.local/share/applications/mimeinfo.cache
-$HOME/.local/share/applications/mimeapps.list
-$HOME/.config/mimeapps.list
+* * *
+# mime 整理
+<https://wiki.archlinux.org/index.php/Default_applications_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)>
+有关path和文件
+`/usr/share/applications`
+`~/.local/share/applications`
+`/usr/share/applications/mimeinfo.cache`
+`~/.local/share/applications/mimeinfo.cache`
+`$HOME/.local/share/applications/mimeapps.list`
+`$HOME/.config/mimeapps.list`
 
-修改~/.local/share/applications/mimeinfo.cache
-
+修改`~/.local/share/applications/mimeinfo.cache`
+```
+...
 application/pdf=wine-extension-pdf.desktop;
+...
+```
+
+`perl-file-mimeinfo`
+
+`mimeopen -d 1.html`
+
+找找
+`xfce4-mime-settings`
 
 
 
-
-perl-file-mimeinfo
-
-mimeopen -d 1.html
-
-
-
-
-
-
+* * *
+# Something
+```
+sudo pacman -Qdt
+sudo pacman -Rc geoclue
+#yaourt pdf-xchange
 yaourt dolphin
-
-
-
 yaourt stcgal sdcc
-
-
 yaourt ltspice
-
-
 yaourt mplab
-
-
 yaourt bluefish
 yaourt kompozer
+yaourt minicom
+yaourt asciiflow
+```
 
 
-
+* * *
+# updatedb 有关
+```
 sudo updatedb -U /run/media/andy/BC482DD5482D8EE8/ -o ~/Downloads/mlocate_sdd.db
 sudo locate -d ~/Downloads/mlocate_sdd.db  XXX
 sudo locate -d ~/Downloads/mlocate_sdd.db  XXX | peco
 sudo locate -d ~/Downloads/mlocate_sdd.db VPFE | grep pdf | peco
 sudo locate -d ~/Downloads/mlocate_sdd.db VPFE | grep pdf
+```
 
-
-
+* * *
+# 远程桌面
+```
 yaourt realvnc
 sudo pacman -R xrdp
 sudo pacman -R tigervnc
 sudo pacman -U realvnc-vnc-server-6.0.2-1-x86_64.pkg.tar.xz 
 sudo pacman -U realvnc-vnc-viewer-6.0.2-1-x86_64.pkg.tar.xz 
-
-sudo systemctl enable vncserver-x11-serviced
+```
+`sudo systemctl enable vncserver-x11-serviced`
+```
 Created symlink /etc/systemd/system/multi-user.target.wants/vncserver-x11-serviced.service → /usr/lib/systemd/system/vncserver-x11-serviced.service.
-sudo systemctl start vncserver-x11-serviced
-WHJRK-UXY7V-Q34M9-CZU8L-8KGFA 
-sudo systemctl enable avahi-daemon.service
+```
+`sudo systemctl start vncserver-x11-serviced`
+注册码是
+`WHJRK-UXY7V-Q34M9-CZU8L-8KGFA`
+
+`sudo systemctl enable avahi-daemon.service`
+```
 Created symlink /etc/systemd/system/dbus-org.freedesktop.Avahi.service → /usr/lib/systemd/system/avahi-daemon.service.
 Created symlink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service → /usr/lib/systemd/system/avahi-daemon.service.
 Created symlink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket → /usr/lib/systemd/system/avahi-daemon.socket.
-sudo systemctl start avahi-daemon.service 
+```
+`sudo systemctl start avahi-daemon.service`
 
-
-sudo systemctl enable teamviewerd.service
+`sudo systemctl enable teamviewerd.service`
+```
 Created symlink /etc/systemd/system/multi-user.target.wants/teamviewerd.service → /usr/lib/systemd/system/teamviewerd.service.
-sudo systemctl start teamviewerd.service
+```
+`sudo systemctl start teamviewerd.service`
 
 
 
 
 
 
-yaourt minicom
 
-
-
-
-yaourt asciiflow
-
-
-https://wiki.archlinux.org/index.php/MySQL
-yaourt mysql
-sudo systemctl start mysqld.service 
-mysql -u root -p 直接回车，无需输入密码就可以进入数据库了
+* * *
+# MySQL
+<https://wiki.archlinux.org/index.php/MySQL>
+`yaourt mysql`
+`sudo systemctl start mysqld.service`
+`mysql -u root -p `直接回车，无需输入密码就可以进入数据库了
 设置密码
+```
 mysql> set password for root@localhost = password('a');
+```
 基本使用：
-显示已有数据库
-mysql> show databases;
-载入名为mysql的数据库
-mysql> use mysql;
-显示该数据库包含的表
-mysql> show tables;
-查询某表
-mysql> select * from user;
-退出
-mysql> exit;
 
-https://wiki.archlinux.org/index.php/PhpMyAdmin
+显示已有数据库
+`mysql> show databases;`
+载入名为mysql的数据库
+`mysql> use mysql;`
+显示该数据库包含的表
+`mysql> show tables;`
+查询某表
+`mysql> select * from user;`
+退出
+`mysql> exit;`
+
+* * *
+# PhpMyAdmin
+<https://wiki.archlinux.org/index.php/PhpMyAdmin>
+```
 yaourt phpmyadmin
 sudo gedit /etc/httpd/conf/extra/phpmyadmin.conf
 sudo gedit /etc/httpd/conf/httpd.conf
 sudo systemctl restart httpd.service 
+```
 
-
-
-
-
-
+* * *
+# php安装
 
 php安装和apache的php扩展配置见wiki
-To install PHP, first install the php and php-apache packages.
-In /etc/httpd/conf/httpd.conf, comment the line:
-#LoadModule mpm_event_module modules/mod_mpm_event.so
-and uncomment the line:
-LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
-To enable PHP, add these lines to /etc/httpd/conf/httpd.conf:
 
-    Place this at the end of the LoadModule list:
+To install PHP, first install the php and php-apache packages.
+
+In `/etc/httpd/conf/httpd.conf`, comment the line:
+```
+#LoadModule mpm_event_module modules/mod_mpm_event.so
+```
+and uncomment the line:
+```
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+```
+To enable PHP, add these lines to `/etc/httpd/conf/httpd.conf`:
+
+Place this at the end of the LoadModule list:
+```
 LoadModule php7_module modules/libphp7.so
 AddHandler php7-script php
-
-    Place this at the end of the Include list:
+```
+Place this at the end of the Include list:
+```
 Include conf/extra/php7_module.conf
-
+```
 Restart httpd.service using systemd. 
+`sudo systemcrl restart httpd.service`
 
 Create the Apache configuration file:
-/etc/httpd/conf/extra/phpmyadmin.conf
-
+`/etc/httpd/conf/extra/phpmyadmin.conf`
+```
 Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"
 <Directory "/usr/share/webapps/phpMyAdmin">
     DirectoryIndex index.php
@@ -2557,64 +2568,65 @@ Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"
     Options FollowSymlinks
     Require all granted
 </Directory>
-
-And include it in /etc/httpd/conf/httpd.conf at the end of the Include list:
+```
+And include it in `/etc/httpd/conf/httpd.conf` at the end of the Include list:
+```
 # phpMyAdmin configuration
 Include conf/extra/phpmyadmin.conf
+```
 
-
-建立一个测试文件test.php
+建立一个测试文件`test.php`
+```
 <?php phpinfo(); ?>
-php -S localhost:8000 test.php
-就可以用浏览器看 localhost:8000
-
-
+```
+`php -S localhost:8000 test.php`
+就可以用浏览器看 `localhost:8000`
 
 
 设置随系统启动服务
+```
 sudo systemctl enable mysqld.service
 sudo systemctl enable httpd.service 
+```
 
-
-强制安装某包
+* * *
+# 强制安装某包
+```
 sudo pacman -U *.xz --force
+```
 不要单独更新openssl（libssl等），就算如php要求也不要单独更新，否则会让pacman和yaourt挂掉
 
 
-
-
-
-
-
+* * *
+# 安装 doxygen
+```
 yaourt doxygen
+```
 
 
-
-
-
+* * *
+# 安装 adb tools
+```
 yaourt android-sdk-platform-tools
+```
 其实在android-sdk里就有，在platform-tools目录
 
-/etc/udev/rules.d/50-android.rules
+`sudo gedit /etc/udev/rules.d/50-android.rules`
 内容是
+```
 SUBSYSTEM=="usb", ENV{DEVTYPE} == "usb_device", ATTR{idVendor}=="2a45", MODE="0666"
+```
+`sudo udevadm control --reload`
 
-sudo udevadm control --reload
-
-/opt/Android/android-sdk/tools/android update adb
-gedit ~/.android/adb_usb.ini
+`/opt/Android/android-sdk/tools/android update adb`
+`gedit ~/.android/adb_usb.ini`
 添加0x2a45
 
 
 
-
-
-
-
-
-
-
-
+* * *
+# 全盘更新
+```
 [andy@andy ~]$ sudo pacman -Syu
 :: 正在同步软件包数据库...
  core 已经是最新版本
@@ -2692,64 +2704,62 @@ gedit ~/.android/adb_usb.ini
 (1/2) Arming ConditionNeedsUpdate...
 (2/2) Updating the info directory file...
 [andy@andy ~]$ 
+```
 
-
-
-
-
-
-
-
-
+* * *
+# Something
+```
 yaourt uget
-
 yaourt pyuv
-
 yaourt openh264
+```
 
 
-
-
-
-
-
+* * *
+# java 环境变量设置
+```
 [andy@andy bin]$ java TestJava2_5 
 错误: 找不到或无法加载主类 TestJava2_5
-
-sudo gedit /etc/profile
+```
+`sudo gedit /etc/profile`
 添加 
+```
 export JAVA_HOME=/usr/lib/jvm/java-8-jdk/
 export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
-
+```
 或者
+```
 export JAVA_HOME=/usr/lib/jvm/default/
 export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+```
 
 
-
-
-
-
-
+* * *
+# 确认当前 python 版本
+```
 [andy@andy test_3]$ python2 -V
 Python 2.7.13
 [andy@andy test_3]$ python -V
 Python 3.6.1
 [andy@andy test_3]$ 
+```
 
+* * *
+# chm 查看工具
+```
 kchmviewer
 xchm
 gnochm
 chmsee
+```
 
-
-
-
-
+* * *
+# shutter有关
+```
 错误：无法准备事务处理 (无法满足依赖关系)
 :: gnome-perl：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
 :: gnome-vfs-perl：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
@@ -2760,11 +2770,12 @@ chmsee
 :: perl-gtk2-imageview：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
 :: perl-gtk2-unique：安装 perl (5.26.0-1) 将破坏依赖关系 'perl<5.25'
 [andy@andy ~]$ sudo pacman -R shutter
+```
 
 
-
-以下命令很危险，半天才恢复一大部分被删除的包，不如用sudo pacman -R perl-gtk2-imageview等命令指定删除
+以下命令很危险，半天才恢复一大部分被删除的包，不如用`sudo pacman -R perl-gtk2-imageview`等命令指定删除
 留下art-sharp、gnome-vfs-sharp、libgnome-sharp、webkit-sharp等包编译报错，无法还原，目前也没有什么必要性，所以先这样吧，没有安装就没有吧
+```
 [andy@andy ~]$ sudo pacman -Rns $(pacman -Qtdq)
 正在检查依赖关系...
 :: perl-libwww可选依赖perl-lwp-protocol-https: for https:// url schemes
@@ -3001,10 +3012,12 @@ chmsee
 (6/6) Updating the MIME type database...
 Unknown media type in type 'all/all'
 Unknown media type in type 'all/allfiles'
+```
 
 
-
-
+* * *
+# mysql等 重安装
+```
 [andy@andy ~]$ sudo pacman -R mysql-clients mysql phpmyadmin
 正在检查依赖关系...
 
@@ -3022,32 +3035,24 @@ groupdel：不能移除用户“mysql”的主组
 (3/3) 正在删除 mysql-clients                       [######################] 100%
 :: 正在运行事务后钩子函数...
 (1/1) Arming ConditionNeedsUpdate...
-
-
-
-
-
-
+...
 (31/31) 正在检查密钥环里的密钥                     [######################] 100%
 正在下载所需的密钥......
 错误：key "F9F9FA97A403F63E" could not be looked up remotely
 错误：所需的密钥从密钥环中丢失
 错误：无法提交处理 (未预期的错误)
 发生错误，没有软件包被更新。
+```
 
-$ sudo leafpad /etc/pacman.conf
+`$ sudo leafpad /etc/pacman.conf`
+```
 [archlinuxcn]
 SigLevel = Optional TrustAll
+```
 
-$ sudo pacman -S archlinuxcn-keyring
+`$ sudo pacman -S archlinuxcn-keyring`
 
-
-
-
-
-
-
-
+```
 [andy@andy ~]$ sudo pacman -S mysql mysql-clients  phpmyadmin
 :: 有 2 个软件包可提供 mysql ：
 :: 软件库 extra
@@ -3094,79 +3099,78 @@ mariadb 的可选依赖
 (1/3) Updating system user accounts...
 (2/3) Creating temporary files...
 (3/3) Arming ConditionNeedsUpdate...
+```
 
+* * *
+# 升级gcc-libs之后启动allegro报错的处理
 
-
-
-
-
-
-
-
-
-
-升级gcc-libs之后启动allegro报错的处理
-[andy@andy allegro_166_patch]$ pacman -Qo /lib/libstdc++.so.6
+`[andy@andy allegro_166_patch]$ pacman -Qo /lib/libstdc++.so.6`
+```
 /usr/lib/libstdc++.so.6 属于 gcc-libs 7.1.1-2
-[andy@andy ~]$ ls /usr/lib32/libstdc++.so.6 -l
+```
+`[andy@andy ~]$ ls /usr/lib32/libstdc++.so.6 -l`
+```
 lrwxrwxrwx 1 root root 19 6月  11 15:03 /usr/lib32/libstdc++.so.6 -> libstdc++.so.6.0.23
-[andy@andy lib32]$ ls /usr/lib32/libstdc++.so.6
+```
+`[andy@andy lib32]$ ls /usr/lib32/libstdc++.so.6`
+```
 libstdc++.so.6       libstdc++.so.6.0.23 
-$ sudo rm /usr/lib32/libstdc++.so.6
-$ sudo ln -s /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21 /usr/lib32/libstdc++.so.6
-$ locate libstdc++.so.6 | grep 32
-$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
-        libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf717b000)
-[andy@andy ~]$ ls /usr/lib32/libstdc++.so.6 -l
-lrwxrwxrwx 1 root root 103 6月  11 15:12 libstdc++.so.6 -> /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21
+```
 
+`$ sudo rm /usr/lib32/libstdc++.so.6`
+`$ sudo ln -s /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21 /usr/lib32/libstdc++.so.6`
+`$ locate libstdc++.so.6 | grep 32`
+`$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc`
+```
+        libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf717b000)
+```
+`[andy@andy ~]$ ls /usr/lib32/libstdc++.so.6 -l`
+```
+lrwxrwxrwx 1 root root 103 6月  11 15:12 libstdc++.so.6 -> /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21
+```
 恢复原始的lib链接
-在配置文件/etc/ld.so.conf等文件的路径保持最初状态
-sudo ldconfig
+在配置文件`/etc/ld.so.conf`等文件的路径保持最初状态
+`sudo ldconfig`
 就恢复了
 
 
-更好的办法,通过环境变量LD_LIBRARY_PATH指定动态库搜索路径
-$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
-
+更好的办法,通过环境变量`LD_LIBRARY_PATH`指定动态库搜索路径
+`$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc`
+```
 [andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
 	libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf70ce000)
+```
+```
 [andy@andy ~]$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
 	libstdc++.so.6 => /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6 (0xf71e1000)
 [andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc	libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf7163000)
 [andy@andy ~]$ LD_LIBRARY_PATH=/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/
 [andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc	libstdc++.so.6 => /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6 (0xf7224000)
-
+```
 
 最终定案
-复制/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21到/opt/cadence/SPB166/tools.lnx86/lib
-命名为libstdc++.so.6
-修改spb166里的环境变量LD_LIBRARY_PATH
+`cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/i386/usr/lib/i386-linux-gnu/libstdc++.so.6.0.21 /opt/cadence/SPB166/tools.lnx86/lib/libstdc++.so.6`
+修改spb166里的环境变量`LD_LIBRARY_PATH`
+```
 export LD_LIBRARY_PATH=$CDS_ROOT/tools/lib64:$CDS_ROOT/tools.lnx86/mainwin540_64/mw/lib-amd64_linux_optimized:$CDS_ROOT/tools.lnx86/lib:$CDS_ROOT/tools.lnx86/mainwin540/mw/lib-linux_optimized:/usr/lib32/:/usr/lib/:/usr/lib64:$LD_LIBRARY_PATH
-
+```
 就可以脱离系统库依赖了
 
 反正ldd看可执行文件，缺啥库，弄进来，环境变量顺序一设置，就不依赖系统库了
 
-
+```
 [andy@andy ~]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
 	libstdc++.so.6 => /usr/lib32/libstdc++.so.6 (0xf712f000)
 [andy@andy ~]$ cd /opt/cadence/allegro_166_patch/
 [andy@andy allegro_166_patch]$ source spb166 
 [andy@andy allegro_166_patch]$ ldd /opt/cadence/SPB166/tools/pcb/bin/allegro.exe | grep stdc
 	libstdc++.so.6 => /opt/cadence/SPB166/tools.lnx86/lib/libstdc++.so.6 (0xf3ed4000)
+```
 
 
-
-
-
-
-
-
-
-
-
-
+* * *
+# monodevelop
+```
 $ yaourt monodevelop
 $ ilasm --version 
 Mono ILasm compiler version 5.0.0.0
@@ -3176,32 +3180,28 @@ Mono C# compiler version 5.0.0.0
 $ mcs  --version
 Mono C# compiler version 5.0.0.0
 $ mono --version
+```
 
 
 
-
-
-
+* * *
+# sublime
+```
 $ yaourt sublime-text-imfix
+```
 
-
-
-
-
-
-
-
-
+* * *
+# jlink
+```
 $ yaourt jlink
+```
 
-
-
-
-
-pacman的几个常用命令
+* * *
+# pacman的几个常用命令
+```
 pacman -S package_name #安装软件包
 pacman -R package_name #删除软件包
-
+pacman -Rdd package_name #删除软件包不检查依赖关系
 pacman -Rs package_name #顺便删除软件包相关依赖
 pacman -Syu #升级系统中的所有包
 pacman -Ss package #查询软件包
@@ -3213,25 +3213,28 @@ pacman -U /path/package.pkg.tar.gz #安装本地包
 pacman -Scc #清理包缓存，下载的包会在/var/cache 这个目录
 pacman -Sf pacman #重新安装包
 pacman -Qo /usr/lib/*** #查询库文件所属于的软件包
-
+```
 其实要容易记的话可以自己在bashrc里配置一下alias就好。
 
+* * *
+# pacman 下载的加速
 再说说包下载的提速。。。
-修改一下/etc/pacman.conf，把下面这句的注释去掉：
+修改一下`/etc/pacman.conf`，把下面这句的注释去掉：
+``
 XferCommand = /usr/bin/wget -c --passive-ftp -c %u
-
+``
 这样就可以使用wget来下载包。当然你也可以尝试powerpill来提高下载速度，因为这个确实不错！
 
 也可以用aria2，在配置文件中加上这句：
+```
 XferCommand = /usr/bin/aria2c -s 4 -m 2 -d / -o %o %u
-
+```
 -s后面是连接的服务器数量，-m是线程数。
 
 
-
-
-
-开启所有tty
+* * *
+# 开启所有tty
+```
 for i in {1..7};do echo -n "tty$i is ";systemctl is-enabled getty@tty$i; done
 systemctl is-enabled getty@tty3
 
@@ -3261,120 +3264,112 @@ It's easy to script this or to include it in the prompt, example:
 
 $ PS1='`tty`: '
 /dev/pts/0: _
+```
 
-
-
-
-
-
-
-
-
-
-
-
-https://wiki.archlinux.org/index.php/Display_manager
-查看当前登录管理器
+* * *
+# 查看当前登录管理器
+<https://wiki.archlinux.org/index.php/Display_manager>
+```
 $ ls -l /etc/systemd/system/display-manager.service
 lrwxrwxrwx 1 root root 36 3月  29 2015 /etc/systemd/system/display-manager.service -> /usr/lib/systemd/system/lxdm.service
-
+```
 The configuration files for LXDM are all located in 
-/etc/lxdm/
+`/etc/lxdm/`
 可执行文件在
-/usr/lib/lxdm/
+`/usr/lib/lxdm/`
 
 查看默认的运行级别配置
+```
 $ ls -l /lib/systemd/system/default.target
 lrwxrwxrwx 1 root root 16 1月  29 06:32 /lib/systemd/system/default.target -> graphical.target
+```
 这是登陆器的桌面候选
-$ ls /usr/share/xsessions/
+`$ ls /usr/share/xsessions/`
 更换登录管理器，比如slim
-# systemctl enable slim.service
+`# systemctl enable slim.service`
 display manager有
-kdm, gdm, lightdm, lxdm, wdm, xdm, slim, nodm, ldm
+`kdm, gdm, lightdm, lxdm, wdm, xdm, slim, nodm, ldm`
 
 
-https://wiki.archlinux.org/index.php/Systemd#Change_default_target_to_boot_into
+<https://wiki.archlinux.org/index.php/Systemd#Change_default_target_to_boot_into>
 初始化运行级别配置
-# systemctl set-default multi-user.target
+`# systemctl set-default multi-user.target`
 修改运行级别配置
-# systemctl set-default -f multi-user.target
+`# systemctl set-default -f multi-user.target`
 实际上作用就是
-$ sudo ln -s /lib/systemd/system/multi-user.target default.target
+`$ sudo ln -s /lib/systemd/system/multi-user.target default.target`
 这样可以实现xstart登录，默认不开启X界面（# 字符界面启动 #）
-
+```
 [andy@andy ~]$ sudo systemctl set-default multi-user.target
 [sudo] andy 的密码：
 Created symlink /etc/systemd/system/default.target → /usr/lib/systemd/system/multi-user.target.
+```
 
 
-
-播放器
+* * *
+# totem 播放器
+```
 $ sudo pacman -S totem grilo-plugins
+```
 
 
-
-fcitx调试信息
+* * *
+# fcitx调试信息
+```
 $ fcitx-diagnose
+```
 
-
-找找
-xfce4-mime-settings
-
-
-
-
-
-x自带屏保
-xset q
+* * *
+# x自带屏保
+`xset q`
 十秒黑屏
-xset s 10 600
+`xset s 10 600`
 
 
-
-
-
-
-
+* * *
+# amule有关
+```
 If you plan to use external client (e.g. amuleGUI or amuleweb) then you need to
 provide [ExternalConnect] configuration.
 You also need to specify amuleweb password.
 Please follow https://wiki.archlinux.org/index.php/AMule for more information.
 amuleweb can be started as 'systemctl start amuleweb'.
+```
 
 
+* * *
+# 亚全局 proxy
 
-
-
-
-亚全局
-
-在 Unix 和 GNU/Linux 中，大多 HTTP 应用程序均支持调用环境变量 http_proxy 和 https_proxy 进行代理。此外该环境变量的大小写其实并没有统一标准，有个别程序就只支持全大写的环境变量。所以为方便起见，直接在 ~/.bash_profile 或 ~/.zshenv 添加以下即可： export http_proxy=http://127.0.0.1:8087/ export https_proxy=$http_proxy export HTTP_PROXY=$http_proxy export HTTPS_PROXY=$HTTP_PROXY
+在 Unix 和 GNU/Linux 中，大多 HTTP 应用程序均支持调用环境变量 http_proxy 和 https_proxy 进行代理。此外该环境变量的大小写其实并没有统一标准，有个别程序就只支持全大写的环境变量。所以为方便起见，直接在 ~/.bash_profile 或 ~/.zshenv 添加以下即可： 
+`export http_proxy=http://127.0.0.1:8087/`
+`export https_proxy=$http_proxy`
+`export HTTP_PROXY=$http_proxy`
+`export HTTPS_PROXY=$HTTP_PROXY`
 
 再执行以下命令，导入证书以archlinux为例：
+```
 sudo ln -s /opt/XX-Net/data/gae_proxy/CA.crt  /etc/ca-certificates/trust-source/anchors/GoAgent.crt
 sudo trust extract-compat
+```
 
-发现一个衍生版
+* * *
+# 发现一个衍生版
 CTKArch
 
 
-
-
-
-
-切换中文目录为英文目录 使用命令来转换中文目录为英文目录。
-即/home中的“桌面”、“下载”等等转换成“Desktop”、“Downloads”等等。
+* * *
+# 切换中文目录为英文目录
+使用命令来转换中文目录为英文目录，即/home中的“桌面”、“下载”等等转换成“Desktop”、“Downloads”等等。
+```
 export LANG=en_US
 xdg-user-dirs-update
 选 update
 export LANG=zh_CN.UTF-8
 xdg-user-dirs-update
 选“不要再提醒”和“保持原来的名称”
-
-arch无效
-
-修改user-dirs.dirs
+```
+arch无效， 直接修改`～/.config/user-dirs.dirs`
+```
 XDG_DESKTOP_DIR="$HOME/Desktop"
 XDG_DOWNLOAD_DIR="$HOME/Downloads"
 XDG_TEMPLATES_DIR="$HOME/Templates"
@@ -3383,16 +3378,16 @@ XDG_DOCUMENTS_DIR="$HOME/Documents"
 XDG_MUSIC_DIR="$HOME/Music"
 XDG_PICTURES_DIR="$HOME/Pictures"
 XDG_VIDEOS_DIR="$HOME/Videos"
+```
+```
+$ mkdir Desktop Downloads Templates Public Documents Music Pictures Videos
+$ rm -rf 公共  视频  文档  音乐 模板  图片  下载  桌面
+```
 
 
-mkdir Desktop Downloads Templates Public Documents Music Pictures Videos
-rm -rf 公共  视频  文档  音乐 模板  图片  下载  桌面
-
-
-
-
-
-批量配置文件
+* * *
+# 批量配置文件
+```
 openbox
 tint2
 obmenu-generator
@@ -3402,9 +3397,10 @@ bin目录中的doc
 xinitrc目录中的
 vim
 firefox
-
-bookmarks现在在这，之前在/home/andy_old/.config/gtk-3.0
-.gtk-bookmarks
+```
+bookmarks现在在这，之前在`/home/andy_old/.config/gtk-3.0
+.gtk-bookmarks`
+```
 file:///home/andy/Documents Documents
 file:///home/andy/Downloads Downloads
 file:/// /
@@ -3414,17 +3410,19 @@ file:///home/andy/.config config
 file:///mnt/win_e win_e
 file:///mnt/win_e/boot/arch_doc doc
 file:///home/andy/%E6%88%91%E7%9A%84%E5%9D%9A%E6%9E%9C%E4%BA%91 我的坚果云
+```
 
-
-
-ps -elf |grep fcitx
-直接吧~/.config/fcitx目录删掉
-对比了一下两次fcitx-diagnose的结果
+* * *
+# fcitx 重配置
+`ps -elf |grep fcitx`
+直接吧`~/.config/fcitx`目录删掉
+对比了一下两次`fcitx-diagnose`的结果
+```
 pidof fcitx
 pkill fcitx
+```
 
-
-
+```
 $ yaourt fcitx-git
 1 archlinuxcn/fcitx-lilydjwg-git 2:4.2.9.1.20170518-1
     A Flexible Input Method Framework. With Lua support
@@ -3447,33 +3445,34 @@ $ yaourt fcitx-git
 下载大小:    7.10 MiB
 全部安装大小：  34.71 MiB
 净更新大小：  -0.40 MiB
+```
 
+`$ yaourt -S fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5`
 
-$ yaourt -S fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5
-
-~/.xprofile
-/etc/environment中加入：
-
+`~/.xprofile`或`/etc/environment`中加入：
+```
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
-
- #非桌面环境 里的环境变量改成如下的值：
-
+```
+~~~非桌面环境 里的环境变量改成如下的值~~~：
+```
  export GTK_IM_MODULE=xim
  export QT_IM_MODULE=xim
+```
 
 
-
-
-
+* * *
+# 降级firefox
+```
 $ yaourt downgrader
-降级firefox
-downgrader -h firefox
+$ downgrader -h firefox
+```
 
 
-
-
+* * *
+# qtqr 排错(truetype库)
+```
 $ qtqr
 Traceback (most recent call last):
   File "/usr/bin/qtqr", line 14, in <module>
@@ -3503,36 +3502,37 @@ $ nm -D /usr/lib/libharfbuzz.so.0 | grep FT_Get
                  U FT_Get_Name_Index
                  U FT_Get_Var_Blend_Coordinates
 
-
+```
 有啊
-
+```
 $ cat /home/andy/.local/share/xorg/Xorg.0.log | grep FT_Get
+```
 没有错啊
 
 不需要
+```
 $ yaout freetype2-git
-
+```
 
 /home/andy目录备份，新建andy目录改好chown，发现qtqr可以运行呢
-逐步查找，定位在.bashrc的export LD_LIBRARY_PATH行，去掉就可以运行了，看来这个库出问题了
+
+逐步查找，定位在`～/.bashrc`的`export LD_LIBRARY_PATH`行，去掉就可以运行了，看来这个库出问题了
+
 再看看具体是啥玩意造成的呢
-/opt/modelsim/modeltech/lib
-这里有libfreetype.so
-去掉LD_LIBRARY_PATH变量中的/opt/modelsim/modeltech/lib:至少能用qtqr了嘛
+`/opt/modelsim/modeltech/lib`
+这里有`libfreetype.so`
+
+去掉`LD_LIBRARY_PATH`变量中的`/opt/modelsim/modeltech/lib:`至少能用qtqr了嘛
 
 
-终极解决办法，/opt/modelsim/modeltech/lib里面的freetype库和软链接都删掉，更新为系统自带的也行
-这样.bashrc还是要改
+## 终极解决办法：
+`/opt/modelsim/modeltech/lib`里面的freetype库和软链接都删掉，更新为系统自带的也行
+这样`～/.bashrc`还是要改
 
-http://bbs.eeworld.com.cn/thread-455341-1-1.html
-用freetype2-2.5.0.1-1-x86_64.pkg.tar.xz里面的truetype，替换/opt/modelsim/modeltech/lib里面的
-
-
+<http://bbs.eeworld.com.cn/thread-455341-1-1.html>
+用`freetype2-2.5.0.1-1-x86_64.pkg.tar.xz`里面的truetype，替换`/opt/modelsim/modeltech/lib`里面的
 
 这样由于modelsim里truetype库问题引起的故障排除，vsim终于可以用了，qtqr等也没有影响了
-
-
-
 
 
 明白了，但是多次重启fcitx造成Xorg假死还是无解
@@ -3540,57 +3540,57 @@ http://bbs.eeworld.com.cn/thread-455341-1-1.html
 通过类似的方法试试能不能治好fcitx的问题呢，即就没有.bashrc呢
 次重启fcitx造成Xorg假死还是无解
 
+* * *
+# /home/andy备份
+`backup_home_170622.tar.xz`
 
 
-
-
-/home/andy备份
-backup_home_170622.tar.xz
-
-
-处理wine winrar启动不了的问题
+* * *
+# 处理wine winrar启动不了的问题
 新建一个/home/andy目录
+
 发现wine winrar是可以启动的，那么配置肯定出问题了，定位哪里出问题了
+
 winecfg的函数库第三项，comctl32被删除之后就可以了。其实选内建先于原装也可以解决这个问题。
+
 但是，这样的话启动其他比如winecfg都会弹出一个报错窗口，但是可以继续运行，觉得很讨厌吧
+
 于是，可以对winrar单独进行一个设置，这样就可以兼顾了。
 
 看来处理wine问题，先配置一个函数库没有任何改造的运行配置就可以了，没有必要去动全局
 
 
-
-
-$ yaourt qtchooser
+* * *
+# qtchooser qtcreator
+`$ yaourt qtchooser`
 与qt5-base、qt5-declarative、qt5-tools、qt5-xmlpatterns、冲突，
-qtchooser无效了，用
-qmake-qt4
+`qtchooser`无效了，用`qmake-qt4`
 
 下面这个玩意影响qtcreator使用
+```
 $ sudo pacman -Rdd hardening-wrapper
+```
 
-
-
+* * *
+# something
+```
 yaourt libbs2b projectm mpc
+```
 
-
-
-
-
-
-20171118日更新后
-确认phpmyadmin不能使用
-处理
-phpmyadmin运行错误
+* * *
+# 20171118日更新后 确认phpmyadmin不能使用
+处理 phpmyadmin 运行错误
 
 先检查apache，ok的
 
 检查php的test页，ok的
 
 再检查mysql，失效了，不能运行
+
 根据提示查找到
-https://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+<https://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html>
 
-
+```
 sudo rm /var/lib/mysql -rf
 重新安装
 sudo pacman -S mysql
@@ -3598,38 +3598,33 @@ sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 sudo systemctl start mysqld
 
 /usr/bin/mysqladmin -u root password
-
+```
 
 ok
 
 
 
+* * *
+# ALA 过期的软件包到这里找
+<https://archive.archlinux.org/packages>
+<https://archive.archlinux.org>
+<https://wiki.archlinux.org/index.php/Arch_Linux_Archive>
 
 
-
-过期的软件包到这里找
-https://archive.archlinux.org/packages
-
-
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-备份arch_root_only_20171119还原之后
+* * *
+# 备份arch_root_only_20171119还原之后
 
 首先，发现apache服务还是没有自动启动，设置自启动
-sudo systemctl enable httpd.service
+`sudo systemctl enable httpd.service`
 没有效果？/usr/lib/systemd/system/下确实有啊
-systemctl status httpd
+`systemctl status httpd`
 发现有错误了，因为挂载点权限每次启动都还原掉的，
 换成根目录是/run/media也不行，/run是一个内存文件系统，启动服务的时候还没有这货
 所以，u盘挂载点udev设置不改，就每次手动启动httpd
 
-
 修改挂载点会怎么样呢? ok
-https://wiki.archlinux.org/index.php/Udisks#Mount_to_.2Fmedia_.28udisks2.29
+<https://wiki.archlinux.org/index.php/Udisks#Mount_to_.2Fmedia_.28udisks2.29>
+```
 By default, udisks2 mounts removable drives under the ACL controlled directory /run/media/$USER/. 
 If you wish to mount to /media instead, use this rule:
 
@@ -3640,123 +3635,105 @@ If you wish to mount to /media instead, use this rule:
 # ==0: mount filesystem to a private directory (/run/media/$USER/VolumeName)
 # See udisks(8)
 ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"
-
-
-
-
-
+```
 
 修改web根目录
-sudo gedit /etc/httpd/conf/httpd.conf
-
+`sudo gedit /etc/httpd/conf/httpd.conf`
+```
 DocumentRoot "/media/"
 AddDefaultCharset UTF-8
 DefaultLanguage zh-CN
 <Directory "/media/">
-
+```
 浏览器显示乱码，
-sudo gedit /etc/httpd/conf/httpd.conf
+`sudo gedit /etc/httpd/conf/httpd.conf`
 关闭charset也不行啊
+```
 #AddDefaultCharset UTF-8
 #AddDefaultCharset GB2312
 AddDefaultCharset off
-
+```
 终极解决方式：最后面添加
+```
 IndexOptions Charset=UTF-8
+```
+
+~~每次启动挂载点权限还原了~~
+~~`/run/media`权限设置一下，最好是644或755，确保个人使用才能是777~~
 
 
-#每次启动挂载点权限还原了
-#/run/media权限设置一下，最好是644或755，确保个人使用才能是777
+* * *
+# ipv6 xxnet miredo
+<https://github.com/XX-net/XX-Net/wiki/IPv6-Linux>
+`$ yaourt  miredo`
 
-
-
-
-
-
-
-
-
-https://github.com/XX-net/XX-Net/wiki/IPv6-Linux
-$ yaourt  miredo
-测试：http://test-ipv6.com/
-ifconfig
+测试：<http://test-ipv6.com/>
+`ifconfig`
 在结果中应该能看见一个叫 teredo 的虚拟网卡
+
 重启系统之后，需要重新开启miredo
-sudo miredo
+`sudo miredo`
 
 
-
-
-
-
-
-
-
-
-
-
-
-Linux 手动处理用户级别证书
+* * *
+# Linux 手动处理用户级别证书
 
 创建文件夹
-
+```
 mkdir -p ~/.pki/nssdb
 
 Create a new certificate database
 certutil -d $HOME/.pki/nssdb -N
-
+```
 手动导入证书到数据库
-
+```
 certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n "GoAgent XX-Net - GoAgent" -i /opt/XX-Net/data/gae_proxy/CA.crt
 certutil -d sql:$HOME/.pki/nssdb -A -t TC -n "goagent" -i /opt/XX-Net/data/gae_proxy/CA.crt
 certutil -d sql:${HOME}/.pki/nssdb -A -t TC -n "goagent" -i /opt/XX-Net/data/gae_proxy/CA.crt
-
+```
 若失败,可尝试更改证书数据库密码,可改为空
-
+```
 modutil -changepw "NSS Certificate DB" -dbdir ~/.pki/nssdb
 modutil -changepw "NSS Certificate DB" -dbdir $HOME/.pki/nssdb
-
+```
 查看证书:??
-
+```
 certutil -L -d sql:~/.pki/nssdb #用～不行，SEC_ERROR_BAD_DATABASE，必须下面这样写
 certutil -L -d sql:${HOME}/.pki/nssdb
-
+```
 ref：
-certutil -L
+`certutil -L`
 The certificate/key database is in an old, unsupported format
-https://stackoverflow.com/questions/27666517/certutil-function-failed-sec-error-legacy-database-the-certificate-key-databa
+<https://stackoverflow.com/questions/27666517/certutil-function-failed-sec-error-legacy-database-the-certificate-key-databa>
 The database has migrated over the years from flat files to Berkeley DB to now SQLite in 3.12. Prefix the directory name with sql and enclose in quotes to get around spaces: 
-certutil -L -d sql:${HOME}/.pki/nssdb 
+`certutil -L -d sql:${HOME}/.pki/nssdb`
 For reference, here's the Mozilla NSS roadmap.
-http://wiki.mozilla.org/NSS:Roadmap#SQLite-Based_Shareable_Certificate_and_Key_Databases
+<http://wiki.mozilla.org/NSS:Roadmap#SQLite-Based_Shareable_Certificate_and_Key_Databases>
 
 
 若要删除证书:
-
+```
 certutil -d sql:~/.pki/nssdb -D -n "GoAgent XX-Net - GoAgent"
 实际是
 certutil -d sql:${HOME}/.pki/nssdb -D -n "goagent"
+```
 
 
-
-
-
-
-
-
-
-安装 ise 14.7
-
+* * *
+# 安装 ise 14.7
+```
 $ yaourt fxload
 git clone git://git.zerfleddert.de/usb-driver
 
 $ ./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE
-
+```
 lsusb:
+```
 Bus 001 Device 004: ID 03fd:0008 Xilinx, Inc.
+```
 
-
------ise的启动icon-----
+ise的启动icon
+```
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -3764,9 +3741,10 @@ Name=ISE 14.7
 Comment=ISE 14.7
 Icon=/opt/Xilinx/14.7/ISE_DS/ISE/data/images/pn-ise.png
 Exec=/opt/Xilinx/14.7/ISE_DS/ise
-----------
+```
 
------脚本名：/opt/Xilinx/14.7/ISE_DS/ise-----
+脚本名：`/opt/Xilinx/14.7/ISE_DS/ise`
+```
 #!/bin/bash
 ISE_DS_DIR=/opt/Xilinx/14.7/ISE_DS
 export gmake=/usr/bin/make
@@ -3778,15 +3756,15 @@ export LANG=''  # reset locale to English to fix decimal/comma seperation
 
 "$ISE_DS_DIR"/ISE/bin/lin64/ise
 
-----------
+```
 记得给777权限
 
 
 
-
-
-类似的方法给quartus做一个启动器
------Quartusii.desktop-----
+* * *
+# 给quartus做一个启动器
+Quartusii.desktop
+```
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -3794,19 +3772,20 @@ Name=Quartusii 11
 Comment=Quartusii 11
 Icon=/opt/altera/11.0/quartus/adm/quartusii.png
 Exec=/opt/altera/11.0/quartusii
-----------
------脚本名：/opt/altera/11.0/quartusii-----
+```
+脚本名：/opt/altera/11.0/quartusii
+```
 #!/bin/bash
 export LM_LICENSE_FILE=/opt/modelsim/license.dat:/opt/altera/license.dat
 export LANG=''
 /opt/altera/11.0/quartus/bin/quartus
-----------
+```
 
 
 
-
-
-
+* * *
+# 全盘更新
+```
 2018年 02月 09日 星期五 20:56:48 CST
  
 :: 正在进行全面系统更新...
@@ -3820,7 +3799,6 @@ y:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n]
 :: ffmpeg0.10：安装 libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-64'
 :: ffmpeg0.10：安装 libx264 (2:152.20171224-1) 将破坏依赖关系 'libx264.so=148-64'
 :: lib32-ffmpeg：安装 lib32-libvpx (1.7.0-1) 将破坏依赖关系 'libvpx.so=4-32'
-
 
 [andy@andy ~]$ sudo pacman -R ffmpeg0.10
 正在检查依赖关系...
@@ -3854,13 +3832,9 @@ y:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n]
 (2/2) 正在删除 lib32-ffmpeg                        [######################] 100%
 :: 正在运行事务后钩子函数...
 (1/1) Arming ConditionNeedsUpdate...
+```
 
-
-
-
-
-
-
+```
 错误：无法升级 archlinuxcn (调用外部下载程序时出错)
 :: 正在进行全面系统更新...
 :: 替换 gtk3-print-backends 吗 (使用 extra/gtk3 )？ [Y/n] y
@@ -4140,49 +4114,50 @@ y:: 替换 mime-types 吗 (使用 extra/mailcap )？ [Y/n]
 下载大小:    4427.19 MiB
 全部安装大小：  14469.67 MiB
 净更新大小：   1058.30 MiB
+```
 
 
-
-
-
-
-
+* * *
+# 安装 libffi
+```
 sudo pacman -S libffi
+```
 如果强制删除
+```
 sudo pacman -Rdd libffi
+```
 
-
-
-
-
-
-
-ALA
-https://archive.archlinux.org
-https://wiki.archlinux.org/index.php/Arch_Linux_Archive
-
-
-
-yaourt icecat
+* * *
+# icecat 
+icecat替代老版本的ff(比如54版本)
+`yaourt icecat`
+```
 sudo ln -s /usr/lib/libvpx.so.5 /usr/lib/libvpx.so.4
+```
+依赖icu61,解压lib里的有关库文件到/usr/lib，ok
+或者源码编译。。。
 
 
+* * *
+# firefox降级遇到的依赖性问题
 
+icu库软链接到最新的不行
 
-firefox降级遇到的依赖性问题
-
-icu库软链接到最新的不行，去下载需要的icu版本，解压出来lib目录里只复制库，到/usr/lib，再去建立软链接
+去下载需要的icu版本，解压出来lib目录里只复制库，到/usr/lib，再去建立软链接
+```
 libicudata.so.58.2  libicuio.so.58.2    libicutu.so.58.2
 libicui18n.so.58.2  libicutest.so.58.2  libicuuc.so.58.2
-
+```
 用软链接应付一下的
+```
 cd /usr/lib
 sudo ln -s libhunspell-1.6.so.0 libhunspell-1.5.so.0
 sudo ln -s libevent-2.1.so.6 libevent-2.0.so.5
-
+```
 最好还是https://archive.archlinux.org下载对应的库包，提取库文件，再新建软链接
+
 查询库文件所属的软件包
-pacman -Qo /usr/lib/***
+`pacman -Qo /usr/lib/***`
 
 
 
@@ -4202,35 +4177,29 @@ yaourt tree
 
 
 
-
-
-2018年 04月 22日 星期日 14:44:56 CST
-
-
+* * *
+# something
+```
 yaourt vscode
-
 yaourt geany geany-plugins
+```
 
-
-
-
-
-
-shutter 缺模块
+* * *
+# shutter 缺模块
+```
 [andy@andy ~]$ shutter
 Can't locate Gnome2.pm in @INC (you may need to install the Gnome2 module) (@INC contains: /usr/lib/perl5/5.26/site_perl /usr/share/perl5/site_perl /usr/lib/perl5/5.26/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5/5.26/core_perl /usr/share/perl5/core_perl) at /usr/bin/shutter line 37.
 BEGIN failed--compilation aborted at /usr/bin/shutter line 37.
 
 [andy@andy ~]$ sudo cpan install Gnome2
+```
 ok
 
 
-
-
-
-
-
-
+* * *
+# 全盘更新
+```
+2018年 04月 22日 星期日 14:44:56 CST
 
 :: 正在进行全面系统更新...
 :: 替换 apache-ant 吗 (使用 extra/ant )？ [Y/n] y
@@ -4982,34 +4951,25 @@ sudo pacman -Syu
 下载大小:    3973.75 MiB
 全部安装大小：  15207.09 MiB
 净更新大小：   2074.88 MiB
-
-
+...
 
 错误：无法提交处理 (有冲突的文件)
 android-sdk-platform-tools: 文件系统中已存在 /opt/android-sdk/platform-tools/e2fsdroid 
 
 sudo pacman -S android-sdk-platform-tools --force
 sudo pacman -S google-chrome --force
+```
 
 
-
-icecat替代老版本的ff(比如54版本)
-yaourt icecat
-依赖icu61,解压lib里的有关库文件到/usr/lib，ok
-或者源码编译。。。
-
-
-
-
+***
+# 开源的diff比较工具（bcompare like）
+```
 yaourt meld
+```
 
-
-
-
-
-
-
-pacman 解决依赖关系 和 强制覆盖已存在文件
+***
+# pacman 解决依赖关系 和 强制覆盖已存在文件
+```
 In the process of Xorg cleanup the update requires manual intervention when you hit this message:
 
 :: installing xorgproto (2019.2-2) breaks dependency 'inputproto' required by lib32-libxi
@@ -5029,24 +4989,11 @@ when updating, use:
 pacman -Syu --overwrite=/usr/lib/libnv_vulkan_wrapper.so.1,/usr/lib/libprimus_vk.so.1
 
 to perform the upgrade.
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# 更新 keyring
+```
 sudo pacman-key --refresh-keys
 sudo gedit /etc/pacman.d/gnupg/gpg.conf
 #keyserver hkp://pool.sks-keyservers.net 
@@ -5060,50 +5007,51 @@ www.gpg-keyserver.de
 sudo pacman -S archlinuxcn-keyring
 sudo pacman -S archlinux-keyring
 sudo pacman -Syudd --asdeps
-
-
-sudo gedit /etc/locale.conf
+```
+***
+# 更新 locale
+`sudo gedit /etc/locale.conf`
+```
 #LANG="zh_CN.UTF-8"
 LANG=en_US.UTF-8
+```
 
-
-
-wlp4s0 名字 换成 wlan0
-$ sudo leafpad /etc/udev/rules.d/10-network.rules
+***
+# 网络名称 网卡 网口 wlp4s0 名字 换成 wlan0
+`$ sudo leafpad /etc/udev/rules.d/10-network.rules`
+```
 SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="00:17:42:f4:8e:1c", NAME="eth0"
 SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="24:ec:99:60:29:57", NAME="wlan0"
-
-sudo systemctl restart systemd-networkd.service
-
-
-
+```
+`sudo systemctl restart systemd-networkd.service`
 
 
 网络接口重命名
 作为更改设备名称的替代方案，systemd 使用.link文件用于接口重命名。常见的例子是基于 MAC 地址给一个 USB 接口以太网适配器设置一个可预见的接口名称。这类设备依其连接到不同 USB 接口而具有不同的接口名称。
 
-/etc/systemd/network/10-ethusb0.link
+`/etc/systemd/network/10-ethusb0.link`
+```
 [Match]
 MACAddress=12:34:56:78:90:ab
 
 [Link]
 Description=USB to Ethernet Adapter
 Name=ethusb0
+```
 注意： 任何由用户提供的.link文件名必须是依字典顺序先于默认配置文件名99-default.link才能生效。例如，必须是10-ethusb0.link而不能是 ethusb0.link
 
 
-
-
-
-
-
-修复cadence
+***
+# 修复cadence
+```
 mv /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1 /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1.bk
 cp /usr/lib32/libgcc_s.so.1 /opt/cadence/SPB166/tools.lnx86/lib/libgcc_s.so.1
+```
 
 
-
-
+***
+# snap 修复
+```
 $ ldd snap-exec 
 /usr/bin/ldd: line 160: /usr/libx32/ld-linux-x32.so.2: cannot execute binary file: Exec format error
 ldd: exited with unknown exit code (126)
@@ -5118,6 +5066,6 @@ $ pacman -Qo /usr/libx32/ld-2.23.so
     选1 失败
     
     选2？
-
+```
 
 
