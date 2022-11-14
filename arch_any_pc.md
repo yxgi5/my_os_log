@@ -8633,3 +8633,554 @@ kompozer不能用了，可以snap重新安装一个
 `sudo pacman -R kompozer`
 
 
+***
+# microchip mplab
+```
+This package provides a file: /etc/profile.d/microchip-mplabxc16-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC16_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC16 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc16-bin/LICENSE
+
+For using MPLAB_XC16 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC16_TOOLCHAIN_ROOT/bin
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc32-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC32_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC32 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc32-bin/LICENSE
+
+For using MPLAB_XC32 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC32_TOOLCHAIN_ROOT/bin
+
+
+This package provides a file: /etc/profile.d/microchip-mplabxc8-bin.sh
+It will add the toolchain binaries to the PATH variable for every user.
+It also defines XC8_TOOLCHAIN_ROOT pointing to the toolchain install dir.
+Log out and log back in to update your environment varibles.
+
+Before using MPLAB_XC8 you have to agree with the LICENSE at:
+/usr/share/licenses/microchip-mplabxc8-bin/LICENSE
+
+For using MPLAB_XC8 with MPLAB_X (microchip-mplabx-bin), in MPLAB_X go to:
+Tools->Options->Embedded->Add
+
+and enter:
+$XC8_TOOLCHAIN_ROOT/bin
+```
+
+
+***
+# 更新后修改配置
+```
+xulrunner需要先删旧版本再编译
+xulrunner修改一下，依赖libpng，原来这玩意被lucidor依赖
+lucidor修改一下，到最新版本，AUR里的包链接失效，找不到了。
+
+yay icu57
+
+Missing AUR Packages: 查看信息，一般不用删掉的
+pacman -Qi automake1.11
+
+
+
+https://wiki.archlinux.org/index.php/Apache_HTTP_Server
+
+[andy@archlinux ~]$ sudo systemctl status httpd.service
+● httpd.service - Apache Web Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+     Active: failed (Result: exit-code) since Thu 2021-02-18 15:42:19 CST; 7s ago
+    Process: 354727 ExecStart=/usr/bin/httpd -k start -DFOREGROUND (code=exited, status=1/FAILURE)
+   Main PID: 354727 (code=exited, status=1/FAILURE)
+
+Feb 18 15:42:19 archlinux systemd[1]: Started Apache Web Server.
+Feb 18 15:42:19 archlinux httpd[354727]: httpd: Syntax error on line 184 of /etc/httpd/conf/httpd.conf: Cannot load modules/libphp7.so into server: /etc/httpd/modules/libphp7.so: cannot ope>
+Feb 18 15:42:19 archlinux systemd[1]: httpd.service: Main process exited, code=exited, status=1/FAILURE
+Feb 18 15:42:19 archlinux systemd[1]: httpd.service: Failed with result 'exit-code'.
+
+修改
+sudo gedit /etc/httpd/conf/httpd.conf
+主要是php7修改为php什么的
+
+
+sudo pip2 install service_identity  -i https://mirrors.163.com/pypi/simple
+python2-mechanize在test地方出错，test你妹啊，去掉check()就好了，我只是要成功产生安装包而已。
+
+```
+
+
+***
+# 一个基于firefox改进的web浏览器
+`palemoon`
+
+
+***
+# 日语输入法
+```
+gxkb
+fcitx-mozc
+ttf-kochi-substitute
+```
+
+***
+# epub编辑器
+`sigil pageedit hyphen-en hunspell-en_US`
+
+
+***
+# something
+```
+bibletime
+geogebra
+google-earth-pro 好像无法登录服务器
+celestia
+chemtool
+sagemath
+```
+
+***
+# maple2020
+##Activate Maple
+When prompted, activate Maple using your activation code/purchase code:
+`NZ3DP9ZX6L4GPNUH`
+Your evaluation will expire in 15 days (March 06, 2021).
+
+##无限期试用maple可以像这样，确认可用
+```
+faketime '2021-02-25 08:15:42' xmaple
+```
+
+
+***
+# something
+```
+maxima 之前引入有 maxima-ecl
+dosbox
+ekho
+foliate     ekho -f '-'
+festival
+espeak-ng
+dictd
+xclip
+error: ekho: key "83F817213361BF5F02E7E124F9F9FA97A403F63E" is unknown
+gpg --keyserver keyserver.ubuntu.com --recv 83F817213361BF5F02E7E124F9F9FA97A403F63E
+ekho "hello 123"
+archlinuxcn-keyring python-keyring libgnome-keyring gnome-keyring archlinux-keyring
+
+warning: /etc/sane.d/canon_lide70.conf installed as /etc/sane.d/canon_lide70.conf.pacnew
+warning: /etc/sane.d/escl.conf installed as /etc/sane.d/escl.conf.pacnew
+
+sudo mv /etc/sane.d/canon_lide70.conf.pacnew /etc/sane.d/canon_lide70.conf
+sudo mv /etc/sane.d/escl.conf.pacnew /etc/sane.d/escl.conf
+
+sudo pacman -Rns tor-browser-en
+rm -rf ~/.tor-browser-en
+gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org   这个公钥是 EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+gpg --keyserver keyserver.ubuntu.com --recv  4E2C6E8793298290
+yay tor-browser
+
+systemctl list-timers
+sudo pacman -S pkgstats
+
+konsole (dolphin需要)
+
+manjaro? 可能有一些有趣的附加工具，but 老子用不着，至少目前用不着
+```
+
+***
+# lattice diamond 下载线驱动识别
+`sudo gedit /etc/udev/rules.d/10-local.rules`
+```
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="andy",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andy",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'
+```
+```
+sudo chmod 755 /etc/udev/rules.d/10-local.rules
+sudo udevadm control --reload-rules
+```
+
+***
+# archlinuxcn-keyring 报错处理
+```
+error: key "F9F9FA97A403F63E" could not be looked up remotely
+sudo pacman -S archlinuxcn-keyring
+有报错
+ERROR: 90403E12F4CE5E0E950E4AD2C96492E347202001 could not be locally signed
+之类， 参考https://www.archlinuxcn.org/gnupg-2-1-and-the-pacman-keyring/
+```
+```
+su
+pacman -Syu haveged
+systemctl start haveged
+systemctl enable haveged
+rm -fr /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
+pacman-key --populate archlinuxcn
+```
+这样就 `sudo pacman -S archlinuxcn-keyring` 无报错
+
+
+***
+# 重新打包pkg，提取已经安装的pkg
+```
+yay repacman2
+repacman -h
+```
+
+***
+# 以后pcmanfm不好使了就可以用caja取代
+```
+yay caja-open-terminal
+```
+change `mate-terminal` to `lxterminal`：
+<https://github.com/mate-desktop/caja-extensions/issues/31>
+
+可以配置F4快捷键打开terminal
+`~/.config/caja/scripts/open-terminal-here`
+```
+#!/bin/sh
+#
+# This script opens a gnome-terminal in the current directory.
+#
+# Distributed under the terms of GNU GPL version 2 or later
+#
+# Original author: Keith Conger <acid@twcny.rr.com>
+#
+# Sourced from
+# https://forums.linuxmint.com/viewtopic.php?p=773382&sid=9939ce160bd97313f849367231eb721a#p773382
+# http://g-scripts.sourceforge.net/nautilus-scripts/Execute/Open%20terminal/terminal-here
+#
+# Put this file in your ~/.config/caja/scripts/ directory.
+# You need to have caja-actions installed to use scripts.
+
+cd $CAJA_SCRIPT_CURRENT_URI
+exec lxterminal
+```
+`chmod +x ~/.config/caja/scripts/open-terminal-here`
+
+`gedit ~/.config/caja/accels`
+添加
+```
+"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+```
+有效
+
+
+
+***
+# dconf-editor
+Then navigate to org > gnome > nautilus > preferences and check always-use-location-entry.
+
+Then navigate to org > mate > caja > preferences and check always-use-location-entry.
+
+
+***
+# something
+```
+sudo pacman -S handbrake-cli handbrake intel-media-sdk intel-compute-runtime
+
+sudo pacman -S asciinema peek gifski lib32-simplescreenrecorder simplescreenrecorder vokoscreen
+
+yay green-recorder
+yay kazam
+cinelerra-cv toolame
+需要修改cinelerra/transportque.inc的#define CHANGE_ALL 0xffffffffu为#define CHANGE_ALL 0xff
+
+sudo pacman -S log4cxx
+davinci-resolve-studio
+davinci-resolve
+这两个需要从这里收动下载原始包
+http://www.blackmagicdesign.com/hk/products/davinciresolve/
+
+[andy@archlinux ~]$ /opt/resolve/bin/resolve 
+ActCCMessage Already in Table: Code= c005, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= c006, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= c007, Mode= 13, Level=  1, CmdKey= -1, Option= 0
+ActCCMessage Already in Table: Code= 2282, Mode=  0, Level=  0, CmdKey= 8, Option= 0
+PnlMsgActionStringAdapter Already in Table: Code= 615e, Mode=  0, Level=  0, CmdKey= -1, Option= 0
+log4cxx: No appender could be found for logger (BtCommon).
+log4cxx: Please initialize the log4cxx system properly.
+
+启动失败了
+https://forum.manjaro.org/t/davinci-resolve-doesnt-open/30065
+https://wiki.archlinux.org/index.php/DaVinci_Resolve
+哦，驱动是个大问题。intel显卡看来用不了这个软件， 删掉这个/home/andy/.local/share/DaVinciResolve
+
+PKGEXT='.pkg.tar' yay -S davinci-resolve 可以不压缩makepkg生成的包
+
+opencl-clhpp opencl-mesa lib32-opencl-nvidia lib32-opencl-mesa
+
+
+/sbin/lspci | grep -e VGA
+pactl info
+inxi bluez-utils-compat tree wmctrl ell
+yay perl-xml-dumper
+inxi -Fxz
+opencl-amd
+clinfo
+
+
+flowblade
+vidcutter
+yay xmind-pro
+```
+
+
+***
+# texlive
+```
+yay -S xdot xdotool
+http://wiki.archlinux.org/index.php/TeX_Live
+texlive-core texlive-bin texlive-bibtexextra texlive-fontsextra texlive-formatsextra
+qtikz tikzit ed biber perl-tk psutils t1utils dot2tex gnuplot yasm
+texlive-latexextra latex2html git-latexdiff texlive-langchinese texlive-langextra texlive-langjapanese texlive-langkorean 
+texlive-pictures texlive-publishers texlive-science texlive-latexextra texstudio texlive-humanities lyx
+texworks texmaker texlive-langcyrillic texlive-langgreek texlive-pstricks dblatex
+okular rcs kdegraphics-mobipocket calligra pstoedit doxygen-docs
+
+su
+ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
+fc-cache && mkfontscale && mkfontdir
+fc-list :lang=zh-cn
+fc-list | grep sim
+
+cd /usr/share/texmf-dist/fonts/truetype
+mkfontdir
+mkfontscale
+fc-cache -f -s -v
+fc-cache -fv
+fc-cache
+fc-list :lang=zh-cn
+fc-list | grep sim
+```
+
+***
+# libvirt 
+```
+virt-manager virt-viewer x11-ssh-askpass dnsmasq ebtables
+systemctl status libvirtd.service
+sudo systemctl start libvirtd.service
+sudo systemctl enable libvirtd.service
+sudo usermod -a -G libvirt andy
+不能连接，
+
+查org.libvirt.unix.manage
+https://wiki.archlinux.org/index.php/libvirt
+
+/usr/share/polkit-1/actions/org.libvirt.unix.policy  
+已经确认修改字段
+        <allow_any>yes</allow_any>
+        <allow_inactive>yes</allow_inactive>
+        <allow_active>yes</allow_active>
+就可以有效允许普通用户连接
+/usr/share/polkit-1/rules.d/50-default.rules
+/etc/polkit-1/rules.d/50-libvirt.rules
+```
+```
+/* Allow users in kvm group to manage the libvirt
+daemon without authentication */
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.libvirt.unix.manage" &&
+        subject.isInGroup("kvm")) {
+            return polkit.Result.YES;
+    }
+});
+```
+```
+sudo usermod -a -G kvm andy
+
+virt-manager
+```
+
+增加权限启动配置未验证(没有效果)，还是用上面的办法
+`vi /etc/polkit-1/localauthority/50-local.d/50-org.libvirtd-group-access.pkla`
+```
+[libvirtd group Management Access]
+Identity=unix-group:libvirtd
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+```
+```
+sudo systemctl restart libvirtd.service
+```
+```
+# systemctl disable qemu-ga.service
+# systemctl enable qemu-guest-agent.service
+```
+
+
+***
+# dvsdk
+```
+心血来潮，在滚动更新的当前系统编译一下dvsdk玩
+/home/andy/ti-dvsdk_dm368-evm_4_02_00_06
+make clean 
+
+错误1
+valid arguments to ‘-mabi=’ are: ms sysv
+
+修改 Makefile 
+linux_clean:
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) mrproper
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) clean
+
+-->
+
+linux_clean:
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) mrproper
+	$(MAKE) -C $(LINUXKERNEL_INSTALL_DIR) ARCH=arm CROSS_COMPILE=$(CSTOOL_PREFIX) clean
+
+错误2
+Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at kernel/timeconst.pl line 373
+修改
+if (!defined(@val)) {
+-->
+if (!@val) {
+
+到这里kernel是编译成功了。未在板验证
+
+错误3
+error: redefinition of ‘struct fdt_header’
+看来即include了系统的又include了uboot源码的
+未解决
+
+错误4
+errno: TLS definition in /lib64/libc.so.6 section .tbss mismatches non-TLS reference
+extern int errno;
+I replaced this line with #include <errno.h>
+未成功，如果不inlcude系统的，那么就include了uboot源码的，又不能改errno.h，否则循环引入;如果引入系统的，那么由于错误3又编译不过。
+
+结论：
+u-boot的老代码在新版本glibc下还真有问题。包括海思的u-boot版本比较新了吧，还是有问题。
+
+可能的办法，暂时删掉fdt之类的dev包，先编译通过了再说。未验证。不如用虚拟机呢。
+
+```
+
+
+***
+# 降级pkg
+`$ yaourt downgrader`
+降级firefox
+```
+downgrader -h firefox
+```
+可以编译最新的`downgrader-git`
+
+
+
+
+***
+# something
+```
+yay -S cdate downgrade
+dcmtk   (dicom)
+pari-elldata
+pari-galdata
+pari-seadata
+
+不安装catalyst-utils
+不安装pipewire-pulse
+不安装openblas
+不安装espeak-ng-espeak
+yay -S pari-galpol texlive-bin python-symengine swi-prolog pipewire-alsa
+yay -S clinfo gap-packages gap-doc dsdp polymake python-pkgconfig jmol sagemath-doc
+yay -S python-igraph sage-numerical-backends-coin coin-or-csdp buckygen plantri benzene coxeter rubiks lrs python-pynormaliz
+yay -S latte-integrale python-jupymake shared_meataxe sirocco primecount dot2tex cryptominisat5 python-pycosat sagemath-jupyter
+yay -S kdialog keditbookmarks perl-xml-dumper c-xsc libsemigroups python-pycurl jsmol sage-notebook-exporter
+yay perl-xml-dumper
+
+
+sudo gedit /etc/default/grub.pacnew
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+sudo mv /etc/default/grub.pacnew /etc/default/grub
+```
+
+
+
+***
+# repacman utorrent
+```
+sudo pacman -Rn utorrent
+yay rutorrent
+yay mod_scgi
+cp /usr/share/doc/rtorrent/rtorrent.rc ~/.rtorrent.rc
+gedit ~/.rtorrent.rc
+yay qrtorrent-git
+```
+暂时不启动服务。现在懒得配置了，以后需要再按这些资料配置好了
+<https://wiki.archlinux.org/index.php/RTorrent>
+<https://github.com/Novik/ruTorrent>
+
+
+
+***
+# 查询已经安装的pkg
+```
+pacman -Qeq > pacqeq.txt   <一般来说关心这个>
+pacman -Qdq > pacqdq.txt
+pacman -Qmq > pacqmq.txt   <一般n和m的就是全部了>
+pacman -Qnq > pacqnq.txt
+pacman -Qtd 可以保留这些
+pacman -Qmq
+```
+
+***
+# memtester
+```
+yay -S memtester
+memtester 1900M 10
+```
+
+***
+# balena-etcher
+```
+yay balena-etcher
+```
+
+***
+# orage为例， AUR弃用包的编译使用
+有些小工具挺好的，因为一些依赖关系被弃用，甚至从AUR移除， 已经安装的表现为无法升级，直到有一天什么库不见了，就不能再用了，未安装的AUR里都搜不到
+
+以orage为例子进行弃用包的 编译使用（orage已经被xfce-4.16弃用）
+<https://archive.xfce.org/src/apps/orage/4.12/>
+<https://github.com/balena/orage>
+可以下载源码
+<https://archive.archlinux.org/packages/>
+可以获取被移除出官方repo的旧安装包
+<https://github.com/aur-archive>
+可以找到在aur中出现过的包的存档
+
+稍加修改，依然可以编译通过，正常运行，不需要配合xfce4
+
+还是能延续相当长时代的
+
+
+
+***
+# 7z的命令行操作
+```
+7z a -p'fuckya' 'DLI 课程目录202004.7z' 'DLI 课程目录202004.pdf'
+7z x -p'fuckya' 'DLI 课程目录202004.7z'
+```
+
+
+
