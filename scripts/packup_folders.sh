@@ -11,9 +11,9 @@ for folders in `ls -l |grep ^d |awk '{print substr($0,index($0,$9))}'`
 do 
 echo $folders
 tar -zcvpf $folders.tar.gz $folders/*
-#rm -rf $folders
 #7z a -sdel $folders.7z $folders/*
 #7z a -sdel -t7z -mx9 -aoa $folders.7z $folders
+#rm -rf $folders
 done
 
 #统计文件数目
