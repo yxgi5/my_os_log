@@ -6658,4 +6658,1978 @@ g_unix_is_mount_path_system_internal(), they call to see if it's "system interna
 看来仓库的二进制文件是不再支持在/opt或者/dev/shm这样的位置创建trash can了
 
 
+***
+# git difftool 配置
+```
+See 'git difftool --tool-help' or 'git help config' for more details.
+'git difftool' will now attempt to use one of the following tools:
+opendiff kdiff3 tkdiff xxdiff meld kompare gvimdiff diffuse diffmerge ecmerge p4merge araxis bc codecompare emerge vimdiff
+```
+
+xxdiff/meld工具看起来还不错gitk直接可以设置为比较工具
+
+gitk实际上可以比较任何两个commit之间的diff：先选old再在new上右键，再比较每一个文件的diff
+
+meld用来merge还行，只用来比较有点太花哨了。还是默认xxdiff好了
+
+```
+yay xxdiff
+sudo pacman -S meld
+```
+
+
+***
+# pcb 文件 wine powerpcb 关联修复
+```
+xdg-mime query filetype 4L4.pcb
+mimetype 4L4.pcb
+file --mime-type 4L4.pcb
+```
+不一致
+```
+update-mime-database ~/.local/share/mime
+gtk-update-icon-cache
+update-desktop-database ~/.local/share/applications/
+```
+mime type 确实是正确的，但是，文件不显示icon，右键菜单的备选程序有icon。
+```
+sudo update-mime-database /usr/share/mime
+```
+
+根据
+<https://wiki.archlinux.org/index.php/XDG_MIME_Applications>
+`~/.local/share/mime/packages/application-x-foobar.xml`
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-foobar">
+        <comment>foo file</comment>
+        <icon name="application-x-foobar"/>
+        <glob-deleteall/>
+        <glob pattern="*.foo"/>
+    </mime-type>
+</mime-info>
+```
+## 类似的办法 opj 关联 orcad 弄了
+`gedit ~/.local/share/mime/packages/x-wine-extension-dsn.xml`
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-wine-extension-dsn">
+    <generic-icon name="application-x-wine-extension-dsn"/>
+    <glob pattern="*.dsn"/>
+    <comment>OrCAD Capture Design File Type</comment>
+  </mime-type>
+</mime-info>
+```
+```
+update-mime-database ~/.local/share/mime
+locate application-x-wine-extension-dsn.png
+```
+确实可以
+
+## pcb格式呢
+`sudo gedit /usr/share/mime/packages/pcb.xml`
+加
+```
+<generic-icon name="application-x-pcb-layout"/>
+```
+```
+sudo update-mime-database /usr/share/mime
+update-mime-database ~/.local/share/mime
+```
+无效。。。。实际上在nautilus和thunar等都显示正常的，那么应该是pcmanfm的问题咯
+
+因为`/usr/share/mime/packages/pcb.xml`会在update过程被更新所以
+```
+cp /usr/share/mime/packages/pcb.xml ~/.local/share/mime/packages/
+update-mime-database ~/.local/share/mime
+```
+
+尝试
+`sudo gedit /usr/share/mime/packages/pcb.xml`
+添加  
+```
+<generic-icon name="application-x-pcb-layout"/>
+<glob pattern="*.pcb"/>
+```
+```
+sudo update-mime-database /usr/share/mime
+sudo update-desktop-database /usr/share/applications
+sudo gtk-update-icon-cache /usr/share/icons/hicolor
+cat /usr/share/mime/application/x-pcb-layout.xml
+```
+pcmanfm下pcb文件还是没有图标，放弃了
+
+
+***
+# pcmanfm 替换研究
+```
+sudo pacman -S lxpanel libfm pcmanfm
+sudo pacman -S lxpanel-gtk3 libfm-gtk3 pcmanfm-gtk3
+sudo pacman -S libfm-qt pcmanfm-qt lxqt-archiver
+```
+openbox的文件浏览，无非pcmanfm，pcmanfm-qt，thunar什么的
+
+非要替换的话，thunar目前看是最好的选择了
+
+
+***
+# totem 播放器
+```
+$ yay -S totem
+```
+
+
+***
+# 安装ranger
+```
+$ yay -S ranger
+Optional dependencies for ranger
+    atool: for previews of archives
+    elinks: for previews of html pages
+    ffmpegthumbnailer: for video previews [installed]
+    highlight: for syntax highlighting of code
+    libcaca: for ASCII-art image previews [installed]
+    lynx: for previews of html pages [installed]
+    mediainfo: for viewing information about media files
+    odt2txt: for OpenDocument texts
+    perl-image-exiftool: for viewing information about media files [installed]
+    poppler: for pdf previews [installed]
+    python-chardet: in case of encoding detection problems [installed]
+    sudo: to use the "run as root"-feature [installed]
+    transmission-cli: for viewing bittorrent information [installed]
+    ueberzug: for previews of images
+    w3m: for previews of images and html pages [installed]
+```
+补充安装
+```
+$ yay -S atool lha elinks highlight mediainfo odt2txt ueberzug
+```
+
+
+***
+# 安装i3-gaps
+```
+$ yay -S i3-gaps
+Optional dependencies for i3-gaps
+    rxvt-unicode: The terminal emulator used in the default config.
+    dmenu: As menu. [installed]
+    i3lock: For locking your screen.
+    i3status: To display system information with a bar.
+    perl-json-xs: For i3-save-tree [installed]
+    perl-anyevent-i3: For i3-save-tree
+$ yay -S i3status dunst
+```
+
+
+***
+# libjaylink
+安装aur/libjaylink-git
+`$ yay -S libjaylink-git`
+或者安装编译好的二进制包
+`yay -S libjaylink`
+
+
+***
+# 安装stlink
+pacman安装stlink
+`//`//sudo cp -a /usr/lib/udev/rules.d/* /etc/udev/rules.d/`
+安装pandoc
+`yay -S pandoc`
+```
+git clone https://github.com/stlink-org/stlink.git
+cd stlink
+make release
+sudo make install
+$ sudo cp -a config/udev/rules.d/* /etc/udev/rules.d/
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+```
+```
+sudo st-info --probe
+sudo st-util -1
+sudo st-info --chipid
+sudo st-flash --reset erase
+sudo st-flash write file.bin 0x08000000
+sudo st-flash --debug write file.bin 0x08000000 > debug.log 2>&1
+sudo st-flash reset
+```
+```
+st-info --probe
+st-util -1
+st-info --chipid
+st-flash --reset erase
+st-flash write file.bin 0x08000000
+st-flash --debug write file.bin 0x08000000 > debug.log 2>&1
+st-flash reset
+st-flash read out.bin 0x8000000 1048576
+```
+```
+sudo modprobe -r usb-storage && sudo modprobe usb-storage
+```
+```
+git clone https://github.com/stlink-org/stlink --branch v1.6.0
+```
+确认stlink v1已经不能在最新的环境使用了， stlink v2完全正常
+
+安装`aur-stlink-git`
+
+其他
+`git clone git@github.com:EmBitz/EBlink.git`
+
+
+***
+# 安装 cutecom
+```
+$ yay -S cutecom
+```
+
+***
+# libpgf
+```
+sudo pacman -S libpgf
+```
+
+
+***
+# 20201216 全盘更新
+`sudo pacman -Syu`
+```
+sudo systemctl disable qemu-ga.service
+sudo systemctl enable qemu-guest-agent.service
+sudo pacman -S qt5-charts vcdimager
+sudo pacman -S boost ogre mygui
+sudo pacman -S apparmor go-tools sdl_net
+sudo pacman -S wireshark-qt
+sudo pacman -S python2-pip python-pip
+```
+
+
+***
+# 编译安装 snap
+## 查看备选安装
+`yay snapd`
+
+## 编译失败
+`makepkg -si`  编译失败
+
+添加 `--nocheck` 选项
+```
+[在aur-pkg目录]
+makepkg --nocheck
+sudo pacman -S apparmor python-notify2 go-tools squashfuse
+makepkg --nocheck
+sudo pacman -U snapd-2.48.2-1-x86_64.pkg.tar.zst
+```
+`sudo systemctl enable --now snapd.socket`
+`sudo systemctl restart snapd.service`
+`sudo systemctl restart apparmor.service`
+`sudo systemctl enable --now snapd.apparmor.service`
+`sudo systemctl daemon-reload && sudo systemctl restart snapd`
+`systemctl status snapd`
+测试snap
+```
+snap version
+snap --version
+sudo snap install hello-world
+sudo proxychains snap install hello-world
+/var/lib/snapd/snap/bin/hello-world
+sudo journalctl -u snapd
+snap list
+//sudo snap remove hello-world
+snap find
+```
+
+
+***
+# 优先用pacman安装python module！！
+```
+//sudo pip3.9 install --upgrade pip -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install tensorflow==1.5 -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install mxnet==1.1 -i https://mirrors.163.com/pypi/simple
+sudo pacman -S python-numpy cython
+//sudo pip3.9 install Cython -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install numpy -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install mkl -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install scipy -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 uninstall scipy
+/sudo pip3.9 install pilutil -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 install scipy==1.1.0 -i https://mirrors.163.com/pypi/simple
+```
+
+<https://github.com/scipy/scipy/issues/6212>
+`python3.9`
+```
+from scipy.misc import imread
+cannot import ！
+imread is deprecated in SciPy 1.0.0, and will be removed in 1.2.0. Use imageio.imread instead
+```
+`python3.9`
+```
+from imageio import imread
+from matplotlib.pyplot import imread
+```
+优先用pacman安装python module
+```
+sudo pacman -S cfitsio gcc-fortran
+sudo pacman -S python-scipy python-scipy-doc
+//sudo pip3.9 install matplotlib -i https://mirrors.163.com/pypi/simple
+sudo pacman -S python-matplotlib
+sudo pacman -S python-notify2
+sudo pacman -S python-pilkit cython python-qtpy
+sudo pacman -S python-skorch python-scikit-image python-scikit-learn python-scikit-build python-pillow python-pillowfight python-pilkit
+//sudo pip3.9 install scikit-image -i https://mirrors.163.com/pypi/simple
+//sudo pip3.9 uninstall scikit-image
+//sudo pip3.9 uninstall tifffile pywavelets networkx imageio
+sudo pacman -S python-tensorflow python-opt_einsum python-tensorflow-estimator python-tensorflow-opt tensorflow tensorboard tensorflow-opt python-tensorboardx mxnet-git python-mxboard 
+//sudo pacman -S python-horovod 
+//sudo pacman -S python-pytorch-opt 
+sudo pacman -S python-pytorch
+```
+
+***
+# telegram
+```
+sudo pacman -S telegram-desktop ttf-opensans
+```
+
+***
+# xilinx usb cable / xilinx下载线
+安装fxload
+`yay fxload`
+安装hotplug的hex
+`/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/install_script/install_drivers/`
+安装rules
+`/opt/Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers`
+修改rules
+`sudo gedit /etc/udev/rules.d/52-xilinx-pcusb.rules`
+```
+# version 0002
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0008", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0007", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0009", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="000d", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="000f", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0013", MODE="666"
+#ATTR{idVendor}=="03fd", ATTR{idProduct}=="0015", MODE="666"
+
+# version 0003
+ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0008", MODE="666"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0007", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusbdfwu.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0009", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xup.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="000d", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_emb.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="000f", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xlp.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0013", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xp2.hex -D $tempnode"
+SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="03fd", ATTRS{idProduct}=="0015", RUN+="/sbin/fxload -v -t fx2 -I /etc/hotplug/usb/xusbdfwu.fw/xusb_xse.hex -D $tempnode"
+```
+如果要更新hex文件
+```
+//$ sudo cp /opt/Xilinx/Vivado/2017.4/data/xicom/xusb*.hex /etc/hotplug/usb/xusbdfwu.fw/
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+```
+
+***
+# deb转pacman
+## 方法1：PKGBUILD脚本
+可以像st-stlink-server那样编写PKGBUILD脚本
+```
+pkgname=st-stlink-server
+pkgver=1.0.12
+pkgrel=1
+pkgdesc="st-link-server"
+arch=('x86_64')
+license=('custom')
+depends=('libusb')
+source=("${pkgname}-${pkgver}-${pkgrel}-linux-amd64.deb")
+sha1sums=('434ec9bf507122fbd995a134bc6a94d1fa70a1ae')
+
+build() {
+	cd "${srcdir}"
+	tar -Jxf data.tar.xz
+}
+
+package() {
+	cd "${srcdir}"
+	cp -r "${srcdir}/usr" "${pkgdir}/usr"
+}
+```
+然后
+`makepkg`
+
+##还可以用转换工具debtap
+```
+yay debtap
+sudo debtap -u
+debtap xxx.deb
+```
+```
+#已经安装过了 /opt/Ac6/SystemWorkbench/install_stlink_udev.sh
+/opt/Ac6/SystemWorkbench/stlinkserver/st-stlink-server-1.0.12-1-linux-amd64.deb经过debtap转换后
+安装st-stlink-server-1.0.12-1-x86_64.pkg.tar.zst
+```
+
+***
+# 安装 docker
+```
+sudo pacman -S docker
+```
+
+
+***
+# aria2 后台服务配置
+
+## 1，安装前端
+sudo pacman -S ariang-allinone
+
+## 2. 配置服务
+### 方法1，作为系统服务
+`sudo mkdir -p /etc/aria2`
+`sudo touch /etc/aria2/aria2.session`
+`sudo gedit /etc/aria2/aria2.conf`
+```
+## '#'开头为注释内容, 选项都有相应的注释说明, 根据需要修改 ##
+## 被注释的选项填写的是默认值, 建议在需要修改时再取消注释  ##
+ 
+## 文件保存相关 ##
+ 
+# 文件的保存路径(可使用绝对路径或相对路径), 默认: 当前启动位置
+# dir=~/Downloads 不行啊，直接在/下创建了“～”目录呢
+dir=/home/andy/Downloads
+# 启用磁盘缓存, 0为禁用缓存, 需1.16以上版本, 默认:16M
+disk-cache=32M
+# 文件预分配方式, 能有效降低磁盘碎片, 默认:prealloc
+# 预分配所需时间: none < falloc ? trunc < prealloc
+# falloc和trunc则需要文件系统和内核支持
+# NTFS建议使用falloc, EXT3/4建议trunc, MAC 下需要注释此项
+# file-allocation=none
+file-allocation=trunc
+# 断点续传
+continue=true
+
+## 下载连接相关 ##
+ 
+# 最大同时下载任务数, 运行时可修改, 默认:5
+max-concurrent-downloads=20
+# 同一服务器连接数, 添加时可指定, 默认:1
+max-connection-per-server=10
+# 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M
+# 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载
+min-split-size=10M
+# 单个任务最大线程数, 添加时可指定, 默认:5
+#split=5
+# 整体下载速度限制, 运行时可修改, 默认:0
+#max-overall-download-limit=0
+# 单个任务下载速度限制, 默认:0
+#max-download-limit=0
+# 整体上传速度限制, 运行时可修改, 默认:0
+#max-overall-upload-limit=0
+# 单个任务上传速度限制, 默认:0
+#max-upload-limit=0
+# 禁用IPv6, 默认:false
+#disable-ipv6=true
+# 连接超时时间, 默认:60
+#timeout=60
+# 最大重试次数, 设置为0表示不限制重试次数, 默认:5
+#max-tries=5
+# 设置重试等待的秒数, 默认:0
+#retry-wait=0
+ 
+## 进度保存相关 ##
+ 
+# 从会话文件中读取下载任务
+input-file=/etc/aria2/aria2.session
+# 在Aria2退出时保存`错误/未完成`的下载任务到会话文件
+save-session=/etc/aria2/aria2.session
+# 定时保存会话, 0为退出时才保存, 需1.16.1以上版本, 默认:0
+#save-session-interval=60
+ 
+## RPC相关设置 ##
+ 
+# 启用RPC, 默认:false
+enable-rpc=true
+# 允许所有来源, 默认:false
+rpc-allow-origin-all=true
+# 允许非外部访问, 默认:false
+rpc-listen-all=true
+# 事件轮询方式, 取值:[epoll, kqueue, port, poll, select], 不同系统默认值不同
+#event-poll=select
+# RPC监听端口, 端口被占用时可以修改, 默认:6800
+#rpc-listen-port=6800
+# 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项
+rpc-secret=mytoken
+# 设置的RPC访问用户名, 此选项新版已废弃, 建议改用 --rpc-secret 选项
+#rpc-user=<USER>
+# 设置的RPC访问密码, 此选项新版已废弃, 建议改用 --rpc-secret 选项
+#rpc-passwd=<PASSWD>
+# 是否启用 RPC 服务的 SSL/TLS 加密,
+# 启用加密后 RPC 服务需要使用 https 或者 wss 协议连接
+#rpc-secure=true
+# 在 RPC 服务中启用 SSL/TLS 加密时的证书文件,
+# 使用 PEM 格式时，您必须通过 --rpc-private-key 指定私钥
+#rpc-certificate=/path/to/certificate.pem
+# 在 RPC 服务中启用 SSL/TLS 加密时的私钥文件
+#rpc-private-key=/path/to/certificate.key
+ 
+## BT/PT下载相关 ##
+ 
+# 当下载的是一个种子(以.torrent结尾)时, 自动开始BT任务, 默认:true
+#follow-torrent=true
+# BT监听端口, 当端口被屏蔽时使用, 默认:6881-6999
+listen-port=51413
+# 单个种子最大连接数, 默认:55
+#bt-max-peers=55
+# 打开DHT功能, PT需要禁用, 默认:true
+enable-dht=false
+# 打开IPv6 DHT功能, PT需要禁用
+#enable-dht6=false
+# DHT网络监听端口, 默认:6881-6999
+#dht-listen-port=6881-6999
+# 本地节点查找, PT需要禁用, 默认:false
+#bt-enable-lpd=false
+# 种子交换, PT需要禁用, 默认:true
+enable-peer-exchange=false
+# 每个种子限速, 对少种的PT很有用, 默认:50K
+#bt-request-peer-speed-limit=50K
+# 客户端伪装, PT需要
+peer-id-prefix=-TR2770-
+user-agent=Transmission/2.77
+# 当种子的分享率达到这个数时, 自动停止做种, 0为一直做种, 默认:1.0
+seed-ratio=0
+# 强制保存会话, 即使任务已经完成, 默认:false
+# 较新的版本开启后会在任务完成后依然保留.aria2文件
+#force-save=false
+# BT校验相关, 默认:true
+#bt-hash-check-seed=true
+# 继续之前的BT任务时, 无需再次校验, 默认:false
+bt-seed-unverified=true
+# 保存磁力链接元数据为种子文件(.torrent文件), 默认:false
+bt-save-metadata=true
+
+```
+ref:
+<https://wiki.archlinux.org/index.php/Aria2>
+```
+continue
+daemon=true
+dir=/home/aria2/Downloads
+file-allocation=falloc
+log-level=warn
+max-connection-per-server=4
+max-concurrent-downloads=3
+max-overall-download-limit=0
+min-split-size=5M
+enable-http-pipelining=true
+
+enable-rpc=true
+rpc-listen-all=true
+rpc-user=rpcuser
+rpc-passwd=rpcpass
+```
+
+`sudo gedit /etc/systemd/system/aria2cd.service`
+```
+[Unit]
+Description=Aria2 Daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/aria2c --conf-path=/etc/aria2/aria2.conf
+TimeoutSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
+```
+`sudo systemctl enable aria2cd.service`
+`sudo systemctl start aria2cd.service`
+
+上面那样设置，aria2c的运行是以root身份。不想这样
+```
+sudo systemctl stop aria2cd.service
+sudo systemctl disable aria2cd.service
+sudo rm /etc/systemd/system/aria2cd.service
+sudo rm -rf /etc/aria2
+```
+
+### 方法2， 作为用户服务
+```
+mkdir ~/.config/aria2
+touch ~/.config/aria2/aria2.session #用于保存日志
+touch ~/.config/aria2/aria2.conf #创建配置文件
+```
+`gedit ~/.config/aria2/aria2.conf`
+```
+## '#'开头为注释内容, 选项都有相应的注释说明, 根据需要修改 ##
+## 被注释的选项填写的是默认值, 建议在需要修改时再取消注释  ##
+ 
+## 文件保存相关 ##
+ 
+# 文件的保存路径(可使用绝对路径或相对路径), 默认: 当前启动位置
+# dir=~/Downloads
+dir=/home/andy/Downloads
+# 启用磁盘缓存, 0为禁用缓存, 需1.16以上版本, 默认:16M
+disk-cache=32M
+# 文件预分配方式, 能有效降低磁盘碎片, 默认:prealloc
+# 预分配所需时间: none < falloc ? trunc < prealloc
+# falloc和trunc则需要文件系统和内核支持
+# NTFS建议使用falloc, EXT3/4建议trunc, MAC 下需要注释此项
+# file-allocation=none
+file-allocation=trunc
+# 断点续传
+continue=true
+
+## 下载连接相关 ##
+ 
+# 最大同时下载任务数, 运行时可修改, 默认:5
+max-concurrent-downloads=20
+# 同一服务器连接数, 添加时可指定, 默认:1
+max-connection-per-server=10
+# 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M
+# 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载
+min-split-size=10M
+# 单个任务最大线程数, 添加时可指定, 默认:5
+#split=5
+# 整体下载速度限制, 运行时可修改, 默认:0
+#max-overall-download-limit=0
+# 单个任务下载速度限制, 默认:0
+#max-download-limit=0
+# 整体上传速度限制, 运行时可修改, 默认:0
+#max-overall-upload-limit=0
+# 单个任务上传速度限制, 默认:0
+#max-upload-limit=0
+# 禁用IPv6, 默认:false
+#disable-ipv6=true
+# 连接超时时间, 默认:60
+#timeout=60
+# 最大重试次数, 设置为0表示不限制重试次数, 默认:5
+#max-tries=5
+# 设置重试等待的秒数, 默认:0
+#retry-wait=0
+ 
+## 进度保存相关 ##
+ 
+# 从会话文件中读取下载任务
+input-file=/home/andy/.config/aria2/aria2.session
+# 在Aria2退出时保存`错误/未完成`的下载任务到会话文件
+save-session=/home/andy/.config/aria2/aria2.session
+# 定时保存会话, 0为退出时才保存, 需1.16.1以上版本, 默认:0
+#save-session-interval=60
+ 
+## RPC相关设置 ##
+ 
+# 启用RPC, 默认:false
+enable-rpc=true
+# 允许所有来源, 默认:false
+rpc-allow-origin-all=true
+# 允许非外部访问, 默认:false
+rpc-listen-all=true
+# 事件轮询方式, 取值:[epoll, kqueue, port, poll, select], 不同系统默认值不同
+#event-poll=select
+# RPC监听端口, 端口被占用时可以修改, 默认:6800
+#rpc-listen-port=6800
+# 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项
+rpc-secret=mytoken
+# 设置的RPC访问用户名, 此选项新版已废弃, 建议改用 --rpc-secret 选项
+#rpc-user=<USER>
+# 设置的RPC访问密码, 此选项新版已废弃, 建议改用 --rpc-secret 选项
+#rpc-passwd=<PASSWD>
+# 是否启用 RPC 服务的 SSL/TLS 加密,
+# 启用加密后 RPC 服务需要使用 https 或者 wss 协议连接
+#rpc-secure=true
+# 在 RPC 服务中启用 SSL/TLS 加密时的证书文件,
+# 使用 PEM 格式时，您必须通过 --rpc-private-key 指定私钥
+#rpc-certificate=/path/to/certificate.pem
+# 在 RPC 服务中启用 SSL/TLS 加密时的私钥文件
+#rpc-private-key=/path/to/certificate.key
+ 
+## BT/PT下载相关 ##
+ 
+# 当下载的是一个种子(以.torrent结尾)时, 自动开始BT任务, 默认:true
+#follow-torrent=true
+# BT监听端口, 当端口被屏蔽时使用, 默认:6881-6999
+listen-port=51413
+# 单个种子最大连接数, 默认:55
+#bt-max-peers=55
+# 打开DHT功能, PT需要禁用, 默认:true
+enable-dht=false
+# 打开IPv6 DHT功能, PT需要禁用
+#enable-dht6=false
+# DHT网络监听端口, 默认:6881-6999
+#dht-listen-port=6881-6999
+# 本地节点查找, PT需要禁用, 默认:false
+#bt-enable-lpd=false
+# 种子交换, PT需要禁用, 默认:true
+enable-peer-exchange=false
+# 每个种子限速, 对少种的PT很有用, 默认:50K
+#bt-request-peer-speed-limit=50K
+# 客户端伪装, PT需要
+peer-id-prefix=-TR2770-
+user-agent=Transmission/2.77
+# 当种子的分享率达到这个数时, 自动停止做种, 0为一直做种, 默认:1.0
+seed-ratio=0
+# 强制保存会话, 即使任务已经完成, 默认:false
+# 较新的版本开启后会在任务完成后依然保留.aria2文件
+#force-save=false
+# BT校验相关, 默认:true
+#bt-hash-check-seed=true
+# 继续之前的BT任务时, 无需再次校验, 默认:false
+bt-seed-unverified=true
+# 保存磁力链接元数据为种子文件(.torrent文件), 默认:false
+bt-save-metadata=true
+
+daemon=true
+```
+
+`mkdir -p ~/.config/systemd/user`
+`gedit ~/.config/systemd/user/aria2cd.service`
+```
+[Unit]
+Description=Aria2 Daemon
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/aria2c --conf-path=/home/andy/.config/aria2/aria2.conf
+TimeoutSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
+```
+Type=forking情况下，要么配置文件设置成daemon=true，要么ExecStart加-D选项
+
+或者Type=simple，不过这样不太好
+
+```
+systemctl --user enable aria2cd.service
+systemctl --user daemon-reload
+systemctl --user start aria2cd.service
+```
+ok了
+
+## aria2，也可添加-D选项，后台启动
+`aria2c --conf-path=$HOME/.config/aria2/aria2.conf -D`
+
+和前面的启动用户服务的方法是等效的, 可以添加到自动启动脚本
+
+## aria2c前端uget-gtk
+
+uget old settings
+```
+curl
+http://localhost:6800/jsonrpc
+path:aria2c
+arguments:--enable-rpc=true -D --disable-ipv6 --check-certificate=false
+```
+uget new settings
+```
+aria2+curl
+http://localhost:6800/jsonrpc
+token:mytoken
+path:aria2c
+arguments:--conf-path=/home/andy/.config/aria2/aria2.conf
+```
+
+## aria2c前端ariang-allinone配置
+ariang settings -> RPC(localhost:6800) -> Token填入 RPC授权令牌 前面设置的是“mytoken”
+
+
+***
+# 监控网口流量
+```
+sudo pacman -S nethogs
+sudo nethogs wlan0
+```
+
+***
+# 安装 ddd
+```
+yaourt ddd
+gpg --keyserver keyserver.ubuntu.com --recv-keys 6656C593E5158D1A
+```
+
+
+***
+# Xilin vivado sdk rlwrap使用native版本
+`sudo pacman -S rlwrap`
+修改tclsh，xmd，xstc，xsdb，xtclsh(不同版本稍有不同)
+替换
+```
+"$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap
+```
+为
+```
+/usr/bin/rlwrap
+```
+
+***
+# gtk-icon-theme
+选一个
+```
+~/.gtkrc-2.0
+/etc/gtk-2.0/gtkrc
+```
+add the following line:
+```
+gtk-icon-theme-name = "gnome"
+```
+
+***
+# something
+`sudo usermod -aG storage andy`
+
+***
+# gtk3版本的lxappearance运行不起来..
+```
+sudo pacman -S lxappearance lxappearance-obconf 
+sudo pacman -S gnome-icon-theme gnome-icon-theme-extras mate-icon-theme mate-icon-theme-faenza xcursor-themes
+sudo pacman -S tango-icon-theme-extras tango-icon-theme
+```
+
+
+***
+# 创建百度网盘的命令启动
+`cd /usr/local/bin`
+`sudo gedit baidunetdisk`
+```
+#!/bin/bash
+cd /opt/baidunetdisk
+./baidunetdisk
+```
+`sudo chmod +x baidunetdisk`
+
+***
+# 邮件和快捷键的编辑器都设置成notepadqq
+苦于gedit什么的没有掉电保存功能
+更新notepadqq
+邮件和快捷键的编辑器都设置成notepadqq
+
+
+***
+# pycharm
+sudo pacman -S pycharm-professional
+sudo pacman -S libopenraw
+
+
+
+***
+# //安装kde[目前千万不要安装]
+
+```
+sudo pacman -S plasma-meta
+sudo pacman -Rns plasma-meta
+noto-fonts-cjk 
+noto-fonts-extra
+gnuplot
+plasma-workspace
+packagekit-qt5
+breeze-gtk
+qt5-virtualkeyboard
+plasma-workspace-wallpapers
+networkmanager-qt
+gpsd
+kdepim-addons
+appmenu-gtk-module
+baloo
+discover
+kross
+purpose
+quota-tools
+plasma-nm
+powerdevil
+ibus
+scim
+encfs
+cryfs
+gocryptfs
+packagekit-qt5
+fwupd
+breeze-grub
+
+
+sudo pacman -S plasma
+sudo pacman -S plasma-desktop
+sudo pacman -S plasma-wayland-session
+sudo pacman -Rns plasma-wayland-session
+opus-tools
+maxima
+octave
+r
+sagemath
+julia
+libdvdcss
+gnu-free-fonts
+live-media
+libgoom2
+aribb24
+aribb25
+libva-vdpau-driver
+kimageformats
+kipi-plugins
+kamera
+postgresql
+libetebase
+vorbis-tools
+python-language-server
+texlab
+rust
+sox
+movit
+rtaudio
+dvdauthor
+recordmydesktop
+xine-ui
+grammalecte
+libmediawiki
+libkvkontakte
+gnuchess
+libgadu
+mediastreamer
+python-random2
+python-pysol_cards
+languagetool
+libwlocate
+shapelib
+calligra
+udftools
+system-config-printer
+telepathy-gabble
+telepathy-haze
+telepathy-morse
+telepathy-salut
+lldb
+okteta
+cppcheck
+astyle
+heaptrack
+
+sudo pacman -S kde-applications
+sudo pacman -S kde-applications-meta 
+sudo pacman -Rns kde-applications-meta
+
+sudo pacman -Rns kdevelop kdevelop-php libksysguard umbrello plasma-workspace kget telepathy-kde-desktop-applets
+sudo pacman -Rns plasma
+
+sudo pacman -Rns baloo baloo-widgets dolphin konqueror elisa gwenview
+
+
+
+
+
+balooctl disable
+
+~/.config/kwalletrc
+[Wallet]
+Enabled=false
+Open=false
+
+
+
+
+opera
+inode/directory=pcmanfm.desktop
+sudo pacman -S gnome gnome-extra gnome-shell
+
+
+locate org.kde.kgpg.desktop
+sudo rm /etc/xdg/autostart/org.kde.kgpg.desktop
+sudo gedit /usr/share/dbus-1/services/org.gnome.OnlineAccounts.service
+注释掉goa-daemon
+
+
+
+dpms is the Display Power Management Signalling. For the xfce4-power-manager to disable it is a simple command mainly just to quit it.
+
+xfce4-power-manager -q
+To re-enable xfce4-power-manager it is:
+
+nohup xfce4-power-manager & 2>&1 >/dev/null
+To disable the dpms run the following command:
+
+xset -dpms
+To enable dpms it is just the opposite:
+
+xset dpms
+
+
+sudo gedit /usr/share/dbus-1/services/org.kde.kglobalaccel.service
+sudo gedit /usr/share/dbus-1/services/org.kde.activitymanager.service 
+cat /etc/xdg/autostart/xfce4-screensaver.desktop
+cat /etc/xdg/autostart/xfce4-power-manager.desktop
+都改成不执行或者添加Hidden=true
+
+sudo gedit /usr/share/kservices5/kglobalaccel5.desktop
+添加Hidden=true
+
+
+安装kde带来的配置冲突简直是个灾难
+从备份盘里恢复吧，需要恢复的有 /分区， /home的配置文件需要把目前的一些多余设置删除， 安装缺失的部分补上。很简单的。
+```
+
+
+***
+# online-accounts
+```
+systemctl list-units | grep service
+systemctl list-unit-files
+systemctl is-enabled dbus.service
+systemd-analyze blame
+```
+```
+systemctl mask seems to be an effective way to disable services and is reversible with unmask eg. -
+Code: [Select]
+systemctl mask lvm2-activation.service
+
+creating an empty 'foo.service' file in ~/.local/share/dbus-1/services effectively disables the foo service by taking precedence over the (working) foo.service file in /usr/share
+```
+`/usr/share/dbus-1/system.conf and /usr/share/dbus-1/session.conf`
+```
+<policy group="lp">
+    <allow send_destination="org.bluez"/>
+    <allow send_destination="org.bluez.obex"/>
+  </policy>
+
+  <policy context="default">
+    <deny send_destination="org.bluez"/>
+    <deny send_destination="org.bluez.obex"/>
+  </policy>
+```
+`ls /usr/share/dbus-1/services/`
+```
+goa-daemon
+/usr/share/dbus-1/services/org.gnome.OnlineAccounts.service
+goa-identity-service
+/usr/share/dbus-1/services/org.gnome.Identity.service
+gvfs-goa-volume-monitor
+/usr/share/dbus-1/services/org.gtk.vfs.GoaVolumeMonitor.service
+```
+`sudo gedit /usr/share/dbus-1/session.conf`
+添加
+```
+  <policy context="default">
+    <deny send_destination="org.gnome.OnlineAccounts"/>
+    <deny send_destination="org.gtk.vfs.GoaVolumeMonitor"/>
+    <deny send_destination="org.gnome.Identity"/>
+  </policy>
+```
+放到最后的</busconfig> 之前
+无效
+
+下面的有效
+```
+mkdir -p ~/.local/share/dbus-1/services
+
+cp /usr/share/dbus-1/services/org.gnome.Identity.service ~/.local/share/dbus-1/services/org.gnome.Identity.service
+
+cp /usr/share/dbus-1/services/org.gnome.OnlineAccounts.service ~/.local/share/dbus-1/services/org.gnome.OnlineAccounts.service
+
+cp /usr/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service ~/.local/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service
+```
+replace the Exec=/usr/lib/gnome-online-accounts/..... line with Exec=exit
+```
+xed ~/.local/share/dbus-1/services/org.gnome.Identity.service
+xed ~/.local/share/dbus-1/services/org.gnome.OnlineAccounts.service
+xed ~/.local/share/dbus-1/services/org.gtk.vfs.GPhoto2VolumeMonitor.service
+```
+```
+mkdir -p ~/.local/share/systemd/user/
+cp /usr/lib/systemd/user/gvfs-goa-volume-monitor.service ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
+gedit ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
+```
+```
+ExecStart=exit
+```
+这个之后gedit，thunar等启动会变慢哦
+```
+rm ~/.local/share/systemd/user/gvfs-goa-volume-monitor.service
+```
+就好了
+
+To revert
+CODE: SELECT ALL
+```
+rm -r ~/.local/share/dbus-1/services
+```
+
+***
+# xfce4一些配置
+```
+sudo gedit /etc/xdg/autostart/xfce4-screensaver.desktop
+sudo gedit /etc/xdg/autostart/xfce4-power-manager.desktop
+```
+添加Hidden=true木有用
+都改成不执行，比如
+Exec=xfce4-power-manager
+改成
+#Exec=xfce4-power-manager
+
+
+***
+# gvfs 有关
+```
+busctl --user
+loginctl session-status
+echo $DBUS_SESSION_BUS_ADDRESS
+hostnamectl
+journalctl -xf
+pacman -Qikk gvfs
+pgrep -u andy -l
+systemctl --user list-unit-files |grep gvfs
+```
+
+
+***
+# 键盘有关
+查看系统默认已有的keycode
+```
+xmodmap -pke
+```
+查看keycode
+`xev | grep keycode`
+
+```
+localectl list-x11-keymap-layouts
+
+//登陆打开NumLock键
+//$ gsettings set org.gnome.settings-daemon.peripherals.keyboard numlock-state on
+```
+
+```
+localectl status
+
+localectl list-keymaps
+localectl list-keymaps | grep -i search_term
+
+setxkbmap -print -verbose 10
+```
+
+loadkeys 工具临时修改键盘布局
+
+```
+sudo localectl set-keymap --no-convert us
+同时修改了/etc/vconsole.conf 和当前会话中的 KEYMAP
+us
+jp106
+```
+```
+yaourt xkb-switch 
+yaourt xkblayout-state
+
+xkblayout-state print "%s"
+xkb-switch -s jp106
+xkblayout-state print "%s"
+xkb-switch -l
+怎么就一个？
+```
+
+
+***
+# evtest
+```
+sudo pacman -S evtest
+sudo evtest
+```
+
+***
+# 一些字体
+```
+sudo pacman -S wqy-microhei wqy-zenhei wqy-microhei-lite wqy-bitmapfont
+```
+
+***
+# eclipse-ecj
+```
+sudo pacman -S eclipse-ecj
+```
+安装包默认不覆盖已经存在的文件，比如python就比较常见这样的现象
+```
+python-setuptools: /usr/lib/python3.9/site-packages/setuptools/tests/textwrap.py exists in filesystem
+Errors occurred, no packages were upgraded.
+error installing repo packages
+```
+办法，强制覆盖
+`pacman -S <package> --overwrite=*`
+这里具体就是
+```
+sudo pacman -Syu --overwrite=*
+```
+
+
+***
+# 替换wine的版本
+```
+sudo pacman -S wine-staging
+sudo pacman -S dosbox cups lib32-vkd3d vkd3d
+sudo pacman -S foomatic-db antiword docx2txt
+sudo pacman -S playonlinux
+```
+
+
+***
+# miredo修复
+检查`/lib/systemd/system/miredo.service`
+```
+[Unit]
+Description=Teredo IPv6 tunneling
+After=network-online.target
+
+[Service]
+ExecStartPre=/usr/bin/miredo-checkconf -f /etc/miredo/miredo.conf
+ExecStart=/usr/bin/miredo -f
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+```
+`sudo systemctl enable systemd-networkd-wait-online.service`
+`sudo systemctl enable miredo.service`
+
+
+***
+# 在si4输入中文
+`env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" XMODIFIERS=@im=fcitx GTK_IM_MODULE=fcitx QT4_IM_MODULE=fcitx QT_IM_MODULE=fcitx WINEARCH=win32 WINEPREFIX="/home/andy/.wine" wine C:\\\\Program\\ Files\\\\Source\\ Insight\\ 4.0\\\\sourceinsight4.exe`
+还是不能在si4输入中文
+
+
+***
+# v2ray 修复
+```
+failed to read config files: [/etc/v2ray/config.json] > v2ray.com/core/infra/conf: unknown cipher method: aes-256-cfb
+v2ray-desktop
+git-lfs
+qwt
+botan1.10
+```
+
+
+***
+# 20210114 全盘更新
+```
+sudo pacman -Syu
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing wxgtk2 (3.0.5.1-2) breaks dependency 'wxgtk' required by gspiceui
+:: installing wxgtk2 (3.0.5.1-2) breaks dependency 'wxgtk' required by pyuv
+sudo pacman -R gspiceui
+sudo pacman -R pyuv
+yay gspiceui
+yay pyuv
+:: There are 3 providers available for wxgtk:
+:: Repository AUR
+    1) wxgtk-git 2) wxgtk2-dev 3) wxgtk2-light 
+选2
+
+更新了
+wxgtk-common --> wxgtk-common-dev
+wxgtk2 --> wxgtk2-dev
+```
+实际上，不需要替换的，修改编译配置为依赖wxgtk-common就可以了
+
+
+***
+# 图片有(1).jpg之类的重复，删除
+`rm *\)\.jpg`
+
+
+***
+# 一些 missing firmware
+WARNING: Possibly missing firmware for module: aic94xx
+WARNING: Possibly missing firmware for module: wd719x
+modinfo wd719x
+
+git clone https://aur.archlinux.org/aic94xx-firmware.git
+cd aic94xx-firmware
+makepkg -sri
+git clone https://aur.archlinux.org/wd719x-firmware.git
+cd wd719x-firmware
+makepkg -sri
+yay upd72020x-fw
+
+
+
+***
+# ltspice
+```
+yay ltspice
+```
+
+
+***
+# zoom
+`cd /usr/local/bin`
+`sudo gedit zoom`
+```
+#!/bin/bash
+cd /opt/zoom
+export LD_LIBRARY_PATH=.
+./zoom
+```
+`sudo chmod +x zoom`
+
+`sudo rm zoom`
+God damn zoom!
+
+<https://cdn.zoom.us/prod/5.4.57862.0110/zoom_x86_64.pkg.tar.xz>
+```
+sudo pacman -U zoom_x86_64.pkg.tar.xz --overwrite=*
+sudo pacman -S xcompmgr
+```
+
+
+***
+# allegro display err
+```
+ldd /opt/cadence/SPB166/tools.lnx86/pcb/bin/allegro.exe
+export LD_LIBRARY_PATH=/usr/lib32:/usr/lib:/usr/lib64:$CDS_ROOT/tools/lib64:$CDS_ROOT/tools.lnx86/mainwin540_64/mw/lib-amd64_linux_optimized:$CDS_ROOT/tools.lnx86/lib:$CDS_ROOT/tools.lnx86/mainwin540/mw/lib-linux_optimized:$LD_LIBRARY_PATH
+ldd /opt/cadence/SPB166/tools.lnx86/pcb/bin/allegro.exe
+```
+附加的库路径有和系统库路径冲突的库，懒得一个个补成系统库，去掉冲突的就好了哇
+`/opt/cadence/SPB166/tools.lnx86/lib`目录下的
+```
+libgcc_s.so.1 -> libgcc_s.so.1.bk
+libstdc++.so.6 -> libstdc++.so.6.bk
+```
+到这里可以运行
+
+命令行运行会看到缺drirc
+
+以前从fedora哪个包存档的，懒得找arch的包了。那么建立：
+
+`～/.drirc和/etc/drirc`，内容一样如下
+```
+<!--
+
+============================================
+Application bugs worked around in this file:
+============================================
+
+* Various Unigine products don't use the #version and #extension GLSL
+  directives, meaning they only get GLSL 1.10 and no extensions for their
+  shaders.
+  Enabling all extensions for Unigine fixes most issues, but the GLSL version
+  is still 1.10.
+
+* Unigine Heaven 3.0 with ARB_texture_multisample uses a "ivec4 * vec4"
+  expression, which fails to compile with GLSL 1.10.
+  Adding "#version 130" fixes this.
+
+* Unigine Heaven 3.0 with ARB_shader_bit_encoding uses the uint keyword, which
+  fails to compile with GLSL 1.10.
+  Adding "#version 130" fixes this.
+
+* Unigine Heaven 3.0 with ARB_shader_bit_encoding uses a "uint & int"
+  expression, which fails (and should fail) to compile with any GLSL version.
+  Disabling ARB_shader_bit_encoding fixes this.
+
+TODO: document the other workarounds.
+
+-->
+
+<driconf>
+    <!-- Please always enable app-specific workarounds for all drivers and
+         screens. -->
+    <device>
+        <application name="Unigine Sanctuary" executable="Sanctuary">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Unigine Tropics" executable="Tropics">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Unigine Heaven (32-bit)" executable="heaven_x86">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+            <option name="force_glsl_version" value="130" />
+            <option name="disable_shader_bit_encoding" value="true" />
+	</application>
+
+        <application name="Unigine Heaven (64-bit)" executable="heaven_x64">
+            <option name="force_glsl_extensions_warn" value="true" />
+            <option name="disable_blend_func_extended" value="true" />
+            <option name="force_glsl_version" value="130" />
+            <option name="disable_shader_bit_encoding" value="true" />
+	</application>
+
+        <application name="Unigine OilRush (32-bit)" executable="OilRush_x86">
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Unigine OilRush (64-bit)" executable="OilRush_x64">
+            <option name="disable_blend_func_extended" value="true" />
+	</application>
+
+        <application name="Savage 2" executable="savage2.bin">
+            <option name="disable_glsl_line_continuations" value="true" />
+        </application>
+
+        <application name="Topogun (32-bit)" executable="topogun32">
+            <option name="always_have_depth_buffer" value="true" />
+        </application>
+
+        <application name="Topogun (64-bit)" executable="topogun64">
+            <option name="always_have_depth_buffer" value="true" />
+        </application>
+    </device>
+</driconf>
+```
+ok， 是不是该考虑升级成spp170？
+
+
+***
+# DraftSight 等出错处理
+DraftSight因为库依赖问题不能用
+`yay DraftSight`
+<http://dl-ak.solidworks.com/nonsecure/draftsight/2019SP3/draftSight.rpm>
+404了。
+直接解决库问题吧
+`/opt/dassault-systemes/DraftSight/Linux/DraftSight`
+```
+ymbol lookup error: /usr/lib/libfontconfig.so.1: undefined symbol: FT_Done_MM_Var
+```
+`ldd /opt/dassault-systemes/DraftSight/Linux/DraftSight`
+`locate libfontconfig.so.1`
+```
+cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.4.4 /opt/dassault-systemes/DraftSight/Libraries
+cd /opt/dassault-systemes/DraftSight/Libraries
+ln -s libfontconfig.so.1.4.4 libfontconfig.so.1
+```
+用户配置文件在
+`~/.config/dassault-systemes`
+
+active不了啊，狗日的达索
+
+还是查aur吧，
+<https://aur.archlinux.org/packages/draftsight/?O=10&PP=10>
+有人post出来存档的链接。。。。。。
+
+那么就用makepkg编译一个呗，也纳入pacman的管理
+draftSight.rpm名字修改成draftsight-2019SP3
+
+这样就剩下产品过期问题，参考
+```
+cd /opt/dassault-systemes/DraftSight/Linux/
+env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' ./DraftSight
+（export LIBGL_DEBUG=verbose 据说 will have probably errors with DRI）
+```
+desktop文件修改一下，加一个 faketime 变量
+```
+[Desktop Entry]
+Name=DraftSight
+Comment=Freeware CAD software for your DWG/DXF files.
+GenericName=DraftSight
+Exec=env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' /opt/dassault-systemes/DraftSight/Linux/DraftSight %U
+Path=/opt/dassault-systemes/DraftSight/Linux
+Type=Application
+Terminal=false
+Icon=draftsight
+MimeType=image/vnd.dwg;image/vnd.dwt;image/vnd.dxf;application-vnd.dassault-systemes.draftsight-dwg;application-vnd.dassault-systemes.draftsight-dwt;application-vnd.dassault-systemes.draftsight-dxf
+Categories=Application;Graphics;2DGraphics;RasterGraphics;
+```
+就大功告成. 注意，达索已经不更新linux版本了。
+
+
+
+
+类似的 graebert-gmbh
+rpm包已经准备好，参照上面的aur配置可以自己生成一个pacman包... 有时间再弄了
+
+
+qcad是pacman仓库就已经有的，暂时不安装
+```
+//sudo pacman -S qcad
+```
+不过这玩意的命令用起来不方便，还是上面法国佬和德国佬的两个好。
+
+
+***
+# openproj 问题处理
+openproj已经安装了运行有点问题
+解决：
+确保`/usr/lib/jvm/java-8-openjdk`已经有java8
+修改`$HOME/.openproj/run.conf`，
+将
+```
+JAVA_OPTS="-Xms128m -Xmx768m"
+```
+改为
+```
+JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"
+```
+重启openproj
+
+
+***
+# pyqt4 有关
+
+`sudo pip3.6 uninstall sip`
+`cd sip-4.19.12/`
+`python3 configure.py`	## 这次是配置 编译PyQt 要用的SIP v4 (i.e. the sip.sipconfig module)
+`make`
+`sudo make install`
+
+PyQt4_gpl_x11-4.12.3编译
+```
+compiling this package failed because of $[QT_INSTALL_LIBS] = 0 PLease replace '$[QT_INSTALL_LIBS]' with ‘/usr/lib’.
+```
+`gedit configure.py`
+修改
+```
+        pyqt_modules.append("QtCore")
+```
+为
+```
+        pyqt_modules.append("QtCore")
+        pyqt_modules.append("QtGui")
+        pyqt_modules.append("QtHelp")
+        pyqt_modules.append("QtMultimedia")
+        pyqt_modules.append("QtNetwork")
+        pyqt_modules.append("QtDBus")
+        pyqt_modules.append("QtDeclarative")
+        pyqt_modules.append("QtScript")
+        pyqt_modules.append("QtScriptTools")
+        pyqt_modules.append("QtOpenGL")
+        pyqt_modules.append("QtSql")
+        pyqt_modules.append("QtSvg")
+        pyqt_modules.append("QtTest")
+        pyqt_modules.append("QtWebKit")
+        pyqt_modules.append("QtXml")
+        pyqt_modules.append("QtXmlPatterns")
+        pyqt_modules.append("phonon")
+        pyqt_modules.append("QtDesigner")
+```
+```
+for files in `find . -type f -name "Makefile"`
+do
+sed -i 's/$$\[QT_INSTALL_LIBS\]/\/usr\/lib/' $files
+done
+```
+```
+python3 configure.py
+make -j $(nproc)
+sudo make install
+```
+```
+cd ../sip-4.19.12/
+make clean
+## python3 configure.py --sip-module PyQt4.sip --no-dist-info --no-tools ## 可能造成报错PyCapsule_GetPointer called with incorrect name
+python3 configure.py --sip-module PyQt4.sip
+make	## 这次是配置运行 import PyQt4 所需要的 PyQt4.sip
+sudo make install
+```
+
+安装时出现报错：
+```
+Error: This version of PyQt4 and the commercial version of Qt have incompatible licenses.
+```
+解决方法：注释掉configure-ng.py下面语句即可：
+```
+if introspecting and target_config.qt_licensee not in OPEN_SOURCE_LICENSEES and ltype == 'GPL':
+        error(
+                "This version of PyQt4 and the commercial version of Qt have "
+                "incompatible licenses.")
+```
+
+`error: ‘waitForEvents’ is not a member of ‘QTest’`
+`gedit PyQt4_gpl_x11-4.12.3/sip/QtTest/qtestmouse.sip`
+去掉waitForEvents那一段
+
+`fatal error: abstractaudiooutput.h: No such file or directory`
+`PyQt4_gpl_x11-4.12.3/phonon/Makefile`
+引入`/usr/include/phonon4qt5/phonon`
+
+`/usr/bin/ld: cannot find -lQt5onon`
+我实在找不着这个鸡巴库
+`PyQt4_gpl_x11-4.12.3/phonon/Makefile`
+删掉-lQt5onon
+
+`fatal error: qassistantclient.h: No such file or directory`
+这个没辙，不要编译QtAssistant模块就好了嘛
+
+`/usr/bin/ld: cannot find -lQt5xContainer`
+我也实在找不着这个鸡巴库
+去掉QAxContainer的编译
+
+这样总算把Pyqt4安装得差不多了。
+
+
+***
+# 删除多余的snap包
+```
+su
+snap list --all | while read snapname ver rev trk pub notes; do if [[ $notes = *disabled* ]]; then snap remove "$snapname" --revision="$rev"; fi; done
+```
+安装几个游戏
+```
+sudo snap install 0ad
+sudo snap install openra
+sudo snap install warzone2100
+```
+维护参考
+<https://snapcraft.io/docs/getting-started>
+
+
+***
+# 安装一些多媒体编辑工具
+```
+yay shotcut
+yay rtaudio
+yay vidcutter
+yay mkvtoolnix-gui
+yay mkvtoolnix-cli
+yay audacity
+```
+
+
+***
+# 矢量图制作
+```
+yay inkscape
+yay scour
+```
+
+
+***
+# 记账工具
+```
+yay gnucash-docs
+yay gnucash
+```
+
+
+***
+# 更新
+wxgtk-common和wxgtk2
+
+取代
+
+wxgtk-common-dev和wxgtk2-dev
+
+测试用 gspiceui，audacity和pyuv
+
+`pacman -Qs wxgtk`
+
+既然都删了wxgtk2-dev和以此库依赖编译的pyuv，那么按pyuv的要求选`wxgtk-git`依赖
+
+but，wxgtk-git编译失败
+
+解决办法
+
+修改pyuv的依赖为`wxgtk-common`
+
+重新编译，这样pyuv也是可以用的。
+
+
+***
+# 安装 cppunit，libmspack等
+```
+$ yay -S cppunit libmspack cunit bcunit splint cmocka gtest python-pylint
+```
+
+
+***
+# 安装vlc
+```
+$ yay -S vlc libdvdcss gnu-free-fonts live-media libgoom2 aribb24 aribb25
+```
+
+***
+# picom
+```
+yay picom
+mkdir ~/.config/picom/
+cp /etc/xdg/picom.conf ~/.config/picom/picom.conf
+gedit ~/.config/picom/picom.conf
+```
+```
+opacity-rule = [
+  "100:class_g = 'Lxterminal' && focused",
+  "100:class_g = 'Lxterminal' && !focused"
+];
+```
+```
+picom --config ~/.config/picom/picom.conf
+```
+效果不是我想要的，不启用
+`rm ~/.config/picom/picom.conf`
+
+
+
+***
+# 更新wps
+```
+yay wps-office
+yay wps-office-mime
+```
+
+***
+# 更新exfat工具集
+`exfat-utils -> exfatprogs`
+
+
+***
+# php配置更系
+```
+sudo mv /etc/php/php.ini /etc/php/php.ini.bk
+sudo mv /etc/php/php.ini.pacnew /etc/php/php.ini
+```
+
+***
+# privoxy配置更新
+```
+sudo mv /etc/privoxy/config /etc/privoxy/config.bk
+sudo mv /etc/privoxy/config.pacnew /etc/privoxy/config
+sudo gedit /etc/privoxy/config
+```
+```
+...
+listen-address  localhost:8118
+forward-socks5 / 127.0.0.1:1081 .
+...
+```
+
+`privoxy /etc/privoxy/config`启动
+```
+systemctl status privoxy.service
+sudo systemctl start privoxy.service
+sudo systemctl enable privoxy.service
+```
+```
+Created symlink /etc/systemd/system/multi-user.target.wants/privoxy.service → /usr/lib/systemd/system/privoxy.service.
+```
+类似于这样用
+`aria2c --all-proxy='http://127.0.0.1:8118' -D`
+```
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+(可以添加到类似/etc/profile的地方去)
+```
+测试
+`curl www.google.com`
+
+yay加速
+```
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+yay
+```
+
+
+***
+# 默认java版本选择
+Default Java environment is already set to 'java-15-jdk'
+See 'archlinux-java help' to change it
+
+
+***
+# 更新后处理
+```
+yay python-certifi
+libtool
+libtool --finish /usr/lib
+更新gnucap为gnucap-git版本
+更新miredo
+更新peco，参考https://goproxy.cn和https://github.com/ethereum/go-ethereum/issues/21129
+$ go env -w GO111MODULE=on
+$ go env -w GOPROXY=https://goproxy.cn,direct
+makepkg
+更新gaw为gaw3
+更新foxitreader
+更新obmenu
+更新obmenu-generator
+The schema file has been installed as: /etc/xdg/obmenu-generator/schema.pl
+yay perl-gtk3
+更新spacefm
+New optional dependencies for spacefm
+    curlftpfs: mount FTP shares [installed]
+    dbus: dbus integration [installed]
+    fuseiso: mount ISO files
+    gphotofs: mount cameras
+    ifuse: mount your iPhone/iPod Touch
+    jmtpfs: mount MTP devices
+    pmount: mount as non-root user
+    util-linux: disk eject support [installed]
+yay pv
+看到opt目录下有个mygui文件夹，里面的玩意运行又缺乏库，aur的git版本cmake报错，编译不了，啥鸡巴玩意，删！
+sudo pacman -Rs mygui
+更新提示了
+>>> It's now located under /usr/lib/rp-pppoe/rp-pppoe.so
+>>> Change LINUX_PLUGIN to the new path in your /etc/ppp/pppoe.conf
+就是
+LINUX_PLUGIN=/usr/lib/rp-pppoe/rp-pppoe.so
+```
+今日系统无法启动
+fsck修复，后能启动，发现/etc/ppp/pppoe.conf已经被莫名二进制文件替代，其他配置文件可能也会有类似问题
+
+解决方法有二
+
+一。幸好老子的laptop有个备份系统，直接更新到最新然后把前面的update都搞好，复制到移动系统盘，包括home分区都以laptop为准。
+
+二。深度更新，<https://wiki.archlinux.org/index.php/pacman#Skip_package_from_being_upgraded>， `pacman -S $(pacman -Qnq)`，之后一个个查/etc下的文件的Qo(属于哪个软件包)，全部对比重置。
+
+本来的laptop是否也存在配置文件无效问题，需要有时间按方法二也检查。
+
+目前移动系统盘起码还能凑合用，先拖到春节放假。
+
+
+***
+# something
+```
+yay -S asco gperf obmenu2-git
+```
+
+
+***
+# qucs
+<http://downloads.sourceforge.net/project/qucs/qucs/0.0.20/qucs-0.0.20-rc2.tar.gz>
+
+
+***
+# AUR 镜像使用帮助
+<https://mirror.tuna.tsinghua.edu.cn/help/AUR/>
+
+
+***
+# yaourt / yay 更换aururl国内源
+
+yaourt 用户
+修改 /etc/yaourtrc，去掉 # AURURL 的注释，修改为
+```
+AURURL="https://aur.tuna.tsinghua.edu.cn"
+```
+yay 用户
+执行以下命令修改 aururl :
+```
+yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+```
+修改的配置文件位于 `~/.config/yay/config.json` ，还可通过以下命令查看修改过的配置：
+`yay -P -g`
+
+
+***
+# shutter-git
+```
+Optional dependencies for shutter-git
+    gnome-web-photo: web screenshot support
+    perl-image-exiftool: read and write EXIF data [installed]
+    nautilus-sendto: send screenshots via mail [installed]
+    perl-goo-canvas: editing screenshots [installed]
+    perl-gtk2-appindicator: AppIndicators support
+    perl-path-class: Imgur and Dropbox upload support [installed]
+    perl-lwp-protocol-https: Imgur and Dropbox upload support [installed]
+    perl-net-oauth: Imgur and Dropbox upload support [installed]
+    bc: 3D Rotate and 3D Reflection plugins support [installed]
+    perl-webservice-gyazo-b: Gyazo upload support
+```
+`yay gnome-web-photo`
+需要更新webkitgtk和webkitgtk2
+`yay perl-gtk2-appindicator`
+`yay perl-webservice-gyazo-b`
+
+
+***
+# something
+```
+yay ozone
+yay lucidor
+yay libcurl-openssl-1.0
+yay lib32-unixodbc
+yay jlink-systemview
+yay jlink-systemview-target-src
+yay jlink-software-and-documentation
+yay idnkit
+yay gcc6
+yay smath
+yay asco
+yay lib32-fakechroot 失败
+yay microchip-mplabx-bin 依赖失败
+yay stcgal
+dropbox
+
+rarcrack
+tcllib
+autofs
+R rpmextract
+python2-qrtools失败
+python2-werkzeug失败
+sssd
+R qt5-enginio
+qt5-enginio-git失败
+
+sudo debtap -u
+
+dumpet-2.1.tar.bz2 ... FAILED (unknown public key 8C004C2F93481F6B)
+
+gpg --keyserver keyserver.ubuntu.com --recv 8C004C2F93481F6B
+```
+
+***
+# uex升级后无限试用
+```
+rm -rf ~/.idm/*.spl
+rm -rf /tmp/*.spl
+rm -rf ~/.idm/uex/*.spl
+```
+参考
+```
+alias ue='rm -rf ~/.idm/uex/*.spl | rm -rf ~/.idm/uex/*.spl |rm -rf /tmp/*.spl | /usr/bin/uex &'
+```
+启动desktop文件加入
+```
+Exec=env faketime '2020-02-29 08:15:42' uex %U
+```
+***
+# bcompare升级后无限试用
+```
+NOTE: It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+/home/andy/.config/bcompare
+```
+参考：
+bcompare Linux版 无限试用
+需要root权限。
+```
+# mv /usr/bin/bcompare /usr/bin/bcompare.real
+# cat /usr/bin/bcompare
+#!/bin/sh
+rm "${HOME}/.config/bcompare/registry.dat"
+/usr/bin/bcompare.real $@
+# chmod a+x /usr/bin/bcompare
+```
+就知道删掉`${HOME}/.config/bcompare/registry.dat`这个文件就可以继续试用呗
+
+懒得用
+```
+cd /usr/lib/beyondcompare/
+sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g" BCompare
+```
+
+***
+# bcompare uex 无限试用脚本
+一个好主意是每次开机就执行，或者放到一个脚本里，一起删掉
+`reset_trialtime_uex_bcompare.sh`
+```
+#!/bin/bash
+rm "${HOME}/.config/bcompare/registry.dat"
+rm ${HOME}/.idm/*.spl
+rm /tmp/*.spl
+rm ${HOME}/.idm/uex/*.spl
+```
+
+
+
+***
+# 网页编辑器
+```
+$ yay -S bluefish komodo gtksourceview libgtkhtml libgnomeprintui enchant1.6 gnome-menus2 rarian addinclude screem
+```
+kompozer不能用了，可以snap重新安装一个
+`sudo snap install kompozer`
+也可以使用/opt目录下那个
+删掉pacman安装的那个就好了
+`sudo pacman -R kompozer`
+
 
