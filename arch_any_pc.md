@@ -3455,7 +3455,7 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 ```
-~~~非桌面环境 里的环境变量改成如下的值~~~：
+//非桌面环境 里的环境变量改成如下的值：
 ```
  export GTK_IM_MODULE=xim
  export QT_IM_MODULE=xim
