@@ -11029,3 +11029,3583 @@ pyenv deactivate
 2.命令行运行 pyenv uninstall 虚拟环境的名字
 
 
+
+***
+# something
+```
+error: android-emulator: key "83F817213361BF5F02E7E124F9F9FA97A403F63E" is unknown
+gpg --keyserver keyserver.ubuntu.com --recv  F9F9FA97A403F63E
+```
+`yay -S ghdl-gcc python-pyghdl python-objgraph`
+```
+ldconfig: /usr/lib/libtbbbind.so.3 is not a symbolic link
+ldconfig: /usr/lib/libtbbbind_2_0.so.3 is not a symbolic link
+```
+被aur包覆盖了？
+
+```
+freehdl
+Qucs
+```
+
+
+***
+# gtkwave
+```
+GTKWAVE | Tcl support not compiled into gtkwave, exiting.
+```
+`yay -S gtkwave-tcl`
+更新参考版本
+<https://github.com/archlinux/svntogit-community/tree/packages/gtkwave/trunk>
+<https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=gtkwave-tcl>
+修改后的
+PKGBUILD
+```
+# Maintainer: Darren Ng <$(base64 --decode <<<'ZGFycmVuMTk5NzA4MTBAZ21haWwuY29tCg==')>
+# Thanks: Jared Casper <jaredcasper@gmail.com>
+# Thanks: Kyle Keen <keenerd@gmail.com>
+# Thanks: Markus Koch <CClassicVideos@aol.com>
+# Thanks: Thomas Dziedzic < gostrc at gmail >
+
+_pkgname=gtkwave
+pkgname=gtkwave-tcl
+pkgver=3.3.111
+pkgrel=1
+pkgdesc='A wave viewer which reads LXT, LXT2, VZT, GHW, FST and VCD/EVCD files (with Tcl/Tk support)'
+arch=('x86_64')
+url='http://gtkwave.sourceforge.net'
+license=('GPL' 'custom:MIT' 'custom')
+depends=(
+  'bzip2'
+  'dconf' # gsettings
+  'desktop-file-utils'
+  # 'gcc' # -lgnu-intl
+  # 'gconf'
+  # 'gcr' # -lgck
+  # 'gimp'
+  'glib2' # -lgobject -lgthread gsettings
+  'gnutls' # 
+  'gtk2'
+  'judy' # --enable-judy
+  'libjpeg-turbo' # -ljpeg
+  'libpng' # -lpng
+  'libtiff' # -ltiff
+  'tcl'
+  'tk'
+  'xz' # liblzma
+)
+makedepends=('gperf')
+provides=('gtkwave')
+conflicts=('gtkwave')
+install='gtkwave.install'
+source=("http://gtkwave.sourceforge.net/gtkwave-${pkgver}.tar.gz"
+        "http://gtkwave.sourceforge.net/${_pkgname}.pdf"
+        "gtkwave.install")
+
+md5sums=('ec9978cc21582ccb89b844e0abfc9b94'
+         'SKIP'
+         '5c404e6a86f1c209344a5d7d2fa07753')
+
+build() {
+  cd "$srcdir/${_pkgname}-${pkgver}"
+
+  ./configure \
+    --prefix=/usr \
+    \
+    --disable-mime-update \
+    --enable-struct-pack \
+    --enable-fatlines \
+    --enable-manymarkers \
+    --disable-dependency-tracking \
+    --disable-local-libz \
+    --disable-local-libbz2 \
+    --enable-xz \
+    --enable-fasttree \
+    --enable-judy \
+    --enable-schemas-compile \
+    --enable-largefile \
+    --enable-tcl \
+    --enable-tk \
+    \
+    --with-gsettings \
+    --with-tcl=/usr/lib \
+    --with-tk=/usr/lib \
+
+    # --with-gconf \
+    # --with-tcl=/usr/lib/tcl8.6  \
+    # --with-tk=/usr/lib/tk8.6 \
+    # --with-xdgdatadir=path \
+
+  make CFLAGS="-D_LARGEFILE64_SOURCE -O"
+}
+
+package() {
+  cd "$srcdir/${_pkgname}-${pkgver}"
+
+  make DESTDIR="${pkgdir}" install
+  make DESTDIR="${pkgdir}" install-strip
+  
+  mkdir -p "$pkgdir/usr/share/licenses/gtkwave"
+  install -D -m644 LICENSE.TXT \
+    "$pkgdir/usr/share/licenses/gtkwave/LICENSE.TXT"
+
+  mkdir -p "$pkgdir/usr/share/doc/gtkwave"
+  install -D -m644 "$srcdir/gtkwave.pdf" \
+    "$pkgdir/usr/share/doc/gtkwave/gtkwave.pdf"
+}
+```
+gtkwave.install
+```
+# https://git.archlinux.org/svntogit/community.git/tree/trunk/gtkwave.install?h=packages/gtkwave
+
+post_install() {
+  echo 'Make sure you copy the /usr/share/gtkwave/examples/gtkwaverc file to'
+  echo 'your home directory (as .gtkwaverc) or to your VCD project directory.'
+  echo 'It contains the prefs for a good configuration that most people find'
+  echo 'ergonomic.  It is not strictly necessary however.'
+}
+```
+这样就支持tcl了
+
+
+***
+# 编译 libgnomecups 报错
+`format not a string literal and no format arguments format-security`
+
+获得合适的cflags和cxxflags
+```
+python3-config --cflags
+```
+修改cflags和cxxflags到
+```
+/etc/makepkg.conf
+```
+
+***
+# 锁屏有关
+`lightdm  time has expired`
+`cat /usr/bin/xflock4`
+```
+...
+for lock_cmd in \
+    "$LOCK_CMD" \
+    "xfce4-screensaver-command --lock" \
+    "xscreensaver-command -lock" \
+    "gnome-screensaver-command --lock"
+...
+```
+```
+cat /usr/share/xscreensaver/config/abstractile.xml
+ls /usr/share/applications/screensavers
+fgrep -r screensaver /etc/xdg/ | fgrep Exec
+/etc/xdg/autostart/org.gnome.SettingsDaemon.ScreensaverProxy.desktop:Exec=/usr/lib/gsd-screensaver-proxy
+/etc/xdg/autostart/xscreensaver.desktop:Exec=xscreensaver -no-splash
+/etc/xdg/autostart/xscreensaver.desktop:TryExec=xscreensaver
+/etc/xdg/autostart/xfce4-screensaver.desktop:Exec=xfce4-screensaver
+
+ps awux|grep screen
+```
+<https://bugzilla.redhat.com/show_bug.cgi?id=1957658>
+<https://bugzilla.redhat.com/show_bug.cgi?id=1944011>
+<https://dev.to/nabbisen/keyboard-is-freezed-by-xfce4-screensaver-and-light-locker-f3n>
+```
+sudo mv /etc/xdg/autostart/xfce4-screensaver.desktop ~/Desktop/
+xfce4-settings-manager
+xscreensaver-demo
+
+disable xfce4-screensaver:
+xfce4-screensaver-preferences
+
+sudo mv ~/Desktop/xfce4-screensaver.desktop /etc/xdg/autostart/
+```
+先按上面修改
+
+作为参考：
+```
+This might happen if someone enters the wrong password more than three times. The log-in manager locks the user from logging-in for 10 minutes. But the remaining time is shown only for a few milliseconds. So user hardly can realize the issue.
+
+CTR+ALT+F5
+
+Then login with username: root then type root password…
+
+Then:
+vim /etc/security/faillock.conf
+set from
+#deny =3
+to
+deny=0
+```
+Yes, remove the hashtag ahhaha
+
+Done !!
+
+
+
+***
+# GPGME error
+`error: GPGME error: No data`
+```
+$ sudo rm -R /var/lib/pacman/sync
+$ sudo pacman -Syu
+```
+
+***
+# docker
+`/etc/docker/daemon.json`，加上如下的键值:
+```
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+```
+`sudo systemctl daemon-reload`
+`sudo systemctl restart docker`
+```
+docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
+docker run -it -p 5902:5902 -p 1234:22 --hostname lizhen --mac-address 02:42:ac:11:00:02 -v /home/andy/mydata:/mnt/mydata phyzli/ubuntu18.04_xfce4_vnc4server_synopsys2016
+vncserver -geometry 1920x1080 :2
+```
+vncviewer，配置连接，地址是127.0.0.1:5902, 连接密码为 zhenchen
+`passwd` 创建root密码
+```
+ssh -p 1234 root@127.0.0.1
+scp -P 1234 root@127.0.0.1:/usr/synopsys2016.tar.gz .
+```
+退出容器
+`exit` 
+启动容器
+`docker start [容器id]`
+启动容器后进入容器
+`docker exec -it [容器id] bash`
+
+```
+docker pull phyzli/centos8_xfce4_tigervnc_virtuosoic617_mmsim15_calibre2015
+docker pull phyzli/centos8_xfce4_tigervnc_hspice2016
+docker pull phyzli/centos8_xfce4_tigervnc_hspice2010
+docker pull phyzli/ubuntu18.04_xfce4_vnc4server_synopsys
+docker pull phyzli/ubuntu20.04_xfce4_tigervnc_alsrac
+```
+
+
+***
+# something
+```
+yay -S python-pygame docker-scan mesa-utils qt6-quick3d qt6-positioning bliss
+su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+sudo systemctl enable teamviewerd
+```
+```
+/etc/pacman.d/mirrorlist.pacnew
+/etc/privoxy/config.pacnew
+/etc/speech-dispatcher/modules/espeak-ng.conf.pacnew
+/etc/default/grub.pacnew
+```
+It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+```
+# archlinux-java set java-8-jre/jre
+$ archlinux-java status
+# archlinux-java set java-8-jdk
+```
+```
+yay -S pyenv gcc-ada libiconv python-funcy python-stevedore syslog-ng librabbitmq-c libesmtp mongo-c-driver 
+yay -S gprbuild-bootstrap libgpr xmlada ada_language_server libadalang libadalang-tools (fail)
+yay -S gnat-gps (fail)
+yay -S tkgate (fail)
+yay -S tkgate-beta tclreadline gprbuild-bootstrap-git xmlada-git autopep8 yapf gnatcoll-gmp-git gnatcoll-core-git gnatcoll-iconv-git libgpr-git gprbuild-git
+yay -S ada_language_server libvss ada-libfswatch fswatch (fail)
+yay -S gnat-gps (fail)
+yay -S qucs iverilog freehdl ngspice yosys mpdecimal python39
+##yay -S ghdl-yosys-plugin-git ghdl-gcc-git
+yay -Rdd ghdl-yosys-plugin-git ghdl-gcc-git
+yay -S ghdl-gcc
+```
+```
+create the file /etc/doas.conf with the following content:
+	permit :wheel
+```
+
+
+***
+# tkcon
+```
+pkgname=tkcon
+pkgver=2.7.10
+pkgrel=1
+pkgdesc='Enhanced Tk Console for all Tk platforms'
+arch=('x86_64')
+arch+=('i686')
+license=('GPL3')
+depends=('tcl' 'tk')
+makedepends=('git')
+provides=("tkcon=${pkgver%%.r*}")
+conflicts=('tkcon')
+#install="${pkgname#-git}.install"
+_srcdir="${pkgname%-git}"
+source=(
+  'git://github.com/KarlCHansen/tkcon.git'
+)
+md5sums=('SKIP')
+
+prepare() {
+  mkdir -p "$pkgdir/usr/local/bin/"
+  mkdir -p "$pkgdir/usr/share/applications/"
+}
+
+build() {
+  cd "${_srcdir}"
+  #./configure --prefix=/usr
+}
+
+package() {
+  #cd "${_srcdir}"
+  #make INSTALL_ROOT="$pkgdir" install
+  #cp -r ${_pkgbase}/module/* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
+  install -Dm755 "${srcdir}/tkcon/tkcon.tcl" "$pkgdir/usr/local/bin/tkcon"
+  install -Dm644 "${srcdir}/tkcon/tkcon-console.desktop" -t "$pkgdir/usr/share/applications/"
+}
+```
+`makepkg -si`
+
+***
+# conky 自动显示cpu核心数目对应的bar条
+
+查看是否支持lua
+`conky -v`
+
+`gedit ~/cpu.lua`
+```
+function conky_mycpus()
+        local file = io.popen("grep -c processor /proc/cpuinfo")
+        local numcpus = file:read("*n")
+        file:close()
+        listcpus = ""
+        for i = 1,numcpus
+        do listcpus = listcpus.."${cpubar cpu"..tostring(i).."}\n"
+         -- do listcpus = listcpus.."${offset 0}Core "..tostring(i).." ${color ff8300}${cpubar cpu"..tostring(i).." 6}${color FFFDE2}\n"
+         -- do  listcpus = listcpus.."${cpu cpu"..tostring(i).."} "
+        end
+
+        return listcpus
+end
+```
+ref to <https://unix.stackexchange.com/questions/313630/is-it-possible-to-loop-in-conky>
+
+1. in your `~/.conkyrc` you can add in the conky.config={ part the line
+```
+lua_load = '~/cpu.lua',
+```
+2. at the place where you want to have the cpu values, the line
+```
+${lua_parse conky_mycpus}
+```
+
+`gedit ~/config/conky/conky.conf`
+```
+-- Conky config for ArchBang
+-- by Mr Green
+
+conky.config = {
+lua_load = '~/cpu.lua',
+background = true,
+use_xft = true,
+font = 'monospace:size=9',
+xftalpha = 1,
+update_interval = 1.0,
+total_run_times = 0,
+own_window = true,
+own_window_transparent = true,
+own_window_type = 'desktop',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+double_buffer = true,
+minimum_height = 390,
+maximum_width = 340,
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+default_color = 'white',
+default_shade_color = '000000',
+default_outline_color = 'd9d7d6',
+alignment = 'top_right',
+gap_x = 12,
+gap_y = 12,
+no_buffers = true,
+uppercase = false,
+cpu_avg_samples = 2,
+override_utf8_locale = false,
+color1 = 'gray',
+color2 = 'gray',
+color3 = 'gray',
+}
+
+conky.text = [[
+#${pre_exec nproc}
+#${execi 86400 nproc}
+##${exec nproc}
+${color2}${font sans:normal:size=9}CPU ${cpu cpu0}%${color1}
+${lua_parse conky_mycpus}
+#${cpu cpu0} is the total usage
+#${cpubar cpu1}
+#${cpubar cpu2}
+#${cpubar cpu3}
+#${cpubar cpu4}
+#${cpubar cpu5}
+#${cpubar cpu6}
+#${cpubar cpu7}
+#${cpubar cpu8}
+${color2}${font sans:normal:size=9}RAM ${color1} $alignr$mem/$memmax
+${membar}
+#${memgraph 30,555 AAF5D0 00B35B}
+${if_existing /proc/net/route wlan0}
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+${endif}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${color2}${font sans:normal:size=9}SYSTEM ${color1}${hr 2}
+#${color1}${font sans:normal:size=9}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#
+${color2}${font sans:bold:size=9}TOP PROCESSES ${color1}${hr 2}
+${color1}${font sans:normal:size=9}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+
+${color2}${font sans:bold:size=9}SHORTCUT KEYS ${color1}${hr 2}${color1}${font sans:normal:size=9}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize]]
+```
+
+***
+# feeluown
+```
+yay -S feeluown feeluown-kuwo feeluown-local feeluown-netease feeluown-qqmusic feeluown-ytmusic feeluown-bilibili
+yay -S yapf
+mkdir feeluown-download && cd feeluown-download
+```
+```
+# Maintainer: Andreas Zhang <denglitsch@gmail.com>
+
+_pkgbase=feeluown-download
+pkgname=feeluown-download
+pkgver=0.3
+pkgrel=1
+pkgdesc="FeelUOwn mp3 download plugin"
+arch=('any')
+license=('GPL3')
+depends=('feeluown' 'python-aiohttp' 'python-bilibili-api')
+makedepends=('python-setuptools' 'python-pip')
+source=("git+https://github.com/feeluown/feeluown-download")
+sha512sums=('SKIP')
+
+build() {
+  cd ${_pkgbase}
+  python setup.py build
+}
+
+package() {
+  cd ${_pkgbase}
+  python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
+}
+```
+`makepkg -si`
+`yay -S gunicorn python-aiodns python-eventlet python-gevent python-httplib2 python-psycopg2`
+
+
+***
+# Bluetooth
+```
+yay Bluetooth 
+blueman-applet
+pacman -Qo /usr/lib/systemd/system/pulseaudio.service
+yay pulseaudio
+yay pulsemixer
+yay pulseaudio-alsa
+yay pulseaudio
+blueman-applet --loglevel debug
+pair
+yay bluetoothctl
+head -1 $(which blueman-applet)
+sudo dmesg -w
+yay rtl8761
+bluetoothctl list
+sudo bluetoothctl list
+sudo bluetoothctl show
+sudo bluetoothctl devices
+find /lib/firmware | grep rtl8761b | xargs ls -ln
+modinfo btusb
+sudo systemctl status bluetooth
+sudo systemctl enable bluetooth
+sudo systemctl restart bluetooth
+sudo systemctl status bluetooth
+sudo pacman -S pulseaudio-bluetooth
+blueman-manager
+sudo dmesg | grep Bluetooth
+sudo dmesg | grep hci
+sudo dmesg | grep hci0
+ls /usr/lib/firmware/rtl_bt/
+sudo systemctl status bluetooth
+ls /lib/modules/`uname -r`/kernel/drivers/bluetooth/
+
+hwinfo --bluetooth
+hciconfig -a
+bluetoothctl
+rfkill list
+yay pulseaudio-modules-bt
+yay pulseaudio-modules
+yay pulseaudio
+yay bluez
+yay pipewire
+
+sudo systemctl restart bluetooth
+sudo reboot
+
+/lib/firmware/rtl_bt
+sudo lsusb -v -d 2550:8761
+
+sudo dmesg | egrep -i bluetooth
+```
+
+***
+# rtl8761b蓝牙适配器
+<https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1955916>
+```
+sudo lsusb
+Bus 003 Device 005: ID 2550:8761 Realtek Bluetooth Radio
+sudo dmesg
+[ 6281.078926] usb 3-3: new full-speed USB device number 3 using xhci_hcd
+[ 6281.223202] usb 3-3: New USB device found, idVendor=2550, idProduct=8761, bcdDevice= 2.00
+[ 6281.223214] usb 3-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 6281.223219] usb 3-3: Product: Bluetooth Radio
+[ 6281.223222] usb 3-3: Manufacturer: Realtek
+[ 6281.223224] usb 3-3: SerialNumber: 00E04C239987
+[ 6281.283830] Bluetooth: Core ver 2.22
+[ 6281.283865] NET: Registered PF_BLUETOOTH protocol family
+[ 6281.283866] Bluetooth: HCI device and connection manager initialized
+[ 6281.283870] Bluetooth: HCI socket layer initialized
+[ 6281.283871] Bluetooth: L2CAP socket layer initialized
+[ 6281.283874] Bluetooth: SCO socket layer initialized
+[ 6281.308335] usbcore: registered new interface driver btusb
+[ 6281.324814] audit: type=1130 audit(1647874795.280:289): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-rfkill comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 6281.342327] audit: type=1130 audit(1647874795.300:290): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=bluetooth comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 6281.351268] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[ 6281.351272] Bluetooth: BNEP filters: protocol multicast
+[ 6281.351276] Bluetooth: BNEP socket layer initialized
+[ 6281.367202] audit: type=1334 audit(1647874795.323:291): prog-id=70 op=LOAD
+[ 6281.367333] audit: type=1334 audit(1647874795.323:292): prog-id=71 op=LOAD
+[ 6281.367372] audit: type=1334 audit(1647874795.323:293): prog-id=72 op=LOAD
+[ 6281.386126] NET: Registered PF_ALG protocol family
+[ 6281.415784] audit: type=1130 audit(1647874795.373:294): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-hostnamed comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 6281.419139] Bluetooth: RFCOMM TTY layer initialized
+[ 6281.419149] Bluetooth: RFCOMM socket layer initialized
+[ 6281.419153] Bluetooth: RFCOMM ver 1.11
+```
+
+## 修改二进制文件法
+
+已经通过aur编译安装了驱动（不带dmks的那个）， blueman-applet 找不到 蓝牙外设, 其实就是 linux-firmware 里面就有的  `pacman -Qo /usr/lib/firmware/rtl_bt/rtl8761bu_fw.bin`
+
+经过查找和实验， 确认是btusb.ko需要修改，大概在`/lib/modules/`uname -r`/kernel/drivers/bluetooth/btusb.ko.zst`， 解压了
+```
+pacman -Qo /lib/modules/5.16.14-arch1-1/kernel/drivers/bluetooth/btusb.ko.zst 
+/usr/lib/modules/5.16.14-arch1-1/kernel/drivers/bluetooth/btusb.ko.zst is owned by linux 5.16.14.arch1-1
+```
+如果btusb.ko.zst不见了，就重新安装内核
+```
+xxd btusb.ko | grep ca04 确认有被替换字符串
+xxd btusb.ko | sed 's/ca04 0540/5025 6187/g' | xxd -r > btusb.ko.mod
+xxd btusb.ko.mod | grep 5025 确认修改好了
+strip --strip-debug btusb.ko.mod
+mv btusb.ko.mod btusb.ko
+```
+这个修改后的btusb.ko再打包成btusb.ko.zst放回原位，
+`sudo modprobe -r btusb && sudo modprobe btusb`
+
+插入适配器之后 
+```
+dmesg | tail
+hciconfig -a
+sudo dmesg
+[ 7198.775764] usb 3-3: new full-speed USB device number 4 using xhci_hcd
+[ 7198.916531] usb 3-3: New USB device found, idVendor=2550, idProduct=8761, bcdDevice= 2.00
+[ 7198.916542] usb 3-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 7198.916547] usb 3-3: Product: Bluetooth Radio
+[ 7198.916550] usb 3-3: Manufacturer: Realtek
+[ 7198.916553] usb 3-3: SerialNumber: 00E04C239987
+[ 7198.919273] Bluetooth: hci0: RTL: examining hci_ver=0a hci_rev=000b lmp_ver=0a lmp_subver=8761
+[ 7198.920314] Bluetooth: hci0: RTL: rom_version status=0 version=1
+[ 7198.920328] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_fw.bin
+[ 7198.927758] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_config.bin
+[ 7198.929732] Bluetooth: hci0: RTL: cfg_sz 6, total sz 27814
+[ 7198.967615] audit: type=1130 audit(1647875712.933:392): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-rfkill comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+[ 7199.069380] Bluetooth: hci0: RTL: fw version 0x09a98a6b
+```
+这样就TMD可以找到BT外设了。。。。。
+
+
+## 修改内核源码法添加ID
+添加ID也可以修改内核源码`drivers/bluetooth/btusb.c`
+
+修改内核源码(linux 5.16.arch1-1)添加蓝牙ID
+```
+git clone git@github.com:archlinux/svntogit-packages.git
+或
+git clone --depth 6 --single-branch --branch packages/linux git@github.com:archlinux/svntogit-packages.git
+cd svntogit-packages/trunk/
+git checkout -b tmp 3b39577d
+git fetch --depth 100 origin packages/linux
+git fetch --unshallow
+git fetch origin
+```
+```
+git fetch --unshallow
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git fetch origin
+```
+`yay python-pyqt6-webengine catdoc wdiff `
+
+`sudo gedit /etc/default/grub`
+enable this line
+```
+GRUB_DISABLE_OS_PROBER=false
+```
+```
+5.15.31-1-lts、5.16.16等内核对博通ath9k无线网卡，都出现断流问题， 降级到linux-lts-5.4.98-1， 安装linux-zen
+linux-lts-5.10.90-1-x86_64.pkg.tar.zst
+linux-lts-headers-5.10.90-1-x86_64.pkg.tar.zst
+yay -S crda linux-zen linux-zen-header
+python-sphinx_rtd_theme
+```
+```
+git clone --depth 6 --single-branch --branch packages/linux-lts git@github.com:archlinux/svntogit-packages.git
+cd svntogit-packages/
+git checkout -b tmp f21f0cb2c
+git fetch --unshallow
+git fetch origin
+cd trunk/
+gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
+```
+
+简单修改PKGBUILD文件，添加一个patch
+`bluetooth_driver.patch`
+```
+diff -Naur a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+--- a/drivers/bluetooth/btrtl.c	2022-01-05 19:40:34.000000000 +0800
++++ b/drivers/bluetooth/btrtl.c	2022-03-26 20:44:24.447750477 +0800
+@@ -140,8 +140,8 @@
+ 	{ IC_INFO(RTL_ROM_LMP_8761A, 0xb),
+ 	  .config_needed = false,
+ 	  .has_rom_version = true,
+-	  .fw_name  = "rtl_bt/rtl8761b_fw.bin",
+-	  .cfg_name = "rtl_bt/rtl8761b_config" },
++	  .fw_name  = "rtl_bt/rtl8761bu_fw.bin",
++	  .cfg_name = "rtl_bt/rtl8761bu_config" },
+ 
+ 	/* 8822C with UART interface */
+ 	{ .match_flags = IC_MATCH_FL_LMPSUBV | IC_MATCH_FL_HCIREV |
+diff -Naur a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+--- a/drivers/bluetooth/btusb.c	2022-01-05 19:40:34.000000000 +0800
++++ b/drivers/bluetooth/btusb.c	2022-03-26 20:45:14.218661516 +0800
+@@ -411,6 +411,9 @@
+ 	{ USB_DEVICE(0x13d3, 0x3416), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3459), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3494), .driver_info = BTUSB_REALTEK },
++	
++	/* Additional Realtek 8761BU Bluetooth devices */
++	{ USB_DEVICE(0x2550, 0x8761), .driver_info = BTUSB_REALTEK },
+ 
+ 	/* Additional Realtek 8723BU Bluetooth devices */
+ 	{ USB_DEVICE(0x7392, 0xa611), .driver_info = BTUSB_REALTEK },
+
+```
+`makepkg -si`
+
+产生目标安装文件为
+```
+linux-lts-5.10.90-1-x86_64.pkg.tar.zst
+linux-lts-headers-5.10.90-1-x86_64.pkg.tar.zst
+linux-lts-docs-5.10.90-1-x86_64.pkg.tar.zst
+```
+安装
+`yay -U *.pkg.tar.zst`
+
+编译整个内核时间比较长
+
+可以简单化只编译ko
+先 `makepkg -si` 把之前补丁打完， 然后推出makepkg编译
+```
+cd drivers/bluetooth
+make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
+（/lib/modules/5.10.90-1-lts/build）
+```
+然后只把 btrtl.ko 和 btusb.ko 打包成 .zx 替换 `/lib/modules/5.10.90-1-lts/kernel/drivers/bluetooth/`里的
+`sudo modprobe -r btusb && sudo modprobe btusb`
+就可以了
+
+`blueman-applet` 大概是需要安装的， pasystray 不需要， 其他的只做了个事后记录， 看着办吧
+
+
+***
+# 115pc
+`yay -S 115pc`
+`PKGBUILD`
+```
+pkgname=115pc
+pkgver=1.0.1.6
+pkgrel=1
+epoch=
+pkgdesc="115.com PC client"
+arch=('x86_64')
+url="https://pc.115.com/"
+license=('Proprietary')
+groups=()
+depends=()
+makedepends=('tar')
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=(!strip)
+install=
+changelog=
+source=(
+    "https://down.115.com/client/${pkgname}/lin/${pkgname}_${pkgver}.deb"
+    "115.desktop"
+    "115.sh"
+)
+noextract=()
+sha256sums=(
+    'be147769440f486898b729ef52e4fd8814a5bda9f5851077fd84363c6e624dea'
+    'SKIP'
+    'SKIP'
+)
+validpgpkeys=()
+
+package() {
+        tar -C ${srcdir} -xf data.tar.xz
+	mkdir -p ${pkgdir}/opt/
+	install -Dm644 ${srcdir}/115.desktop ${pkgdir}/usr/share/applications/${pkgname}.desktop
+        install -Dm644 ${srcdir}/usr/local/115/res/115.png ${pkgdir}/usr/share/icons/hicolor/256x256/apps/115pc.png
+	cp -rT ${srcdir}/usr/local/115 ${pkgdir}/opt/${pkgname}
+	install -Dm755 ${srcdir}/115.sh ${pkgdir}/opt/${pkgname}/115.sh
+}
+```
+`115.desktop`
+```
+[Desktop Entry]
+Comment=115 PC Edition
+Comment[zh_CN]=115电脑版
+Exec=sh /opt/115pc/115.sh
+GenericName=115
+GenericName[zh_CN]=115
+Name=115
+Name[zh_CN]=115
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Network;
+Icon=115pc
+# Remove under line for fixing icon bug in taskbar
+#StartupWMClass=115
+```
+`115.sh`
+```
+#!/bin/sh
+export LD_LIBRARY_PATH=/opt/115pc/lib:$LD_LIBRARY_PATH
+export PATH=/opt/115pc:$PATH
+/bin/bash -c "exec -a $0 115 > /dev/null 2>&1" $0 
+```
+
+***
+# something
+`sudo pip3 install libscrc -i https://mirrors.163.com/pypi/simple`
+`yay -Rdd polymake`
+```
+:: Replace crda with core/wireless-regdb? [Y/n] y
+:: Replace jupyter with community/jupyter-notebook? [Y/n] y
+:: Replace maxima-ecl with extra/maxima? [Y/n] y
+:: espeak-ng and espeak are in conflict. Remove espeak? [y/N] y
+```
+```
+yay -S kde-cli-tools python-asgiref python-bottleneck python-fsspec python-numexpr python-openpyxl python-pyarrow
+yay -S python-pymysql python-pytables python-snappy python-sqlalchemy python-xarray python-xlrd python-xlwt xsel python-netcdf4 python-cftime python-dask python-distributed python-seaborn python-pint python-blosc python-statsmodels python-nose
+```
+```
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+
+Please add your user to the brlapi group.
+sudo usermod -aG brlapi andy
+
+yay -S python-curio python-trio jupyter-server-mathjax	jupyterlab-widgets qt6-languageserver refind-docs --overwrite=*
+
+su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+```
+
+***
+# 准备玩玩看deepin-anything
+```
+yay -S deepin-anything deepin-anything-dkms
+```
+
+
+***
+# planner
+`yay -S planner-git projectlibre ganttproject granite gtk-theme-elementary jd-gui-bin`
+需要修改planner-git的PKGBUILD
+```
+# Maintainer:
+# Contributor: Mark Wagie <mark dot wagie at tutanota dot com>
+# Contributor: Lubosz <lubosz at gmail dot com>
+pkgname=planner-git
+pkgver=0.14.6.r349.56b03b1
+pkgrel=1
+pkgdesc="A project management tool for planning, scheduling and tracking projects."
+arch=('i686' 'x86_64')
+url="https://wiki.gnome.org/Apps/Planner"
+license=('GPL')
+depends=('libgnomecanvas' 'gnome-vfs' 'libxslt' 'pygtk')
+makedepends=('git' 'gnome-common' 'rarian')
+provides=("${pkgname%-git}" 'libplanner-1.so')
+conflicts=("${pkgname%-git}")
+source=('git+https://gitlab.gnome.org/GNOME/planner.git')
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${pkgname%-git}"
+	git describe --long | sed 's/^PLANNER_//;s/\([^-]*-\)g/r\1/;s/_/./;s/_/./;s/-/./g'
+}
+
+prepare() {
+	cd "$srcdir/${pkgname%-git}"
+	sed -i 's/python/python2/g' tests/python/task-test.py
+}
+
+build() {
+	cd "$srcdir/${pkgname%-git}"
+	export CFLAGS=-Wno-error
+
+	meson build --prefix=/usr
+	ninja -C build
+}
+
+package() {
+	cd "$srcdir/${pkgname%-git}"
+	DESTDIR="$pkgdir/" ninja -C build install
+
+	# Remove conflicting files
+	#cd "$pkgdir/usr/local/share/mime"
+	#find . -maxdepth 1 -type f -exec rm "{}" \;
+}
+```
+
+***
+# picocom
+`yay -S picocom`
+串口设置
+`sudo gpasswd -a $USER uucp`    
+反向操作
+`sudo gpasswd -d $USER uucp`
+或者`sudo usermod -aG uucp $USER`
+`cat /etc/group | grep uucp`
+```
+groups $USER
+```
+`yay -S vofa+`
+
+
+***
+# 假mac，未试验
+```
+Load the relevant kernel module and create the interface with the MAC address:
+# modprobe dummy
+# ip link add bond0 type dummy
+# ifconfig bond0 hw ether 10:22:33:44:55:66
+Cleanup for after Diamond exits:
+# ip link delete bond0 type dummy
+# rmmod dummy
+```
+<https://aur.archlinux.org/cgit/aur.git/log/?h=xilinx-vivado-dummy>
+`git clone https://aur.archlinux.org/xilinx-vivado-dummy.git`
+
+
+
+***
+# 全局github代理加速
+```
+git config --global http.proxy 'socks5://127.0.0.1:1081'
+git config --global https.proxy 'socks5://127.0.0.1:1081'
+```
+or
+```
+git config --global http.proxy 'socks5://127.0.0.1:10808'
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+```
+查询是否启用代理
+```
+git config --global http.proxy
+git config --list
+```
+取消代理
+```
+git config --global --unset http.proxy
+```
+
+
+* * *
+# udisk_arch_update @ 20220605
+```
+$ yay
+[sudo] password for andy: 
+:: Synchronizing package databases...
+ core is up to date
+ extra is up to date
+ community is up to date
+ multilib is up to date
+ archlinuxcn is up to date
+:: Starting full system upgrade...
+warning: gcc10: local (1:10.3.0-2) is newer than archlinuxcn (10.3.0-3)
+warning: gcc10-libs: local (1:10.3.0-2) is newer than archlinuxcn (10.3.0-3)
+:: Replace jupyter with community/jupyter-notebook? [Y/n] y
+:: Replace lib32-sdl with multilib/lib32-sdl12-compat? [Y/n] y
+:: Replace maxima-ecl with extra/maxima? [Y/n] y
+:: Replace qemu with extra/qemu-desktop? [Y/n] y
+:: Replace qemu-arch-extra with extra/qemu-emulators-full? [Y/n] y
+:: Replace sdl with community/sdl12-compat? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'nvidia' from target list because it conflicts with 'nvidia-dkms'
+error: unresolvable package conflicts detected
+error: failed to prepare transaction (conflicting dependencies)
+:: nvidia-dkms and nvidia-lts are in conflict
+ -> error installing repo packages
+andy@archlinux ~
+$ yay -R nvidia-lts
+[sudo] password for andy: 
+checking dependencies...
+
+Packages (1) nvidia-lts-1:510.47.03-5
+
+Total Removed Size:  27.55 MiB
+
+:: Do you want to remove these packages? [Y/n] y
+:: Processing package changes...
+(1/1) removing nvidia-lts                          [######################] 100%
+:: Running post-transaction hooks...
+(1/3) Arming ConditionNeedsUpdate...
+(2/3) Updating module dependencies...
+(3/3) Refreshing PackageKit...
+andy@archlinux ~
+$ yay
+:: Synchronizing package databases...
+ core is up to date
+ extra is up to date
+ community is up to date
+ multilib is up to date
+ archlinuxcn is up to date
+:: Starting full system upgrade...
+warning: gcc10: local (1:10.3.0-2) is newer than archlinuxcn (10.3.0-3)
+warning: gcc10-libs: local (1:10.3.0-2) is newer than archlinuxcn (10.3.0-3)
+:: Replace jupyter with community/jupyter-notebook? [Y/n] y
+:: Replace lib32-sdl with multilib/lib32-sdl12-compat? [Y/n] y
+:: Replace maxima-ecl with extra/maxima? [Y/n] y
+y:: Replace qemu with extra/qemu-desktop? [Y/n] 
+:: Replace qemu-arch-extra with extra/qemu-emulators-full? [Y/n] y
+:: Replace sdl with community/sdl12-compat? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'nvidia' from target list because it conflicts with 'nvidia-dkms'
+:: espeak-ng and espeak are in conflict. Remove espeak? [y/N] y
+:: nvidia-dkms and nvidia are in conflict (NVIDIA-MODULE). Remove nvidia? [y/N] y
+warning: dependency cycle detected:
+warning: harfbuzz will be installed before its freetype2 dependency
+warning: dependency cycle detected:
+warning: libglvnd will be installed before its mesa dependency
+warning: dependency cycle detected:
+warning: nvidia-utils will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: xorg-server will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: nvidia-utils will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: smbclient will be installed before its cifs-utils dependency
+warning: dependency cycle detected:
+warning: rubygems will be installed before its ruby dependency
+warning: dependency cycle detected:
+warning: python-ipykernel will be installed before its python-jupyter_client dependency
+warning: dependency cycle detected:
+warning: jupyter-server will be installed before its jupyter-nbconvert dependency
+warning: dependency cycle detected:
+warning: lib32-harfbuzz will be installed before its lib32-freetype2 dependency
+warning: dependency cycle detected:
+warning: lib32-mesa will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-nvidia-utils will be installed before its lib32-libglvnd dependency
+
+Packages (1955) 1password-8.7.0-124  aarch64-linux-gnu-binutils-2.38-1
+                abseil-cpp-20211102.0-2  accountsservice-22.08.8-2
+                adios2-2.8.0-2  adwaita-icon-theme-42.0+r1+gc144c3d75-1
+                aircrack-ng-1.7-1  akonadi-calendar-22.04.1-1
+                akonadi-contacts-22.04.1-1  akonadi-mime-22.04.1-1
+                akonadi-notes-22.04.1-1  akonadi-search-22.04.1-1
+                alsa-card-profiles-1:0.3.51-1  alsa-plugins-1:1.2.6-3
+                amtk-5.4.1-1  android-emulator-31.2.10-1  android-sdk-26.1.1-2
+                android-sdk-platform-tools-33.0.2-1
+                android-studio-2021.2.1.15-1  android-tools-31.0.3-5
+                ant-1.10.12-1  antlr4-runtime-4.10.1-2  aom-3.3.0-1
+                apache-2.4.53-1  apparmor-3.0.4-2  appstream-0.15.4-1
+                appstream-qt-0.15.4-1  archlinux-keyring-20220424-1
+                archlinuxcn-keyring-20220331-1  ariang-allinone-1.2.4-1
+                ark-22.04.1-1  arm-none-eabi-binutils-2.38-1
+                arm-none-eabi-gcc-12.1.0-1  arm-none-eabi-gdb-12.1-1
+                arm-none-eabi-newlib-4.2.0.20211231-1  arpack-3.8.0-2
+                asar-3.1.0-2  assimp-5.2.3-1  at-3.2.5-1  at-spi2-core-2.44.1-1
+                atk-2.38.0-1  atool-0.39.0-8  attica-5.94.0-1
+                audacious-plugins-4.1-6  audit-3.0.8-1  avr-binutils-2.38-2
+                avr-gcc-12.1.0-1  avr-gdb-12.1-1  avrdude-1:7.0-1
+                babl-0.1.90-2  baloo-5.94.0-1  baloo-widgets-22.04.1-1
+                baobab-42.0-1  bbswitch-0.8-509  benchmark-1.6.1-2
+                biber-1:2.17-2  bibletime-3.0.3-1  bind-9.18.3-1
+                binutils-2.38-5  bison-3.8.2-4  blas-3.10.1-1  bluez-5.64-2
+                bluez-libs-5.64-2  bluez-utils-compat-5.64-2  boost-1.78.0-2
+                boost-libs-1.78.0-2  breeze-5.24.5-1  breeze-gtk-5.24.5-1
+                breeze-icons-5.94.0-1  breezy-3.2.1-2  brltty-6.4-10
+                broadcom-wl-6.30.223.271-388  brotli-1.0.9-8
+                btrfs-progs-5.18-1  bubblewrap-0.6.2-1
+                ca-certificates-mozilla-3.79-1  cairo-1.17.6-2
+                cairo-perl-1.109-2  calendarsupport-22.04.1-1  calibre-5.43.0-1
+                calligra-3.2.1-34  camlp4-4.13+1-3  cbatticon-1.6.12-2
+                cblas-3.10.1-1  ccache-4.6.1-1  celestia-1.6.2.2-3
+                certbot-1.27.0-1  cfitsio-1:4.1.0-1  chromaprint-1.5.1-3
+                chromium-102.0.5005.61-1  cifs-utils-6.15-1  clang-13.0.1-2
+                clash-1.10.6-1  clion-1:2022.1.1-1  clion-cmake-1:2022.1.1-1
+                clion-gdb-1:2022.1.1-1  clion-jre-1:2022.1.1-1
+                clion-lldb-1:2022.1.1-1  clucene-2.3.3.4-12  clutter-1.26.4-2
+                clutter-gst-3.0.27-4  clutter-gtk-1.8.4-3  cmake-3.23.2-1
+                code-1.67.2-1  codeblocks-20.03-2  cogl-1.22.8-2
+                coin-or-cbc-2.10.8-1  coin-or-cgl-0.60.6-1  colord-1.4.6-1
+                colord-gtk-0.3.0-2  colord-gtk-common-0.3.0-2
+                colord-gtk4-0.3.0-2  colord-sane-1.4.6-1  colordiff-1.0.20-1
+                containerd-1.6.4-1  coreutils-9.1-1  cpanminus-1.7044-6
+                cppunit-1.15.1-3  crypto++-8.6.0-2  cuda-11.6.2-1
+                cuda-tools-11.6.2-1  cups-1:2.4.2-1  cups-filters-1.28.15-1
+                cups-pk-helper-0.2.6-5  curl-7.83.1-1
+                cyrus-sasl-gssapi-2.1.28-1  cython-0.29.30-1  cython2-0.29.30-1
+                dav1d-1.0.0-1  dbus-1.14.0-1  dcmtk-3.6.7-1  deadbeef-1.9.1-3
+                debuginfod-0.187-1  dejagnu-1.6.3-2  desktop-file-utils-0.26-2
+                devhelp-41.2+r48+g14272cae-1  device-mapper-2.03.16-1
+                dhclient-4.4.3-1  dialog-1:1.3_20220414-1  dictd-1.13.1-2
+                ding-libs-0.6.2-1  discord-0.0.17-1  discount-2.2.7.b-1
+                dmenu-5.1-1  docker-1:20.10.16-1  docker-compose-2.6.0-1
+                docker-scan-0.17.0-2  dolphin-22.04.1-1
+                dolphin-plugins-22.04.1-1  downgrade-11.1.0-1  dpkg-1.21.8-1
+                drawio-desktop-bin-18.1.3-1  dsdp-5.8-6  dtc-1.6.1-4
+                dunst-1.8.1-1  e-antic-1.2.1-1  e2fsprogs-1.46.5-3
+                ecl-21.2.1-3  eclipse-ecj-4.22-2  edk2-armvirt-202202-2
+                edk2-ovmf-202202-2  electron-18.2.4-1  electron11-11.5.0-5
+                electron12-12.2.3-4  electron13-13.6.9-3  electron17-17.4.3-1
+                elfutils-0.187-1  ell-0.50-1  embree-3.13.3-2  enchant-2.3.3-1
+                eog-42.2-1  epiphany-42.2-1  espeak-1:1.48.04-4 [removal]
+                espeak-ng-1.51-1  ethtool-1:5.17-1  evince-42.3-1
+                evolution-3.44.2-1  evolution-data-server-3.44.2-1
+                evtest-1.35-1  exempi-2.6.1-1  exiv2-0.27.5-3  expat-2.4.8-1
+                extra-cmake-modules-5.94.0-1  f2fs-tools-1.15.0-1
+                fakeroot-1.29-1  faudio-22.06-1
+                fcitx-mozc-2.26.4360.102.gca82d39-2  fcitx-qt5-1.2.7-4
+                ffcall-2.4-2  ffmpeg-2:5.0-7  ffmpeg4.4-4.4.1-5
+                ffmpegthumbnailer-2.2.2-4  file-roller-3.42.0-1
+                filezilla-3.60.0-1  firefox-101.0-1  five-or-more-3.32.3-1
+                flac-1.3.4-2  flatpak-1:1.12.7-1  flint-2.8.5-1
+                fluidsynth-2.2.7-1  fmt-8.1.1-2  folks-0.15.5-1
+                fontconfig-2:2.14.0-1  fontforge-20220308-1
+                foomatic-db-3:20220328-1  foomatic-db-ppds-3:20220328-1
+                fplll-5.4.2-1  frameworkintegration-5.94.0-1  freeglut-3.2.2-2
+                freehdl-0.0.8-12  freerdp-2:2.7.0-1  freetype2-2.12.1-1
+                fribidi-1.0.12-1  fuse-common-3.11.0-1  fuse3-3.11.0-1
+                fzf-0.30.0-3  gambas3-gb-gtk3-3.17.2-4
+                gambas3-gb-image-3.17.2-4  gambas3-runtime-3.17.2-4
+                gap-4.11.1-10  gap-doc-4.11.1-10  gap-packages-4.11.1-10
+                gavl-1.4.0-6  gc-8.2.0-3  gcc-12.1.0-2  gcc-ada-12.1.0-2
+                gcc-fortran-12.1.0-2  gcc-libs-12.1.0-2  gcc-objc-12.1.0-2
+                gcolor3-2.4.0-4  gcr-3.41.0-2  gd-2.3.3-4  gdal-3.4.3-3
+                gdb-12.1-1  gdb-common-12.1-1  gdk-pixbuf2-2.42.8-1
+                gdm-42.0+r11+g4a52f026-1  geany-1.38-2  geany-plugins-1.38-3
+                gedit-42.1-1  gegl-0.4.36-3  gendesk-1.0.9-3  geoclue-2.6.0-2
+                geocode-glib-3.26.2+r9+g6047da3-2  geogebra-6.0.709.0-1
+                geoip-database-20220524-1  gerbv-2.8.1-2  gettext-0.21-2
+                gftp-2.9.1b-2  ghex-42.2-1  ghostscript-9.56.1-1
+                giac-1.9.0.7-1  gifski-1.6.4-3  gimp-2.10.30-3  git-2.36.1-1
+                git-lfs-3.2.0-1  gjs-2:1.72.0-1  glew-2.2.0-3  glfw-x11-3.3.7-1
+                glib-networking-1:2.72.0-1  glib-perl-1.329.3-3  glib2-2.72.2-1
+                glib2-docs-2.72.2-1  glibc-2.35-5  glibmm-2.66.4-1
+                glslang-11.9.0-1  glu-9.0.2-3  glusterfs-1:10.1-1  gmic-3.1.2-2
+                gmp-6.2.1-2  gmp-ecm-7.0.5-1  gnome-autoar-0.4.3-2
+                gnome-backgrounds-42.0-1  gnome-bluetooth-3.34.5-3
+                gnome-bluetooth-3.0-42.0-1  gnome-boxes-42.1-1
+                gnome-builder-42.1-1  gnome-calculator-42.1-1
+                gnome-calendar-42.1-1  gnome-characters-42.0-1
+                gnome-chess-42.0-1  gnome-clocks-42.0-1
+                gnome-code-assistance-3:3.16.1+r14+gaad6437-1
+                gnome-color-manager-3.36.0+r25+g4aab8b59-1
+                gnome-contacts-42.0-1  gnome-control-center-42.2-1
+                gnome-desktop-1:42.2-1  gnome-desktop-4-1:42.2-1
+                gnome-desktop-common-1:42.2-1  gnome-disk-utility-42.0-1
+                gnome-font-viewer-42.0-1  gnome-keyring-1:42.1-1
+                gnome-logs-42.0-1  gnome-maps-42.2-1  gnome-mines-40.1-1
+                gnome-music-1:42.1-1  gnome-nettool-42.0-1
+                gnome-online-accounts-3.44.0-1  gnome-photos-1:42.0-1
+                gnome-recipes-2.0.4-3  gnome-remote-desktop-42.2-1
+                gnome-screenshot-41.0+r25+g45f08f0-1  gnome-session-42.0-1
+                gnome-settings-daemon-42.2-1  gnome-shell-1:42.2-1
+                gnome-shell-extensions-42.2-1  gnome-software-42.2-1
+                gnome-sound-recorder-42.0-1  gnome-sudoku-42.0-1
+                gnome-system-monitor-42.0-1  gnome-terminal-3.44.1-1
+                gnome-todo-41.0+r106+gebc68374-1
+                gnome-tweaks-42beta+r9+gc66d8c3-1  gnome-user-docs-42.0-1
+                gnome-weather-42.0-1  gnucash-4.10-1  gnucash-docs-4.10.1-1
+                gnupg-2.2.35-2  gnuplot-5.4.3-5  gnustep-base-1.28.0-4
+                gnutls-3.7.6-1  go-2:1.18.3-1  go-tools-4:0.1.10-2
+                gobject-introspection-1.72.0-1
+                gobject-introspection-runtime-1.72.0-1  goland-2022.1.1-1
+                goland-jre-2022.1.1-1  google-glog-0.6.0-1  gparted-1.4.0-1
+                gperftools-2.9.1-2  gpgme-1.17.1-1  gpicview-0.2.5-7
+                gptfdisk-1.0.9-1  gradle-7.4.2-1  gradle-doc-7.4.2-1
+                gradle-src-7.4.2-1  grantleetheme-22.04.1-1  graphene-1.10.8-1
+                graphicsmagick-1.3.38-3  graphite-1:1.3.14-2  graphviz-4.0.0-1
+                groff-1.22.4-7  grub-2:2.06-5  gsettings-desktop-schemas-42.0-1
+                gsound-1.0.3-2  gspell-1.10.0-2  gssproxy-0.9.0-1
+                gst-editing-services-1.20.2-1  gst-libav-1.20.2-1
+                gst-plugin-gtk-1.20.2-1  gst-plugin-pipewire-1:0.3.51-1
+                gst-plugins-bad-1.20.2-1  gst-plugins-bad-libs-1.20.2-1
+                gst-plugins-base-1.20.2-1  gst-plugins-base-libs-1.20.2-1
+                gst-plugins-good-1.20.2-1  gst-plugins-ugly-1.20.2-1
+                gst-python-1.20.2-1  gstreamer-1.20.2-1
+                gstreamer-docs-1.20.2-1  gthumb-3.12.2-1
+                gtk-update-icon-cache-1:4.6.5-1  gtk2-perl-1.24993-4
+                gtk3-1:3.24.34-1  gtk4-1:4.6.5-1  gtkmm3-3.24.6-1
+                gtksourceview4-4.8.3-1  gtksourceview5-5.4.1-1
+                gupnp-av-0.14.1-1  guvcview-2.0.7-4  guvcview-common-2.0.7-4
+                gvfs-1.50.2-1  gvfs-afc-1.50.2-1  gvfs-goa-1.50.2-1
+                gvfs-google-1.50.2-1  gvfs-gphoto2-1.50.2-1  gvfs-mtp-1.50.2-1
+                gvfs-nfs-1.50.2-1  gvfs-smb-1.50.2-1  gvim-8.2.5046-1
+                gwenhywfar-5.9.0-1  gxkb-0.9.3-2  gzip-1.12-1
+                handbrake-1.5.1-2  handbrake-cli-1.5.1-2  harfbuzz-4.3.0-1
+                harfbuzz-icu-4.3.0-1  haskell-aeson-1.5.6.0-108
+                haskell-aeson-pretty-0.8.9-59  haskell-ansi-terminal-0.11.1-33
+                haskell-asn1-encoding-0.9.6-173  haskell-asn1-parse-0.9.5-173
+                haskell-asn1-types-0.3.4-152  haskell-assoc-1.0.2-142
+                haskell-async-2.2.4-65  haskell-attoparsec-0.14.4-20
+                haskell-base-compat-0.12.1-1
+                haskell-base-compat-batteries-0.12.1-25
+                haskell-base-orphans-0.8.6-43
+                haskell-base16-bytestring-1.0.2.0-26
+                haskell-base64-bytestring-1.2.1.0-47  haskell-basement-0.0.14-1
+                haskell-bifunctors-5.5.12-6  haskell-blaze-html-0.9.1.2-170
+                haskell-blaze-markup-0.8.2.8-76  haskell-cairo-0.13.8.1-147
+                haskell-case-insensitive-1.2.1.0-149
+                haskell-citeproc-0.6.0.1-50  haskell-colour-2.3.6-102
+                haskell-commonmark-0.2.1.1-27
+                haskell-commonmark-extensions-0.2.3-12
+                haskell-commonmark-pandoc-0.2.1.2-43  haskell-comonad-5.0.8-145
+                haskell-conduit-1.3.4.2-56  haskell-conduit-extra-1.3.5-235
+                haskell-connection-0.3.1-198  haskell-cryptonite-0.30-16
+                haskell-data-default-0.7.1.1-227
+                haskell-data-default-instances-dlist-0.0.1-240
+                haskell-data-fix-0.3.2-48  haskell-distributive-0.6.2.1-148
+                haskell-dlist-1.0-162  haskell-doclayout-0.3.1.1-15
+                haskell-doctemplates-0.10.0.1-62  haskell-emojis-0.1.2-20
+                haskell-file-embed-0.0.15.0-1
+                haskell-ghc-bignum-orphans-0.1.1-1  haskell-githash-0.1.6.2-102
+                haskell-glib-0.13.8.2-12  haskell-glob-0.10.2-36
+                haskell-gtk3-0.15.7-8  haskell-haddock-library-1.10.0-133
+                haskell-hashable-1.4.0.2-11  haskell-hourglass-0.2.12-192
+                haskell-hslua-2.1.0-16  haskell-hslua-aeson-2.1.0-16
+                haskell-hslua-classes-2.1.0-16  haskell-hslua-core-2.1.0-16
+                haskell-hslua-marshalling-2.1.0-16
+                haskell-hslua-module-path-1.0.1-16
+                haskell-hslua-module-system-1.0.1-16
+                haskell-hslua-module-text-1.0.1-16
+                haskell-hslua-module-version-1.0.1-16
+                haskell-hslua-objectorientation-2.1.0-16
+                haskell-hslua-packaging-2.1.0-16  haskell-hsyaml-0.2.1.1-4
+                haskell-http-4000.4.0-23  haskell-http-client-0.7.11-24
+                haskell-http-client-tls-0.3.6.1-17
+                haskell-http-types-0.12.3-236  haskell-hxt-9.3.1.22-71
+                haskell-iproute-1.7.12-24  haskell-ipynb-0.2-17
+                haskell-jira-wiki-markup-1.4.0-59  haskell-juicypixels-3.3.7-16
+                haskell-lexer-1.1-11  haskell-libyaml-0.1.2-220
+                haskell-lpeg-1.0.2-10  haskell-lua-2.1.0-10
+                haskell-memory-0.17.0-12  haskell-mono-traversable-1.0.15.3-53
+                haskell-network-3.1.2.7-24  haskell-network-uri-2.6.4.1-81
+                haskell-pandoc-lua-marshal-0.1.5.1-16
+                haskell-pandoc-types-1.22.2-14  haskell-pango-0.13.8.2-13
+                haskell-pem-0.2.4-229  haskell-pretty-show-1.10-13
+                haskell-primitive-0.7.4.0-3  haskell-quickcheck-2.14.2-317
+                haskell-random-1.2.1.1-15  haskell-resourcet-1.2.5-4
+                haskell-scientific-0.3.7.0-59  haskell-skylighting-0.12.3-18
+                haskell-skylighting-core-0.12.3-18  haskell-socks-0.6.1-176
+                haskell-split-0.2.3.4-191  haskell-splitmix-0.1.0.4-68
+                haskell-streaming-commons-0.2.2.4-20
+                haskell-strict-0.4.0.1-116  haskell-syb-0.7.2.1-139
+                haskell-tagsoup-0.14.8-172  haskell-temporary-1.3-412
+                haskell-texmath-0.12.5-14  haskell-text-conversions-0.3.1.1-6
+                haskell-text-icu-0.8.0.1-17  haskell-th-compat-0.1.3-43
+                haskell-th-lift-instances-0.1.19-32  haskell-these-1.1.1.1-143
+                haskell-time-compat-1.9.6.1-43  haskell-tls-1.5.7-30
+                haskell-typed-process-0.2.8.0-32
+                haskell-unicode-collation-0.1.3.2-4
+                haskell-unicode-data-0.3.0-13
+                haskell-unicode-transforms-0.4.0.1-11
+                haskell-uniplate-1.6.13-124
+                haskell-unordered-containers-0.2.19.1-8
+                haskell-utf8-string-1.0.2-96  haskell-uuid-types-1.0.5-63
+                haskell-vector-0.12.3.1-93
+                haskell-vector-algorithms-0.8.0.4-111  haskell-x509-1.7.7-2
+                haskell-x509-store-1.6.9-27  haskell-x509-system-1.6.7-30
+                haskell-x509-validation-1.6.12-32
+                haskell-xml-conduit-1.9.1.1-110  haskell-yaml-0.11.8.0-27
+                haskell-zip-archive-0.4.2.1-16  haskell-zlib-0.6.3.0-6
+                haveged-1.9.18-1  hdf5-1.12.2-1  hidapi-0.12.0-1
+                highlight-4.2-1  hitori-3.38.4-1  htop-3.2.1-1
+                hunspell-1.7.0-4  hwdata-0.359-1  hwinfo-21.80-2  hwloc-2.7.1-1
+                hyphen-2.8.8-4  hyphen-en-2.8.8-4  iana-etc-20220427-1
+                ibus-1.5.26-2  icu-71.1-1  igraph-0.9.8-1  ijs-0.35-4
+                imagemagick-7.1.0.36-2  imath-3.1.5-1  imlib2-1.9.0-3
+                inkscape-1.2-3  intel-compute-runtime-22.21.23269-1
+                intel-gmmlib-22.1.3-1  intel-graphics-compiler-1:1.0.11279-1
+                intel-media-driver-22.4.2-1  intel-media-sdk-22.3.0-1
+                intel-opencl-clang-13.0.0.r6+gd06733f-1  intel-ucode-20220510-1
+                intellij-idea-ultimate-edition-2022.1.1-1
+                intellij-idea-ultimate-edition-jre-2022.1.1-1  inxi-3.3.16.1-1
+                iproute2-5.18.0-1  iptables-1:1.8.8-1  iptux-0.8.3-3
+                ipython-8.4.0-1  iso-codes-4.10.0-1  ispc-1.18.0-2  iw-5.19-1
+                jack2-1.9.21-1  jansson-2.14-2  jasper-3.0.3-1
+                java-openjfx-18.0.1.u2-1  java11-openjfx-11.0.15.u2-1
+                jdk-18.0.1-1  jdk-openjdk-18.0.1.1.u2-1
+                jdk11-openjdk-11.0.15.u10-1  jdk8-openjdk-8.332.u09-1
+                jemalloc-1:5.3.0-1  jfsutils-1.1.15-8  jmol-14.32.59-1
+                jose-11-1  jre-18.0.1-1  jre-openjdk-18.0.1.1.u2-1
+                jre-openjdk-headless-18.0.1.1.u2-1  jre11-openjdk-11.0.15.u10-1
+                jre11-openjdk-headless-11.0.15.u10-1  jre8-openjdk-8.332.u09-1
+                jre8-openjdk-headless-8.332.u09-1  js78-78.15.0-4
+                js91-91.10.0-1  jsmol-14.32.59-1  json-c-0.16-1
+                json-glib-1.6.6-2  jsoncpp-1.9.5-2  jsonrpc-glib-3.42.0-1
+                jupyter-4.6.3-3 [removal]  jupyter-nbclient-0.6.4-1
+                jupyter-nbconvert-6.5.0-3  jupyter-nbformat-5.4.0-1
+                jupyter-notebook-6.4.11-2  jupyter-notebook-shim-0.1.0-1
+                jupyter-server-1.17.0-1  jupyter-widgetsnbextension-1:3.6.0-2
+                jupyter_console-6.4.3-1  jupyterlab-3.4.2-1
+                jupyterlab_pygments-0.2.2-1  jwm-2.4.2-1  k3b-1:22.04.1-1
+                kaccounts-integration-22.04.1-1  kactivities-5.94.0-1
+                kactivities-stats-5.94.0-1  karchive-5.94.0-1  kauth-5.94.0-1
+                kbookmarks-5.94.0-1  kcalendarcore-5.94.0-1
+                kcalutils-22.04.1-1  kchmviewer-8.0-4  kcmutils-5.94.0-1
+                kcodecs-5.94.0-1  kcompletion-5.94.0-1  kconfig-5.94.0-1
+                kconfigwidgets-5.94.0-1  kcontacts-1:5.94.0-1
+                kcoreaddons-5.94.0-1  kcrash-5.94.0-1  kdbusaddons-5.94.0-1
+                kde-cli-tools-5.24.5-1  kdeclarative-5.94.0-1
+                kdecoration-5.24.5-1  kded-5.94.0-1
+                kdegraphics-mobipocket-22.04.1-1  kdelibs4support-5.94.0-1
+                kdesu-5.94.0-1  kdialog-22.04.1-1  kdnssd-5.94.0-1
+                keditbookmarks-22.04.1-1  kemoticons-5.94.0-1
+                kfilemetadata-5.94.0-1  kglobalaccel-5.94.0-1
+                kguiaddons-5.94.0-1  kholidays-1:5.94.0-1  khtml-5.94.0-1
+                ki18n-5.94.0-1  kicad-6.0.5-1  kicad-library-6.0.5-1
+                kicad-library-3d-6.0.5-1  kiconthemes-5.94.0-1
+                kidentitymanagement-22.04.1-1  kidletime-5.94.0-1
+                kimap-22.04.1-1  kinit-5.94.0-1  kio-5.94.0-1
+                kio-extras-22.04.1-1  kirigami2-5.94.0-1  kitemmodels-5.94.0-1
+                kitemviews-5.94.0-1  kjobwidgets-5.94.0-1  kjs-5.94.0-1
+                kldap-22.04.1-1  kmailtransport-22.04.1-1  kmime-22.04.1-1
+                kmod-29-3  knewstuff-5.94.0-2  knotifications-5.94.0-1
+                knotifyconfig-5.94.0-1  konsole-22.04.1-1  kpackage-5.94.0-1
+                kparts-5.94.0-1  kpimtextedit-22.04.1-1  kpty-5.94.0-1
+                krb5-1.19.3-1  kross-5.94.0-1  krunner-5.94.0-1
+                kscreenlocker-5.24.5-1  kservice-5.94.0-1  ksmtp-22.04.1-1
+                ktextwidgets-5.94.0-1  kunitconversion-5.94.0-1
+                kwallet-5.94.0-1  kwayland-5.94.0-2  kwayland-server-5.24.5-1
+                kwidgetsaddons-5.94.0-1  kwin-5.24.5-2  kwindowsystem-5.94.0-1
+                kxmlgui-5.94.0-1  lablgtk2-2.18.12-1  lapack-3.10.1-1
+                layer-shell-qt-5.24.5-1  ldb-2:2.5.0-1  lensfun-1:0.3.3-1
+                level-zero-loader-1.8.1-1  lib32-at-spi2-atk-2.38.0-2
+                lib32-at-spi2-core-2.44.1-1  lib32-atk-2.38.0-1
+                lib32-brotli-1.0.9-4  lib32-cairo-1.17.6-2
+                lib32-colord-1.4.6-1  lib32-cracklib-2.9.7-2
+                lib32-curl-7.83.1-1  lib32-db-5.3.28-5  lib32-dbus-1.14.0-1
+                lib32-dbus-glib-0.112-2  lib32-dconf-0.40.0-2
+                lib32-expat-2.4.8-1  lib32-fakeroot-1.28-1
+                lib32-faudio-22.06-1  lib32-flac-1.3.4-2
+                lib32-fontconfig-2:2.14.0-1  lib32-freeglut-3.2.2-2
+                lib32-freetype2-2.12.1-1  lib32-fribidi-1.0.12-1
+                lib32-gcc-libs-12.1.0-2  lib32-gdk-pixbuf2-2.42.8-1
+                lib32-glew-2.2.0-3  lib32-glew1.10-1.10.0-5
+                lib32-glib-networking-2.72.0-1  lib32-glib2-2.72.2-1
+                lib32-glibc-2.35-5  lib32-glu-9.0.2-3  lib32-gnutls-3.7.6-1
+                lib32-gst-plugins-base-libs-1.20.2-1  lib32-gstreamer-1.20.2-1
+                lib32-gtk3-3.24.34-1  lib32-harfbuzz-4.3.0-1
+                lib32-harfbuzz-icu-4.3.0-1  lib32-icu-71.1-1
+                lib32-imlib2-1.9.0-2  lib32-json-c-0.16-1
+                lib32-json-glib-1.6.6-2  lib32-krb5-1.19.3-2
+                lib32-libappindicator-gtk2-12.10.0-13
+                lib32-libasyncns-1:0.8+r3+g68cd5af-1  lib32-libavc1394-0.5.4-3
+                lib32-libcanberra-1:0.30+r2+gc0620e4-1  lib32-libcap-2.64-1
+                lib32-libcups-2.4.2-1  lib32-libcurl-compat-7.83.1-1
+                lib32-libcurl-gnutls-7.83.1-1  lib32-libdrm-2.4.110-1
+                lib32-libelf-0.187-1  lib32-libepoxy-1.5.10-1
+                lib32-libffi-3.4.2-4  lib32-libgcrypt-1.10.1-1
+                lib32-libgcrypt15-1.5.6-7  lib32-libglvnd-1.4.0-2
+                lib32-libgpg-error-1.45-1  lib32-libgudev-237-2
+                lib32-libgusb-0.3.10-2  lib32-libid3tag-0.15.1b-3
+                lib32-libidn11-1.33-2  lib32-libiec61883-1.2.0-3
+                lib32-libjpeg-turbo-2.1.3-1  lib32-libldap-2.6.2-1
+                lib32-libltdl-2.4.7-2  lib32-libmikmod-3.3.11.1-5
+                lib32-libmodplug-0.8.9.0-4  lib32-libnl-3.6.0-1
+                lib32-libnm-1.38.0-1  lib32-libproxy-0.4.17-2
+                lib32-libpsl-0.21.1-2  lib32-libpulse-16.0-1
+                lib32-libraw1394-2.1.2-3  lib32-librsvg-2:2.54.3-1
+                lib32-libsndfile-1.1.0-1  lib32-libtheora-1.1.1-13
+                lib32-libtiff-4.4.0-1  lib32-libtiff4-3.9.7-5
+                lib32-libtirpc-1.3.2-2  lib32-libudev0-shim-1-5
+                lib32-libunistring-1.0-1  lib32-libusb-1.0.26-1
+                lib32-libva-2.14.0-1  lib32-libvdpau-1.5-1
+                lib32-libvpx-1.11.0-2  lib32-libwrap-7.6.31-3
+                lib32-libx11-1.8-1  lib32-libxau-1.0.9-2  lib32-libxcb-1.15-1
+                lib32-libxcomposite-0.4.5-2  lib32-libxcursor-1.2.1-1
+                lib32-libxdamage-1.1.5-2  lib32-libxext-1.3.4-2
+                lib32-libxinerama-1.1.4-2  lib32-libxkbcommon-1.4.1-1
+                lib32-libxml2-2.9.14-1  lib32-libxmu-1.1.3-2
+                lib32-libxrandr-1.5.2-2  lib32-libxslt-1.1.35-1
+                lib32-libxss-1.2.3-2  lib32-libxxf86vm-1.1.4-3
+                lib32-mesa-22.1.0-1  lib32-mesa-demos-8.4.0-8
+                lib32-ncurses5-compat-libs-6.3-1  lib32-nspr-4.34-1
+                lib32-nss-3.79-1  lib32-nvidia-utils-515.43.04-1
+                lib32-openal-1.22.0-1  lib32-opencl-mesa-22.1.0-1
+                lib32-opencl-nvidia-515.43.04-1  lib32-openssl-1:1.1.1.n-1
+                lib32-openssl-1.0-1.0.2.u-2  lib32-orc-0.4.32-2
+                lib32-pango-1:1.50.7-1  lib32-pipewire-1:0.3.51-1
+                lib32-pipewire-v4l2-1:0.3.51-1  lib32-polkit-0.120-5
+                lib32-rest-0.8.1-4  lib32-sdl-1.2.15-8 [removal]
+                lib32-sdl12-compat-1.2.52-3  lib32-sdl2-2.0.22-1
+                lib32-sdl2_image-2.0.5-2  lib32-sdl2_mixer-2.0.4-2
+                lib32-sdl2_ttf-2.0.18-1  lib32-sdl_mixer-1.2.12-4
+                lib32-sdl_ttf-2.0.11-6  lib32-simplescreenrecorder-0.4.4-1
+                lib32-speex-1.2.0-3  lib32-sqlite-3.38.5-1
+                lib32-systemd-251.2-1  lib32-tcl-8.6.12-3  lib32-tdb-1.4.6-1
+                lib32-util-linux-2.38-1  lib32-vkd3d-1.3-1
+                lib32-vulkan-icd-loader-1.3.213-1  lib32-wayland-1.20.0-2
+                lib32-x264-3:0.164.r3081.19856cc-1  lib32-zlib-1.2.12-1
+                libabw-0.1.3-3  libaccounts-glib-1.25-7  libadwaita-1:1.1.2-1
+                libaio-0.3.113-1  libakonadi-22.04.1-2
+                libappindicator-gtk2-12.10.0.r296-2
+                libappindicator-gtk3-12.10.0.r296-2  libarchive-3.6.1-1
+                libass-0.15.2-2  libasyncns-1:0.8+r3+g68cd5af-1
+                libavif-0.10.1-1  libbluray-1.3.0-2  libbpf-0.7.0-1
+                libbsd-0.11.6-2  libcanberra-1:0.30+r2+gc0620e4-1
+                libcap-2.64-1  libcap-ng-0.8.3-1  libcdr-0.1.7-4
+                libcerf-1:2.1-1  libchamplain-0.12.20-3  libclc-13.0.1-1
+                libcolord-1.4.6-1  libcups-1:2.4.2-1  libcurl-compat-7.83.1-1
+                libcurl-gnutls-7.83.1-1  libdazzle-3.44.0-1
+                libdbusmenu-glib-16.04.0-5  libdbusmenu-gtk2-16.04.0-5
+                libdbusmenu-gtk3-16.04.0-5  libde265-1.0.8-2  libdrm-2.4.110-1
+                libdvdread-6.1.3-1  libe-book-0.1.3-11  libebml-1.4.2-2
+                libelf-0.187-1  libepoxy-1.5.10-1  libepubgen-0.1.1-3
+                libevdev-1.12.1-1  libfabric-1.15.1-1  libfaketime-0.9.10-1
+                libffi-3.4.2-5  libfilezilla-1:0.37.2-1  libfm-qt-1.1.0-2
+                libfreehand-0.1.2-4  libgcrypt-1.10.1-1  libgcrypt15-1.5.6-6
+                libgdata-0.18.1-2  libgdm-42.0+r11+g4a52f026-1  libgee-0.20.5-2
+                libgeotiff-1.6.0-4  libgit2-1:1.4.3-1  libgit2-glib-1.0.0.1-2
+                libglvnd-1.4.0-2  libgnome-games-support-1.8.2-2
+                libgnomekbd-1:3.26.1+r5+g54da436-1  libgpg-error-1.45-1
+                libgphoto2-2.5.29-1  libgsf-1.14.49-1  libgudev-237-2
+                libgusb-0.3.10-2  libgweather-40.0+r87+g80e5a652-2
+                libgweather-4-4.0.0-1  libhandy-1.6.2-1  libheif-1.12.0-3
+                libibus-1.5.26-2  libical-3.0.14-3  libice-1.0.10-4
+                libiconv-1.17-1  libimagequant-2.17.0-3
+                libindicator-gtk2-12.10.1-10  libindicator-gtk3-12.10.1-10
+                libinih-55-2  libinput-1.20.1-1  libisl-0.24-4
+                libjpeg-turbo-2.1.3-2  libkate-0.4.1-8  libkcddb-22.04.1-1
+                libkdepim-22.04.1-1  libkexiv2-22.04.1-1  libkgapi-22.04.1-1
+                libkleo-22.04.1-1  liblangtag-0.6.3-3
+                liblas-1.8.1.r127+ge6a1aaed-1  libldap-2.6.2-2
+                liblouis-3.21.0-1  libmaa-1.4.7-2  libmalcontent-0.10.4-1
+                libmanette-0.2.6-3  libmatroska-1.6.3-2  libmaxminddb-1.6.0-3
+                libmediaart-1.9.6-1  libmediainfo-22.03-1  libmfx-22.3.0-1
+                libmm-glib-1.18.8-1  libmnl-1.0.5-1  libmpc-1.2.1-2
+                libmpdclient-2.20-2  libmspub-0.1.4-12  libmwaw-0.3.21-2
+                libmythes-1:1.2.4-5  libnautilus-extension-42.2-1
+                libnetfilter_conntrack-1.0.9-1  libnfnetlink-1.0.2-1
+                libnfs-5.0.1-2  libnghttp2-1.47.0-1  libnice-0.1.19-1
+                libnl-3.6.0-3  libnm-1.38.0-1  libnma-1.8.38-1
+                libnma-common-1.8.38-1  libnma-gtk4-1.8.38-1
+                libnotify-0.7.12-1  libnumbertext-1.0.10-1
+                liboauth-1:1.0.3+r15+gac4cf3a-1  libofx-0.10.5-1
+                libopenmpt-0.6.3-1  libopenraw-0.3.1-1  libosinfo-1.10.0-1
+                libpackagekit-glib-1.2.5-1  libpagemaker-0.0.4-3
+                libpaper-1.1.28-2  libpciaccess-0.16-3  libpeas-1.32.0-1
+                libpgm-5.3.128-2  libphonenumber-1:8.12.49-1  libpinyin-2.6.2-1
+                libpipeline-1.5.6-1  libplacebo-4.192.1-2  libportal-0.6-1
+                libportal-gtk3-0.6-1  libportal-gtk4-0.6-1  libproxy-0.4.17-7
+                libpst-0.6.76-6  libpulse-16.0-1  libqxp-0.0.2-8
+                libraw-0.20.2-2  libreoffice-fresh-7.3.3-3  librevenge-0.0.4-4
+                librsvg-2:2.54.3-1  librttopo-1.1.0-4  libsasl-2.1.28-1
+                libseccomp-2.5.4-1  libsecret-0.20.5-2  libsemigroups-2.1.5-1
+                libshout-1:2.4.6-1  libslirp-4.7.0-1  libsm-1.2.3-3
+                libsndfile-1.1.0-2  libsoup3-3.0.6-1  libspatialite-5.0.1-2
+                libspeechd-0.11.1-3  libspnav-1.0-1  libstaroffice-0.0.7-2
+                libstemmer-2.2.0-2  libsynctex-2022.62885-1
+                libsysprof-capture-3.44.0-1  libtg_owt-0.git13.63a934d-1
+                libtiff-4.3.0-2  libtool-2.4.7-2
+                libtorrent-rasterbar-1:2.0.6-1  libunistring-1.0-1
+                libunrar-1:6.1.7-1  libupnp-1.14.12-3  libusb-1.0.26-1
+                libutempter-1.2.1-2  libutf8proc-2.7.0-2  libva-2.14.0-1
+                libva-intel-driver-2.4.1-2  libvdpau-1.5-1  libvirt-1:8.3.0-1
+                libvirt-python-1:8.3.0-1  libvisio-0.1.7-7  libvorbis-1.3.7-3
+                libvpx-1.11.0-2  libwacom-2.2.0-1  libwnck3-40.1-1
+                libwpe-1.12.0-2  libwpg-0.3.3-3  libwrap-7.6.31-4  libx11-1.8-1
+                libx86emu-3.5-2  libxau-1.0.9-4  libxcb-1.15-1
+                libxcomposite-0.4.5-4  libxcrypt-4.4.28-2  libxcursor-1.2.1-1
+                libxdamage-1.1.5-4  libxdmcp-1.1.3-4  libxext-1.3.4-4
+                libxinerama-1.1.4-4  libxkbcommon-1.4.1-1
+                libxkbcommon-x11-1.4.1-1  libxkbfile-1.1.0-3  libxml2-2.9.14-1
+                libxmlb-0.3.9-1  libxmlrpc-1:1.51.08-2  libxmu-1.1.3-3
+                libxnvctrl-515.43.04-1  libxp-1.0.3-5  libxpm-3.5.13-3
+                libxrandr-1.5.2-4  libxrender-0.9.10-5  libxshmfence-1.3-3
+                libxslt-1.1.35-1  libxss-1.2.3-4  libxtst-1.2.3-5
+                libxv-1.0.11-5  libxvmc-1.0.13-1  libxxf86vm-1.1.4-5
+                libyuv-r2322+3aebf69d-1  libzmf-0.0.2-12  liferea-1.13.8-1
+                lightdm-gtk-greeter-1:2.0.8-2  linux-5.18.1.arch1-1
+                linux-api-headers-5.17.5-2  linux-firmware-20220509.b19cbdc-1
+                linux-firmware-whence-20220509.b19cbdc-1
+                linux-headers-5.18.1.arch1-1  linux-lts-5.15.44-1
+                linux-lts-headers-5.15.44-1  lirc-1:0.10.1-12
+                live-media-2022.04.26-1  llvm-13.0.1-6  llvm-libs-13.0.1-6
+                log4cxx-0.13.0-1  lrs-072-1  lrzip-0.651-2
+                lsb-release-2.0.r48.3cf5103-1  lsof-4.95.0-1  lua-expat-1.4.1-2
+                lua-socket-1:3.0.0-1  lua52-expat-1.4.1-2
+                lua52-socket-1:3.0.0-1  lua53-lpeg-1.0.2-4
+                luajit-2.1.0.beta3.r409.g1b8d8cab-1  luit-20220111-1
+                lvm2-2.03.16-1  lxmusic-0.4.7-6  lxqt-archiver-0.6.0-1
+                lxtask-gtk3-0.1.10-2  malcontent-0.10.4-1
+                maliit-framework-2.2.1-1  maliit-keyboard-2.2.1.1-1
+                man-db-2.10.2-1  mariadb-10.8.3-1  mariadb-clients-10.8.3-1
+                mariadb-libs-10.8.3-1  marisa-0.2.6-9  masterpdfeditor-5.8.52-1
+                mathjax-3.2.1-1  maxima-5.46.0-2  maxima-ecl-5.46.0-2
+                maxima-ecl-5.45.1-2 [removal]  maxima-fas-5.46.0-2  mdadm-4.2-2
+                mediainfo-22.03-1  menu-cache-1.1.0-3  mesa-22.1.0-1
+                mesa-demos-8.5.0-1  mesa-utils-8.5.0-1  meson-0.62.2-1
+                mgard-1.0.0-1  mingw-w64-binutils-2.38-2
+                mingw-w64-crt-10.0.0-1  mingw-w64-headers-10.0.0-1
+                mingw-w64-winpthreads-10.0.0-1  miniupnpc-2.2.3-1
+                minizip-1:1.2.12-2  mkvtoolnix-cli-67.0.0-2
+                mkvtoolnix-gui-67.0.0-2  mlt-7.6.0-1  mlt6-6.26.1-9
+                mobile-broadband-provider-info-20220511-1
+                mongo-c-driver-1.21.1-2  mono-6.12.0.177-1  mousepad-0.5.9-1
+                mpc-0.34-2  mpfr-4.1.0.p13-2  mpg123-1.29.3-2  mplayer-38359-1
+                mpv-1:0.34.1-4  mtd-utils-2.1.4-1  mtdev-1.1.6-2
+                mtools-1:4.0.39-1  multipath-tools-0.8.9-1  mutter-42.2-1
+                mysql-workbench-8.0.29-1  nano-6.3-1  nautilus-42.2-1
+                nbd-3.24-1  nccl-2.12.10-1  ncdu-2.1.2-1  ncurses-6.3-3
+                ndctl-73-1  net-snmp-5.9.1-4  netcdf-4.8.1-3  netctl-1.28-1
+                nethogs-0.8.7-1  network-manager-applet-1.26.0-1
+                networkmanager-1.38.0-1  networkmanager-openconnect-1.2.8-2
+                networkmanager-openvpn-1.8.18-2  networkmanager-pptp-1.2.10-2
+                networkmanager-vpnc-1.2.8-2  ngspice-37-1  ninja-1.11.0-1
+                nm-connection-editor-1.26.0-1  node-gyp-9.0.0-1
+                normaliz-3.9.3-1  npm-8.5.5-1  nspr-4.34-1  nss-3.79-1
+                ntfs-3g-2022.5.17-1  numactl-2.0.14-3  nuspell-5.1.0-2
+                nvidia-510.47.03-4 [removal]  nvidia-dkms-515.43.04-2
+                nvidia-settings-515.43.04-1  nvidia-utils-515.43.04-2
+                ocaml-4.13.1-3  ocaml-num-1.4-5  ogre-13.3.1-1
+                okular-22.04.1-1  onednn-2.6-1  oniguruma-6.9.8-1
+                openal-1.22.0-1  opencascade-1:7.5.3-3  opencc-1.1.3-1
+                opencl-headers-2:2022.01.04-1  opencl-mesa-22.1.0-1
+                opencl-nvidia-515.43.04-2  openconnect-1:9.01-1  opencv-4.5.5-5
+                openexr-3.1.5-1  openimagedenoise-1.4.3-1  openjade-1.3.2-7
+                openjpeg2-2.5.0-1  openocd-1:0.11.0-2  openssh-9.0p1-1
+                openssl-1.1.1.o-1  openvkl-1.3.0-1  openvpn-2.5.7-1
+                opera-87.0.4390.45-1  opera-ffmpeg-codecs-101.0.4951.67-1
+                opusfile-0.12-2  orca-42.1-1  osinfo-db-20220516-1
+                ospray-2.9.0-1  ostree-2022.3-1  oxygen-icons-1:5.94.0-1
+                packagekit-1.2.5-1  pacman-6.0.1-5  pacman-contrib-1.5.2-1
+                pacman-mirrorlist-20220501-1  palemoon-1:31.0.0-3
+                pandoc-2.17.1.1-37  pango-1:1.50.7-1  pango-perl-1.227-15
+                pari-2.13.4-1  partclone-0.3.20-1  parted-3.5-1
+                patchelf-0.14.5-1  pcb-1:4.3.0-2  pciutils-3.8.0-1
+                pcmanfm-qt-1.1.0-1  pcre2-10.40-1  pcsclite-1.9.7-1
+                peco-0.5.10-4  perl-5.36.0-1  perl-alien-build-2.48-3
+                perl-alien-libxml2-0.17-3  perl-archive-zip-1.68-7
+                perl-autovivification-0.18-8  perl-b-hooks-endofscope-0.26-1
+                perl-bit-vector-7.4-13  perl-business-isbn-3.007-1
+                perl-business-isbn-data-20210112.006-1
+                perl-business-ismn-1.202-1  perl-business-issn-1.005-1
+                perl-cairo-gobject-1.004-12  perl-canary-stability-2013-5
+                perl-capture-tiny-0.48-6  perl-carp-always-0.16-2
+                perl-carp-clan-6.08-5  perl-cgi-4.54-2
+                perl-class-data-inheritable-0.09-2  perl-class-inspector-1.36-5
+                perl-class-method-modifiers-2.13-3  perl-class-singleton-1.6-1
+                perl-clone-0.45-4  perl-common-sense-3.75-4
+                perl-cpan-perl-releases-5.20220528-1
+                perl-cpanel-json-xs-4.29-2  perl-data-compare-1.27-1
+                perl-data-dump-1.25-3  perl-data-optlist-0.112-2
+                perl-data-random-0.13-6  perl-data-uniqid-0.12-10
+                perl-date-calc-6.4-9  perl-datetime-1.58-1
+                perl-datetime-calendar-julian-0.107-1
+                perl-datetime-format-builder-1:0.83-3
+                perl-datetime-format-strptime-1.79-1
+                perl-datetime-locale-1.35-1  perl-datetime-timezone-2.52-1
+                perl-devel-globaldestruction-0.14-8
+                perl-devel-patchperl-2.08-1  perl-devel-stacktrace-2.04-2
+                perl-digest-hmac-1.04-3  perl-digest-sha1-2.13-17
+                perl-dist-checkconflicts-0.11-8  perl-encode-locale-1.05-9
+                perl-error-0.17029-4  perl-eval-closure-0.14-8
+                perl-exception-class-1.45-2  perl-exporter-tiny-1.002002-4
+                perl-extutils-depends-0.8001-3  perl-extutils-pkgconfig-1.16-9
+                perl-ffi-checklib-0.28-3  perl-file-basedir-0.09-2
+                perl-file-copy-recursive-0.45-5  perl-file-desktopentry-0.22-9
+                perl-file-find-rule-0.34-9  perl-file-listing-6.15-2
+                perl-file-mimeinfo-0.32-2  perl-file-path-tiny-1.0-1
+                perl-file-pushd-1.016-5  perl-file-sharedir-1.118-2
+                perl-file-sharedir-install-0.13-6  perl-file-slurp-tiny-0.004-8
+                perl-file-slurper-0.013-1  perl-file-which-1.27-2
+                perl-gd-2.76-1  perl-glib-object-introspection-0.049-3
+                perl-goocanvas2-0.06-4  perl-goocanvas2-cairotypes-0.001-6
+                perl-gtk3-0.038-2  perl-gtk3-imageview-10-2
+                perl-html-form-6.07-1  perl-html-parser-3.78-2
+                perl-html-tagset-3.20-12  perl-http-cookies-6.10-3
+                perl-http-daemon-6.14-2  perl-http-date-6.05-5
+                perl-http-message-6.36-2  perl-http-negotiate-6.01-10
+                perl-http-server-simple-0.52-3  perl-image-exiftool-12.40-2
+                perl-import-into-1.002005-8  perl-inc-latest-0.500-9
+                perl-io-html-1.004-3  perl-io-socket-ssl-2.074-3
+                perl-ipc-run3-0.048-10  perl-ipc-system-simple-1.30-4
+                perl-json-4.06-1  perl-json-maybexs-1.004003-3
+                perl-json-xs-4.03-3  perl-libwww-6.60-2
+                perl-lingua-translit-0.28-7  perl-list-allutils-0.19-1
+                perl-list-moreutils-0.430-3  perl-list-moreutils-xs-0.430-3
+                perl-list-someutils-0.58-1  perl-list-utilsby-0.12-1
+                perl-local-lib-2.000029-1  perl-locale-gettext-1.07-12
+                perl-log-log4perl-1.54-3  perl-lwp-mediatypes-6.04-2
+                perl-lwp-protocol-https-6.10-3  perl-mailtools-2.21-6
+                perl-mime-charset-1.012.2-9  perl-module-build-0.4231-7
+                perl-module-implementation-0.09-8  perl-module-pluggable-5.2-8
+                perl-moo-2.005004-3  perl-mouse-2.5.10-4
+                perl-mozilla-ca-20200520-5  perl-mro-compat-0.15-1
+                perl-namespace-autoclean-0.29-4  perl-namespace-clean-0.27-8
+                perl-net-dbus-1.2.0-4  perl-net-dropbox-api-1.9-11
+                perl-net-http-6.22-2  perl-net-oauth-0.28-12
+                perl-net-ssleay-1.90-3  perl-number-bytes-human-0.11-6
+                perl-number-compare-0.03-12
+                perl-package-deprecationmanager-0.17-8
+                perl-package-stash-0.40-2  perl-package-stash-xs-0.29-6
+                perl-params-util-1.102-3  perl-params-validate-1.30-3
+                perl-params-validationcompiler-0.30-5  perl-parse-yapp-1.21-5
+                perl-path-class-0.37-8  perl-path-tiny-0.122-2
+                perl-perlio-utf8-strict-0.009-1  perl-pod-parser-1.65-1
+                perl-proc-processtable-0.634-2  perl-proc-simple-1.32-8
+                perl-regexp-common-2017060201-5  perl-role-tiny-2.002004-3
+                perl-sgmls-1:1.1-9  perl-sort-key-1.33-11
+                perl-sort-naturally-1.03-8  perl-specio-0.47-2
+                perl-sub-exporter-0.988-2
+                perl-sub-exporter-progressive-0.001013-8
+                perl-sub-identify-0.14-10  perl-sub-install-0.928-8
+                perl-sub-name-0.26-4  perl-sub-quote-1:2.006_007-2
+                perl-term-readkey-2.38-7  perl-term-readline-gnu-1.42-2
+                perl-test-fatal-0.016-3  perl-test-pod-1.52-7
+                perl-text-bibtex-0.88-1  perl-text-csv-2.01-1
+                perl-text-glob-0.11-9  perl-text-iconv-1.7-21
+                perl-text-roman-3.5-9  perl-tie-cycle-1.225-7
+                perl-timedate-2.33-4  perl-tk-804.036-4  perl-try-tiny-0.31-2
+                perl-types-serialiser-1.01-1  perl-unicode-linebreak-2019.001-5
+                perl-uri-5.10-2  perl-variable-magic-0.62-7
+                perl-www-mechanize-2.08-1  perl-www-robotrules-6.02-10
+                perl-x11-protocol-0.56-13  perl-xml-libxml-2.0207-3
+                perl-xml-libxml-simple-1.01-1  perl-xml-libxslt-2.000000-2
+                perl-xml-parser-2.46-4  perl-xml-simple-2.25-7
+                perl-xml-twig-3.52-9  perl-xml-writer-0.900-1
+                perl-yaml-tiny-1.73-6  perlbrew-0.95-1  phodav-2.5-2
+                php-8.1.6-1  php-apache-8.1.6-1  php-cgi-8.1.6-1
+                phpmyadmin-5.2.0-1  picom-9.1-3  pigz-2.7-1
+                pimcommon-22.04.1-1  pipewire-1:0.3.51-1
+                pipewire-alsa-1:0.3.51-1  pipewire-media-session-1:0.4.1-2
+                pipewire-media-session-docs-1:0.4.1-2  pipewire-v4l2-1:0.3.51-1
+                pixman-0.40.0-2  pkcs11-helper-1.29.0-1  pkgstats-3.2.2-1
+                planarity-3.0.2.0-1  plantri-5.3-1  plasma-framework-5.94.0-1
+                podofo-0.9.8-1  polari-42.0-1  polkit-0.120-5
+                polkit-gnome-0.105-9  polymake-4.6-4  poppler-22.06.0-1
+                poppler-glib-22.06.0-1  poppler-qt5-22.06.0-1
+                poppler-qt6-22.06.0-1  postgresql-14.3-2
+                postgresql-libs-14.3-2  power-profiles-daemon-0.11.1-1
+                primecount-7.3-1  primesieve-7.9-1  prison-5.94.0-1
+                projectm-3.1.12-3  protobuf-3.20.1-2  psmisc-23.5-1
+                pugixml-1.12.1-1  pulseaudio-16.0-1  pulseaudio-alsa-1:1.2.6-3
+                pulseaudio-bluetooth-16.0-1  purpose-5.94.0-1  putty-0.77-1
+                pv-1.6.20-2  pybind11-2.9.2-1  pyenv-2.3.0-1  pyside2-5.15.4-1
+                pyside6-6.3.0-1  python-3.10.4-2  python-acme-1.27.0-1
+                python-anyio-3.6.1-1  python-apipkg-2.1.1-1
+                python-apsw-3.38.1-1  python-asn1crypto-1.5.1-1
+                python-astroid-2.11.5-1  python-automat-20.2.0-9
+                python-babel-2.10.1-1  python-black-22.3.0-1
+                python-brotli-1.0.9-8  python-cachetools-5.1.0-1
+                python-cairo-1.21.0-1  python-click-8.1.3-1
+                python-cryptography-37.0.2-1  python-cvxopt-1.3.0-1
+                python-cycler-0.11.0-1  python-debugpy-1.6.0-1
+                python-deprecation-2.1.0-6  python-distro-1.7.0-1
+                python-dnspython-1:2.2.1-1  python-docutils-1:0.18.1-1
+                python-dotenv-0.20.0-1  python-dulwich-0.20.42-1
+                python-entrypoints-0.4-2  python-executing-0.8.3-1
+                python-fastjsonschema-2.15.3-1  python-feedparser-6.0.3-1
+                python-filelock-3.5.0-1  python-flask-2.1.2-1
+                python-flatbuffers-2.0.6-1  python-fonttools-4.33.3-1
+                python-fpylll-0.5.7-1  python-fs-2.4.16-1
+                python-gobject-3.42.1-1  python-google-auth-1.34.0-4
+                python-google-auth-oauthlib-0.5.1-1  python-gpgme-1.17.1-1
+                python-graphviz-0.20-1  python-grpcio-1.46.3-1
+                python-h5py-3.7.0-1  python-igraph-0.9.10-1
+                python-imageio-2.19.2-1  python-ipykernel-6.13.0-1
+                python-ipython-genutils-0.2.0-1  python-ipywidgets-7.7.0-4
+                python-isort-5.10.1-5  python-itsdangerous-2.1.2-2
+                python-jinja-1:3.1.2-1  python-josepy-1.13.0-2
+                python-json5-0.9.8-1  python-jupyter_client-7.3.1-1
+                python-jupyter_core-4.10.0-1  python-jupyter_packaging-0.12.1-1
+                python-jupyterlab_server-2.14.0-1  python-lxml-4.8.0-1
+                python-markdown-3.3.7-1  python-markupsafe-2.1.1-1
+                python-matplotlib-3.5.2-1  python-mccabe-0.7.0-1
+                python-memory-allocator-0.1.3-1  python-more-itertools-8.12.0-2
+                python-nest-asyncio-1.5.5-1  python-networkx-2.7.1-1
+                python-numpy-1.22.3-1  python-oauthlib-3.2.0-1
+                python-opengl-3.1.6-1  python-packaging-21.3-1
+                python-pandas-1.4.2-1  python-paramiko-2.11.0-1
+                python-pbr-5.9.0-1  python-pillow-9.1.1-1  python-pip-21.0-1
+                python-platformdirs-2.5.0-1  python-pluggy-1.0.0-1
+                python-prettytable-2.3.0-1  python-prometheus_client-0.14.1-1
+                python-prompt_toolkit-3.0.29-1  python-protobuf-3.20.1-2
+                python-psutil-5.9.0-2  python-py7zr-0.18.5-1
+                python-pyaml-21.10.1-1  python-pycryptodomex-3.12.0-1
+                python-pycurl-7.45.1-1  python-pygments-2.12.0-1
+                python-pylint-2.13.8-1  python-pyopenssl-22.0.0-1
+                python-pyparsing-3.0.9-1  python-pyperclip-1.8.2-4
+                python-pyppmd-0.18.2-1  python-pyqt5-sip-12.10.1-1
+                python-pyqt6-6.3.0-1  python-pyqt6-sip-13.3.1-1
+                python-pytest-7.1.2-1  python-pytest-runner-5.3.2-1
+                python-pytorch-1.11.0-7  python-pytz-2022.1-1
+                python-pywavelets-1.3.0-1  python-pyzmq-23.0.0-1
+                python-pyzstd-0.15.2-1  python-qtpy-2.1.0-1
+                python-reportlab-3.6.9-1  python-requests-2.27.1-1
+                python-requests-oauthlib-1.3.1-1
+                python-requests-unixsocket-0.3.0-1  python-rpy2-3.5.2-1
+                python-scikit-build-0.13.1-2  python-scikit-image-0.19.2-1
+                python-scikit-learn-1.1.1-1  python-scipy-1.8.1-1
+                python-setproctitle-1.2.3-1  python-setuptools-1:60.6.0-1
+                python-shapely-1.8.1-1  python-shiboken2-5.15.4-1
+                python-sniffio-1.2.0-5  python-soupsieve-2.3.1-1
+                python-sphinx-5.0.1-1  python-stack-data-0.2.0-1
+                python-symengine-0.9.2-1  python-sympy-1.10.1-1
+                python-tensorboardx-2.5-1  python-tensorflow-estimator-2.8.0-1
+                python-tensorflow-opt-2.8.0-7  python-terminado-0.15.0-1
+                python-testpath-0.6.0-1  python-threadpoolctl-3.1.0-1
+                python-tifffile-2022.5.4-1  python-tinycss2-1.1.1-1
+                python-tomli-2.0.1-1  python-tomlkit-0.11.0-1
+                python-tox-3.25.0-1  python-tqdm-4.64.0-1
+                python-traitlets-5.2.2.post1-1
+                python-typing_extensions-4.2.0-1  python-tzdata-2022.1-1
+                python-tzlocal-1:2.1-1  python-unidecode-1.3.4-1
+                python-unrardll-0.1.5-1  python-urllib3-1.26.9-1
+                python-waitress-2.1.2-1  python-websocket-client-1.3.2-1
+                python-websockets-10.3-1  python-werkzeug-2.1.2-1
+                python-wrapt-1.14.1-1  python-yaml-6.0-1
+                python-zeroconf-0.38.4-1  python-zipfile-deflate64-0.2.0-1
+                python-zipp-3.8.0-1  python-zopfli-0.2.1-1  qbs-1.22.1-1
+                qemu-6.2.0-2 [removal]  qemu-arch-extra-6.2.0-2 [removal]
+                qemu-audio-alsa-7.0.0-10  qemu-audio-dbus-7.0.0-10
+                qemu-audio-jack-7.0.0-10  qemu-audio-oss-7.0.0-10
+                qemu-audio-pa-7.0.0-10  qemu-audio-sdl-7.0.0-10
+                qemu-audio-spice-7.0.0-10  qemu-block-curl-7.0.0-10
+                qemu-block-dmg-7.0.0-10  qemu-block-gluster-7.0.0-10
+                qemu-block-iscsi-7.0.0-10  qemu-block-nfs-7.0.0-10
+                qemu-block-rbd-7.0.0-10  qemu-block-ssh-7.0.0-10
+                qemu-chardev-spice-7.0.0-10  qemu-common-7.0.0-10
+                qemu-desktop-7.0.0-10  qemu-emulators-full-7.0.0-10
+                qemu-guest-agent-7.0.0-10  qemu-hw-display-qxl-7.0.0-10
+                qemu-hw-display-virtio-gpu-7.0.0-10
+                qemu-hw-display-virtio-gpu-gl-7.0.0-10
+                qemu-hw-display-virtio-gpu-pci-7.0.0-10
+                qemu-hw-display-virtio-gpu-pci-gl-7.0.0-10
+                qemu-hw-display-virtio-vga-7.0.0-10
+                qemu-hw-display-virtio-vga-gl-7.0.0-10
+                qemu-hw-s390x-virtio-gpu-ccw-7.0.0-10
+                qemu-hw-usb-host-7.0.0-10  qemu-hw-usb-redirect-7.0.0-10
+                qemu-hw-usb-smartcard-7.0.0-10  qemu-img-7.0.0-10
+                qemu-pr-helper-7.0.0-10  qemu-system-aarch64-7.0.0-10
+                qemu-system-alpha-7.0.0-10  qemu-system-arm-7.0.0-10
+                qemu-system-avr-7.0.0-10  qemu-system-cris-7.0.0-10
+                qemu-system-hppa-7.0.0-10  qemu-system-m68k-7.0.0-10
+                qemu-system-microblaze-7.0.0-10  qemu-system-mips-7.0.0-10
+                qemu-system-nios2-7.0.0-10  qemu-system-or1k-7.0.0-10
+                qemu-system-ppc-7.0.0-10  qemu-system-riscv-7.0.0-10
+                qemu-system-rx-7.0.0-10  qemu-system-s390x-7.0.0-10
+                qemu-system-sh4-7.0.0-10  qemu-system-sparc-7.0.0-10
+                qemu-system-tricore-7.0.0-10  qemu-system-x86-7.0.0-10
+                qemu-system-xtensa-7.0.0-10  qemu-tools-7.0.0-10
+                qemu-ui-curses-7.0.0-10  qemu-ui-dbus-7.0.0-10
+                qemu-ui-egl-headless-7.0.0-10  qemu-ui-gtk-7.0.0-10
+                qemu-ui-opengl-7.0.0-10  qemu-ui-sdl-7.0.0-10
+                qemu-ui-spice-app-7.0.0-10  qemu-ui-spice-core-7.0.0-10
+                qemu-user-7.0.0-10  qemu-vhost-user-gpu-7.0.0-10
+                qemu-virtiofsd-7.0.0-10  qgpgme-1.17.1-1  qpdf-10.6.3-1
+                qt5-3d-5.15.4+kde+r17-1  qt5-base-5.15.4+kde+r146-1
+                qt5-charts-5.15.4+kde+r0-1  qt5-connectivity-5.15.4+kde+r5-1
+                qt5-datavis3d-5.15.4+kde+r0-1  qt5-declarative-5.15.4+kde+r19-1
+                qt5-doc-5.15.4-1  qt5-examples-5.15.4-1
+                qt5-graphicaleffects-5.15.4+kde+r0-1
+                qt5-imageformats-5.15.4+kde+r1-1  qt5-location-5.15.4+kde+r2-1
+                qt5-multimedia-5.15.4+kde+r1-1  qt5-quick3d-5.15.4+kde+r2-1
+                qt5-quickcontrols-5.15.4+kde+r0-1
+                qt5-quickcontrols2-5.15.4+kde+r4-1
+                qt5-remoteobjects-5.15.4+kde+r0-1  qt5-script-5.15.9-2
+                qt5-scxml-5.15.4+kde+r0-1  qt5-sensors-5.15.4+kde+r0-1
+                qt5-serialport-5.15.4+kde+r0-1  qt5-speech-5.15.4+kde+r1-1
+                qt5-svg-5.15.4+kde+r10-1  qt5-tools-5.15.4+kde+r0-1
+                qt5-translations-5.15.4+kde+r2-1  qt5-wayland-5.15.4+kde+r38-1
+                qt5-webchannel-5.15.4+kde+r3-1  qt5-webengine-5.15.9-3
+                qt5-webkit-5.212.0alpha4-14  qt5-websockets-5.15.4+kde+r3-1
+                qt5-x11extras-5.15.4+kde+r0-1  qt5-xmlpatterns-5.15.4+kde+r0-1
+                qt6-3d-6.3.0-1  qt6-5compat-6.3.0-2  qt6-base-6.3.0-3
+                qt6-charts-6.3.0-1  qt6-connectivity-6.3.0-1
+                qt6-datavis3d-6.3.0-1  qt6-declarative-6.3.0-2  qt6-doc-6.3.0-1
+                qt6-examples-6.3.0-1  qt6-imageformats-6.3.0-2
+                qt6-multimedia-6.3.0-1  qt6-networkauth-6.3.0-1
+                qt6-positioning-6.3.0-1  qt6-quick3d-6.3.0-1
+                qt6-quicktimeline-6.3.0-1  qt6-remoteobjects-6.3.0-1
+                qt6-scxml-6.3.0-1  qt6-sensors-6.3.0-1  qt6-serialport-6.3.0-1
+                qt6-shadertools-6.3.0-1  qt6-svg-6.3.0-1  qt6-tools-6.3.0-1
+                qt6-translations-6.3.0-1  qt6-wayland-6.3.0-1
+                qt6-webchannel-6.3.0-1  qt6-webengine-6.3.0-3
+                qt6-websockets-6.3.0-1  qtcreator-7.0.2-1  quazip-qt5-1.3-1
+                quazip-qt6-1.3-1  r-4.2.0-4  raptor-2.0.15-19  rar-6.12.0-1
+                rasqal-1:0.9.33-5  rav1e-0.4.1-2  re2-1:20220601-1
+                recode-3.7.12-1  refind-0.13.3.1-1  remmina-1:1.4.26-1
+                retext-7.2.3-1  rhythmbox-3.4.5-1  rkcommon-1.9.0-1
+                rsync-3.2.4-1  rtmpdump-1:2.4.r99.f1b83c1-2  rtorrent-0.9.8-3
+                ruby-3.0.4-1  ruby-dbus-0.17.0-1  ruby-psych-4.0.4-2
+                ruby-stringio-3.0.2-1  ruby2.7-2.7.6-1  rubygems-3.3.8-1
+                runc-1.1.2-1  rust-1:1.61.0-1  rygel-1:0.40.4-1  sagemath-9.6-2
+                sagemath-doc-9.6-2  samba-4.16.1-3  sdcc-4.2.0-2
+                sdl-1:1.2.15+r406+gf1caf909-1 [removal]  sdl12-compat-1.2.52-2
+                sdl2-2.0.22-2  sdl_mixer-1.2.12-11  seabios-1.16.0-1
+                semver-7.3.7-1  sgml-common-0.6.3-8  shaderc-2022.1-3
+                shadowsocks-3.0.0a.20180219-5  shadowsocks-v2ray-plugin-5.0.2-1
+                shared-mime-info-2.0+144+g13695c7-1  shiboken6-6.3.0-1
+                shotcut-22.04.25-1  sigil-1.9.10-1
+                signon-kwallet-extension-22.04.1-1  signond-8.61-1
+                simple-scan-42.1-1  simplescreenrecorder-0.4.4-1
+                singular-4.3.0.p1-1  sip-6.6.2dev2205162316-1  slock-1.4-6
+                smbclient-4.16.1-3  smplayer-22.2.0-2  socat-1.7.4.3-1
+                solid-5.94.0-1  sonnet-5.94.0-1  sound-theme-freedesktop-0.8-5
+                soundtouch-2.3.1-2  speech-dispatcher-0.11.1-3
+                spice-gtk-0.40-1  spirv-llvm-translator-13.0.0.r27+gd7a03044-1
+                spirv-tools-2022.1-1  sqlite-3.38.5-1  squashfs-tools-4.5.1-1
+                sshfs-3.7.3-1  sssd-2.7.0-1  steam-native-runtime-1.0.0.70-3
+                strace-5.17-1  stress-1.0.5-1  subversion-1.14.1-6
+                sudo-1.9.10-1  suitesparse-5.12.0-1  sushi-41.2-1
+                svt-av1-0.9.0-2  svt-hevc-1.5.1-2  swell-foop-41.1-1
+                swi-prolog-8.4.2-2  sword-1.9.0-5  sxhkd-0.6.2-2
+                symengine-0.9.0-1  sympol-0.1.9-11  syndication-5.94.0-1
+                syntax-highlighting-5.94.0-1  syslog-ng-3.36.1-1
+                sysprof-3.44.0-1  sysstat-12.6.0-1  systemd-251.2-1
+                systemd-libs-251.2-1  systemd-sysvcompat-251.2-1  sz-2.1.12-4
+                tachyon-0.99.5-1  tali-40.7-1  tcsh-6.24.00-2
+                teamviewer-15.29.4-1  telegram-desktop-3.7.3-1
+                telepathy-mission-control-5.16.6-2  template-glib-3.34.1-1
+                tensorboard-2.8.0-2  tensorflow-opt-2.8.0-7  tepl-6.0.2-1
+                texlive-bibtexextra-2022.63023-1  texlive-bin-2022.62885-1
+                texlive-core-2022.63035-1  texlive-fontsextra-2022.62977-1
+                texlive-formatsextra-2022.62529-1
+                texlive-humanities-2022.62929-1
+                texlive-langchinese-2022.62922-1
+                texlive-langcyrillic-2022.62517-1
+                texlive-langextra-2022.62837-1  texlive-langgreek-2022.61820-1
+                texlive-langjapanese-2022.63011-1
+                texlive-langkorean-2022.63005-1
+                texlive-latexextra-2022.63034-1  texlive-pictures-2022.62992-1
+                texlive-pstricks-2022.62977-1  texlive-publishers-2022.63013-1
+                texlive-science-2022.62977-1  texmaker-5.1.3-1
+                texstudio-4.2.3-1  texworks-0.6.7-1  threadweaver-5.94.0-1
+                thunar-4.16.11-2  thunar-archive-plugin-0.5.0-2
+                thunderbird-91.9.1-1  tint2-17.0.2-2  tinyxml-2.6.2-9
+                tmux-3.3-2  toolame-02l-13  tor-0.4.7.7-2
+                tor-browser-11.0.13-1  totem-42.0-1  tpm2-tss-3.2.0-1
+                tracker-1:2.3.6+r7+gb27396252-1
+                tracker-miners-1:2.3.5+r3+gd9d61d87f-1  tracker3-3.3.1-1
+                tracker3-miners-3.3.1-1  transmission-cli-3.00-4
+                transmission-gtk-3.00-4  trash-cli-0.22.4.16-1  tree-2.0.2-1
+                tzdata-2022a-1  udiskie-2.4.2-1  uget-2.2.3-5
+                unarchiver-1.10.7-6  units-2.21-3  unixodbc-2.3.11-1
+                upower-0.99.18-1  upx-3.96-3  usb_modeswitch-2.6.1-3
+                util-linux-2.38-1  util-linux-libs-2.38-1  v2ray-4.45.0-1
+                v2ray-domain-list-community-20220604062951-1
+                v2ray-geoip-202206020056-1  vagrant-2.2.19-2  vala-0.56.1-1
+                valgrind-3.19.0-3  vde2-2.3.3-1  verilator-4.222-1
+                vim-runtime-8.2.5046-1  virt-install-4.0.0-1
+                virt-manager-4.0.0-1  virtualbox-6.1.34-4
+                virtualbox-ext-oracle-6.1.34-1  virtualbox-ext-vnc-6.1.34-4
+                virtualbox-guest-iso-6.1.34-1
+                virtualbox-guest-utils-nox-6.1.34-4
+                virtualbox-host-dkms-6.1.34-4  virtualbox-sdk-6.1.34-4
+                vkd3d-1.3-1  vlc-3.0.17.4-3  vmaf-2.3.1-1  vokoscreen-3.2.0-1
+                vpnc-1:0.5.3.r506.r204-1  vte-common-0.68.0-2  vte3-0.68.0-2
+                vtk-9.1.0-15  vulkan-headers-1:1.3.213-1
+                vulkan-icd-loader-1.3.213-1  w3m-0.5.3.git20220409_1-1
+                wayland-1.20.0-2  webkit2gtk-2.36.3-1  webkit2gtk-4.1-2.36.3-1
+                webstorm-2022.1.1b221.5591.52-1
+                webstorm-jre-2022.1.1b221.5591.52-1  wget-1.21.3-1
+                whois-5.5.13-1  wine-7.7-1  wine-mono-7.2.0-1
+                winetricks-20220411-1  wireshark-cli-3.6.5-1
+                wireshark-qt-3.6.5-1  wolfssl-5.3.0-1  wpa_supplicant-2:2.10-4
+                wpebackend-fdo-1.12.0-2  wvstreams-4.6.1-18  x11docker-7.1.4-1
+                x264-3:0.164.r3081.19856cc-2  x265-3.5-3
+                xapian-core-1:1.4.19-2  xarchiver-0.5.4.18-1  xbitmaps-1.1.2-3
+                xcb-proto-1.15-1  xcb-util-0.4.0-4  xcb-util-cursor-0.1.3-4
+                xcb-util-image-0.4.0-4  xcb-util-keysyms-0.4.0-4
+                xcb-util-renderutil-0.3.9-4  xcb-util-wm-0.4.1-4
+                xcompmgr-1.1.8-3  xcursor-themes-1.0.6-3
+                xdg-dbus-proxy-0.1.4-1  xdg-desktop-portal-1.14.4-1
+                xdg-desktop-portal-gnome-42.1-1
+                xdg-desktop-portal-gtk-1.14.0-1  xdg-utils-1.1.3+21+g1a58bc2-1
+                xerces-c-3.2.3-6  xf86-video-dummy-0.4.0-1
+                xfce4-diskperf-plugin-2.7.0-1  xfce4-eyes-plugin-4.6.0-1
+                xfce4-panel-4.16.4-1  xfce4-pulseaudio-plugin-0.4.3-2
+                xfce4-screenshooter-1.9.10-2  xfce4-settings-4.16.2-2
+                xfce4-taskmanager-1.5.4-1  xfce4-terminal-1.0.4-1
+                xfsprogs-5.16.0-1  xine-lib-1.2.12-2  xkeyboard-config-2.36-1
+                xmlsec-1.2.34-1  xmms2-0.9.1-2  xorg-appres-1.0.6-1
+                xorg-bdftopcf-1.1-3  xorg-font-util-1.3.2-3
+                xorg-iceauth-1.0.9-1  xorg-mkfontscale-1.2.2-1
+                xorg-server-21.1.3-7  xorg-server-common-21.1.3-7
+                xorg-server-devel-21.1.3-7  xorg-server-xephyr-21.1.3-7
+                xorg-server-xvfb-21.1.3-7  xorg-sessreg-1.1.2-3
+                xorg-setxkbmap-1.3.3-1  xorg-xauth-1.1.2-1
+                xorg-xbacklight-1.2.3-3  xorg-xcmsdb-1.0.5-4
+                xorg-xdpyinfo-1.3.3-4  xorg-xdriinfo-1.0.6-3
+                xorg-xgamma-1.0.6-4  xorg-xhost-1.0.8-3  xorg-xinput-1.6.3-3
+                xorg-xkill-1.0.5-3  xorg-xlsatoms-1.1.3-3
+                xorg-xlsclients-1.1.4-3  xorg-xmessage-1.0.5-3
+                xorg-xmodmap-1.0.10-3  xorg-xrefresh-1.0.6-3  xorg-xset-1.2.4-3
+                xorg-xsetroot-1.1.2-3  xorg-xvinfo-1.1.4-3
+                xorg-xwayland-22.1.2-1  xorg-xwininfo-1.1.5-3
+                xorgproto-2022.1-1  xplc-0.3.13-10  xpra-4.2.3-4
+                xscreensaver-6.03-1  xterm-372-2  xxhash-0.8.1-2  xz-5.2.5-3
+                yarn-1.22.19-1  yasm-1.3.0-5  yay-11.1.2-1  yelp-42.1-2
+                yelp-tools-42.0-1  yelp-xsl-42.0-1  yosys-0.12-4
+                yt-dlp-2022.05.18-1  zenity-3.42.1-1  zimg-3.0.3-2  zip-3.0-10
+                zlib-1:1.2.12-2  zstd-1.5.2-3  zxing-cpp-1.3.0-1
+
+Total Download Size:   15044.66 MiB
+Total Installed Size:  57969.10 MiB
+Net Upgrade Size:       1899.98 MiB
+
+:: Proceed with installation? [Y/n] 
+
+
+
+
+error: failed to commit transaction (conflicting files)
+texlive-core: /usr/share/man/man1/git-latexdiff.1.gz exists in filesystem (owned by git-latexdiff)
+
+
+python-railroad-diagrams
+wireless-regdb
+catdoc
+qemu-chardev-baum
+qemu-docs
+qemu-tests
+swtpm
+libkate-docs
+python-trio
+python-uvloop
+jupyter-server-mathjax
+jupyterlab-widgets
+qt6-languageserver
+python-asgiref
+python-uharfbuzz
+python-bottleneck
+python-fsspec
+python-numexpr
+python-openpyxl
+python-psycopg2
+python-pyarrow
+python-pymysql
+python-pytables
+python-snappy
+python-sqlalchemy
+python-xarray
+python-xlrd
+python-xlwt
+python-zstandard
+python-pyqt6-webengine
+refind-docs
+python-phitigra
+topcom
+wdiff
+MariaDB was updated to a new feature release. To update the data run:
+systemctl restart mariadb.service && mariadb-upgrade -u root -p
+>>> updmap custom entries should go into /etc/texmf/web2c/updmap-local.cfg
+>>> fmtutil custom entries should go into /etc/texmf/web2c/fmtutil-local.cnf
+ Updating the appstream cache...
+** (appstreamcli:107623): WARNING **: 11:13:57.030: Found icon of unknown type 'unknown' in 'system/flatpak/flatpak/cc.nift.nsm/*', skipping it.
+
+Failed to get unit file state for qemu-ga.service: No such file or directory
+
+
+
+
+yay -S python-railroad-diagrams wireless-regdb catdoc qemu-chardev-baum qemu-docs qemu-tests swtpm libkate-docs python-trio python-uvloop jupyter-server-mathjax jupyterlab-widgets qt6-languageserver python-asgiref python-uharfbuzz python-bottleneck python-fsspec python-numexpr python-openpyxl python-psycopg2 python-pyarrow python-pymysql python-pytables python-snappy python-sqlalchemy python-xarray python-xlrd python-xlwt python-zstandard python-pyqt6-webengine refind-docs python-phitigra topcom wdiff --overwrite=*
+yay -R git-latexdiff
+yay -S python-pint python-seaborn python-distributed python-dask python-cftime python-netcdf4 python-blosc
+yay -S vofa+ picocom planner-git projectlibre projectm-pulseaudio
+yay -S udisks2-qt5 python-birdseye python-pgzero thonny testdisk rtl8761usb	qtmpris qtdbusextended xsel python-yarl python-ytmusicapi granite gsettings-qt
+yay -S pasystray pavucontrol pavucontrol-qt netease-cloud-music motrix mingw-w64-cmake magnet2torrent-git lshw paprefs libqtxdg libxcrypt-compat
+yay -S jython kingstvis jre17-openjdk jre17-openjdk-headless jdk17-openjdk jd-gui-bin ipmitool haskell-unliftio haskell-text-metrics haskell-tf-random haskell-setenv haskell-quickcheck-io haskell-infer-license haskell-hunit haskell-hspec haskell-hspec-core haskell-hspec-discover haskell-hspec-expectations haskell-hpack haskell-clock haskell-call-stack gunicorn gtk-theme-elementary gcc9-fortran ganttproject gambas3-gb-compress freeipmi
+yay -S feeluown feeluown-bilibili feeluown-download feeluown-kuwo feeluown-local feeluown-netease feeluown-qqmusic feeluown-ytmusic
+yay -S electron14 dtkcommon dtkcore dtkgui dtkwidget dotnet-host dotnet-runtime
+yay -S deepin-anything deepin-anything-dkms deepin-desktop-base deepin-music deepin-qt5integration deepin-qt5platform-plugins deepin-qt-dbus-factory deepin-screen-recorder deepin-turbo deepin-wayland bluez-tools blueman blueberry pulsemixer pulseaudio-equalizer-ladspa pulseaudio-equalizer python-bilibili-api python-pytube python-charset-normalizer python-curio python-eventlet python-gevent gtk-engine-murrine python-aiodns python-httplib2
+yay -R cbatticon
+yay -S cbatticon-git
+yay -S glfw-x11 ## glfw-wayland
+yay -S python-jdcal python-nose python-olefile python-patsy python-pyvisa python-sphinx_rtd_theme python-pyvisa-py
+yay -S python-tensorflow-opt ## python-tensorflow
+# yay -S nvidia
+yay -S nvidia-dkms nvidia-prime
+# yay -S linux-lts-docs # linux-zen / linux-zen-headers
+yay -R linux-lts-docs
+```
+
+
+* * *
+# update vivado/vitis from 2020.1 to 2020.2 (没有必要)
+
+`sudo gedit /usr/local/bin/vivado`
+```
+#!/bin/bash
+/opt/Xilinx/Vivado/2020.2/bin/vivado
+```
+`sudo chmod +x /usr/local/bin/vivado`
+`sudo gedit /usr/local/bin/vitis`
+```
+#!/bin/bash
+/opt/Xilinx/Vitis/2020.2/bin/vitis 
+```
+`sudo chmod +x /usr/local/bin/vitis`
+
+
+***
+# pip3修复
+```
+pip3 --version
+broken!
+```
+```
+sudo python3 -m ensurepip --default-pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python3 get-pip.py
+pip3 --version
+pip 22.1.2 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+sudo -H pip3 install -i https://mirrors.163.com/pypi/simple opencv-contrib-python opencv-python
+sudo -H pip3 install -i https://mirrors.163.com/pypi/simple alive_progress
+```
+
+
+***
+# 全盘更新
+```
+:: Starting full system upgrade...
+:: Replace absl-py with community/python-absl? [Y/n] y
+warning: gcc10: local (1:10.3.0-2) is newer than archlinuxcn (10.4.0-1)
+warning: gcc10-libs: local (1:10.3.0-2) is newer than archlinuxcn (10.4.0-1)
+:: Replace intel-mkl with community/intel-oneapi-mkl? [Y/n] y
+:: Replace kwayland-server with extra/kwin? [Y/n] y
+:: Replace wxgtk-common with extra/wxwidgets-common? [Y/n] y
+:: Replace wxgtk3 with extra/wxwidgets-gtk3? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+:: python-mistune and python-mistune1 are in conflict. Remove python-mistune1? [y/N] y
+error: failed to prepare transaction (could not satisfy dependencies)
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by pcbdraw
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by pyuv
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk2
+
+pactree -r python-mistune1
+
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by jupyter-nbconvert
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by pcbdraw
+yay -Rdd python-mistune1
+yay -S python-mistune
+
+yay -R wxgtk-common
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by pyuv
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk2
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk3
+yay -Rdd wxgtk-common
+yay -S wxwidgets-common
+
+:: Replace intel-mkl with community/intel-oneapi-mkl? [Y/n] y
+:: Replace kwayland-server with extra/kwin? [Y/n] y
+:: Replace wxgtk3 with extra/wxwidgets-gtk3? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+yay -R pipewire-media-session
+checking dependencies...
+error: failed to prepare transaction (could not satisfy dependencies)
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by gst-plugin-pipewire
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by kwin
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by pipewire-alsa
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by pipewire-v4l2
+yay -S wireplumber
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+
+yay -S python-absl
+[sudo] password for andy: 
+resolving dependencies...
+looking for conflicting packages...
+:: python-absl and absl-py are in conflict. Remove absl-py? [y/N] y
+
+yay -S intel-oneapi-mkl
+resolving dependencies...
+looking for conflicting packages...
+:: intel-oneapi-mkl and intel-mkl are in conflict. Remove intel-mkl? [y/N] y
+warning: dependency cycle detected:
+warning: intel-oneapi-openmp will be installed before its intel-oneapi-compiler-dpcpp-cpp-runtime dependency
+
+Packages (8) intel-mkl-2020.4.304-1 [removal]  intel-oneapi-common-2022.1.0-3
+             intel-oneapi-compiler-dpcpp-cpp-runtime-2022.1.0-7
+             intel-oneapi-compiler-shared-runtime-2022.1.0-8
+             intel-oneapi-openmp-2022.1.0-8  intel-oneapi-tbb-2021.6.0-4
+             level-zero-loader-1.8.1-1  intel-oneapi-mkl-2022.1.0_223-4
+
+yay -S kwin wxwidgets-gtk3 --overwrite=*
+
+yay -S gcc10 gcc10-libs
+:: Import PGP key F9F9FA97A403F63E
+sudo pacman-key -r F9F9FA97A403F63E
+gpg --keyserver keyserver.ubuntu.com --recv-keys F9F9FA97A403F63E
+
+sudo pacman -Syu --overwrite=*
+
+
+/etc/locale.gen installed as /etc/locale.gen.pacnew
+warning: directory permissions differ on /usr/lib/mysql/plugin/auth_pam_tool_dir/
+filesystem: 700  package: 755
+warning: directory permissions differ on /var/lib/samba/private/
+filesystem: 755  package: 700
+The Teamviewer daemon must be running for Teamviewer to work.
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+(780/793) upgrading virtualbox-ext-oracle                                         [##############################################] 100%
+0%...
+Progress state: NS_ERROR_FAILURE
+VBoxManage: error: Failed to install "/usr/share/virtualbox/extensions/Oracle_VM_VirtualBox_Extension_Pack-7.0.2.vbox-extpack"
+VBoxManage: error: Failed to load the main module ('/usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/linux.amd64/VBoxPuelMain.so'): VERR_FILE_NOT_FOUND - /usr/lib/virtualbox/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/linux.amd64/VBoxPuelMain.so: undefined symbol: RTUtf16NCmp
+VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component ExtPackManagerWrap, interface IExtPackManager
+VBoxManage: error: Context: "RTEXITCODE handleExtPack(HandlerArg*)" at line 1424 of file VBoxManageMisc.cpp
+error: command failed to execute correctly
+
+yay -S qt6-speech qemu-user-binfmt python-database-cubic-hecke
+```
+
+
+
+***
+# 安装 jupyter notebook
+```
+sudo -H pip3 install parsel -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pillow -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyecharts -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install jupyter -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install ipykernel -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install notedown -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install d2l==1.0.0a1.post0
+mkdir d2l-en && cd d2l-en
+curl https://d2l.ai/d2l-en.zip -o d2l-en.zip
+unzip d2l-en.zip && rm d2l-en.zip
+cd pytorch
+$ jupyter notebook
+```
+```
+sudo -H pip3 install --upgrade \
+                        pip \
+                        setuptools \
+                        numpy
+sudo -H pip3 install tensorflow-probability tensorflow-io-gcs-filesystem commentjson protobuf mxnet
+sudo -H pip3 install configure -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install spacy -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install scrapy -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install gluoncv -i https://mirrors.163.com/pypi/simple
+```
+```
+New optional dependencies for python-jsonschema
+    python-fqdn: check hostname format
+    python-idna: check idn-hostname format [installed]
+    python-isoduration: check duration format
+    python-jsonpointer: check json-pointer & relative-json-pointer format
+    python-rfc3339-validator: check date-time format
+    python-rfc3987: for iri, iri-reference, uri & uri-reference format
+    python-uri-template: for uri-template format
+    python-webcolors: check color format
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+```
+
+***
+# pip3 已安装模块快照
+```
+$ pip3 list
+Package                       Version
+----------------------------- -------------------
+absl-py                       1.3.0
+acme                          1.31.0
+aiodns                        3.0.0
+aiohttp                       3.8.3
+aiosignal                     1.2.0
+airdrop-ng                    1.1
+airgraph-ng                   1.1
+alabaster                     0.7.12
+alive-progress                1.4.0
+ANGRYsearch                   1.0.4
+anyio                         3.6.1
+anytree                       2.8.0
+apipkg                        3.0.1
+apparmor                      3.1.1
+appdirs                       1.4.4
+apsw                          3.38.5.post1
+argon2-cffi                   21.3.0
+argon2-cffi-bindings          21.2.0
+asciinema                     2.2.0
+asgiref                       3.5.2
+asn1crypto                    1.5.1
+astor                         0.8.1
+astroid                       2.12.12
+asttokens                     2.0.8
+astunparse                    1.6.3
+async-generator               1.10
+async-timeout                 4.0.2
+attrs                         22.1.0
+AUR                           2021.11.20.2.41.2
+autocfg                       0.0.8
+autocommand                   2.2.1
+Automat                       20.2.0
+Babel                         2.10.3
+backcall                      0.2.0
+bcrypt                        4.0.1
+Beaker                        1.11.0
+beautifulsoup4                4.11.1
+bencoder                      0.2.0
+bilibili-api                  9.0.2
+black                         22.10.0
+bleach                        5.0.1
+blis                          0.7.4
+blosc                         1.10.6
+Bottleneck                    1.3.5
+breezy                        3.3.0
+Brlapi                        0.8.4
+Brotli                        1.0.9
+brotlicffi                    1.0.9.2
+bs4                           0.0.1
+btrfsutil                     6.0
+CacheControl                  0.12.11
+cached-property               1.5.2
+cachetools                    5.2.0
+catalogue                     2.0.6
+catfish                       4.16.4
+cchardet                      2.1.7
+ceph                          1.0.0
+ceph-volume                   1.0.0
+cephfs                        2.0.0
+cephfs-shell                  0.0.1
+certbot                       1.31.0
+certifi                       2022.9.24
+cffi                          1.15.1
+cftime                        1.6.1
+chardet                       4.0.0
+charset-normalizer            2.1.1
+click                         7.1.2
+cloudpickle                   2.1.0
+cmd2                          2.4.2
+colorama                      0.4.6
+commentjson                   0.9.0
+ConfigArgParse                1.5.2
+configobj                     5.1.0.dev0
+configparser                  5.0.2
+configure                     0.5
+constantly                    15.1.0
+contextlib2                   21.6.0
+contourpy                     1.0.5
+coverage                      6.5.0
+crayons                       0.4.0
+cryptography                  38.0.1
+css-parser                    1.0.7
+cssselect                     1.1.0
+curio                         1.5
+cvxopt                        1.3.0
+cycler                        0.11.0
+cymem                         2.0.5
+cypari2                       2.1.2
+cysignals                     1.11.2
+Cython                        0.29.32
+d2l                           1.0.0a1.post0
+dask                          2022.7.1
+dblatex                       0.3.12
+debugpy                       1.6.3
+decorator                     5.1.1
+defusedxml                    0.7.1
+deluge                        2.1.1
+deprecation                   2.1.0
+dill                          0.3.5.1
+distlib                       0.3.6
+distributed                   2022.7.1
+distro                        1.7.0
+dm-tree                       0.1.7
+dnspython                     2.2.1
+docker                        6.0.0
+docker-pycreds                0.4.0
+dockerpty                     0.4.1
+docopt                        0.6.2
+docstring-to-markdown         0.10
+docutils                      0.19
+dot2tex                       2.11.3
+dulwich                       0.20.46
+entrypoints                   0.4
+et-xmlfile                    1.1.0
+euclid3                       0.1
+eventlet                      0.33.1
+exceptiongroup                1.0.0rc9
+executing                     1.1.1
+fastbencode                   0.0.12
+fastjsonschema                2.16.2
+feedparser                    6.0.10
+feeluown                      3.8.8
+filelock                      3.8.0
+fire                          0.4.0
+Flask                         2.2.2
+flatbuffers                   22.10.26
+flowblade                     2.8.0.3
+fonttools                     4.38.0
+fpylll                        0.5.7
+frozenlist                    1.3.1
+fs                            2.4.16
+fsspec                        2022.5.0
+fuo-bilibili                  0.1.3
+fuo-dl                        0.3
+fuo-kuwo                      0.1.6
+fuo-local                     0.3
+fuo-netease                   0.9.2
+fuo-qqmusic                   0.4.1
+fuo-ytmusic                   0.1.0
+future                        0.18.2
+fuzzywuzzy                    0.18.0
+gast                          0.3.3
+GeoIP                         1.3.2
+gevent                        22.10.1
+gluoncv                       0.10.5.post0
+gmpy2                         2.1.2
+google-auth                   2.6.2
+google-auth-oauthlib          0.5.2
+google-pasta                  0.2.0
+gps                           3.24
+graphviz                      0.8.4
+greenlet                      1.1.3
+grpcio                        1.50.0
+gunicorn                      20.1.0
+gym                           0.26.2
+gym-notices                   0.0.8
+h11                           0.12.0
+h2                            3.2.0
+h5py                          3.7.0
+HeapDict                      1.0.1
+hpack                         3.0.0
+html2text                     2020.1.16
+html5-parser                  0.4.10
+html5lib                      1.1
+httplib2                      0.20.4
+hyperframe                    5.2.0
+hyperlink                     21.0.0
+idna                          3.4
+ifaddr                        0.2.0
+igraph                        0.10.2
+imageio                       2.22.1
+imagesize                     1.4.1
+importlib-metadata            5.0.0
+incremental                   22.10.0
+inflate64                     0.1.3
+inflect                       6.0.2
+iniconfig                     1.1.1
+intel-openmp                  2021.4.0
+ipykernel                     6.16.2
+ipython                       8.5.0
+ipython-genutils              0.2.0
+ipywidgets                    8.0.2
+isodate                       0.6.1
+isort                         5.10.1
+itemadapter                   0.4.0
+itemloaders                   1.0.4
+itsdangerous                  2.1.2
+janus                         1.0.0
+jaraco.classes                3.2.3
+jaraco.context                4.1.2
+jaraco.functools              3.5.2
+jaraco.text                   3.10.0
+jdcal                         1.4.1
+jedi                          0.18.1
+jedi-language-server          0.37.0
+jeepney                       0.8.0
+Jinja2                        3.1.2
+jmespath                      0.10.0
+joblib                        1.2.0
+josepy                        1.13.0
+json5                         0.9.10
+jsonschema                    4.16.0
+JuPyMake                      0.9
+jupyter                       1.0.0
+jupyter_client                7.4.4
+jupyter-console               6.4.4
+jupyter_core                  4.11.2
+jupyter-jsmol                 2022.1.0
+jupyter_packaging             0.12.3
+jupyter-server                1.21.0
+jupyter-server-mathjax        0.2.6
+jupyterlab                    3.5.0
+jupyterlab-pygments           0.2.2
+jupyterlab_server             2.16.1
+jupyterlab-widgets            3.0.3
+kazam                         1.4.5
+keras                         2.10.0
+Keras-Applications            1.0.8
+Keras-Preprocessing           1.1.2
+keyring                       23.9.3
+keyutils                      0.6
+KiKit                         0.0.0
+kiwisolver                    1.4.4
+lark                          1.1.3
+lark-parser                   0.7.8
+lazy-object-proxy             1.8.0
+lensfun                       0.3.3
+LibAppArmor                   3.1.1
+libclang                      12.0.0
+libfdt                        1.6.1
+libtorrent                    2.0.7
+libvirt-python                8.8.0
+lit                           14.0.6.dev0
+locket                        1.0.0
+loguru                        0.5.3
+logutils                      0.3.5
+louis                         3.23.0
+lrcalc                        2.0.0
+lxml                          4.9.1
+lz4                           3.1.10
+Mako                          1.2.3
+mallard-ducktype              1.0.2
+Markdown                      3.4.1
+markdown2                     2.4.3
+Markups                       3.1.3
+MarkupSafe                    2.1.1
+marshmallow                   3.18.0
+matplotlib                    3.6.1
+matplotlib-inline             0.1.6
+mccabe                        0.7.0
+mechanize                     0.4.8
+MemoizeDB                     2021.11.20.2.41.2
+memory-allocator              0.1.3
+merge3                        0.0.10
+meson                         0.63.3
+mistune                       2.0.4
+mkl                           2021.4.0
+mock                          3.0.5
+monotonic                     1.6
+more-itertools                9.0.0
+MouseInfo                     0.1.3
+mpmath                        1.2.1
+msgpack                       1.0.4
+multidict                     6.0.2
+multivolumefile               0.2.3
+murmurhash                    1.0.5
+mutagen                       1.46.0
+mxboard                       0.1.0
+mxnet                         1.9.1
+mypy                          0.982
+mypy-extensions               0.4.3
+nautilus-terminal             3.5.0
+nbclassic                     0.4.7
+nbclient                      0.7.0
+nbconvert                     7.2.3
+nbformat                      5.7.0
+ndg-httpsclient               0.5.1
+nest-asyncio                  1.5.6
+netCDF4                       1.6.0
+netifaces                     0.11.0
+netsnmp-python                1.0a1
+networkx                      2.8.7
+nose                          1.3.7
+notebook                      6.5.1
+notebook_shim                 0.2.0
+notedown                      1.5.1
+notify2                       0.3.1
+nspektr                       0.4.0
+numexpr                       2.8.3
+numpy                         1.23.4
+oauthlib                      3.2.0
+olefile                       0.46
+OpenCC                        1.1.4
+opencv-contrib-python         4.5.4.58
+opencv-python                 4.6.0.66
+openpyxl                      3.0.10
+opt-einsum                    3.3.0
+ordered-set                   4.1.0
+outcome                       1.2.0
+packaging                     21.3
+pandas                        1.4.4
+pandoc-attributes             0.1.7
+pandocfilters                 1.5.0
+paramiko                      2.11.0
+parse                         1.19.0
+parsedatetime                 2.6
+parsel                        1.6.0
+parso                         0.8.3
+partd                         1.2.0
+pathspec                      0.10.1
+pathy                         0.6.1
+patiencediff                  0.2.6
+patsy                         0.5.3
+pbr                           5.11.0
+PcbDraw                       0.6.1
+pcbnewTransition              0.2.0
+pdftotext                     2.2.2
+pecan                         1.4.2
+pep517                        0.13.0
+pexpect                       4.8.0
+pickleshare                   0.7.5
+pilkit                        2.0
+Pillow                        9.2.0
+Pint                          0.19.2
+pip                           22.3
+pkgconfig                     1.5.5
+platformdirs                  2.5.2
+pluggy                        1.0.0
+ply                           3.11
+portalocker                   2.3.2
+pplpy                         0.8.7
+preshed                       3.0.5
+prettytable                   3.4.1
+primecountpy                  0.1.0
+priority                      1.3.0
+progress                      1.6
+prometheus-client             0.15.0
+prompt-toolkit                3.0.31
+Protego                       0.1.16
+protobuf                      4.21.7
+psutil                        5.9.3
+psycopg2                      2.9.3
+ptyprocess                    0.7.0
+pulsemixer                    1.5.1
+pure-eval                     0.2.2
+pwquality                     1.4.4
+py                            1.11.0
+py7zr                         0.19.0
+pyalpm                        0.10.6
+pyaml                         21.10.1
+pyarrow                       9.0.0
+pyasn1                        0.4.8
+pyasn1-modules                0.2.8
+PyAutoGUI                     0.9.52
+pybars3                       0.9.7
+pybcj                         1.0.1
+pybind11                      2.10.0
+pycairo                       1.21.0
+pycares                       4.2.2
+pychm                         0.8.6
+pycocotools                   2.0.5
+pycodestyle                   2.9.1
+pycosat                       0.6.4
+pycparser                     2.21
+pycryptodome                  3.15.0
+pycryptodomex                 3.12.0
+pycryptosat                   5.11.4
+pycups                        2.0.1
+pycurl                        7.45.1
+pydantic                      1.8.2
+pydbus                        0.6.0
+pydecor                       2.0.1
+PyDispatcher                  2.0.5
+pydot                         1.4.2
+pyecharts                     1.9.0
+pyflakes                      2.5.0
+pygame                        2.1.2
+PyGetWindow                   0.0.9
+pyGHDL                        1.0.0
+pygls                         0.12.1
+Pygments                      2.13.0
+PyGObject                     3.42.2
+PyHamcrest                    2.0.4
+pyinotify                     0.9.6
+pylint                        2.14.5
+PyMeta3                       0.5.1
+PyMsgBox                      1.0.9
+PyMySQL                       1.0.2
+PyNaCl                        1.4.0
+PyNormaliz                    2.17
+PyOpenGL                      3.1.6
+pyOpenSSL                     22.1.0
+pyparsing                     3.0.9
+pyperclip                     1.8.2
+pypillowfight                 0.3.0
+pypng                         0.0.21
+pyppmd                        1.0.0
+PyQt5                         5.15.7
+PyQt5-sip                     12.11.0
+PyQt6                         6.4.0
+PyQt6-sip                     13.4.0
+PyQt6-WebEngine               6.4.0
+PyQtWebEngine                 5.15.6
+pyquery                       1.4.3
+PyRect                        0.1.4
+pyRFC3339                     1.1
+pyrsistent                    0.19.0
+PyScreeze                     0.1.28
+pyserial                      3.5
+PySide2                       5.15.6
+PySide6                       6.4.0.1
+PySocks                       1.7.1
+pytest                        7.1.3
+pytest-runner                 6.0.0
+python-dateutil               2.8.2
+python-distutils-extra        2.39
+python-dotenv                 0.21.0
+python-markdown-math          0.8
+python-snappy                 0.6.1
+python-xlib                   0.31
+python3-xlib                  0.15
+pytube                        11.0.2
+PyTweening                    1.0.3
+pytz                          2022.1
+pytz-deprecation-shim         0.1.0.post0
+pyVHDLModel                   0.12.0
+PyVISA                        1.11.3
+PyWavelets                    1.4.1
+pywebcopy                     6.3.0
+pyxdg                         0.28
+PyYAML                        6.0
+pyzmq                         24.0.1
+pyzstd                        0.15.3
+qasync                        0.23.0
+qrcode                        6.1
+qrtools                       2.1
+qtconsole                     5.2.2
+QtPy                          2.1.0
+queuelib                      1.6.2
+rados                         2.0.0
+railroad-diagrams             2.0.4
+ranger-fm                     1.9.3
+rbd                           2.0.0
+rdflib                        6.2.0
+regex                         2022.9.13
+rencode                       1.0.6
+reportlab                     3.6.11
+requests                      2.28.1
+requests-oauthlib             1.3.1
+requests-toolbelt             0.10.1
+requests-unixsocket           0.3.0
+resolvelib                    0.8.1
+ReText                        7.2.3
+retrying                      1.3.3
+rgw                           2.0.0
+rpm                           4.18.0
+rpy2                          3.5.5
+rsa                           4.9
+s-tui                         1.1.3
+sage-numerical-backends-coin  9.0b12
+sagemath-standard             9.7
+sagenb-export                 3.3
+scikit-build                  0.15.0
+scikit-image                  0.19.3
+scikit-learn                  1.1.2
+scipy                         1.9.3
+SCons                         4.4.0
+scour                         0.38.2
+Scrapy                        2.5.1
+seaborn                       0.11.2
+SecretStorage                 3.3.3
+selenium                      4.0.0
+selinux                       3.3
+Send2Trash                    1.8.0
+service-identity              21.1.0
+setproctitle                  1.3.1
+setuptools                    65.5.0
+setuptools-scm                7.0.5
+sgmllib3k                     1.0.0
+shadowsocks                   3.0.0
+Shapely                       1.8.2
+shiboken2                     5.15.6
+shiboken6                     6.4.0.1
+simplejson                    3.17.6
+sip                           6.7.2
+six                           1.16.0
+skorch                        0.12.0
+smart-open                    5.2.1
+smbus                         1.1
+sniffio                       1.3.0
+snowballstemmer               2.2.0
+solidpython                   1.1.3
+sortedcontainers              2.4.0
+soupsieve                     2.3.2.post1
+spacy                         3.1.4
+spacy-legacy                  3.0.8
+Sphinx                        5.3.0
+sphinx-rtd-theme              1.0.0
+sphinxcontrib-applehelp       1.0.2
+sphinxcontrib-devhelp         1.0.2
+sphinxcontrib-htmlhelp        2.0.0
+sphinxcontrib-jsmath          1.0.1
+sphinxcontrib-qthelp          1.0.3
+sphinxcontrib-serializinghtml 1.1.5
+SQLAlchemy                    1.4.42
+srsly                         2.4.2
+SSSDConfig                    2.8.0
+stack-data                    0.5.1
+statsmodels                   0.13.2
+sympy                         1.11.1
+tables                        3.7.0
+tabulate                      0.9.0
+tbb                           2021.4.0
+tblib                         1.7.0
+team                          1.0
+tensorboard                   2.10.1
+tensorboard-data-server       0.7.0a0
+tensorboard-plugin-wit        1.8.1
+tensorboardX                  2.5.1
+tensorflow                    2.10.0
+tensorflow-estimator          2.10.0
+tensorflow-io-gcs-filesystem  0.27.0
+tensorflow-probability        0.18.0
+termcolor                     2.0.1
+terminado                     0.17.0
+testpath                      0.6.0
+texttable                     1.6.4
+thinc                         8.0.12
+threadpoolctl                 3.1.0
+tifffile                      2022.10.10
+tinycss2                      1.2.1
+toml                          0.10.2
+tomli                         2.0.1
+tomlkit                       0.11.5
+toolz                         0.12.0
+torch                         1.12.1
+torchvision                   0.2.2.post3
+tornado                       6.2
+tox                           3.26.0
+tqdm                          4.64.1
+traitlets                     5.5.0
+trash-cli                     0.22.8.27
+trio                          0.22.0
+trio-websocket                0.9.2
+trove-classifiers             2022.10.19
+Twisted                       22.8.0
+typed-ast                     1.5.4
+typeguard                     2.13.3
+typer                         0.3.2
+typing_extensions             4.4.0
+tzdata                        2022.5
+tzlocal                       4.2
+udiskie                       2.4.2
+ueberzug                      18.1.9
+unicodedata2                  14.0.0
+Unidecode                     1.3.6
+unrardll                      0.1.5
+urllib3                       1.26.12
+urwid                         2.1.2
+validate                      5.1.0.dev0
+validate-pyproject            0.10.1
+vboxapi                       1.0
+vidcutter                     6.0.5.1
+virtualenv                    20.16.6
+vtr-xml-utils                 0.0.1
+w3lib                         1.22.0
+waitress                      2.1.2
+Wand                          0.6.10
+wasabi                        0.8.2
+wcwidth                       0.2.5
+webdriver-manager             3.5.2
+webencodings                  0.5.1
+WebOb                         1.8.7
+websocket-client              1.4.1
+websockets                    10.3
+WebTest                       3.0.0
+Werkzeug                      2.2.2
+wheel                         0.37.1
+widgetsnbextension            4.0.3
+wrapt                         1.14.1
+wsproto                       1.0.0
+wxPython                      4.1.1
+xarray                        2022.6.0
+XCGF                          2021.11.20.2.41.3
+XCPF                          2021.12.24.10.22.41
+xdot                          1.2
+xlrd                          2.0.1
+xlwt                          1.3.0
+xpra                          4.3.3
+yacs                          0.1.8
+yapf                          0.32.0
+yarl                          1.8.1
+yt-dlp                        2022.10.4
+ytmusicapi                    0.21.0
+zeroconf                      0.39.1
+zict                          2.2.0
+zipfile-deflate64             0.2.0
+zipp                          3.10.0
+zope.component                5.0.1
+zope.deferredimport           4.4
+zope.deprecation              4.4.0
+zope.event                    4.5.0
+zope.hookable                 5.2
+zope.interface                5.5.0
+zope.proxy                    4.5.1
+zopfli                        0.2.1
+zstandard                     0.18.0
+```
+
+```
+sudo -H pip3 install --force-reinstall --upgrade torchvision torch
+sudo -H pip3 install --force-reinstall --ignore-installed --upgrade d2l==1.0.0a1.post0
+
+tensorboardx 2.5.1 requires protobuf<=3.20.1,>=3.8.0, but you have protobuf 4.21.7 which is incompatible.
+sphinx-rtd-theme 1.0.0 requires docutils<0.18, but you have docutils 0.19 which is incompatible.
+py7zr 0.19.0 requires pyppmd<0.19.0,>=0.18.1, but you have pyppmd 1.0.0 which is incompatible.
+jedi-language-server 0.37.0 requires pydantic<2.0.0,>=1.9.1, but you have pydantic 1.8.2 which is incompatible.
+flask 2.2.2 requires click>=8.0, but you have click 7.1.2 which is incompatible.
+distributed 2022.7.1 requires tornado<6.2,>=6.0.3, but you have tornado 6.2 which is incompatible.
+bilibili-api 9.0.2 requires aiohttp~=3.7.4.post0, but you have aiohttp 3.8.3 which is incompatible.
+bilibili-api 9.0.2 requires beautifulsoup4~=4.9.3, but you have beautifulsoup4 4.11.1 which is incompatible.
+bilibili-api 9.0.2 requires lxml~=4.6.1, but you have lxml 4.9.1 which is incompatible.
+bilibili-api 9.0.2 requires pyyaml~=5.4.1, but you have pyyaml 6.0 which is incompatible.
+bilibili-api 9.0.2 requires yarl~=1.6.0, but you have yarl 1.8.1 which is incompatible.
+
+sudo -H pip3 install --force-reinstall --ignore-installed --upgrade tensorflow tensorflow-probability
+sudo -H pip3 install --force-reinstall --ignore-installed --upgrade bilibili-api distributed flask inflect pydantic sphinx-rtd-theme jedi-language-server
+
+zeroconf 0.39.1 requires async_timeout>=4.0.1, but you have async-timeout 3.0.1 which is incompatible.
+typer 0.3.2 requires click<7.2.0,>=7.1.1, but you have click 8.1.3 which is incompatible.
+thinc 8.0.12 requires pydantic!=1.8,!=1.8.1,<1.9.0,>=1.7.4, but you have pydantic 1.10.2 which is incompatible.
+tensorflow 2.10.0 requires protobuf<3.20,>=3.9.2, but you have protobuf 4.21.7 which is incompatible.
+spacy 3.1.4 requires pydantic!=1.8,!=1.8.1,<1.9.0,>=1.7.4, but you have pydantic 1.10.2 which is incompatible.
+py7zr 0.19.0 requires pyppmd<0.19.0,>=0.18.1, but you have pyppmd 1.0.0 which is incompatible.
+notebook 6.5.1 requires nbclassic==0.4.5, but you have nbclassic 0.4.7 which is incompatible.
+jupyter-client 7.4.4 requires tornado>=6.2, but you have tornado 6.1 which is incompatible.
+
+sudo -H pip3 install --force-reinstall --ignore-installed --upgrade jupyter-client tornado notebook py7zr spacy protobuf thinc typer zeroconf
+```
+最新的包来自源
+<https://pypi.python.org/simple>
+
+```
+$ pip3 list
+Package                       Version
+----------------------------- -------------------
+absl-py                       1.3.0
+acme                          1.31.0
+aiodns                        3.0.0
+aiohttp                       3.8.3
+aiosignal                     1.2.0
+airdrop-ng                    1.1
+airgraph-ng                   1.1
+alabaster                     0.7.12
+alive-progress                1.4.0
+ANGRYsearch                   1.0.4
+anyio                         3.6.2
+anytree                       2.8.0
+apipkg                        3.0.1
+apparmor                      3.1.1
+appdirs                       1.4.4
+apsw                          3.38.5.post1
+argon2-cffi                   21.3.0
+argon2-cffi-bindings          21.2.0
+asciinema                     2.2.0
+asgiref                       3.5.2
+asn1crypto                    1.5.1
+astor                         0.8.1
+astroid                       2.12.12
+asttokens                     2.0.8
+astunparse                    1.6.3
+async-generator               1.10
+async-timeout                 4.0.2
+attrs                         22.1.0
+AUR                           2021.11.20.2.41.2
+autocfg                       0.0.8
+autocommand                   2.2.1
+Automat                       20.2.0
+Babel                         2.10.3
+backcall                      0.2.0
+bcrypt                        4.0.1
+Beaker                        1.11.0
+beautifulsoup4                4.11.1
+bencoder                      0.2.0
+bilibili-api                  9.1.0
+black                         22.10.0
+bleach                        5.0.1
+blis                          0.7.9
+blosc                         1.10.6
+Bottleneck                    1.3.5
+breezy                        3.3.0
+Brlapi                        0.8.4
+Brotli                        1.0.9
+brotlicffi                    1.0.9.2
+bs4                           0.0.1
+btrfsutil                     6.0
+CacheControl                  0.12.11
+cached-property               1.5.2
+cachetools                    5.2.0
+catalogue                     2.0.8
+catfish                       4.16.4
+cchardet                      2.1.7
+ceph                          1.0.0
+ceph-volume                   1.0.0
+cephfs                        2.0.0
+cephfs-shell                  0.0.1
+certbot                       1.31.0
+certifi                       2022.9.24
+cffi                          1.15.1
+cftime                        1.6.1
+chardet                       4.0.0
+charset-normalizer            2.1.1
+click                         8.1.3
+cloudpickle                   2.2.0
+cmd2                          2.4.2
+colorama                      0.4.6
+commentjson                   0.9.0
+confection                    0.0.3
+ConfigArgParse                1.5.2
+configobj                     5.1.0.dev0
+configparser                  5.0.2
+configure                     0.5
+constantly                    15.1.0
+contextlib2                   21.6.0
+contourpy                     1.0.5
+coverage                      6.5.0
+crayons                       0.4.0
+cryptography                  38.0.1
+css-parser                    1.0.7
+cssselect                     1.1.0
+curio                         1.5
+cvxopt                        1.3.0
+cycler                        0.11.0
+cymem                         2.0.7
+cypari2                       2.1.2
+cysignals                     1.11.2
+Cython                        0.29.32
+d2l                           1.0.0a1.post0
+dask                          2022.10.0
+dblatex                       0.3.12
+debugpy                       1.6.3
+decorator                     5.1.1
+defusedxml                    0.7.1
+deluge                        2.1.1
+deprecation                   2.1.0
+dill                          0.3.5.1
+distlib                       0.3.6
+distributed                   2022.10.0
+distro                        1.7.0
+dm-tree                       0.1.7
+dnspython                     2.2.1
+docker                        6.0.0
+docker-pycreds                0.4.0
+dockerpty                     0.4.1
+docopt                        0.6.2
+docstring-to-markdown         0.10
+docutils                      0.19
+dot2tex                       2.11.3
+dulwich                       0.20.46
+entrypoints                   0.4
+et-xmlfile                    1.1.0
+euclid3                       0.1
+eventlet                      0.33.1
+exceptiongroup                1.0.0rc9
+executing                     1.1.1
+fastbencode                   0.0.12
+fastjsonschema                2.16.2
+feedparser                    6.0.10
+feeluown                      3.8.8
+filelock                      3.8.0
+fire                          0.4.0
+Flask                         2.2.2
+flatbuffers                   22.10.26
+flowblade                     2.8.0.3
+fonttools                     4.38.0
+fpylll                        0.5.7
+frozenlist                    1.3.1
+fs                            2.4.16
+fsspec                        2022.10.0
+fuo-bilibili                  0.1.3
+fuo-dl                        0.3
+fuo-kuwo                      0.1.6
+fuo-local                     0.3
+fuo-netease                   0.9.2
+fuo-qqmusic                   0.4.1
+fuo-ytmusic                   0.1.0
+future                        0.18.2
+fuzzywuzzy                    0.18.0
+gast                          0.4.0
+GeoIP                         1.3.2
+gevent                        22.10.1
+gluoncv                       0.10.5.post0
+gmpy2                         2.1.2
+google-auth                   2.13.0
+google-auth-oauthlib          0.5.2
+google-pasta                  0.2.0
+gps                           3.24
+graphviz                      0.8.4
+greenlet                      1.1.3
+grpcio                        1.50.0
+gunicorn                      20.1.0
+gym                           0.26.2
+gym-notices                   0.0.8
+h11                           0.12.0
+h2                            3.2.0
+h5py                          3.7.0
+HeapDict                      1.0.1
+hpack                         3.0.0
+html2text                     2020.1.16
+html5-parser                  0.4.10
+html5lib                      1.1
+httplib2                      0.20.4
+hyperframe                    5.2.0
+hyperlink                     21.0.0
+idna                          3.4
+ifaddr                        0.2.0
+igraph                        0.10.2
+imageio                       2.22.1
+imagesize                     1.4.1
+importlib-metadata            5.0.0
+incremental                   22.10.0
+inflate64                     0.3.0
+inflect                       6.0.2
+iniconfig                     1.1.1
+intel-openmp                  2021.4.0
+ipykernel                     6.16.2
+ipython                       8.5.0
+ipython-genutils              0.2.0
+ipywidgets                    8.0.2
+isodate                       0.6.1
+isort                         5.10.1
+itemadapter                   0.4.0
+itemloaders                   1.0.4
+itsdangerous                  2.1.2
+janus                         1.0.0
+jaraco.classes                3.2.3
+jaraco.context                4.1.2
+jaraco.functools              3.5.2
+jaraco.text                   3.10.0
+jdcal                         1.4.1
+jedi                          0.18.1
+jedi-language-server          0.38.0
+jeepney                       0.8.0
+Jinja2                        3.1.2
+jmespath                      0.10.0
+joblib                        1.2.0
+josepy                        1.13.0
+json5                         0.9.10
+jsonschema                    4.16.0
+JuPyMake                      0.9
+jupyter                       1.0.0
+jupyter_client                7.4.4
+jupyter-console               6.4.4
+jupyter_core                  4.11.2
+jupyter-jsmol                 2022.1.0
+jupyter_packaging             0.12.3
+jupyter-server                1.21.0
+jupyter-server-mathjax        0.2.6
+jupyterlab                    3.5.0
+jupyterlab-pygments           0.2.2
+jupyterlab_server             2.16.1
+jupyterlab-widgets            3.0.3
+kazam                         1.4.5
+keras                         2.10.0
+Keras-Applications            1.0.8
+Keras-Preprocessing           1.1.2
+keyring                       23.9.3
+keyutils                      0.6
+KiKit                         0.0.0
+kiwisolver                    1.4.4
+langcodes                     3.3.0
+lark                          1.1.3
+lark-parser                   0.7.8
+lazy-object-proxy             1.8.0
+lensfun                       0.3.3
+LibAppArmor                   3.1.1
+libclang                      14.0.6
+libfdt                        1.6.1
+libtorrent                    2.0.7
+libvirt-python                8.8.0
+lit                           14.0.6.dev0
+locket                        1.0.0
+loguru                        0.5.3
+logutils                      0.3.5
+louis                         3.23.0
+lrcalc                        2.0.0
+lxml                          4.9.1
+lz4                           3.1.10
+Mako                          1.2.3
+mallard-ducktype              1.0.2
+Markdown                      3.4.1
+markdown2                     2.4.3
+Markups                       3.1.3
+MarkupSafe                    2.1.1
+marshmallow                   3.18.0
+matplotlib                    3.6.1
+matplotlib-inline             0.1.6
+mccabe                        0.7.0
+mechanize                     0.4.8
+MemoizeDB                     2021.11.20.2.41.2
+memory-allocator              0.1.3
+merge3                        0.0.10
+meson                         0.63.3
+mistune                       2.0.4
+mkl                           2021.4.0
+mock                          3.0.5
+monotonic                     1.6
+more-itertools                9.0.0
+MouseInfo                     0.1.3
+mpmath                        1.2.1
+msgpack                       1.0.4
+multidict                     6.0.2
+multivolumefile               0.2.3
+murmurhash                    1.0.9
+mutagen                       1.46.0
+mxboard                       0.1.0
+mxnet                         1.9.1
+mypy                          0.982
+mypy-extensions               0.4.3
+nautilus-terminal             3.5.0
+nbclassic                     0.4.7
+nbclient                      0.7.0
+nbconvert                     7.2.3
+nbformat                      5.7.0
+ndg-httpsclient               0.5.1
+nest-asyncio                  1.5.6
+netCDF4                       1.6.0
+netifaces                     0.11.0
+netsnmp-python                1.0a1
+networkx                      2.8.7
+nose                          1.3.7
+notebook                      6.5.1
+notebook_shim                 0.2.0
+notedown                      1.5.1
+notify2                       0.3.1
+nspektr                       0.4.0
+numexpr                       2.8.3
+numpy                         1.23.4
+oauthlib                      3.2.2
+olefile                       0.46
+OpenCC                        1.1.4
+opencv-contrib-python         4.5.4.58
+opencv-python                 4.6.0.66
+openpyxl                      3.0.10
+opt-einsum                    3.3.0
+ordered-set                   4.1.0
+outcome                       1.2.0
+packaging                     21.3
+pandas                        1.5.1
+pandoc-attributes             0.1.7
+pandocfilters                 1.5.0
+paramiko                      2.11.0
+parse                         1.19.0
+parsedatetime                 2.6
+parsel                        1.6.0
+parso                         0.8.3
+partd                         1.3.0
+pathspec                      0.10.1
+pathy                         0.6.2
+patiencediff                  0.2.6
+patsy                         0.5.3
+pbr                           5.11.0
+PcbDraw                       0.6.1
+pcbnewTransition              0.2.0
+pdftotext                     2.2.2
+pecan                         1.4.2
+pep517                        0.13.0
+pexpect                       4.8.0
+pickleshare                   0.7.5
+pilkit                        2.0
+Pillow                        9.2.0
+Pint                          0.19.2
+pip                           22.3
+pkgconfig                     1.5.5
+platformdirs                  2.5.2
+pluggy                        1.0.0
+ply                           3.11
+portalocker                   2.3.2
+pplpy                         0.8.7
+preshed                       3.0.8
+prettytable                   3.4.1
+primecountpy                  0.1.0
+priority                      1.3.0
+progress                      1.6
+prometheus-client             0.15.0
+prompt-toolkit                3.0.31
+Protego                       0.1.16
+protobuf                      4.21.9
+psutil                        5.9.3
+psycopg2                      2.9.3
+ptyprocess                    0.7.0
+pulsemixer                    1.5.1
+pure-eval                     0.2.2
+pwquality                     1.4.4
+py                            1.11.0
+py7zr                         0.20.0
+pyalpm                        0.10.6
+pyaml                         21.10.1
+pyarrow                       9.0.0
+pyasn1                        0.4.8
+pyasn1-modules                0.2.8
+PyAutoGUI                     0.9.52
+pybars3                       0.9.7
+pybcj                         1.0.1
+pybind11                      2.10.0
+pycairo                       1.21.0
+pycares                       4.2.2
+pychm                         0.8.6
+pycocotools                   2.0.5
+pycodestyle                   2.9.1
+pycosat                       0.6.4
+pycparser                     2.21
+pycryptodome                  3.15.0
+pycryptodomex                 3.15.0
+pycryptosat                   5.11.4
+pycups                        2.0.1
+pycurl                        7.45.1
+pydantic                      1.10.2
+pydbus                        0.6.0
+pydecor                       2.0.1
+PyDispatcher                  2.0.5
+pydot                         1.4.2
+pyecharts                     1.9.0
+pyflakes                      2.5.0
+pygame                        2.1.2
+PyGetWindow                   0.0.9
+pyGHDL                        1.0.0
+pygls                         0.12.4
+Pygments                      2.13.0
+PyGObject                     3.42.2
+PyHamcrest                    2.0.4
+pyinotify                     0.9.6
+pylint                        2.14.5
+PyMeta3                       0.5.1
+PyMsgBox                      1.0.9
+PyMySQL                       1.0.2
+PyNaCl                        1.4.0
+PyNormaliz                    2.17
+PyOpenGL                      3.1.6
+pyOpenSSL                     22.1.0
+pyparsing                     3.0.9
+pyperclip                     1.8.2
+pypillowfight                 0.3.0
+pypng                         0.0.21
+pyppmd                        1.0.0
+PyQt5                         5.15.7
+PyQt5-sip                     12.11.0
+PyQt6                         6.4.0
+PyQt6-sip                     13.4.0
+PyQt6-WebEngine               6.4.0
+PyQtWebEngine                 5.15.6
+pyquery                       1.4.3
+PyRect                        0.1.4
+pyRFC3339                     1.1
+pyrsistent                    0.19.0
+PyScreeze                     0.1.28
+pyserial                      3.5
+PySide2                       5.15.6
+PySide6                       6.4.0.1
+PySocks                       1.7.1
+pytest                        7.1.3
+pytest-runner                 6.0.0
+python-dateutil               2.8.2
+python-distutils-extra        2.39
+python-dotenv                 0.21.0
+python-markdown-math          0.8
+python-snappy                 0.6.1
+python-xlib                   0.31
+python3-xlib                  0.15
+pytube                        11.0.2
+PyTweening                    1.0.3
+pytz                          2022.5
+pytz-deprecation-shim         0.1.0.post0
+pyVHDLModel                   0.12.0
+PyVISA                        1.11.3
+PyWavelets                    1.4.1
+pywebcopy                     6.3.0
+pyxdg                         0.28
+PyYAML                        6.0
+pyzmq                         24.0.1
+pyzstd                        0.15.3
+qasync                        0.23.0
+qrcode                        6.1
+qrtools                       2.1
+qtconsole                     5.3.2
+QtPy                          2.2.1
+queuelib                      1.6.2
+rados                         2.0.0
+railroad-diagrams             2.0.4
+ranger-fm                     1.9.3
+rbd                           2.0.0
+rdflib                        6.2.0
+regex                         2022.9.13
+rencode                       1.0.6
+reportlab                     3.6.11
+requests                      2.28.1
+requests-oauthlib             1.3.1
+requests-toolbelt             0.10.1
+requests-unixsocket           0.3.0
+resolvelib                    0.8.1
+ReText                        7.2.3
+retrying                      1.3.3
+rgw                           2.0.0
+rpm                           4.18.0
+rpy2                          3.5.5
+rsa                           4.9
+s-tui                         1.1.3
+sage-numerical-backends-coin  9.0b12
+sagemath-standard             9.7
+sagenb-export                 3.3
+scikit-build                  0.15.0
+scikit-image                  0.19.3
+scikit-learn                  1.1.2
+scipy                         1.9.3
+SCons                         4.4.0
+scour                         0.38.2
+Scrapy                        2.5.1
+seaborn                       0.11.2
+SecretStorage                 3.3.3
+selenium                      4.0.0
+selinux                       3.3
+Send2Trash                    1.8.0
+service-identity              21.1.0
+setproctitle                  1.3.1
+setuptools                    65.5.0
+setuptools-scm                7.0.5
+sgmllib3k                     1.0.0
+shadowsocks                   3.0.0
+Shapely                       1.8.2
+shiboken2                     5.15.6
+shiboken6                     6.4.0.1
+simplejson                    3.17.6
+sip                           6.7.2
+six                           1.16.0
+skorch                        0.12.0
+smart-open                    5.2.1
+smbus                         1.1
+sniffio                       1.3.0
+snowballstemmer               2.2.0
+solidpython                   1.1.3
+sortedcontainers              2.4.0
+soupsieve                     2.3.2.post1
+spacy                         3.4.2
+spacy-legacy                  3.0.10
+spacy-loggers                 1.0.3
+Sphinx                        5.3.0
+sphinx-rtd-theme              1.0.0
+sphinxcontrib-applehelp       1.0.2
+sphinxcontrib-devhelp         1.0.2
+sphinxcontrib-htmlhelp        2.0.0
+sphinxcontrib-jsmath          1.0.1
+sphinxcontrib-qthelp          1.0.3
+sphinxcontrib-serializinghtml 1.1.5
+SQLAlchemy                    1.4.42
+srsly                         2.4.5
+SSSDConfig                    2.8.0
+stack-data                    0.5.1
+statsmodels                   0.13.2
+sympy                         1.11.1
+tables                        3.7.0
+tabulate                      0.9.0
+tbb                           2021.4.0
+tblib                         1.7.0
+team                          1.0
+tensorboard                   2.10.1
+tensorboard-data-server       0.7.0a0
+tensorboard-plugin-wit        1.8.1
+tensorboardX                  2.5.1
+tensorflow                    2.10.0
+tensorflow-estimator          2.10.0
+tensorflow-io-gcs-filesystem  0.27.0
+tensorflow-probability        0.18.0
+termcolor                     2.0.1
+terminado                     0.17.0
+testpath                      0.6.0
+texttable                     1.6.4
+thinc                         8.1.5
+threadpoolctl                 3.1.0
+tifffile                      2022.10.10
+tinycss2                      1.2.1
+toml                          0.10.2
+tomli                         2.0.1
+tomlkit                       0.11.5
+toolz                         0.12.0
+torch                         1.12.1
+torchvision                   0.13.1
+tornado                       6.2
+tox                           3.26.0
+tqdm                          4.64.1
+traitlets                     5.5.0
+trash-cli                     0.22.8.27
+trio                          0.22.0
+trio-websocket                0.9.2
+trove-classifiers             2022.10.19
+Twisted                       22.8.0
+typed-ast                     1.5.4
+typeguard                     2.13.3
+typer                         0.4.2
+typing_extensions             4.4.0
+tzdata                        2022.5
+tzlocal                       4.2
+udiskie                       2.4.2
+ueberzug                      18.1.9
+unicodedata2                  14.0.0
+Unidecode                     1.3.6
+unrardll                      0.1.5
+urllib3                       1.26.12
+urwid                         2.1.2
+validate                      5.1.0.dev0
+validate-pyproject            0.10.1
+vboxapi                       1.0
+vidcutter                     6.0.5.1
+virtualenv                    20.16.6
+vtr-xml-utils                 0.0.1
+w3lib                         1.22.0
+waitress                      2.1.2
+Wand                          0.6.10
+wasabi                        0.10.1
+wcwidth                       0.2.5
+webdriver-manager             3.5.2
+webencodings                  0.5.1
+WebOb                         1.8.7
+websocket-client              1.4.1
+websockets                    10.3
+WebTest                       3.0.0
+Werkzeug                      2.2.2
+wheel                         0.37.1
+widgetsnbextension            4.0.3
+wrapt                         1.14.1
+wsproto                       1.0.0
+wxPython                      4.1.1
+xarray                        2022.6.0
+XCGF                          2021.11.20.2.41.3
+XCPF                          2021.12.24.10.22.41
+xdot                          1.2
+xlrd                          2.0.1
+xlwt                          1.3.0
+xpra                          4.3.3
+yacs                          0.1.8
+yapf                          0.32.0
+yarl                          1.8.1
+yt-dlp                        2022.10.4
+ytmusicapi                    0.21.0
+zeroconf                      0.39.3
+zict                          2.2.0
+zipfile-deflate64             0.2.0
+zipp                          3.10.0
+zope.component                5.0.1
+zope.deferredimport           4.4
+zope.deprecation              4.4.0
+zope.event                    4.5.0
+zope.hookable                 5.2
+zope.interface                5.5.0
+zope.proxy                    4.5.1
+zopfli                        0.2.1
+zstandard                     0.18.0
+```
+
+
+* * *
+# 安装 anaconda
+```
+$ yay -S anaconda fish
+```
+Suppose that we have this line in ~/.bashrc or ~/.zshrc or etc.
+
+[ -f /opt/anaconda/etc/profile.d/conda.sh ] && source /opt/anaconda/etc/profile.d/conda.sh
+Before to upgrade I comment this line.
+Upgrade the package as usual.
+Uncomment the line.
+
+```
+$ conda config --set show_channel_urls yes
+```
+
+激活base环境
+$ source /opt/anaconda/bin/activate root
+or
+$ conda activate root
+(base) andy@archlinux ~
+初始化fish prompt
+$ conda init fish
+关闭base环境
+$ conda deactivate
+
+bash环境变量(还是手动加载为好)
+```
+$ source /opt/anaconda/bin/activate  [这句就是手动加载]
+(base) andy@archlinux ~
+$ conda init
+```
+在.bashrc添加了[abort]
+```
+# [ -f /opt/anaconda/etc/profile.d/conda.sh ] && source /opt/anaconda/etc/profile.d/conda.sh
+或者
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/anaconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/anaconda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+```
+
+创建运行环境
+```
+$ conda create --name python3.10 python=3.10
+$ conda activate python3.10
+$ conda env list
+```
+实际位置在
+/home/andy/.conda/envs
+
+
+在运行环境安装常用的一些模块
+```
+conda install mxnet jupyter pandas numpy matplotlib matplotlib-inline requests pandas pyqt pyqt5-sip
+或升级模块
+conda update mxnet jupyter pandas numpy matplotlib matplotlib-inline requests pandas pyqt pyqt5-sip
+
+conda install -c conda-forge gym
+```
+
+升级base环境模块
+```
+$ su
+# source /opt/anaconda/bin/activate root
+# conda upgrade --all
+```
+
+
+***
+# something
+```
+yay -S bash-language-server libcamera-tools libcamera-docs gst-plugin-libcamera shellcheck
+yay -S python-fqdn python-isoduration python-rfc3339-validator python-webcolors python-jsonpointer python-fastnumbers python-pyicu python-installer python-build xfce4-dev-tools
+```
+`yay -S v2x-git`
+`makepkg -si`
+```
+报错
+  -> Creating working copy of python-symbiflow-v2x git repo...
+fatal: invalid reference: origin/HEAD
+```
+对比正常clone出来的repo
+
+发现默认branch名字为master而不是main，但应该是main
+
+那么在PKGBUILD指定brach
+
+makepkg应退出conda环境, 例如speedometer
+
+```
+You must run at least once "debtap -u"
+with root privileges (preferably recently),
+before running this script
+==> Syntax: debtap [option] package_filename
+==> Run "debtap -h" for help
+
+The schema file has been installed as: /etc/xdg/obmenu-generator/schema.pl
+```
+```
+yay -S bcompare bcompare-cinnamon bcompare-kde4 bcompare-kde5 bcompare-mate bcompare-nautilus bcompare-thunar
+NOTE: It is necessary to enable 'File Manager Integration' under 'Tools' -> 'Options' from Beyond Compare interface.
+
+yay -S python-flup python-memcached python-oauth2client erlang-unixodbc rabbitmqadmin lksctp-tools python-gflags
+
+:: mono-msbuild and msbuild-stable are in conflict (msbuild). Remove msbuild-stable? [y/N]
+```
+
+***
+# npm node 更新
+```
+$ sudo npm --help
+node: error while loading shared libraries: libicui18n.so.71: cannot open shared object file: No such file or directory
+$ yay -S node   //而不是nodejs-lts-erbium
+$ yay -S ax25-tools soundmodem
+```
+从 <https://archive.archlinux.org/packages/n/nodejs-lts-erbium/> 下载 `nodejs-lts-erbium-12.22.11-1-x86_64.pkg.tar.zst`
+```
+yay -S nodejs-lts-erbium
+yay -Rdd nodejs-lts-erbium
+yay -Rdd node
+yay -R npm
+yay -R node-gyp
+yay -R nodejs-nopt
+```
+```
+yay -S nodejs npm
+nodejs-lts-gallium>nodejs-lts-fermium
+```
+
+***
+# cron 计划任务 [更新的办法是systemd]
+```
+//yay -S fcron
+yay -S cronie kcron 
+```
+```
+gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys F9F9FA97A403F63E
+sudo pacman-key --keyserver hkp://keyserver.ubuntu.com:80 -r F9F9FA97A403F63E
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9A2FD067A2E3EF7B
+curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+curl -sSL https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x83f817213361bf5f02e7e124f9f9fa97a403f63e | gpg --import -
+```
+
+***
+# baidunetdisk 修复
+```
+$ baidunetdisk 
+electron11: error while loading shared libraries: libicui18n.so.71: cannot open shared object file: No such file or directory
+```
+```
+yay -S electron11-bin
+::electron11-bin and electron11 are in conflict. Remove electron11? [y/N] y
+```
