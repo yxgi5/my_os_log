@@ -9923,6 +9923,80 @@ arch神教反正是激进的环境，只能在使用上注意
 ```
 
 ***
+# xsct
+
+为了解决 xsct 在 archlinux 中管理 vitis/sdk 工程过程的 fail，各种办法都没有解决问题，那么就用 docker run a ubuntu container
+```
+docker pull ubuntu:16.04
+docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu:16.04 bash
+
+docker exec -it ubuntu_container /bin/bash
+```
+```
+apt update
+--apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude
+apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev 
+dpkg-reconfigure locales
+>149 and 3
+dpkg-reconfigure dash
+>choose no
+adduser andy
+```
+```
+docker exec -it ubuntu_container /bin/bash
+```
+```
+cd /opt/Xilinx/Vitis/2020.1
+source ./settings64.sh
+xsct
+```
+```
+$ docker pull ubuntu
+-- or "docker pull ubuntu:16.04"
+$ docker run -d --name ubuntu_container --restart always -v /opt/:/opt/ -v /home/andy/:/home/andy/ -i -t ubuntu bash
+$ docker exec -it ubuntu_container /bin/bash
+```
+```
+# apt update
+# apt install lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
+# dpkg-reconfigure locales
+> choose en_US.UTF-8 UTF-8, at about number 149 ... 159
+> and choose num 3, en_US.UTF-8
+# dpkg-reconfigure dash
+> choose no
+# adduser andy
+> ...
+# su andy
+$ cd /opt/Xilinx/Vitis/2020.1
+$ source ./settings64.sh
+$ xsct
+```
+
+几个常用操作
+```
+docker stop ubuntu_container
+docker start ubuntu_container
+
+sudo docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+sudo systemctl stop docker.service 
+
+sudo systemctl start docker.service 
+sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+```
+2017 sdk 报错 GTK+ Version Check
+```
+root@1f7e6c346eca:/# apt install libgtk2.0
+```
+就可以了
+
+这下，可以间接使用vitis/xsct有关tcl了！！
+```
+$ docker exec -it ubuntu_container /bin/bash
+# su andy
+$ cd ~
+```
+
+***
 # 恢复删除文件
 ```
 extundelete
@@ -10073,6 +10147,34 @@ yay -S patchelf
 <https://swift.org/builds/swift-5.4.2-release/centos8/swift-5.4.2-RELEASE/swift-5.4.2-RELEASE-centos8.tar.gz>
 
 
+clion安装swift plugin，然后设置swift path，
+<https://youtrack.jetbrains.com/issue/CPP-19371>
+<https://caelis.medium.com/install-and-configure-swift-on-arch-linux-for-clion-ee72908bc105>
+应该这样
+```
+mkdir ~/Swift
+cd ~/Swift
+ln -s /usr/lib/swift-git usr
+```
+clion的settings->swift path: ~/Swift
+```
+ldd /home/andy/Swift/usr/bin/swift-package
+	libicuuc.so.68 => not found
+	libicuuc.so.68 => not found
+	libicui18n.so.68 => not found
+```
+一个主意是把69的改名成68放到`/home/andy/Swift/usr/lib`之类的地方
+
+干脆这样，更新为
+`swift-language-git-swift.DEVELOPMENT.SNAPSHOT.2021.06.01.a.r274.g038af80a880-1-x86_64.pkg.tar.zst`
+就ok了
+
+编译
+`～/.cache/yay/swift-language-git`
+`makepkg --nocheck`
+然后在install阶段之前把pkg目录的权限修改为777，否则报错，无法生成安装包
+
+
 ***
 # 修复wine打开路径乱码问题
 
@@ -10103,6 +10205,255 @@ dkms install --no-depmod -m vboxhost -v 6.1.26_OSE -k
 yay -S python-latexcodec
 ```
 
+***
+# gcc makepkg有关key缺失问题
+```
+gpg --keyserver keyserver.ubuntu.com --recv-keys 3AB00996FC26A641
+gpg --keyserver keyserver.ubuntu.com --recv-keys F3691687D867B81B51CE07D9BBE43771487328A9
+gpg --keyserver keyserver.ubuntu.com --recv-keys 86CFFCA918CF3AF47147588051E8B148A9999C34
+yay -U gcc6 gcc6-fortran gcc6-gcj gcc6-libs gcc8 gcc8-fortran gcc8-libs gcc9 gcc9-fortran gcc9-libs
+```
 
+
+***
+# DSView在滚升系统经常因为库依赖挂掉
+```
+	libboost_filesystem.so.1.76.0 => not found
+	libboost_system.so.1.76.0 => not found
+	libboost_thread.so.1.76.0 => not found
+```
+
+
+***
+# qt6
+```
+yay -S qt6-doc qt6-examples qt6-translations
+```
+
+
+***
+# vivado / vitis 启动命令
+`cd /usr/local/bin`
+`sudo gedit vivado`
+```
+#!/bin/bash
+/opt/Xilinx/Vivado/2020.1/bin/vivado
+```
+`sudo chmod +x vivado`
+
+`sudo gedit vitis`
+```
+#!/bin/bash
+/opt/Xilinx/Vitis/2020.1/bin/vitis 
+```
+`sudo chmod +x vitis`
+
+
+***
+# yosys 等
+```
+yay -S vhd2vl-git
+yay -S abc v2x-git python-pytest-runner yosys python-vtr-xml-utils-git
+yay -S covered
+yay -S sv2v alex ghc happy haskell-githash 
+yay -S verilator
+yay -S jedi-language-server
+yay -S systemc
+
+	Reenable any per-user enabled pipewire-media-session.service
+       	manually to establish a new service alias for
+       	pipewire-session-manager.service added with 0.3.38.
+Removed /etc/systemd/user/pipewire.service.wants/pipewire-media-session.service.
+
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+with relevant options, to initialize the database cluster.
+```
+<https://archlinux.org/packages/community/x86_64/haskell-githash/>
+`haskell-hpack haskell-hspec haskell-unliftio`
+```
+sv2v $ makepkg --skipchecksums 
+
+sv2v
+sv2v.cabal(patch)
+```
+```
+@@ -105,7 +105,7 @@
+ 
+     build-depends:
+         array >=0.5.4.0 && <0.6,
+-        base >=4.14.1.0 && <4.15,
++        base >=4,
+         cmdargs >=0.10.21 && <0.11,
+         containers >=0.6.2.1 && <0.7,
+         directory >=1.3.6.0 && <1.4,
+#@@ -113,1 +113,0 @@
+#-        githash >=0.1.6.1 && <0.2,
+```
+
+***
+# 全盘更新
+```
+:: Synchronizing package databases...
+ core                  137.5 KiB  1785 KiB/s 00:00 [######################] 100%
+ extra                1567.3 KiB  6.86 MiB/s 00:00 [######################] 100%
+ community               5.8 MiB  7.40 MiB/s 00:01 [######################] 100%
+ multilib              150.3 KiB  4.32 MiB/s 00:00 [######################] 100%
+ archlinuxcn          1921.0 KiB  4.77 MiB/s 00:00 [######################] 100%
+:: Starting full system upgrade...
+:: Replace python-sgmllib with extra/python-sgmllib3k? [Y/n] y
+:: Replace wine-wechat with archlinuxcn/wine-wechat-setup? [Y/n] y
+:: Replace xdg-desktop-portal-gtk with extra/xdg-desktop-portal-gnome? [Y/n] y
+:: Replace xmlrpc-c with community/libxmlrpc? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+warning: removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
+:: python-mistune1 and python-mistune are in conflict. Remove python-mistune? [y/N] y
+warning: dependency cycle detected:
+warning: freetype2 will be installed before its harfbuzz dependency
+warning: dependency cycle detected:
+warning: libglvnd will be installed before its mesa dependency
+warning: dependency cycle detected:
+warning: nvidia-utils will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: xorg-server will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: egl-wayland will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: smbclient will be installed before its cifs-utils dependency
+warning: dependency cycle detected:
+warning: rubygems will be installed before its ruby dependency
+warning: dependency cycle detected:
+warning: jupyter-nbconvert will be installed before its jupyter dependency
+warning: dependency cycle detected:
+warning: lib32-mesa will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-nvidia-utils will be installed before its lib32-libglvnd dependency
+warning: dependency cycle detected:
+warning: lib32-harfbuzz will be installed before its lib32-freetype2 dependency
+warning: dependency cycle detected:
+warning: tensorboard will be installed before its python-tensorboard_plugin_wit dependency
+warning: dependency cycle detected:
+warning: python-keras will be installed before its python-tensorflow-opt dependency
+The Teamviewer daemon must be running for Teamviewer to work.
+Execute 'sudo systemctl enable teamviewerd' in a terminal.
+==> WeChat data will be put into ~/.local/lib/wine-wechat when needed.
+==> You need to download WeChat setup program yourself.
+==> run 'wechat -i path/to/WeChatSetup.exe' to install / update.
+==> run 'wechat --config' if you want to adjust DPI settings.
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+```
+
+```
+$ yay -S libdecor lesspipe libjxl python-curio python-sniffio python-trio criu pipewire-v4l2 pipewire-session-manager jedi-language-server python-pyppeteer lib32-pipewire-v4l2 yt-dlp adios2 cgns libharu liblas openimagedenoise openvdb openvr ospray gvfs pyside2 edk2-armvirt python-database-knotinfo yt-dlp libotr libotr wine-for-wechat python-plyvel
+```
+
+```
+error: failed to prepare transaction (could not satisfy dependencies)
+:: installing x264 (3:0.163.r3060.5db6aa6-1) breaks dependency 'x264=3:0.161.r3039.544c61f' required by lib32-x264
+
+yay -Rdd lib32-x264
+yay -S pyside2 edk2-armvirt qt5-scxml qt5-remoteobjects qt5-datavis3d
+yay -S pipewire-session-manager pipewire-v4l2 pipewire-media-session-docs lib32-pipewire-v4l2 
+
+removing 'python-mistune' from target list because it conflicts with 'python-mistune1'
+
+yay -S python-mistune1 adios2 libharu liblas openimagedenoise openvr ospray level-zero-loader benchmark
+yay -S yt-dlp atomicparsley
+```
+
+***
+# anydesk
+```
+yay -S anydesk
+sudo systemctl start anydesk.service
+sudo teamviewer --daemon start
+```
+
+***
+# pip3 modules
+```
+sudo -H pip3 install selenium -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install webdriver-manager -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pywebcopy -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install pyautogui -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install bencoder -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install requests docopt requests beautifulsoup4 lxml future pysocks -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install PySide6 loguru Pillow html5lib qrcode incremental -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install ndg-httpsclient pyopenssl pyasn1 -i https://mirrors.163.com/pypi/simple
+```
+
+
+***
+# genymotion command line research
+```
+VBoxManage list vms
+"win7" {a476458e-c12a-4541-8453-5d0120b14e89}
+"XP" {4e009271-4819-4487-82dd-92f96ed822cb}
+"ubuntu1604" {1fa17739-4ddc-40b6-909c-d79368dd2cbe}
+"Google Nexus 7" {e48922a5-f560-4cbe-aceb-8f6f9356f0b5}
+"Google Nexus 10" {5b406e20-9e6a-4e5d-b9d6-4d9ac239b4f8}
+"Amazon Fire HD 10" {6a2d46d1-ac4f-4752-ab51-11fa0fb56703}
+"manjaro" {52e3916f-9117-4afd-99d5-93205a5144a6}
+
+
+/opt/genymotion/genymotion-shell
+genymotion-shell
+genymotion>player --vm-name "6a2d46d1-ac4f-4752-ab51-11fa0fb56703"
+
+/opt/genymotion/player --vm-name "6a2d46d1-ac4f-4752-ab51-11fa0fb56703"
+
+Genymotion Shell > help                                                                   
+
+List of available commands:
+---------------------------
+android             information related to the Android system included in Genymotion distribution
+battery             actions and information related to the battery widget
+devices             generic actions related to virtual devices (listing, selection, ...)
+diskio              actions and information related to the disk throughput
+exit                quit this application
+genymotion          information related to the Genymotion system
+gps                 actions and information related to the Global Positioning System widget
+help                display this help and display help for each verb
+network             actions and information related to the network quality of service
+pause               perform a pause (useful for automatic tests)
+phone               actions related to the phone widget
+quit                quit this application
+rotation            actions related to the rotation of virtual devices
+version             version number of the running Genymotion Shell application
+
+Genymotion Shell > devices list
+Available devices:
+
+ Id | Select |    Status     |   Type   |   IP Address    |      Name
+----+--------+---------------+----------+-----------------+---------------
+  0 |    *   |            On |  virtual |  192.168.56.104 | Amazon Fire HD 10
+  1 |        |           Off |  virtual |         0.0.0.0 | Google Nexus 10
+  2 |        |           Off |  virtual |         0.0.0.0 | Google Nexus 7
+
+Genymotion Shell > devices select 0    
+Selecting device id 0
+Genymotion device selected: Amazon Fire HD 10
+
+
+
+
+genyshell -c "devices list"
+
+gmtool admin create "Google Nexus 5 - 4.4.4 - API 19 - 1080x1920" myNexus
+gmtool admin start myNexus
+```
+
+***
+# something
+```
+yay -S socat libsepol libselinux 
+org.eclipse.tcf.core_1.5.0.202005280226.jar
+//yay xrt
+```
 
 
