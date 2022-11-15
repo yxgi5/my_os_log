@@ -9685,6 +9685,10 @@ $ cat ~/.gitconfig
 	email = denglitsch@gmail.com
 [core]
 	editor = vim
+$ git config --list --show-origin
+user.name=Andreas Zhang
+user.email=denglitsch@gmail.com
+core.editor=vim
 ```
 
 
