@@ -9671,7 +9671,21 @@ tftp 默认占用的是69端口。
 
 ***
 # 设置git默认编辑器
-`git config --global core.editor "vim"`
+```
+$ git config --global core.editor "vim"
+$ git config --global user.name "Andreas Zhang"
+$ git config --global user.email denglitsch@gmail.com
+$ git config --list
+user.name=Andreas Zhang
+user.email=denglitsch@gmail.com
+core.editor=vim
+$ cat ~/.gitconfig 
+[user]
+	name = Andreas Zhang
+	email = denglitsch@gmail.com
+[core]
+	editor = vim
+```
 
 
 ***
@@ -14609,3 +14623,14 @@ electron11: error while loading shared libraries: libicui18n.so.71: cannot open 
 yay -S electron11-bin
 ::electron11-bin and electron11 are in conflict. Remove electron11? [y/N] y
 ```
+
+
+
+***
+# 准备放弃arch
+
+越来越没有精力和时间处理滚动升级的各种问题，而且长期使用下来每次需要进行大量更新，更新周期也逐渐拉长，遗留大量aur包未更新。
+
+准备存档后就使用ubuntu，两年一次大升级就可以。
+
+考虑虚拟机里弄个最简化的arch，arch的好处就是软件真新，aur提供的选择真多。
