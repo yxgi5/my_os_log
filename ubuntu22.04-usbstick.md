@@ -1469,11 +1469,30 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2i/Lu18LrmuAFTsiATM6DPbmqfhhZ2hreUSw0t9I6
 $ git config --global user.name "Andreas Zhang"
 $ git config --global user.email denglitsch@gmail.com
 $ git config --global core.editor "vim"
-$ git config --list
+```
+`$ git config --list`
+```
 user.name=Andreas Zhang
 user.email=denglitsch@gmail.com
 core.editor=vim
-$ cat ~/.gitconfig 
+```
+`$ git config --list --show-origin`
+```
+file:/home/andy/.gitconfig      user.name=Andreas Zhang
+file:/home/andy/.gitconfig      user.email=denglitsch@gmail.com
+file:/home/andy/.gitconfig      core.editor=vim
+file:.git/config        core.repositoryformatversion=0
+file:.git/config        core.filemode=true
+file:.git/config        core.bare=false
+file:.git/config        core.logallrefupdates=true
+file:.git/config        remote.origin.url=git@github.com:yxgi5/my_os_log.git
+file:.git/config        remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config        branch.master.remote=origin
+file:.git/config        branch.master.merge=refs/heads/master
+file:.git/config        pull.rebase=false
+```
+`$ cat ~/.gitconfig`
+```
 [user]
 	name = Andreas Zhang
 	email = denglitsch@gmail.com
@@ -1483,8 +1502,13 @@ $ cat ~/.gitconfig
 
 
 ***
-# 
+# meld / xxdiff
 ```
+sudo apt install meld xxdiff xxdiff-scripts
+```
+```
+The following additional packages will be installed:
+  gir1.2-gtksource-3.0 libgtksourceview-3.0-1 libgtksourceview-3.0-common
 ```
 
 
