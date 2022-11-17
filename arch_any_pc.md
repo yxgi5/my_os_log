@@ -9671,7 +9671,25 @@ tftp 默认占用的是69端口。
 
 ***
 # 设置git默认编辑器
-`git config --global core.editor "vim"`
+```
+$ git config --global core.editor "vim"
+$ git config --global user.name "Andreas Zhang"
+$ git config --global user.email denglitsch@gmail.com
+$ git config --list
+user.name=Andreas Zhang
+user.email=denglitsch@gmail.com
+core.editor=vim
+$ cat ~/.gitconfig 
+[user]
+	name = Andreas Zhang
+	email = denglitsch@gmail.com
+[core]
+	editor = vim
+$ git config --list --show-origin
+user.name=Andreas Zhang
+user.email=denglitsch@gmail.com
+core.editor=vim
+```
 
 
 ***
