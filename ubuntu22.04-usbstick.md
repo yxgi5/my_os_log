@@ -68,6 +68,15 @@ set isofile="/username/download/ubuntu-14.04.iso"
 `sudo umount -l /isodevice`
 
 
+***
+# sudo
+```
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+```
+TODO:
+
+
 # Ubuntu下让date命令显示英语日期
 
 no effect
