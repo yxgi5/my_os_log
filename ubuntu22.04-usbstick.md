@@ -2,6 +2,71 @@
 # set gnome online acount and livepath
 `/usr/libexec/gnome-initial-setup --existing-user`
 
+***
+# 加载ubuntu的iso镜像
+grub4dos
+```
+title Ubuntu Livd CD
+root(hd0,1)
+kernel (hd0,1)/boot/vmlinuz boot=casper iso-scan/filename=/boot/ubuntu-16.04.4-desktop-amd64.iso
+ locale=zh_CN.UTF-8
+initrd (hd0,1)/boot/initrd.lz
+```
+```
+title Boot Ubuntu
+root (hd1,1)
+kernel (hd1,1)/boot/vmlinuz-4.9.0-0.bpo.3-amd64 root=/dev/sda2 ro quiet
+initrd (hd1,1)/boot/initrd.img-4.9.0-0.bpo.3-amd64
+```
+```
+1.grub> loopback loop (hd0,1)/ubuntu.iso
+2.grub> set root=(loop)
+3.grub> linux /casper/vmlinuz boot=casper iso-scan/filename=/ubuntu.iso
+4.grub> initrd /casper/initrd.lz
+5.grub> boot
+```
+原生grub/grub2
+`sudo gedit /boot/grub/grub.cfg`
+添加
+```
+menuentry "ubuntu iso install" {
+    loopback loop (hd0,1)/ubuntu.iso
+    set root=(loop)
+    linux /casper/vmlinuz boot=casper iso-scan/filename=/ubuntu.iso
+    initrd /casper/initrd.lz
+}
+```
+
+或者参考
+```
+mv /etc/grub.d/40_custom /etc/grub.d/40_custom_bak
+chmod u-x /etc/grub.d/40_custom_bak
+sudo gedit /etc/grub.d/40_custom
+```
+```
+#!/bin/sh
+ exec tail -n +3 $0
+ # This file provides an easy way to add custom menu entries.  Simp    ly type the
+ # menu entries you want to add after this comment.  Be careful not     to change
+ # the 'exec tail' line above.
+ menuentry "Ubuntukylin 14.04 ISO" {
+          insmod ntfs
+          insmod iso9660
+          set isofile="/download/ubuntukylin-14.04-desktop-amd64.iso"
+          loopback loop (hd0,msdos6)$isofile
+          linux (loop)/casper/vmlinuz.efi boot=casper iso-scan/filename=$isofile noprompt noeject
+          initrd (loop)/casper/initrd.lz
+  }
+```
+如果不是放在ntfs分区就不需要`insmod ntfs`
+
+isofile这里是从分区出发的，比如如果home是单独分区的话，而iso又存放在了比如"/home/username/download/ubuntu-14.04.iso",用下面这行替换
+```
+set isofile="/username/download/ubuntu-14.04.iso"
+```
+在live-cd安装时先
+`sudo umount -l /isodevice`
+
 
 # Ubuntu下让date命令显示英语日期
 
@@ -111,6 +176,11 @@ The following additional packages will be installed:
   ncurses-term openssh-sftp-server ssh-import-id
 Suggested packages:
   molly-guard monkeysphere ssh-askpass
+
+Created symlink /etc/systemd/system/sshd.service → /lib/systemd/system/ssh.servi
+ce.
+Created symlink /etc/systemd/system/multi-user.target.wants/ssh.service → /lib/s
+ystemd/system/ssh.service.
 ```
 ```
 Creating config file /etc/ssh/sshd_config with new version
@@ -186,7 +256,7 @@ deb https://www.scootersoftware.com/ bcompare4 non-free
 科^学%上$网, FUCK CCP!!
 
 原始的go.sh脚本需要修改, 已经修改好的go_mod.sh
-
+`sudo ./go_mod.sh`
 v2ray-linux-64.zip下载到相同目录就可以安装到本机, 然后
 ```
 sudo gedit /etc/v2ray/config.json
@@ -258,6 +328,11 @@ Suggested packages:
   fcitx-m17n kdialog plasma-widgets-kimpanel qt5-image-formats-plugins
   qtwayland5
 ```
+for mint-c
+```
+sudo apt install libfcitx-utils0 libmarisa0 gir1.2-fcitx-1.0 fcitx-config-gtk fcitx-libs libopencc1.1 fcitx-frontend-fbterm ibus-gtk3 libx86-1 ibus-table fcitx-module-kimpanel fcitx-sunpinyin python3-ibus-1.0 fcitx ibus-libpinyin fcitx-module-dbus liblua5.3-0 libpresage1v5 fcitx-modules sunpinyin-data libclutter-imcontext-0.1-0 fcitx-pinyin fbterm fonts-arphic-uming libfcitx-config4 fcitx-bin libtinyxml2.6.2v5 fcitx-module-lua libclutter-imcontext-0.1-bin fcitx-table-wubi ibus-data fcitx-module-x11 fcitx-frontend-gtk2 fcitx-frontend-gtk3 libpresage-data fcitx-config-common fcitx-tools fcitx-data libpinyin13 ibus-sunpinyin fcitx-frontend-all libpinyin-data fcitx-ui-classic libgettextpo0 libfcitx-gclient1 fcitx-frontend-qt5 ibus-gtk libfcitx-core0 ibus-table-wubi fonts-arphic-ukai ibus libsunpinyin3v5 ibus-clutter fcitx-module-cloudpinyin fcitx-table libopencc-data
+```
+
 ## 配置fcitx输入法
 ```
 $ sudo im-config
@@ -1251,6 +1326,7 @@ $ sudo apt install chrpath
 # foxitreader
 build deb by makedeb, then install deb
 `sudo dpkg -i foxitreader_2.4.5.0727-jammy_amd64.deb`
+`evince` and `xreader` are not as good as foxitreader
 
 
 # locate
@@ -1441,13 +1517,13 @@ Suggested packages:
   xfsprogs exfatprogs
 ```
 ```
-$ sudo apt install gparted dmraid gpart jfsutils kpartx reiser4progs reiserfsprogs udftools xfsprogs dvd+rw-tools udfclient xfsdump attr quota
+$ sudo apt install gparted dmraid gpart jfsutils kpartx reiser4progs reiserfsprogs udftools xfsprogs dvd+rw-tools udfclient xfsdump attr quota  dosfstools mtools
 ```
 ```
 The following additional packages will be installed:
   growisofs kpartx-boot libdmraid1.0.0.rc16
 Suggested packages:
-  cdrskin libnet-ldap-perl rpcbind default-mta | mail-transport-agent
+  cdrskin libnet-ldap-perl rpcbind default-mta | mail-transport-agent floppyd
 ```
 
 ***
@@ -1545,8 +1621,23 @@ or
 `dconf write /org/gnome/nautilus/preferences/always-use-location-entry true`
 
 ***
-# 
+# gedit for mint-c
 ```
+$ sudo apt install dconf-editor gedit gedit-plugins
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  gedit-common gedit-plugin-bookmarks gedit-plugin-bracket-completion
+  gedit-plugin-character-map gedit-plugin-code-comment
+  gedit-plugin-color-picker gedit-plugin-color-schemer gedit-plugin-commander
+  gedit-plugin-draw-spaces gedit-plugin-find-in-files gedit-plugin-git
+  gedit-plugin-join-lines gedit-plugin-multi-edit gedit-plugin-session-saver
+  gedit-plugin-smart-spaces gedit-plugin-synctex gedit-plugin-terminal
+  gedit-plugin-text-size gedit-plugin-translate gedit-plugin-word-completion
+  gedit-plugins-common gir1.2-ggit-1.0 gir1.2-gucharmap-2.90 libgit2-1.1
+  libgit2-glib-1.0-0 libhttp-parser2.9 libssh2-1
+
 ```
 
 
