@@ -80,7 +80,7 @@ TODO:
 # Ubuntu下让date命令显示英语日期
 
 no effect
-`env LANG=en_US.UTF-8 date`
+`$ env LANG=en_US.UTF-8 date`
 
 `$ cat /etc/default/locale`
 ```
@@ -97,6 +97,7 @@ LC_MEASUREMENT="zh_CN.UTF-8"
 LC_IDENTIFICATION="zh_CN.UTF-8"
 ```
 `sudo sed -e 's/^LC_TIME.*/LC_TIME="en_US.UTF-8"/' -i /etc/default/locale`
+
 then take effect after re-login
 
 <https://www.cnblogs.com/majestyking/p/11522868.html>
@@ -143,6 +144,7 @@ sudo systemctl status ssh
 ```
 
 `$ sudo cat /root/.profile`
+
 ```
 # ~/.profile: executed by Bourne-compatible login shells.
 
@@ -212,7 +214,9 @@ Setting up ncurses-term (6.3-2) ...
 # apt / aptitude
 
 `sudo apt update && sudo apt upgrade -yuf`
+
 `sudo apt install aptitude apt-file`
+
 ```
 The following additional packages will be installed:
   libapt-pkg-perl libexporter-tiny-perl liblist-moreutils-perl
@@ -289,7 +293,9 @@ $ sudo apt update
 $ sudo apt upgrade
 ```
 `opera://settings`
+
 `opera://extensions`
+
 load SwitchyOmega_Chromium folder and set/load config, then update crx of SwitchyOmega
 ```
 127.0.0.1:10808
@@ -497,7 +503,9 @@ total 3.5G
 ```
 查看垃圾文件
 `$ sudo du -t 100M /var`
+
 `$ journalctl --disk-usage`
+
 `$ sudo du -hm --max-depth=1 /var/ | sort -n`
 
 清空 `/var/log/journal`
@@ -525,6 +533,7 @@ rm -rf /var/log/journal/f9d400c5e1e8c3a8209e990d887d4ac1
 常见问题
 
 执行 journalctl 命令时报错：`Error was encountered while opening journal files: Input/output error`
+
 `journalctl --vacuum-time=1w`
 ```
 Error was encountered while opening journal files: Input/output error
@@ -564,7 +573,9 @@ $ man journalctl
 
 ## 查看错误日志
 `$ journalctl -p err`
+
 `$ journalctl -p 3`
+
 3==err后面优先级（PRIORITY）有解释
 
 ## 最后2行错误日志
@@ -598,10 +609,12 @@ $ journalctl -F PRIORITY
 ```
 若要检查上一次引导的日志，请使用`-b`参数筛选日记。`-b`选项仅显示上次引导后的消息。它以负数作为参数，显示以前引导的日志。
 `$ journalctl -p err -b warning`
+
 `$ journalctl _SYSTEMD_UNIT=docker.service PRIORITY=6`
 
 ## 监控日志(实时滚动显示最新日志)
 `$ journalctl -f`
+
 与`tail -f`类似
 
 ## 动态监控，默认最后10行
@@ -628,12 +641,19 @@ $ journalctl -b -1
 Specifying boot ID has no effect, no persistent journal was found 
 ```
 `sudo gedit /etc/systemd/journald.conf`
+
 `Storage=auto`
+
 修改为
+
 `Storage=persistent`
+
 重启服务生效
+
 `$ sudo systemctl restart systemd-journald`
+
 `$ systemctl status systemd-journald`
+
 tips：
 ```
 Storage参数设置值有：
@@ -667,6 +687,7 @@ $ journalctl -u nginx.service --since today
 
 ## 以 JSON 格式（多行）输出，可读性更好
 `$ journalctl -b -u nginx.serviceqq -o json-pretty`
+
 `$ journalctl -p 3 -o json-pretty`
 
 ## 查看指定服务的日志
@@ -1335,6 +1356,7 @@ $ sudo apt install chrpath
 # foxitreader
 build deb by makedeb, then install deb
 `sudo dpkg -i foxitreader_2.4.5.0727-jammy_amd64.deb`
+
 `evince` and `xreader` are not as good as foxitreader
 
 
