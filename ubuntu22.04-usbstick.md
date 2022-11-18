@@ -852,7 +852,7 @@ gnome-system-log
 # iso checksums
 high speed mirror: Shanghai Jiao Tong University
 <https://mirror.sjtu.edu.cn/>
-
+<https://mirrors.sjtug.sjtu.edu.cn/>
 
 ## Ubuntu flavours
 <https://ubuntu.com/#download>
@@ -889,12 +889,36 @@ ref:
 SHA256SUM
 `e1ffc4f30bf96f07e11315f71b3342bce4b97bb3b93601ed5e1ba803d144c656 *xubuntu-22.04.1-desktop-amd64.iso`
 
+## linux lite
+<https://www.linuxliteos.com/>
+<https://mirrors.sjtug.sjtu.edu.cn/linuxliteos/isos/>
+SHA256SUM
+`8bfee7756772b8f4613b783fa7be3996be9a2bebd39364d407f4c17ad24bdef4  linux-lite-6.2-64bit.iso`
+
+## ubuntu-budgie
+<https://ubuntubudgie.org>
+<https://mirror.sjtu.edu.cn/ubuntu-cdimage/ubuntu-budgie/releases/>
+SHA256SUM
+`54d5642faf1a3b37bff4377ff0363c17ac6f3da8f21a1f366bc1ec0afbf2ef65 *ubuntu-budgie-22.04.1-desktop-amd64.iso`
+
+## ubuntu-mate
+<https://ubuntu-mate.org>
+<https://mirror.sjtu.edu.cn/ubuntu-cdimage/ubuntu-mate/releases/>
+SHA256SUM
+`1c18cdabcf820f699cebf6cda7ed4ba230d9acaf0b1573b870b099f678d32c29 *ubuntu-mate-22.04.1-desktop-amd64.iso`
+
 ## ubuntukylin
 <https://www.ubuntukylin.com>
 <https://www.ubuntukylin.com/downloads/download-en.html>
 <https://mirrors.aliyun.com/ubuntukylin-cdimage/>
 MD5SUM
 `0145d61dcea77cd7e7ced4020e09c840   *https://mirrors.aliyun.com/ubuntukylin-cdimage/22.04/ubuntukylin-22.04-pro-amd64.iso`
+
+## lxle linux
+<https://www.lxle.net>
+<https://sourceforge.net/projects/lxle/files/Final/OS/Focal-64/>
+MD5SUM
+`b9b252265cd79f84d459c7c3cacdf4ef  LXLE-Focal-Release.iso`
 
 ## linuxmint
 <https://mirror.sjtu.edu.cn/linuxmint-cd/stable/>
@@ -1711,8 +1735,9 @@ The following additional packages will be installed:
 
 
 ***
-# 
+# TODO
 ```
+sudo apt install lubuntu-desktop
 ```
 
 
