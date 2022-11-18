@@ -1522,6 +1522,56 @@ The following additional packages will be installed:
 
 
 ***
+# tweaks
+```
+sudo apt install gnome-tweaks
+```
+```
+Suggested packages:
+  gnome-shell-extension-prefs | gnome-shell-extension-manager
+```
+
+
+***
+# dconf-tools
+```
+$ sudo apt install dconf-editor
+$ dconf-editor
+```
+添加gedit的encodings
+```
+依次点开->org->gnome->gedit->preferences->encodings
+改成
+['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+```
+nautilus显示绝对路径
+```
+Then navigate to 
+org > gnome > nautilus > preferences
+and check always-use-location-entry.
+```
+or
+`dconf write /org/gnome/nautilus/preferences/always-use-location-entry true`
+
+***
+# 
+```
+```
+
+
+***
+# 
+```
+```
+
+
+***
+# 
+```
+```
+
+
+***
 # 
 ```
 ```
