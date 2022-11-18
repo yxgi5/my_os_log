@@ -3,6 +3,15 @@
 `/usr/libexec/gnome-initial-setup --existing-user`
 
 
+***
+# sudo
+```
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+```
+TODO:
+
+
 # Ubuntu下让date命令显示英语日期
 
 no effect
