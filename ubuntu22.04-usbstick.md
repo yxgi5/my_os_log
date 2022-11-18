@@ -1110,6 +1110,7 @@ ref:
 <https://wiki.centos.org/>
 <https://wiki.centos.org/Download>
 <https://mirrors.aliyun.com/centos/8/isos>
+<https://mirrors.cqu.edu.cn/centos/8-stream/isos>
 <https://www.centos.org/download/mirrors/>
 <http://mirror.stream.centos.org/9-stream/BaseOS/x86_64/iso>
 ```
