@@ -74,7 +74,14 @@ set isofile="/username/download/ubuntu-14.04.iso"
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 ```
-TODO:
+sudo配置分析
+`$ sudo cat etc/sudoers`
+```
+# Allow members of group sudo to execute any command
+%sudo	ALL=(ALL:ALL) ALL
+```
+看看sudo用户在不在sudo组
+`$ sudo cat /etc/group | grep sudo`
 
 
 # Ubuntu下让date命令显示英语日期
