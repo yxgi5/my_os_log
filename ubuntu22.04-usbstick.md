@@ -1585,6 +1585,29 @@ file:.git/config        pull.rebase=false
 	editor = vim
 ```
 
+## 	pull一律使用快进合并
+```
+git config pull.rebase false  # merge
+git config pull.rebase true   # rebase
+git config pull.ff only       # fast-forward only
+```
+全局配置
+```
+git config --global pull.ff only
+```
+特别指定
+```
+gut pull --rebase     # 对团队不安全
+gut pull --no-rebase  # 合并
+gut pull --ff-only    # 快进
+```
+
+## merge 一律用非快进
+```
+git merge --no-ff   # 非快进，保留被合并分支的记录，无分支和`git merge --ff`一样
+git merge --ff      # 快进，不保留被合并分支的记录，无分支和`git merge --no-ff`一样
+// git rebase       # 尽量不要用rebase
+```
 
 ***
 # meld / xxdiff
