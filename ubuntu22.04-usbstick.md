@@ -920,6 +920,10 @@ MD5SUM
 MD5SUM
 `b9b252265cd79f84d459c7c3cacdf4ef  LXLE-Focal-Release.iso`
 
+## crunchbang++
+<https://www.crunchbangplusplus.org>
+<https://github.com/CBPP/cbpp11-amd64/releases/download/v11.1/cbpp-11.1-amd64-20210923.iso>
+
 ## linuxmint
 <https://mirror.sjtu.edu.cn/linuxmint-cd/stable/>
 <https://linuxmint-installation-guide.readthedocs.io/en/latest/>
@@ -1198,6 +1202,21 @@ d275f609aa7c0ee3337d6ab9f09d3dd6062aa2a248d9f9dcddc5e0cf30719506  manjaro-xfce-2
 ref:
 <https://www.zhihu.com/question/50326289/answers/updated>
 
+## endeavouros
+<https://endeavouros.com>
+<https://mirrors.tuna.tsinghua.edu.cn/endeavouros/iso/>
+<https://mirror.funami.tech/endeavouros/iso/>
+sha512sum
+`fb3a82d9d57bde47fc38bc34b3ca1caab5db4f01e25931a5b739e78f0a188e167660dcc729e578539dfb6216ec5a8793a4590761af0722e441ca32538d62c87a  EndeavourOS_Artemis_nova_22_9.iso`
+
+To check the ISO file with the sha512
+`sha512sum -c EndeavourOS_Artemis_nova_22_9.iso.sha512sum`
+
+To verify the key
+```
+gpg --recv CDF595A1
+gpg --verify EndeavourOS_Artemis_nova_22_9.iso.sig
+```
 
 ## archlinux
 <https://archlinux.org/>
@@ -1229,7 +1248,52 @@ chroot tips:
 # cp -L /etc/resolv.conf squashfs-root/etc  ## this is needed to use networking within the chroot
 ```
 
+## gentoo
+<https://www.gentoo.org/>
+<https://wiki.gentoo.org/wiki/Main_Page>
+<https://www.gentoo.org/downloads/>
+<https://gentoo.osuosl.org>
+<https://gentoo.osuosl.org/releases/>
+<https://mirrors.163.com/gentoo//releases/>
 
+## freebsd
+<https://www.freebsd.org>
+<https://docs.freebsd.org/doc/>
+<https://download.freebsd.org/releases/amd64/amd64/ISO-IMAGES>
+https://mirrors.163.com/freebsd/releases/ISO-IMAGES/
+<http://ftp.kaist.ac.kr/FreeBSD/releases/amd64/amd64/ISO-IMAGES>
+```
+SHA256 (FreeBSD-13.1-RELEASE-amd64-bootonly.iso) = 02e77c57bd0a306e3fc92296b3640433a3bd7e4ba39d82db94dfd885f5bb1f78
+SHA256 (FreeBSD-13.1-RELEASE-amd64-bootonly.iso.xz) = ffb6def0b167d25d4ee1c8eea292bbd3ac8cf877555f41251ac0d140cee108c0
+SHA256 (FreeBSD-13.1-RELEASE-amd64-disc1.iso) = 697d81653fa246b921ddfcf1d15562c55249cc727b11fa3e47f470e2cf2b6a40
+SHA256 (FreeBSD-13.1-RELEASE-amd64-disc1.iso.xz) = e18907b6ec09e14c2065049873d28bf78682821903074e0e602e07f29075d347
+SHA256 (FreeBSD-13.1-RELEASE-amd64-dvd1.iso) = 5b29c2cd5a604ad24810c994027ec13c9efc53778a307831f6181dfdaf02939f
+SHA256 (FreeBSD-13.1-RELEASE-amd64-dvd1.iso.xz) = 8b22dd325280c811725ca8178d8408d7a235161fbb1650b2a369b6e8acbaeaf8
+SHA256 (FreeBSD-13.1-RELEASE-amd64-memstick.img) = f73ce6526ccd24dfe2e79740f6de1ad1a304c854bfcff03a4d5b0de35d69d4a0
+SHA256 (FreeBSD-13.1-RELEASE-amd64-memstick.img.xz) = 1ad1c64546f27e7720690f7338be2314d0c3097549a3ee12e8d888388bf01a6f
+SHA256 (FreeBSD-13.1-RELEASE-amd64-mini-memstick.img) = 348f6541f3b6cc914504c34d035c7ff085baad99298cf646504dcecd4c9913c0
+SHA256 (FreeBSD-13.1-RELEASE-amd64-mini-memstick.img.xz) = 8f0df8762fae588c457ce48bc34f617aae8a66723254aa143acadcec93933b8f
+```
+
+## openbsd
+<http://www.openbsd.org>
+<https://cdn.openbsd.org/pub/OpenBSD/7.2/amd64/>
+<https://ftp.kaist.ac.kr/OpenBSD/7.2/amd64/>
+<https://mirrors.aliyun.com/pub/OpenBSD/>
+
+install72.img
+
+## netbsd
+<http://www.netbsd.org>
+<https://cdn.netbsd.org/pub/NetBSD/NetBSD-9.3/images/>
+<http://www.netbsd.org/mirrors/>
+<https://ftp.kaist.ac.kr/NetBSD/images/>
+<https://mirrors.aliyun.com/netbsd/images>
+<https://cdn.netbsd.org/pub/NetBSD/NetBSD-9.3/images/NetBSD-9.3-amd64.iso>
+<https://cdn.netbsd.org/pub/NetBSD/NetBSD-9.3/images/NetBSD-9.3-amd64-install.img.gz>
+
+
+***
 # makedeb
 <https://www.makedeb.org/>
 <https://github.com/makedeb/makedeb>
