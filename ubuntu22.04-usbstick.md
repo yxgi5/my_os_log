@@ -1631,6 +1631,14 @@ git merge --ff      # 快进，不保留被合并分支的记录，无分支和`
 // git rebase       # 尽量不要用rebase
 ```
 
+## git add 的几种参数区别
+```
+git add -A 保存所有的修改
+git add . 保存新的添加和修改，但是不包括删除
+git add -u 保存修改和删除，但是不包括新建文件
+```
+
+
 ***
 # meld / xxdiff
 ```
