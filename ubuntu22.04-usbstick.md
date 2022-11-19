@@ -2003,6 +2003,304 @@ aptitude search openbox
 
 
 ***
+# mint-meta-cinnamon
+```
+$ sudo gedit /etc/apt/sources.list
+deb http://archive.canonical.com/ubuntu jammy partner
+deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport
+
+$ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A6616109451BBBF2
+$ sudo apt install mint-meta-cinnamon
+The following additional packages will be installed:
+  app-install-data bulky catdoc cinnamon cinnamon-common cinnamon-control-center cinnamon-control-center-data cinnamon-desktop-data cinnamon-l10n
+  cinnamon-screensaver cinnamon-session cinnamon-session-common cinnamon-settings-daemon cjs exfatprogs exif flatpak folder-color-switcher
+  gir1.2-appstream-1.0 gir1.2-appstreamglib-1.0 gir1.2-camel-1.2 gir1.2-caribou-1.0 gir1.2-cinnamondesktop-3.0 gir1.2-clutter-1.0 gir1.2-cmenu-3.0
+  gir1.2-cogl-1.0 gir1.2-coglpango-1.0 gir1.2-cvc-1.0 gir1.2-ecal-2.0 gir1.2-edataserver-1.2 gir1.2-flatpak-1.0 gir1.2-gdata-0.0 gir1.2-gkbd-3.0
+  gir1.2-gsound-1.0 gir1.2-gtkclutter-1.0 gir1.2-ical-3.0 gir1.2-keybinder-3.0 gir1.2-matemenu-2.0 gir1.2-meta-muffin-0.0 gir1.2-nemo-3.0
+  gir1.2-timezonemap-1.0 gir1.2-xapp-1.0 gir1.2-xkl-1.0 html2text hwdata id3 inxi iso-flag-png libappstream-glib8 libcaribou-common libcaribou0
+  libcinnamon-control-center1 libcinnamon-desktop4 libcinnamon-menu-3-0 libcjs0f libcscreensaver0 libcvc0 libept1.6.0 libflatpak0 libfuse2
+  libgail-3-0 libgsf-bin libgtk-layer-shell0 libjs-mathjax libkeybinder-3.0-0 libmalcontent-0-0 libmate-desktop-2-17 libmate-menu2
+  libmate-panel-applet-4-1 libmateweather-common libmateweather1 libmetacity3 libmozjs-78-0 libmuffin0 libnemo-extension1 libostree-1-1
+  librda-common librda0 libtimezonemap-data libtimezonemap1 libxapp1 libxdo3 libxpresent1 libxreaderdocument3 libxreaderview3 linuxmint-keyring
+  lm-sensors mate-desktop mate-desktop-common mate-menus mate-panel mate-panel-common mate-polkit mate-polkit-common mate-user-guide mesa-utils
+  mesa-utils-bin metacity metacity-common mint-artwork mint-backgrounds-vanessa mint-common mint-info-xfce mint-meta-core mint-mirrors mint-themes
+  mint-translations mint-upgrade-info mint-x-icons mint-y-icons mintbackup mintdrivers mintinstall mintreport mintsources mintstick mintsystem
+  mintupdate mintwelcome muffin-common nemo nemo-data nemo-fileroller odt2txt policykit-1-gnome python-tinycss2-common python3-bs4 python3-configobj
+  python3-html5lib python3-lxml python3-magic python3-pam python3-parted python3-psutil python3-pycurl python3-pyinotify python3-setproctitle
+  python3-soupsieve python3-tinycss2 python3-webencodings python3-xapp python3-xlib python3-xlrd streamer synaptic thingy tree ubuntu-dbgsym-keyring
+  ubuntu-system-adjustments untex xapps-common xawtv-plugins xreader xreader-common
+Suggested packages:
+  cinnamon-doc gnome-screenshot malcontent-gui libxml-dumper-perl imagemagick libjs-mathjax-doc fancontrol read-edid i2c-tools
+  mate-desktop-environment python-configobj-doc python3-genshi python-lxml-doc python3-pam-dbg python-parted-doc python-psutil-doc
+  libcurl4-gnutls-dev python-pycurl-doc python-pyinotify-doc python-tinycss2-doc xawtv dwww menu deborphan apt-xapian-index tasksel
+```
+
+```
+dpkg: error processing archive /tmp/apt-dpkg-install-fUtn6G/126-mintupdate_5.8.8_all.deb (--unpack):
+ trying to overwrite '/usr/share/icons/hicolor/16x16/apps/software-properties.png', which is also in package software-properties-gtk 0.99.22.3
+```
+强制覆盖
+```
+$ sudo apt-get -o Dpkg::Options::="--force-overwrite" install -f
+Unpacking mintupdate (5.8.8) ...
+dpkg: warning: overriding problem because --force enabled:
+dpkg: warning: trying to overwrite '/usr/share/icons/hicolor/16x16/apps/software-properties.png', which is also in package software-properties-gtk 0.99.22.3
+
+```
+## ubuntu orig
+```
+$ cat /etc/apt/sources.list
+#deb cdrom:[Ubuntu 22.04.1 LTS _Jammy Jellyfish_ - Release amd64 (20220809.1)]/ jammy main restricted
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy main restricted
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy-updates main restricted
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy universe
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy universe
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy-updates universe
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to 
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy multiverse
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy-updates multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy-updates multiverse
+
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://cn.archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse
+
+deb http://security.ubuntu.com/ubuntu jammy-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu jammy-security main restricted
+deb http://security.ubuntu.com/ubuntu jammy-security universe
+# deb-src http://security.ubuntu.com/ubuntu jammy-security universe
+deb http://security.ubuntu.com/ubuntu jammy-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu jammy-security multiverse
+
+# This system was installed using small removable media
+# (e.g. netinst, live or single CD). The matching "deb cdrom"
+# entries were disabled at the end of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
+```
+```
+$ cat /usr/lib/os-release
+PRETTY_NAME="Ubuntu 22.04.1 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.1 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+$ cat /etc/lsb-release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Ubuntu 22.04.1 LTS"
+
+
+$ sudo cp /usr/lib/os-release /usr/lib/os-release.bk
+$ sudo cp /etc/lsb-release /etc/lsb-release.bk
+$ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bk
+```
+## mint record
+```
+$ cat /etc/apt/sources.list
+
+# This system was installed using small removable media
+# (e.g. netinst, live or single CD). The matching "deb cdrom"
+# entries were disabled at the end of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
+```
+```
+$ cat /etc/apt/sources.list.d/official-package-repositories.list
+deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport 
+
+deb http://mirrors.cqu.edu.cn/ubuntu jammy main restricted universe multiverse
+deb http://mirrors.cqu.edu.cn/ubuntu jammy-updates main restricted universe multiverse
+deb http://mirrors.cqu.edu.cn/ubuntu jammy-backports main restricted universe multiverse
+
+deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+```
+```
+$ cat /usr/lib/os-release
+NAME="Linux Mint"
+VERSION="21 (Vanessa)"
+ID=linuxmint
+ID_LIKE="ubuntu debian"
+PRETTY_NAME="Linux Mint 21"
+VERSION_ID="21"
+HOME_URL="https://www.linuxmint.com/"
+SUPPORT_URL="https://forums.linuxmint.com/"
+BUG_REPORT_URL="http://linuxmint-troubleshooting-guide.readthedocs.io/en/latest/"
+PRIVACY_POLICY_URL="https://www.linuxmint.com/"
+VERSION_CODENAME=vanessa
+UBUNTU_CODENAME=jammy
+
+$ cat /etc/lsb-release
+DISTRIB_ID=LinuxMint
+DISTRIB_RELEASE=21
+DISTRIB_CODENAME=vanessa
+DISTRIB_DESCRIPTION="Linux Mint 21 Vanessa"
+```
+
+## 解决`yout apt configuration is corrupt`
+<https://forums.linuxmint.com/viewtopic.php?t=361477>
+```
+$ sudo xed /etc/apt/preferences.d/official-package-repositories.pref
+```
+```
+Package: *
+Pin: origin live.linuxmint.com
+Pin-Priority: 750
+
+Package: *
+Pin: release o=linuxmint,c=upstream
+Pin-Priority: 700
+
+Package: *
+Pin: release o=LP-PPA-linuxmint-daily-build-team-daily-builds
+Pin-Priority: 700
+```
+无用的尝试
+```
+$ sudo rm -rf /var/lib/apt/lists/
+$ sudo mkdir -p /var/lib/apt/lists/partial
+$ sudo apt-get clean
+$ sudo apt-get update
+$ sudo apt install --reinstall mintsources
+$ inxi -Fxxxrz
+```
+
+***
+# lightdm
+```
+$ sudo apt install lightdm lightdm-gtk-greeter
+The following additional packages will be installed:
+  gnome-themes-standard liblightdm-gobject-1-0
+Suggested packages:
+  bindfs desktop-base
+```
+```
+$ sudo apt install bindfs desktop-base
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  fonts-quicksand
+Suggested packages:
+  gnome | kde-standard | xfce4 | wmaker
+```
+```
+$ sudo dpkg-reconfigure gdm3
+$ sudo dpkg-reconfigure lightdm
+```
+```
+$ sudo gedit /etc/lightdm/lightdm.conf.d/70-linuxmint.conf
+```
+change
+```
+[SeatDefaults]
+user-session=xfce
+```
+to
+```
+[SeatDefaults]
+user-session=cinnamon
+```
+```
+sudo systemctl disable gdm.service
+sudo systemctl enable lightdm.service
+sudo systemctl start lightdm.service
+sudo systemctl stop gdm.service
+```
+查询已经安装软件和导出列表
+<https://www.myfreax.com/how-to-list-installed-packages-on-ubuntu/>
+```
+sudo apt list --installed | less
+sudo apt list --installed
+sudo dpkg-query -l
+sudo dpkg-query -l | less
+sudo dpkg-query -f '${binary:Package}\n' -W > packages_list.txt
+```
+导入列表
+```
+xargs sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install < pkg_list.txt
+```
+或者
+```
+sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install $(cat pkg_list.txt)
+```
+
+
+***
+# wlan driver
+```
+$ sudo apt install bcmwl-kernel-source
+The following additional packages will be installed:
+  dctrl-tools dkms
+Suggested packages:
+  debtags menu
+```
+
+
+***
+# timeshift
+```
+$ sudo apt install timeshift 
+The following additional packages will be installed:
+  btrfs-progs
+Suggested packages:
+  duperemove
+```
+
+
+***
+# xed
+```
+$ sudo apt install xed xed-common
+```
+
+
+***
+# 
+```
+```
+
+
+
+***
+# 
+```
+```
+
+
+***
 # 
 ```
 ```
@@ -2018,3 +2316,11 @@ aptitude search openbox
 # 
 ```
 ```
+
+
+***
+# 
+```
+```
+
+
