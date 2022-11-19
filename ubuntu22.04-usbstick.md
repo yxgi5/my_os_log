@@ -483,7 +483,10 @@ usbstick地址码:
 
 ***
 # check boot log
-`sudo cat /var/log/boot.log`
+```
+$ sudo cat /var/log/boot.log
+$ systemctl --failed
+```
 <https://blog.csdn.net/qq_42427109/article/details/107881734>
 `systemd-journal`服务，`/run/log/`
 `rsyslog`服务，`/var/log/`
@@ -2255,6 +2258,12 @@ xargs sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install < pkg_list
 或者
 ```
 sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install $(cat pkg_list.txt)
+```
+## Failed to start casper-md5check Verify Live ISO checksums
+```
+$ sudo cat /var/log/boot.log
+$ systemctl --failed
+$ sudo systemctl disable casper-md5check.service
 ```
 
 
