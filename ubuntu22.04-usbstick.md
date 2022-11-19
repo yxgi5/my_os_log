@@ -1800,15 +1800,205 @@ The following additional packages will be installed:
 
 
 ***
-# TODO
+# aria2 etc.
 ```
-sudo apt install lubuntu-desktop
+sudo apt install curl wget aria2 libaria2-0 libssh2-1
 ```
 
 
 ***
-# 
+# run 32-bit programs
 ```
+$ dpkg --print-foreign-architectures
+i386
+$ dpkg --print-architecture
+amd64
+$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
+```
+```
+The following additional packages will be installed:
+  gcc-12-base:i386 krb5-locales libcom-err2:i386 libcrypt1:i386 libgcc-s1:i386
+  libgpm2:i386 libgssapi-krb5-2:i386 libidn2-0:i386 libk5crypto3:i386
+  libkeyutils1:i386 libkrb5-3:i386 libkrb5support0:i386 libnsl2:i386
+  libnss-nis:i386 libnss-nisplus:i386 libssl3:i386 libtinfo5:i386
+  libtirpc3:i386 libunistring2:i386
+Suggested packages:
+  glibc-doc:i386 locales:i386 gpm:i386 krb5-doc:i386 krb5-user:i386
+```
+```
+$ sudo aptitude search multiarch
+p   binutils-multiarch                                                 - Binary utilities that support multi-arch targets                             
+p   binutils-multiarch:i386                                            - Binary utilities that support multi-arch targets                             
+p   binutils-multiarch-dbg                                             - Binary utilities that support multi-arch targets (debug symbols)             
+p   binutils-multiarch-dbg:i386                                        - Binary utilities that support multi-arch targets (debug symbols)             
+p   binutils-multiarch-dev                                             - GNU binary utilities that support multi-arch targets (BFD development files) 
+p   binutils-multiarch-dev:i386                                        - GNU binary utilities that support multi-arch targets (BFD development files) 
+p   gdb-multiarch                                                      - GNU Debugger (with support for multiple architectures)                       
+p   gdb-multiarch:i386                                                 - GNU Debugger (with support for multiple architectures)  
+```
+
+
+***
+# sunloginclient
+`$ sudo dpkg -i sunloginclient-11.0.0.36662-amd64.deb`
+garbage! not as good as anydesk.
+
+
+
+***
+# SunloginRemote
+```
+$ ./SunloginRemote 
+bash: ./SunloginRemote: No such file or directory
+andy@andy-usbstick:~/Downloads/sunlogin_remote_linux$ file SunloginRemote 
+SunloginRemote: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.15, BuildID[sha1]=b72efebe1ac65c1c169a5e1b0eb777cf6ab60bbb, not stripped
+andy@andy-usbstick:~/Downloads/sunlogin_remote_linux$ ldd ./SunloginRemote 
+	not a dynamic executable
+```
+```
+$ dpkg --print-foreign-architectures
+i386
+$ dpkg --print-architecture
+amd64
+$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
+```
+```
+The following additional packages will be installed:
+  gcc-12-base:i386 krb5-locales libcom-err2:i386 libcrypt1:i386 libgcc-s1:i386
+  libgpm2:i386 libgssapi-krb5-2:i386 libidn2-0:i386 libk5crypto3:i386
+  libkeyutils1:i386 libkrb5-3:i386 libkrb5support0:i386 libnsl2:i386
+  libnss-nis:i386 libnss-nisplus:i386 libssl3:i386 libtinfo5:i386
+  libtirpc3:i386 libunistring2:i386
+Suggested packages:
+  glibc-doc:i386 locales:i386 gpm:i386 krb5-doc:i386 krb5-user:i386
+```
+## `cannot open shared object file`处理报错
+```
+$ ./SunloginRemote 
+./SunloginRemote: error while loading shared libraries: libuuid.so.1: cannot open shared object file: No such file or directory
+```
+```
+$ sudo updatedb
+$ locate libuuid.so.1
+/usr/lib/x86_64-linux-gnu/libuuid.so.1
+/usr/lib/x86_64-linux-gnu/libuuid.so.1.3.0
+```
+```
+  libuuid.so.1
+  libGL.so.1
+  libpulse.so.0
+  libgobject-2.0.so.0
+```
+查文件归属哪个deb包
+```
+$ sudo dpkg -S /usr/lib/x86_64-linux-gnu/libuuid.so.1
+libuuid1:amd64: /usr/lib/x86_64-linux-gnu/libuuid.so.1
+```
+最后得到
+```
+sudo apt install libuuid1:i386 libgl1:i386 libpulse0:i386 libglib2.0-0:i386
+```
+```
+The following additional packages will be installed:
+  libatomic1:i386 libbsd0:i386 libdrm-amdgpu1:i386 libdrm-nouveau2:i386 libdrm-radeon1:i386 libdrm2:i386 libedit2:i386 libelf1:i386 libexpat1:i386
+  libffi8:i386 libgl1-mesa-dri:i386 libglapi-mesa:i386 libglvnd0:i386 libglx-mesa0:i386 libglx0:i386 libicu70:i386 libllvm13:i386 liblzma5:i386
+  libmd0:i386 libsensors5:i386 libtinfo6:i386 libvulkan1:i386 libwayland-client0:i386 libx11-6:i386 libx11-xcb1:i386 libxau6:i386 libxcb-dri2-0:i386
+  libxcb-dri3-0:i386 libxcb-glx0:i386 libxcb-present0:i386 libxcb-randr0:i386 libxcb-shm0:i386 libxcb-sync1:i386 libxcb-xfixes0:i386 libxcb1:i386
+  libxdmcp6:i386 libxext6:i386 libxfixes3:i386 libxml2:i386 libxshmfence1:i386 libxxf86vm1:i386 libzstd1:i386 mesa-vulkan-drivers:i386 zlib1g:i386 libapparmor1:i386 libasyncns0:i386 libcap2:i386 libdbus-1-3:i386 libflac8:i386 libgcrypt20:i386 libgpg-error-l10n libgpg-error0:i386 libblkid1:i386 libmount1:i386 libpcre2-8-0:i386 libpcre3:i386 libselinux1:i386
+Suggested packages:
+  lm-sensors:i386 rng-tools:i386 opus-tools:i386 cryptsetup-bin:i386
+Recommended packages:
+  libgl1-amber-dri:i386
+```
+## xcb报错处理
+```
+$ ./SunloginRemote 
+This application failed to start because it could not find or load the Qt platform plugin "xcb".
+
+Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, xcb.
+
+Reinstalling the application may fix this problem.
+```
+```
+$ export QT_DEBUG_PLUGINS=1
+$ ./SunloginRemote 
+```
+```
+: "Cannot load library sunlogin_remote_linux/plugins/platforms/libqxcb.so: (libXi.so.6: cannot open shared object file: No such file or directory)" 
+This application failed to start because it could not find or load the Qt platform plugin "xcb".
+
+Available platform plugins are: eglfs, linuxfb, minimal, minimalegl, offscreen, xcb.
+
+Reinstalling the application may fix this problem.
+```
+`ldd sunlogin_remote_linux/plugins/platforms/libqxcb.so`
+
+`ldd libqxcb.so | grep "not found"`
+```
+  libXi.so.6 => not found
+	libXrender.so.1 => not found
+	libQt5DBus.so.5 => not found
+	libQt5Gui.so.5 => not found
+	libQt5Core.so.5 => not found
+```
+在`/usr/lib/x86_64-linux-gnu/`都有，那么是architecture不对。
+
+这样查文件归属哪个deb包
+```
+$ sudo dpkg -S /usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+libglib2.0-0:amd64: /usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
+```
+最后得到
+
+```
+sudo apt install libxi6:i386 libsm6:i386 libfontconfig1:i386 libqt5dbus5:i386 libqt5gui5:i386 libqt5core5a:i386 libxrender1:i386
+```
+```
+The following additional packages will be installed:
+  libxi6:i386 libice6:i386 libbrotli1:i386 libfreetype6:i386 libpng16-16:i386 libatk-bridge2.0-0:i386 libatk1.0-0:i386 libatspi2.0-0:i386 libavahi-client3:i386 libavahi-common-data:i386 libavahi-common3:i386
+  libcairo-gobject2:i386 libcairo2:i386 libcolord2:i386 libcups2:i386 libdatrie1:i386 libdeflate0:i386 libdouble-conversion3:i386 libegl-mesa0:i386
+  libegl1:i386 libepoxy0:i386 libevdev2:i386 libfribidi0:i386 libgbm1:i386 libgdk-pixbuf-2.0-0:i386 libgmp10:i386 libgnutls30:i386
+  libgraphite2-3:i386 libgtk-3-0:i386 libgudev-1.0-0:i386 libharfbuzz0b:i386 libhogweed6:i386 libinput10:i386 libjbig0:i386 libjpeg-turbo8:i386
+  libjpeg8:i386 liblcms2-2:i386 libmd4c0:i386 libmtdev1:i386 libnettle8:i386 libp11-kit0:i386 libpango-1.0-0:i386 libpangocairo-1.0-0:i386
+  libpangoft2-1.0-0:i386 libpcre2-16-0:i386 libpixman-1-0:i386 libqt5network5:i386 libqt5svg5:i386 libqt5widgets5:i386 librsvg2-2:i386
+  librsvg2-common:i386 libtasn1-6:i386 libthai0:i386 libtiff5:i386 libudev1:i386 libwacom9:i386 libwayland-cursor0:i386 libwayland-egl1:i386
+  libwayland-server0:i386 libwebp7:i386 libxcb-icccm4:i386 libxcb-image0:i386 libxcb-keysyms1:i386 libxcb-render-util0:i386 libxcb-render0:i386
+  libxcb-shape0:i386 libxcb-util1:i386 libxcb-xinerama0:i386 libxcb-xinput0:i386 libxcb-xkb1:i386 libxcomposite1:i386 libxcursor1:i386
+  libxdamage1:i386 libxinerama1:i386 libxkbcommon-x11-0:i386 libxkbcommon0:i386 libxrandr2:i386 qt5-gtk-platformtheme:i386
+Suggested packages:
+  gnutls-bin:i386 gvfs:i386 qt5-image-formats-plugins:i386 qtwayland5:i386 librsvg2-bin:i386
+Recommended packages:
+  qttranslations5-l10n:i386
+```
+一条解决上面两个
+`$ sudo apt install libglib2.0-0:i386 libuuid1:i386 libgl1:i386 libpulse0:i386 libglib2.0-0:i386 libxi6:i386 libsm6:i386 libfontconfig1:i386 libqt5dbus5:i386 libqt5gui5:i386 libqt5core5a:i386 libxrender1:i386`
+
+再运行一下
+
+`sudo apt install libglib2.0-0 libuuid1 libgl1 libpulse0 libglib2.0-0 libxi6 libsm6 libfontconfig1 libqt5dbus5 libqt5gui5 libqt5core5a libxrender1 --reinstall`
+
+
+***
+# 备选的桌面环境
+```
+aptitude search desktop
+sudo apt install lubuntu-desktop
+sudo apt install xubuntu-desktop
+sudo apt install kubuntu-desktop
+sudo apt install kde-plasma-desktop
+sudo apt install desktop-base
+sudo apt install budgie-desktop
+sudo apt install cinnamon-desktop-environment
+sudo apt install ubuntukylin-desktop
+sudo apt install ubuntustudio-desktop
+sudo apt install ubuntu-desktop  [default]
+sudo apt install ubuntu-gnome-desktop
+sudo apt install ubuntu-mate-desktop
+sudo apt install ubuntu-unity-desktop
+sudo apt install ubuntu-budgie-desktop
+aptitude search lxde
+sudo apt install lxde
+aptitude search openbox
 ```
 
 
