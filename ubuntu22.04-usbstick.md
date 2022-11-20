@@ -3069,9 +3069,80 @@ The following additional packages will be installed:
 ```
 
 ***
-# 
+# * * *
+# 启用 swapfile
+
+查看系统是否有交换分区：
+
+`sudo swapon --show`
+
+free命令用来查看空闲的内存空间，其中包括交换分区的空间。
+
+`free -h`
+
+检查当前磁盘的使用情况：
+
+`df -h`
+
+创建swap文件
+
+使用以下命令创建swapfile
+
+`sudo fallocate -l 8G /swapfile`
+
+经过测试，OpenSuSE系统要使用以下命令才能成功创建swapfile
+
+`sudo dd if=/dev/zero of=/swapfile count=4096 bs=1MiB`
+
+使用以下命令查看是否正确创建。
+
+`ls -lh /swapfile`
+
+结果应该类似下面这样：
+
 ```
+-rw-r--r-- 1 root root 8.0G Apr 26 17:04 /swapfile
 ```
+
+修改swapfile权限
+
+`sudo chmod 600 /swapfile`
+
+查看效果
+
+`ls -lh /swapfile`
+
+结果应该类似下面这样：
+```
+-rw------- 1 root root 8.0G Apr 26 17:04 /swapfile
+```
+激活交换空间
+
+`sudo mkswap /swapfile`
+`sudo swapon /swapfile`
+
+之后使用以下命令查看使用成功开启交换空间：
+
+`sudo swapon --show`
+
+结果类似下面这样：
+```
+NAME      TYPE SIZE USED PRIO
+
+/swapfile file   8G   0B   -1
+```
+添加到fstab
+
+这样每次开机系统就会自动吧swapfile挂载为交换空间。 首先请自行备份fstab文件。 然后把以下配置添加到fstab文件末尾。
+```
+/swapfile none swap sw 0 0
+```
+或者直接使用以下命令：
+
+`sudo cp /etc/fstab /etc/fstab.bak`
+
+`echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab`
+
 
 
 ***
