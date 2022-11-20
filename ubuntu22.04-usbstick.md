@@ -355,6 +355,10 @@ for mint-c
 sudo apt install libfcitx-utils0 libmarisa0 gir1.2-fcitx-1.0 fcitx-config-gtk fcitx-libs libopencc1.1 fcitx-frontend-fbterm ibus-gtk3 libx86-1 ibus-table fcitx-module-kimpanel fcitx-sunpinyin python3-ibus-1.0 fcitx ibus-libpinyin fcitx-module-dbus liblua5.3-0 libpresage1v5 fcitx-modules sunpinyin-data libclutter-imcontext-0.1-0 fcitx-pinyin fbterm fonts-arphic-uming libfcitx-config4 fcitx-bin libtinyxml2.6.2v5 fcitx-module-lua libclutter-imcontext-0.1-bin fcitx-table-wubi ibus-data fcitx-module-x11 fcitx-frontend-gtk2 fcitx-frontend-gtk3 libpresage-data fcitx-config-common fcitx-tools fcitx-data libpinyin13 ibus-sunpinyin fcitx-frontend-all libpinyin-data fcitx-ui-classic libgettextpo0 libfcitx-gclient1 fcitx-frontend-qt5 ibus-gtk libfcitx-core0 ibus-table-wubi fonts-arphic-ukai ibus libsunpinyin3v5 ibus-clutter fcitx-module-cloudpinyin fcitx-table libopencc-data
 ```
 
+```
+sudo apt install fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus
+```
+
 ## 配置fcitx输入法
 ```
 $ sudo im-config
@@ -424,7 +428,9 @@ The following additional packages will be installed:
 Suggested packages:
   libjs-mathjax
 ```
-
+```
+$ sudo apt install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
+```
 
 # ubunut-extras 
 ```
@@ -1417,6 +1423,8 @@ package() {
 # vim: set sw=4 expandtab:
 ```
 
+
+***
 # set up the APT repository
 For example:
 ```
@@ -1426,6 +1434,7 @@ sudo apt update
 ```
 
 
+***
 # git
 ```
 $ sudo apt-get install git gitk git-doc git-svn subversion
@@ -1440,11 +1449,28 @@ Suggested packages:
 ```
 
 
+***
 # 7z
 ```
 $ sudo apt install p7zip p7zip-full p7zip-rar
+$ sudo apt install rar p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar
+```
+```
+$ sudo apt install sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils
+```
+```
+file-roller is already the newest version (3.42.0-1).
+xz-utils is already the newest version (5.2.5-2ubuntu1).
+cabextract is already the newest version (1.9-3).
+The following additional packages will be installed:
+  libjlha-java libuu0
+Suggested packages:
+  libjlha-java-doc-ja default-mta | mail-transport-agent inews sharutils-doc
+  bsd-mailx | mailx xdeview
 ```
 
+
+***
 # chrpath
 Tool to edit the rpath in ELF binaries
 ```
@@ -2265,6 +2291,122 @@ $ sudo cat /var/log/boot.log
 $ systemctl --failed
 $ sudo systemctl disable casper-md5check.service
 ```
+## lightdm 配置
+```
+sudo gedit /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+```
+change
+```
+```
+[Seat:*]
+user-session=ubuntu
+```
+```
+to
+```
+[Seat:*]
+greeter-session=unity-greeter
+user-session=ubuntu
+greeter-show-manual-login=true
+all-guest=false
+```
+```
+$ sudo gedit /etc/lightdm/lightdm.conf.d/70-linuxmint.conf
+```
+change
+```
+[SeatDefaults]
+user-session=cinnamon
+greeter-setup-script=xhost +
+```
+to
+```
+[SeatDefaults]
+user-session=cinnamon
+greeter-setup-script=xhost +
+```
+```
+$ sudo gedit /etc/gdm3/custom.con
+```
+change
+```
+# GDM configuration storage
+#
+# See /usr/share/gdm/gdm.schemas for a list of available options.
+
+[daemon]
+# Uncomment the line below to force the login screen to use Xorg
+#WaylandEnable=false
+
+# Enabling automatic login
+#  AutomaticLoginEnable = true
+#  AutomaticLogin = user1
+
+# Enabling timed login
+#  TimedLoginEnable = true
+#  TimedLogin = user1
+#  TimedLoginDelay = 10
+
+[security]
+
+[xdmcp]
+
+[chooser]
+
+[debug]
+# Uncomment the line below to turn on debugging
+# More verbose logs
+# Additionally lets the X server dump core if it crashes
+#Enable=true
+```
+to
+```
+# GDM configuration storage
+#
+# See /usr/share/gdm/gdm.schemas for a list of available options.
+
+[daemon]
+# Uncomment the line below to force the login screen to use Xorg
+#WaylandEnable=false
+
+# Enabling automatic login
+#  AutomaticLoginEnable = true
+#  AutomaticLogin = user1
+
+# Enabling timed login
+#  TimedLoginEnable = true
+#  TimedLogin = user1
+#  TimedLoginDelay = 10
+
+[security]
+DisallowTCP=false
+
+[xdmcp]
+Enable=true
+DisplaysPerHost=10 
+
+[chooser]
+
+[debug]
+# Uncomment the line below to turn on debugging
+# More verbose logs
+# Additionally lets the X server dump core if it crashes
+#Enable=true
+```
+
+```
+$ sudo gedit /etc/ssh/ssh_config
+```
+change
+```
+#   ForwardX11 yes
+#   ForwardX11Trusted yes
+```
+to
+```
+    ForwardX11 yes
+    ForwardX11Trusted yes
+```
 
 
 ***
@@ -2297,16 +2439,610 @@ $ sudo apt install xed xed-common
 
 
 ***
-# 
+# leafpad
+<https://askubuntu.com/questions/1142518/leafpad-not-available-for-newer-releases-of-ubuntu>
+## 编译准备工作
+```
+$ sudo apt-get install build-essential checkinstall intltool libgtk2.0-dev
 ```
 ```
+The following additional packages will be installed:
+  autoconf automake autopoint autotools-dev debhelper debugedit dh-autoreconf
+  dh-strip-nondeterminism dwz gir1.2-gtk-2.0 icu-devtools libarchive-cpio-perl
+  libatk1.0-dev libblkid-dev libbrotli-dev libcairo2-dev libdatrie-dev
+  libdebhelper-perl libdeflate-dev libexpat1-dev libffi-dev
+  libfile-stripnondeterminism-perl libfontconfig-dev libfontconfig1-dev
+  libfreetype-dev libfreetype6-dev libfribidi-dev libgdk-pixbuf-2.0-dev
+  libglib2.0-dev libglib2.0-dev-bin libgraphite2-dev libharfbuzz-dev
+  libharfbuzz-gobject0 libice-dev libicu-dev libjbig-dev libjpeg-dev
+  libjpeg-turbo8-dev libjpeg8-dev libltdl-dev liblzma-dev
+  libmail-sendmail-perl libmount-dev libpango1.0-dev libpcre16-3 libpcre2-dev
+  libpcre2-posix3 libpcre3-dev libpcre32-3 libpixman-1-dev libpng-dev
+  libpng-tools libpthread-stubs0-dev libselinux1-dev libsepol-dev libsm-dev
+  libsub-override-perl libsys-hostname-long-perl libthai-dev libtiff-dev
+  libtiffxx5 libtool libx11-dev libxau-dev libxcb-render0-dev libxcb-shm0-dev
+  libxcb1-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxdmcp-dev
+  libxext-dev libxfixes-dev libxft-dev libxi-dev libxinerama-dev libxml2-utils
+  libxrandr-dev libxrender-dev pango1.0-tools po-debconf python3-distutils
+  uuid-dev x11proto-dev xorg-sgml-doctools xtrans-dev zlib1g-dev
+Suggested packages:
+  autoconf-archive gnu-standards autoconf-doc dh-make libcairo2-doc
+  libdatrie-doc freetype2-doc libgirepository1.0-dev libglib2.0-doc
+  libgraphite2-utils libgtk2.0-doc libice-doc icu-doc libtool-doc liblzma-doc
+  libpango1.0-doc libsm-doc libthai-doc gfortran | fortran95-compiler gcj-jdk
+  libx11-doc libxcb-doc libxext-doc graphicsmagick libmail-box-pe
+```
 
+## 获取合适的参考cflags和cxxflags
+```
+$ sudo apt install python3-dev
+```
+```
+The following additional packages will be installed:
+  javascript-common libjs-jquery libjs-sphinxdoc libjs-underscore libpython3-dev libpython3.10-dev python3.10-dev
+Suggested packages:
+  apache2 | lighttpd | httpd
+```
+```
+$ python3-config --cflags
+```
+```
+-I/usr/include/python3.10 -I/usr/include/python3.10  -Wno-unused-result -Wsign-compare -g      -fstack-protector-strong -Wformat -Werror=format-security  -DNDEBUG -g -fwrapv -O2 -Wall
 
+```
+## 修改makedeb的配置
+```
+$ sudo gedit /etc/makepkg.conf
+```
+修改
+```
+#MAKEFLAGS="-j2"
+```
+为
+```
+MAKEFLAGS="-j$(nproc)"
+```
+为了编译leafpad，修改
+```
+-Werror=format-security
+```
+为
+```
+-Wno-error=format-security
+```
+## PKGBUILD
+```
+# Maintainer: Lex Black <autumn-wind at web dot de>
+# Contributor: SiD
+
+pkgname=leafpad
+pkgver=0.8.18.1
+pkgrel=3
+pkgdesc="A notepad clone for GTK+ 2.0 with print header disabled"
+arch=('i386' 'amd64')
+url="http://tarot.freeshell.org/leafpad/"
+license=('GPL')
+depends=('libgtk2.0-dev' 'desktop-file-utils' 'gtk-update-icon-cache')
+makedepends=('intltool')
+conflicts=('leafpad')
+provides=('leafpad')
+source=(http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.gz
+        gtkprint.c.diff)
+md5sums=('254a72fc67505e3aa52884c729cd7b97'
+         'a01afce5b77fd78845e1d4985fd3c0f7')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  patch -p0 <../gtkprint.c.diff
+  ./configure --prefix=/usr --enable-chooser
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+  echo 'StartupNotify=true' >> "${pkgdir}/usr/share/applications/leafpad.desktop"
+}
+```
+## 生成leafpad_0.8.18.1-3_amd64.deb
+```
+$ makedeb
+```
+## 安装leafpad
+```
+$ sudo dpkg -i leafpad_0.8.18.1-3_amd64.deb
+或
+$ sudo apt install ./leafpad_0.8.18.1-3_amd64.deb
+```
 
 ***
-# 
+# tcl
+```
+sudo apt install tk-dev
 ```
 ```
+The following additional packages will be installed:
+  libxss-dev tcl-dev tcl8.6-dev tk8.6-dev
+Suggested packages:
+  tcl-doc tcl8.6-doc tk-doc tk8.6-doc
+```
+
+***
+# openbox
+
+## Note, selecting 'suckless-tools' instead of 'dmenu'
+```
+$ sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm feh suckless-tools fonts-dejavu
+```
+```
+pkg-config is already the newest version (0.29.2-1ubuntu3).
+xinit is already the newest version (1.4.1-0ubuntu4).
+fonts-dejavu is already the newest version (2.37-2build1).
+The following additional packages will be installed:
+  icu-devtools libfm-extra4 libicu-dev libjpeg-progs libjpeg9
+  libmenu-cache-bin libmenu-cache3 libobrender32v5 libobt2v5 obconf scrot
+  yudit-common
+Suggested packages:
+  icu-doc lxde-common gksu | kde-runtime | ktsuss openbox-kde-session dwm
+  stterm surf yudit-doc yudit
+```
+```
+$ sudo apt install lxappearance pcmanfm libfm-tools lxterminal libgtk2.0-dev libpango-perl libpango1.0-dev
+```
+```
+libpango1.0-dev is already the newest version (1.50.6+ds-2).
+libpango1.0-dev set to manually installed.
+libgtk2.0-dev is already the newest version (2.24.33-2ubuntu2).
+The following additional packages will be installed:
+  libfm-data libfm-gtk-data libfm-gtk4 libfm-modules libfm4 lxde-settings-daemon lxmenu-data
+Suggested packages:
+  nautilus-actions
+```
+## obmenu hasn't been available since bionic
+<https://askubuntu.com/questions/1337888/with-ubuntu-21-04-can-openbox-be-customized-like-the-openbox-of-other-distros>
+
+## 安装配置 obmenu-generator
+```
+$ sudo apt install build-essential cpanminus git
+```
+```
+build-essential is already the newest version (12.9ubuntu3).
+git is already the newest version (1:2.34.1-1ubuntu1.5).
+The following additional packages will be installed:
+  libalgorithm-c3-perl libany-uri-escape-perl libclass-c3-perl libclass-c3-xs-perl libcpan-changes-perl libcpan-distnameinfo-perl libcpan-meta-check-perl
+  libdata-perl-perl libdata-section-perl libfile-pushd-perl libfile-slurp-perl libgetopt-long-descriptive-perl liblocal-lib-perl libmodule-build-perl
+  libmodule-cpanfile-perl libmodule-signature-perl libmoox-handlesvia-perl libmro-compat-perl libnamespace-autoclean-perl libparams-validate-perl libparse-pmfile-perl
+  libpod-markdown-perl libpod-readme-perl libreadonly-perl libref-util-perl libref-util-xs-perl libsoftware-license-perl libstring-shellquote-perl
+  libtext-template-perl libtype-tiny-perl libtype-tiny-xs-perl liburi-escape-xs-perl
+Suggested packages:
+  libdevel-lexalias-perl
+```
+```
+//sudo cpan install YAML Gtk2 Pango Linux::DesktopFiles Data::Dump
+sudo cpan install YAML Gtk3 Pango Linux::DesktopFiles Data::Dump File::DesktopEntry
+sudo cpan install YAML Gtk3 Pango Linux::DesktopFiles Data::Dump File::DesktopEntry Log::Log4perl
+sudo cpanm Linux::DesktopFiles
+sudo cpanm Data::Dump
+```
+```
+$ git clone https://github.com/trizen/obmenu-generator.git
+sudo cp obmenu-generator/obmenu-generator /usr/bin
+mkdir -p ~/.config/obmenu-generator/
+//cp -r obmenu-generator/schema.pl ~/.config/obmenu-generator/
+schema.pl和config.pl都用存档的
+sudo chown root:root /usr/bin/obmenu-generator
+sudo chmod 755 /usr/bin/obmenu-generator 
+```
+测试
+```
+obmenu-generator -i
+```
+
+## 安装浏览器，比如opera
+```
+$ sudo apt install opera-stable chromium-browser 
+```
+```
+opera-stable is already the newest version (93.0.4585.11).
+The following additional packages will be installed:
+  chromium libgl1-mesa-glx
+The following packages will be REMOVED:
+  chromium-codecs-ffmpeg-extra
+```
+```
+sudo apt install opera-stable chromium-browser firefox
+```
+
+## 安装cbatticon
+```
+$ sudo apt install cbatticon
+```
+
+## 恢复默认网卡为eth0
+```
+sudo gedit /etc/default/grub
+```
+```
+查找
+GRUB_CMDLINE_LINUX=""
+修改为
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+```
+重新生成grub引导配置文件
+```
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+## 安装配置 conky
+```
+$ sudo apt install conky conky-all
+```
+```
+The following additional packages will be installed:
+  libaudclient2 libircclient1 libxmmsclient6 libxnvctrl0
+Suggested packages:
+  apcupsd audacious moc mpd xmms
+```
+```
+$ cat /home/andy/.cpu.lua
+```
+```
+function conky_mycpus()
+        local file = io.popen("grep -c processor /proc/cpuinfo")
+        local numcpus = file:read("*n")
+        file:close()
+        listcpus = ""
+        for i = 1,numcpus
+        do listcpus = listcpus.."${cpubar cpu"..tostring(i).."}\n"
+         -- do listcpus = listcpus.."${offset 0}Core "..tostring(i).." ${color ff8300}${cpubar cpu"..tostring(i).." 6}${color FFFDE2}\n"
+         -- do  listcpus = listcpus.."${cpu cpu"..tostring(i).."} "
+        end
+
+        return listcpus
+end
+```
+```
+$ cat /home/andy/.config/conky/conky.conf
+```
+```
+conky.config = {
+lua_load = '~/.cpu.lua',
+background = true,
+use_xft = true,
+font = 'monospace:size=9',
+xftalpha = 1,
+update_interval = 1.0,
+total_run_times = 0,
+own_window = true,
+own_window_transparent = true,
+own_window_type = 'desktop',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+double_buffer = true,
+minimum_height = 390,
+maximum_width = 340,
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+default_color = 'white',
+default_shade_color = '000000',
+default_outline_color = 'd9d7d6',
+alignment = 'top_right',
+gap_x = 12,
+gap_y = 12,
+no_buffers = true,
+uppercase = false,
+cpu_avg_samples = 2,
+override_utf8_locale = false,
+color1 = 'gray',
+color2 = 'gray',
+color3 = 'gray',
+}
+
+conky.text = [[
+#${pre_exec nproc}
+#${execi 86400 nproc}
+##${exec nproc}
+${color2}${font sans:normal:size=9}CPU ${cpu cpu0}%${color1}
+${lua_parse conky_mycpus}
+#${cpu cpu0} is the total usage
+#${cpubar cpu1}
+#${cpubar cpu2}
+#${cpubar cpu3}
+#${cpubar cpu4}
+#${cpubar cpu5}
+#${cpubar cpu6}
+#${cpubar cpu7}
+#${cpubar cpu8}
+#${cpubar cpu9}
+#${cpubar cpu10}
+#${cpubar cpu11}
+#${cpubar cpu12}
+#${cpubar cpu13}
+#${cpubar cpu14}
+#${cpubar cpu15}
+#${cpubar cpu16}
+${color2}${font sans:normal:size=9}RAM ${color1} $alignr$mem/$memmax
+${membar}
+#${memgraph 30,555 AAF5D0 00B35B}
+${if_existing /proc/net/route wlan0}
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+${endif}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${color2}${font sans:normal:size=9}SYSTEM ${color1}${hr 2}
+#${color1}${font sans:normal:size=9}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#
+${color2}${font sans:bold:size=9}TOP PROCESSES ${color1}${hr 2}
+${color1}${font sans:normal:size=9}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+
+${color2}${font sans:bold:size=9}SHORTCUT KEYS ${color1}${hr 2}${color1}${font sans:normal:size=9}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize]]
+```
+
+```
+$ sudo apt install volumeicon-alsa gnome-icon-theme
+```
+```
+gnome-icon-theme is already the newest version (3.12.0-4).
+Suggested packages:
+  alsamixergui | aumix-gtk | kmix | gnome-alsamixer
+```
+
+## 高级剪贴板
+```
+$ sudo apt install parcellite
+```
+```
+The following additional packages will be installed:
+  libayatana-appindicator1 libayatana-indicator7 libdbusmenu-gtk4
+```
+
+## 截图工具
+```
+$ sudo apt install shutter
+```
+```
+The following additional packages will be installed:
+  gir1.2-goocanvas-2.0 libcarp-always-perl libclass-accessor-perl
+  libcommon-sense-perl libcrypt-openssl-bignum-perl
+  libcrypt-openssl-random-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl
+  libfile-copy-recursive-perl libfile-which-perl libgoocanvas-2.0-9
+  libgoocanvas-2.0-common libgoocanvas2-cairotypes-perl libgoocanvas2-perl
+  libgtk3-imageview-perl libhttp-server-simple-perl libimage-exiftool-perl
+  libimage-magick-perl libimage-magick-q16-perl libjson-perl libjson-xs-perl
+  libmime-charset-perl libnet-dbus-glib-perl libnet-oauth-perl
+  libnumber-bytes-human-perl libpath-class-perl libproc-simple-perl libsombok3
+  libsort-naturally-perl libtypes-serialiser-perl libunicode-linebreak-perl
+  libwww-mechanize-perl libx11-protocol-other-perl libxml-simple-perl
+Suggested packages:
+  libposix-strptime-perl imagemagick-doc libencode-hanextra-perl
+  libpod2-base-perl
+```
+
+## 基本编译工具
+```
+$ sudo apt install g++ make autoconf libtool automake cmake cmake-gui
+```
+```
+Note, selecting 'cmake-qt-gui' instead of 'cmake-gui'
+autoconf is already the newest version (2.71-2).
+autoconf set to manually installed.
+automake is already the newest version (1:1.16.5-1.3).
+automake set to manually installed.
+g++ is already the newest version (4:11.2.0-1ubuntu1).
+g++ set to manually installed.
+libtool is already the newest version (2.4.6-15build2).
+libtool set to manually installed.
+make is already the newest version (4.3-4.1build1).
+The following additional packages will be installed:
+  cmake-data dh-elpa-helper librhash0
+Suggested packages:
+  cmake-doc ninja-build cmake-format
+```
+
+## 屏保 xscreensaver
+```
+sudo apt install xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf
+```
+```
+fonts-freefont-ttf is already the newest version (20120503-10build1).
+The following additional packages will be installed:
+  dizzy fonts-sil-gentium fonts-sil-gentium-basic freeglut3 gsfonts-x11
+  libalien-sdl-perl libclass-inspector-perl libconvert-color-perl
+  libfile-sharedir-perl libfluidsynth3 libgdk-pixbuf-xlib-2.0-0 libgle3
+  libinstpatch-1.0-2 libjpeg-turbo-progs libmad0 libmikmod3
+  libmodule-pluggable-perl libopengl-perl libsdl-gfx1.2-5 libsdl-image1.2
+  libsdl-mixer1.2 libsdl-pango1 libsdl-perl libsdl-ttf2.0-0 libsdl1.2debian
+  libtie-simple-perl timgm6mb-soundfont
+Suggested packages:
+  fluid-soundfont-gm fortune xdaliclock xfishtank
+The following packages will be REMOVED:
+  libjpeg-progs
+```
+
+## 补全网络工具
+```
+sudo apt install network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig
+```
+```
+network-manager-openvpn is already the newest version (1.8.18-1).
+network-manager-pptp is already the newest version (1.2.10-1).
+ppp is already the newest version (2.4.9-1+1ubuntu3).
+pppconfig is already the newest version (2.3.26).
+pppoeconf is already the newest version (1.21+nmu2ubuntu1).
+The following additional packages will be installed:
+  iodine libopenconnect5 libpskc0 libstoken1 libtomcrypt1 libtss2-tctildr0
+  libxmlsec1-openssl openconnect python3-asn1crypto python3-mechanize vpnc
+  vpnc-scripts
+Suggested packages:
+  fping | oping ipcalc network-manager-iodine-gnome resolvconf dnsmasq
+```
+
+## openbox环境的一些补充
+```
+$ sudo apt install openbox-dev
+The following additional packages will be installed:
+  bzip2-doc libbz2-dev libgif-dev libid3tag0-dev libimlib2-dev librsvg2-dev
+  libwebp-dev
+Suggested packages:
+  librsvg2-doc
+```
+
+```
+sudo apt install lxappearance-obconf adwaita-icon-theme-full
+```
+
+## 其他一些杂碎
+```
+sudo apt install libgtk2.0-dev libglib2.0-dev
+```
+
+```
+$ sudo apt install libgconf2-dev
+```
+```
+The following additional packages will be installed:
+  gconf-service gconf-service-backend gconf2 gconf2-common gir1.2-gconf-2.0
+  libdbus-1-dev libgconf-2-4 libgconf2-doc
+Suggested packages:
+  gconf-defaults-service
+```
+
+```
+$ sudo apt install libgstreamer1.0-dev
+```
+```
+The following additional packages will be installed:
+  libdw-dev libelf-dev libunwind-dev
+Suggested packages:
+  gstreamer1.0-doc
+```
+
+```
+$ sudo apt install libgst-dev
+```
+```
+The following additional packages will be installed:
+  libgst7
+```
+
+
+```
+//sudo apt install python-pip
+The following additional packages will be installed:
+  libpython2-stdlib libpython2.7-minimal libpython2.7-stdlib
+  python-pkg-resources python-setuptools python2 python2-minimal python2.7
+  python2.7-minimal
+Suggested packages:
+  python-setuptools-doc python2-doc python-tk python2.7-doc binfmt-support
+Recommended packages:
+  python2-dev
+```
+
+```
+$ sudo apt install python3-pip
+The following additional packages will be installed:
+  python3-setuptools python3-wheel
+Suggested packages:
+  python-setuptools-doc
+```
+
+```
+$ sudo apt install gtk-theme-switch gtk2-engines
+gtk2-engines is already the newest version (1:2.20.2-5build2).
+The following NEW packages will be installed:
+  gtk-theme-switch
+```
+
+
+```
+sudo apt install libreoffice-l10n-en-za libreoffice-l10n-en-gb libreoffice-help-en-gb hyphen-en-gb hunspell-en-ca mythes-en-au hunspell-en-za hunspell-en-au hunspell-en-gb gimp-help-common gimp-help-en thunderbird-locale-en-gb
+```
+
+## home_andy_openbox_base.tar.bz2
+解压出来到~
+
+
+## 全局文件查找 mlocate
+```
+sudo apt install mlocate
+sudo updatedb
+```
+
+## 配置pcmanfm
+修改pcmanfm的默认shell
+```
+x-terminal-emulator %s
+```
+to
+```
+lxterminal
+```
+## 配置  volumeicon
+```
+$ sudo apt install alsamixergui
+```
+```
+The following additional packages will be installed:
+  libfltk1.1
+```
+```
+$ sudo apt install xterm
+```
+```
+The following additional packages will be installed:
+  libutempter0
+Suggested packages:
+  xfonts-cyrillic
+```
+```
+$ gedit ~/.config/volumeicon/volumeicon
+```
+从
+`xterm -bg black -e 'alsamixer'`
+改成
+`alsamixergui`
+
+从
+`xterm -e 'alsamixer'`
+改成
+`alsamixergui`
+不好看，换成lxterminal
+
+```
+$ gedit ~/.config/volumeicon/volumeicon
+```
+从
+`xterm -e 'alsamixer'`
+改成
+`lxterminal -e 'alsamixer'`
+
 
 
 ***
