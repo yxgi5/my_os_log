@@ -3004,6 +3004,15 @@ to
 ```
 lxterminal
 ```
+## 配置lxterminal
+回滚设置成10000行
+
+光标闪烁cursor blink
+
+字体monospace 12号
+
+背景 透明度200
+
 ## 配置  volumeicon
 ```
 $ sudo apt install alsamixergui
