@@ -3043,7 +3043,21 @@ $ gedit ~/.config/volumeicon/volumeicon
 改成
 `lxterminal -e 'alsamixer'`
 
+## tint2 systraybar icons color keep going black
+<https://forum.maboxlinux.org/t/problem-with-battery-icon/335/2>
+在`tint2conf`里修改`system tray`
 
+`Icon saturation`为37
+`Icon brightness`为48
+
+都恢复为0好了
+
+试试lxpanel，好像也不好
+```
+$ sudo apt install lxpanel
+The following additional packages will be installed:
+  libkeybinder0 libwnck-common libwnck22 lxpanel-data pavucontrol
+```
 
 ***
 # 
