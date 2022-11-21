@@ -1147,6 +1147,25 @@ ref:
 <https://download.csdn.net/download/weixin_42114645/15732639>
 <https://download.csdn.net/download/weixin_42128988/15743239?utm_medium=distribute.pc_relevant_download.none-task-download-2~default~BlogCommendFromBaidu~Rate-2-15743239-download-15732639.topnsimilar_compare_v2&depth_1-utm_source=distribute.pc_relevant_download.none-task-download-2~default~BlogCommendFromBaidu~Rate-2-15743239-download-15732639.topnsimilar_compare_v2&dest=https%3A%2F%2Fdownload.csdn.net%2Fdownload%2Fweixin_42128988%2F15743239&spm=1003.2020.3001.6616.2>
 
+## slackware
+<http://www.slackware.com>
+<http://ftp.slackware.com/pub/slackware-iso/>
+<https://slackware.nl/slackware-live/slackware64-15.0-live/>
+<https://slackware.nl/slackware/slackware-iso/slackware64-15.0-iso/>
+<https://slackware.nl/slackware/slackware-live/slackware64-15.0-live/>
+<https://slackware.nl/slackware/slackware64-current-iso/>
+<https://mirrors.bfsu.edu.cn/slackware/>
+<https://mirrors.slackware.com/guidelines/>
+<https://download.liveslak.org>
+MD5SUM
+```
+e7abe1bd616b643e3ae519fe6e754ed1  slackware64-live-15.0.iso
+f8418ef0ec2c0a205adf5dbc2f2a1971  slackware64-15.0-install-dvd.iso
+0b8fd275dda97443cf48d2798fa86abe  slackware64-current-install-dvd.iso
+cc0e6061264c11fdd5cf1c76c0460642  slackware64-current-mini-install.iso
+```
+
+
 ## fedora
 <https://fedoraproject.org/>
 <https://download.fedoraproject.org/pub/fedora/linux/releases/37/Workstation/x86_64/iso/>
@@ -1467,6 +1486,28 @@ The following additional packages will be installed:
 Suggested packages:
   libjlha-java-doc-ja default-mta | mail-transport-agent inews sharutils-doc
   bsd-mailx | mailx xdeview
+```
+rarreg.key
+```
+RAR registration data
+Andreas Zhang
+Unlimited Company License
+UID=95d88025e605e7f69a7d
+64122122509a7d8fe151cac66f48da9a7eba775d78b0928b03d738
+409ffd2cdd69047f79b560fce6cb5ffde62890079861be57638717
+7131ced835ed65cc743d9777f2ea71a8e32c7e593cf66794343565
+b41bcf56929486b8bcdac33d50ecf7739960cf9a562353a49af6f9
+69d97d19b1c2fb9c0a37971376ad4e3d6a18705e8f9b541bdffccf
+bfcd3a6fe09f73b6f6ead20f2606d79374df1160d8db0a1f603850
+4e86565158c437a7ff6ea0b2a21104b968ad6ddc336e0342949312
+```
+把 rarreg.key 复制到你的 home 目录，或：/etc， /usr/lib， /usr/local/lib， /usr/local/etc
+
+没有放到~, 就不需要保护了
+```
+//$ sudo chattr +i rarreg.key
+$ sudo chattr -i rarreg.key
+$ lsattr -a
 ```
 
 
@@ -1838,6 +1879,7 @@ sudo apt install curl wget aria2 libaria2-0 libssh2-1
 ***
 # run 32-bit programs
 ```
+$ dpkg-architecture -l
 $ dpkg --print-foreign-architectures
 i386
 $ dpkg --print-architecture
@@ -1865,7 +1907,20 @@ p   binutils-multiarch-dev:i386                                        - GNU bin
 p   gdb-multiarch                                                      - GNU Debugger (with support for multiple architectures)                       
 p   gdb-multiarch:i386                                                 - GNU Debugger (with support for multiple architectures)  
 ```
+```
+$ sudo apt install g++-multilib gcc-multilib binutils-multiarch binutils-multiarch-dev gdb-multiarch
 
+The following additional packages will be installed:
+  binutils-dev g++-11-multilib gcc-11-multilib lib32asan6 lib32atomic1
+  lib32gcc-11-dev lib32gcc-s1 lib32gomp1 lib32itm1 lib32quadmath0
+  lib32stdc++-11-dev lib32stdc++6 lib32ubsan1 libc6-dev-i386 libc6-dev-x32
+  libc6-i386 libc6-x32 libx32asan6 libx32atomic1 libx32gcc-11-dev libx32gcc-s1
+  libx32gomp1 libx32itm1 libx32quadmath0 libx32stdc++-11-dev libx32stdc++6
+  libx32ubsan1
+Suggested packages:
+  lib32stdc++6-11-dbg libx32stdc++6-11-dbg
+
+```
 
 ***
 # sunloginclient
@@ -2076,6 +2131,11 @@ dpkg: warning: overriding problem because --force enabled:
 dpkg: warning: trying to overwrite '/usr/share/icons/hicolor/16x16/apps/software-properties.png', which is also in package software-properties-gtk 0.99.22.3
 
 ```
+强制更新配置
+```
+$ sudo apt-get -o DPkg::options::=--force-confmiss --reinstall install  linuxmint-keyring
+```
+
 ## ubuntu orig
 ```
 $ cat /etc/apt/sources.list
@@ -2885,6 +2945,12 @@ Suggested packages:
 The following packages will be REMOVED:
   libjpeg-progs
 ```
+```
+$ touch ~/.xinitrc
+$ gedit ~/.xinitrc
+$ cat ~/.xinitrc
+xscreensaver -no-splash
+```
 
 ## 补全网络工具
 ```
@@ -3146,8 +3212,303 @@ NAME      TYPE SIZE USED PRIO
 
 
 ***
+# wine
+<https://www.winehq.org>
+<https://wiki.winehq.org/Ubuntu>
+```
+sudo dpkg --add-architecture i386
+//wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+//sudo apt-key add /usr/share/keyrings/winehq-archive.key
+
+sudo mkdir -pm755 /etc/apt/keyrings
+sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+
+```
+这key名字不能修改，比如后缀改成gpg就是不行。
+
+```
+cat /etc/apt/sources.list.d/winehq-jammy.sources
+Types: deb
+URIs: https://dl.winehq.org/wine-builds/ubuntu
+Suites: jammy
+Components: main
+Architectures: amd64 i386
+Signed-By: /etc/apt/keyrings/winehq-archive.key
+```
+如果key没有设置对就有报错
+```
+$ sudo update
+W: GPG error: https://dl.winehq.org/wine-builds/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 76F1A20FF987672F
+E: The repository 'https://dl.winehq.org/wine-builds/ubuntu jammy InRelease' is not signed
+```
+尝试解决，下面几句都不行，实际上wine的key文件的名字或者后缀不能修改，最好是按官方说明放`/etc/apt/keyrings/winehq-archive.key`
+```
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 76F1A20FF987672F
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 76F1A20FF987672F
+$ gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 76F1A20FF987672F
+```
+解决了key问题就可以安装了，可以选winehq-stable，winehq-devel，winehq-staging, 这里我用winehq-staging(激进程度居中)
+<https://wiki.winehq.org/Wine_User%27s_Guide#Wine_from_WineHQ>
+```
+$ sudo update
+$ sudo apt install --install-recommends winehq-staging
+```
+```
+The following additional packages will be installed:
+  gstreamer1.0-plugins-base:i386 i965-va-driver:i386 intel-media-va-driver:i386 libasound2:i386 libasound2-plugins:i386 libbz2-1.0:i386 libcdparanoia0:i386
+  libcurl3-gnutls:i386 libcurl4:i386 libdb5.3:i386 libdecor-0-0:i386 libdecor-0-plugin-1-cairo:i386 libdrm-intel1:i386 libdw1:i386 libexif12:i386 libgd3:i386
+  libgdbm-compat4:i386 libgdbm6:i386 libglu1-mesa:i386 libgphoto2-6:i386 libgphoto2-port12:i386 libgstreamer-plugins-base1.0-0:i386 libgstreamer1.0-0:i386
+  libieee1284-3:i386 libigdgmm12:i386 libjack-jackd2-0:i386 libldap-2.5-0:i386 libltdl7:i386 libnghttp2-14:i386 libnspr4:i386 libnss3:i386 libodbc1:i386 libodbc1
+  libodbc2 libodbc2:i386 libodbccr2 libodbccr2:i386 libopengl0:i386 libopenjp2-7:i386 liborc-0.4-0:i386 libosmesa6 libosmesa6:i386 libpcap0.8:i386 libpci3:i386
+  libpciaccess0:i386 libperl5.34:i386 libpoppler-glib8:i386 libpoppler118:i386 libpsl5:i386 librtmp1:i386 libsamplerate0:i386 libsane1:i386 libsasl2-2:i386
+  libsasl2-modules:i386 libsasl2-modules-db:i386 libsdl2-2.0-0:i386 libsnmp40:i386 libsqlite3-0:i386 libssh-4:i386 libtheora0:i386 libunwind8:i386 libusb-1.0-0:i386
+  libv4l-0:i386 libv4lconvert0:i386 libva-drm2:i386 libva-x11-2:i386 libva2:i386 libvisual-0.4-0:i386 libwrap0:i386 libxpm4:i386 libxss1:i386 mesa-va-drivers:i386
+  ocl-icd-libopencl1:i386 va-driver-all:i386 wine-staging wine-staging-amd64 wine-staging-i386:i386
+Suggested packages:
+  gvfs:i386 i965-va-driver-shaders:i386 libgd-tools:i386 gdbm-l10n:i386 gphoto2:i386 libvisual-0.4-plugins:i386 gstreamer1.0-tools:i386 jackd2:i386 odbc-postgresql
+  tdsodbc odbc-postgresql:i386 tdsodbc:i386 hplip:i386 libsasl2-modules-gssapi-mit:i386 | libsasl2-modules-gssapi-heimdal:i386 libsasl2-modules-ldap:i386
+  libsasl2-modules-otp:i386 libsasl2-modules-sql:i386 opencl-icd:i386
+Recommended packages:
+  sane-airscan:i386
+```
+
+winetricks
+```
+$ sudo apt install winetricks 
+The following additional packages will be installed:
+  fuseiso
+Suggested packages:
+  tor
+```
+
+playonlinux（没啥卵用）
+<https://www.playonlinux.com/en/>
+<https://www.playonlinux.com/en/documentation.html>
+<https://www.how2shout.com/linux/how-to-install-playonlinux-on-ubuntu-22-04-lts-jammy/>
+<https://linuxhint.com/run_32_bit_windows_64_bit_unbuntu/>
+```
+$ sudo apt install playonlinux 
+The following additional packages will be installed:
+  icoutils jq libjq1 libonig5 libwxbase3.0-0v5 libwxgtk3.0-gtk3-0v5 python3-natsort python3-numpy python3-wxgtk4.0
+Suggested packages:
+  libterm-readline-gnu-perl | libterm-readline-perl-perl winbind python-natsort-doc gfortran python-numpy-doc python3-pytest wx3.0-doc
+```
+```
+$ playonlinux --version
+PlayOnLinux 4.3.4
+```
+如果要删除
+```
+$ sudo apt autoremove playonlinux -y
+```
+
+Installing without Internet
+```
+sudo apt-get clean
+sudo apt-get --download-only install winehq-<branch>
+sudo apt-get --download-only dist-upgrade
+```
+To check the version
+```
+$ wine --version
+wine-7.21 (Staging)
+```
+Setup Wine
+```
+$ export WINEARCH=win32
+$ export WINEPREFIX=~/.wine32
+$ winecfg
+
+$ ls ~/.cache/wine/
+```
+
+安装Mono
+```
+<https://wiki.winehq.org/Mono>
+<https://wiki.winehq.org/Gecko>
+<http://mirrors.ustc.edu.cn/wine/wine/wine-mono/>
+<http://mirrors.ustc.edu.cn/wine/wine/wine-gecko/>
+<https://dl.winehq.org/wine/wine-gecko/>
+<https://dl.winehq.org/wine/wine-mono/>
+```
+wine运行exe
+```
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
+```
+```
+export WINEPREFIX=$HOME/.wine/
+export WINEARCH=win32
+export LANG=zh_CN.UTF-8
+wine xxx.exe
+unset  WINEARCH=win32
+```
+```
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
+```
+~/.bashrc
+```
+export WINEPREFIX=$HOME/.wine/
+# export WINEARCH=win32
+export WINEARCH=win64
+export LANG=zh_CN.UTF-8
+# alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine'
+alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine wine'
+```
+
+```
+$ export WINEARCH=win32
+$ export WINEPREFIX=~/.wine32
+$ winecfg
+$ wine msiexec /i wine-mono-7.4.0-x86.msi
+$ wine msiexec /i wine-gecko-2.47.3-x86.msi
+```
+```
+$ winecfg
+$ wine msiexec /i wine-mono-7.4.0-x86.msi
+$ wine msiexec /i wine-gecko-2.47.3-x86.msi
+$ wine msiexec /i wine-gecko-2.47.3-x86_64.msi
+```
+```
+$ wine uninstaller
+```
+
+Running .msi files
+```
+wine msiexec /i whatever.msi
+```
+or
+```
+wine start whatever.msi
+```
+run Windows programs from the command line
+```
+cd '.wine/drive_c/Games/Tron'
+wine tron.exe 
+```
+```
+$ wine "C:\Program Files\appname\appname.exe"
+$ wine start 'C:\Games\Tron\tron.exe'
+$ wine start "C:\\Games\\Tron\\tron.exe"
+$ wine start /unix "$HOME/installers/TronSetup.exe"
+```
+basic applications and control panel applets
+```
+$ wine uninstaller
+$ wine control
+$ wine regedit
+$ wine clock
+$ wine iexplore
+$ wineserver -h
+$ wine explorer
+$ wine explorer /desktop=name,1024x768 program.exe 
+$ WINEDEBUG=+all,-relay wine program_name
+```
+WINEARCH
+```
+win32 (support only 32-bit applications)
+win64 (support both 64-bit applications and 32-bit ones in WoW64 mode)
+```
+WINEPREFIX
+```
+export WINEPREFIX=~/.wine-new
+wine winecfg 
+```
+```
+WINEPREFIX=path_to_wineprefix wine winecfg 
+```
+```
+WINEARCH=win32 WINEPREFIX=path_to_wineprefix winecfg
+```
+```
+WINEPREFIX=path_to_wineprefix wine start /unix path_to_installer
+```
+```
+WINEPREFIX="$HOME/.wine-second" wine second-program.exe 
+```
+
+重启wine
+```
+wineboot
+```
+
+用winetricks配置wine
+```
+$ winetricks --gui
+```
+
+wine winrar
+<https://www.win-rar.com/download.html?&L=0>
+<https://linuxhint.com/install-wine-ubuntu-22-04/>
+
+
+***
+# crossover
+<https://www.crossoverchina.com/xiazai.html#linux>
+<https://cpv2.mairuan.com/crossoverchina.com/trial/Linux/crossover-22.deb>
+```
+$ sudo dpkg -i crossover-22.deb
+```
+
+***
+# cvs
+```
+$ sudo apt-get install cvs 
+Suggested packages:
+  mksh rcs
+```
+
+
+***
 # 
 ```
+sudo apt-get install bison flex
+```
+OpenGL支持
+
+```
+$ sudo apt-get install xlibmesa-glu-dev
+Note, selecting 'libglu1-mesa-dev' instead of 'xlibmesa-glu-dev'
+The following additional packages will be installed:
+  libgl-dev libglx-dev
+The following NEW packages will be installed:
+  libgl-dev libglu1-mesa-dev libglx-dev
+```
+```
+sudo apt-get install 
+
+```
+
+***
+# apt-show-versions
+```
+$ sudo apt install apt-show-versions
+$ apt-show-versions | fgrep avail
+```
+
+
+***
+# fakechroot
+```
+$ sudo apt install fakechroot schroot debootstrap
+
+The following additional packages will be installed:
+  libfakechroot schroot-common
+Suggested packages:
+  squid-deb-proxy-client debian-archive-keyring arch-test aufs-tools
+  | unionfs-fuse qemu-user-static
+```
+
+
+***
+# adb
+```
+$ sudo apt-get install android-tools-adb
+
+Note, selecting 'adb' instead of 'android-tools-adb'
+The following additional packages will be installed:
+  android-libadb android-libbase android-libboringssl android-libcrypto-utils
+  android-libcutils android-liblog android-sdk-platform-tools-common
 ```
 
 
@@ -3163,3 +3524,7 @@ NAME      TYPE SIZE USED PRIO
 ```
 
 
+***
+# 
+```
+```
