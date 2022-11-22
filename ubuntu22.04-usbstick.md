@@ -119,7 +119,131 @@ $ sudo apt install vim vim-runtime universal-ctags vim-doc vim-scripts
 Suggested packages:
   perlsgml libtemplate-perl
 ```
+```
+$ sudo  apt install vim-addon-manager
 
+The following additional packages will be installed:
+  fonts-lato libruby3.0 rake ruby ruby-net-telnet ruby-rubygems ruby-webrick ruby-xmlrpc ruby3.0 rubygems-integration
+Suggested packages:
+  ri ruby-dev bundler
+```
+```
+$ sudo apt install vim-gtk3 ubuntu-minimal vim vim-addon-manager vim-common vim-scripts vim-gtk cscope
+
+The following additional packages will be installed:
+  vim-common vim-gui-common
+```
+```
+$ sudo apt-get install vim universal-ctags vim-doc vim-scripts cscope
+```
+```
+$ sudo apt install vim vim-doc vim-scripts exuberant-ctags libtemplate-perl ispell vim-addon-manager cscope
+
+cscope is already the newest version (15.9-1).
+vim-addon-manager is already the newest version (0.5.10).
+vim-scripts is already the newest version (20210124.2).
+vim is already the newest version (2:8.2.3995-1ubuntu2.1).
+vim-doc is already the newest version (2:8.2.3995-1ubuntu2.1).
+The following additional packages will be installed:
+  iamerican ienglish-common libappconfig-perl
+Suggested packages:
+  spell libtemplate-plugin-gd-perl libtemplate-plugin-xml-perl
+```
+```
+$ sudo update-alternatives --config vim
+选gtk3
+```
+
+***
+# apt-get 操作 / apt 操作
+```
+man dpkg
+man apt
+man apt-get
+```
+
+upgrade有可能需要覆盖，一般不常用覆盖
+```
+sudo apt-get -o Dpkg::Options::=--force-overwrite install xxx
+```
+重新安装xxx及配置文件
+```
+sudo apt-get -o DPkg::options::=--force-confmiss --reinstall install xxx
+sudo apt-get -o DPkg::options::=--force-confnew --reinstall install xxx
+sudo apt-get -o DPkg::options::=--force-confold --reinstall install xxx
+```
+
+Recommends are installed by default (since Lucid). 
+```
+$ sudo apt-get --install-recommends install xxx
+==
+$ sudo apt-get -o APT::Install-Recommends="true" install xxx
+```
+To negate this for a specific package, use 
+```
+$ sudo apt-get --no-install-recommends install xxx
+```
+```
+$ sudo apt-get --install-suggests install xxx
+==
+$ sudo apt-get -o APT::Install-Suggests="true" install xxx 
+```
+You can make this the default behaviour by putting
+```
+APT::Install-Suggests "true"
+```
+in file `/etc/apt/apt.conf.d/30install-suggests`
+
+批量安装
+```
+sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install $(cat pkg_list.txt)
+```
+Uninstall xxx And Its Dependencies
+```
+sudo apt-get autoremove xxx
+```
+Remove xxx Configurations and Data
+```
+sudo apt-get purge xxx
+```
+Remove qt6-base-dev configuration, data, and all of its dependencies，可能这个更用得多吧
+```
+sudo apt-get autoremove --purge xxx
+```
+
+The officially recommended command for Ubuntu 16.04 and beyond is apt instead of apt-get
+
+`apt full-upgrade` performs the same function as `apt-get dist-upgrade`
+
+依赖被依赖都查看
+```
+$ apt-cache showpkg xxx
+```
+
+依赖什么包
+```
+$ apt-cache depends xxx
+```
+
+被什么包依赖
+```
+$ apt-cache rdepends xxx
+$ aptitude why xxx
+```
+
+自定安装了啥
+```
+$ apt-mark showauto
+$ apt-mark showauto xxx
+$ apt-mark showhold
+```
+Remove Old PPA
+```
+$ sudo apt-get autoremove -purge PACKAGENAME
+$ sudo apt-get install ppa-purge
+$ sudo add-apt-repository -remove ppa:someppa/ppa
+$ sudo apt-get autoclean
+```
 
 # rootlogin.sh
 ubuntu22.04桌面版开启root用户登陆并开启root用户远程ssh连接
@@ -1466,7 +1590,9 @@ Suggested packages:
   git-daemon-run | git-daemon-sysvinit git-email git-gui gitweb git-cvs
   git-mediawiki  libyaml-shell-perl db5.3-util libapache2-mod-svn subversion-tools
 ```
-
+```
+$ sudo apt-get install git-gui
+```
 
 ***
 # 7z
@@ -2131,9 +2257,9 @@ dpkg: warning: overriding problem because --force enabled:
 dpkg: warning: trying to overwrite '/usr/share/icons/hicolor/16x16/apps/software-properties.png', which is also in package software-properties-gtk 0.99.22.3
 
 ```
-强制更新配置
+强制更新配置文件
 ```
-$ sudo apt-get -o DPkg::options::=--force-confmiss --reinstall install  linuxmint-keyring
+$ sudo apt-get -o DPkg::options::=--force-confmiss --reinstall install linuxmint-keyring
 ```
 
 ## ubuntu orig
@@ -3460,12 +3586,7 @@ Suggested packages:
 
 
 ***
-# 
-```
-sudo apt-get install bison flex
-```
-OpenGL支持
-
+# OpenGL支持
 ```
 $ sudo apt-get install xlibmesa-glu-dev
 Note, selecting 'libglu1-mesa-dev' instead of 'xlibmesa-glu-dev'
@@ -3475,8 +3596,13 @@ The following NEW packages will be installed:
   libgl-dev libglu1-mesa-dev libglx-dev
 ```
 ```
-sudo apt-get install 
+sudo apt-get install libglx-dev 
+```
+```
+$ sudo apt install libgl1-mesa-dev
 
+The following additional packages will be installed:
+  libgles-dev libgles1 libglvnd-core-dev libglvnd-dev
 ```
 
 ***
@@ -3513,18 +3639,576 @@ The following additional packages will be installed:
 
 
 ***
-# 
+# cpu-x
+```
+$ sudo apt install cpu-x libcpuid15 libglfw3
+```
+
+
+***
+# python3-examples
+```
+$ sudo apt install python3-examples python3-extras
+
+The following additional packages will be installed:
+  python3-fixtures python3-pbr python3-testtools python3.10-examples
+Suggested packages:
+  python-testtools-doc
+```
+
+
+***
+# peco
+```
+$ sudo apt install peco
+```
+
+
+***
+# samba
+```
+$ sudo apt-get install samba samba-common samba-client
+
+Note, selecting 'smbclient' instead of 'samba-client'
+samba-common is already the newest version (2:4.15.9+dfsg-0ubuntu0.2).
+smbclient is already the newest version (2:4.15.9+dfsg-0ubuntu0.2).
+The following additional packages will be installed:
+  ibverbs-providers libcephfs2 libgfapi0 libgfrpc0 libgfxdr0 libglusterfs0 libibverbs1 librados2 librdmacm1 python3-dnspython python3-markdown python3-pygments
+  python3-requests-toolbelt samba-vfs-modules tdb-tools
+Suggested packages:
+  python3-sniffio python3-trio python-markdown-doc python-pygments-doc ttf-bitstream-vera bind9 bind9utils ctdb ldb-tools ntp | chrony smbldap-tools winbind
+```
+
+
+***
+# sqlite
+```
+$ sudo apt install sqlite3 sqlite3-doc sqlitebrowser
+
+sqlite3 is already the newest version (3.37.2-2ubuntu0.1).
+sqlite3-doc is already the newest version (3.37.2-2ubuntu0.1).
+The following additional packages will be installed:
+  libqscintilla2-qt5-15 libqscintilla2-qt5-l10n libqt5printsupport5 libqt5xml5
+Suggested packages:
+  libqscintilla2-doc
+```
+```
+$ sudo apt-get install libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev
+
+Suggested packages:
+  db5.3-doc libssl-doc
+```
+repo的版本maximize按钮没有，从git拉取最新的编译出deb可以解决。需要安装qt5
+
+PKGBUILD
+```
+# Maintainer: sakure <duarm at disroot dot org>
+# Old Maintainer: nixi <nixi at cock dot li>
+# Contributor: <darkfeline@felesatra.moe>
+# Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Contributor: Douglas Soares de Andrade <dsandrade@gmail.com>
+# Contributor: Michael Fellinger <m.fellinger@gmail.com>
+
+pkgname=sqlitebrowser-git
+pkgver=3.12.99
+pkgrel=1
+pkgdesc="SQLite Database browser is a light GUI editor for SQLite databases, built on top of Qt"
+arch=('i386' 'amd64')
+url="http://sqlitebrowser.org/"
+license=('GPL3')
+provides=('sqlitebrowser')
+conflicts=('sqlitebrowser')
+#depends=('libc6' 'libgcc-s1' 'libqscintilla2-qt5-15' 'libqt5core5a' 'libqt5gui5' 'libqt5gui5-gles' 'libqt5network5' 'libqt5printsupport5' 'libqt5widgets5' 'libqt5xml5' 'libsqlite3-0' 'libstdc++6')
+depends=('libc6' 'libgcc-s1' 'libqscintilla2-qt5-15' 'libqt5core5a' 'libqt5gui5' 'libqt5network5' 'libqt5printsupport5' 'libqt5widgets5' 'libqt5xml5' 'libsqlite3-0' 'libstdc++6')
+makedepends=('cmake')
+install=sqlitebrowser.install
+source=($pkgname'::git+https://github.com/sqlitebrowser/sqlitebrowser.git')
+md5sums=('SKIP')
+
+#pkgver() {
+#	cd "$pkgname"
+#	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/^non-daw-v//;s/-/./g'
+#}
+
+build() {
+	cd $srcdir/$pkgname
+	cmake -DUSE_QT5=TRUE -DCMAKE_INSTALL_PREFIX=/usr .
+	make
+}
+
+package() {
+	cd $srcdir/$pkgname
+	make install DESTDIR=$pkgdir
+	install -Dm0644 distri/sqlitebrowser.desktop $pkgdir/usr/share/applications/sqlitebrowser.desktop
+	install -dm0755 $pkgdir/usr/share/icons/
+	install -m0644 images/logo.svg $pkgdir/usr/share/icons/
+}
+```
+sqlitebrowser.install
+```
+post_install() {
+	[[ -x usr/bin/update-desktop-database ]] && update-desktop-database -q || true
+	[[ -x usr/bin/gtk-update-icon-cache ]] && gtk-update-icon-cache -q -t -f usr/share/icons/hicolor || true
+}
+
+post_upgrade() {
+	post_install
+}
+
+
+post_remove() {
+	post_install
+}
+```
+```
+$ sudo apt remove sqlitebrowser
+$ sudo dpkg -i sqlitebrowser-git_3.12.99-1_amd64.deb
+```
+
+
+***
+# qt5
+```
+$ sudo apt install qtcreator qtbase5-dev qt5-qmake cmake
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+cmake is already the newest version (3.22.1-1ubuntu1.22.04.1).
+The following additional packages will be installed:
+  binfmt-support clang-14 clang-tidy clang-tidy-14 clang-tools-14
+  libclang-common-14-dev libclang-cpp14 libclang1-14 libegl-dev
+  libkf5syntaxhighlighting-data libkf5syntaxhighlighting5 libllvm14
+  libncurses-dev libobjc-11-dev libobjc4 libpfm4 libqt5concurrent5
+  libqt5designer5 libqt5designercomponents5 libqt5help5 libqt5opengl5
+  libqt5opengl5-dev libqt5positioning5 libqt5qml5 libqt5qmlmodels5
+  libqt5qmlworkerscript5 libqt5quick5 libqt5quicktest5 libqt5quickwidgets5
+  libqt5sensors5 libqt5serialport5 libqt5sql5 libqt5sql5-sqlite libqt5test5
+  libqt5webchannel5 libqt5webkit5 libqt5xmlpatterns5 libtinfo-dev
+  libvulkan-dev libyaml-cpp0.7 libz3-4 libz3-dev llvm-14 llvm-14-dev
+  llvm-14-linker-tools llvm-14-runtime llvm-14-tools qdoc-qt5
+  qhelpgenerator-qt5 qml-module-qtgraphicaleffects qml-module-qtqml
+  qml-module-qtqml-models2 qml-module-qtquick-controls
+  qml-module-qtquick-layouts qml-module-qtquick-window2 qml-module-qtquick2
+  qmlscene qt3d5-doc qt5-assistant qt5-doc qt5-qmake-bin
+  qt5-qmltooling-plugins qtattributionsscanner-qt5 qtbase5-dev-tools
+  qtbase5-doc qtcharts5-doc qtchooser qtconnectivity5-doc qtcreator-data
+  qtcreator-doc qtdatavisualization5-doc qtdeclarative5-dev-tools
+  qtdeclarative5-doc qtgamepad5-doc qtgraphicaleffects5-doc qtlocation5-doc
+  qtmultimedia5-doc qtnetworkauth5-doc qtquickcontrols2-5-doc
+  qtquickcontrols5-doc qtscript5-doc qtscxml5-doc qtsensors5-doc
+  qtserialbus5-doc qtserialport5-doc qtsvg5-doc qttools5-dev-tools
+  qttools5-doc qtvirtualkeyboard5-doc qtwayland5-doc qtwebchannel5-doc
+  qtwebengine5-doc qtwebsockets5-doc qtwebview5-doc qtx11extras5-doc
+  qtxmlpatterns5-dev-tools qtxmlpatterns5-doc
+Suggested packages:
+  clang-14-doc ncurses-doc llvm-14-doc default-libmysqlclient-dev firebird-dev
+  libpq-dev unixodbc-dev clazy meson valgrind python3-pylsp
+```
+
+```
+$ sudo apt install qtbase5-dev qt5-qmake qttools5-dev qttools5-dev-tools qtwebengine5-dev libqt5svg5-dev libqt5websockets5-dev
+
+qttools5-dev-tools is already the newest version (5.15.3-1).
+qttools5-dev-tools set to manually installed.
+qt5-qmake is already the newest version (5.15.3+dfsg-2ubuntu0.2).
+qtbase5-dev is already the newest version (5.15.3+dfsg-2ubuntu0.2).
+The following additional packages will be installed:
+  libminizip1 libqt5positioning5-plugins libqt5positioningquick5
+  libqt5quickparticles5 libqt5quickshapes5 libqt5webchannel5-dev
+  libqt5webengine-data libqt5webengine5 libqt5webenginecore5
+  libqt5webenginewidgets5 libqt5websockets5 libre2-9 qtdeclarative5-dev
+  qtpositioning5-dev
+```
+Could not find a package configuration file provided by "Qt5LinguistTools"
+```
+$ sudo apt install qttools5-dev qttools5-dev-tools
+```
+据说要设置CMAKE_PREFIX_PATH环境变量
+```
+$ printenv | grep CMAKE
+CMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5LinguistTools
+```
+```
+$ sudo apt install libqt5x11extras5
+```
+
+***
+# qt6
+```
+$ sudo apt install qt6-base-dev
+
+The following additional packages will be installed:
+  libb2-1 libopengl-dev libqt6concurrent6 libqt6core6 libqt6dbus6 libqt6gui6 libqt6network6 libqt6opengl6 libqt6opengl6-dev libqt6openglwidgets6 libqt6printsupport6
+  libqt6sql6 libqt6sql6-sqlite libqt6test6 libqt6widgets6 libqt6xml6 libts0 qmake6 qmake6-bin qt6-base-dev-tools qt6-gtk-platformtheme qt6-qpa-plugins
+```
+```
+$ sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+
+libglu1-mesa-dev is already the newest version (9.0.2-1).
+The following additional packages will be installed:
+  libdrm-dev libpciaccess-dev libxt-dev
+Suggested packages:
+  libxt-doc
+```
+```
+$ sudo apt install gcc g++ gdb binutils build-essential openssl libssl-dev libssl-dev libgl1-mesa-dev
+```
+```
+$ sudo apt install qtcreator qmake6 qtchooser qt6-tools-dev assistant-qt6 designer-qt6 qt6-qmltooling-plugins
+
+qmake6 is already the newest version (6.2.4+dfsg-2ubuntu1).
+qmake6 set to manually installed.
+qtchooser is already the newest version (66-2build1).
+qtchooser set to manually installed.
+qtcreator is already the newest version (6.0.2-2build1).
+The following additional packages will be installed:
+  libqt6designer6 libqt6designercomponents6 libqt6help6 libqt6qml6 libqt6qmlmodels6 libqt6quick6 libqt6quickwidgets6 libqt6uitools6
+```
+
+
+***
+# build-essential
+```
+$ sudo apt install build-essential git cmake libsndfile1-dev libjack-jackd2-dev libfftw3-dev emacs libudev-dev
+
+build-essential is already the newest version (12.9ubuntu3).
+cmake is already the newest version (3.22.1-1ubuntu1.22.04.1).
+git is already the newest version (1:2.34.1-1ubuntu1.5).
+The following additional packages will be installed:
+  emacs-bin-common emacs-common emacs-el emacs-gtk libfftw3-bin libfftw3-long3
+  libfftw3-quad3 libflac-dev libm17n-0 libogg-dev libopus-dev libotf1
+  libvorbis-dev m17n-db
+Suggested packages:
+  mailutils emacs-common-non-dfsg libfftw3-doc m17n-docs
+```
+```
+$ sudo apt-get install libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+
+libbz2-dev is already the newest version (1.0.8-5build1).
+libbz2-dev set to manually installed.
+wget is already the newest version (1.21.2-2ubuntu1).
+curl is already the newest version (7.81.0-1ubuntu1.6).
+libsqlite3-dev is already the newest version (3.37.2-2ubuntu0.1).
+The following additional packages will be installed:
+  llvm-runtime
+Suggested packages:
+  readline-doc
+```
+```
+sudo apt-get install bison flex
+```
+```
+$ sudo apt-get install curl texinfo quilt dc libcrypt-ssleay-perl ccache quilt libusb-dev libexpect-perl mono-devel libgtk2.0-dev
+
+dc is already the newest version (1.07.1-3build1).
+libgtk2.0-dev is already the newest version (2.24.33-2ubuntu2).
+curl is already the newest version (7.81.0-1ubuntu1.6).
+The following additional packages will be installed:
+  ca-certificates-mono cli-common libbytes-random-secure-perl libcrypt-random-seed-perl libgdiplus libhiredis0.14 libio-pty-perl libio-stty-perl
+  libmath-random-isaac-perl libmath-random-isaac-xs-perl libmono-2.0-dev libmono-accessibility4.0-cil libmono-btls-interface4.0-cil libmono-cairo4.0-cil
+  libmono-cecil-private-cil libmono-cil-dev libmono-codecontracts4.0-cil libmono-compilerservices-symbolwriter4.0-cil libmono-corlib4.5-cil libmono-corlib4.5-dll
+  libmono-cscompmgd0.0-cil libmono-csharp4.0c-cil libmono-custommarshalers4.0-cil libmono-data-tds4.0-cil libmono-db2-1.0-cil libmono-debugger-soft4.0a-cil
+  libmono-http4.0-cil libmono-i18n-cjk4.0-cil libmono-i18n-mideast4.0-cil libmono-i18n-other4.0-cil libmono-i18n-rare4.0-cil libmono-i18n-west4.0-cil
+  libmono-i18n4.0-all libmono-i18n4.0-cil libmono-ldap4.0-cil libmono-management4.0-cil libmono-messaging-rabbitmq4.0-cil libmono-messaging4.0-cil
+  libmono-microsoft-build-engine4.0-cil libmono-microsoft-build-framework4.0-cil libmono-microsoft-build-tasks-v4.0-4.0-cil
+  libmono-microsoft-build-utilities-v4.0-4.0-cil libmono-microsoft-build4.0-cil libmono-microsoft-csharp4.0-cil libmono-microsoft-visualc10.0-cil
+  libmono-microsoft-web-infrastructure1.0-cil libmono-oracle4.0-cil libmono-parallel4.0-cil libmono-peapi4.0a-cil libmono-posix4.0-cil libmono-rabbitmq4.0-cil
+  libmono-relaxng4.0-cil libmono-security4.0-cil libmono-sharpzip4.84-cil libmono-simd4.0-cil libmono-smdiagnostics0.0-cil libmono-sqlite4.0-cil
+  libmono-system-componentmodel-composition4.0-cil libmono-system-componentmodel-dataannotations4.0-cil libmono-system-configuration-install4.0-cil
+  libmono-system-configuration4.0-cil libmono-system-core4.0-cil libmono-system-data-datasetextensions4.0-cil libmono-system-data-entity4.0-cil
+  libmono-system-data-linq4.0-cil libmono-system-data-services-client4.0-cil libmono-system-data-services4.0-cil libmono-system-data4.0-cil
+  libmono-system-deployment4.0-cil libmono-system-design4.0-cil libmono-system-drawing-design4.0-cil libmono-system-drawing4.0-cil libmono-system-dynamic4.0-cil
+  libmono-system-enterpriseservices4.0-cil libmono-system-identitymodel-selectors4.0-cil libmono-system-identitymodel4.0-cil
+  libmono-system-io-compression-filesystem4.0-cil libmono-system-io-compression4.0-cil libmono-system-json-microsoft4.0-cil libmono-system-json4.0-cil
+  libmono-system-ldap-protocols4.0-cil libmono-system-ldap4.0-cil libmono-system-management4.0-cil libmono-system-messaging4.0-cil
+  libmono-system-net-http-formatting4.0-cil libmono-system-net-http-webrequest4.0-cil libmono-system-net-http4.0-cil libmono-system-net4.0-cil
+  libmono-system-numerics-vectors4.0-cil libmono-system-numerics4.0-cil libmono-system-reactive-core2.2-cil libmono-system-reactive-debugger2.2-cil
+  libmono-system-reactive-experimental2.2-cil libmono-system-reactive-interfaces2.2-cil libmono-system-reactive-linq2.2-cil
+  libmono-system-reactive-observable-aliases0.0-cil libmono-system-reactive-platformservices2.2-cil libmono-system-reactive-providers2.2-cil
+  libmono-system-reactive-runtime-remoting2.2-cil libmono-system-reactive-windows-forms2.2-cil libmono-system-reactive-windows-threading2.2-cil
+  libmono-system-reflection-context4.0-cil libmono-system-runtime-caching4.0-cil libmono-system-runtime-durableinstancing4.0-cil
+  libmono-system-runtime-serialization-formatters-soap4.0-cil libmono-system-runtime-serialization4.0-cil libmono-system-runtime4.0-cil libmono-system-security4.0-cil
+  libmono-system-servicemodel-activation4.0-cil libmono-system-servicemodel-discovery4.0-cil libmono-system-servicemodel-internals0.0-cil
+  libmono-system-servicemodel-routing4.0-cil libmono-system-servicemodel-web4.0-cil libmono-system-servicemodel4.0a-cil libmono-system-serviceprocess4.0-cil
+  libmono-system-threading-tasks-dataflow4.0-cil libmono-system-transactions4.0-cil libmono-system-web-abstractions4.0-cil
+  libmono-system-web-applicationservices4.0-cil libmono-system-web-dynamicdata4.0-cil libmono-system-web-extensions-design4.0-cil libmono-system-web-extensions4.0-cil
+  libmono-system-web-http-selfhost4.0-cil libmono-system-web-http-webhost4.0-cil libmono-system-web-http4.0-cil libmono-system-web-mobile4.0-cil
+  libmono-system-web-mvc3.0-cil libmono-system-web-razor2.0-cil libmono-system-web-regularexpressions4.0-cil libmono-system-web-routing4.0-cil
+  libmono-system-web-services4.0-cil libmono-system-web-webpages-deployment2.0-cil libmono-system-web-webpages-razor2.0-cil libmono-system-web-webpages2.0-cil
+  libmono-system-web4.0-cil libmono-system-windows-forms-datavisualization4.0a-cil libmono-system-windows-forms4.0-cil libmono-system-windows4.0-cil
+  libmono-system-workflow-activities4.0-cil libmono-system-workflow-componentmodel4.0-cil libmono-system-workflow-runtime4.0-cil libmono-system-xaml4.0-cil
+  libmono-system-xml-linq4.0-cil libmono-system-xml-serialization4.0-cil libmono-system-xml4.0-cil libmono-system4.0-cil libmono-tasklets4.0-cil
+  libmono-webbrowser4.0-cil libmono-webmatrix-data4.0-cil libmono-windowsbase4.0-cil libmono-xbuild-tasks4.0-cil libmonosgen-2.0-1 libmonosgen-2.0-dev libnunit-cil-dev
+  libnunit-console-runner2.6.3-cil libnunit-core-interfaces2.6.3-cil libnunit-core2.6.3-cil libnunit-framework2.6.3-cil libnunit-mocks2.6.3-cil libnunit-util2.6.3-cil
+  libtext-unidecode-perl libusb-0.1-4 mono-4.0-gac mono-csharp-shell mono-gac mono-mcs mono-runtime mono-runtime-common mono-runtime-sgen mono-xbuild tex-common
+Suggested packages:
+  distcc | icecc libgnomeui-0 libgamin0 libnunit-doc monodoc-nunit-manual default-mta | mail-transport-agent graphviz procmail texlive-base texlive-latex-base
+  texlive-plain-generic texlive-fonts-recommended
+Recommended packages:
+  libgluezilla
+```
+```
+$ sudo apt-get install xinetd tftpd nfs-kernel-server minicom build-essential libncurses5-dev u-boot-tools autoconf automake tree git-core subversion
+
+Note, selecting 'git' instead of 'git-core'
+autoconf is already the newest version (2.71-2).
+automake is already the newest version (1:1.16.5-1.3).
+build-essential is already the newest version (12.9ubuntu3).
+tree is already the newest version (2.0.2-1).
+tree set to manually installed.
+git is already the newest version (1:2.34.1-1ubuntu1.5).
+subversion is already the newest version (1.14.1-3ubuntu0.22.04.1).
+The following additional packages will be installed:
+  device-tree-compiler libevent-core-2.1-7 libfdt1 libnfsidmap1 libubootenv-tool libubootenv0.1 lrzsz nfs-common rpcbind
+Suggested packages:
+  open-iscsi watchdog
+```
+```
+$ sudo apt-get install fakeroot pkg-config
+$ sudo apt-get install tofrodos iproute2 gawk
+$ sudo apt-get install gcc git make
+$ sudo apt-get install xvfb
+$ sudo apt-get install net-tools libncurses5-dev tftpd
+sudo apt-get install gnupg wget diffstat chrpath socat xterm
+```
+```
+$ sudo apt-get install zlib1g-dev zlib1g-dev:i386 libssl-dev flex bison libselinux1
+
+bison is already the newest version (2:3.8.2+dfsg-1build1).
+flex is already the newest version (2.6.4-8build2).
+libselinux1 is already the newest version (3.3-1build2).
+libssl-dev is already the newest version (3.0.2-0ubuntu1.7).
+zlib1g-dev is already the newest version (1:1.2.11.dfsg-2ubuntu9.2).
+zlib1g-dev set to manually installed.
+Suggested packages:
+  glibc-doc:i386
+```
+```
+$ sudo apt-get install autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev
+
+autoconf is already the newest version (2.71-2).
+build-essential is already the newest version (12.9ubuntu3).
+gcc-multilib is already the newest version (4:11.2.0-1ubuntu1).
+libglib2.0-dev is already the newest version (2.72.1-1).
+libtool is already the newest version (2.4.6-15build2).
+tar is already the newest version (1.34+dfsg-1build3).
+texinfo is already the newest version (6.8-4build1).
+unzip is already the newest version (6.0-26ubuntu3.1).
+zlib1g-dev is already the newest version (1:1.2.11.dfsg-2ubuntu9.2).
+The following additional packages will be installed:
+  libasound2-dev libcaca-dev libpulse-dev libslang2-dev
+Suggested packages:
+  libasound2-doc
+```
+```
+$ sudo apt-get install screen pax gzip tar
+
+tar is already the newest version (1.34+dfsg-1build3).
+gzip is already the newest version (1.10-4ubuntu4.1).
+Suggested packages:
+  byobu | screenie | iselect
+```
+```
+$ sudo apt-get install lib32z1 libncurses5 libbz2-1.0:i386 lib32stdc++6 libncurses5:i386
+
+libbz2-1.0:i386 is already the newest version (1.0.8-5build1).
+libbz2-1.0:i386 set to manually installed.
+libncurses5:i386 is already the newest version (6.3-2).
+lib32stdc++6 is already the newest version (12.1.0-2ubuntu1~22.04).
+lib32stdc++6 set to manually installed.
+The following additional packages will be installed:
+  libtinfo5
+```
+```
+$ sudo apt-get install libncurses5 libncurses5-dev
+```
+
+
+
+***
+# sh 设置
+```
+$ sudo dpkg-reconfigure dash
+选否
+Removing 'diversion of /bin/sh to /bin/sh.distrib by dash'
+Adding 'diversion of /bin/sh to /bin/sh.distrib by bash'
+Removing 'diversion of /usr/share/man/man1/sh.1.gz to /usr/share/man/man1/sh.distrib.1.gz by dash'
+Adding 'diversion of /usr/share/man/man1/sh.1.gz to /usr/share/man/man1/sh.distrib.1.gz by bash'
+
+$ ls -al /bin/sh
+lrwxrwxrwx 1 root root 4 Nov 22 12:18 /bin/sh -> bash
+```
+
+
+***
+# tftp
+```
+$ sudo apt-get install tftp-hpa tftpd-hpa xinetd
+
+xinetd is already the newest version (1:2.3.15.3-1).
+Suggested packages:
+  pxelinux
+The following packages will be REMOVED:
+  tftpd
+```
+
+```
+sudo gedit /etc/default/tftpd-hpa
+```
+修改
+```
+# /etc/default/tftpd-hpa
+
+TFTP_USERNAME="tftp"
+TFTP_DIRECTORY="/srv/tftp"
+TFTP_ADDRESS=":69"
+TFTP_OPTIONS="--secure"
+```
+为
+```
+TFTP_USERNAME="tftp"
+TFTP_DIRECTORY="/tftpboot"
+TFTP_ADDRESS="0.0.0.0:69"
+TFTP_OPTIONS="-l -c -s"
+```
+
+```
+sudo mkdir -p /tftpboot
+sudo chmod 777 /tftpboot
+sudo chown nobody /tftpboot
+sudo service tftpd-hpa restart
+sudo systemctl start tftpd-hpa.service
+sudo systemctl enable tftpd-hpa.service
+sudo systemctl status tftpd-hpa.service
+sudo systemctl stop xinetd.service
+sudo systemctl disable xinetd.service
+sudo systemctl status xinetd.service
+```
+确认tftp服务是否已经开启
+```
+netstat -an | more | grep udp | grep 69
+```
+显示
+```
+udp        0      0 0.0.0.0:69              0.0.0.0:*
+```
+
+```
+netstat -au | grep tftp
+```
+显示
+```
+udp        0      0 0.0.0.0:tftp            0.0.0.0:*                *:*
+```
+
+本机测试,需要tftp客户端
+```
+tftp <ip>
+get <testfile>
+```
+
+目标板上
+```
+tftp -g -r <testfile> <ip>
+```
+
+
+***
+# ftp client
+```
+$ sudo apt-get install gftp
+
+The following additional packages will be installed:
+  gftp-common gftp-gtk gftp-text
+```
+```
+$ sudo apt-get install filezilla
+
+The following additional packages will be installed:
+  filezilla-common libfilezilla-common libfilezilla24 libpugixml1v5
+```
+
+
+***
+# BitTorrent client
+```
+$ sudo apt install deluge
+
+The following additional packages will be installed:
+  deluge-common deluge-gtk gir1.2-appindicator3-0.1 libboost-python1.74.0 libmodplug1 libopusfile0 libportmidi0 libsdl2-image-2.0-0 libsdl2-mixer-2.0-0
+  libsdl2-ttf-2.0-0 libtorrent-rasterbar2.0 python3-attr python3-automat python3-constantly python3-geoip python3-hamcrest python3-hyperlink python3-incremental
+  python3-libtorrent python3-openssl python3-pyasn1 python3-pyasn1-modules python3-pygame python3-rencode python3-service-identity python3-twisted
+  python3-zope.interface
+Suggested packages:
+  python-attr-doc python-openssl-doc python3-openssl-dbg python-pygame-doc timidity python3-pampy python3-serial python3-tk
+
+```
+```
+$ sudo apt install transmission transmission-gtk
+```
+
+
+***
+# torbrowser
+```
+$ sudo apt-get install torbrowser-launcher 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  python3-pyqt5 python3-pyqt5.sip python3-socks tor tor-geoipdb torsocks
+Suggested packages:
+  mixmaster apparmor-utils nyx obfs4proxy
+```
+```
+$ sudo apt-get install apparmor-utils nyx obfs4proxy
+
+The following additional packages will be installed:
+  python3-apparmor python3-libapparmor python3-stem
+Suggested packages:
+  vim-addon-manager
+```
+
+
+***
+# usbview
+```
+$ sudo apt-get install usbview
+$ sudo usbview
+```
+
+
+***
+#
 ```
 ```
 
 
 ***
-# 
+#
 ```
 ```
 
 
 ***
-# 
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
 ```
 ```
