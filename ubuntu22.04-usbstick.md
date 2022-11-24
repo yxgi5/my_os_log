@@ -111,6 +111,31 @@ then take effect after re-login
 <https://www.linuxdiyf.com/linux/29771.html>
 
 
+
+***
+# 修改 bash 显示风格
+
+```
+$ gedit ~/.bashrc
+```
+```
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+```
+修改为
+```
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
+```
+其他效果
+```
+PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ "
+```
+
+***
+# time zoom
+
+Run 'sudo dpkg-reconfigure tzdata' if you wish to change it
+
+
 # vim
 ```
 $ sudo apt install vim vim-runtime universal-ctags vim-doc vim-scripts
@@ -206,7 +231,7 @@ Remove xxx Configurations and Data
 ```
 sudo apt-get purge xxx
 ```
-Remove qt6-base-dev configuration, data, and all of its dependencies，可能这个更用得多吧
+Remove qt6-base-dev configuration, data, and all of its dependencies
 ```
 sudo apt-get autoremove --purge xxx
 ```
@@ -244,6 +269,12 @@ $ sudo apt-get install ppa-purge
 $ sudo add-apt-repository -remove ppa:someppa/ppa
 $ sudo apt-get autoclean
 ```
+查询可升级的包
+```
+$ sudo apt update
+$ apt list --upgradable
+```
+
 
 # rootlogin.sh
 ubuntu22.04桌面版开启root用户登陆并开启root用户远程ssh连接
@@ -603,6 +634,18 @@ ttf-mscorefonts-installer: downloading http://downloads.sourceforge.net/corefont
 `/var/lib/update-notifier/package-data-downloads/partial/`
 中断之后继续
 `sudo dpkg --configure -a`
+
+完成后
+```
+$ ls -l /var/lib/update-notifier/package-data-downloads/
+drwx------ 2 _apt root 4096 Nov 23 14:17 partial
+-rw-r--r-- 1 root root    0 Nov 23 14:17 ttf-mscorefonts-installer
+```
+
+```
+run 'dpkg-reconfigure ttf-mscorefonts-installer' to perform the installation again
+```
+
 
 ***
 # anydesk
@@ -1613,7 +1656,7 @@ Suggested packages:
   libjlha-java-doc-ja default-mta | mail-transport-agent inews sharutils-doc
   bsd-mailx | mailx xdeview
 ```
-rarreg.key
+$ cat /etc/rarreg.key
 ```
 RAR registration data
 Andreas Zhang
@@ -1629,7 +1672,7 @@ bfcd3a6fe09f73b6f6ead20f2606d79374df1160d8db0a1f603850
 ```
 把 rarreg.key 复制到你的 home 目录，或：/etc， /usr/lib， /usr/local/lib， /usr/local/etc
 
-没有放到~, 就不需要保护了
+没有放到~, 就不需要保护了（我放到/etc）
 ```
 //$ sudo chattr +i rarreg.key
 $ sudo chattr -i rarreg.key
@@ -1897,6 +1940,12 @@ file:.git/config        pull.rebase=false
 	email = denglitsch@gmail.com
 [core]
 	editor = vim
+```
+## The remote end hung up unexpectedly 解决方案
+```
+git config --global http.postBuffer 1048576000
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
 ```
 
 ## 	pull一律使用快进合并
@@ -2410,6 +2459,10 @@ $ sudo apt-get clean
 $ sudo apt-get update
 $ sudo apt install --reinstall mintsources
 $ inxi -Fxxxrz
+$ inxi -G
+$ inxi -SGxxx
+$ glxinfo -B
+$ xrandr
 ```
 
 ***
@@ -3339,6 +3392,8 @@ NAME      TYPE SIZE USED PRIO
 
 ***
 # wine
+
+## winehq版本（有缺陷我无法搞定）
 <https://www.winehq.org>
 <https://wiki.winehq.org/Ubuntu>
 ```
@@ -3364,7 +3419,7 @@ Signed-By: /etc/apt/keyrings/winehq-archive.key
 ```
 如果key没有设置对就有报错
 ```
-$ sudo update
+$ sudo apt update
 W: GPG error: https://dl.winehq.org/wine-builds/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 76F1A20FF987672F
 E: The repository 'https://dl.winehq.org/wine-builds/ubuntu jammy InRelease' is not signed
 ```
@@ -3374,10 +3429,10 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 76F1A20F
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 76F1A20FF987672F
 $ gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 76F1A20FF987672F
 ```
-解决了key问题就可以安装了，可以选winehq-stable，winehq-devel，winehq-staging, 这里我用winehq-staging(激进程度居中)
+解决了key问题就可以安装了，可以选winehq-stable，winehq-devel，winehq-staging, 这里我用winehq-staging(还是换回winehq-stable)
 <https://wiki.winehq.org/Wine_User%27s_Guide#Wine_from_WineHQ>
 ```
-$ sudo update
+$ sudo apt update
 $ sudo apt install --install-recommends winehq-staging
 ```
 ```
@@ -3398,6 +3453,28 @@ Suggested packages:
 Recommended packages:
   sane-airscan:i386
 ```
+```
+$ sudo apt install --install-recommends winehq-stable
+
+The following packages were automatically installed and are no longer required:
+  i965-va-driver:i386 intel-media-va-driver:i386 libdrm-intel1:i386
+  libigdgmm12:i386 libpciaccess0:i386 libva-drm2:i386 libva-x11-2:i386
+  libva2:i386 mesa-va-drivers:i386 va-driver-all:i386 wine-staging
+  wine-staging-amd64 wine-staging-i386:i386
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libcapi20-3:i386 libcapi20-3 libgsm1:i386 libopenal1:i386 libsndio7.0:i386
+  libxslt1.1:i386 wine-stable wine-stable-amd64 wine-stable-i386:i386
+Suggested packages:
+  libportaudio2:i386 sndiod:i386
+The following packages will be REMOVED:
+  winehq-staging
+
+$ sudo apt autoremove
+The following packages will be REMOVED:
+  i965-va-driver:i386 intel-media-va-driver:i386 libdrm-intel1:i386 libigdgmm12:i386 libpciaccess0:i386 libva-drm2:i386 libva-x11-2:i386 libva2:i386
+  mesa-va-drivers:i386 va-driver-all:i386 wine-staging wine-staging-amd64 wine-staging-i386:i386
+```
 
 winetricks
 ```
@@ -3406,6 +3483,9 @@ The following additional packages will be installed:
   fuseiso
 Suggested packages:
   tor
+
+$ winetricks --version
+20210206 - sha256sum: 0f21da98811e0bfda16a7d6d6b8e860a9cedbd4e836c7dd9b02f068d3092ee2e
 ```
 
 playonlinux（没啥卵用）
@@ -3482,6 +3562,13 @@ export LANG=zh_CN.UTF-8
 alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine wine'
 ```
 
+winehq-staging 自动安装的wine-mono-7.4.0-x86.msi等
+
+winehq-stable 自动安装的wine-mono-7.0.0-x86.msi，wine-mono-2.47.2-x64.msi，wine-mono-2.47.2-x86.msi
+
+winecfg时候自动安装mono，比如安装winrar-x64-611.exe之前会自动安装64位gecho，安装winrar-x32-611.exe之前会自动安装32位gecho
+
+msi下载到`~/.cache/wine`就自动安装，手动安装按下面命令
 ```
 $ export WINEARCH=win32
 $ export WINEPREFIX=~/.wine32
@@ -3490,11 +3577,14 @@ $ wine msiexec /i wine-mono-7.4.0-x86.msi
 $ wine msiexec /i wine-gecko-2.47.3-x86.msi
 ```
 ```
+$ export WINEARCH=win64
+$ export WINEPREFIX=~/.wine
 $ winecfg
 $ wine msiexec /i wine-mono-7.4.0-x86.msi
 $ wine msiexec /i wine-gecko-2.47.3-x86.msi
 $ wine msiexec /i wine-gecko-2.47.3-x86_64.msi
 ```
+查看已经安装的
 ```
 $ wine uninstaller
 ```
@@ -3567,6 +3657,234 @@ wine winrar
 <https://www.win-rar.com/download.html?&L=0>
 <https://linuxhint.com/install-wine-ubuntu-22-04/>
 
+影响的文件所在位置
+```
+/home/andy/.config/menus/applications-merged/
+/home/andy/.config/menus/cinnamon-applications-merged
+/home/andy/.local/share/applications/wine
+/home/andy/.local/share/applications
+/home/andy/.local/share/icons/hicolor
+/home/andy/.local/share/mime/application
+/home/andy/.local/share/mime/packages/
+```
+```
+Usage: update-mime-database [-hvVn] MIME-DIR
+The databases in
+/usr/share/gnome/applications, 
+/usr/share/cinnamon/applications, 
+/usr/share/gnome/applications, 
+/home/andy/.local/share/flatpak/exports/share/applications, 
+/var/lib/flatpak/exports/share/applications, 
+/usr/local/share/applications, 
+/usr/share/applications, 
+/var/lib/snapd/desktop/applications
+could not be updated.
+```
+## 删除wine关联
+<https://appuals.com/unregister-wine-file-associations-linux/>
+```
+$ rm -f ~/.local/share/applications/wine-extension*.desktop
+$ rm -f ~/.local/share/icons/hicolor/*/*/application-x-wine-extension*
+$ rm -f ~/.local/share/applications/mimeinfo.cache
+$ rm -f ~/.local/share/mime/packages/x-wine*
+$ rm -f ~/.local/share/mime/application/x-wine-extension*
+$ update-desktop-database ~/.local/share/applications
+$ update-mime-database ~/.local/share/mime/
+```
+
+命令行mime工具
+```
+xdg-mime query filetype [filename]
+mimetype [filename]
+mimeopen -d [/path/to/file]
+```
+图形化mime工具
+```
+$ sudo apt install xfce4-settings
+
+The following additional packages will be installed:
+  elementary-xfce-icon-theme exo-utils greybird-gtk-theme libexo-2-0 libexo-common libgarcon-1-0 libgarcon-common libxfce4ui-2-0 libxfce4ui-common libxfce4util-bin
+  libxfce4util-common libxfce4util7 libxfconf-0-3 xfce4-helpers xfconf xiccd
+Suggested packages:
+  devhelp
+
+$ xfce4-mime-settings
+
+```
+
+winehq目前发现缺陷
+
+驱动器在通过desktop文件比如打开rar文件的时候丢失，于是打不开
+```
+Exec=env WINEPREFIX="/home/andy/.wine/dosdevices/e:/home/andy/.wine" wine start /ProgIDOpen WinRAR %f
+```
+如果没有同时打开winecfg，那么e盘会丢失，发现改成
+```
+Exec=env WINEPREFIX="/home/andy/.wine/dosdevices/z:/home/andy/.wine" wine start /ProgIDOpen WinRAR %f
+```
+就可以打开。
+
+## 全删，用repo自带的wine版本
+
+```
+//$ sudo apt-get remove winehq-staging --purge
+$ sudo apt autoremove winehq-staging playonlinux
+
+The following packages will be REMOVED:
+  fuseiso gstreamer1.0-plugins-base:i386 i965-va-driver:i386 icoutils intel-media-va-driver:i386 jq libasound2:i386 libasound2-plugins:i386 libcdparanoia0:i386
+  libcurl3-gnutls:i386 libcurl4:i386 libdecor-0-0:i386 libdecor-0-plugin-1-cairo:i386 libdrm-intel1:i386 libdw1:i386 libexif12:i386 libgd3:i386 libgdbm-compat4:i386
+  libgdbm6:i386 libglu1-mesa:i386 libgphoto2-6:i386 libgphoto2-port12:i386 libgstreamer-plugins-base1.0-0:i386 libgstreamer1.0-0:i386 libieee1284-3:i386
+  libigdgmm12:i386 libjack-jackd2-0:i386 libjq1 libldap-2.5-0:i386 libltdl7:i386 libnghttp2-14:i386 libnspr4:i386 libnss3:i386 libodbc1:i386 libodbc1 libodbc2
+  libodbc2:i386 libodbccr2 libodbccr2:i386 libonig5 libopengl0:i386 libopenjp2-7:i386 liborc-0.4-0:i386 libosmesa6:i386 libpcap0.8:i386 libpci3:i386 libpciaccess0:i386
+  libperl5.34:i386 libpoppler-glib8:i386 libpoppler118:i386 libpsl5:i386 librtmp1:i386 libsamplerate0:i386 libsane1:i386 libsasl2-2:i386 libsasl2-modules:i386
+  libsasl2-modules-db:i386 libsdl2-2.0-0:i386 libsnmp40:i386 libsqlite3-0:i386 libssh-4:i386 libtheora0:i386 libunwind8:i386 libusb-1.0-0:i386 libv4l-0:i386
+  libv4lconvert0:i386 libva-drm2:i386 libva-x11-2:i386 libva2:i386 libvisual-0.4-0:i386 libwrap0:i386 libxpm4:i386 libxss1:i386 mesa-va-drivers:i386
+  ocl-icd-libopencl1:i386 playonlinux python3-natsort va-driver-all:i386 wine-staging wine-staging-amd64 wine-staging-i386:i386 winehq-staging winetricks
+
+```
+```
+$ sudo rm -rf /etc/apt/keyrings/
+$ sudo rm /etc/apt/sources.list.d/winehq-jammy.sources 
+$ sudo apt update
+```
+```
+$ sudo apt-get --install-recommends install playonlinux
+
+The following additional packages will be installed:
+  fonts-wine glib-networking:i386 gstreamer1.0-plugins-base:i386 gstreamer1.0-plugins-good:i386 gstreamer1.0-x:i386 icoutils jq libaa1:i386 libasound2:i386
+  libasound2-plugins:i386 libavc1394-0:i386 libcaca0:i386 libcapi20-3:i386 libcdparanoia0:i386 libcurl4:i386 libdecor-0-0:i386 libdecor-0-plugin-1-cairo:i386
+  libdv4:i386 libdw1:i386 libexif12:i386 libfaudio0:i386 libgd3:i386 libgphoto2-6:i386 libgphoto2-port12:i386 libgsm1:i386 libgstreamer-plugins-base1.0-0:i386
+  libgstreamer-plugins-good1.0-0:i386 libgstreamer1.0-0:i386 libiec61883-0:i386 libjack-jackd2-0:i386 libjq1 libldap-2.5-0:i386 libltdl7:i386 libmp3lame0:i386
+  libmpg123-0:i386 libncurses6:i386 libncursesw6:i386 libnghttp2-14:i386 libodbc2:i386 libonig5 libopenal1:i386 liborc-0.4-0:i386 libosmesa6:i386 libpcap0.8:i386
+  libproxy1v5:i386 libpsl5:i386 libraw1394-11:i386 librtmp1:i386 libsamplerate0:i386 libsasl2-2:i386 libsasl2-modules:i386 libsasl2-modules-db:i386 libsdl2-2.0-0:i386
+  libshout3:i386 libslang2:i386 libsndio7.0:i386 libsoup2.4-1:i386 libspeex1:i386 libsqlite3-0:i386 libssh-4:i386 libstb0:i386 libtag1v5:i386 libtag1v5-vanilla:i386
+  libtheora0:i386 libtwolame0:i386 libunwind8:i386 libusb-1.0-0:i386 libv4l-0:i386 libv4lconvert0:i386 libvisual-0.4-0:i386 libvkd3d1:i386 libvpx7:i386
+  libwavpack1:i386 libwine:i386 libxpm4:i386 libxslt1.1:i386 libxss1:i386 libxv1:i386 libz-mingw-w64 ocl-icd-libopencl1:i386 python3-natsort wine wine32:i386
+Suggested packages:
+  gvfs:i386 libterm-readline-gnu-perl | libterm-readline-perl-perl libdv-bin:i386 oss-compat:i386 libgd-tools:i386 gphoto2:i386 libvisual-0.4-plugins:i386
+  gstreamer1.0-tools:i386 jackd2:i386 odbc-postgresql:i386 tdsodbc:i386 libportaudio2:i386 libraw1394-doc:i386 libsasl2-modules-gssapi-mit:i386
+  | libsasl2-modules-gssapi-heimdal:i386 libsasl2-modules-ldap:i386 libsasl2-modules-otp:i386 libsasl2-modules-sql:i386 sndiod:i386 speex:i386 gstreamer1.0-libav:i386
+  gstreamer1.0-plugins-bad:i386 gstreamer1.0-plugins-ugly:i386 opencl-icd:i386 winbind python-natsort-doc q4wine winetricks wine-binfmt dosbox exe-thumbnailer
+  | kio-extras wine32-preloader:i386
+Recommended packages:
+  libvkd3d-shader1:i386
+
+```
+```
+$ sudo apt-get --install-recommends install wine
+
+The following additional packages will be installed:
+  fonts-wine glib-networking:i386 gstreamer1.0-plugins-base:i386 gstreamer1.0-plugins-good:i386 gstreamer1.0-x:i386 libaa1:i386 libasound2:i386 libasound2-plugins:i386
+  libavc1394-0:i386 libcaca0:i386 libcapi20-3:i386 libcapi20-3 libcdparanoia0:i386 libcurl4:i386 libdecor-0-0:i386 libdecor-0-plugin-1-cairo:i386 libdv4:i386
+  libdw1:i386 libexif12:i386 libfaudio0 libfaudio0:i386 libgd3:i386 libgphoto2-6:i386 libgphoto2-port12:i386 libgsm1:i386 libgstreamer-plugins-base1.0-0:i386
+  libgstreamer-plugins-good1.0-0:i386 libgstreamer1.0-0:i386 libiec61883-0:i386 libjack-jackd2-0:i386 libldap-2.5-0:i386 libltdl7:i386 libmp3lame0:i386
+  libmpg123-0:i386 libncurses6:i386 libncursesw6:i386 libnghttp2-14:i386 libodbc2 libodbc2:i386 libopenal1:i386 liborc-0.4-0:i386 libosmesa6:i386 libpcap0.8:i386
+  libproxy1v5:i386 libpsl5:i386 libraw1394-11:i386 librtmp1:i386 libsamplerate0:i386 libsasl2-2:i386 libsasl2-modules:i386 libsasl2-modules-db:i386 libsdl2-2.0-0:i386
+  libshout3:i386 libslang2:i386 libsndio7.0:i386 libsoup2.4-1:i386 libspeex1:i386 libsqlite3-0:i386 libssh-4:i386 libstb0 libstb0:i386 libtag1v5:i386
+  libtag1v5-vanilla:i386 libtheora0:i386 libtwolame0:i386 libunwind8:i386 libusb-1.0-0:i386 libv4l-0:i386 libv4lconvert0:i386 libvisual-0.4-0:i386 libvkd3d1
+  libvkd3d1:i386 libvpx7:i386 libwavpack1:i386 libwine libwine:i386 libxpm4:i386 libxslt1.1:i386 libxss1:i386 libxv1:i386 libz-mingw-w64 ocl-icd-libopencl1:i386
+  wine32:i386 wine64
+Suggested packages:
+  gvfs:i386 libdv-bin:i386 oss-compat:i386 libgd-tools:i386 gphoto2:i386 libvisual-0.4-plugins:i386 gstreamer1.0-tools:i386 jackd2:i386 odbc-postgresql tdsodbc
+  odbc-postgresql:i386 tdsodbc:i386 libportaudio2:i386 libraw1394-doc:i386 libsasl2-modules-gssapi-mit:i386 | libsasl2-modules-gssapi-heimdal:i386
+  libsasl2-modules-ldap:i386 libsasl2-modules-otp:i386 libsasl2-modules-sql:i386 sndiod:i386 speex:i386 gstreamer1.0-plugins-bad gstreamer1.0-libav:i386
+  gstreamer1.0-plugins-bad:i386 gstreamer1.0-plugins-ugly:i386 opencl-icd:i386 q4wine winbind winetricks playonlinux wine-binfmt dosbox exe-thumbnailer | kio-extras
+  wine32-preloader:i386 wine64-preloader
+Recommended packages:
+  libvkd3d-shader1 libvkd3d-shader1:i386
+```
+```
+$ sudo apt install winetricks fuseiso
+$ winetricks --version
+20210206 - sha256sum: 0f21da98811e0bfda16a7d6d6b8e860a9cedbd4e836c7dd9b02f068d3092ee2e
+```
+```
+$ sudo apt install mono-runtime
+$ sudo apt install mono-complete
+The following additional packages will be installed:
+  libjs-xmlextras libmono-2.0-1 libmono-profiler libmonoboehm-2.0-1
+  mono-4.0-service mono-utils mono-xsp4 mono-xsp4-base monodoc-base
+  monodoc-http monodoc-manual
+Suggested packages:
+  monodoc-gtk-manual monodoc-gecko-manual monodoc-nunit-manual
+```
+```
+$ sudo cp /usr/share/doc/wine/examples/wine.desktop /usr/share/applications/
+```
+
+```
+$ sudo apt autoremove wine playonlinux
+
+The following packages will be REMOVED:
+  fonts-wine fuseiso glib-networking:i386 gstreamer1.0-plugins-base:i386 gstreamer1.0-plugins-good:i386 gstreamer1.0-x:i386 icoutils jq libaa1:i386 libasound2:i386
+  libasound2-plugins:i386 libavc1394-0:i386 libcaca0:i386 libcapi20-3:i386 libcapi20-3 libcdparanoia0:i386 libcurl4:i386 libdecor-0-0:i386
+  libdecor-0-plugin-1-cairo:i386 libdv4:i386 libdw1:i386 libexif12:i386 libfaudio0 libfaudio0:i386 libgd3:i386 libgphoto2-6:i386 libgphoto2-port12:i386 libgsm1:i386
+  libgstreamer-plugins-base1.0-0:i386 libgstreamer-plugins-good1.0-0:i386 libgstreamer1.0-0:i386 libiec61883-0:i386 libjack-jackd2-0:i386 libjq1 libldap-2.5-0:i386
+  libltdl7:i386 libmp3lame0:i386 libmpg123-0:i386 libnghttp2-14:i386 libodbc2 libodbc2:i386 libonig5 libopenal1:i386 liborc-0.4-0:i386 libosmesa6:i386 libpcap0.8:i386
+  libproxy1v5:i386 libpsl5:i386 libraw1394-11:i386 librtmp1:i386 libsamplerate0:i386 libsasl2-2:i386 libsasl2-modules:i386 libsasl2-modules-db:i386 libsdl2-2.0-0:i386
+  libshout3:i386 libslang2:i386 libsndio7.0:i386 libsoup2.4-1:i386 libspeex1:i386 libsqlite3-0:i386 libssh-4:i386 libstb0 libstb0:i386 libtag1v5:i386
+  libtag1v5-vanilla:i386 libtheora0:i386 libtwolame0:i386 libunwind8:i386 libusb-1.0-0:i386 libv4l-0:i386 libv4lconvert0:i386 libvisual-0.4-0:i386 libvkd3d1
+  libvkd3d1:i386 libvpx7:i386 libwavpack1:i386 libwine libwine:i386 libxpm4:i386 libxslt1.1:i386 libxss1:i386 libxv1:i386 libz-mingw-w64 ocl-icd-libopencl1:i386
+  playonlinux python3-natsort wine wine32:i386 wine64 winetricks
+```
+
+## 配置wine
+
+用repo自带的wine版本6.0.3, winecfg没有要安装wine-mono
+```
+$ sudo update-alternatives --config wine
+There is only one alternative in link group wine (providing /usr/bin/wine): /usr/bin/wine-stable
+```
+环境变量是
+```
+export WINEPREFIX=$HOME/.wine/
+# export WINEARCH=win32
+export WINEARCH=win64
+export LANG=zh_CN.UTF-8
+# alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine'
+# alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine wine'
+```
+安装`winrar-x64-611.exe`，没有要安装wine-gecho
+
+`/home/andy/.local/share/applications`里 自动生成的desktop大概像这样
+```
+Exec=env WINEPREFIX="/home/andy/.wine/" wine-stable start /ProgIDOpen WinRAR %f
+```
+不会有驱动器丢失问题，打开rar文件正常
+
+```
+$ wine msiexec /i wine-mono-7.0.0-x86.msi
+$ wine msiexec /i wine-gecko-2.47.2-x86.msi
+$ wine msiexec /i wine-gecko-2.47.2-x86_64.msi
+
+$ sudo apt install winbind
+Suggested packages:
+  libnss-winbind libpam-winbind
+```
+
+```
+winetricks --gui
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine winetricks --gui
+
+也可以像这样命令行添加
+winetricks vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 ie6 gdiplus
+winetricks cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30
+winetricks msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash
+winetricks win2k vcrun2005
+winetricks vcrun2005sp1
+winetricks win2k vcrun2005sp1
+winetricks -q dotnet40
+```
+```
+$ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30 ie6 msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash win2k vcrun2005 vcrun2005sp1 win2k vcrun2005sp1
+
+$ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 riched20 riched30 msxml3
+```
+```
+com1 -> /dev/ttyS0
+...
+com32 -> /dev/ttyS3
+```
 
 ***
 # crossover
@@ -4175,6 +4493,250 @@ Suggested packages:
 ```
 $ sudo apt-get install usbview
 $ sudo usbview
+```
+
+
+***
+# qr code 二维码工具
+```
+$ sudo apt install qtqr
+
+The following additional packages will be installed:
+  libqrencode4 libzbar0 python3-qrtools python3-zbar qrencode
+```
+
+
+***
+# cutecom
+```
+$ sudo apt install cutecom
+```
+
+
+***
+# tree
+```
+$ sudo apt install tree
+```
+
+
+***
+# java
+
+## openjre and openjdk
+<https://www.cloudbooklet.com/how-to-install-java-on-ubuntu-22-04/>
+```
+$ java --version
+openjdk 11.0.17 2022-10-18
+OpenJDK Runtime Environment (build 11.0.17+8-post-Ubuntu-1ubuntu222.04)
+OpenJDK 64-Bit Server VM (build 11.0.17+8-post-Ubuntu-1ubuntu222.04, mixed mode, sharing)
+
+
+$ sudo apt-get install openjdk-11-jre-headless default-jre openjdk-17-jre-headless openjdk-18-jre-headless openjdk-8-jre-headless
+
+default-jre is already the newest version (2:1.11-72build2).
+openjdk-11-jre-headless is already the newest version (11.0.17+8-1ubuntu2~22.04).
+The following NEW packages will be installed:
+  openjdk-17-jre-headless openjdk-18-jre-headless openjdk-8-jre-headless
+
+$ java --version
+openjdk 18.0.2-ea 2022-07-19
+OpenJDK Runtime Environment (build 18.0.2-ea+9-Ubuntu-222.04)
+OpenJDK 64-Bit Server VM (build 18.0.2-ea+9-Ubuntu-222.04, mixed mode, sharing)
+
+$ sudo update-alternatives --config java
+There are 4 choices for the alternative java (providing /usr/bin/java).
+
+  Selection    Path                                            Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-18-openjdk-amd64/bin/java      1811      auto mode
+  1            /usr/lib/jvm/java-11-openjdk-amd64/bin/java      1111      manual mode
+  2            /usr/lib/jvm/java-17-openjdk-amd64/bin/java      1711      manual mode
+  3            /usr/lib/jvm/java-18-openjdk-amd64/bin/java      1811      manual mode
+  4            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java   1081      manual mode
+
+Press <enter> to keep the current choice[*], or type selection number:
+
+
+$ sudo apt install openjdk-17-jdk openjdk-18-jdk openjdk-11-jdk openjdk-8-jdk 
+
+The following additional packages will be installed:
+  openjdk-11-jdk-headless openjdk-17-jdk-headless openjdk-17-jre openjdk-18-jdk-headless openjdk-18-jre openjdk-8-jdk-headless openjdk-8-jre
+Suggested packages:
+  openjdk-11-demo openjdk-11-source visualvm openjdk-17-demo openjdk-17-source openjdk-18-demo openjdk-18-source openjdk-8-demo openjdk-8-source
+
+$ sudo update-alternatives --config javac
+There are 4 choices for the alternative javac (providing /usr/bin/javac).
+
+  Selection    Path                                          Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-18-openjdk-amd64/bin/javac   1811      auto mode
+  1            /usr/lib/jvm/java-11-openjdk-amd64/bin/javac   1111      manual mode
+  2            /usr/lib/jvm/java-17-openjdk-amd64/bin/javac   1711      manual mode
+  3            /usr/lib/jvm/java-18-openjdk-amd64/bin/javac   1811      manual mode
+  4            /usr/lib/jvm/java-8-openjdk-amd64/bin/javac    1081      manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 
+
+$ ls /usr/lib/jvm/
+default-java               java-1.17.0-openjdk-amd64  java-11-openjdk-amd64  java-1.8.0-openjdk-amd64  java-8-openjdk-amd64  openjdk-17
+java-1.11.0-openjdk-amd64  java-1.18.0-openjdk-amd64  java-17-openjdk-amd64  java-18-openjdk-amd64     openjdk-11            openjdk-18
+
+```
+可以环境变量，或者在调用前export
+```
+$ sudo nano /etc/environment
+添加比如
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+```
+
+整理版本
+```
+$ sudo apt autoremove openjdk-17-jre-headless openjdk-18-jre-headless openjdk-8-jre-headless
+
+The following packages will be REMOVED:
+  openjdk-17-jdk openjdk-17-jdk-headless openjdk-17-jre openjdk-17-jre-headless openjdk-18-jdk openjdk-18-jdk-headless openjdk-18-jre openjdk-18-jre-headless
+  openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre openjdk-8-jre-headless
+```
+确认openjdk-11这俩安装了
+```
+$ sudo apt install openjdk-11-jdk openjdk-11-jdk-headless
+```
+
+
+## oracle java
+<https://www.oracle.com/news/announcement/oracle-releases-java-18-2022-03-22/>
+<https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html>
+<https://www.oracle.com/java/technologies/downloads/>
+<https://www.java.com/en/download/>
+<https://www.oracle.com/hk/java/technologies/javase/javase8u211-later-archive-downloads.html>
+
+java17LTS
+```
+$ sudo apt install libc6-x32 libc6-i386
+//$ wget https://download.oracle.com/java/19/latest/jdk-19_linux-x64_bin.deb
+$ wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb
+//$ wget https://download.oracle.com/java/18/archive/jdk-18.0.2.1_linux-x64_bin.deb
+```
+java8和java11
+```
+https://download.oracle.com/otn/java/jdk/8u351-b10/10e8cce67c7843478f41411b7003171c/jdk-8u351-linux-x64.tar.gz
+https://download.oracle.com/otn/java/jdk/11.0.17%2B10/8bd089539add49a9b99e2f27eb0c4329/jdk-11.0.17_linux-x64_bin.deb
+```
+
+参考 deb解包 和`openjdk-8-jdk.tar.gz` `openjdk-8-jdk-headless.tar.gz`的结构及脚本
+
+用下面这些这些替换preinst，postinst，prerm里的对应部分
+```
+appletviewer extcheck idlj jar jarsigner java javac javadoc javafxpackager javah javap javapackager java-rmi.cgi javaws jcmd jconsole jcontrol jdb jdeps jhat jinfo jjs jmap jps jrunscript jsadebugd jstack jstat jstatd jvisualvm keytool native2ascii orbd pack200 policytool rmic rmid rmiregistry schemagen serialver servertool tnameserv unpack200 wsgen wsimport xjc
+```
+打包成 `jdk-8_1.8.0-351_amd64-auto.deb`
+
+参考 deb解包 和`jdk-18.0.2.1_linux-x64_bin.deb` 
+
+把`jdk-8u351-linux-x64.tar.gz` 打包成 `jdk-8_1.8.0-351_amd64.deb`
+
+添加update-alternatives备选
+```
+//$ sudo tar zxvf jdk-8u291-linux-x64.tar.gz -C /usr/lib/jvm
+$ sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_291/bin/java" 1112
+$ sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_291/bin/javac" 1112
+$ sudo update-alternatives --install "/usr/bin/javah" "javah" "/usr/lib/jvm/jdk1.8.0_291/bin/javah" 1112
+```
+查看update-alternatives备选
+```
+$ sudo update-alternatives --config java
+$ sudo update-alternatives --config javac
+$ sudo update-alternatives --config javah
+```
+
+总结：
+
+只安装`jdk-8_1.8.0-351_amd64-auto.deb`和`jdk-11_11.0.17-1_amd64-auto.deb`
+
+
+***
+# 重新打包deb
+
+## deb解包
+```
+mkdir extract
+mkdir extract/DEBIAN
+mkdir build
+dpkg -X xxx.deb extract
+dpkg -e xxx.deb extract/DEBIAN/
+```
+
+## 修改deb包内容
+
+## 修改extract/DEBIAN/control的Installed-Size
+```
+$ cd extract
+$ du -ks usr|cut -f 1
+```
+
+## DEBIAN/md5sums文件生成（可选）
+```
+$ md5sum $(find * -type f -not -path 'DEBIAN/*') > DEBIAN/md5sums
+```
+上面那句 比这句好
+```
+$ md5sum $(find ./usr/ -type f | awk '!/^\.\/DEBIAN/ { print substr($0, 3) }')
+```
+
+## 打包出deb
+
+从已有的可以执行文件，同样按照这个方法可以打包出deb
+```
+$ cd extract/..
+$ fakeroot
+# dpkg-deb -b extract/ build/
+```
+生成的deb在build目录
+```
+$ sudo dpkg -i build/jdk-8_1.8.0-351_amd64.deb
+```
+
+***
+# notepadqq
+```
+$ sudo apt install notepadqq
+
+The following additional packages will be installed:
+  libjs-highlight.js libjs-modernizr libjs-requirejs
+```
+
+
+***
+# cups-pdf
+```
+$ sudo apt install printer-driver-cups-pdf libcups2 libcups2:i386
+```
+
+
+***
+# retext
+```
+$ sudo apt install retext
+
+The following additional packages will be installed:
+  docutils-common python3-docutils python3-enchant python3-markups
+  python3-mdx-math python3-pyqt5.qtwebkit python3-regex python3-roman
+  python3-textile
+Suggested packages:
+  docutils-doc fonts-linuxlibertine | ttf-linux-libertine texlive-lang-french
+  texlive-latex-base texlive-latex-recommended
+```
+
+
+***
+# 默认浏览器设置为 opera
+```
+$ xdg-settings --list
+$ xdg-settings get default-web-browser
+$ xdg-settings set default-web-browser opera.desktop
+//$ sudo update-alternatives --config x-www-browser
+//$ sudo update-alternatives --config gnome-www-browser 
 ```
 
 
