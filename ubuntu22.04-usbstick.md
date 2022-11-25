@@ -3622,8 +3622,9 @@ $ wine regedit
 $ wine clock
 $ wine iexplore
 $ wineserver -h
+$ wine taskmgr
 $ wine explorer
-$ wine explorer /desktop=name,1024x768 program.exe 
+$ wine explorer /desktop=name,1024x768 program.exe
 $ WINEDEBUG=+all,-relay wine program_name
 ```
 WINEARCH
@@ -3888,11 +3889,14 @@ winetricks -q gdiplus riched20 riched30
 $ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30 ie6 msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash win2k vcrun2005 vcrun2005sp1 win2k vcrun2005sp1
 
 $ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 riched20 riched30 msxml3
+$ winetricks -q gdiplus riched20 riched30
+$ winetricks -q allfonts
+$ winetricks --force cjkfonts fakechinese fakejapanese fakekorean fakejapanese_ipamona fakejapanese_vlgothic pptfonts
 ```
 ```
 com1 -> /dev/ttyS0
 ...
-com32 -> /dev/ttyS3
+com32 -> /dev/ttyS31
 ```
 
 ```
