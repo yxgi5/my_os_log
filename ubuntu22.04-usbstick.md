@@ -3426,7 +3426,7 @@ alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$H
 winecfg
 wine regedit
 wine explorer
-wine iexplore
+//wine iexplore
 wine msiexec /i wine-mono-7.4.0-x86.msi
 wine msiexec /i wine-gecko-2.47.3-x86.msi
 wine msiexec /i wine-gecko-2.47.3-x86_64.msi
