@@ -3448,6 +3448,7 @@ winetricks -q vb6ru vcrun6 vcrun6sp6 secur32 msvcirt mfc42 cmd comctl32 mfc42 vc
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 for files in `find -name '*.desktop'`; do echo $files | sed 's/$/"/' | sed 's/^/"/' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g' ; done
+for files in `find -name '*.desktop'`; do echo $files | sed 's/$/"/' | sed 's/^/"/' | xargs perl -pi -e 's|^Exec\=env\ WINEPREFIX\=(.*)$|Exec\=env\ LANG=zh\_CN.UTF\-8\ WINEPREFIX\=$1|' ; done
 ```
 
 ## winehq版本（有缺陷我无法搞定）
