@@ -3476,7 +3476,11 @@ The following packages will be REMOVED:
   mesa-va-drivers:i386 va-driver-all:i386 wine-staging wine-staging-amd64 wine-staging-i386:i386
 ```
 
-winetricks
+winetricks(最好从github下最新的)
+<https://github.com/Winetricks/winetricks/tree/master/src>
+
+vcrun6 and vcrun6sp6 don't install and break wine prefix
+<https://github.com/Winetricks/winetricks/issues/1804>
 ```
 $ sudo apt install winetricks 
 The following additional packages will be installed:
@@ -3690,14 +3694,20 @@ could not be updated.
 ```
 ## 删除wine关联
 <https://appuals.com/unregister-wine-file-associations-linux/>
+<https://wiki.winehq.org/FAQ#How_do_I_get_Wine_to_launch_an_application_in_a_virtual_desktop.3F>
 ```
 //rm -rf ~/.wine
 rm -f ~/.local/share/applications/wine-extension*.desktop
 rm -f ~/.local/share/icons/hicolor/*/*/application-x-wine-extension*
+rm -f ~/.local/share/icons/????_*.{xpm,png}
+rm -f ~/.local/share/icons/*-x-wine-*.{xpm,png}
+rm -f ~/.local/share/icons/hicolor/*/*/????_*.{xpm,png}
+rm -f ~/.local/share/icons/hicolor/*/*/*-x-wine-*.{xpm,png}
 rm -f ~/.local/share/applications/mimeinfo.cache
 rm -f ~/.local/share/mime/packages/x-wine*
 rm -f ~/.local/share/mime/application/x-wine-extension*
 rm -rf ~/.local/share/applications/*
+rm -f ~/.config/menus/applications-merged/
 update-desktop-database ~/.local/share/applications/
 update-mime-database ~/.local/share/mime/
 ```
@@ -3839,6 +3849,10 @@ The following packages will be REMOVED:
 ```
 
 ## 配置wine
+如下只使用Builtin DLL
+```
+advapi32, capi2032, ddraw, gdi32, glu32, icmp, iphlpapi, kernel32, mswsock, ntdll, opengl32, stdole2.tlb, stdole32.tlb, twain_32, unicows, user32, vdmdbg, w32skrnl, winealsa.drv, wined3d, winejoystick.drv, wineoss.drv, wineps.drv, winex11.drv, winmm, wintab32, wnaspi32, wow32, ws2_32, wsock32
+```
 
 用repo自带的wine版本6.0.3, winecfg没有要安装wine-mono
 ```
@@ -3871,7 +3885,13 @@ $ sudo apt install winbind
 Suggested packages:
   libnss-winbind libpam-winbind
 ```
-
+<https://github.com/Winetricks/winetricks/src>
+```
+$ sudo winetricks --self-update
+$ winetricks --version
+20220411-next - sha256sum: 013a9062d25b07ab3cc5d60e664bd171899a397a8614fa953bc2b8e9a9fff049
+$ WINEPREFIX="/home/andy/.wine" winetricks -q mfc42 vcrun6sp6
+```
 ```
 winetricks --gui
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine winetricks --gui
@@ -3886,8 +3906,9 @@ winetricks win2k vcrun2005sp1
 winetricks -q dotnet40
 $ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 mfc42 vcrun2003 vcrun2008 vcrun2010 ie6 msxml3 flash win2k vcrun2005 vcrun2005sp1
 ```
+64bit可行的几个
 ```
-$ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 riched20 riched30 msxml3
+$ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 cmd comctl32 mfc42 vcrun2003 msxml3
 $ winetricks -q gdiplus riched20 riched30
 $ winetricks -q allfonts
 $ winetricks --force cjkfonts fakechinese fakejapanese fakekorean fakejapanese_ipamona fakejapanese_vlgothic pptfonts
@@ -3910,6 +3931,11 @@ $ echo './wine-extension-pdf.desktop' | sed 's/$/"/' | sed 's/^/"/'
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 for files in `find -name '*.desktop'`; do echo $files | sed 's/$/"/' | sed 's/^/"/' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g' ; done
+```
+补齐winetricks缓存
+```
+$ winetricks dlls list | grep -e "\[可下载\]"
+$ winetricks list-all | grep -e "\[可下载\]"
 ```
 
 ***
@@ -4767,8 +4793,74 @@ $ xdg-settings set default-web-browser opera.desktop
 
 
 ***
-#
+# protontricks（暂时用不着）
+
+Protontricks is a simple wrapper script that allows you to easily run Winetricks commands for Steam Play / Proton games. This is often useful when a game requires closed-source runtime libraries that are not included with Proton. Installation of Steam is required to use Protontricks.
+
+## repo里就有 protontricks
 ```
+$ sudo apt install protontricks
+
+The following additional packages will be installed:
+  python3-vdf steam:i386 steam-devices
+Suggested packages:
+  libnvidia-gl-390:i386 | libnvidia-gl-470:i386 | libnvidia-gl-495:i386 pipewire:i386
+```
+## pip方式安装 protontricks
+```
+sudo apt install pipx
+sudo apt install -y python3-pip python3-setuptools python3-venv
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+```
+Close and reopen the terminal again
+```
+pipx install protontricks
+```
+具体细节
+```
+$ sudo apt install pipx
+
+The following additional packages will be installed:
+  fonts-font-awesome libjs-bootstrap4 libjs-lunr libjs-popper.js libjs-sizzle mkdocs node-jquery python-babel-localedata python3-argcomplete python3-babel
+  python3-jinja2 python3-livereload python3-pip-whl python3-setuptools-whl python3-tornado python3-userpath python3-venv python3.10-venv sphinx-rtd-theme-common
+Suggested packages:
+  libjs-es5-shim ghp-import mkdocs-doc nodejs python-jinja2-doc coffeescript node-less node-uglify python-livereload-doc python3-django python3-flask python3-slimmer
+  python-tornado-doc
+
+```
+user模式安装在
+```
+/home/andy/.local/lib/python3.10/site-packages/argcomplet
+```
+~/.bashrc添加了
+```
+# Created by `pipx` on 2022-11-25 06:07:49
+export PATH="$PATH:/home/andy/.local/bin"
+```
+
+删除
+
+先还原bashrc
+
+然后
+```
+$ python3 -m pip uninstall argcomplete
+Found existing installation: argcomplete 2.0.0
+Uninstalling argcomplete-2.0.0:
+  Would remove:
+    /home/andy/.local/bin/activate-global-python-argcomplete
+    /home/andy/.local/bin/python-argcomplete-check-easy-install-script
+    /home/andy/.local/bin/python-argcomplete-tcsh
+    /home/andy/.local/bin/register-python-argcomplete
+    /home/andy/.local/lib/python3.10/site-packages/argcomplete-2.0.0.dist-info/*
+    /home/andy/.local/lib/python3.10/site-packages/argcomplete/*
+Proceed (Y/n)? y
+  Successfully uninstalled argcomplete-2.0.0
+```
+```
+$ rm -rf /home/andy/.local/lib    ## 确保没有其他文件夹了
+$ rm -rf /home/andy/.local/pipx
 ```
 
 
