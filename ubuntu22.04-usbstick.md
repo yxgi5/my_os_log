@@ -3393,6 +3393,63 @@ NAME      TYPE SIZE USED PRIO
 ***
 # wine
 
+## wine quick config
+比如已经安装了winehq-7.21-staging，winetricks-20220411-next
+```
+//rm -rf ~/.wine
+rm -f ~/.local/share/applications/wine-extension*.desktop
+rm -f ~/.local/share/icons/hicolor/*/*/application-x-wine-extension*
+rm -f ~/.local/share/icons/????_*.{xpm,png}
+rm -f ~/.local/share/icons/*-x-wine-*.{xpm,png}
+rm -f ~/.local/share/icons/hicolor/*/*/????_*.{xpm,png}
+rm -f ~/.local/share/icons/hicolor/*/*/*-x-wine-*.{xpm,png}
+rm -f ~/.local/share/icons/hicolor/*/*/*.{xpm,png}
+rm -f ~/.local/share/applications/mimeinfo.cache
+rm -f ~/.local/share/mime/packages/x-wine*
+rm -f ~/.local/share/mime/application/x-wine-extension*
+rm -rf ~/.local/share/applications/*
+rm -f ~/.config/menus/applications-merged/*
+update-desktop-database ~/.local/share/applications/
+update-mime-database ~/.local/share/mime/
+```
+~/.bashrc
+```
+export WINEPREFIX=$HOME/.wine/
+# export WINEARCH=win32
+export WINEARCH=win64
+export LANG=zh_CN.UTF-8
+# alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine wine'
+alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine wine'
+```
+安装一些基础工具
+```
+winecfg
+wine regedit
+wine explorer
+wine iexplore
+wine msiexec /i wine-mono-7.4.0-x86.msi
+wine msiexec /i wine-gecko-2.47.3-x86.msi
+wine msiexec /i wine-gecko-2.47.3-x86_64.msi
+
+winetricks -q gdiplus riched20 riched30
+winetricks -q allfonts
+winetricks --force cjkfonts fakechinese fakejapanese fakekorean fakejapanese_ipamona fakejapanese_vlgothic pptfonts
+
+然后把ms的一些fonts复制进来，并更新reg
+wine regedit /S ch_font.reg
+
+wine winrar-x64-611.exe    ## 默认关联
+wine "Foxit Reader Pro 3.0 Build 1817.exe"   ## 创建桌面
+
+winetricks -q vb6ru vcrun6 vcrun6sp6 secur32 msvcirt mfc42 cmd comctl32 mfc42 vcrun2003 msxml3 cmd comctl32 vcrun2005
+```
+批量修复desktop文件
+```
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+for files in `find -name '*.desktop'`; do echo $files | sed 's/$/"/' | sed 's/^/"/' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g' ; done
+```
+
 ## winehq版本（有缺陷我无法搞定）
 <https://www.winehq.org>
 <https://wiki.winehq.org/Ubuntu>
@@ -3707,7 +3764,7 @@ rm -f ~/.local/share/applications/mimeinfo.cache
 rm -f ~/.local/share/mime/packages/x-wine*
 rm -f ~/.local/share/mime/application/x-wine-extension*
 rm -rf ~/.local/share/applications/*
-rm -f ~/.config/menus/applications-merged/
+rm -f ~/.config/menus/applications-merged/*
 update-desktop-database ~/.local/share/applications/
 update-mime-database ~/.local/share/mime/
 ```
@@ -3932,10 +3989,12 @@ SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 for files in `find -name '*.desktop'`; do echo $files | sed 's/$/"/' | sed 's/^/"/' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g' ; done
 ```
-补齐winetricks缓存
+补齐winetricks缓存，应该要挂代理
 ```
 $ winetricks dlls list | grep -e "\[可下载\]"
 $ winetricks list-all | grep -e "\[可下载\]"
+$ env WINEARCH=win32 WINEPREFIX=~/.wine32 winetricks xxx
+$ winetricks dlls list | grep -e "\[可下载\]" | tee list.txt
 ```
 
 ***
