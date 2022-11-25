@@ -3977,8 +3977,9 @@ com32 -> /dev/ttyS31
 ```
 
 ```
-find -name '*.desktop' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g'
-for files in `find -name '*.desktop'`; do echo $files; echo $files | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g'; done
+$ find -name '*.desktop' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g'
+$ for files in `find -name '*.desktop'`; do echo $files; echo $files | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g'; done
+$ a='Exec=env WINEPREFIX="/home/andy/.wine/dosdevices/e:/home/andy/.wine" wine start /ProgIDOpen WinRAR %f'
 $ echo $a | sed -r -e 's/^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$/\1\2/'Exec=env WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen WinRAR %f
 $ echo $a | perl -p -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|'
 $ echo './wine-extension-pdf.desktop' | sed 's/$/"/' | sed 's/^/"/'
