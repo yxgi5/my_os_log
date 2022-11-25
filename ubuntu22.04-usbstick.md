@@ -4926,8 +4926,10 @@ $ rm -rf /home/andy/.local/pipx
 
 
 ***
-#
+# git empty folder
 ```
+find -name .git -prune -o -type d -empty -exec touch {}/.gitkeep \;
+git add .
 ```
 
 
