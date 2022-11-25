@@ -3530,14 +3530,19 @@ $ ls ~/.cache/wine/
 ```
 
 安装Mono
-```
+
 <https://wiki.winehq.org/Mono>
+
 <https://wiki.winehq.org/Gecko>
+
 <http://mirrors.ustc.edu.cn/wine/wine/wine-mono/>
+
 <http://mirrors.ustc.edu.cn/wine/wine/wine-gecko/>
+
 <https://dl.winehq.org/wine/wine-gecko/>
+
 <https://dl.winehq.org/wine/wine-mono/>
-```
+
 wine运行exe
 ```
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
