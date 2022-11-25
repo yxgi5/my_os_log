@@ -3612,6 +3612,7 @@ basic applications and control panel applets
 ```
 $ wine uninstaller
 $ wine control
+$ wine wineconsole
 $ wine regedit
 $ wine clock
 $ wine iexplore
@@ -3683,13 +3684,15 @@ could not be updated.
 ## 删除wine关联
 <https://appuals.com/unregister-wine-file-associations-linux/>
 ```
-$ rm -f ~/.local/share/applications/wine-extension*.desktop
-$ rm -f ~/.local/share/icons/hicolor/*/*/application-x-wine-extension*
-$ rm -f ~/.local/share/applications/mimeinfo.cache
-$ rm -f ~/.local/share/mime/packages/x-wine*
-$ rm -f ~/.local/share/mime/application/x-wine-extension*
-$ update-desktop-database ~/.local/share/applications
-$ update-mime-database ~/.local/share/mime/
+//rm -rf ~/.wine
+rm -f ~/.local/share/applications/wine-extension*.desktop
+rm -f ~/.local/share/icons/hicolor/*/*/application-x-wine-extension*
+rm -f ~/.local/share/applications/mimeinfo.cache
+rm -f ~/.local/share/mime/packages/x-wine*
+rm -f ~/.local/share/mime/application/x-wine-extension*
+rm -rf ~/.local/share/applications/*
+update-desktop-database ~/.local/share/applications/
+update-mime-database ~/.local/share/mime/
 ```
 
 命令行mime工具
@@ -3874,6 +3877,7 @@ winetricks win2k vcrun2005
 winetricks vcrun2005sp1
 winetricks win2k vcrun2005sp1
 winetricks -q dotnet40
+winetricks -q gdiplus riched20 riched30
 ```
 ```
 $ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30 ie6 msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash win2k vcrun2005 vcrun2005sp1 win2k vcrun2005sp1
@@ -3884,6 +3888,20 @@ $ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 
 com1 -> /dev/ttyS0
 ...
 com32 -> /dev/ttyS3
+```
+
+```
+find -name '*.desktop' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g'
+for files in `find -name '*.desktop'`; do echo $files; echo $files | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g'; done
+$ echo $a | sed -r -e 's/^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$/\1\2/'Exec=env WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen WinRAR %f
+$ echo $a | perl -p -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|'
+$ echo './wine-extension-pdf.desktop' | sed 's/$/"/' | sed 's/^/"/'
+```
+批量修复desktop文件
+```
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+for files in `find -name '*.desktop'`; do echo $files | sed 's/$/"/' | sed 's/^/"/' | xargs perl -pi -e 's|^(.*)?\/dosdevices\/e\:\/home\/andy\/\.wine(.*)$|$1$2|g' ; done
 ```
 
 ***
