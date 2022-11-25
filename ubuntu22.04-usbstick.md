@@ -3441,7 +3441,7 @@ wine regedit /S ch_font.reg
 wine winrar-x64-611.exe    ## 默认文件类型关联即可
 wine "Foxit Reader Pro 3.0 Build 1817.exe"   ## 勾选创建桌面快捷方式
 
-winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 cmd comctl32 mfc42 vcrun2003 msxml3 cmd comctl32 vcrun2005
+winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 cmd comctl32 vcrun2003 msxml3 cmd comctl32 vcrun2005
 ```
 批量修复desktop文件
 ```
