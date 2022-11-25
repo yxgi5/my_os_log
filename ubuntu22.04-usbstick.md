@@ -3525,6 +3525,7 @@ Setup Wine
 $ export WINEARCH=win32
 $ export WINEPREFIX=~/.wine32
 $ winecfg
+$ wine regedit     # 产生基本的*.desktop
 
 $ ls ~/.cache/wine/
 ```
@@ -3851,7 +3852,7 @@ export WINEPREFIX=$HOME/.wine/
 export WINEARCH=win64
 export LANG=zh_CN.UTF-8
 # alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine'
-# alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine wine'
+alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/home/andy/.wine wine'
 ```
 安装`winrar-x64-611.exe`，没有要安装wine-gecho
 
@@ -3883,11 +3884,9 @@ winetricks win2k vcrun2005
 winetricks vcrun2005sp1
 winetricks win2k vcrun2005sp1
 winetricks -q dotnet40
-winetricks -q gdiplus riched20 riched30
+$ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 mfc42 vcrun2003 vcrun2008 vcrun2010 ie6 msxml3 flash win2k vcrun2005 vcrun2005sp1
 ```
 ```
-$ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30 ie6 msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash win2k vcrun2005 vcrun2005sp1 win2k vcrun2005sp1
-
 $ winetricks -q vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 gdiplus cmd comctl32 gdiplus mfc42 vcrun2003 riched20 riched30 msxml3
 $ winetricks -q gdiplus riched20 riched30
 $ winetricks -q allfonts
