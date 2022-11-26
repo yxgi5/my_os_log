@@ -4934,15 +4934,45 @@ git add .
 
 
 ***
-#
+# unzip
+在`/etc/environment`添加
 ```
+alias unzip='unzip -O cp936'
 ```
 
 
 ***
-#
+# URL字符编码解码
+url-encode
 ```
+#!/usr/bin/perl
+ 
+use URI::Escape;
+
+print "Input original string:\n";
+my $string = <STDIN>;
+print "\nOriginal string:\n$string\n";
+
+my $encode = uri_escape($string);
+print "URL Encoded string:\n$encode\n\n";
 ```
+url-decode
+```
+#!/usr/bin/perl
+ 
+use URI::Escape;
+
+print "Input original string:\n";
+my $string = <STDIN>;
+print "\nOriginal string:\n$string\n";
+
+my $decode = uri_unescape($string);
+print "URL Decoded string:\n$decode\n";
+
+my $encode = uri_escape($decode);
+print "URL Encoded string:\n$encode\n\n";
+```
+都chmod 777，就可以转换了，复制到/bin去。
 
 
 ***

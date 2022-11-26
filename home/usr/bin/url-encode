@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+ 
+use URI::Escape;
+
+print "Input original string:\n";
+my $string = <STDIN>;
+print "\nOriginal string:\n$string\n";
+
+my $encode = uri_escape($string);
+print "URL Encoded string:\n$encode\n\n";

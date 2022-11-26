@@ -1,0 +1,25 @@
+
+# panel
+(sleep 1s && tint2) &
+
+# Set wallpaper
+(sleep 1s && feh --bg-scale /usr/share/wallpapers/backgroud.jpg)  &
+
+# Enable as required
+#xbacklight -set 100 &
+#/usr/bin/synclient TouchpadOff=1 &
+#xxkb &
+setxkbmap us &
+
+#/usr/bin/xscreensaver -no-splash &
+
+#(sleep 2 && spacefm -d) &
+(sleep 2 && pcmanfm -d) &
+#(sleep 3 && nm-applet) &
+(sleep 3 && fcitx-autostart) &
+(sleep 3 && volumeicon) &
+(sleep 2 && conky) &
+(sleep 2 && cbatticon) &
+#(sleep 2 && xxnet) &
+#aria2c --conf-path=$HOME/.config/aria2/aria2.conf -D
+(sleep 2 && shutter) &
