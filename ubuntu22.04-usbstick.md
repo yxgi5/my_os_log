@@ -3249,6 +3249,14 @@ to
 ```
 lxterminal
 ```
+deb系的可以这配置terminal
+```
+sudo update-alternatives --config  x-terminal-emulator
+```
+pcmanfm的bookmark文件在
+```
+/home/andy/.config/gtk-3.0/bookmarks
+```
 ## 配置lxterminal
 回滚设置成10000行
 
@@ -4973,6 +4981,14 @@ my $encode = uri_escape($decode);
 print "URL Encoded string:\n$encode\n\n";
 ```
 都chmod 777，就可以转换了，复制到/bin去。
+
+
+
+***
+# 显示进度的复制
+```
+$ sudo apt-get install gcp
+```
 
 
 ***

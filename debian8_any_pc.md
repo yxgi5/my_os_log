@@ -1220,63 +1220,78 @@ https://bugs.launchpad.net/ubuntu/+source/shared-mime-info/+bug/289592
 https://askubuntu.com/questions/39852/how-to-remove-warnings-like-unknown-media-type
 
 
-
-
-
-
-
+***
+# mathomatic+gnuplot+gtkwave+qucs
+```
 //$ sudo apt-get install mathomatic gnuplot rlwrap filelight baobab colordiff hardinfo i-nex gnome-calendar calcurse when qucs geda-gaf units freehdl
 $ sudo apt-get install mathomatic gnuplot rlwrap filelight baobab colordiff hardinfo calcurse when units freehdl
-
+```
+```
 gnuplot> plot [-3.14:3.14] sin(x)
+```
 http://www.gnuplot.info/demo/
 
-
-
 //add source
+```
 $ sudo leafpad /etc/apt/sources.list
 deb http://ppa.launchpad.net/qucs/qucs/ubuntu trusty main 
 #deb-src http://ppa.launchpad.net/qucs/qucs/ubuntu trusty main
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 2C2B9116
 $ sudo apt-get update
+```
 //这个是pcb和HDL仿真软件
+```
 $ sudo apt-get install qucs gtkwave
-//星空图这个其实很好玩
+```
+
+***
+# stellarium星空图
 $ sudo apt-get install stellarium
 
 
-// cpu-g
+***
+# cpu-g
+```
 $ sudo leafpad /etc/apt/sources.list
 deb http://ppa.launchpad.net/cpug-devs/ppa/ubuntu trusty main 
 #deb-src http://ppa.launchpad.net/cpug-devs/ppa/ubuntu trusty main 
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 4B894331
 $ sudo apt-get update
+$ sudo apt-get install cpu-g
+$ cpu-g.py
+```
 
-// i-nex 坑跌了安装不了
+***
+# i-nex 坑跌了安装不了
+```
 $ sudo leafpad /etc/apt/sources.list
 deb http://ppa.launchpad.net/i-nex-development-team/stable/ubuntu trusty main 
 deb-src http://ppa.launchpad.net/i-nex-development-team/stable/ubuntu trusty main 
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 F34CDDAD
 $ sudo apt-get update
+```
 
-$ sudo apt-get install cpu-g
-$ cpu-g.py
-
-
-
-//https://launchpad.net/~mehanik/+archive/ubuntu/geda-unstable
+***
+# iverilog+geda
+<http://www.geda-project.org/>
+<https://launchpad.net/~mehanik/+archive/ubuntu/geda-unstable>
+```
 //$ sudo leafpad /etc/apt/sources.list
 //deb http://ppa.launchpad.net/mehanik/geda-unstable/ubuntu trusty main 
 //#deb-src http://ppa.launchpad.net/mehanik/geda-unstable/ubuntu trusty main 
 //$ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 BDEB2384
 //$ sudo apt-get update
-//$ sudo apt-get install geda-gaf iverilog pcb
-//http://www.geda-project.org/
+//$ sudo apt-get install geda-gaf iverilog 
+```
 
-// debian的stable库是有geda-gaf的， 安装了上面的用aptitude降级
-// http://wiki.geda-project.org/geda:download
+debian的stable库是有geda-gaf的， 安装了上面的用aptitude降级
+
+<http://wiki.geda-project.org/geda:download>
+```
 deb http://mirrors.163.com/debian/ stable main non-free contrib
 deb-src http://mirrors.163.com/debian/ stable main non-free contrib
+```
+```
 $ sudo apt-get install geda pcb gerbv geda-utils geda-examples geda-gschem geda-xgsch2pcb
 sudo apt-get remove geda-utils geda-xgsch2pcb pcb geda-gschem gerbv geda geda-examples geda-gattrib geda-gnetlist geda-gsymcheck pcb-common pcb-gtk geda-doc geda-symbols geda-gaf geda-xorn libgeda43 libgeda-common
 sudo apt-get install geda-utils geda-xgsch2pcb pcb geda-gschem gerbv geda geda-examples geda-gattrib geda-gnetlist geda-gsymcheck pcb-common pcb-gtk geda-doc geda-symbols libgeda42 libgeda-common
@@ -1287,32 +1302,29 @@ $ gerbv
 $ iverilog
 $ gtkwave
 // geda不如qucs新
+```
 
-
-暴露一个问题，好多资源都没有加入默认仓库，但都在一个源里都有。。。。
-
-
-
+好多资源都没有加入默认仓库，但都在一个源里都有。。。。
 
 
 
+***
+#回收站位置
+`~/.local/share/Trash/files/`
 
+
+***
+# conky
+```
 $ git clone https://github.com/brndnmtthws/conky.git
-
-
-//回收站在~/.local/share/Trash/files/
-
 $ sudo apt-get install liblua5.1-0-dev liblua5.2-dev
-按照cmake的说法安装一遍
-看起来效果不怎么样
-
+```
+按照cmake的说法安装一遍，看起来效果不怎么样
+```
 // 打开ubuntu的源安装conky-manager，记得立即关闭ubuntu的源
 
 // 不要安装这个玩意
 // $ sudo apt-get install gnome-do
-
-
-
 
 $ sudo apt-get install lua5.2
 $ sudo apt-get install lua50 lua5.1
@@ -1334,10 +1346,8 @@ $ sudo apt-get install libluabind-doc libluabind-dev liblua5.2-dev libluabind0.9
 
 $ killall conky
 
-
 // 主要是这几个-dev和编译有关
 $ sudo apt-get install libtolua-dev libtolua++5.1-dev libimlib2 libimlib2-dev libiml0 libiml-dev
-
 
 $ locate lua5.1
 
@@ -1354,17 +1364,19 @@ copy files
 in ~/.conky/
 $ conky -c ~/.conky/conkyrc_grey
 $ killall conky
+```
 
-
-
+***
+# games
+```
 $ aptitude search mines
 $ sudo apt-get install games-minesweeper
+```
 
 
-
-
------安装modelsim
-
+***
+# 安装modelsim
+```
 $ sudo apt-get install libxp-dev libxp6 libxpa-dev libxpa1 libxplc0.3.13-dev libxplc0.3.13 xorg-dev xserver-xorg-dev primus-libs-ia32
 
 // 这样才能运行modelsim的安装程序，一般的unix兼容层而且是32位元
@@ -1387,60 +1399,69 @@ $ lmutil lmdiag
 
 // 运行
 $ vsim
+```
 
-
-// for matlab
+***
+# matlab
+```
 $ sudo apt-get install libc-dev libc6-amd64:i386
+```
 
 
-
-// 操作mdb文件
+***
+#  操作mdb文件
+```
 $ sudo apt-get install mdbtools mdbtools-gmdb mdbtools-dev
 $ sudo apt-get install unixodbc mdbtools
 $ gmdb2
+```
 
-
+***
+# firmware
 $ sudo apt-get install firmware-linux-nonfree
 
 
-// 安装有道词典
+***
+# 安装有道词典
 // 要临时开trusty的源，python3-xlib在Debian中没有
+```
 $ sudo gdebi youdao-dict_1.0.2~deepin_amd64.deb
 $ sudo apt-get -f install
+```
 
-
-// 安装altera
+***
+# 安装altera quartus
 https://wiki.archlinux.org/index.php/Altera_Design_Software_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29
+```
 $ sudo apt-get install tcsh
 $ sudo dpkg-reconfigure dash
+```
 http://www.linuxidc.com/Linux/2011-10/46280.htm
 
-
-// 安装文件所在目录的名称不能有空格
+安装文件所在目录的名称不能有空格
+```
 $ sh 11.0_quartus_linux.sh  --noexec
 $ sh 11.0_dsp_builder_linux.sh  --noexec
 $ sh 11.0_devices_linux.sh  --noexec
 $ sh 11.0_modelsim_ae_linux.sh  --noexec
 $ sh 11.0_legacy_nios2_linux.sh  --noexec
 $ sh 11.0_programmer_linux.sh --noexec
-// 然后把每个解压的文件夹里的libpng12.so.0都mv出来，就能正常安装了
+```
+然后把每个解压的文件夹里的libpng12.so.0都mv出来，就能正常安装了
 
-
-
-
-
-
+```
 /etc/udev/rules.d/51-altera-usb-blaster.rules
-
+```
+```
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
+```
 
-
-
-
+设置环境变量
+```
 export WINEPREFIX=$HOME/.wine/
 export WINEARCH=win32
 
@@ -1456,47 +1477,47 @@ export LM_LICENSE_FILE=/opt/modelsim/license.dat:/opt/altera/license.dat
 export PATH=$PATH:/opt/MATLAB/R2010b/bin:/opt/modelsim/modeltech/bin:/opt/altera/11.0/quartus/bin:/opt/altera/11.0/nios2eds/bin
 		
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64
+```
 
-
-
+添加快捷bin
+```
 cd /usr/local/bin
 sudo gedit quartus
----------------------------------
+```
+```
 #!/bin/bash
 cd /opt/altera/11.0/quartus/bin/
 ./quartus
----------------------------------
+```
+```
 sudo chmod +x quartus
+```
 
+解压配置好的部分alter器件的modelsim仿真库
 
-/home/user/.cache/tracker目录，找到meta.db（多媒体文件索引数据），删除这个文件（可以放心删除，手机重启后会自动生成），然后重启
-//找出大文件
-http://www.gosoa.com.cn/category/linux%E5%BC%80%E5%8F%91
-http://www.gosoa.com.cn/linux-%E6%89%BE%E5%87%BA%E5%A4%A7%E6%96%87%E4%BB%B6%E6%B1%87%E6%80%BB
-$ find . -type f -size +10000k -exec ls -lh {} \; | awk ‘{ print $8 “: ” $5 }’
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-
-
-
-// 解压配置好的部分alter器件的modelsim仿真库
 这样基本上就配置完毕
+
 在tech_log/fpga/给modelsim_SE创建Altera库/modeltech64_10.1c_q110_linux.tar.xz
 
 
+***
+# 找出大文件
+http://www.gosoa.com.cn/category/linux%E5%BC%80%E5%8F%91
 
+http://www.gosoa.com.cn/linux-%E6%89%BE%E5%87%BA%E5%A4%A7%E6%96%87%E4%BB%B6%E6%B1%87%E6%80%BB
+
+/home/user/.cache/tracker目录，找到meta.db（多媒体文件索引数据），删除这个文件（可以放心删除，手机重启后会自动生成），然后重启
+
+`$ find . -type f -size +10000k -exec ls -lh {} \; | awk ‘{ print $8 “: ” $5 }’
+`
+
+***
+# cadence(abort)
+```
 $ sudo apt-get install devscripts
-
 $ sudo apt-get install libxmu-dev:i386 libxmu-headers:i386
-
-//==============================================
-
+```
+```
 export CDS_INST_DIR=/opt/spb
 export CDS_ROOT=/opt/IC5141
 export CDS_INSTALL_DIR=$CDS_INST_DIR/tools/dfII:$CDS_ROOT/tools/dfII
@@ -1510,24 +1531,21 @@ export PATH=$CDS_INST_DIR/tools/bin:$CDS_INST_DIR/tools/pcb/bin:$CDS_INST_DIR/to
 export CDS_Netlisting_Node Analog
 export LD_ASSUME_KERNEL=2.4.19
 #allegro &allegro_design_entry_HDL &projmgr &
-
-
-
-
-
+```
+```
 cd /home/您的主目录/您的SPB166工作路径/
 source spb166
 allegro或者concepthdl或者projmgr
-
+```
 例子：
-# !/bin/bash
+```
+#!/bin/bash
 cd /home/love/Documents/cadence/SPB166/
 source spb166
 allegro
+```
 
-
-
-# for cadence
+```
 alias lmgrd='/opt/cadence/SPB166/tools/bin/lmgrd -c /opt/cadence/SPB166/share/license/license.dat'   
 alias lmdown='/opt/cadence/SPB166/tools/bin/lmdown -c /opt/cadence/SPB166/share/license/license.dat'            
 export CDS_LIC_FILE=27000@localhost.localdomain     
@@ -1536,155 +1554,207 @@ export OA_HOME=/opt/cadence/SPB166/oa_v22.43.006
 export CDS_Netlisting_Mode=Analog                  
 export
 PATH=$SPB166/tools/bin:$SPB166/tools/pcb/bin:$SPB166/tools/fet/bin:$SPB166/tools/specctra/bin:$PATH
-# end cadence
-
+```
 
 破解用的
+```
 eetop.cn_license.dat.tar.gz
 eetop.cn_pubkey_verify_1.10.rar
+```
 
-确实有allegro.exe
-在/opt/cadence/SPB166/tools.lnx86/pcb/bin
-那么原始的破解应该也行吧，不想玩了
-=======================================//
-allegro能运行，还是不会用，算球
+确实有allegro.exe在/opt/cadence/SPB166/tools.lnx86/pcb/bin
 
 
-
-
-
-
-// 关于FT232RL USB转RS232线
+***
+# 关于FT232RL USB转RS232线
+```
 $ lsusb
 $ dmesg|tail
 $ ls /dev/ttyUSB*
 $ sudo apt-get install putty
+```
 
+***
+# 安装unetbootin
 
-
-
-
-
-
-
-$ sudo apt-get install x11-apps
-
-
-
-
-
-// 安装unetbootin
 ppa:n-muench/programs-ppa
-https://launchpad.net/~n-muench/+archive/ubuntu/programs-ppa2
+
+<https://launchpad.net/~n-muench/+archive/ubuntu/programs-ppa2>
+```
 deb http://ppa.launchpad.net/n-muench/programs-ppa2/ubuntu trusty main 
 deb-src http://ppa.launchpad.net/n-muench/programs-ppa2/ubuntu trusty main 
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 EAE0D85C
 $ sudo apt-get update
 $ sudo apt-get install unetbootin
+```
 
 
-// 安装veracrypt
+***
+# 安装veracrypt
 ppa:unit193/encryption
-https://launchpad.net/~unit193/+archive/ubuntu/encryption
+<https://launchpad.net/~unit193/+archive/ubuntu/encryption>
+```
 deb http://ppa.launchpad.net/unit193/encryption/ubuntu trusty main 
 deb-src http://ppa.launchpad.net/unit193/encryption/ubuntu trusty main 
+```
+```
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 B58A653A
 $ sudo apt-get update
 $ sudo apt-get install veracrypt
+```
 
 
-
-
+***
+# dropbox
+自动更新
+```
 $ sudo apt-get install nautilus-dropbox
 dropbox start -i
-//上面的命令自动更新
-// 下面这种方式比较旧
+```
+
+这种方式比较旧
+```
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 ~/.dropbox-dist/dropboxd
+```
 
 
-
+***
+# something
+```
+$ sudo apt-get install x11-apps
 $ sudo apt-get install hexedit dhex dmg2img
+```
 
 
-// 安装115yun
-// 安装uex
-// 安装bcompare，32位的包在64位环境可以用的，但是要安装libxft2:i386等
-先dpkg，报错，然后
+***
+# 安装115yun
+
+
+***
+# 安装uex
+
+
+***
+# 安装bcompare
+32位的包在64位环境可以用的，但是要安装libxft2:i386等
+
+先dpkg，报错，然后完成依赖关系安装,就可以运行了
+```
 $ sudo apt-get -f install
-完成依赖关系安装
-就可以运行了
-// key
+```
+
+key
+```
 HmB5oANygQOhaStTHNa+zOKgOeWHOkeAp6d1+QwIebz6z9kwYCm9-O0jF9F79zvzed9v5UVC4VrDkDMmTM8nB+
+```
 
+***
+# 安装acetoneiso
 
-// 安装acetoneiso
 https://launchpad.net/ubuntu/trusty/+package/acetoneiso
+
 https://launchpad.net/ubuntu/trusty/+package/fuseiso
+
+```
 fuseiso_20070708-3ubuntu1_amd64.deb
 $ sudo apt-get install isomaster
-
-
 $ sudo apt-get install okteta
-
+```
 打开ubuntu的源后
-https://launchpad.net/onboard
+<https://launchpad.net/onboard>
+```
 $ sudo apt-get install onboard
+```
 
-tesseract-ocr
+***
+# tesseract-ocr
+```
 $ sudo apt-get install gimagereader
+```
 
-// 网页编辑
+***
+# 网页编辑
+```
 $ sudo apt-get install bluefish
+```
 其实还是kompozer好
 
-// 电驴
+***
+# 电驴
+```
 $ sudo apt-get install mldonkey-gui
-
 // = deluge
 $ sudo apt-get install bittorrent-gui rtorrent
+```
 
 
-
-以太网接口的逻辑名字（eth0 , eth1 , eth2 ……）：
-该名称保存在：
+***
+# 以太网接口的逻辑名字（eth0 , eth1 , eth2 ……）
+该名称保存在
+```
 /etc/udev/rules.d/70-persistent-net.rules
+```
 查看默认路由配置：
+```
 route -n
+```
 清空一个网卡接口的所有IP配置
+```
 ip addr flush eth0
+```
 DNS配置,即时生效的
-/etc/resolv.conf
+```
+cat /etc/resolv.conf
 nameserver 202.xx.xx.xx
 nameserver 192.168.1.1
+```
 DNS服务器查询
+```
 $ nslookup
+```
 动态IP地址分配(DHCP Client)
-修改/etc/network/interfaces文件如下：
+修改`/etc/network/interfaces`文件如下
+```
 auto eth0
 iface eth0 inet dhcp
+```
 静态主机名
-修改/etc/hosts
+修改`/etc/hosts`
 查看主机名
+```
 $ hosts
+```
 临时修改主机名
+```
 $ sudo hostname testserver
+```
 永久修改主机名
+```
 $ sudo vi /etc/hostname
+```
 删除当前缺省网关
+```
 $ sudo route del default gw
+```
 手工配置缺省网关
+```
 $ sudo route add default gw 192.168.1.1
+```
 重启networking命令让新配置生效：
+```
 $ sudo /etc/init.d/networking restart
+```
 也可以重启网卡让新配置生效，优点是不影响其他网络接口：
+```
 $ sudo ifdown eth0
 $ sudo ifup eth0
+```
 
-
-// 设置双网卡
-$ sudo vim /etc/network/interfaces
-------
+***
+# 设置双网卡
+`$ sudo vim /etc/network/interfaces`
+```
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -1705,34 +1775,39 @@ netmask 255.255.255.0
 # gateway 192.168.1.1
 
 auto wlan0
-------
-
+```
+```
 $ sudo /etc/init.d/networking restart
-
-// 这样就可以通过有线路由连接开发板了，而且通过无线网卡可以上网
+```
+这样就可以通过有线路由连接开发板了，而且通过无线网卡可以上网
 
 
 同网段的，
+
 有线网卡192.168.2.222（静态)
+
 无线网卡192.168.2.x（dhcp）
+
 在上述双网卡配置条件下
-先$ sudo ifconfig eth0 192.168.2.222
+
+先`$ sudo ifconfig eth0 192.168.2.222`
+
 再重连接无线路由就可以用了
 
 
-
-
-// 修改pcmanfm的默认shell
-x-terminal-emulator %s
-to
-lxterminal
+***
+# 修改pcmanfm的默认shell
+`x-terminal-emulator %s` 修改为 `lxterminal`
 
 原来是
+```
 In pcmanfm preferences, under the advanced tab, change the terminal to "x-terminal-emulator -e %s". You can also change the "terminal" value in ~/.config/libfm/libfm.conf
-
+```
 最好的办法
+```
 $ sudo update-alternatives --config  x-terminal-emulator
-[sudo] password for andy: 
+```
+``` 
 There are 8 choices for the alternative x-terminal-emulator (providing /usr/bin/x-terminal-emulator).
 
   Selection    Path                             Priority   Status
@@ -1748,98 +1823,133 @@ There are 8 choices for the alternative x-terminal-emulator (providing /usr/bin/
   8            /usr/bin/xterm                    20        manual mode
 
 Press enter to keep the current choice[*], or type selection number: 5
-
-
+```
 
 pcmanfm的bookmark文件在
+```
 /home/andy/.config/gtk-3.0/bookmarks
+```
+
+***
+# 安装lantern
+设置一下浏览器代理 `127.0.0.1：8787`
 
 
-// 安装lantern
-设置一下浏览器
-127.0.0.1：8787
-
-// 安装kmplayer
+***
+# 安装kmplayer
+```
 $ sudo apt-get install kmplayer
+```
 
-// 安装ffmpeg
-# http://www.deb-multimedia.org/
+***
+# 安装ffmpeg
+<http://www.deb-multimedia.org/>
+```
 deb http://www.deb-multimedia.org stable main non-free
-
-
+```
+```
 sudo apt-get install deb-multimedia-keyring
 sudo apt-get update
 sudo apt-get install ffmpeg
+```
 
-// 安装mpv
-
-// 截图工具shutter
-// 再搭配gimp，也很牛逼啊
-
-
-// 安装calibre
-// 安装lucidor
-// ppub没有deb包
+***
+# 安装mpv
 
 
-//安装eaglemode
-http://eaglemode.sourceforge.net/download.html
+***
+# 截图工具shutter
+
+
+***
+# 再搭配gimp
+
+
+***
+# 安装calibre
+
+
+***
+# 安装lucidor
+EPUB阅读软件ppub没有deb包
+
+
+***
+# 安装eaglemode
+<http://eaglemode.sourceforge.net/download.html>
 需要-f添加一些依赖包
 
 
-// 安装golang
+***
+# 安装golang
 
 
-// peco
-http://peco.github.io/
+***
+# peco+catfish+locator
+
+## peco
+<http://peco.github.io/>
 下载后放到bin里面就行
 
-// 安装agrep
+## 安装agrep
 
-// 安装catfish
+## 安装catfish
 
-#// 安装Lazarus
-// 安装locator
-#https://github.com/AlexTuduran/Locator
+## 安装Lazarus(abort)
+
+## 安装locator
+<https://github.com/AlexTuduran/Locator>
 直接安装编译好的就可以了
 
 在peco/locator
-
+```
 sudo /opt/locator/locator
 $ sudo updatedb
 $ locate XXX | peco
 $ locate XXX | pick
 $ locate XXX | peco | xargs less
 $ locate XXX | less
-
 sudo catfish
+```
 用catfish和locator等查找外部存储器的内容
+
 最好先备份默认缓存文件
+```
 $ sudo cp /var/lib/mlocate/mlocate.db /path_to/mlocate.db.bk
+```
 需要生产默认文件名的缓存文件
+```
 sudo updatedb -U /media/sdd1/
+```
 再使用catfish和locator等locate前端
 
-查找文件的终极方法
+## 查找文件的终极方法
+
 可以本地查找用catfish/locator，外部存储器用命令行
 另外生成外部存储器的缓存文件
+```
 sudo updatedb -U /media/sdd1/ -o /var/lib/mlocate/mlocate_sdd.db
 sudo updatedb -U /media/andy/BC482DD5482D8EE8 -o /var/lib/mlocate/mlocate_sdd.db
+```
 用locate查找就行了
+```
 sudo locate -d /var/lib/mlocate/mlocate_sdd.db  XXX
 sudo locate -d /var/lib/mlocate/mlocate_sdd.db  XXX | peco
 sudo locate -d /var/lib/mlocate/mlocate_sdd.db VPFE | grep pdf | peco
 sudo locate -d /var/lib/mlocate/mlocate_sdd.db VPFE | grep pdf
-
+```
 最纯粹的方法是用find
+```
 find /media/sdd1/ -name "*VPBE*"
+```
 
 
-安装xdm
-
-
+***
+# 安装xdm
+```
 $ sudo leafpad /etc/xrdp/startwm.sh 
--------------------------------------
+```
+```
 #!/bin/sh
 
 if [ -r /etc/default/locale ]; then
@@ -1851,99 +1961,110 @@ fi
 exec /usr/bin/openbox-session
 
 . /etc/X11/Xsession
--------------------------------------
+```
+```
 $ sudo /etc/init.d/xrdp restart
-
-
+```
+```
 $ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andy -f 192.168.1.110
+```
 也可以访问了
 
 startxfce4替换成，？
+```
 /usr/bin/openbox --startup /usr/lib/x86_64-linux-gnu/openbox-autostart OPENBOX
 /usr/bin/ssh-agent /usr/bin/dbus-launch --exit-with-session /usr/bin/sogou-session /usr/bin/im-launch /usr
 /usr/bin/dbus-launch --exit-with-session /usr/bin/sogou-session /usr/bin/im-launch /usr/bin/openbox-sessio
 /home/andy/.config/openbox/autostart
+```
 
 
-
-
-
-// SDL
+***
+# SDL
+```
 $ sudo aptitude install libsdl-image1.2-dev libsdl1.2-dev libpulse-dev libv4l-dev v4l-utils v4l-utils v4l-utils v4l-utils dov4l dv4l
+```
 
 
-// avcodec
+***
+# avcodec
+```
 $ sudo aptitude install libavcodec-dev libswscale-dev
+```
 
-
-// i2c-tools
+***
+# i2c-tools
+```
 sudo apt-get install i2c-tools
+```
 
-
+***
+# lxterminal
 shell的scrollback设置成5000
 
 
-
+***
+# qt
+```
 $ sudo aptitude install qt5-default
-
 $ sudo apt-get install libqwt5-qt4 libqwt5-qt4-dev
-
 $ sudo apt-get install qt4-dev-tools qt4-doc qt4-qtconfig qt4-demos qt4-designer qt4-qmlviewer
-
 $ sudo apt-get install libqt4-sql-mysql 
-
 $ sudo apt-get install libxcb1 libxcb1-dev libx11-xcb1 libx11-xcb-dev libxcb-keysyms1 libxcb-keysyms1-dev libxcb-image0 libxcb-image0-dev libxcb-shm0 libxcb-shm0-dev libxcb-sync-dev libxcb-render-util0 libxcb-render-util0-dev libxcb-xfixes0-dev
-
 $ sudo apt-get install libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev
+```
 
-
-//add source
+add source
+```
 deb http://mirrors.163.com/debian experimental main contrib non-free
 deb-src http://mirrors.163.com/debian experimental main contrib non-free
-
+```
+```
 $ sudo apt-get install libicu-dev qmlscene oxideqmlscene
 $ sudo apt-get install libx11-xcb1
-
+```
 经验证,添加下面环境变量能够解决xcb插件不能找到的问题
+```
 $ export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms
-//http://stackoverflow.com/questions/17106315/failed-to-load-platform-plugin-xcb-while-launching-qt5-app-on-linux-without
-
+```
+<http://stackoverflow.com/questions/17106315/failed-to-load-platform-plugin-xcb-while-launching-qt5-app-on-linux-without>
 
 添加到profile
+```
 $ gedit ~/.profile
+```
 
 
-
-
-
-
-
-
-
+***
+# gstreamer
 $ sudo apt-get install gstreamer1.0-tools gstreamer1.0-doc gstreamer0.10-plugins-ugly gstreamer0.10-doc gstreamer-tools gstreamer-sdk-dev gstreamer-sdk gstreamer0.10-plugins-good gstreamer0.10-plugins-good
 
 
-//$ sudo apt-get install gcalctool
-// 这个牛逼的玩意已经被改名了用gnome-calculator
-$ sudo apt-get install galctool
+***
+# gcalctool
+```
+$ sudo apt-get install gcalctool
+```
+这个牛逼的玩意已经被改名了用gnome-calculator
 
 
 
-
-
-
-
-ATI 驱动官方网址：http://support.amd.com/zh-cn/download
-下载的是：amd-catalyst-15.9-linux-installer-15.201.1151-x86.x86_64.zip
-准备工作：
+***
+# ATI 驱动
+<http://support.amd.com/zh-cn/download>
+```
+amd-catalyst-15.9-linux-installer-15.201.1151-x86.x86_64.zip
+```
+准备工作
+```
 sudo apt-get install module-assistant build-essential
 sudo apt-get install fakeroot dh-make debconf libstdc++5 linux-headers-$(uname -r)
-
+```
+```
 xserver-xorg-video-radeon
 radeontool
 radeontop
 libdrm-radeon1
-
 libgl1-fglrx-glx
 xserver-xorg-video-fglrx
 glx-alternative-fglrx
@@ -1954,10 +2075,11 @@ radeontool
 radeontop
 fglrx-atieventsd
 fglrx-modules-dkms
-
-
+```
+```
 $ sudo apt-get install xserver-xorg-video-fglrx fglrx-driver fglrx-control
-
+```
+```
 The following extra packages will be installed:
   fglrx-atieventsd fglrx-modules-dkms glx-alternative-fglrx glx-alternative-mesa glx-diversions libfglrx libfglrx:i386
   libfglrx-amdxvba1 libfglrx-amdxvba1:i386 libgl1-fglrx-glx libgl1-fglrx-glx:i386 libgl1-fglrx-glx-i386:i386
@@ -1967,14 +2089,16 @@ The following NEW packages will be installed:
   fglrx-atieventsd fglrx-control fglrx-driver fglrx-modules-dkms glx-alternative-fglrx glx-alternative-mesa glx-diversions libfglrx
   libfglrx:i386 libfglrx-amdxvba1 libfglrx-amdxvba1:i386 libgl1-fglrx-glx libgl1-fglrx-glx:i386 libgl1-fglrx-glx-i386:i386
   nvidia-installer-cleanup
-
-
+```
+```
 lsb_release -a
 Codename:   jessie
+```
+```
 sudo sh AMD-Catalyst-15.9-Linux-installer-15.201.1151-x86.x86_64.run --buildpkg Debian/jessie
-无效
-Debian/ustable都不行
-
+```
+无效, Debian/ustable都不行
+```
 $ sudo aticonfig --initial
 
 sudo aticonfig --initial -f
@@ -1984,8 +2108,8 @@ glxinfo | grep -i opengl
 OpenGL renderer string后面是你的显卡型号
 fglrxinfo
 fgl_glxgears
-
-
+```
+```
 $ sudo apt-get install fp-utils lksctp-tools dropbear
 
 $ sudo apt-get install lazarus-ide mldonkey-server xcb lazarus
@@ -2001,35 +2125,41 @@ $ sudo apt-get install bzr
 $ bzr branch lp:onboard
 
 $ sudo apt-get -u dist-upgrade
-
-
-
-
-
+```
+```
 sudo update-alternatives --config glx?fb?
+```
 
 
-
-
-smb目录的shell访问
+***
+# smb目录的shell访问
+```
 andy@debian-dell:/run/user/1000/gvfs/smb-share:server=192.168.1.111,share=ridgerun-sdk/kernel/linux-2.6.32.17-psp03.01.01.39$ 
+```
 
-
-
-
-
-
+***
+# tor
+```
 $ sudo apt-get install tor vidalia 
+```
+
+***
+# privoxy
+```
 $ sudo apt-get install privoxy 
+```
 
 
-
-摄像头。camera
+***
+# 摄像头 camera
+```
 cheese
+```
 
 
-
-
+***
+# apache
+```
 $ sudo apt-get install apache2 apache2-utils apache2-doc 
 sudo /etc/init.d/apache2 restart
 sudo /etc/init.d/apache2 stop
@@ -2037,7 +2167,9 @@ sudo killall apache2
 sudo a2enmod rewrite
 sudo service apache2 reload
 sudo gedit /etc/apache2/sites-available/zhang.conf
+```
 设置网络分享目录，但是搭建apt源别有中文，会出问题的
+```
 <VirtualHost *:80>
 	ServerAdmin yxgi5@163.com
 	ServerName andreas.com
@@ -2046,7 +2178,9 @@ sudo gedit /etc/apache2/sites-available/zhang.conf
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
+```
 或者内容如下
+```
 <VirtualHost *:80>
 	ServerAdmin yxgi5@163.com
 	ServerName andreas.com
@@ -2058,10 +2192,12 @@ sudo gedit /etc/apache2/sites-available/zhang.conf
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-
-
+```
+```
 sudo gedit /etc/apache2/apache2.conf
+```
 添加
+```
 <Directory /media/sdd1/software>
 	Options Indexes FollowSymLinks
 	AllowOverride None
@@ -2077,31 +2213,39 @@ sudo gedit /etc/apache2/apache2.conf
 	Require all granted
 </Directory>
 
-...末尾
+...[末尾]
 IndexOptions Charset=UTF-8
+```
 如果原来乱码ff看是unicode，这样简易的文件服务器乱码就好了
-
+```
 $ cd /etc/apache2
 $ sudo a2dissite 000-default.conf
 $ sudo a2ensite zhang.conf
 $ sudo /etc/init.d/apache2 restart
-
+```
 不要用lantern等代理，或者暂时关闭，就能访问这个局域网的web服务器
 
-ntfs文件系统的权限问题
+
+***
+# ntfs文件系统的权限问题
+```
 sudo apt-get install ntfs-config
 sudo ntfs-config
-点击ok，勾选Enable write support for external device
+```
+点击ok，勾选`Enable write support for external device`
+```
 $ sudo apt-get install fuse
-
 $ id
-
+```
 就手动mount好了
+```
 $ sudo mount -t ntfs-3g -o users,auto,rw,dev,exec,locale=zh_CN.UTF-8 /dev/sdd1 /media/sdd1/
+```
 
+## 自动挂载的ntfs移动磁盘不能访问
 
-自动挂载的ntfs移动磁盘不能访问
 查看硬盘信息
+```
 $ udevadm info /dev/sdd | grep ID_SERIAL
 $ udevadm info /dev/sdc1
 $ blkid /dev/sdd1 | grep UUID
@@ -2112,39 +2256,43 @@ $ udevadm monitor
 $ lsblk
 
 $ sudo udevadm control -l debug
-
-
+```
+```
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 sudo /etc/init.d/udev restart
 sudo systemctl daemon-reload
-
 
 systemctl --type=service
 sudo strace -f /lib/systemd/systemd-udevd --daemon
 $ sudo partprobe /dev/sdc1
 $ udevadm test -a -p  $(udevadm info -q path -n /dev/sdc1)
 
-
-
 /lib/udev/rules.d/60-persistent-storage.rules
 $ /lib/udev/scsi_id --help
-
+```
 目前看来很像这样调用的
+```
 $ udisksctl mount -o rw,exec,locale=zh_CN.UTF-8 -b /dev/sdc1
 $ udisksctl mount -o rw,exec,locale=zh_CN.UTF-8 -b /dev/sdc1 --no-user-interaction
-
+```
 systemd里面是用udisks2之类管理挂载的吧,给定一下权限,ok了,自动挂载mount出来的目录有权限了
+```
 $ udisksctl mount -o uid=1000,gid=1000,umask=0000,rw,exec,locale=zh_CN.UTF-8 -b /dev/sdc1
 $ udisksctl unmount -b /dev/sdc1
+```
 据说udisks的命令类似于
+```
 udisks --mount-options uid=1000,gid=100,umask=0000 --mount /dev/sda6
-
-https://serverfault.com/questions/766506/automount-usb-drives-with-systemd
+```
+<https://serverfault.com/questions/766506/automount-usb-drives-with-systemd>
 
 命名搞不定,那么就解决一下权限吧
+```
 $ sudo journalctl -f
+```
 可看出dmask,umask都不是我要的
+```
 10月 18 14:46:35 debian-dell systemd-udevd[20990]: validate module index
 10月 18 14:46:35 debian-dell systemd-udevd[20990]: Check if link configuration needs reloading.
 10月 18 14:46:35 debian-dell systemd-udevd[20990]: seq 22731 queued, 'add' 'bdi'
@@ -2164,14 +2312,19 @@ $ sudo journalctl -f
 10月 18 14:46:35 debian-dell org.gtk.Private.UDisks2VolumeMonitor[2522]: libudev: udev_device_new_from_syspath: device 0x743200 has devpath '/devices/pci0000:00/0000:00:1c.2/0000:03:00.0/usb3/3-1/3-1:1.0/host6/target6:0:0/6:0:0:0/block/sdc/sdc1'
 10月 18 14:46:35 debian-dell org.gtk.Private.UDisks2VolumeMonitor[2522]: libudev: udev_device_read_db: device 0x743200 filled with db file data
 10月 18 14:46:35 debian-dell udisksd[2719]: Mounted /dev/sdc1 at /media/andy/本地磁盘 on behalf of uid 1000
-
+```
 
 查看到底用的哪个service
+```
 sudo systemctl status systemd-udevd
-
+```
 
 ntfsfix is a program to perform limited NTFS checking. While it won't fix all NTFS troubles, it will fix some problems. 
 
+
+***
+# qt
+```
 $ tar zxvf qt-everywhere-opensource-src-4.7.0.tar.gz
 $ tar zxvf tslib-1.4.tar.gz
 $ mv qt-everywhere-opensource-src-4.7.0 qt-everywhere-opensource-src-4.7.0-pc
@@ -2181,22 +2334,26 @@ $ source set_env.sh
 $ ./configure --prefix=/usr/local/tslib/ --host=arm-none-linux-gnueabi ac_cv_func_malloc_0_nonnull=yes
 $ make
 $ sudo make install
-
+```
+```
 cd qt-everywhere-opensource-src-4.7.0-pc64
 echo yes | ./configure -opensource  -prefix /usr/local/Trolltech/Qt-4.7.0  -prefix-install -qt-freetype -depths all -qt-kbd-linuxinput -qt-libtiff -qt-libmng -qt-libjpeg -qt-libpng -qt-gfx-linuxfb -qvfb -make tools -make libs -make examples -make demos
 
 cd qt-everywhere-opensource-src-4.7.0-x64
 echo yes | ./configure -opensource -prefix /usr/local/Trolltech/QtEmbedded-4.7.0-x64 -prefix-install -embedded x64 -xplatform qws/linux-generic-g++ -qt-gfx-qvfb -qt-kbd-qvfb -qt-mouse-qvfb -qt-libtiff -qt-libmng -qt-libjpeg -qt-libpng -qvfb -make tools -make libs -make examples -make demos
-
+```
+```
 cp /usr/local/Trolltech/Qt-4.7.0/bin/qvfb* /usr/local/Trolltech/QtEmbedded-4.7.0-x64/bin
+```
 
 
-
-
-
+***
+# 内核 kernel
+```
 $ sudo dpkg -l | grep linux-headers
-
+```
 暂时不要升级内核到4.4
+```
 $ sudo apt-get install linux-image-4.4.0-trunk-amd64
 The following extra packages will be installed:
   firmware-linux-free irqbalance
@@ -2206,48 +2363,66 @@ The following packages will be REMOVED:
   task-desktop task-gnome-desktop xserver-xorg-input-all xserver-xorg-input-vmmouse
 The following NEW packages will be installed:
   firmware-linux-free irqbalance linux-image-4.4.0-trunk-amd64
+```
 
 
-ubuntu14虚拟机重新编译附加驱动组件
+***
+# ubuntu14虚拟机重新编译附加驱动组件
+```
 sudo /etc/init.d/vboxadd setup 
+```
 
 
-
-
-# 字符界面启动 #
+***
+# 字符界面启动
 
 查看运行级别
+```
 runlevel
 sudo runlevel
+```
 
+指定登录管理器
+```
 /etc/X11/default-display-manager
-指定登录管理器 #没有必要
 
 /etc/init/rc-sysinit.conf
 /etc/init/lightdm.conf
 ...#没有必要
+```
 
 编辑/etc/default/grub #不建议
+
 把
+```
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+```
 改成
+```
 GRUB_CMDLINE_LINUX_DEFAULT="text"或“quiet splash text”
+```
 其实只要把"quiet splash"修改为其它字符就可以了，这是系统启动是ubuntu那个logo和下面那个闪动的小亮点。
+```
 sudo update-grub
 sudo update-grub2
+```
 
-
-！！！！或者直接修改/boot/grub/grub.cfg
+## 直接修改/boot/grub/grub.cfg
+```
 linux	/boot/vmlinuz-2.6.32-22-generic root=UUID=035c6a4f-6382-445d-9c5b-f8739d15caea ro   quiet splash
+```
 成
+```
 linux	/boot/vmlinuz-2.6.32-22-generic root=UUID=035c6a4f-6382-445d-9c5b-f8739d15caea ro   quiet splash text
+```
 上述方法在u10.04测试通过
 
+Ubuntu的默认开机的runlevel是2,可以用`runlevel`来查看当前的默认运行级别。
 
+debian系(ubuntu是基于debian)的Linux一直是用runlevel 2来默认启动，并且runlevel定义也与redhat有区别
 
-
-Ubuntu的默认开机的runlevel是2,可以用runlevel来查看当前的默认运行级别。
-debian系(ubuntu是基于debian)的Linux一直是用runlevel 2来默认启动，并且runlevel定义也与redhat有区别。debian的runlevel级别定义如下：
+debian的runlevel级别定义如下
+```
 0 – Halt，关机模式
 1 – Single，单用户模式
 2 - Full multi-user with display manager (GUI)
@@ -2255,7 +2430,9 @@ debian系(ubuntu是基于debian)的Linux一直是用runlevel 2来默认启动，
 4 - Full multi-user with display manager (GUI)
 5 - Full multi-user with display manager (GUI)
 6 – Reboot，重启
+```
 可以发现2~5级是没有任何区别的。他们为多用户模式，这和一般的linux不一样。而redhat的runlevel级别定义如下：
+```
 0：关机。不能将系统缺省运行级别设置为0，否则无法启动。
 1：单用户模式，只允许root用户对系统进行维护。
 2：多用户模式，但不能使用NFS（相当于Windows下的网上邻居）
@@ -2263,31 +2440,39 @@ debian系(ubuntu是基于debian)的Linux一直是用runlevel 2来默认启动，
 4：未定义。
 5：图形界面的多用户模式。
 6：重启。不能将系统缺省运行级别设置为0，否则会一直重启。
+```
+这里补充一下，多数的linux都是用一种叫System V的机制来启动运行级别，而ubuntu使用upstart代替init启动系统进程。所以没有那个inittab文件来改默认运行级别。ubuntu 的默认运行级别文件是`/etc/init/rc-sysinit.conf`
 
-这里补充一下，多数的linux都是用一种叫System V的机制来启动运行级别，而ubuntu使用upstart代替init启动系统进程。所以没有那个inittab文件来改默认运行级别。ubuntu 的默认运行级别文件是/etc/init/rc-sysinit.conf。
-
-而init启动系统进程的默认运行级别文件是/etc/inittab
+而init启动系统进程的默认运行级别文件是`/etc/inittab`
+```
 id:3:initdefault:
+```
 
-/etc目录下的 rc0.d  rc1.d  rc2.d  rc3.d  rc4.d  rc5.d  rc6.d
+/etc目录下的 `rc0.d  rc1.d  rc2.d  rc3.d  rc4.d  rc5.d  rc6.d`
+
 如果rc-sysinit.conf或inittab中指定的默认级别是2，那么init将执行/etc/rc2.d目录下的脚本启动或关闭相应服务
 
 把对应级别下的登录管理器备份，参考
+```
 cd /etc/rc2.d
 sudo mv S30gdm /home/my-ubuntu/s30gdm
-
+```
 也可以，用工具配置（等于redhat系列的chkconfig工具）
-https://www.debian.org/doc/manuals/debian-reference/ch03.en.html
+
+<https://www.debian.org/doc/manuals/debian-reference/ch03.en.html>
+```
 $ sudo apt-get install sysv-rc-conf
 $ sudo apt-get rcconf(在redhat的ntsysv）
 $ sudo update-rc.d -f gdm3 remove
 $ sudo sysv-rc-conf
 $ pstree
+```
 
+## 对于debian8和ubuntu16有效 修改runlevel
+<http://unix.stackexchange.com/questions/210117/how-to-set-up-a-runlevel-3-in-debian-8>
 
-#对于debian8和ubuntu16有效 #runlevel
-http://unix.stackexchange.com/questions/210117/how-to-set-up-a-runlevel-3-in-debian-8
 Debian 8 that you speak of don't use upstart. ubuntu1404还是用的upstart
+```
 Two things you need to know:
 1) Systemd boots towards the target given by "default.target". This is typically a symbolic link to the actual target file.
 2) Systemd keeps it's targets in /lib/systemd/system and /etc/systemd/system. A file in /etc/systemd/system takes precedence over those shipped with the OS in /lib/systemd/system -- the intent is that /etc/systemd is used by systems administrators and /lib/systemd is used by distributions.
@@ -2299,50 +2484,29 @@ $ ls -l /lib/systemd/system/default.target
 So to boot towards the multiuser target all you need do is to put in own target:
 $ cd /etc/systemd/system/
 $ sudo ln -s /lib/systemd/system/multi-user.target default.target
+```
 
 
+## 如果用的是kdm
+systemctl disable kdm.service #似乎是arch的服务管理方式<http://bbs.archbang.org/viewtopic.php?id=5301>
 
-#如果kdm
-systemctl disable kdm.service #似乎是arch的服务管理方式http://bbs.archbang.org/viewtopic.php?id=5301
 如果临时想用图形界面，那直接systemctl start kdm.service不就行了么？干嘛还要改配置重启啊？
+
 另外直接startx应该也可以，当然得设置好~/.xinitrc 
 其他一些dm也类似
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# 内核 kernel
 安装stable unstable test版本的源
+```
 $ sudo apt-get install linux-image-4.3.0-1-amd64
+```
 
 
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# nvidia-driver
+```
 $ sudo apt-get install nvidia-driver
 
 The following NEW packages will be installed:
@@ -2355,234 +2519,290 @@ The following NEW packages will be installed:
 0 upgraded, 22 newly installed, 0 to remove and 1 not upgraded.
 
 $ sudo apt-get remove glx-alternative-mesa glx-alternative-nvidia glx-diversions libegl1-nvidia libgl1-nvidia-glx libgl1-nvidia-glx:i386 libgl1-nvidia-glx-i386:i386 libgles1-nvidia libgles2-nvidia libnvidia-ml1 nvidia-alternative nvidia-driver nvidia-driver-bin nvidia-installer-cleanup nvidia-kernel-common nvidia-kernel-dkms nvidia-modprobe nvidia-settings nvidia-support nvidia-vdpau-driver xserver-xorg-video-nvidia
+```
 
 
-
-
-
-
-
-
-
-
-
-masterpdfeditor3破解版本
+***
+# masterpdfeditor3破解版本
+```
 Code.Industry.Master.PDF.Editor.v3.3.20.for.Linux.x64-BEAN.tar.gz
 /opt/master-pdf-editor-3
+```
 
-
-
-
+***
+# fbset
+```
 $ sudo apt-get install fbset
+```
 
 
-ftp client, such as gftp, filezilla
+***
+# ftp client
+such as gftp, filezilla
+```
 $ sudo apt-get install gftp
+```
 gftp need use unstable source
 
 
-
-
-
-// 用于转换rpm包到deb
+***
+# 转换rpm包到deb
+```
 $ sudo apt-get install alien
+```
 
 
+***
+# pcmamfm
 pcmamfm在edit>preferences里面,修改default view为detailed list view
 
 
 
-
+***
+# samba
+```
 'net usershare' returned error 255: net usershare add: cannot share path /media/sdd1 as we are restricted to only sharing directories we own.
 	Ask the administrator to add the line "usershare owner only = false" 
 	to the [global] section of the smb.conf to allow this.
-
-
+```
+```
 sudo gedit /etc/samba/smb.conf
+```
 
 
-
-
-
-
-
+***
+# something 
+```
 sudo apt-get install dumpet
 sudo apt-get install xorriso
+```
 
 
-
+***
+# 百度文库
 idocdown_v29用于下载百度文库
 
 
-
-
-
-squashfs
+***
+# squashfs
+```
 sudo apt-get install squashfs-tools
+```
 
 
-
-office project
-安装openproj
-安装
+***
+# 安装 openproj
+```
 Download openproj from http://sourceforge.net/projects/openproj/ Yes, you can only download the rpm file. But you can also install it in Ubuntu via alien. sudo apt-get install alien sudo alien -i openproj.rpm
+```
 错误
+```
 Your Java vendor is "Oracle Corporation". To run OpenProj, you need the Sun Java implementation. The auto-detected Java Runtime used is..
+```
 解决办法
-修改$HOME/.openproj/run.conf，将JAVA_OPTS="-Xms128m -Xmx768m"改为JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"，最后重启openproj
+修改`$HOME/.openproj/run.conf`，将
+```
+JAVA_OPTS="-Xms128m -Xmx768m"
+```
+改为
+```
+JAVA_OPTS="-Djava.vendor=Sun -Xms128m -Xmx768m"
+```
+最后重启openproj
 
 
 
-安装jwm
+***
+# 安装jwm
+```
 sudo apt-get install jwm
+```
 
 
-安装目录树工具
+***
+# 安装目录树工具
+```
 $ sudo apt-get install tree
+```
 
 
-
-chrome设置代理
+***
+# chrome设置代理
+```
 --proxy-server=127.0.0.1:8787
+```
 
 
-
-
+***
+# 恢复intel驱动
+```
 sudo apt-get install libgl1-fglrx-glx-i386:i386
 sudo apt-get install libgl1-fglrx-glx libgl1-fglrx-glx-i386
 sudo apt-get install libfglrx libfglrx:i386 fglrx-atieventsd fglrx-modules-dkms glx-alternative-fglrx glx-alternative-mesa glx-diversions libfglrx libfglrx:i386 fglrx-control amd-opencl-icd fglrx-driver
 sudo apt-get install xlibmesa-dri xlibmesa-gl xlibmesa-glu mesa-utils libgl1-mesa-dri libgl1-mesa-glx
 
-
-
 glxinfo
 lspci | grep VGA
 glxgears
+```
 
-allegro相关
-从rpm包提取
-.drirc to ~
+
+***
+# allegro相关
+
+从rpm包提取 `.drirc` to ~
 
 
 allegro环境变量设置要点
-Unable to resolve function glXQueryExtension这类问题，要制定对的库;debian和arch位置有区别的
+```
+Unable to resolve function glXQueryExtension
+```
+这类问题，要制定对的库;debian和arch位置有区别的
+```
 export LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/:/usr/lib/:/usr/lib64:/usr/lib32/:$CDS_ROOT/tools/lib64:$CDS_ROOT/tools.lnx86/mainwin540_64/mw/lib-amd64_linux_optimized:$CDS_ROOT/tools.lnx86/lib:$CDS_ROOT/tools.lnx86/mainwin540/mw/lib-linux_optimized:$LD_LIBRARY_PATH
-
+```
 lmgrd出现no such file and directory问题解决
+```
 sudo apt-get install lsb-core
+```
 
 
-
-
-
-
-autoCAD的替代品
+***
+# autoCAD的替代品
+```
 $ sudo apt-get install librecad
+```
 当然autocad2004用wine运行也是可以的
 也可以用draftsight
+```
 /opt/dassault-systemes/DraftSight/Linux$ ./DraftSight
+```
 
 
-
-
-visio替代pin
+***
+# visio替代pin
+```
 $ sudo apt-get install dia
+```
 
 
-
-安装CCS
-http://processors.wiki.ti.com/index.php/Linux_Host_Support_CCSv6
-
+***
+# 安装CCS
+<http://processors.wiki.ti.com/index.php/Linux_Host_Support_CCSv6>
+```
 dpkg --add-architecture i386
-
 sudo aptitude install libgtk2.0-0:i386 libcanberra-gtk0:i386 libdbus-glib-1-2:i386 libgconf-2-4:i386 liborbit-2-0:i386 libusb-0.1-4:i386 libgnomevfs2-0:i386 libice6:i386 libncurses5:i386 libsm6:i386 libxtst6:i386 libxt6:i386 libasound2:i386 libgcrypt11:i386 libudev1:i386
-
+```
 Note：
+```
 libudev0 has been obsoleted and removed. You can install libudev1:i386 instead and
 sudo ln -siT /lib/i386-linux-gnu/libudev.so.1 /lib/i386-linux-gnu/libudev.so.0
 If you cannot install libgcrypt11:i386 then add
 deb http://security.debian.org/debian-security wheezy/updates main to your /etc/apt/sources.list
-
+```
 后来libgcrypt11更新到libgcrypt20，而ccs还是要用libgcrypt11
+
 简单暴力的方法，解压libgcrypt11_1.5.0-5+deb7u6_i386.deb提取libgcrypt.so.11.7.0，复制到/lib/i386-linux-gnu，然后建立一个软链接libgcrypt.so.11
 
 一个个安装处理包兼容性
 
 主要问题
+```
 The following packages have unmet dependencies:
  libdbus-glib-1-2 : Breaks: libdbus-glib-1-2:i386 (!= 0.106-1) but 0.102-1 is to be installed.
  libdbus-glib-1-2:i386 : Breaks: libdbus-glib-1-2 (!= 0.102-1) but 0.106-1 is installed.
 open: 137; closed: 997; defer: 105; conflict: 151                                           
-
+```
 
 手动下载
+```
 libdbus-glib-1-dev_0.102-1_amd64.deb
 libdbus-glib-1-2_0.102-1_amd64.deb
+```
 用dpkg安装降级
 
 其他都可以用aptitude降级
 
 这下可以安装ccs了
 
-
-ccs6的空白
-https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/349185
+## ccs6的空白
+<https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/349185>
+```
 ldd -v -r /opt/ti/ccsv6/eclipse/plugins/com.ti.chromium.browser.gtk.linux.x86_1.0.0.201604131600/libs/*.so|grep "not"
 sudo apt-get install libnss3:i386
+```
 libgcrypt11升级问题也会导致空白，前面有解决方法:
+```
 后来libgcrypt11更新到libgcrypt20，而ccs还是要用libgcrypt11
 简单暴力的方法，解压libgcrypt11_1.5.0-5+deb7u6_i386.deb提取libgcrypt.so.11.7.0，复制到/lib/i386-linux-gnu，然后建立一个软链接libgcrypt.so.11
-
-CCS的附加库选择
+```
+## CCS的附加库选择
 比如xdc的最新版本安装在/opt/ti2/,而且其调用64位jre（eclipese目录下jre目录）
+
 在用ccs6.1.3时候就要说XDC_CG_ROOT路径有问题，
 
 只能通过product选择来更新路径。这样的情况是不应该让ccs去发现高版本的xdc库的
+
 有关设置位置
-window->reference-> code composer studio -> RTSC -> products 两种设置，一个是路径，一个是库，都可以进行选择，
+```
+window->reference-> code composer studio -> RTSC -> product
+```
+两种设置，一个是路径，一个是库，都可以进行选择，
+
 影响的path有
+```
 project -> property -> resource -> linked resources
+```
 还有一个办法是
-project -> property -> CCS General -> RTSC 这里可以选XDC版本
+```
+project -> property -> CCS General -> RTSC
+```
+这里可以选XDC版本
+```
 the environment variable 'XDCTOOLS_JAVA_HOME' is set, but does not appear to be a directory containing a 64-bit Java Runtime Environment (1.7 or greater); e.g., '/usr/lib/jvm/java-7-openjdk-amd64'.
-ccs6的升级plugin报错
-https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/411178
+```
+
+## ccs6的升级plugin报错
+<https://e2e.ti.com/support/development_tools/code_composer_studio/f/81/t/411178>
+```
 Cd to <installdir>\ccsv6\eclipse\p2\org.eclipse.equinox.p2.core and <installdir>\ccsv6\eclipse\p2\org.eclipse.equinox.p2.repository and delete the cache folders there.
 Try the update again.
-
+```
 还有proxy设置的开启和关闭，都试试
 
 
-
-
-eclipse svn插件 git插件
+***
+# eclipse svn插件 git插件
 3.8.1的eclipse
 http://download.eclipse.org/egit/updates-2.1
 
 http://subclipse.tigris.org/update_1.10.x
+
 http://subclipse.tigris.org/servlets/ProjectDocumentList?folderID=2240
 
-eclipse jdt插件 
+## eclipse jdt插件 
 4.5.0的eclipse
 http://archive.eclipse.org/eclipse/downloads/
+
 http://archive.eclipse.org/eclipse/downloads/drops4/R-4.5-201506032000/
+
 http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/R-4.5-201506032000/org.eclipse.jdt-4.5.zip
 
-ADT插件
+## eclipse ADT插件
 Android Developer Tools Update Site
-https://dl.google.com/android/eclipse/
+
+<https://dl.google.com/android/eclipse/>
 
 Eclipse Color Theme（从插件市场安装）
-http://marketplace.eclipse.org/content/eclipse-color-theme
 
-eclipse问题
+<http://marketplace.eclipse.org/content/eclipse-color-theme>
+
+## eclipse一般出问题
 可以试图关闭项目，删除整个工作目录（包括隐藏项目）
 
 
-
-
-logcat不显示问题
-
+## logcat不显示问题
+```
     exit eclipse
 
     open up the file
@@ -2602,17 +2822,15 @@ logcat不显示问题
     logcat.view.colsize.Text=619
     logcat.view.colsize.Time=182
 
-
-
-
-
-
-
+```
+```
 sudo apt-get install setserial
+```
 
 
-
-ti cc2650
+***
+# ti cc2650
+```
 sunmaysky.blogspot.com/2016_01_01_archive.html
 https://apkpure.com/search?q=BLE+Scanner
 http://www.eeworld.com.cn/huodong/201310_TI_SensorTag/zhuanti/
@@ -2626,45 +2844,48 @@ sudo setserial -g /dev/ttyS*
 sudo setserial -g /dev/ttyA*
 
 http://dev.ti.com/tirex/content/cc26xx_bluetooth_smart/cc26xx_bluetooth_smart__2.01.00.44423/Projects/ble/ProjectZero/project0_resources/prz/index.html#/?collapsetree=
-
+```
 云下载按提示安装firefox插件，然后安装
 ticloudagent.run
 可能需要建立软链接
+```
 sudo ln -s /lib/i386-linux-gnu/libusb-1.0.so.0.1.0  /lib/i386-linux-gnu/libusb-1.0.so
+```
 
 
-
-
-
-
-显示进度的复制
+***
+# 显示进度的复制
+```
 $ sudo apt-get install gcp
+```
 
 
-
-
-
-
-
-
-
+***
+# playonlinux
+```
 sudo apt-get install playonlinux
+```
 
 
-
-
-命令行浏览器w3m、lynx等
+***
+# 命令行浏览器
+w3m、lynx等
+```
 sudo apt-get install lynx elinks
+```
 
 
-
-更新opera
+***
+# 更新opera
+```
 $ sudo apt-get install apt-transport-https
 $ sudo dpkg -i opera_stable-40.0.2308.74-linux-release-x64.deb 
+```
 
 
-
-命令行邮件工具，采用exim4程序
+***
+# 命令行邮件工具，采用exim4程序
+```
 sudo dpkg-reconfigure exim4-config
 #sudo apt-get install mailutils
 update-alternatives: using /usr/bin/frm.mailutils to provide /usr/bin/frm (frm) in auto mode
@@ -2680,42 +2901,43 @@ http://teamcoding.com/blog/2010/02/24/sendmail-slash-exim-error-mailing-to-remot
 gedit /etc/exim4/update-exim4.conf.conf
 
 sudo /etc/init.d/exim4 restart
-
+```
 mail命令
-按q出来会存放在
-~/mbox
+
+按q出来会存放在~/mbox
 
 按EOF出来会保持，再按q出来也是保持，奇怪啊，就这样
 
 按x出来也会保持
-
+```
 sudo mailq -v
 sudo /usr/lib/sendmail -bp
-
+```
 没有发送成功的在
+```
 /var/spool/exim4/input
-
+```
 如果要重装，exim4-config和exim4都删除重装，mailutils没有必要，purge掉并autoremove
 
-
+```
 mail -s test yxgi5@163.com
 aa  #这里是邮件内容
 ss
 s #正文以ctrl+d结束并下一步; 两次Ctrl+C键则中断工作，不送此信件
 Cc:  #以enter结束并发送
-
-
+```
+```
 sudo /usr/lib/sendmail -bp
-
+```
 将文件当做电子邮件的内容送出
+```
 mail -s 邮件主题 -a 附件 用户名@地址 < 正文内容文件
 echo “邮件正文” | mail -s 邮件主题 -a 附件 用户名@地址
-
 uuencode <in_file> <remote_file> | mail -s "title" mail@address
+```
 
-
-在linux中输入mail ，就进行了收件箱，并显示二十封邮件列表。
-
+在linux中输入`mail` ，就进行了收件箱，并显示二十封邮件列表。
+```
     此时命令提示符为”&”：（可以输入以下命令对邮件进行相关操作）
     unread 标记为未读邮件
     h|headers 显示当前的邮件列表
@@ -2735,145 +2957,135 @@ uuencode <in_file> <remote_file> | mail -s "title" mail@address
     x 退出mail命令平台，并不保存之前的操作，比如删除邮件
     q 退出mail命令平台，保存之前的操作，比如删除已用d删除的邮件，已阅读邮件会转存到当前用户家目录下的mbox文件中。如果在mbox中删除文件才会 彻底删除。在linux文本命令平台输入 mail -f mbox，就可以看到当前目录下的mbox中的邮件了。
     cd 改变当前所在文件夹的位置
+```
 
 
-
-
-
-
-#iceweasel被firefox替换
+***
+# iceweasel被firefox替换
+```
 sudo apt-get install firefox-esr icedove 
+```
 thunderbird-mozilla-build还没有完成替换
 
 
+
+***
+# qrcode zbar 等
+```
 sudo apt-get install qtqr python-qrtools python-zbar
+```
 
 
-
-
-登录管理器还是gdm3比较好看
+***
+# 登录管理器还是gdm3比较好看
+```
 sudo dpkg-reconfigure gdm3
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# sqlitebrowser sqlite3
+```
 sudo apt-get install sqlitebrowser
-
+```
+```
 $ sudo aptitude install sqlite3
 sqlite3 -version
-
+```
 可选
+```
 sudo apt-get install libsqlite3-dev
-
+```
+```
 sqlite3 test.db
-
+```
 查看数据库
+```
 sqlite> .database
-
+```
 查看数据表
 
 查看数据库有那写数据表 可以用.table或者.tables
-
+```
 sqlite> .table
 student  teacher
 sqlite> .tables
 student  teacher
 sqlite> 
-
+```
 插入数据
-
+```
 sqlite> insert into student values('fck', 21);
 sqlite> insert into student values("shit",20);
-
-8. 查询数据
-
+```
+查询数据
+```
 sqlite> select * from student;
 fck|21
 shit|20
+```
 
-
-9. 退出数据库
-
+退出数据库
+```
 sqlite> .exit;
+```
 
 
-
-
-
-
-
+***
+# gdebi
 
 install via .deb and resolve dependence
 
 1. using gdebi
-
+```
 sudo gdebi  nautilus_nutstore_amd64.deb
-
+```
 2. double click the .deb, install via ubuntu software center
 
 3. install via dpkg
-
+```
 sudo dpkg -i nautilus_nutstore_amd64.deb
 
 sudo apt-get install -f
+```
 
+
+***
+# nutstore
 增加一个启动器
+```
 sudo gedit /usr/bin/nutstore
 sh -c "nohup ~/.nutstore/dist/bin/nutstore-pydaemon.py >/dev/null 2>&1 &"
 sudo chmod +x /usr/bin/nutstore
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# something
+```
 sudo apt-get install libftdi-dev fxload libc6-dev libusb-dev build-essential
+```
+
+***
+# 回收站位置
+```
+~/.local/share/Trash/files
+```
 
 
-
-
-
-
-
-
-回收站位置
-/home/andy/.local/share/Trash/files
-
-
-
-
-
-codeblocks
-http://www.codeblocks.org/
-https://apt.jenslody.de/
+***
+# codeblocks
+<http://www.codeblocks.org/>
+<https://apt.jenslody.de/>
 http://http.debian.net/debian源也有
+```
 sudo apt-get install codeblocks
+```
 
 
-
-rar文件关联
+***
+# rar文件关联
+```
 perl-file-mimeinfo 调用 mimeopen 类似这样:
 mimeopen -d /path/to/file
 会提示用哪个程序来打开 /path/to/file:
@@ -2883,10 +3095,11 @@ Please choose a default application for files of type text/plain
        3) OpenOffice.org Writer  (writer)
        4) gVim  (gvim)
        5) Other...
-
+```
 
 pcmanfm open with是空的
-https://wiki.archlinux.org/index.php/PCManFM
+<https://wiki.archlinux.org/index.php/PCManFM>
+```
 Open With dialog window empty
 If you do not see any applications to choose from in the open with dialog, then you can try removing gnome-menus and instead install lxmenu-data. Furthermore, export the following variables:
 export XDG_MENU_PREFIX=lxde-
@@ -2896,55 +3109,75 @@ You can try this method: Delete all files in the $HOME/.cache/menus directory, a
 PCManFM requires the environment variable XDG_MENU_PREFIX to be set. The value of the variable should match the beginning of a file present in the /etc/xdg/menus/ directory. E.g. you can set the value in your .xinitrc file with the line:
 export XDG_MENU_PREFIX="lxde-"
 See these threads for more information: [1], and especially this post from the Linux Mint forums: [2]
-
+```
 看来是 gnome-menus 和 lxmenu-data 冲突了，那么有 gnome-menus 就用 nautilus 的 open with 来 associate apps
+
 有关路径
+```
 /home/andy/.cache/menus
+```
 尝试1,failed
+```
 gedit ~/.xinitrc
 export XDG_MENU_PREFIX=lxde-
 #export XDG_CURRENT_DESKTOP=LXDE
+```
 
-
-
+```
 /etc/xdg/menus
 alacarte
-export XDG_MENU_PREFIX="lxde-" to .initrc好像不行呢
-https://sourceforge.net/p/pcmanfm/bugs/864/
-I would like to see values of XDG_CURRENT_DESKTOP and XDG_MENU_PREFIX environment variables when you start pcmanfm and also listing of ~/.config/menus and /etc/xdg/menus folders.
+```
+```
+export XDG_MENU_PREFIX="lxde-" to .initrc
+```
+好像不行呢
 
+https://sourceforge.net/p/pcmanfm/bugs/864/
+
+```
+I would like to see values of XDG_CURRENT_DESKTOP and XDG_MENU_PREFIX environment variables when you start pcmanfm and also listing of ~/.config/menus and /etc/xdg/menus folders.
+```
 
 添加rar类型的
+```
 /home/andy/.local/share/mime/application/x-wine-extension-rar.xml
 /home/andy/.local/share/mime/packages/x-wine-extension-rar.xml
+```
 有关位置
+```
 /home/andy/.local/share/mime/application/
 /home/andy/.local/share/mime/packages/
 /home/andy/.local/share/applications
 /usr/share/mime/packages
 /usr/share/mime/application
-
+```
 其他有关mime的文件
+```
 ~/.config/mimeapps.list
+```
 ！！ 如果通过选择默认程选了wine里面的rar,会在这里体现,可以删掉pcmanfm多的openwith
 
 pcmanfm多的openwith就更新一下目标desktop文件就刷掉了
+
 应该是指向/home/andy/.local/share/applications内的wine快捷图标就行了的
+
 而不是指向/home/andy/.local/share/applications/wine内的快捷图标
 
 指向/home/andy/.local/share/applications内的wine快捷图标的内容要对
+
 /home/andy/.local/share/applications/mimeinfo.cache的内容要对
 
 这样rar文件openwith winrar打开就对了
 
-一个好的mime图形化工具
+## 一个好的mime图形化工具
+```
 xfce4-mime-settings
-
+```
 nautilus的openwith正常能用
 
 
 
-
+```
 bcompare open folder with associated app change:
 inode/directory= ?
 from /usr/share/applications/mimeinfo.cache
@@ -2952,10 +3185,10 @@ or
 /home/andy/.config/mimeapps.list
 or
 other mimeapps.list or mimeinfo.cache files
-
+```
 
 firefox下载好的在文件夹中打开“Open containing folder” 
-
+```
 If the already mentioned solutions don't work, try this.
 Write the following to 
 /usr/share/dbus-1/services/org.freedesktop.FileManager1.service
@@ -2963,17 +3196,18 @@ Write the following to
 Name=org.freedesktop.FileManager1
 #Exec=/usr/bin/nautilus --gapplication-service
 Exec=/usr/bin/pcmanfm --gapplication-service
-
+```
 这里dbus-1/services看来最优先，其次是各个mimeapps.list或mimeinfo.cache的inode/directory= 
 
 
 还有，标准名称包装了的程序，可以这样换默认调用
+```
 sudo update-alternatives --config x-terminal-emulator
 sudo update-alternatives --config x-www-browser
 sudo update-alternatives --config editor
+```
 
-
-
+```
 xdg-mime query { filetype | default } ...
 xdg-mime default application mimetype(s)
 xdg-mime install [--mode mode] [--novendor] mimetypes-file
@@ -2987,77 +3221,81 @@ xdg-mime query filetype /media/andy/M4A/备份/desktop/workdir/*.xlsx
 application/wps-office.xlsx
 
 sudo apt-get install nautilus nautilus-sendto nautilus-share
+```
 
 
-
-
-
-
-
-
-apt有关
+***
+# apt有关
 http://blog.csdn.net/comcat/article/details/1549559
 
 替换“var/cache/apt”为想要设置的缓存目录
 
 源列表文件
-/etc/apt/source.list
+`/etc/apt/source.list`
 
 下载deb包的缓存位置
-/var/cache/apt/archives/
+`/var/cache/apt/archives/`
 
 下载的index files存放位置
-/var/lib/apt/lists/
+`/var/lib/apt/lists/`
 
 安装于系统的软件包的信息记录文件，很重要！可在依赖关系不满足时修改之，让其暂时通过：）
-/var/lib/dpkg/status
+`/var/lib/dpkg/status`
 
 
 apt缓存路径设置
 http://blog.csdn.net/bsi_l4/article/details/49632709
-/etc/cron.daily/apt
+
+`/etc/cron.daily/apt`
 
 
 
+***
+# zip文件解压乱码问题
 
-
-
-
-
-zip文件解压乱码问题
 用unar最优
+```
 unar file.zip
+```
 
 unzip方法
+
 可能要给源码打补丁,打开jessie的src源
-https://link.zhihu.com/?target=https%3A//github.com/ikohara/dpkg-unzip-iconv
+
+<https://link.zhihu.com/?target=https%3A//github.com/ikohara/dpkg-unzip-iconv>
+```
 git clone https://github.com/ikohara/dpkg-unzip-iconv.git
 cd dpkg-unzip-iconv
 $ make source
 $ sudo make build-dep
 $ make
 $ sudo make install
+```
 使用
+```
 unzip -O GBK test.zip
 unzip -O GB18030 test.zip
 unzip -O CP936 test.zip
+```
 要一直生效就在/etc/environment或者在$HOME/.bashrc里加入
-
+```
 UNZIP="-O CP936"
 ZIPINFO="-O CP936"
+```
 或者
-alias unzip='unzip -O cp936'  （有效）
-
+```
+alias unzip='unzip -O cp936'  ## 有效
+```
 
 解压之后替换文件名
+```
 LANG=C 7za x your-zip-file.zip
 convmv -f GBK -t utf8 --notest -r .
-
+```
 python方案
 
 unzip.py
-/-------------------------------
-
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -3080,57 +3318,50 @@ for name in file.namelist():
         fo.write(data)
         fo.close
 file.close()
-
--------------------------------/
+```
+```
 chmod +x unzip.py
 ./unzip.py test.zip
+```
 
 
-
-
-
-
-
-安装ddrescue
+***
+# 安装ddrescue
+```
 sudo apt-get install gddrescue
 ddrescue /dev/sr1 20120218_194649.iso
+```
 光驱提取成iso
+```
 dd if=/dev/cdrom of=filename.iso
-
 dd if=/dev/sr1 of=SHX005.iso
+```
 
 
-
-
-
-
-
-
-
-
-
-
-nrg镜像转换成iso
+***
+# nrg镜像转换成iso
+```
 sudo apt-get install nrg2iso
+```
 Usage :
+```
 nrg2iso image.nrg image.iso
+```
 
 
-
-
-
-
-还是这个图像查看器比较好
+***
+# 图像查看器
+```
 sudo apt-get install gpicview
+```
 
 
-
-
-
-
-
-设置移动硬盘samba共享share
+***
+# 设置移动硬盘samba共享share
+```
 sudo gedit /etc/samba/smb.conf
+```
+```
 [dell]
     comment = Network Logon Service
     path = /media/andy
@@ -3138,15 +3369,19 @@ sudo gedit /etc/samba/smb.conf
     read only = no
     writeable = yes
     browseable = yes
-
+```
+```
 sudo /etc/init.d/nmbd restart
 sudo /etc/init.d/smbd restart
-
-
-
+```
+```
 sudo useradd andy
 sudo smbpasswd -a andy
+```
+```
 sudo vi /etc/samba/smb.conf
+```
+```
 [dell]
     comment = Network Logon Service
     path = /media/andy
@@ -3155,87 +3390,102 @@ sudo vi /etc/samba/smb.conf
     read only = no
     writeable = yes
     browseable = yes
-
+```
+```
 sudo /etc/init.d/nmbd restart
 sudo /etc/init.d/smbd restart
+```
 
-
-安装steam
+***
+# 安装 steam
 记得go offline
 
 
-
-
-
-
+***
+# bin+cue 镜像转换
+```
 sudo apt-get install bchunk
-以bin和cue为后缀名，先把它们转为iso文件，用bchunk软件，安装sudo apt-get install bchunk
-然后运行bchunk filename.bin filename.cue filename就能将其转化为filename.iso文件
+```
+以bin和cue为后缀名，先把它们转为iso文件，用bchunk软件
+
+然后运行
+```
+bchunk filename.bin filename.cue filename
+```
+就能将其转化为filename.iso文件
+
 用cdemu来挂载bin
+
 bin2iso来把bin转成iso
-挂载iso ：sudo mount -o loop Wolfram.Research.Mathematica.v7.0.1.Linux-EDGEISO.iso /media/cdrom0
+
+挂载iso
+```
+sudo mount -o loop Wolfram.Research.Mathematica.v7.0.1.Linux-EDGEISO.iso /media/cdrom0
+```
 
 
+***
+# 安装mathematica
+修改了`/usr/local/bin/mathematica`和`/usr/local/bin/Mathematica`
 
-
-QR code 处理
-sudo aptitude install qtqr
-
-
-
-
-安装mathematica
-修改了/usr/local/bin/mathematica
-修改了/usr/local/bin/Mathematica
 都增加下面两句避免字体找不到的问题
+```
 LANG=C
 export LANG
+```
 
 
-安装maple
-添加了软链接/usr/local/bin/xmaple
+***
+# 安装maple
+添加了软链接`/usr/local/bin/xmaple`
+```
 sudo ln -s /opt/maple12/bin/xmaple /usr/local/bin/xmaple
+```
 
 
-
-
-spice仿真工具
+***
+# spice 仿真工具
+```
 sudo apt-get install ngspice
+```
 
 编译gspiceui
+```
 sudo apt-get install libwxgtk3.0-dev libpangox-1.0-dev gnucap
 cd gspiceui-v1.1.00
 make GSPICEUI_WXLIB=3.0
 sudo make install
-
+```
 
 为了编译gwave2
-先aptitude install/remove guile-2.0-libs guile-2.0-dev guile-cairo libgnome2-dev
-放弃
+先
+```
+aptitude install/remove guile-2.0-libs guile-2.0-dev guile-cairo libgnome2-dev
+```
+编译失败，放弃
 
 换成gaw（有源码）,提供给gspiceui,不要安装或者编译gwave2
+```
 http://www.rvq.fr/linux/gaw.php
 http://download.tuxfamily.org/gaw/download/gaw-20111016.tar.gz
 https://aur.archlinux.org/packages/gaw/
-
+```
 还是用ltspice
 
 
-
-
-下载安装audio-convert
+***
+# 下载安装audio-convert
 http://download.savannah.gnu.org/releases/audio-convert/
-配合
+
+```
 sudo apt-get install lame vorbis-tools flac shntool bchunk
-
 sudo apt-get install soundconverter
+```
 
 
-
-
-
-
-思维导图软件
+***
+# 思维导图软件
+```
 sudo apt-get install freemind freemind-browser freemind-plugins-script freemind-plugins-svg freemind-plugins-help
 The following NEW packages will be installed:
   antlr fop freemind freemind-browser freemind-doc freemind-plugins-help freemind-plugins-script freemind-plugins-svg groovy
@@ -3243,35 +3493,35 @@ The following NEW packages will be installed:
   libfop-java libgetopt-java libgnu-regexp-java libhawtjni-runtime-java libjansi-java libjansi-native-java libjaxp1.3-java
   libjgoodies-forms-java libjibx1.1-java libmockobjects-java libqdox-java librhino-java libsaxon-java libxalan2-java
   libxmlgraphics-commons-java libxstream-java rhino simplyhtml
-
+```
 
 xmind下载
-http://www.xmindchina.net/xiazai.html
-http://xiazai.xmindchina.cn/trail/xmind-8-linux.zip
+<http://www.xmindchina.net/xiazai.html>
+<http://xiazai.xmindchina.cn/trail/xmind-8-linux.zip>
 
 
 
-
-
-
-
-SMath下载
-http://en.smath.info/forum/yaf_postsm2314_Installation-in-Ubuntu.aspx
+***
+# SMath 下载
+<http://en.smath.info/forum/yaf_postsm2314_Installation-in-Ubuntu.aspx>
+```
 sudo apt-get install mono-complete
 sudo mono ~/Downloads/SMathStudioDesktop.0_88.Mono/SmathStudio_Desktop.exe
+```
+<https://sourceforge.net/projects/pcpu/files/SmathStudio/>
+安装deb包
 
-https://sourceforge.net/projects/pcpu/files/SmathStudio/
-安装deb包。
-创建一个脚本smath，放置在/usr/local/bin
+创建一个脚本smath，放置在`/usr/local/bin`
+```
 #!/bin/bash
 mono /usr/share/SMathStudio/SMathStudio_Desktop.exe
+```
 修改成+x权限
 
 
-
-
-
-
+***
+# kicad + freecad
+```
 sudo apt-get install freecad kicad
 The following extra packages will be installed:
   fonts-lyx kicad-common libboost-filesystem1.55.0 libboost-regex1.55.0
@@ -3306,13 +3556,12 @@ The following NEW packages will be installed:
   python-pyside.qtuitools python-pyside.qtwebkit python-pyside.qtxml
   python-qt4-gl python-tz
 0 upgraded, 45 newly installed, 0 to remove and 27 not upgraded.
+```
 
 
-
-
-
-
-
+***
+# electric
+```
 sudo apt-get install electric
 The following extra packages will be installed:
   antlr3 jython libatinject-jsr330-api-java libbsh-java libconstantine-java
@@ -3331,122 +3580,105 @@ The following NEW packages will be installed:
   libjnr-x86asm-java libjsr305-java liblivetribe-jsr223-java libreadline-java
   libslf4j-java libstringtemplate-java libvecmath-java
 0 upgraded, 21 newly installed, 0 to remove and 27 not upgraded.
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-更新vbox
+***
+# 更新vbox
+```
 sudo apt-get remove virtualbox-qt virtualbox-dkms
 sudo apt-get remove virtualbox-guest-additions-iso
 sudo apt-get autoremove
-
 sudo dpkg -i virtualbox-5.1_5.1.18-114002~Debian~jessie_amd64.deb
-
+```
 安装附加软件包
 
-
 更新内核配置
-sudo /sbin/vboxconfig
+`sudo /sbin/vboxconfig`
 
-<log >
+```
 sudo gedit /etc/apt/sources.list
+```
 添加
+```
 deb http://download.virtualbox.org/virtualbox/debian jessie contrib
+```
 添加公钥
+```
 sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com A2F683C52980AECF
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
-
-
 sudo apt-get update
 sudo apt-get install virtualbox-5.1
 sudo apt-get install dkms
 sudo apt-get autoremove
+```
 附加包在这样的地方
 http://download.virtualbox.org/virtualbox/5.1.30/
 
-
+```
 VBoxManage list extpacks
 andy@debian-dell:~$ cat /etc/group | grep vbox
 vboxusers:x:129:
 andy@debian-dell:~$ sudo usermod -a -G vboxusers andy 
 andy@debian-dell:~$ cat /etc/group | grep vbox
 vboxusers:x:129:andy
+```
 重启host，可以用usb筛选器了
-</log>
 
 
-
-
-
-
-android studio 升级 gradle位置在
+***
+# gradle
+android studio 升级 gradle 位置在
+```
 /home/andy/.gradle/wrapper/dists
+```
 事先把这玩意放置到android studio下也行的。
 
 
-
-
-
-Pipe Viewer 的简称
+***
+# Pipe Viewer
+```
 sudo apt-get install pv
+```
 
 
-
-
-
-
-
-
-
-
-
+***
+# phpmyadmin
+```
 sudo apt-get install mysql-server phpmyadmin
-
-
-
-
-
+```
 
 公司plm系统配置
 http://plm.aohua.local:7001/Agile
+```
 sudo gedit hosts
 添加
 192.168.1.12       plm.aohua.local
 192.168.1.13       plmfile.aohua.local
-opera浏览器settings里设置Allow all sites to show pop-ups
+```
+opera浏览器settings里设置`Allow all sites to show pop-ups`
 
 
 
-
-170506
+***
+# 170506 更新
+```
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt-get dist-upgrade
 $ sudo apt-get -u dist-upgrade
+```
 
-apt-get upgrade 和 apt-get dist-upgrade 本质上是没有什么不同的。
-只不过，dist-upgrade 会识别出当依赖关系改变的情形并作出处理，而upgrade对此情形不处理。
-例如软件包 a 原先依赖 b c d，但是在源里面可能已经升级了，现在是 a 依赖 b c e。
+apt-get upgrade 和 apt-get dist-upgrade 本质上是没有什么不同的
+
+只不过，dist-upgrade 会识别出当依赖关系改变的情形并作出处理，而upgrade对此情形不处理
+
+例如软件包 a 原先依赖 b c d，但是在源里面可能已经升级了，现在是 a 依赖 b c e
+
 这种情况下，dist-upgrade 会删除 d 安装 e，并把 a 软件包升级，而 upgrade 会认为依赖关系改变而拒绝升级 a 
 
+问题处理
+```
 python-keyring (8.4.1-1) unstable; urgency=medium
 
   Now this package contains only the recommended secure backends for each
@@ -3475,42 +3707,44 @@ On Ubuntu systems, oracle-java8-set-default is most probably installed
 automatically with this package.
 ######################
 
-
 /home/andy/.config/VirtualBox
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
+***
+# adb tools
+```
 sudo apt-get install android-tools-adb
 sudo aptitude install android-tools-fastboot
+```
 lsusb得到
+```
 Bus 002 Device 003: ID 2a45:0c02 Meizu Corp. MX Phone (MTP & ADB)
-
+```
+```
 gedit ~/.android/adb_usb.ini
+```
 添加0x2a45
+
 实际上直接用360手机助手文件夹里的这个文件不是很好吗
 
 不要在android-sdk/tools/运行
+```
 ./android update adb
-会覆盖~/.android/adb_usb.ini
-
+```
+会覆盖`~/.android/adb_usb.ini`
+```
 /etc/udev/rules.d/50-android.rules
+```
 内容是
+```
 SUBSYSTEM=="usb", ENV{DEVTYPE} == "usb_device", ATTR{idVendor}=="2a45", MODE="0666"
-
+```
 修改udev配置后要
+```
 sudo /etc/init.d/udev restart
-
-
+```
+```
 adb kill-server
 adb devices （首次要在手机上确认）
 List of devices attached 
@@ -3524,39 +3758,25 @@ wm density
 wm density 320
 wm size
 wm size 720x1280
+```
 
 
+***
+# telnet
+```
+$ sudo apt-get install xinetd
+$ sudo apt-get install telnetd-ssl
+$ sudo apt-get install telnetd
 
-
-
-
-
-
-andy@debian-dell:~$ sudo apt-get install xinetd
-andy@debian-dell:~$ sudo apt-get install telnetd-ssl
-andy@debian-dell:~$ sudo apt-get install telnetd
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following NEW packages will be installed:
-  telnetd
-0 upgraded, 1 newly installed, 0 to remove and 1 not upgraded.
-Need to get 44.6 kB of archives.
-After this operation, 160 kB of additional disk space will be used.
-Get:1 http://mirrors.163.com/debian/ jessie/main telnetd amd64 0.17-36 [44.6 kB]
-Fetched 44.6 kB in 0s (198 kB/s) 
-Selecting previously unselected package telnetd.
-(Reading database ... 500997 files and directories currently installed.)
-Preparing to unpack .../telnetd_0.17-36_amd64.deb ...
-Unpacking telnetd (0.17-36) ...
-Processing triggers for man-db (2.7.5-1) ...
-Setting up telnetd (0.17-36) ...
 Adding user telnetd to group utmp
 Note: xinetd currently is not fully supported by update-inetd.
       Please consult /usr/share/doc/xinetd/README.Debian and itox(8).
+```
 
-andy@debian-dell:~$ sudo gedit /etc/xinetd.d/telnet
--------------------------
+```
+$ sudo gedit /etc/xinetd.d/telnet
+```
+```
 # default: on
 # description: The telnet server serves telnet sessions; it uses ＼
 #       unencrypted username/password pairs for authentication.
@@ -3571,73 +3791,86 @@ service telnet
         server_args     = -h
         log_on_failure  += USERID
 }
--------------------------
-andy@debian-dell:~$ sudo /etc/init.d/xinetd restart
-
+```
+```
+$ sudo /etc/init.d/xinetd restart
+```
+```
 telnet 192.168.1.103
+```
 
 
-
-
-
-
-
-
-
-termux
-编辑 /data/data/com.termux/files/usr/etc/apt/sources.list 文件，修改 apt 源为清华大学开源镜像
--------------------------
+***
+# termux 手机端
+编辑 `/data/data/com.termux/files/usr/etc/apt/sources.list` 文件，修改 apt 源为清华大学开源镜像
+```
 # The main termux repository:
 #deb [arch=all,arm] http://termux.net stable main
 deb [arch=all,arm] http://mirrors.tuna.tsinghua.edu.cn/termux stable main
--------------------------
+```
+```
 apt update
 apt install openssl
 apt install openssh
+```
+安装完成后 `/data/data/com.termux/files/usr/bin` 目录下会多几个有关 ssh 的可执行文件
 
-#安装完成后 /data/data/com.termux/files/usr/bin 目录下会多几个有关 ssh 的可执行文件
-
-#开启 sshd 服务
+开启 sshd 服务
+```
 sshd
-
-#查看 sshd 使用的端口，我这里是 8022
+```
+查看 sshd 使用的端口，我这里是 8022
+```
 netstat -ntlp
-
-# ssh 密钥创建，接下来的问题一律回车默认
+```
+ssh 密钥创建，接下来的问题一律回车默认
+```
 ssh-keygen
+```
+/data/data/com.termux/files/home/.ssh 多出两个文件 id_rsa.pub 和 id_rsa ，分别是公钥和私钥
 
-# /data/data/com.termux/files/home/.ssh 多出两个文件 id_rsa.pub 和 id_rsa ，分别是公钥和私钥
-# 将公钥导入到信任主机列表
+将公钥导入到信任主机列表
+```
 cd /data/data/com.termux/files/home/.ssh
 cat id_rsa.pub >>　authorized_keys
-
-debian pc主机上
-运行
+```
+debian pc主机上，运行
+```
 ssh-keygen -t rsa
+```
 或者
+```
 ssh-keygen -t dsa
-
+```
 通过各种方式（直接usb或者通过网络adb）adb连接到手机上，将公钥adb push到手机上
+```
 adb push ~/.ssh/id_dsa.pub /data/data/com.termux/files/home/.ssh/id_dsa.pub
+```
 （先push进手机，再adb shell进去su了挪位置）
 
 通过adb shell进入手机，cd到data/data/com.termux/files/home/.ssh/，将公钥内容添加到ssh的授权文件里
+```
 cat id_dsa.pub >> authorized_keys
-
+```
 手机上执行
+```
 whoami
-
+```
 核对权限
+```
 /data/data/com.termux/files/home # ls -al
 chmod 700 .ssh
+```
 所属用户和组修改
+```
 chown u0_a89:u0_a89 .ssh
+```
 
+pc端的私钥权限要设置成600
 
-pc端的私钥要设置成600
 核对手机的ip地址，要一个网段内
 
-
+```
 andy@debian-dell:~$ ssh u0_a89@192.168.1.105 -p 8022
 Enter passphrase for key '/home/andy/.ssh/id_dsa': 
 X11 forwarding request failed on channel 0
@@ -3674,9 +3907,10 @@ Proto Recv-Q Send-Q Local Address           Foreign Address         State       
 tcp        0      0 0.0.0.0:8022            0.0.0.0:*               LISTEN      30740/sshd
 -bash-4.4$ whoami
 u0_a89
-
+```
 
 termux可以
+```
 使用bash 和 zsh。
 使用nano 和 vim编辑文件。
 通过ssh访问服务器。
@@ -3687,28 +3921,35 @@ termux可以
 screenfetch
 htop
 tree
+```
 
-
-
+```
 进入 JuiceSSH 的认证，用户名填写刚才的用户名
 复制私钥到sd卡某个目录，搜索即可，端口8022
 hacker's Keyboard要设置成横屏才更好使
 Quick Keyboard Switch很好用
-
+```
 
 多个设备的adb解决more than one device and emulator问题
+
 1.查找所有设备
+```
 adb devices
+```
 2.选择你要使用的设备
+```
 adb -s 设备名称 shell
+```
 OK!
 
 
-
-
 安装sambadroid
-修改/data/data/berserker.android.apps.sambadroid/samba/smb.conf
-------------------------------
+
+修改
+```
+/data/data/berserker.android.apps.sambadroid/samba/smb.conf
+```
+```
 # Generated by SambaDroid
 [global]
 interfaces = wlan0
@@ -3739,121 +3980,129 @@ writable = yes
 guest ok = yes
 force user = root
 map readonly = permissions
-------------------------------
+```
+```
 root@m2note:/ # /data/data/berserker.android.apps.sambadroid/samba/nmbd -D
 root@m2note:/ # /data/data/berserker.android.apps.sambadroid/samba/smbd -D 
-
-
+```
+```
 smbpasswd -a 增加用户（要增加的用户必须以是系统用户）
 smbpasswd -d 冻结用户，就是这个用户不能在登录了
 smbpasswd -e 恢复用户，解冻用户，让冻结的用户可以在使用
 smbpasswd -n 把用户的密码设置成空.
              要在global中写入 null passwords -true
 smbpasswd -x  删除用户
+```
 
 
-
-
-eth0配置更新
+***
+# eth0配置更新
+```
 /etc/network/interfaces
 auto eth0
+```
+```
 iface eth0 inet static
 address 192.168.4.101
 netmask 255.255.255.0
 gateway 192.168.4.1
-
-
+```
+```
 /etc/resolv.conf
+```
+```
 search aohua.com
 nameserver 192.168.1.253
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-java环境变量设置，编辑/etc/profile文件
+***
+# java环境变量设置
+编辑`/etc/profile`文件
+```
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
 export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JRE_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+```
 
 
-
-
-
-
-
+***
+# imagej
+```
 sudo apt-get install imagej
+```
 
 
+***
+# aster
+```
 $ python setup.py install --prefix=/opt/aster
+```
 缺少gfortran
+```
 sudo apt-get install gfortran cfortran liblapack-dev
+```
 
 
-有机化学分子结构式
+***
+# 有机化学分子结构式
+```
 $ sudo aptitude install gchempaint avogadro
+```
 
-力学分析
+
+***
+# 力学分析
+```
 sudo aptitude install step khelpcenter4
+```
 
-逻辑电路分析
+
+***
+# 逻辑电路分析
+```
 sudo aptitude install logisim
+```
 
-
-
-
-
-查询一个文件包含在哪个包里面。可以用 apt-file
+***
+# apt-file
+查询一个文件包含在哪个包里面, 可以用 apt-file
+```
 $ apt-file search libstdc++.so.6
+```
 查询一个安装包安装文件的目录，用 dpkg -L
+```
 $ dpkg -L lib32stdc++6
-
-
+```
+```
 $ sudo apt-get install libtcl8.5 libtcl8.5:i386
 $ dpkg -L libtcl8.5:i386
+```
 
 
-
-
-
-smplayer
+***
+# smplayer
 
 For Debian 8.0 run the following as root:
-
+```
 echo 'deb http://download.opensuse.org/repositories/home:/smplayerdev/Debian_8.0/ /' > /etc/apt/sources.list.d/smplayer.list 
+```
+```
 sudo apt-get update
 sudo apt-get install smplayer
-
+```
 You can add the repository key to apt. Keep in mind that the owner of the key may distribute updates, packages and repositories that your system will trust (more information). To add the key, run:
-
+```
 wget -nv http://download.opensuse.org/repositories/home:smplayerdev/Debian_8.0/Release.key -O Release.key
 sudo apt-key add - < Release.key
 sudo apt-get update
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# monodevelop
+```
 $ sudo aptitude install monodevelop
 $ ilasm --version 
 Mono ILasm compiler version 3.2.8.0
@@ -3862,20 +4111,17 @@ Mono C# compiler version 3.2.8.0
 $ mcs  --version
 Mono C# compiler version 3.2.8.0
 $ mono --version
+```
 
 
-
-
-
-
-sublime
-
+***
+# sublime
 Install the GPG key:
-
+```
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-
+```
 Select the channel to use:
-
+```
 Stable
 
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
@@ -3885,61 +4131,49 @@ Update apt sources and install Sublime Text
 sudo apt-get update
 sudo apt-get install sublime-text
 $ subl
+```
 
 
-
-
-
-
-
+***
+# kchmviewer
 $ sudo aptitude install kchmviewer
 
 
-
-
-
-
-
-andy@debian-dell:~/workspace$ python -V
+***
+# python
+```
+$ python -V
 Python 2.7.9
-andy@debian-dell:~/workspace$ python2 -V
+$ python2 -V
 Python 2.7.9
-andy@debian-dell:~/workspace$ python3 -V
+$ python3 -V
 Python 3.4.2
+```
 
 
-
-
-
-
-
+***
+# jlink
+```
 jlink_4.92_x86_64.deb
 $ JLinkExe
+```
 
 
+***
+# 更新到 debian sid 版本
 
+`upgrade` 可以进x
 
+`dis-upgrade` 无法进x
 
+再一次 `upgrade` 可以进x
 
+upgrade不会删除有相关依赖的软件，所以是安全的
 
+dist-upgrade会删除有相关依赖的软件，使组件最新，所以要当心使用
 
-
-
-
-
-
-跟新到debian sid版本
-upgrade
-可以进x
-dis-upgrade
-无法进x
-
-再一次
-upgrade
-可以进x
-
-
-obmenu-generator挂了
+## obmenu-generator挂了
+```
 sudo apt-get install build-essential cpanminus git
 git clone git://github.com/trizen/obmenu-generator
 sudo cp obmenu-generator/obmenu-generator /usr/bin
@@ -3947,18 +4181,13 @@ sudo cp -r obmenu-generator/schema.pl ~/.config/obmenu-generator/
 sudo cpanm Linux::DesktopFiles
 sudo cpanm Data::Dump
 sudo chmod 777 /usr/bin/obmenu-generator 
+```
+
+## aptitude似乎被删了，安装回来
 
 
-
-
-aptitude似乎被删了，安装回来
-
-
-
-
-
-
-下面总结一下有关apt-get的常用但容易混淆的指令:
+## 下面总结一下有关apt-get的常用但容易混淆的指令:
+```
 apt-get autoclean:
 
     如果你的硬盘空间不大的话，可以定期运行这个程序，将已经删除了的软件包的.deb安装文件从硬盘中删除掉。如果你仍然需要硬盘空间的话，可以试试apt-get clean，这会把你已安装的软件包的安装包也删除掉，当然多数情况下这些包没什么用了，因此这是个为硬盘腾地方的好办法。
@@ -4026,16 +4255,19 @@ dpkg -X mingw-w64-binutils_2.36.1-1_amd64.deb extract
 dpkg -e mingw-w64-binutils_2.36.1-1_amd64.deb extract/DEBIAN/
 重新打包到build目录
 dpkg-deb -b extract/ build/
+```
 
 
-
-
-图饼显示磁盘占用
+***
+# 图饼显示磁盘占用
+```
 sudo baobab
+```
 
 
-
-vlc升级后被删除，降级组建重新安装
+***
+# vlc升级后被删除，降级组建重新安装
+```
 主要是依赖libflac++6，安装stable版本
       Remove the following packages:                                            
 1)      libflac++6v5 [1.3.2-1 (now, unstable)]                                  
@@ -4059,127 +4291,118 @@ vlc升级后被删除，降级组建重新安装
 15)     libk3b6-extracodecs [2.0.3a-2+b2 (now, unstable) -> 2.0.2-8 (stable)]   
 16)     libtagc0 [1.11.1+dfsg.1-0.1 (now, unstable) -> 1.9.1-2.1 (stable)]      
 17)     thunar-media-tags-plugin [0.2.1-1+b2 (now, unstable) -> 0.2.1-1 (stable)
+```
 
 
-
-upgrade不会删除有相关依赖的软件，所以是安全的
-dist-upgrade会删除有相关依赖的软件，使组建最新，所以要当心使用
-
-
-
-
-
-
-
-
-
+***
+# wine 故障
+```
 Microsoft Visual C++ Runtime RuntimeError R6034
 百度文档下载器3
 winecfg的MSVCR90.dll改成内建先于原装，就ok了
+```
 
 
+***
+# 登录管理器 和 runlevel
+<https://wiki.archlinux.org/index.php/Display_manager>
 
-
-
-
-https://wiki.archlinux.org/index.php/Display_manager
 查看当前登录管理器
+```
 $ ls -l /etc/systemd/system/display-manager.service
 lrwxrwxrwx 1 root root 36 3月  29 2015 /etc/systemd/system/display-manager.service -> /usr/lib/systemd/system/lxdm.service
-
+```
 The configuration files for LXDM are all located in 
+```
 /etc/lxdm/
+```
 可执行文件在
+```
 /usr/lib/lxdm/
+```
 
 查看默认的运行级别配置
+```
 $ ls -l /lib/systemd/system/default.target
 lrwxrwxrwx 1 root root 16 1月  29 06:32 /lib/systemd/system/default.target -> graphical.target
+```
 这是登陆器的桌面候选
+```
 $ ls /usr/share/xsessions/
+```
 更换登录管理器，比如slim
+```
 # systemctl enable slim.service
+```
 display manager有
+```
 kdm, gdm, lightdm, lxdm, wdm, xdm, slim, nodm, ldm
+```
 
-
-https://wiki.archlinux.org/index.php/Systemd#Change_default_target_to_boot_into
+<https://wiki.archlinux.org/index.php/Systemd#Change_default_target_to_boot_into>
 初始化运行级别配置
+```
 # systemctl set-default multi-user.target
+```
 修改运行级别配置
+```
 # systemctl set-default -f multi-user.target
+```
 实际上作用就是
+```
 $ sudo ln -s /lib/systemd/system/multi-user.target default.target
+```
 这样可以实现xstart登录，默认不开启X界面（# 字符界面启动 #）
+```
+$ sudo systemctl set-default multi-user.target
 
-[andy@andy ~]$ sudo systemctl set-default multi-user.target
-[sudo] andy 的密码：
 Created symlink /etc/systemd/system/default.target → /usr/lib/systemd/system/multi-user.target.
-
-
+```
+```
 $ sudo systemctl set-default multi-user.target
 $ echo "exec openbox-session" >> ~/.xinitrc
-
-
+```
 
 如何查看用得是systemd 还是 initscripts ？
+```
 sudo readlink -f /proc/1/exe
+```
 
-
-
-
-https://wiki.archlinux.org/index.php/XScreenSaver#Configuration
+***
+# xscreensaver
+<https://wiki.archlinux.org/index.php/XScreenSaver#Configuration>
+```
 xscreensaver-demo
 xscreensaver-command --lock
+```
 
 
+***
+# 还原系统备份backup_0926.tar.bz2
 
-
-************************************************************
-还原backup_0926.tar.bz2后操作
-************************************************************
-<log title>
-detail
-</log>
-
-        
-        
-<ref addr> 
-content
-</ref>
-
-        
-        
-<comment brief>
-text
-</comment>
-
-        
-        
-<file filenanem>
-file content
-</file>
-
-        
-        
-<log 还原系统备份backup_0926.tar.bz2>
 还原备份后如果uuid被改变了，先在360急救盘里用
+```
 # tune2fs -U f5cd428a-7bcc-4026-80b7-9f570e5966cf /dev/sda2
+```
 还原uuid
 
 如果gurb挂了，还要利用启动u盘的grub进入系统，更新grub
+```
 $ sudo grub-install /dev/sda
 $ sudo update-grub2
-    
+```
+
+重新安装证书
+```
 $ sudo cp /sbin/ifconfig /bin/
 $ sudo apt-get install ca-certificates --reinstall
-</log>
+```
 
-        
-        
-<log 更新源并且更新系统>
+更新源并且更新系统
+```
 $ sudo gedit /etc/apt/sources.list
-<file /etc/apt/sources.list>
+```
+```
 deb http://mirrors.aliyun.com/debian/ jessie main non-free contrib
 deb http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib
 deb http://mirrors.aliyun.com/debian/ jessie-updates main non-free contrib
@@ -4192,138 +4415,138 @@ deb-src http://mirrors.aliyun.com/debian/ jessie-backports main contrib non-free
 # deb-src http://mirrors.aliyun.com/debian-security/ jessie/updates main non-free contrib
 deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
 # deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
-</file>
+```
+```
 $ sudo apt-get update
-$ sudo apt-get upgrade <ref 一定要只存在一个codename的sourcelist才可以进行这个操作，否则升降级依赖就复杂了去了></ref>
+$ sudo apt-get upgrade
+```
+一定要只存在一个codename的sourcelist才可以进行这个操作，否则升降级依赖就复杂了去了
+```
 $ sudo apt-get dselect-upgrade
 安装中断
 $ sudo rm /var/lib/dpkg/lock
 $ sudo rm /var/cache/apt/archives/lock
 $ sudo rm /var/lock/aptitude
 $ sudo dpkg --configure -a
+```
 实在不行还要删/var/lib/dpkg/status的相关内容
+
 Dpkg 使用文本文件来作为数据库.通称在 /var/lib/dpkg 目录下. 通称在 status 文件中存储软件状态,和控制信息. 
+
 在 info/ 目录下备份控制文件, 并在其下的 .list 文件中记录安装文件清单, 其下的 .mdasums 保存文件的 MD5 编码.
 
 必要的时候apt用代理
+```
 $ sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8087/" update
+```
 
-<ref 半安装的删除>
+apt半安装的删除
+```
 $ sudo leafpad /var/lib/dpkg/status
+```
 例如要把firefox-mozilla-build状态改成install ok installed就可以删除了
-</ref>
 
-<log java8>
+
+***
+# java8
 开启源
+```
 deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
 deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+```
 导入GPG key
+```
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+```
 更新apt缓存并安装java8
+```
 $ sudo apt-get update
 $ sudo apt-get install oracle-java8-installer
+```
 快速设置环境变量
+```
 $ sudo apt-get install oracle-java8-set-default
-
+```
 aptitude安装jdk8
-</log>
-
+```
 $ sudo apt-get purge openjdk-7-jre*
 $ sudo rm -rf /usr/lib/jvm/java-7-openjdk-amd64
 $ sudo apt-get purge gcj-4.9-jre-lib
 $ sudo rm -rf /usr/lib/jvm/java-1.5.0-gcj-4.9-amd64
 
-Get:40 http://mirrors.aliyun.com stable/main Translation-zh_CN [96.3 kB]                                                             
-Get:41 http://mirrors.aliyun.com stable/main Translation-zh [1,526 B]                                                                
-Get:42 http://mirrors.aliyun.com stable/main Translation-en [5,392 kB]                                                               
-Get:43 http://mirrors.aliyun.com stable/non-free Translation-en [79.2 kB]                                                            
-Fetched 20.6 MB in 1min 3s (324 kB/s)                                                                                                
-Reading package lists... Done
 W: There is no public key available for the following key IDs:
 EF0F382A1A7B6500
 
 $ sudo apt-get install debian-keyring debian-archive-keyring
 $ sudo apt-get autoremove
 $ sudo apt-get clean && sudo apt-get autoclean
+```
 
-</log>
+ 
+***
+# 与时间服务器上的时间同步的方法
+<http://www.cnblogs.com/liuchangchun/p/4685032.html>
 
-        
-        
-<log 与时间服务器上的时间同步的方法> 
-<ref> http://www.cnblogs.com/liuchangchun/p/4685032.html </ref>
 1.  安装ntpdate工具
+```
 $ sudo apt-get install ntpdate
+```
 2.  设置系统时间与网络时间同步
+```
 $ sudo ntpdate cn.pool.ntp.org
+```
 3.  将系统时间写入硬件时间
+```
 $ sudo hwclock --systohc  <comment> 就是 $ sudo hwclock -w </comment>
-
+```
 2个NTP服务器地址:
+```
 cn.pool.ntp.org
 ntp.api.bz
-
+```
 随便修改一个时间
+```
 $ sudo date -s "2015-06-15 10:42"
-</log>
+```
 
-    
-    
-<log 修改时区>
-<ref> http://blog.csdn.net/w786572258/article/details/51248053 </ref>
-andy@debian-dell:~$ sudo tzconfig
+
+***
+# 修改时区
+<http://blog.csdn.net/w786572258/article/details/51248053>
+```
+$ sudo tzconfig
 WARNING: the tzconfig command is deprecated, please use:
  dpkg-reconfigure tzdata
-andy@debian-dell:~$ sudo dpkg-reconfigure tzdata
+$ sudo dpkg-reconfigure tzdata
 Current default time zone: 'Asia/Shanghai'
 Local time is now:      Sat Jun 17 20:14:52 CST 2017.
 Universal Time is now:  Sat Jun 17 12:14:52 UTC 2017.
-
+```
 等效于
+```
 $ sudo cp /usr/share/zoneinfo/Asia/Chongqing /etc/localtime
-
-</log>
-
+```
 
 
-<log 更新内核到4>
+***
+# 更新内核到4 update kernel
+```
 $ sudo aptitude install linux-image-4.9.0-0.bpo.3-amd64
-The following NEW packages will be installed:
-  firmware-linux-free{a} irqbalance{a} linux-image-4.9.0-0.bpo.3-amd64{b} 
-0 packages upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
-Need to get 38.6 MB of archives. After unpacking 191 MB will be used.
-The following packages have unmet dependencies:
- linux-image-4.9.0-0.bpo.3-amd64 : Depends: linux-base (>= 4.3~) but 3.5 is installed.
-The following actions will resolve these dependencies:
-
-     Keep the following packages at their current version:
-1)     linux-image-4.9.0-0.bpo.3-amd64 [Not Installed]    
-
-
-
-Accept this solution? [Y/n/q/?] n
-The following actions will resolve these dependencies:
 
      Upgrade the following packages:                                  
 1)     linux-base [3.5 (now, stable) -> 4.3~bpo8+1 (jessie-backports)]
-
-
 
 Accept this solution? [Y/n/q/?] y
 The following NEW packages will be installed:
   firmware-linux-free{a} irqbalance{a} linux-image-4.9.0-0.bpo.3-amd64 
 The following packages will be upgraded:
   linux-base 
-1 packages upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
-Need to get 38.6 MB of archives. After unpacking 191 MB will be used.
+```
 
-</log>
-        
- 
-        
-<log 处理linux-headers>
+## 处理linux-headers
+```
 $ sudo apt-get install linux-headers-$(uname -r)
-    
+
 $ sudo apt-get install linux-headers-4.9.0-0.bpo.3-all
 The following NEW packages will be installed:
   linux-compiler-gcc-4.9-x86 linux-headers-4.9.0-0.bpo.3-all linux-headers-4.9.0-0.bpo.3-all-amd64 linux-headers-4.9.0-0.bpo.3-amd64
@@ -4337,26 +4560,28 @@ The following NEW packages will be installed:
 0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
     
 $ sudo apt-get install linux-headers-4.9.0-0.bpo.3-common
-
 $ sudo apt-get purge linux-headers-3.16.0-4-*
-</log>
+```
         
         
-
-<log 安装 notepadqq，替代 notepad++>
-<ref> https://launchpad.net/~notepadqq-team/+archive/ubuntu/notepadqq </ref>
+***
+# notepadqq
+<https://launchpad.net/~notepadqq-team/+archive/ubuntu/notepadqq>
+```
 deb http://ppa.launchpad.net/notepadqq-team/notepadqq/ubuntu trusty main 
 #deb-src http://ppa.launchpad.net/notepadqq-team/notepadqq/ubuntu trusty main
-
+```
+```
 $ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 63DE9CD4
 $ sudo apt-get update
 $ sudo apt-get install notepadqq
-</log>
+```
 
 
-
-<log 更新flashplayer>
+***
+# 浏览器 flashplayer
 之前upgrade时候有告警
+```
 Setting up flashplugin-nonfree (1:3.6.1+deb8u1) ...
 --2017-06-17 12:02:05--  https://fpdownload.adobe.com/get/flashplayer/pdc/24.0.0.186/flash_player_npapi_linux.x86_64.tar.gz
 Resolving fpdownload.adobe.com (fpdownload.adobe.com)... 184.85.113.19
@@ -4364,322 +4589,397 @@ Connecting to fpdownload.adobe.com (fpdownload.adobe.com)|184.85.113.19|:443... 
 HTTP request sent, awaiting response... 404 Not Found
 2017-06-17 12:02:06 ERROR 404: Not Found.
 ERROR: wget failed to download https://fpdownload.adobe.com/get/flashplayer/pdc/24.0.0.186/flash_player_npapi_linux.x86_64.tar.gz
-
+```
+```
 $ sudo apt-get install flashplugin-nonfree --reinstall
+```
 还是失败
+
 安装中断
+```
 $ sudo rm /var/lib/dpkg/lock
 $ sudo rm /var/cache/apt/archives/lock
 $ sudo rm /var/lock/aptitude
 $ sudo dpkg --configure -a
-添加源
-deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main <作废>
+```
+添加源 <作废>
+```
+deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main
+```
 导入公钥
+```
 $ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 2667CA5C
+```
     
 update时候报错
+```
 E: The method driver /usr/lib/apt/methods/https could not be found.
 N: Is the package apt-transport-https installed?
-
+```
+```
 $ sudo apt-get install apt-transport-https
-
+```
     
 好像都没有啥用处
+
 原来是后面还安装了
+```
 $ sudo apt-get install pepperflashplugin-nonfree
 $ sudo update-pepperflashplugin-nonfree --install
+```
 没毛病
 
 最前面还有
+```
 $ sudo apt-get install flashplugin-nonfree-extrasound 
 $ sudo update-flashplugin-nonfree --install
-    
-    
+```
+```
 https://wiki.debian.org/PepperFlashPlayer
 https://wiki.debian.org/PepperFlashPlayer/Installing
 https://wiki.debian.org/Freshplayerplugin
 添加
 deb http://http.debian.net/debian jessie-backports main contrib
-
+```
+```
 $ sudo apt-get update
 $ sudo aptitude install pepperflashplugin-nonfree browser-plugin-freshplayer-pepperflash
-see
-http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu/pool/main/f/freshplayerplugin/
+```
+<http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu/pool/main/f/freshplayerplugin/>
 
+```
 $ sudo update-pepperflashplugin-nonfree  --status
 
 gpg --keyserver pgp.mit.edu --recv-keys 1397BC53640DB551
 gpg --export --armor 1397BC53640DB551 | sudo sh -c 'cat >> /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt'
-
-
-https://helpx.adobe.com/flash-player/release-note/readme-flash-player-linux.html
+```
+<https://helpx.adobe.com/flash-player/release-note/readme-flash-player-linux.html>
 
 
 未验证：
+
 手动安装到诸如$HOME/.local/lib/opera/plugin
-## cp libflashplayer.so  /usr/lib/mozilla/plugins/
+```
+cp libflashplayer.so  /usr/lib/mozilla/plugins/
+```
 
 验证可用
-<log 复制文件进特定位置>
+
+复制文件进特定位置
+```
 sudo cp libpepflashplayer.so /usr/lib/pepperflashplugin-nonfree
 sudo cp manifest.json /usr/lib/pepperflashplugin-nonfree
-</log>
+```
     
 opera和chromium都是在
+```
 chrome://plugins/
+```
 启用插件
-
 
 
 firefox如果要换flash插件按下面来，但是版本显示不知道怎么总是不对
 
 在Firefox上使用PepperFlash,则需要通过第三方插件 FreshPlayerPlugin +(~/.config/freshwrapper.conf）来加载
-http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu/pool/main/f/freshplayerplugin/
+
+<http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu/pool/main/f/freshplayerplugin/>
+```
 freshplayerplugin_0.3.3+git20151006-webupd8-precise_amd64.deb
+```
 旧版本os需要安装，debian8不能安装这个
+```
 freshplayerplugin_0.3.6-1-webupd8-trusty6_all.deb
+```
 只是一个doc，所以新版本os不安装也可（browser-plugin-freshplayer-pepperflash包含了这个doc）
 
 
-firefox用的是/usr/lib/browser-plugin-freshplayer-pepperflash/libfreshwrapper-flashplayer.so
+firefox用的是
+```
+/usr/lib/browser-plugin-freshplayer-pepperflash/libfreshwrapper-flashplayer.so
+```
+```
 about:plugins
+```
 禁用启用在
+```
 about:addons (再点plugins)
+```
 软链接是
+```
 /usr/lib/mozilla/plugins/flash-mozilla.so
-see https://wiki.debian.org/Freshplayerplugin/
+```
+<https://wiki.debian.org/Freshplayerplugin/>
+
 更换flash plugin替换掉这个软链接到需要的地方就可以了，freshwrapper.conf是不需要的（不起作用）
+
 直接把libflashplayer.so重命名为libfreshwrapper-flashplayer.so，再复制到/usr/lib/mozilla/plugins/，删掉flash-mozilla.so就可以了
 
-
+```
 cp /opt/google/chrome/PepperFlash/libpepflashplayer.so ~/Downloads/libfreshwrapper-flashplayer.so
 sudo ln -s ~/Downloads/libfreshwrapper-flashplayer.so flash-mozilla.so
 cd /opt/google/chrome/PepperFlash
 sudo cp libpepflashplayer.so libfreshwrapper-flashplayer.so
-软链接不行，名字也得是libfreshwrapper-flashplayer.so
+```
+软链接不行，名字也得是`libfreshwrapper-flashplayer.so`
+```
 cd /usr/lib/mozilla/plugins
 sudo ln -s /opt/google/chrome/PepperFlash/libfreshwrapper-flashplayer.so flash-mozilla.so
+```
 原来的flash-mozilla.so -> /etc/alternatives/flash-mozilla.so
 
-<log 全部浏览器生效>
+## 全部浏览器生效
+```
 cd /usr/lib/pepperflashplugin-nonfree
 sudo mv libpepflashplayer.so libfreshwrapper-flashplayer.so
 sudo ln -s libfreshwrapper-flashplayer.so libpepflashplayer.so
-^opera\chromium可用
+```
+opera+chromium可用
+```
 sudo ln -s /usr/lib/pepperflashplugin-nonfree/libfreshwrapper-flashplayer.so flash-mozilla.so
-    
+```
 ff
+```
 about:plugins
+```
 opera、chrome
-chrome://plugins/ （新的opera是 opera：plugins）
-
-
+```
+chrome://plugins/
+```
+新的opera是
+```
+opera：plugins
+```
 
 
 最新
+
 firefox使用flash_player_npapi_linux.x86_64.tar.gz
 libfreshwrapper-flashplayer.so放到/usr/lib/mozilla/plugins
+
 顺便修改一下flash-mozilla.so的指向
+
 chrome使用flash_player_ppapi_linux.x86_64.tar.gz
+
 libpepflashplayer.so和manifest.json放到/usr/lib/pepperflashplugin-nonfree
 
 chrome和opera都取消了plugins的选项卡
 
-</log>
-    
+```
 $ sudo apt-get install browser-plugin-freshplayer-pepperflash --reinstall
 ls /etc/alternatives/flash-mozilla.so -l
 ls -l /var/lib/dpkg/alternatives/flash-mozilla.so
-
-
-
+```
+```
 /home/andy/.mozilla/firefox/sv3du5zt.default/pluginreg.dat
-
+```
 
 验证可用，命令行指定plugin
+```
 opera --ppapi-flash-path=/opt/google/chrome/PepperFlash/libpepflashplayer.so
 chromium --ppapi-flash-path=/opt/google/chrome/PepperFlash/libpepflashplayer.so --ppapi-flash-version=`grep -i version /opt/google/chrome/PepperFlash/manifest.json | awk '{print $2}' | awk -F"\"" '{print $2}'`
+```
 
 
-deb的解包
+```
 wget https://dl.google.com/linux/direct/google-chrome-stable-current_i386.deb
 ar p google-chrome-stable-current_i386.deb data.tar.lzma | unxz | tar xf - ./opt/google/chrome/PepperFlash
 cp opt/google/chrome/PepperFlash/libpepflashplayer.so /usr/lib/chromium/plugins
 vi /etc/chromium/default
   CHROMIUM_FLAGS="--password-store=detect --ppapi-flash-path=/usr/lib/chromium/plugins/libpepflashplayer.so"
-
+```
 实际上
+```
 cat /etc/chromium.d/pepperflashplugin-nonfree 
 flashso="/usr/lib/pepperflashplugin-nonfree/libpepflashplayer.so"
 flashversion=`strings $flashso 2> /dev/null | grep LNX | cut -d ' ' -f 2 | sed -e "s/,/./g"`
 CHROMIUM_FLAGS="$CHROMIUM_FLAGS --ppapi-flash-path=$flashso --ppapi-flash-version=$flashversion"
+```
 
-</log> 
 
-    
-    
-<log 安装opera>
+***    
+# 安装opera
 手动安装opera-stable_41.0.2353.46_amd64.deb
-Selecting previously unselected package opera-stable.
-dpkg: considering removing opera in favour of opera-stable ...
-dpkg: yes, will remove opera in favour of opera-stable
-(Reading database ... 313693 files and directories currently installed.)
-Preparing to unpack .../opera-stable_41.0.2353.46_amd64.deb ...
-update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/x-www-browser (x-www-browser) in auto mode
-update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/gnome-www-browser (gnome-www-browser) in auto mode
-
+```
 $ sudo update-alternatives --config x-www-browser
-</log>
-    
-    
-    
-    
-<log U盘使用exfat方法>
-sudo apt-get install exfat-utils
-    exfat-fuse exfat-utils
-</log>
-    
-    
-    
-<log opt中程序快速启动设置>
-## sudo ln -s /opt/XX-Net/start /usr/local/bin/xxnet
+```
+
+
+***    
+# U盘使用exfat文件系统
+```
+sudo apt-get install exfat-utils exfat-fuse
+```
+
+
+***    
+# opt中程序快速启动设置
+
+## xxnet
+```
+//sudo ln -s /opt/XX-Net/start /usr/local/bin/xxnet
 cd /usr/local/bin
 sudo gedit xxnet
-sudo chmod +x xxnet
--------------------------------------------------
+```
+```
 #!/bin/bash
 
 /opt/XX-Net/start
--------------------------------------------------
-
+```
+```
+sudo chmod +x xxnet
+```
+```
 $ leafpad ~/.config/openbox/autostart
+```
 添加
+```
 (sleep 2 && xxnet) &
+```
 
-
-
-
+## xmind
+```
 cd /usr/local/bin
 sudo gedit xmind
 sudo chmod +x xmind
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/xmind/XMind_amd64/
 ./XMind
--------------------------------------------------
+```
 
-
-
-
+```
 cd /usr/local/bin
 sudo gedit torbrowser
 sudo chmod +x torbrowser
--------------------------------------------------
+```
+```
 #!/bin/bash
-
 /opt/tor-browser_en-US/Browser/start-tor-browser --detach
-
--------------------------------------------------
-
+```
 
 
-
-
-cadence快速运行
+## cadence快速运行
 
 这里是实现的办法之1
+```
 cd /usr/local/bin
 sudo gedit Allegro
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 allegro
--------------------------------------------------
+```
+```
 sudo gedit Pad_designer
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 pad_designer
--------------------------------------------------
+```
+```
 sudo gedit Concepthdl
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 concepthdl
--------------------------------------------------
+```
+```
 sudo chmod +x Allegro Pad_designer Concepthdl
-
-
-
-
+```
 
 这里是实现的办法之2
+```
 cd /usr/local/bin
 sudo gedit allegro
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/pcb/bin/allegro
--------------------------------------------------
+```
+```
 sudo gedit concepthdl
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/bin/concepthdl
--------------------------------------------------
+```
+```
 sudo gedit pad_designer
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/pcb/bin/pad_designer
--------------------------------------------------
+```
+```
 sudo chmod +x allegro pad_designer concepthdl
-
+```
+```
 sudo gedit projmgr
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/bin/projmgr
--------------------------------------------------
+```
+```
 sudo chmod +x projmgr
+```
 
-eagle 8.1.0
+## eagle 8.1.0
+```
 cd /usr/local/bin
 sudo gedit eagle
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/eagle-8.1.0/
 ./eagle
--------------------------------------------------
+```
+```
 sudo chmod +x eagle
 ls eagle -l
+```
 
-
-
-kompozer
+## kompozer
+```
 cd /usr/local/bin
 sudo gedit kompozer
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/kompozer/
 ./kompozer
--------------------------------------------------
+```
+```
 sudo chmod +x kompozer
 ls kompozer -l
-</log>
+```
     
-<log 安装csh>
+
+***
+# 安装csh
+```
 $ sudo aptitude install csh    
-</log>
-    
-<log 安装libxmu>
+```
+
+
+***
+# 安装libxmu
+```
 sudo apt-get install libxmu-dev:i386 libxmu-headers:i386
 Suggested packages:
   libice-doc:i386 libsm-doc:i386 libxcb-doc:i386 libxext-doc:i386
@@ -4689,12 +4989,14 @@ The following NEW packages will be installed:
   libxau-dev:i386 libxcb1-dev:i386 libxdmcp-dev:i386 libxext-dev:i386
   libxmu-dev:i386 libxmu6:i386 libxt-dev:i386
 0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
-<commemt 到这里pad_designer可运行，但图形显示不对> 考虑用ldd去看缺啥</commemt>
-</log>
+```
+到这里pad_designer可运行，但图形显示不对> 考虑用ldd去看缺啥
 
-    
-    
-<log 安装doxygen>
+
+
+***
+# 安装doxygen
+```
 $ sudo apt-get install fakeroot
 $ sudo apt-get install doxygen 
 Suggested packages:
@@ -4708,11 +5010,13 @@ $ sudo apt-get install doxygen-doc
 $ sudo apt-get install doxygen-gui
  doxygen doxygen-gui libclang1-3.5 libobjc-4.9-dev
     doxygen-doc doxygen-gui
-</log>
+```
    
     
     
-<log 安装 graphviz>
+***
+# 安装 graphviz
+```
 $ sudo apt-get install graphviz graphviz-doc
 Reading package lists... Done
 Building dependency tree       
@@ -4726,60 +5030,69 @@ The following NEW packages will be installed:
 0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
 
 $ gvedit
-</log>
+```
     
     
     
-<log 删除 spacefm>
+***
+# 删除 spacefm
+```
 $ sudo apt-get purge spacefm*
 The following packages will be REMOVED:
   spacefm* spacefm-common*
-</log>
+```
     
  
     
-<log 安装 udevil>
+***
+# 安装 udevil
+```
 $ sudo apt-get install udevil cifs-utils  
 Suggested packages:
   cryptsetup curlftpfs sshfs
 The following NEW packages will be installed:
   cifs-utils keyutils pmount udevil  
-</log>   
-    
-    
-    
-<log 删除 xarchiver>
+```
+ 
+
+***
+# 删除 xarchiver
+```
 $ sudo apt-get install xarchiver    
 $ sudo apt-get install idesk
 $ sudo apt-get purge xarchiver
 $ sudo apt-get purge idesk
-</log>
+```
     
     
-    
-<log 安装 fluid>
+***
+# 安装 fluid
+```
 $ sudo apt-get install fluid
-</log>  
+``` 
     
     
-    
-<log opera、chrome更新>
+***
+# opera、chrome更新
 chrome自动添加
+```
 deb http://dl.google.com/linux/chrome/deb/ stable main
 opera自动添加
 deb https://deb.opera.com/opera-stable/ stable non-free
 $ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com D615560BA5C7FF72
 $ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1397BC53640DB551
-    
+```
 
 更新完成之后删掉这些鸡巴源
+```
 $ sudo rm -rf /etc/apt/sources.list.d/
-    
-</log>
-    
-    
-<log 清理>
-<危险>sudo apt-get install p11-kit:i386
+```
+
+
+***
+# 清理 <危险>
+```
+sudo apt-get install p11-kit:i386
 $ sudo apt-get autoremove 
 Reading package lists... Done
 Building dependency tree       
@@ -4800,59 +5113,60 @@ The following packages will be REMOVED:
 0 upgraded, 0 newly installed, 55 to remove and 0 not upgraded.
     
 $ sudo apt-get install bogofilter bogofilter-bdb bogofilter-common espeak-data gcr gir1.2-accountsservice-1.0 gir1.2-gck-1 gir1.2-gcr-3 gir1.2-gdm3 gir1.2-gkbd-3.0 gir1.2-gnomebluetooth-1.0 gir1.2-gpaste-2.0 gir1.2-gtop-2.0   gir1.2-ibus-1.0 gir1.2-mutter-3.0 gir1.2-networkmanager-1.0 gir1.2-nmgtk-1.0  gir1.2-polkit-1.0 gir1.2-upowerglib-1.0 gir1.2-wnck-3.0 gir1.2-xkl-1.0 gnome-backgrounds gnome-orca gnome-tweak-tool gpaste libdotconf0  libedata-cal-1.2-23 libespeak1 libevolution libgdm1 libgpaste2 libgtkhtml-4.0-0 libgtkhtml-4.0-common libgtkhtml-editor-4.0-0  libgtkspell3-3-0 liblouis-data liblouis2 libpst4 libsonic0 libspeechd2  libytnef0 mailnag mutter-dbg python-dirspec python-httplib2 python-jwt  python-oauthlib python3-brlapi python3-louis python3-pyatspi python3-speechd  python3-xdg speech-dispatcher speech-dispatcher-audio-plugins xbrlapi
-</log>  
-    
-    
-    
-<log u盘挂载问题解决>
-The specified directory '/media/andy/0E1639780E163978' is not valid
-$ sudo chmod 755 /media/andy  
-</log>
- 
-    
-    
-<log 安装 xournal>
-$ sudo apt-get install xournal
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  ghostscript-x
-The following NEW packages will be installed:
-  ghostscript-x xournal
-</log>    
-    
+```
 
-    
-<log 安装vpn>
+
+***
+# u盘挂载问题解决
+The specified directory '/media/andy/0E1639780E163978' is not valid
+```
+$ sudo chmod 755 /media/andy  
+```
+
+
+***
+# 安装 xournal
+```
+$ sudo apt-get install xournal ghostscript-x
+```   
+
+
+***
+# 安装vpn
+```
 $ sudo apt-get install openvpn
 $ sudo apt-get install pptp-linux
 $ sudo apt-get install network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine
 $ sudo apt-get install pppoe ppp pppoeconf pppconfig
-
+```
 nm-applet 在 network-manager-gnome,如果nm-applet用不了呢（添加VPN配置文件闪退），直接用gnome-control-center>network，添加VPN
+```
 $ sudo apt-get install network-manager-gnome network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-pptp-gnome network-manager-vpnc-gnome
 $ sudo apt-get install keyutils
 $ sudo apt-get install keyringer
-    
-Import saved VPN connection has been Recently Broken 
+```
+Import saved VPN connection has been Recently Broken
+```
 http://cache.baiducontent.com/c?m=9f65cb4a8c8507ed4fece7631046903358438014628497492e8ed11bc5735b361b31a5a677654545cec67c6c07a54257feb56b32610c7be8d995c80ccabbe37b388856752358d117&p=c967d51986cc41ac5ab2c7710f4183&newp=84769a47808002e408e2947d0f5083231610db2151d4d2433c97d8&user=baidu&fm=sc&query=import+a+saved&qid=bd2c2ed10004bcf3&p1=3
+```
+```
 $ sudo openvpn (path)/example.ovpn
 /etc/NetworkManager/system-connections
-
 $ sudo systemctl restart network-manager
-
-
+```
+```
 $ sudo apt-get install libnm-glib-dev libnm-gtk-dev libnmz7-dev
 $ sudo apt-get install libnm-glib-vpn-dev libnm-gtk-common libnm-util-dev
-
+```
 用这个工具实现VPN配置导入
+```
 $ gnome-control-center network 
-</log> 
-    
-    
-    
-<log 显卡驱动>   
+``` 
+
+
+***
+# 显卡驱动
+```
 $ sudo dmesg | grep radeon
 $ lspci -v | grep VGA
 Enable non-free repository
@@ -4868,89 +5182,124 @@ The following packages will be REMOVED:
   firmware-linux-nonfree
 The following NEW packages will be installed:
   firmware-amd-graphics
-</log>
-    
-    
-    
-<log 下载工具 uget>
+```
+
+ 
+***
+# 下载工具 uget
+```
 $ sudo apt-get install uget
-</log>
-    
-    
-    
-<log apt-get使用proxy代理加速>
+```
+
+
+
+
+***
+# git也可以使用proxy代理
+```
+export https_proxy="127.0.0.1:8087"
+export http_proxy="127.0.0.1:8087"
+```
+```
+git config --global http.sslVerify false
+##git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
+```
+
+***
+# apt-get 使用 proxy 代理加速
 0.新建文件 apt_proxy_conf(文件名任意)内容如下：
+```
 Acquire::http::proxy "http://127.0.0.1:8087";
 Acquire::ftp::proxy "http://127.0.0.1:8087";
 Acquire::https::proxy "http://127.0.0.1:8087";
+```
 往后就可以在apt-get之后加上 -c apt_proxy_conf 来执行。
+
 命令行指定也行
-$ sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8087/" install gstreamer-sdk-dev    
+```
+$ sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8087/" install gstreamer-sdk-dev  
+```  
 如果报错证书没有
+```
 E: Failed to fetch http://www.freedesktop.org/software/gstreamer-sdk/data/packages/debian/wheezy/amd64/./gstreamer-sdk-gstreamer-tutorials-dev_2013.6-1_amd64.deb  server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+```
 添加证书
-$ sudo cp CA.crt /etc/ssl/certs/ca-certificates.crt     
+```
+$ sudo cp CA.crt /etc/ssl/certs/ca-certificates.crt 
+```    
 
 为啥是/etc/ssl/certs？看上面提示，或者
+```
 $ sudo update-ca-certificates
-[sudo] password for andy: 
 Updating certificates in /etc/ssl/certs    
-
-    
-<log git也可以使用proxy代理>
-export https_proxy="127.0.0.1:8087"
-export http_proxy="127.0.0.1:8087"
-git config --global http.sslVerify false
-##git config --global http.sslCAinfo /etc/ssl/certs/ca-certificates.crt
-</log>
+```
 
 1.这是较常用的方法，修改/etc/apt/apt.conf,加入以下内容：
+```
 Acquire::http::Proxy "http://wilson_ke:password@10.0.0.1:63333";
 Acquire::https::Proxy "http://wilson_ke:password@10.0.0.1:63333";
 Acquire::ftp::Proxy "http://wilson_ke:password@10.0.0.1:63333";
+```
 
 2.修改/etc/bash.bashrc,加入以下内容:
+```
 export http_proxy=http://wilson_ke:password@10.0.0.1:63333
 export https_proxy=http://wilson_ke:password@10.0.0.1:63333
 export ftp_proxy=http://wilson_ke:password@10.0.0.1:63333
+```
 
 3.修改/etc/environment，加入以下内容:
+```
 http_proxy=http://wilson_ke:password@10.0.0.1:63333
 https_proxy=http://wilson_ke:password@10.0.0.1:63333
 ftp_proxy=http://wilson_ke:password@10.0.0.1:63333
+```
 
 4.修改~/.bashrc
+```
 http_proxy=http://wilson_ke:password@10.0.0.1:63333
 https_proxy=http://wilson_ke:password@10.0.0.1:63333
 ftp_proxy=http://wilson_ke:password@10.0.0.1:63333
-</log>
-    
-    
-    
-<log 添加 streamer-sdk>
+```
+
+
+***
+# 添加 streamer-sdk
+```
 $ sudo apt-get autoremove
 $ sudo apt-get clean && sudo apt-get autoclean
-    
+```
 添加源
+```
 deb http://www.freedesktop.org/software/gstreamer-sdk/data/packages/debian/wheezy/amd64 ./
-
+```
+```
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 1900C4BE
 //su -c 'wget -q -O - http://www.freedesktop.org/software/gstreamer-sdk/sdk.gpg | apt-key add -'
 //su -c 'apt-get update'
 $ sudo apt-get update
 //su -c 'apt-get install gstreamer-sdk-dev'
 $ sudo apt-get install gstreamer-sdk-dev
+```
 如果速度慢
+```
 $ sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8087/" install gstreamer-sdk-dev
-    
-// 设置环境变量的脚本
+```
+设置环境变量的脚本
+```
 /opt/gstreamer-sdk/bin/gst-sdk-shell
-// gcc 参数
+```
+gcc 参数
+```
 -Wl,-rpath=/opt/gstreamer-sdk/lib `pkg-config --cflags --libs gstreamer-0.10`
-// 例子
+```
+例子
+```
 $ gcc `pkg-config --cflags --libs gstreamer-0.10` basic-tutorial-1.c -o basic-tutorial-1
 $ gcc `pkg-config --cflags --libs gstreamer-interfaces-0.10 gtk+-2.0 gstreamer-0.10` basic-tutorial-5.c -o basic-tutorial-5
-
+```
+测试
+```
 $ gst-launch-0.10 videotestsrc ! ffmpegcolorspace ! autovideosink
 $ gst-launch-0.10 videotestsrc ! video/x-raw-gray ! ffmpegcolorspace ! autovideosink
 $ gst-launch-0.10 audiotestsrc ! audioconvert ! autoaudiosink
@@ -4978,42 +5327,52 @@ gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tut
 gst-launch-0.10 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! audioresample ! audio/x-raw-float,rate=4000 ! audioconvert ! autoaudiosink
 gst-launch-0.10 uridecodebin uri=file:///home/andy/gst-sdk-tutorials/gst-sdk/tutorials/sintel_trailer-480p.webm ! audioresample ! audio/x-raw-float,rate=4000 ! audioconvert ! autoaudiosink
 gst-launch-0.10 audiotestsrc ! tee name=t ! queue ! audioconvert ! autoaudiosink t. ! queue ! wavescope ! ffmpegcolorspace ! autovideosink
+```
+<http://docs.gstreamer.com/display/GstSDK/Tutorials>
 
-http://docs.gstreamer.com/display/GstSDK/Tutorials
-</log>
-    
-    
-    
-<log 浏览器证书问题>
+
+
+***
+# 浏览器证书问题
 chrome访问很多https网站弹出证书警示，需要将local/CA.crt证书导入
 解决办法：
+```
 sudo apt-get install libnss3-tools
-假设goagent在用户的家目录：certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i '~/goagent/local/CA.crt'
+```
+假设goagent在用户的家目录：
+```
+certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i '~/goagent/local/CA.crt'
 certutil -L -d sql:${HOME}/.pki/nssdb
+```
 重启chrome浏览器，这下ok了。
-    
+```  
 $ sudo apt-get install libnss3-tools libnss3:i386
-</log>
+```
     
     
     
-<log 截图工具shutter>
+***
+# 截图工具
+```
 $ sudo apt-get install shutter
+```
 简单截屏用gnome-screenshot
 设置openbox快捷键rc.xml
-</log>    
-    
-    
-    
-<log 剪贴板>
+
+
+
+***
+# 剪贴板
+```
 //$ sudo apt-get install diodon
 //$ sudo apt-get install klipper
 $ sudo apt-get install parcellite
-</log> 
-    
-    
-    
-<log battery monitor>
+```
+
+
+***
+# battery monitor 电池电量显示
+```
 $ acpi
 $ apt-cache search battery
 $ sudo apt-get install ibam
@@ -5023,7 +5382,7 @@ $ cd cbatticon
 $ make WITH_GTK3=0 WITH_NOTIFY=0
 $ sudo make install
 $ cbatticon &
-</log>
+```
 
 
 
