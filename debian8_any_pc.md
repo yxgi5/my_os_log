@@ -8627,28 +8627,31 @@ indexedmimetypes = text/abcd
 ```
 
 
-
-
-mlocate.db文件操作
-
+***
+# mlocate.db文件操作
+```
 mlocate -d mlocate.db / > mlocate.txt
+```
 这样dump出来的是带完整路径的文件名
 
+```
 strings mlocate.db > mlocate.txt
+```
 这样dump出来的仅仅有文件名没有路径
 
 前面的一个命令比后面的一个命令要好
 
+```
 mlocate -d mlocate.db / | sort > mlocate.txt
 strings mlocate.db | sort > mlocate.txt
+```
 排序会相当慢
 
 
 
-
-
-Sat Apr 14 22:06:10 CST 2018
-
+***
+# markdown
+```
 $ sudo apt-get install geany-plugin-markdown markdown
 Reading package lists... Done
 Building dependency tree       
@@ -8657,23 +8660,72 @@ The following extra packages will be installed:
   geany-plugins-common libmarkdown2
 The following NEW packages will be installed:
   geany-plugin-markdown geany-plugins-common libmarkdown2 markdown
+```
 
 
-Sun Apr 15 23:59:09 CST 2018
-
-meld - a graphical tool to diff and merge files
+***
+# meld 
+a graphical tool to diff and merge files
+```
 sudo apt-get install meld
 The following NEW packages will be installed:
   meld python-gi-cairo
+```
 
 
+***
+# sqlite
+```
+$ sudo apt-get install sqlite
+The following NEW packages will be installed:
+  libsqlite0 sqlite
+```
 
-pgadmin3 graphical administration tool for PostgreSQL
+
+***
+# ruby
+```
+sudo apt-get update
+sudo apt-get install ruby
+```
+没有能更新到要求的版本
+```
+sudo gem install activesupport -v '5.1.6'
+```
+```
+gem sources -l
+gem sources --remove https://rubygems.org/
+gem sources -a https://rubygems.org/
+```
+```
+sudo apt-get install ruby-build
+Recommended packages:
+  libxslt-dev
+The following NEW packages will be installed:
+  libxslt1-dev rbenv ruby-build
+
+```
+```
+//#安装ruby
+//# https://github.com/rbenv/ruby-build#readme
+//git clone https://github.com/rbenv/ruby-build.git
+//ruby -v
+```
+
+
+***
+# pgadmin3 
+graphical administration tool for PostgreSQL
+
 http://wiki.ubuntu.org.cn/PostgreSQL
+
 https://stackoverflow.com/questions/15301826/psql-fatal-role-postgres-does-not-exist
+
 https://launchschool.com/blog/how-to-install-postgres-for-linux
+
 https://stackoverflow.com/questions/12552929/failed-to-build-gem-native-extension-rails-install
 
+```
 sudo apt-get install pgadmin3 postgresql-contrib postgresql-9.4 postgresql-doc-9.4 pgadmin3-data pgagent postgresql-client postgresql-client-9.4 postgresql-client-common 
 Suggested packages:
   oidentd ident-server locales-all libdbd-pg-perl
@@ -8710,37 +8762,6 @@ cd ~
 echo "gem 'pg'" >> Gemfile
 bundle install
 
-
-$ sudo apt-get install sqlite
-The following NEW packages will be installed:
-  libsqlite0 sqlite
-
-
-sudo apt-get update
-sudo apt-get install ruby
-没有能更新到要求的版本
-
-sudo gem install activesupport -v '5.1.6'
-
-gem sources -l
-gem sources --remove https://rubygems.org/
-gem sources -a https://rubygems.org/
-
-
-sudo apt-get install ruby-build
-Recommended packages:
-  libxslt-dev
-The following NEW packages will be installed:
-  libxslt1-dev rbenv ruby-build
-
-
-
-//#安装ruby
-//# https://github.com/rbenv/ruby-build#readme
-//git clone https://github.com/rbenv/ruby-build.git
-//ruby -v
-
-
 $ psql -U postgres -h localhost
 password？
 
@@ -8768,45 +8789,65 @@ sudo apt-get purge pgadmin3 postgresql-contrib postgresql-9.4 postgresql-doc-9.4
 修改密码
 sudo su postgres -c psql template1
 postgres=# ALTER USER postgres WITH PASSWORD 'postgres';
+```
 
 
-
-
-Bless hex editor
+***
+# Bless hex editor
+```
 sudo apt-get install bless
+```
 
 
-Pinta - a Simple drawing/painting program
+***
+# Pinta
+a Simple drawing/painting program
+```
 sudo apt-get install pinta
+```
 
 
-Teigha File Converter 是一个免费的cad文件版本转换器,可把 .dwg和 .DXF 文件转换为不同的 AutoCAD 版本可以正常打开的文件,支持 AutoCAD 2000-2014
+***
+# Teigha File Converter
+是一个免费的cad文件版本转换器,可把 .dwg和 .DXF 文件转换为不同的 AutoCAD 版本可以正常打开的文件,支持 AutoCAD 2000-2014
+
 https://www.opendesign.com/guestfiles/teigha_file_converter
-
+```
 sudo dpkg -i TeighaFileConverter_QT5_lnxX64_4.7dll.deb
+```
 
 
-yEd Graph Editor
+***
+# yEd Graph Editor
 https://www.yworks.com/products/yed/download#download
+```
 chmod +x yEd-3.18.0.2_64-bit_setup.sh
 ./yEd-3.18.0.2_64-bit_setup.sh
+```
 
 
-BeeBEEP (Secure Lan Messenger)
+***
+# BeeBEEP (Secure Lan Messenger)
 http://beebeep.sourceforge.net/download.php
 
 
-zenmap - The Network Mapper Front End
+***
+# zenmap
+The Network Mapper Front End
+```
 sudo apt-get install zenmap
+```
 
 
-网页API集成的微信
+***
+# 网页API集成的微信
+```
 wget https://github.com/geeeeeeeeek/electronic-wechat/releases/download/V2.0/linux-x64.tar.gz
 tar zxvf linux-x64.tar.gz -C /opt
+```
 
-desktop文件参考
 electronic-wechat.desktop
--------
+```
 [Desktop Entry]
 Encoding=UTF-8
 Version=1.0
@@ -8818,34 +8859,42 @@ StartupNotify=false
 StartupWMClass=electronic-wechat
 OnlyShowIn=Unity;
 X-UnityGenerated=true
---------
+```
 
 icon可以在这找
+
 http://www.iconfont.cn/
 
 
- 
-jd-gui - Java Decompiler
+
+***
+# jd-gui
+Java Decompiler
+
 http://jd.benow.ca/
+```
 wget https://github.com/java-decompiler/jd-gui/releases/download/v1.4.0/jd-gui_1.4.0-0_all.deb
 wget https://github.com/java-decompiler/jd-eclipse/releases/download/v1.0.0/jd-eclipse-site-1.0.0-RC2.zip
 
 sudo dpkg -i jd-gui_1.4.0-0_all.deb
+```
 到opt里面去执行
 
 jd-eclipse这个嘛要用再安装
 
 
 
-
-
-st-flash
+***
+# st-flash
 https://github.com/texane/stlink
-http://startingelectronics.org/tutorials/STM32-microcontrollers/programming-STM32-flash-in-Linux/
-https://github.com/texane/stlink.git
 
+http://startingelectronics.org/tutorials/STM32-microcontrollers/programming-STM32-flash-in-Linux/
+
+https://github.com/texane/stlink.git
+```
 sudo apt-get install libusb-1.0-0-dev git
 git clone https://github.com/texane/stlink stlink.git
+git clone https://github.com/aric1987/stlink.git
 cd stlink.git
 make
 cd flash
@@ -8854,56 +8903,85 @@ cd ..
 sudo cp *.rules /etc/udev/rules.d
 sudo restart udev
 st-flash write v1 myflash.bin 0x8000000
+```
 
 
-
-
-atom-ide
+***
+# atom-ide
 https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-linux
-https://packagecloud-prod.global.ssl.fastly.net/5969/6634/any/package_files/505662.deb?t=1523970178_968440c3e2aa614d8eb61620bb54f1a7a3c2f667
 
+https://packagecloud-prod.global.ssl.fastly.net/5969/6634/any/package_files/505662.deb?t=1523970178_968440c3e2aa614d8eb61620bb54f1a7a3c2f667
+```
 sudo dpkg -i atom-beta_1.26.0-beta2_amd64.deb
+```
 打开markdown文件，ctrl+shift+m
+
 还是这个看起来比较好一点
 
 最佳方法是使用vs code加插件
 
 
 
-
-vscode
+***
+# vscode
+```
 sudo dpkg -i code_1.22.2-1523551015_amd64.deb
-命令是code
+```
+命令是`code`
 
 
+***
+# pandoc
+```
 sudo apt-get install pandoc
 Suggested packages:
   texlive-xetex texlive-luatex pandoc-citeproc etoolbox
 The following NEW packages will be installed:
   pandoc pandoc-data
+```
 
 
-
-MdCharm
+***
+# MdCharm
 https://github.com/zhangshine/MdCharm/releases
+```
 sudo dpkg -i mdcharm_1.2_amd64.deb
 sudo apt-get install libhunspell-dev
+```
 这个也还行啊，预览比geany插件要好
 
 
-dillinger
+***
+# dillinger
 https://dillinger.io/
 
-Cmd Markdown
+***
+# Cmd Markdown
 https://www.zybuluo.com/mdeditor
+
 下载客户端
+
 https://www.zybuluo.com/cmd/#
 
 
+***
+# retext
+markdown最好还是用haroopad，下载安装
+下面这个也能用
+```
+sudo apt-get install retext
+Suggested packages:
+  python-markdown-doc python-pil-doc python3-pil-dbg ttf-bitstream-vera
+The following NEW packages will be installed:
+  python3-docutils python3-enchant python3-markdown python3-markups
+  python3-pil python3-pygments python3-pyqt5.qtwebkit python3-roman
+  python3-yaml retext
+```
 
 
-
-
+***
+# texlive
+```
 sudo apt-get install texlive-full fonts-freefont musixlyr
 Suggested packages:
   perl-tk fontforge context-nonfree context-doc-nonfree jadetex passivetex
@@ -8966,10 +9044,7 @@ The following NEW packages will be installed:
 
 sudo apt-get install texlive-lang-german texlive-lang-french texlive-lang-italian texlive-lang-japanese texlive-lang-korean texlive-lang-latin texlive-lang-swedish texlive-lang-english texlive-lang-european texlive-lang-dutch texlive-lang-cjk texlive-lang-all texlive-full texlive-doc-zh texlive-doc-en texlive-xetex texlive-base-bin texlive-base texlive
 
-
 sudo apt-get install texmaker texworks
-
-
 
 sudo apt-get install texlive-lang-all texlive-fonts-extra
 Suggested packages:
@@ -8991,22 +9066,11 @@ The following NEW packages will be installed:
 0 upgraded, 45 newly installed, 0 to remove and 150 not upgraded.
 Need to get 544 MB of archives.
 After this operation, 1,099 MB of additional disk space will be used.
-
-
-
-markdown最好还是用haroopad，下载安装
-下面这个也能用
-sudo apt-get install retext
-Suggested packages:
-  python-markdown-doc python-pil-doc python3-pil-dbg ttf-bitstream-vera
-The following NEW packages will be installed:
-  python3-docutils python3-enchant python3-markdown python3-markups
-  python3-pil python3-pygments python3-pyqt5.qtwebkit python3-roman
-  python3-yaml retext
-
+```
 
 
 复制这几个字体到
+```
 ls ~/.fonts | grep sim
 simfang.ttf
 simhei.ttf
@@ -9023,54 +9087,55 @@ fc-list | grep sim
 fc-list :lang=zh-cn
 查看系统字体缓存
 fc-cache -fv
-
+```
 
 
 
 后来觉得，最好还是用 texlive.live 镜像安装最新的
+```
 sudo apt-get install perl-tk
 cd /media/andy/TeXLive2017
 sudo ./install-tl --gui perltk
-
+```
 安装了perl-tk就可以用图形化tlmgr了
+```
 tlmgr --gui
-
+```
 卸载
+```
 tlmgr uninstall
-
+```
+```
 sudo apt-get install texlive
 
 cd /usr/share/texlive/texmf-dist/fonts/truetype
 sudo cp simkai.ttf SIMKAI.TTF
 sudo mktexlsr
 fc-cache -fv
-
+```
 texmaker 选 xelatex
+```
 latex_tikz/test1/test1.tex
-
-
+```
+```
 Installing code2000 package.
 
     Download the package from its respective link http://www.fonts2u.com/code2000.font
     Copy code2000.ttf to /usr/share/fonts/
     fc-cache -fv to refresh font list.
-
-
-
+```
 
 texstudio 也可以选 xelatex 编译
 
 
-
-
-
-
 texlive-full它的各种配置文件啊、环境变量啊，都放在哪里呢？使用tlmgr conf命令即可查看
+```
 tlmgr conf
-
-
+```
+```
 /usr/share/texlive/texmf-dist/tex/latex/ctex/fontset/ctex-xecjk-winfonts.def
-
+```
+```
 \setCJKmainfont[BoldFont={SimHei},ItalicFont={[SIMKAI.TTF]}]
   {SimSun}
 \setCJKsansfont{SimHei}
@@ -9091,10 +9156,9 @@ tlmgr conf
 % \newcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆
 
 \endinput
-
----------------------
+```
 修改为
-
+```
 \setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]
   {SimSun}
 \setCJKsansfont{SimHei}
@@ -9115,32 +9179,26 @@ tlmgr conf
 % \newcommand*{\youyuan}{\CJKfamily{zhyou}} % 幼圆
 
 \endinput
-
-------------------------
-
+```
 
 
-
-
+***
+# nasm
+```
 sudo apt-get install nasm
+```
 
 
+***
+# gvedit
+从graphviz-2.40.1编译gvedit
+
+graphviz-2.40.1/cmd/gvedit/.libs/gvedit 复制到/usr/bin/
 
 
-
-gvedit
-从graphviz-2.40.1编译gvedit，graphviz-2.40.1/cmd/gvedit/.libs/gvedit 复制到/usr/bin/
-
-
-
-
-
-
-
-
-Sat Apr 21 09:40:44 CST 2018
-
-
+***
+# clang
+```
 sudo apt-get install clang
 Suggested packages:
   gnustep gnustep-devel clang-3.5-doc llvm-3.5-doc
@@ -9152,65 +9210,79 @@ The following NEW packages will be installed:
 sudo apt-get install clang clang-3.5-doc llvm-3.5-doc
 
 ## sudo aptitude install gnustep gnustep-devel
+```
 
 
-
-
-
-
-安装、更新autocad替代软件
+***
+# 安装、更新autocad替代软件
 
 draftSight.deb
+
 BricsCAD-V17.2.11-1-zh_CN-amd64.deb
+
 ARES_Commander_2018-2018.1.1.2107-64.deb
+
 这三个默认就在/opt
 
 qcad-3.20.1-trial-linux-x86_64.run
+
 这个用管理员权限应该安装在/opt，普通用户权限是安装在~/opt/
 
-
+```
 cd /usr/local/bin
 sudo gedit draftsight
-------------------------------------
+```
+```
 #!/bin/bash
 /opt/dassault-systemes/DraftSight/Linux/DraftSight
-------------------------------------
+```
+```
 sudo chmod +x draftsight
+```
 
-
-vs code的sync
+***
+# vs code的sync
+```
 54fcf1cf77dd77f18b9491514dc545346e5a479e
+```
 
 
-
-markdown-preview.vim
+***
+# markdown-preview.vim
 配置文件添加
+```
 Bundle 'iamcco/mathjax-support-for-mkdp'
 Bundle 'iamcco/markdown-preview.vim'
+```
 这里是用的0.9的版本的Bundle插件，和最新的命令稍微不同的
+```
 :BundleInstall
+```
 打开md文件后启用
+```
 :MarkdownPreview
+```
 
 to check if vim supports python:
+```
 vim ‐‐version | grep +python
 :version
+```
 或者这样
+```
 :echo has("python")
 :echo has("python3")
-
-
+```
 
 vundle来管理plugin之外，还可以选vim-plug
+
 https://github.com/junegunn/vim-plug
 
 
 
-
-
-
-
-Sat Apr 28 19:10:50 CST 2018
+***
+# qemu
+```
 sudo apt-get install qemu
 sudo apt-get install qemu-kvm
 
@@ -9221,31 +9293,38 @@ The following NEW packages will be installed:
   gir1.2-gtk-vnc-2.0 gir1.2-libvirt-glib-1.0 gir1.2-spice-client-glib-2.0
   gir1.2-spice-client-gtk-3.0 python-ipaddr python-libvirt python-urlgrabber
   virt-manager virt-viewer virtinst
+```
 
+virt-manager 报错不能建立连接（选用ssh新建一个连接可以）
 
-virt-manager
-报错不能建立连接（选用ssh新建一个连接可以）
 https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=765045
+```
 $ virsh --connect qemu:///system --debug 4
 error: failed to connect to the hypervisor
 error: authentication failed: no agent is available to authenticate
 $ virt-manager --debug --no-fork
+```
 看看报错信息
+```
 $ /usr/lib/kde4/libexec/polkit-kde-authentication-agent-1 # 这个我没有安装kde也不需要
+```
 https://wiki.archlinux.org/index.php/Polkit_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
 
 添加文件（好像没有用）
+```
 sudo vim /etc/polkit-1/localauthority/50-local.d/org.libvirt.unix.manage.pkla
-===============================
+```
+```
 [Allow group libvirt management permissions]
 Identity=unix-group:libvirt
 Action=org.libvirt.unix.manage
 ResultAny=yes
 ResultInactive=yes
 ResultActive=yes
-===============================
+```
 
 我这里运行pkexec
+```
 $ pkexec bash
 Authentication is needed to run `/bin/bash' as user andy,,, (andy)
 Authenticating as: ,,, (postgres)
@@ -9255,64 +9334,59 @@ $ pkexec --user andy /bin/bash
 Authentication is needed to run `/bin/bash' as the super user
 Authenticating as: ,,, (postgres)
 Password: 
-
+```
 无论是andy，root或者postgres的密码都不能
+```
 ==== AUTHENTICATION COMPLETE ===
+```
 都是
+```
 ==== AUTHENTICATION FAILED ===
 Error executing command as another user: Not authorized
-
+```
 解决办法
-https://blog.xiaoben.li/p/497
 
+https://blog.xiaoben.li/p/497
+```
 groupadd libvirt # 实际上已经有libvirt组了
 
 usermod -a -G libvirt user_name # 比如添加andy到libvirt组
-
-
+```
 virt-manager就能建立connection了
 
 但是pkexec还是不知道怎么通过authorize，既然virt-manager能用起来了，就不管那么多了。
 
 https://bugzilla.redhat.com/show_bug.cgi?id=1437933
+
 http://blog.wikichoon.com/2016/01/polkit-password-less-access-for-libvirt.html
+```
 usermod --append --groups libvirt `whoami`
+```
 这样也一样
 
 
-
-Qemu独占鼠标之后，要用Ctrl-Alt+g解除
-按下 Ctrl-Alt-1 切到 serial
-
+Qemu独占鼠标之后，要用`Ctrl-Alt+g`解除
+按下 `Ctrl-Alt-1` 切到 serial
 
 
 
-git clone https://github.com/aric1987/stlink.git
-
-
-
-
-
-
-
+***
+# something
+```
 sudo apt-get install libchm-dev
+$ sudo pip install --upgrade pip
+$ sudo pip install intelhex-2.1-py2.py3-none-any.whl
+```
 
 
-
-
+***
+# gitg
+```
 sudo apt-get install gitg
 git difftool -d
-
-
-
-
-
-
-
-
-
+```
 ~/.gitconfig 一个例子
-
+```
 [user]
 	email = denglitsch@gmail.com
 	name = Andreas Zhang
@@ -9334,52 +9408,55 @@ git difftool -d
 	tabsize = 4
 [credential]
 	helper = store
+```
 
 
 
-
-bcompare
+***
+# bcompare
 的配置在~/.config/bcompare,其中BCPreferences.xml文件是预置过滤配置存放的文件 
 
 
 
-mintlinx (Linux Mint 18.3 Sylvia)
-增加shutter和parcellite（desktop文件复制放到~/.config/autostar）
-tips：添加到桌面，再切过去
-好像没有自启动效果
+***
+# mintlinx
+Linux Mint 18.3 Sylvia
 
+增加shutter和parcellite（desktop文件复制放到~/.config/autostar）
+
+tips：添加到桌面，再切过去
+
+好像没有自启动效果
 
 
 其他剪贴板管理器，像diodon，clipit，glipper，parcellite
 
 
-
-
-
-Tue Jul 24 15:56:11 CST 2018
-
-HOME目录下默认路径名称有关的配置文件
+***
+# HOME目录下默认路径名称有关的配置文件
+```
 .config/user-dirs.dirs
 /etc/xdg/user-dirs.conf
 /etc/xdg/user-dirs.defaults
 
 $(XDG_CONFIG_HOME)/user-dirs.dirs (XDG_CONFIG_HOME defaults to ~/.config)
-
+```
 默认的中文路径改成英文路径
+```
 export LANG=en_US
 xdg-user-dirs-gtk-update
+```
 不保留原来名字
-
+```
 export LANG=zh_CN.UTF-8
 xdg-user-dirs-gtk-update
+```
 保留原来名字
 
 
-
-
-
-
-
+***
+# kdevelop
+```
 $ sudo apt-get install kdevelop
 Reading package lists... Done
 Building dependency tree       
@@ -9397,27 +9474,28 @@ The following NEW packages will be installed:
   libprocesscore4abi1 libprocessui4a libsublime8
 0 upgraded, 7 newly installed, 0 to remove and 669 not upgraded.
 Need to get 7,763 kB of archives.
+```
 
 
-
-
-
-安装haroopad
+***
+# 安装haroopad
 最好的markdown编辑器
 
 
 
-
-
-查看库文件符号表
+***
+# 查看库文件符号表
+```
 nm -g --defined-only Appro_2a_lib.a
 objdump -t Appro_2a_lib.a
 nm -g --defined-only libcontrolcan.so
 objdump -t libcontrolcan.so 
+```
 
 
-
-Mon Aug 13 13:36:38 CST 2018
+***
+# wireshark
+```
 $ sudo apt-get install wireshark
 Reading package lists... Done
 Building dependency tree       
@@ -9439,48 +9517,43 @@ The following NEW packages will be installed:
 Need to get 30.9 MB of archives.
 After this operation, 135 MB of additional disk space will be used.
 Do you want to continue? [Y/n] y
+```
 
 
-
-
-2018年 08月 15日 星期三 13:55:18 CST
-
-Mon Aug 20 22:16:59 CST 2018
-处理插u盘不能进入图形界面的问题
+***
+# 处理插u盘不能进入图形界面的问题
 原因是设备号有变化，比如/dev/sda1是/，但是插了个盘让这个玩意变化了，那就不能正确找到要挂载的分区
+
 解决办法，直接用UUID
+
 sudo blkid查看所有分区的UUID
+
 用UUID=xxx替代原来在/etc/fstab里面的/dev/sdXX
 问题解决！
 
 
-
-
-
-禁用笔记本触摸板
+***
+# 禁用笔记本触摸板
 ~/.bashrc 文件，为这两条命令添加别名。
+```
 alias tpOff=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled’ 0”
 alias tpOn=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled’ 1”
+```
 执行source .bashrc，使刚才起的别名生效。
 
 
-
-
-
-
-
-
-$ sudo pip install --upgrade pip
-$ sudo pip install intelhex-2.1-py2.py3-none-any.whl
-
-
-
-
+***
+# miredo
 1、安装miredo
+```
 sudo apt install miredo
+```
 2、在 /etc/systemd/system新建miredo.service文件
+```
 sudo gedit /etc/systemd/system/miredo.service
+```
 3、将以下内容复制粘贴并保存：
+```
 [Unit]
 Description=Teredo IPv6 tunneling
 Requires=network-online.target
@@ -9495,22 +9568,31 @@ RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
+```
 4、设置服务开机启动
+```
 sudo systemctl enable systemd-networkd-wait-online.service
 sudo systemctl enable miredo.service
+```
 
-已在两台笔记本上验证成功，但我并不明白命令的具体含义，只是将几个命令拼在一起。
-#参考文档：https://bugs.launchpad.net/ubuntu/+source/miredo/+bug/1482069
+已在两台笔记本上验证成功。
+
+参考文档
+
+https://bugs.launchpad.net/ubuntu/+source/miredo/+bug/1482069
+
 http://tieba.baidu.com/p/1937157864
+
 https://www.v2ex.com/t/186840
+
 http://www.jinbuguo.com/systemd/systemd-networkd-wait-online.service.html
 
 
 
-
-
-
-## this failed ## 
+***
+# python
+this failed
+```
 pip install sip
 
 pip install pyqt5
@@ -9518,12 +9600,8 @@ pip install pyqt5
 sudo python -m pip install --upgrade pip
 
 pip install xxx -i https://mirrors.163.com/pypi/simple --trusted-host mirrors.163.com
-
-
-
-
-
-
+```
+```
 $ sudo apt-get install libssl-dev openssl 
 Reading package lists... Done
 Building dependency tree       
@@ -9532,9 +9610,9 @@ The following extra packages will be installed:
   libssl1.0.0 libssl1.0.0:i386
 The following packages will be upgraded:
   libssl-dev libssl1.0.0 libssl1.0.0:i386 openssl
+```
 
-
-
+```
 $ sudo apt-get install idle-python*
 Reading package lists... Done
 Building dependency tree       
@@ -9545,8 +9623,6 @@ Note, selecting 'idle-python2.7' for regex 'idle-python*'
 Note, selecting 'idle-python3.4' for regex 'idle-python*'
 The following NEW packages will be installed:
   idle-python2.7 idle-python3.4
-
-
 
 $ sudo apt-get install -y python3-pip
 [sudo] password for andy: 
@@ -9566,11 +9642,6 @@ Need to get 557 kB of archives
 
 sudo apt-get install build-essential libssl-dev libffi-dev python-dev
 
-
-
-
-
-
 $ sudo apt-get install -y python3-venv
 Reading package lists... Done
 Building dependency tree       
@@ -9585,9 +9656,6 @@ The following NEW packages will be installed:
   python-six-whl python-urllib3-whl python3-venv python3.4-venv
 0 upgraded, 11 newly installed, 0 to remove and 389 not upgraded.
 
-
-
-
 $ sudo apt-get install virtualenv
 Reading package lists... Done
 Building dependency tree       
@@ -9597,10 +9665,6 @@ The following extra packages will be installed:
 The following NEW packages will be installed:
   python3-virtualenv virtualenv
 0 upgraded, 2 newly installed, 0 to remove and 389 not upgraded.
-
-
-
-
 
 $ sudo apt-get install software-properties-common
 
@@ -9632,11 +9696,10 @@ Suggested packages:
 The following NEW packages will be installed:
   libdb5.3-dev libgdbm-dev
 0 upgraded, 2 newly installed, 0 to remove and 440 not upgraded.
-
-
-
+```
 
 python3.5以上源码安装好了
+```
 wget https://www.python.org/ftp/python/3.5.6/Python-3.5.6.tar.xz
 tar -Jxvf Python-3.5.6.tar.xz
 cd Python-3.5.6
@@ -9644,13 +9707,11 @@ cd Python-3.5.6
 make all -j8
 sudo make install
 sudo make altinstall
-
-
+```
+```
 sudo pip3.5 install --upgrade pip -i https://mirrors.163.com/pypi/simple
-
-
-
-
+```
+```
 wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz
 tar -Jxvf Python-3.6.4.tar.xz
 cd Python-3.6.4
@@ -9670,9 +9731,6 @@ andy@debian-dell ~/Downloads/eric6-18.09
 $ sudo python3.6 install.py
 
 $ sudo pip3 install pyinstaller -i https://mirrors.163.com/pypi/simple
-
-
-
 
 $ sudo apt-get install -y libopenblas-dev liblapack-dev
 Reading package lists... Done
@@ -9708,15 +9766,12 @@ http://mirrors.ustc.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
 sudo pip3.6 install tensorflow==1.5 -i https://mirrors.163.com/pypi/simple
 sudo pip3.6 install mxnet==1.1 -i https://mirrors.163.com/pypi/simple
-
+```
 下面这一句会删除pip3.5,所以要做个备份
+```
 sudo pip3.6 install --upgrade pip -i https://mirrors.163.com/pypi/simple
-
-
-
-
-
-
+```
+```
 $ sudo apt-get install python3.5 python3.5-dev python3.5-doc
 Reading package lists... Done
 Building dependency tree       
@@ -9733,11 +9788,10 @@ The following packages will be upgraded:
   libmpdec2
 1 upgraded, 8 newly installed
 
+```
 
-
-
-
-## python3 ## 汇总
+## python3 汇总
+```
 python3 -V
 pip3 -V
 sudo easy_install -U pip -i https://mirrors.163.com/pypi/simple
@@ -9762,14 +9816,17 @@ sudo pip3 install tensorflow -i https://mirrors.163.com/pypi/simple
 sudo pip3 install PyHamcrest -i https://mirrors.163.com/pypi/simple
 sudo pip3 install spacy -i https://mirrors.163.com/pypi/simple
 sudo python3 -m spacy download en
+```
 
 
+***
+# locate
+执行locate前先sudo updatedb
 
 
-
-
-
-
+***
+# kicad
+```
 $ sudo apt-get install kicad-doc-zh-cn 
 $ sudo apt-get install kicad-doc-en
 
@@ -9783,29 +9840,33 @@ The following NEW packages will be installed:
   liboce-ocaf-lite-dev liboce-visualization-dev python-wxgtk3.0-dev swig
   swig2.0
 0 upgraded, 9 newly installed
-
+```
 源码安装kicad5
+```
 $ sudo apt-get install swig3.0 ##实际上是源码安装
 $ sudo apt-get remove swig2.0
+```
 是否可以编译安装完之后再补回来？
 
 
-
-
-
 https://www.ipaddress.com/
+
 http://tool.chinaz.com/dns
+
 github.com和github.global.ssl.fastly.net的ip
 
-## /etc/hosts ##
+## /etc/hosts
+```
 192.30.253.112	github.com
 151.101.185.194	github.global.ssl.fastly.net
 151.101.184.133 avatars0.githubusercontent.com
 151.101.184.133 avatars1.githubusercontent.com
 151.101.184.133 assets-cdn.github.com
-
+```
+```
 $ sudo systemctl restart networking.service
-
+```
+```
 ssh alex@47.92.87.217 -X
 scp -r local_folder remote_username@remote_ip:remote_folder
 scp local_file remote_username@remote_ip:remote_folder
@@ -9814,12 +9875,10 @@ scp root@192.168.120.204:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
 
 scp teamviewer_12.0.93330_i386.deb alex@47.92.87.217:/home/alex/Downloads
 scp alex@47.92.87.217:/home/alex/kicad-symbols-git.tar.bz2 .
+```
 
-
-
-
-## github xxnet加速 ##
-
+## github xxnet加速
+```
 export https_proxy="127.0.0.1:8087"
 export http_proxy="127.0.0.1:8087"
 export https_proxy="127.0.0.1:1080"
@@ -9829,31 +9888,27 @@ git config --global http.sslVerify false
 或者git clone -c http.sslverify=false https://github.com/KiCad/kicad-packages3D.git
 export https_proxy="127.0.0.1:9150"
 export http_proxy="127.0.0.1:9150"
+```
 
 
-
-
-
-
-
-pcbnew找不到库
+## pcbnew找不到库
+```
 /etc/ld.so.conf.d
+```
 里面有/usr/local/lib
+```
 sudo /sbin/ldconfig
+```
 使得修改生效,ok
 
+```
 ~/.config/kicad
+```
 fp-lib-table还是要从安装目录下面去找过来才能看到所有的pcb库
 
 
-
-
-执行locate前先sudo updatedb
-
-
-
-
-## kicad-doc ##
+## kicad-doc
+```
 $ sudo apt-get install dblatex
 [sudo] password for andy: 
 Reading package lists... Done
@@ -9895,15 +9950,12 @@ The following NEW packages will be installed:
 0 upgraded, 9 newly installed
 
 
-
 sudo apt-get install asciidoc cmake dblatex fonts-freefont-ttf \
 fonts-vlgothic gettext git make po4a source-highlight \
 texlive-lang-cyrillic texlive-lang-english texlive-lang-european \
 texlive-lang-french texlive-lang-german texlive-lang-italian \
 texlive-lang-japanese texlive-lang-other texlive-lang-polish \
 texlive-lang-spanish texlive-xetex texlive-lang-chinese
-
-
 
 sudo apt-get install asciidoc cmake dblatex fonts-freefont-ttf \
 fonts-vlgothic gettext git make po4a source-highlight \
@@ -9914,29 +9966,25 @@ texlive-lang-all texlive-xetex
 $ sudo apt-get install libffcall1 libffcall1-dev
 
 
-
-
-
 andy@debian-dell ~/Downloads/kicad/kicad-doc/build
 $ cmake -DLANGUAGES=en ..
 
-
 doc在/usr/local/share/doc/kicad
+```
 
-
-
+***
+# AppStream
 AppStream cache update completed, but some metadata was ignored due to errors
+```
 appstreamcli --version
 sudo appstreamcli refresh --force
 apt list --upgradable
+```
 
 
-
-
-
-
-
-
+***
+# something
+```
 $ sudo apt-get remove `dpkg-query -f'${Package}:${Architecture}\n' -W '*:armhf'`
 Reading package lists... Done
 Building dependency tree       
@@ -9956,21 +10004,17 @@ The following packages will be REMOVED:
 After this operation, 70.7 MB disk space will be freed.
 
 $ sudo dpkg --remove-architecture armhf
+```
 
 
-
-
-
-
-忽略升级
+***
+# 忽略升级
+```
 $ apt list --upgradable
 $ sudo apt-mark hold firefox-esr   ##或者修改/etc/apt/apt.conf.d/里的配置文件
 $ sudo apt-get upgrade
-
+```
 比如uex和bcompare什么的
-
-
-
 
 
 sudo apt-get purge sqlitebrowser libqcustomplot1.2
