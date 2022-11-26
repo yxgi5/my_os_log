@@ -1,17 +1,59 @@
+***
+# source.list
+/etc/apt/source.list
+```
+deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb http://archive.canonical.com/ubuntu/ xenial partner
+deb-src http://archive.canonical.com/ubuntu/ xenial partner
+deb http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://security.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse
+```
+```
+$ sudo apt-get update
+$ sudo apt-get upgrade
+```
+如果163源不好使，改成cn.archive
+
+
+***
+# 安装好之后连接无线网络wpa2
+<https://wiki.archlinux.org/index.php/WPA_supplicant_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)>
+```
+$ iwconfig
+```
+初始化root密码
+```
+$ sudo passwd root
+```
+注意: 由于存在进程替换, 这个命令不能带着 sudo 执行, 必须切换到 root 身份, 否则会报错
+```
+# wpa_supplicant -B -i interface -c <(wpa_passphrase MYSSID passphrase)
+Successfully initialized wpa_supplicant
+Failed to open config file '/dev/fd/63', error: No such file or directory
+Failed to read or parse configuration '/dev/fd/63'
+```
+```
+# wpa_supplicant -B -i wlp2s0 -c <(wpa_passphrase qijiu wuxiqijiu)
+$ iwconfig	## 可以看到有信号强度
+$ sudo dhclient	## 找不到dhcpcd命令 不然就用 # dhcpcd interface
+$ ifconfig -a 	## 可以开到分配好了ip等
+```
+
+
 * * *
 # 修改开机时间为3s
 ```
 mod /boot/grub/grub.cfg  0s to 3s
 ```
-
-
-
-
-
-
-
-
-
 
 * * *
 # HOME目录下默认路径名称有关的配置文件
@@ -22,9 +64,8 @@ mod /boot/grub/grub.cfg  0s to 3s
 $(XDG_CONFIG_HOME)/user-dirs.dirs (XDG_CONFIG_HOME defaults to ~/.config)
 
 
-
 * * *
-## 默认的中文路径改成英文路径
+# 默认的中文路径改成英文路径
 不保留原来名字
 ```
 export LANG=en_US
@@ -35,10 +76,6 @@ xdg-user-dirs-gtk-update
 export LANG=zh_CN.UTF-8
 xdg-user-dirs-gtk-update
 ```
-
-
-
-
 
 
 * * *
@@ -90,11 +127,6 @@ build-essential 已经是最新版 (12.1ubuntu2)。
 ```
 
 
-
-
-
-
-
 * * *
 # 无线网卡驱动问题解决 #
 ==升级内核到 4.14.1-041401==
@@ -117,7 +149,6 @@ make
 sudo make install
 sudo modprobe -a 8821ce
 ```
-
 
 
 * * *
@@ -152,19 +183,10 @@ select 3, vim.basic
 ```
 
 
-
-
-
-
-
-
 * * *
 # 安装google拼音 #
 sudo apt-get install fcitx-googlepinyin
 fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk fcitx-ui-classic fcitx-module-dbus ?
-
-
-
 
 
 * * *
@@ -232,10 +254,8 @@ subversion 已经是最新版 (1.9.3-2ubuntu1.1)。
 解压缩后会消耗 12.0 MB 的额外空间。
 ```
 
-
-
 ~/.gitconfig
-=================================
+```
 [user]
 	name = Andreas Zhang
 	email = denglitsch@gmail.com
@@ -247,13 +267,7 @@ subversion 已经是最新版 (1.9.3-2ubuntu1.1)。
 [merge]
 	tool = meld
 
-=================================
-
-
-
-
-
-
+```
 
 
 * * *
@@ -532,14 +546,15 @@ sudo apt-get install retext
 ```
 
 
-
-
-
 * * *
 # 初始化root密码 #
+```
 sudo passwd root
-如果不要密码则用 sudo passwd -u root
-
+```
+如果不要密码则用
+```
+sudo passwd -u root
+```
 如果要root登录
 ```
 sudo gedit /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
@@ -569,12 +584,6 @@ pulseaudio --start --log-target=syslog
 ```
 
 
-
-
-
-
-
-
 * * *
 # 管理员root密码重置 #
 grub启动时候
@@ -584,10 +593,6 @@ passwd
 
 reboot
 ```
-
-
-
-
 
 
 * * *
@@ -605,7 +610,6 @@ sudo apt-get install lxterminal
 需要下载 379 kB 的归档。
 解压缩后会消耗 2,102 kB 的额外空间。
 ```
-
 
 
 * * *
@@ -681,15 +685,17 @@ sudo apt-get install dmenu
 ```
 
 
+***
+# 测试x自带工具的锁屏
+```
+sudo apt-get install x11-xserver-utils
+```
+连带安装cpp cpp-5 libisl15 libmpc3 libmpfr4
 
-
-
-
-
-
-
-
-
+没有必要的玩意，删除掉
+```
+sudo apt-get purge cpp cpp-5 libisl15 libmpc3 libmpfr4 x11-xserver-utils
+```
 
 
 * * *
@@ -712,9 +718,6 @@ sudo apt-get install pcmanfm
 ```
 
 
-
-
-
 * * *
 # 安装leafpad #
 ```
@@ -722,15 +725,9 @@ sudo apt-get install leafpad
 ```
 
 
-
-
-
 * * *
 # 安装foxitreader #
 /opt设置成777权限再安装
-
-
-
 
 
 * * *
@@ -822,14 +819,7 @@ git 已设置为手动安装。
 需要下载 2,261 kB 的归档。
 解压缩后会消耗 7,618 kB 的额外空间。
 ```
-
-
 schema.pl和config.pl的用户名要修改
-
-
-
-
-
 
 
 * * *
@@ -852,13 +842,7 @@ tk-dev 已设置为手动安装。
 需要下载 566 kB 的归档。
 解压缩后会消耗 2,342 kB 的额外空间。
 ```
-
-
 conkyrc文件呢要注意网口的名称
-
-
-
-
 
 
 * * *
@@ -866,8 +850,6 @@ conkyrc文件呢要注意网口的名称
 ```
 sudo apt-get install volumeicon-alsa
 ```
-
-
 
 
 * * *
@@ -878,9 +860,6 @@ sudo mv /etc/xdg/autostart/fcitx-qimpanel-autostart.desktop ~/Desktop
 kill掉fcitx-qimpanel的图标风格##
 
 
-
-
-
 * * *
 # 设置pcmanfm和openbox的图标风格theme #
 ```
@@ -889,9 +868,6 @@ lxappearance
 ```
 
 到菜单选择openbox configuration manager，设置任务栏风格
-
-
-
 
 
 * * *
@@ -909,9 +885,6 @@ sudo apt-get install parcellite
 需要下载 287 kB 的归档。
 解压缩后会消耗 864 kB 的额外空间。
 ```
-
-
-
 
 
 * * *
@@ -943,19 +916,12 @@ pcmanfm的bookmark文件在
 到某个位置用ctrl+d添加书签
 
 
-
-
-
 * * *
 # 配置lxterminal #
 回滚设置成10000行
 光标闪烁cursor blink
 字体monospace 12号
 背景 透明度200
-
-
-
-
 
 
 * * *
@@ -988,10 +954,6 @@ file-roller 已经是最新版 (3.16.5-0ubuntu1.2)。
 需要下载 29.0 MB 的归档。
 解压缩后会消耗 107 MB 的额外空间。
 ```
-
-
-
-
 
 
 * * *
@@ -1027,12 +989,6 @@ sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhe
 解压缩后会消耗 62.7 MB 的额外空间。
 
 ```
-
-
-
-
-
-
 
 
 * * *
@@ -1097,11 +1053,6 @@ iptux
 ```
 
 
-
-
-
-
-
 * * *
 # oracle java #
 开启源
@@ -1132,9 +1083,6 @@ $ sudo apt-get install oracle-java8-installer
 快速设置环境变量
 $ sudo apt-get install oracle-java8-set-default
 ```
-
-
-
 
 
 * * *
@@ -1186,9 +1134,6 @@ sudo apt-get install shutter
 ```
 
 
-
-
-
 * * *
 # 安装gimp #
 ```
@@ -1211,12 +1156,6 @@ sudo apt-get install gimp gimp-gmic gimp-plugin-registry gimp-data gimp-data-ext
 ```
 
 
-
-
-
-
-
-
 * * *
 # 安装vivado2018.2 #
 Xilinx_Vivado_SDK_2018.2_0614_1954.tar.gz
@@ -1224,21 +1163,10 @@ https://www.xilinx.com/support/download.html
 MD5 SUM Value : e878f870bb9d1dfc882b005550cfdbef
 
 
-
-
-
-
-
-
 * * *
 # opera #
 安装完之后呢
 sudo update-alternatives --config x-www-browser
-
-
-
-
-
 
 
 * * *
@@ -1257,9 +1185,6 @@ cmake 已设置为手动安装。
 需要下载 1,393 kB 的归档。
 解压缩后会消耗 4,704 kB 的额外空间。
 ```
-
-
-
 
 
 * * *
@@ -1543,90 +1468,49 @@ sudo apt-get install putty
 解压缩后会消耗 2,713 kB 的额外空间。
 
 
-
-
-
-
-
-
 * * *
 ## xscreensaver ##
 autostart文件
-
 
 
 * * *
 # matlab #
 
 
-
-
-
-
-
 * * *
 # tor #
-
-
-
-
 
 
 * * *
 # ac6 #
 
 
-
-
-
 * * *
 # xmind #
-
-
-
 
 
 * * *
 # vnc server/viewer #
 
 
-
-
-
 * * *
 # modelsim #
-
-
-
 
 
 * * *
 # cadence #
 
 
-
-
-
 * * *
 # qt4 #
-
-
-
-
 
 
 * * *
 # opencv3 #
 
 
-
-
-
 * * *
 # xxnet #
-
-
-
 
 
 * * *
@@ -1636,11 +1520,6 @@ autostart文件
 ```
 nethogs eth0
 ```
-
-
-
-
-
 
 
 * * *
@@ -1663,7 +1542,8 @@ sudo apt-get install nmap
 
 
 查看局域网内的所有ip地址
-arp -a可以试试，但是只能查看到和主机通讯过的ip地址
+
+`arp -a`可以试试，但是只能查看到和主机通讯过的ip地址
 
 用nmap对局域网扫描一遍，然后查看arp缓存表就可以知道局域内ip对应的mac了。nmap比较强大也可以直接扫描mac地址和端口。执行扫描之后就可以 cat/proc/net/arp查看arp缓存表了。
 
@@ -1718,7 +1598,6 @@ $ nmap -PU 192.168.1.0/24　　
 ```
 $ nmap -sS 192.168.1.0/24
 ```
-
 
 
 * * *
@@ -1783,15 +1662,6 @@ $ sudo apt-get install xvfb
 ```
 
 
-
-
-
-
-
-
-
-
-
 * * *
 # 禁用笔记本触摸板 #
 ~/.bashrc 文件，为这两条命令添加别名。
@@ -1800,12 +1670,6 @@ alias tpOff=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enable
 alias tpOn=”xinput set-prop ‘SynPS/2 Synaptics TouchPad’ ‘Device Enabled’ 1”
 ```
 执行source .bashrc，使刚才起的别名生效。
-
-
-
-
-
-
 
 
 * * *
@@ -1826,12 +1690,6 @@ sudo apt-get install bless
 解压缩后会消耗 4,439 kB 的额外空间。
 
 ```
-
-
-
-
-
-
 
 
 * * *
@@ -1939,12 +1797,9 @@ fc-cache: succeeded
 正在处理用于 fontconfig (2.11.94-0ubuntu1.1) 的触发器 ...
 ```
 
-
+```
 sudo dpkg -i wps-office-fonts_1.0_all.deb
-
-
-
-
+```
 
 
 * * *
@@ -1998,8 +1853,6 @@ Error: '-en_US:en' is not a supported language or locale
 ```
 LANGUAGE=”en_US:”
 ```
-
-
 
 
 * * *
@@ -2885,9 +2738,6 @@ The following NEW packages will be installed:
 ```
 
 
-
-
-
 * * *
 # cadence #
 ```
@@ -2936,10 +2786,6 @@ libxcb-xfixes0-dev is already the newest version (1.11.1-1ubuntu1).
 The following NEW packages will be installed:
   libxcb-icccm4-dev
 ```
-
-
-
-
 
 
 * * *
@@ -2993,9 +2839,6 @@ The following NEW packages will be installed:
 ```
 
 
-
-
-
 * * *
 # libmp4v2 #
 ```
@@ -3008,9 +2851,6 @@ The following additional packages will be installed:
 The following NEW packages will be installed:
   libmp4v2-2 libmp4v2-dev mp4v2-utils
 ```
-
-
-
 
 
 * * *
@@ -3103,9 +2943,6 @@ $ x264 -V
 ```
 
 
-
-
-
 * * *
 # tensorflow #
 ```
@@ -3122,7 +2959,6 @@ sudo apt-get install python-pip python-dev
 pip install --upgrade pip
 pip install tensorflow
 ```
-
 
 
 * * *
@@ -3165,9 +3001,6 @@ Need to get 11.3 MB of archives.
 ```
 
 
-
-
-
 * * *
 # eric 6 ide #
 ```
@@ -3186,11 +3019,6 @@ The following NEW packages will be installed:
   libsmokeqtdbus4-3 libsmokeqtgui4-3 libsmokeqtnetwork4-3 libsmokeqtopengl4-3
   libsmokeqtsql4-3 libsmokeqtsvg4-3 libsmokeqtxml4-3 ruby-qscintilla2 ruby-qt4
 ```
-
-
-
-
-
 
 
 * * *
@@ -3379,9 +3207,6 @@ wget http://mirrors.ustc.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_6
 ```
 
 安装它
-
-
-
 
 
 * * *
