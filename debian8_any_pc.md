@@ -7537,44 +7537,32 @@ sudo apt-get install fonts-noto fonts-arphic-ukai
 
 搞一个`~/.config/fontconfig/fonts.conf`
 
+刷新字体缓存
+fc-cache -f -s -v
 
 
-
-vivado安装后有一个烦人的Xilinx Information Center
-https://wiki.archlinux.org/index.php/Autostarting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#.E5.9B.BE.E5.BD.A2.E7.A8.8B.E5.BA.8F
-https://wiki.archlinux.org/index.php/Desktop_entries#Autostart
+***
+# vivado安装后有一个烦人的Xilinx Information Center
+<https://wiki.archlinux.org/index.php/Autostarting_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#.E5.9B.BE.E5.BD.A2.E7.A8.8B.E5.BA.8F>
+<https://wiki.archlinux.org/index.php/Desktop_entries#Autostart>
 可知在
+```
 /etc/xdg/autostart/
 ~/.config/autostart/
+```
 中的desktop文件会被自动运行
+
 删掉里面的Xilinx Information Center就好
 
 
+***
+# 分辨率设置
+`lxrandr`
 
 
-
-
-
-
-
-分辨率设置
-lxrandr
-
-
-
-
-
-Enter passphrase for key '/home/andy/.ssh/id_dsa':
-202619.5
-
-
-
-
-
-
-
-
-参考
+***
+# debiancn源
+```
 sudo apt update;
 sudo apt install apt-transport-https;
 printf "deb https://repo.debiancn.org/ unstable main" > /etc/apt/sources.list.d/debiancn.list;
@@ -7585,113 +7573,98 @@ apt update;
 W: GPG error: https://repo.debiancn.org jessie InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 0D466E1DA2992C9C
 andy@debian-dell ~
 $ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0D466E1DA2992C9C
-
+```
 有一些有趣的包
 
 
-
-
-
-
-
-#刷新字体缓存
-fc-cache -f -s -v
-
-
-
-
-外观管理器
+***
+# 外观管理器
+```
 xfce4-appearance-settings
+```
 选择font
 
 
-bcompare中文部分不正常
+***
+# bcompare中文部分不正常
 option里面fonts选择simsun
 
 
-
-
-
-
+***
+# fcitx
 /etc/environment中加入：
+```
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
+```
 好像foxit reader也还是不能输入中文呢
-这个配置在~/.xinitrc中已经有了
-
-
+这个配置在`~/.xinitrc`中已经有了
 
 foxit reader linux版本也还好用啊, 那还wine个屁
 
 
 
-
+***
+# pcmanfm的menu
+```
 sudo aptitude install libjs-jquery-livequery lxmenu-data
-
-https://forums.linuxmint.com/viewtopic.php?t=53986
-
+```
+<https://forums.linuxmint.com/viewtopic.php?t=53986>
+```
 ~/.config/openbox/environment
 # Set up environmental variables for Openbox
 # Set up applications menu for pcmanfm
 export XDG_MENU_PREFIX="lxde-"
 
 Then logged out and back in and it worked.
+```
 work?work个屁啊,更新了之后pcmanfm的menu://applications/就没有任何东西
 
 不管了, 用nautilus去管理也能管用
 
-
-
-
-
-
-
+```
 sudo apt-get install menu menu-xdg
 update-menus
+```
 
 
-
-
-
-
+***
+# something
+```
 $ sudo apt-get install mtd-utils
-
-
-
 $ sudo apt-get install linux-source-3.16
 $ sudo apt-get install linux-source-4.9
+```
 
 
-
-
-
-IPv6 Linux
+***
+# IPv6 Linux
 安装虚拟网卡miredo
+```
 sudo apt-get install miredo
 sudo miredo
+```
 重启系统之后，需要重新开启miredo
 
 
-
-
-
-
-
-
-
-安装 ise 14.7
-
+***
+# 安装 ise 14.7
+```
 $ sudo apt-get install fxload
 git clone git://git.zerfleddert.de/usb-driver
 
 $ ./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE
+```
 
-lsusb:
+`lsusb`
+
+```
 Bus 001 Device 004: ID 03fd:0008 Xilinx, Inc.
+```
 
-
------ise的启动icon-----
+ise的启动desktop
+```
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -7699,9 +7672,10 @@ Name=ISE 14.7
 Comment=ISE 14.7
 Icon=/opt/Xilinx/14.7/ISE_DS/ISE/data/images/pn-ise.png
 Exec=/opt/Xilinx/14.7/ISE_DS/ise
-----------
+```
 
------脚本名：/opt/Xilinx/14.7/ISE_DS/ise-----
+/opt/Xilinx/14.7/ISE_DS/ise
+```
 #!/bin/bash
 ISE_DS_DIR=/opt/Xilinx/14.7/ISE_DS
 export gmake=/usr/bin/make
@@ -7713,77 +7687,62 @@ export LANG=''  # reset locale to English to fix decimal/comma seperation
 
 "$ISE_DS_DIR"/ISE/bin/lin64/ise
 
-----------
+```
 记得给777权限
 
 
-
-
-
-
-
-
-硬盘饼状图
-baobab
-
-
-
-
-
-
+***
+# ubifs
 在PC上ubuntu使用mkfs.ubifs and ubinize,则我们要用普通的gcc来编译它们，
-同时在ubuntu上装上lzo库：
-sudo apt-get install liblzo2-dev
 
+同时在ubuntu上装上lzo库：
+```
+sudo apt-get install liblzo2-dev
+```
 ubiformat用arm-gcc编译
 
 
+***
+# geany
+```
+$ sudo apt-get install geany geany-common
+```
 
 
-
-
-
+***
+# somethinh
+```
 $ sudo apt-get install python-bsddb3
-
-
-$ sudo apt-get install geany
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  geany-common
-The following NEW packages will be installed:
-  geany geany-common
-0 upgraded, 2 newly installed, 0 to remove and 4 not upgraded.
-
-
-
-
-
 $ sudo apt-get install gnote
 $ sudo apt-get install gnome-search-tool
+```
 
-
-安装arm-linux-gnueabihf-gcc等等
+***
+# 安装arm-linux-gnueabihf-gcc等等
+```
 $ sudo apt-get install binutils-arm-linux-gnueabihf c-compiler-arm-linux-gnueabi
-
-https://wiki.debian.org/CrossToolchains
+```
+<https://wiki.debian.org/CrossToolchains>
+```
 $ deb http://emdebian.org/tools/debian/ jessie main
-## curl http://emdebian.org/tools/debian/emdebian-toolchain-archive.key | sudo apt-key add -
+// curl http://emdebian.org/tools/debian/emdebian-toolchain-archive.key | sudo apt-key add -
 
 $ sudo apt-get install emdebian-archive-keyring
 $ sudo apt-get update
 $ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 7DE089671804772E
 $ sudo dpkg --add-architecture armhf
-
+```
 源整理virtualbox等关闭,163和aliyun的源都没有支持所有架构,http://mirrors.ustc.edu.cn/debian/还行
+
 http://ftp.hk.debian.org/debian/
+
 http://ftp.jp.debian.org/debian/
+
 http://ftp.tw.debian.org/debian/
+
 http://ftp.kr.debian.org/debian/
 
-
+```
 $ sudo apt-get update
 $ sudo apt-get install cross-gcc-dev
 $ sudo apt-get install crossbuild-essential-armhf
@@ -7842,59 +7801,60 @@ The following NEW packages will be installed:
 0 upgraded, 17 newly installed, 0 to remove and 95 not upgraded.
 Need to get 25.1 MB of archives.
 After this operation, 89.2 MB of additional disk space will be used.
-
-
-
+```
+```
 gcc-4.9-arm-linux-gnueabi
 g++-arm-linux-gnueabi
+```
 
+<https://releases.linaro.org/components/toolchain/binaries/7.2-2017.11/>
 
+<https://releases.linaro.org/components/toolchain/binaries/4.9-2017.01/>
 
-https://releases.linaro.org/components/toolchain/binaries/7.2-2017.11/
-https://releases.linaro.org/components/toolchain/binaries/4.9-2017.01/
-https://collaborate.linaro.org/display/TCWGPUB/ARM+and+AArch64+Target+Triples
+<https://collaborate.linaro.org/display/TCWGPUB/ARM+and+AArch64+Target+Triples>
 
 如果要删除,先要
+```
 sudo apt-get remove `dpkg-query -f'${Package}:${Architecture}\n' -W '*:armhf'`
 $ sudo dpkg --remove-architecture armhf
 sudo apt-get remove `dpkg-query -f'${Package}:${Architecture}\n' -W '*:armel'`
 $ sudo dpkg --remove-architecture armel
 sudo apt-get remove .*:arm64
 sudo dpkg --remove-architecture arm64
+```
 
+
+***
+# crosstool-ng
+```
 $ sudo apt-get install xxgdb
-
-
-
-
-
-
-crosstool-ng
 $ sudo apt-get install help2man
+```
 
 
-
-
-
-c c++ 代码风格检查
+***
+# c c++ 代码风格检查
+```
 $ sudo apt-get install cppcheck // 静态分析工具
 $ sudo apt-get install checkstyle // 不知道咋用,配合xml脚本?
 $ pip install cpplint // failed
 $ git clone https://github.com/google/styleguide.git
+```
 这里面有cpplint.py
+
 内核的
+```
 scripts/checkpatch.pl -f **.c
+```
 也可以检查代码风格,参考Documentation/CodingStyle（内核源文档）
 
 
 
-
-<log 不要安装这个,中间无数错误
+***
+# npm <不要安装这个,中间无数错误>
+```
 $ sudo apt-get install npm
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   gyp libc-ares-dev libjs-node-uuid libv8-3.14-dev libv8-3.14.5 node-abbrev
   node-ansi node-ansi-color-table node-archy node-async node-block-stream
@@ -7921,9 +7881,6 @@ The following NEW packages will be installed:
   node-read node-read-package-json node-request node-retry node-rimraf
   node-semver node-sha node-sigmund node-slide node-tar node-tunnel-agent
   node-underscore node-which nodejs nodejs-dev npm
-0 upgraded, 54 newly installed, 0 to remove and 95 not upgraded.
-Need to get 3,353 kB of archives.
-After this operation, 14.4 MB of additional disk space will be used.
 
 $ git clone git://github.com/mozilla/PDF.js.git 
 $ cd PDF.js 
@@ -7931,57 +7888,62 @@ $ sudo npm install -g gulp-cli
 $ npm install 
 $ gulp server 
 http://localhost:8888/web/viewer.html
-/log>
+```
+
+
+***
+# pdf查看
+还是foxit reader好.linux版本还是不错的.实际上wine的版本输入法和粘贴没有问题的话,就已经完美了.
 
 
 
-
-pdf查看还是foxit reader好.linux版本还是不错的.实际上wine的版本输入法和粘贴没有问题的话,就已经完美了.
-
-
-
-
-
-
-
-
-
-dd配pv显示dd进度,例如
+***
+# dd配pv显示dd进度
+```
 sudo dd if=/dev/zero | pv | sudo dd of=/bigemptyfile bs=4096k
+```
 指定大小的dd,例如
+```
 dd if=/dev/zero of=sdcard.img bs=1M count=256
-
 sudo dd if=s5p4418-debian-sd8g-20171017.img | pv | sudo dd of=/dev/sdc bs=4M
-
+```
 dd其实也有支持进度显示(测试无效)
+```
 dd if=/dev/zero of=/dev/null status=progress
+```
 
-复制东西的时候要显示进度
+
+***
+#复制东西的时候要显示进度
+
 安装使用gcp就可以，好像依赖x11
+```
 rsync -a --progress src dest
 pv src > dest
+```
 cp命令本身有一些显示选项比如-v
 
 
-
-
-实际上vncviewer访问nanofire2a板
-加端口号就可以了
+***
+# vncviewer访问开发板
+实际上vncviewer访问nanofire2a板, 加端口号就可以了
+```
 192.168.4.102:1
 密码fa123456
+```
 
 
-
-
+***
+# something
 
 https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html
+```
 $ sudo apt-get install chrpath
-
-
-
+```
 http://processors.wiki.ti.com/index.php/DaVinci_PSP_03.01_GA_(r39)_Release_Notes
-http://arago-project.org/wiki/index.php/Classic_Setting_Up_Build_Environment
 
+http://arago-project.org/wiki/index.php/Classic_Setting_Up_Build_Environment
+```
 $ sudo apt-get install texi2html cvs
 Reading package lists... Done
 Building dependency tree       
@@ -7993,11 +7955,19 @@ The following NEW packages will be installed:
 0 upgraded, 2 newly installed, 0 to remove and 95 not upgraded.
 Need to get 3,065 kB of archives.
 After this operation, 6,033 kB of additional disk space will be used.
+```
 
+```
+$ sudo apt-get install libcupti-dev libcupti-doc libcupti6.0
+$ sudo apt-get install ack-grep libfile-next-perl
+```
 
-
+***
+# bitbake
 http://blog.csdn.net/redhat7890/article/details/5619503
+
 在OE bitbake配置完毕的情况下，执行bitbake 命令时出现：
+```
 $ bitbake midinux-image
 /home/fedora11/stuff/bitbake/lib/bb/COW.py:29: DeprecationWarning: the sets module is deprecated
   import types, sets
@@ -8006,101 +7976,55 @@ ERROR:  Openembedded's config sanity checker detected a potential misconfigurati
     Following is the list of potential problems / advisories:
 
     /proc/sys/vm/mmap_min_addr is not 0. This will cause problems with qemu so please fix the value (as root).
-
+```
 解决办法：
+```
 [root@redora11 stuff]# vim /etc/sysctl.conf
 
 增加一句：vm.mmap_min_addr = 0
 
 [root@redora11 stuff]# sysctl -p
 vm.mmap_min_addr = 0
- 
+ ```
 重新执行bitbake就可以通过。
 
 
 
-
-
-
-
+***
+# 十六进制查看编辑
+```
 xxd: 按字节解释。因为它来自于文本编辑器 Vim 嘛。
 hexdump: 默认类似于 -x 格式，两字节数值解释。你的机器是小端序的。
 od: -t x 指定格式为十六进制整数，省略了大小所以是 sizeof(int)。你指定 -t c 就是字符了。指定 -t x1 就是单字节十六进制整数。
+```
 
 
-
-
-
-
-
-
-
-
-$ sudo apt-get install libcupti-dev
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  libcupti-doc libcupti6.0
-The following NEW packages will be installed:
-  libcupti-dev libcupti-doc libcupti6.0
-0 upgraded, 3 newly installed, 0 to remove and 1 not upgraded.
-Need to get 989 kB of archives.
-After this operation, 4,182 kB of additional disk space will be used.
-
-
-
-
-python 2.7 install tensorflow CPU support only
+***
+# python 2.7 install tensorflow CPU support only
+```
 $ sudo apt-get install python-pip python-dev
 $ pip install tensorflow
+```
 
 
-
-tftp客户端,用于测试本机服务和登录其他服务器
+***
+# tftp客户端,用于测试本机服务和登录其他服务器
+```
 $ sudo apt-get install tftp
+```
 
 
-
-
-$ sudo apt-get install ack-grep 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  libfile-next-perl
-The following NEW packages will be installed:
-  ack-grep libfile-next-perl
-0 upgraded, 2 newly installed, 0 to remove and 1 not upgraded.
-Need to get 86.4 kB of archives.
-After this operation, 313 kB of additional disk space will be used.
-
-
-
-
-
-
+***
+# axel开20个线程下载
+```
 axel -a -n 20 http://pan.baidu.com/file.tar.gz
-开20个线程下载
+```
 
 
-
-
-sudo apt-get install p7zip convmv
-
-LANG=C 7za x your-zip-file.zip
-convmv -f GBK -t utf8 --notest -r .
-第一条命令用于解压缩，而LANG=C表示以US-ASCII这样的编码输出文件名，如果没有这个语言设置，它同样会输出乱码，只不过是UTF8格式的乱码(convmv会忽略这样的乱码)。第二条命令是将GBK编码的文件名转化为UTF8编码，-r表示递归访问目录，即对当前目录中所有文件进行转换。
-
-unar方法
-这个最简单省力，默认debian已经安装了额unar，这个工具会自动检测文件的编码，也可以通过-e来指定：
-unar file.zip
-即可解压出中文文件
-
+***
+# 系统更新
 Sun Dec 31 12:07:47 CST 2017
-
-
+```
 $ sudo apt-get upgrade 
 Reading package lists... Done
 Building dependency tree       
@@ -8115,9 +8039,29 @@ The following packages will be upgraded:
   linux-libc-dev linux-libc-dev:armhf linux-libc-dev:armel linux-source-3.16
   linux-source-4.9 rsync sensible-utils thunderbird unzip
 20 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+```
 
 
+***
+# 解压zip乱码
+```
+sudo apt-get install p7zip convmv
+```
+```
+LANG=C 7za x your-zip-file.zip
+convmv -f GBK -t utf8 --notest -r .
+```
+第一条命令用于解压缩，而LANG=C表示以US-ASCII这样的编码输出文件名，如果没有这个语言设置，它同样会输出乱码，只不过是UTF8格式的乱码(convmv会忽略这样的乱码)。第二条命令是将GBK编码的文件名转化为UTF8编码，-r表示递归访问目录，即对当前目录中所有文件进行转换。
 
+unar方法
+
+这个最简单省力，默认debian已经安装了额unar，这个工具会自动检测文件的编码，也可以通过-e来指定：
+```
+unar file.zip
+```
+即可解压出中文文件
+
+```
 git clone https://github.com/ikohara/dpkg-unzip-iconv.git
 cd dpkg-unzip-iconv
 
@@ -8158,14 +8102,12 @@ unzip_6.0-16+deb8u3iconv1_amd64.deb
 
 
 unzip -O cp936 xxx.zip
+```
 
 
-
-
-
-Mon Jan  1 18:57:24 CST 2018
-
-
+***
+# 旋转屏幕
+```
 To rotate your screen you can try xrandr command:
 
 xrandr -o left
@@ -8179,31 +8121,26 @@ You need to have DISPLAY variable setted:
 export DISPLAY=:0
 
 To be honest, it doesn't work with full-screen text consoles of my computer (it does with 7th GUI screen) but I had a lot of problems with fglrx drivers lately and I don't want to experiment since I barely managed to set everything up. In case of problems you can check here: http://ubuntuforums.org/showthread.php?t=1815538 for help with that command.
-
+```
 https://askubuntu.com/questions/237963/how-do-i-rotate-my-display-when-not-using-an-x-server
+
 https://wiki.archlinux.org/index.php/Xrandr_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+
 http://blog.163.com/alynx@126/blog/static/17292220520098144460560/
+
 http://blog.csdn.net/wangzhen209/article/details/45218825
 
 
-
-
-
-
-
-
-
-
-
-
-
-Mon Jan 15 13:38:26 CST 2018
-安装一个编辑器scite
+***
+# 安装一个编辑器scite
+```
 sudo apt-get install scite sciteproj
+```
 
 
-
-Tue Jan 16 09:42:40 CST 2018
+***
+# quilt
+```
 $ quilt edit hello.c 
 File hello.c is already in patch patches/hello.patch
 
@@ -8214,109 +8151,121 @@ Select an editor.  To change later, run 'select-editor'.
   4. /usr/bin/vim.basic
   5. /usr/bin/vim.gtk
   6. /usr/bin/vim.tiny
+```
 
 
-从dot文件产生图片
+***
+# 从dot文件产生图片
+```
 dot -Tpng test.dot -o test.png
 dot -Tjpg test.dot -o test.jpg
-
+```
 xdot可以直接查看dot文件
 
 
-
-
-
-Thu Feb  8 14:42:45 CST 2018
-安装cmake-gui
+***
+# 安装cmake-gui
+```
 sudo apt-get install cmake-gui
+```
 
 
-
-
-
-多线程编译
+***
+# 多线程编译
+```
 make -j $(nproc)
+```
 实际上我这里是j8
+
 用nproc来说命令移植性好
 
 
-
-
-Tue Feb 13 00:36:19 CST 2018
-
-opencv相关
-
+***
+# opencv相关
+```
 sudo ln -s /usr/include/libv4l1-videodev.h /usr/include/linux/videodev.h
 
 sudo apt-get install build-essential
 sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
 sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+```
 
 
-
-Tue Feb 13 09:56:10 CST 2018
-库路径和环境变量
+***
+# 库路径和环境变量
 两种方法
+
 一种是设置环境变量LD_LIBRARY_PATH
-一种是修改把库路径添加到/etc/ld.so.conf，再运行sudo ldconfig
+
+一种是修改把库路径添加到/etc/ld.so.conf，再运行
+```
+sudo ldconfig
+```
 
 
-
-Sat Mar 10 14:49:55 CST 2018
-
-批量递归删除某类型文件
+***
+# 批量递归删除某类型文件
+```
 find  . -name  '*.exe' -type  f -print -exec  rm -rf  {} \;  
+```
 
 其他find . -type  f -name "*.o"  | xargs rm -f 对含空格和特殊符号的文件名路径名似乎没有起作用
-
+```
 *.PcbLib.Zip
 *.PcbDoc.Zip
 *.SchDoc.Zip
 *.SchLib.Zip
 *.PrjPCB.Zip
-
+```
 发现无法清除干净的.fuse_hiddenxxxxxx文件
+
 删除文件的动作，貌似是执行了的。但是，会马上生成另外一个文件名的文件——也是.fuse_hiddenxxxxxx开头，只是最后一位数字有变化。最后，我这个问题移动硬盘是NTFS文件系统。
+
 tips：SystemTap
+```
 https://serverfault.com/questions/478558/how-to-delete-fuse-hidden-files
     Log in to the system where the file physically resides. (no network mount)
     Execute lsof dir-name/.fuse_hidden000bd8c100000185 to find out what processes are holding the file handle open.
     Terminate those processes if it makes sense to, or figure out what steps you can perform to "gracefully" release the open file handle without terminating the process.
-
+```
 
 没有深入研究，因为用解压软件打开来看，就占用了这样一个临时文件。关闭archive manager就可以删掉了
 
 
-Tue Mar 13 22:29:44 CST 2018
-
-为了能运行UniFlash
+***
+# 为了能运行UniFlash
+```
 andy@debian-dell /opt/ti/uniflash_4.0/node-webkit
 $ ./nw
 ./nw: error while loading shared libraries: libudev.so.0: cannot open shared object file: No such file or directory
 andy@debian-dell /lib/x86_64-linux-gnu
 $ sudo ln -s libudev.so.1.5.0 libudev.so.0
+```
 这样就可以了
 
 
-
-
-
-Wed Mar 14 10:27:25 CST 2018
-安装dcmtk
+***
+# 安装dcmtk
+```
 sudo apt-get install dcmtk dcmtk-doc libdcmtk-dev dcmtk-www libdcmtk2 libdcmtk2
+```
 
+***
+# device-tree-compiler
 根据zynq文档
+```
 sudo apt-get install device-tree-compiler
+```
 
 
-Mon Mar 19 08:54:27 CST 2018
-
-关于miredo服务开启
+***
+# 关于miredo服务开启
+```
 sudo systemctl enable systemd-networkd-wait-online.service
 sudo systemctl enable miredo.service
-
+```
 /lib/systemd/system/ 里面本来就有miredo.service
---------------------------------------------------------------------
+```
 [Unit]
 Description=Teredo IPv6 tunneling
 After=network.target
@@ -8328,10 +8277,10 @@ ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
 WantedBy=multi-user.target
----------------------------------------------------------------------
+```
 
 和参考文件的miredo.service
----------------------------------------------------------------------
+```
 [Unit]
 Description=Teredo IPv6 tunneling
 Requires=network-online.target
@@ -8346,37 +8295,46 @@ RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
----------------------------------------------------------------------
+```
 放到 /etc/systemd/system/
+
 执行sudo systemctl enable miredo.service 会冲突的
+
 所以只用/lib/systemd/system/miredo.service
-
+```
 sudo systemctl start miredo.service
+```
 
 
-
-github操作
+***
+# github操作
 1. github导入本地已有的repo
+
 github新建一个空的project
 
-
 本地检出所有分支
+```
 git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
 git fetch --all
 git pull --all
-
+```
 然后更换本地的remote地址
+```
 git remote rm origin
 git remote add origin https://github.com/yxgi5/my_os_log.git
 git push -u origin master
+```
 之后提示输入账号和密码，等到更新完成即可。
+```
 git push -u origin [其他分支]
-
+```
 本地局域网可以这样地址像这样
+```
 andy@192.168.4.101:/home/andy/repositories/dm368_kernel.git
-
-2. 删除repo
+```
+2. 删除 github repo
 https://github.com/yxgi5/my_os_log/settings
+
 最下面 Danger Zone
 
 

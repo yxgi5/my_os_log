@@ -4999,6 +4999,51 @@ $ sudo apt install screenfetch
 
 
 ***
+# xdot
+```
+$ sudo apt install xdot
+
+The following additional packages will be installed:
+  graphviz libann0 libcdt5 libcgraph6 libgts-0.7-5 libgts-bin libgvc6 libgvpr2
+  liblab-gamut1 libpathplan4
+Suggested packages:
+  graphviz-doc
+```
+从dot文件产生图片
+```
+dot -Tpng test.dot -o test.png
+dot -Tjpg test.dot -o test.jpg
+```
+xdot可以直接查看dot文件
+
+
+***
 #
 ```
 ```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
