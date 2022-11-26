@@ -1,4 +1,31 @@
-## add sudoers ##
+***
+# 更新源
+```
+sudo gedit /etc/apt/sources.list
+sudo apt-get update
+```
+```
+sudo apt-get install aptitude
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  aptitude-common libcwidget3v5
+Suggested packages:
+  apt-xapian-index aptitude-doc-en | aptitude-doc debtags tasksel
+  libcwidget-dev
+The following NEW packages will be installed:
+  aptitude aptitude-common libcwidget3v5
+0 upgraded, 3 newly installed
+```
+添加用户
+```
+sudo passwd hqs
+```
+
+
+***
+# add sudoers
 ```
 # chmod +w /etc/sudoers
 # gedit /etc/sudoers
@@ -8,10 +35,12 @@ andy ALL=(ALL:ALL) ALL
 
 # chmod -w /etc/sudoers
 ```
-或者在/etc/group里面设置sudo的group
+或者在`/etc/group`里面设置sudo的group
 
 
-## 安装gnome ##
+***
+# 安装gnome
+云服务器需要个图形界面
 ```
 alex@iZ8vb9hu2kftezexm9ehyiZ:~$ sudo apt-get install gnome
 Reading package lists... Done
@@ -312,11 +341,33 @@ Do you want to continue? [Y/n]
 ```
 
 
+***
+# ssh server
+```
+sudo apt-get -y  install ssh
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  ncurses-term openssh-server openssh-sftp-server ssh-import-id
+Suggested packages:
+  ssh-askpass rssh molly-guard monkeysphere
+The following NEW packages will be installed:
+  ncurses-term openssh-server openssh-sftp-server ssh ssh-import-id
+0 upgraded, 5 newly installed
+```
+
+
+***
+# 关闭防火墙
+```
+sudo ufw disable
+```
 
 
 
-
-
+***
+# vnc 服务 （无效）
 ```
 sudo apt-get install x11vnc
 Reading package lists... Done
@@ -336,15 +387,54 @@ Need to get 2,926 kB of archives.
 After this operation, 9,674 kB of additional disk space will be used.
 Do you want to continue? [Y/n]
 ```
-
-
-
-* * *
-# vnc密码
+设置 vnc 密码
 ```
 sudo x11vnc -storepasswd /etc/x11vnc.pass
 ```
-上面的无效，删掉
+
+
+* * *
+# 其他
+```
+sudo apt-get install x-window-system-core
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Note, selecting 'xorg' instead of 'x-window-system-core'
+The following packages were automatically installed and are no longer required:
+  linux-headers-4.4.0-87 linux-headers-4.4.0-87-generic
+  linux-image-4.4.0-87-generic linux-image-extra-4.4.0-87-generic
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  xfonts-scalable xinput xorg-docs-core
+Suggested packages:
+  xorg-docs xfonts-75dpi x11-xfs-utils
+The following NEW packages will be installed:
+  xfonts-scalable xinput xorg xorg-docs-core
+0 upgraded, 4 newly installed, 0 to remove and 73 not upgraded.
+Need to get 374 kB of archives.
+After this operation, 702 kB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+```
+
+
+* * *
+# gdm
+```
+sudo apt-get install gdm
+```
+
+
+***
+# 几个桌面环境
+```
+sudo apt-get install --no-install-recommends ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
+sudo apt-get install gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+sudo apt-get install ubuntu-gnome-desktop -y
+sudo apt-get install xfce4
+sudo apt-get install xrdp
+```
+
 
 * * *
 # 进入桌面环境
@@ -352,9 +442,32 @@ sudo x11vnc -storepasswd /etc/x11vnc.pass
 startx
 sudo apt-get install xinit
 ```
+```
+sudo apt-get install xinetd
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  linux-headers-4.4.0-87 linux-headers-4.4.0-87-generic
+  linux-image-4.4.0-87-generic linux-image-extra-4.4.0-87-generic
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libfile-copy-recursive-perl update-inetd
+The following NEW packages will be installed:
+  libfile-copy-recursive-perl update-inetd xinetd
+0 upgraded, 3 newly installed, 0 to remove and 78 not upgraded.
+Need to get 147 kB of archives.
+After this operation, 493 kB of additional disk space will be used.
+```
+
 
 * * *
 # 安装 tightvncserver
+```
+sudo apt-get install tightvncserver
+sudo apt-get install vnc4server tightvncserver vnc4serve
+```
+具体的
 ```
 sudo apt-get install tightvncserver 
 Reading package lists... Done
@@ -392,7 +505,7 @@ Need to get 2,345 kB of archives.
 After this operation, 8,164 kB of additional disk space will be used.
 Do you want to continue? [Y/n] 
 ```
-删掉
+删掉（可以不删）
 ```
 $ sudo apt-get install xrdp vnc4server xbase-clients
 Reading package lists... Done
@@ -408,18 +521,12 @@ Suggested packages:
 The following NEW packages will be installed:
   vnc4server x11-apps x11-session-utils xbase-clients xbitmaps xrdp
 ```
-
-* * *
-# dconf
-```
-sudo dconf-editor
-```
-依次展开org->gnome->desktop->remote-access，然后取消 “requlre-encryption”的勾选
-
-* * *
-# vncserver 启动
+## vncserver 启动
+第一次设置密码
 ```
 $ vncserver
+```
+```
 sudo netstat -tlup | grep vnc
 sudo netstat -anp | grep 5900
 sudo /etc/init.d/xrdp restart
@@ -427,6 +534,20 @@ sudo /etc/init.d/xrdp restart
 sudo iptables -I INPUT -p tcp --dport 5901 -j ACCEPT
 
 nc -z -w 1 47.92.87.217 5901
+```
+
+```
+vncserver -kill :1
+vncserver :1 -geometry 1920x1080
+```
+```
+vncserver -geometry 1366x768 :1
+vncserver -geometry 1920x1080 :1
+```
+```
+ssh alex@192.168.0.82
+vnc4server -kill :1
+vnc4server :1 -geometry 1920x1080
 ```
 
 可以使用如下的方法启动多个桌面的VNC：
@@ -462,28 +583,43 @@ gnome&
 tightvncserver -kill :1
 tightvncserver -geometry 1024x720 :1
 ```
+还可以这样
+sudo apt-get install vim
+vim .vnc/xstartup
+```
+#!/bin/sh
+
+# Uncomment the following two lines for normal desktop:
+export XKL_XMODMAP_DISABLE=1
+unset SESSION_MANAGER
+# exec /etc/X11/xinit/xinitrc
+unset DBUS_SESSION_BUS_ADDRESS
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+vncconfig -iconic &
+xsetroot -solid grey
+
+x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+x-window-manager &
+
+#xfce4-session &
+startxfce4
+
+#gnome-session &
+#gnome-panel &
+#gnome-settings-daemon &
+#metacity &
+#nautilus &
+#gnome-terminal &
+```
 
 
 * * *
-# 其他
+# dconf
 ```
-sudo apt-get install xinetd
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following packages were automatically installed and are no longer required:
-  linux-headers-4.4.0-87 linux-headers-4.4.0-87-generic
-  linux-image-4.4.0-87-generic linux-image-extra-4.4.0-87-generic
-Use 'sudo apt autoremove' to remove them.
-The following additional packages will be installed:
-  libfile-copy-recursive-perl update-inetd
-The following NEW packages will be installed:
-  libfile-copy-recursive-perl update-inetd xinetd
-0 upgraded, 3 newly installed, 0 to remove and 78 not upgraded.
-Need to get 147 kB of archives.
-After this operation, 493 kB of additional disk space will be used.
+sudo dconf-editor
 ```
-
+依次展开org->gnome->desktop->remote-access，然后取消 “requlre-encryption”的勾选
 
 
 * * *
@@ -499,45 +635,6 @@ After this operation, 493 kB of additional disk space will be used.
 # systemctl start vncserver-virtuald.service
 ```
 
-
-
-
-* * *
-# 其他
-```
-sudo apt-get install x-window-system-core
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-Note, selecting 'xorg' instead of 'x-window-system-core'
-The following packages were automatically installed and are no longer required:
-  linux-headers-4.4.0-87 linux-headers-4.4.0-87-generic
-  linux-image-4.4.0-87-generic linux-image-extra-4.4.0-87-generic
-Use 'sudo apt autoremove' to remove them.
-The following additional packages will be installed:
-  xfonts-scalable xinput xorg-docs-core
-Suggested packages:
-  xorg-docs xfonts-75dpi x11-xfs-utils
-The following NEW packages will be installed:
-  xfonts-scalable xinput xorg xorg-docs-core
-0 upgraded, 4 newly installed, 0 to remove and 73 not upgraded.
-Need to get 374 kB of archives.
-After this operation, 702 kB of additional disk space will be used.
-Do you want to continue? [Y/n] 
-```
-* * *
-# gdm
-```
-sudo apt-get install gdm
-```
-
-* * *
-# 其他
-```
-ssh alex@192.168.0.82
-vnc4server -kill :1
-vnc4server :1 -geometry 1920x1080
-```
 
 * * *
 # XX-Net
@@ -587,26 +684,8 @@ The following NEW packages will be installed:
 ```
 
 
-* * *
-# 其他
-```
-vncserver -geometry 1366x768 :1
-vncserver -geometry 1920x1080 :1
-```
-
-## 添加用户
-```
-sudo unity-control-center
-sudo adduser xxx
-```
-## 修改group和passwd for smb
-```
-sudo smbpasswd -a xxx
-```
-smb://192.168.0.82/
-
-
-## samba
+***
+# samba
 ```
 sudo apt-get install cifs-utils 
 Reading package lists... Done
@@ -623,21 +702,40 @@ The following NEW packages will be installed:
 ```
 sudo apt-get install samba samba-common samba-client
 ```
+## 添加用户
 ```
-sudo apt-get install aptitude
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following additional packages will be installed:
-  aptitude-common libcwidget3v5
-Suggested packages:
-  apt-xapian-index aptitude-doc-en | aptitude-doc debtags tasksel
-  libcwidget-dev
-The following NEW packages will be installed:
-  aptitude aptitude-common libcwidget3v5
-0 upgraded, 3 newly installed
+sudo unity-control-center
+sudo adduser xxx
 ```
 
+## 修改group和passwd for smb
+```
+sudo smbpasswd -a xxx
+```
+smb://192.168.0.82/
+
+## 配置smb服务
+```
+sudo vim /etc/samba/smb.conf
+sudo service smbd restart
+sudo service nmbd restart
+sudo smbstatus
+sudo smbpasswd -a alex
+```
+
+## 权限问题
+```
+sudo chown nobody:nogroup * -R
+```
+
+for win 
+```
+\\192.168.0.82
+```
+for linux 
+```
+smb://192.168.0.82/
+```
 
 
 * * *
@@ -650,6 +748,7 @@ https://stackoverflow.com/questions/18940380/xlib-extension-randr-missing-on-dis
 The vnc server you're using does not provide support for dynamically resizing/rotating the screen. midori seems to require this.
 You should use a specific vnc server that supports this extension e.g. vnc4server, and the exception will not be thrown.
 
+
 * * *
 # 其他
 ```
@@ -658,6 +757,20 @@ sudo chgrp -c vision trasmission csd
 ```
 
 
+* * *
+# 输入法可以用ibus
+```
+ibus-daemon &
+```
 
 
-
+***
+# 文件名兼容处理
+执行下面几句
+```
+for f in *;do mv "$f" `echo "$f" | sed 's/[[:space:]]\+/_/g'`; done  ## 空格用_替换
+for files in *;do mv -f "$files" "`echo $files | sed 's/[:：*?"<>（） |]/_/g'`";done ## win非法文件名字符或者违规文件名符号用_替换
+for files in *;do mv -f "$files" "`echo $files | sed 's/_\+/_/g'`";done ## 连续多个_替换为一个
+for f in *;do mv "$f" `echo "$f" | sed 's/_·_/-/g'`; done ## 特殊patern替换
+for f in *;do mv "$f" `echo "$f" | sed 's/_-_/-/g'`; done ## 特殊patern替换
+```
