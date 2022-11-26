@@ -8333,18 +8333,16 @@ git push -u origin [其他分支]
 andy@192.168.4.101:/home/andy/repositories/dm368_kernel.git
 ```
 2. 删除 github repo
+
 https://github.com/yxgi5/my_os_log/settings
 
 最下面 Danger Zone
 
 
 
-
-
-
-
-Thu Mar 22 20:08:49 CST 2018
-lantern(4.5.7)
+***
+# lantern(4.5.7)
+```
 sudo dpkg -i lantern-installer-64-bit.deb
 
 /home/andy/.lantern/bin/lantern: error while loading shared libraries: libappindicator3.so.1: cannot open shared object file: No such file or directory
@@ -8353,11 +8351,12 @@ sudo apt-get install libappindicator3-1
 
 The following NEW packages will be installed:
   libappindicator3-1 libdbusmenu-gtk3-4 libindicator3-7
+```
 
 
-
-[github设置 ssh pgp]
-
+***
+# github设置 ssh pgp
+```
 gpg --list-secret-keys --keyid-format LONG
 gpg --import 公钥和密钥
 gpg --list-secret-keys --keyid-format LONG
@@ -8368,10 +8367,11 @@ gpg --armor --export CD804564527D8490
 git config commit.gpgsign true
 git config --global user.signingkey CD804564527D8490
 //git config --global commit.gpgsign true
-
+```
 邮件要加到github的settings里，并且在邮箱里去确认才会verified
 
 cat /home/andy/.gitconfig
+```
 [user]
 	name = Andreas Zhang
 	email = denglitsch@gmail.com
@@ -8382,10 +8382,13 @@ cat /home/andy/.gitconfig
 	gpgsign = true
 [http]
 	sslVerify = false
+```
 为啥要这么干呢，用本地保存的gpg私钥，加密提交的内容，github或者gitlab上用gpg公钥解密，就保证了数据的加密和不被篡改。
-gpg的私钥为啥要设置密码
-gpg的私钥一旦泄露，就只有密码这最后一道防线了，所以，私钥最好应该加密码，这样最安全。
 
+gpg的私钥为啥要设置密码
+
+gpg的私钥一旦泄露，就只有密码这最后一道防线了，所以，私钥最好应该加密码，这样最安全。
+```
 $ git commit -S -m your commit message
 # Creates a signed commit
 $ git tag -s mytag
@@ -8394,13 +8397,16 @@ $ git tag -v mytag
 # Verifies the signed tag
 $ git push
 # Pushes your local commits to the remote repository
-
+```
 对于github，目前还是没有必要使用加了密码的私钥去加密/签名。
-取消验证gpg签名
-git config commit.gpgsign false
 
+取消验证gpg签名
+```
+git config commit.gpgsign false
+```
 
 这个是俺的gpg公钥
+```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1
 
@@ -8438,42 +8444,51 @@ EG7f6GSJNbSPnWVNb5z+6r2gMMfiGaPXP/b/hcjrzU59KphH5ZUQMUir3qizmK+C
 C4Ajlo8XT55kDlMTi48IMoLLpaYfDCfmgmb/+vIrdIKAq4RmDG98yJAYPXTLSHs=
 =wYsT
 -----END PGP PUBLIC KEY BLOCK-----
-
+```
 
 打开客户机本地git bash,使用如下命令生成ssh公钥和私钥对
+```
 $ ssh-keygen -t rsa -C 'xxx@xxx.com'
 cat $HOME/.ssh/id_rsa.pub
+```
 添加这个公钥到gitlab
 客户也可以登录BS网页管理，root登录。。。
 在最右上管理里的settings，然后再左边条里（目前是root账户 ，那么这个公钥就是root的公钥）
-
+```
 $ ssh -T git@github.com
-....
+```
+```
 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48这个是github的公钥指纹，表明下载了这个公钥
-....
+```
+```
 Hi yxgi5! You've successfully authenticated, but GitHub does not provide shell access.
-
+```
 添加客户机公钥之后，就可以通过ssh方式免密码拉取和提交了
+```
 $ git clone ssh://git@192.168.5.177:222/root/gitlab_test.git
-$ git clone git@github.com:yxgi5/my_os_log.git    
+$ git clone git@github.com:yxgi5/my_os_log.git 
+```   
 默认端口等效于
+```
 $ git clone ssh://git@github.com:22/yxgi5/my_os_log.git
 $ git clone ssh://git@192.30.253.112:22/yxgi5/my_os_log.git
-
-这个是俺的ssh公钥, 命令cat $HOME/.ssh/id_rsa.pub
+```
+这个是俺的ssh公钥, 命令`cat $HOME/.ssh/id_rsa.pub`
+```
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDGmzfCtRm+PN6YxOwvrH9xLs+1N7AIJpRiHCdrBKlNwlxw0CCCWKQDi73ZhSA9KTHzp2zAnEfAQ37bFEQ6xoPo5yQcDBTj8CwArbaZ1nxn527BgX58CW8ZJYmzQ/xDqR3ktd1Z356gOfqNMICzPJM5kK4AtjMlmqQXbLhR0eYKu19ZTmUlh+EIss7S+kzeRfKBeW+QgwqLPWnrj8so0GoyMfvsUIfxK/pyvqYIUvFGD6RBTH/8WVH276yFEc7+E5nmz58oqAY1kDMD2DVNB7xImD6nINYsM8XytPSj9GXoCHW0Ld60ZsJVSFmFMTEiu+pG5SI5WYzmHcjRaJzRWWf denglitscg@gmail.com
+```
 
 
-
-
-Wed Mar 28 14:03:34 CST 2018
-
+***
+# gcc-arm-none-eabi
+```
 sudo apt-get install gcc-arm-none-eabi libnewlib-arm-none-eabi binutils-arm-none-eabi gdb-arm-none-eabi
+```
 
 
-
-Fri Mar 30 13:34:34 CST 2018
-
+***
+# insight 等
+```
 $ wget ftp://sourceware.org/pub/insight/releases/insight-6.8-1a.tar.bz2
 $ tar jxvf insight-6.8-1a.tar.bz2
 $ cd insight-6.8-1/
@@ -8485,28 +8500,20 @@ sed -i 's/subsubsection/subsection/' ./bfd/doc/elf.texi
 
 $ make
 $ make install
-
+```
 解决端口号无法修改的bug，没有成功
+```
 $ ./configure --target=arm-none-linux-gnueabi --prefix=/home/andy/insight-arm --disable-werror --with-solib-absolute-prefix=/opt/codesourcery/arm-2009q1/arm-none-linux-gnueabi/libc/lib
-
+```
 端口号直接用1000暂时也没问题，不过配合jlink的话会有端口问题，修改代码 或者 使用界面上的gdb命令手动敲啦
 
-
+```
 $ sudo apt-get install kdbg
-
 $ sudo apt-get install cgdb
-
-
-
-
-
-
-
-
-
-
+```
 
 gdb前端还是insight最好使！旧版本(6.8及之前)由于编译器原因各种问题
+```
 git clone git://sourceware.org/git/insight.git
 cd insight
 git submodule init
@@ -8516,21 +8523,24 @@ autoconf
 $ ./configure --libdir=/home/andy/insight/lib64 --disable-binutils --disable-elfcpp --disable-gas --disable-gold--disable-gprof --disable-ld --disable-rpath --disable-zlib --with-gdb-datadir=/home/andy/insight/share/insight --with-jit-reader-dir=/home/andy/insight/lib64/insight --with-separate-debug-dir='/home/andy/insight/lib/debug' --with-expat --with-python --without-libunwind --prefix=/home/andy/insight
 
 make && make install
-
+```
 运行insight-git(8.1.50)需要的库
+```
 $ sudo apt-get install itcl3 itcl3-dev itcl3-doc itk3 itk3-dev itk3-doc iwidgets4 
-
-
-
-
+```
 
 启动gdb时候有个告警
+```
 warning: the debug information found in "/lib64/ld-2.19.so" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch)
+```
 据说是libc6 libc6-dbg版本不一致
-https://stackoverflow.com/questions/28834807/can-crc-mismatch-cause-error-in-connection-with-libnetcdff-so-6
-$ sudo apt-get install libc6 libc6-dbg libc6-dev libc6-i386 libc6-x32
-无效
 
+https://stackoverflow.com/questions/28834807/can-crc-mismatch-cause-error-in-connection-with-libnetcdff-so-6
+```
+$ sudo apt-get install libc6 libc6-dbg libc6-dev libc6-i386 libc6-x32
+```
+无效
+```
 $ ls /lib64/ld-2.19.so 
 /lib64/ld-2.19.so
 andy@debian-dell ~/insight/bin
@@ -8544,14 +8554,16 @@ cb9d6ceb30bbf18b06b2281ee6f882f6  /lib64/ld-2.19.so
 andy@debian-dell ~/insight/bin
 $ md5sum /lib/x86_64-linux-gnu/ld-2.19.so
 c9bd48abebc39c0881f847ecdc23029b  /lib/x86_64-linux-gnu/ld-2.19.so
-
+```
 这两个文件的确不一样哈
 
 
 Confused about packages libc6-amd64 and libc6:amd64
+
 https://askubuntu.com/questions/660759/confused-about-packages-libc6-amd64-and-libc6amd64
 
 查询文件属于那个安装包
+```
 andy@debian-dell ~/insight/bin
 $ dpkg-query -S /lib/x86_64-linux-gnu/ld-2.19.so
 libc6:amd64: /lib/x86_64-linux-gnu/ld-2.19.so
@@ -8564,55 +8576,55 @@ i   libc6                           - GNU C Library: Shared libraries
 andy@debian-dell ~/insight/bin
 $ aptitude search libc6-amd64
 i   libc6-amd64:i386                - GNU C Library: 64bit Shared libraries for
-
+```
 查询安装包依赖关系
+```
 apt-cache rdepends libc6:amd64
 apt-cache rdepends libc6-amd64
-
-
+```
+```
 sudo apt-get remove libc6-amd64:i386
 $ ls /lib64/ld-2.19.so
 ls: cannot access /lib64/ld-2.19.so: No such file or directory
-
+```
 问题解决！
 
-
-
-
 再编译一个支持arm调试的，8.1.50.20180330-git
+```
 export PATH=/opt/codesourcery/arm-2009q1/bin:$PATH
 ./configure --libdir=/home/andy/insight-arm/lib --disable-binutils --disable-elfcpp --disable-gas --disable-gold--disable-gprof --disable-ld --disable-rpath --disable-zlib --with-gdb-datadir=/home/andy/insight-arm/share/insight --with-jit-reader-dir=/home/andy/insight-arm/lib/insight --with-separate-debug-dir='/home/andy/insight-arm/lib/debug' --with-expat --with-python --without-libunwind --prefix=/home/andy/insight-arm --target=arm-none-linux-gnueabi
-
+```
 完美解决port不能修改的问题
-
 
 如果无法run了，删掉~/.gdbtkinit 配置就重置了
 
 
-
-
-
-下载回来的压缩包不完整可能报错
+***
+# 下载回来的压缩包不完整可能报错
+```
 tar: Skipping to next header
 tar: Exiting with failure status due to previous errors
+```
 不论是否sudo都有这个错误，就要检查sha1 sha256
 
 
-
+***
+# gnuarmeclipse
+```
 $ sudo ln -s /opt/gnuarmeclipse/qemu/2.8.0-201703022210-head/bin/qemu-system-gnuarmeclipse /usr/local/bin/qemu-system-gnuarmeclipse
+```
 
 
-
-
-
-
-Tue Apr 10 14:07:26 CST 2018
-全文搜索工具
+***
+# 全文搜索工具
+```
 $ sudo apt-get install recoll
+```
 gedit ~/.recoll/recoll.conf
+```
 indexallfilenames = 1
 indexedmimetypes = text/abcd
-
+```
 
 
 
