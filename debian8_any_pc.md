@@ -1,5 +1,6 @@
-<log install and config sudo>
-
+***
+# install and config sudo
+```
 $ su
 # apt-get install sudo
 # chmod +w /etc/sudoers
@@ -7,15 +8,17 @@ $ su
 （等效于visudo命令）
 // add this line
 andy	ALL=(ALL:ALL) ALL
-</log>
+```
 
+***
+# sources.list
+比如163,aliyun都要用https,更稳定连接
 
-sources.list
-比如163,aliyun都要用https,更稳定连接 tip: 查发行版本名称lsb_release -cs，会获得比如jessie等名称
+tip: 查发行版本名称`lsb_release -cs`，会获得比如jessie等名称
 
-////////////////////////////////////////////////////////////////////
-// install openbox
-
+***
+# install openbox
+```
 $ sudo apt-get install openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n gksu lxdm
 //Suggested packages:
 //  openbox-kde-session
@@ -37,9 +40,11 @@ $ sudo apt-get install lxappearance
 $ sudo apt-get install pcmanfm libfm-tools nautilus-actions
 $ sudo apt-get install lxterminal
 $ sudo apt-get install leafpad
+```
 
-////////////////////////////////////////////////////////////////////
-// install firefox and flash-plugin
+***
+# install firefox and flash-plugin
+```
 // default browser is iceweasel, also based on firefox
 $ sudo apt-get install flashplugin-nonfree ttf-mscorefonts-installer ttf-xfree86-nonfree
 $ sudo gedit /etc/apt/sources.list
@@ -67,35 +72,39 @@ $ sudo leafpad /var/lib/dpkg/status
 $ sudo dpkg -P firefox-mozilla-build
 $ sudo apt-get --purge autoremove firefox-mozilla-build
 $ sudo apt-get autoclean
-
-////////////////////////////////////////////////////////////////////
-
+```
+```
 sudo leafpad /etc/profile
-////////////////////////////////////////////////////////////////////
+```
+```
 if [ "`id -u`" -eq 0 ]; then
   PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 else
   PATH="/usr/local/bin:/usr/bin:/bin:/sbin:/usr/local/games:/usr/games:/usr/sbin:/usr/local/sbin"
 fi
 export PATH
-////////////////////////////////////////////////////////////////////
+```
 
+***
+#切换中文目录为英文目录 使用命令来转换中文目录为英文目录。
 
-
-切换中文目录为英文目录 使用命令来转换中文目录为英文目录。
 即/home中的“桌面”、“下载”等等转换成“Desktop”、“Downloads”等等。
+```
 export LANG=en_US
 xdg-user-dirs-update
+```
 选 update
+```
 export LANG=zh_CN.UTF-8
 xdg-user-dirs-update
-或xdg-user-dirs-gtk-update
+```
+或`xdg-user-dirs-gtk-update`
 选“不要再提醒”和“保持原来的名称”
 
 arch无效
 
 
-
+```
 echo en_US > ~/.config/user-dirs.locale
 修改~/.config/user-dirs.dirs
 XDG_DESKTOP_DIR="$HOME/Desktop"
@@ -106,14 +115,15 @@ XDG_DOCUMENTS_DIR="$HOME/Documents"
 XDG_MUSIC_DIR="$HOME/Music"
 XDG_PICTURES_DIR="$HOME/Pictures"
 XDG_VIDEOS_DIR="$HOME/Videos"
-
-
+```
+```
 mkdir Desktop Downloads Templates Public Documents Music Pictures Videos
 rm -rf 公共  视频  文档  音乐 模板  图片  下载  桌面
+```
 
-
-
-// essential tools
+***
+# essential tools
+```
 $ sudo apt-get install aptitude
 $ sudo apt-get install apt-file
 $ sudo apt-file update
@@ -143,7 +153,6 @@ $ sudo apt-get install remmina libfreerdp-plugins-standard libxcomp3 nxproxy rem
 Ubuntu之间远程登录用remmina，协议选VNC-虚拟网络
 
 
-
 $ sudo apt-get install dpkg-dev build-essential
 $ sudo apt-get install debian-keyring debian-keyring g++-multilib g++-4.9-multilib gcc-4.9-doc libstdc++6-4.9-dbg gcc-multilib autoconf automake libtool flex bison
 $ sudo apt-get install gcc-doc gcc-4.9-multilib gcc-4.9-locales libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg libasan1-dbg liblsan0-dbg libtsan0-dbg autoconf-doc apt-mirror
@@ -160,21 +169,22 @@ file-roller就是archive manager
 // $ apt-get install java-package
 // $ sudo apt-get install fakeroot doxygen doxygen-doc doxygen-latex doxygen-gui
 $ sudo apt-get install fakeroot doxygen doxygen-doc doxygen-gui
-
+```
+```
 $ sudo apt-get install virtualbox virtualbox-guest-additions-iso virtualbox-qt virtualbox-dkms linux-headers-amd64 linux-headers-3.16.0-4-all linux-headers-3.16.0-4-common
 $ sudo apt-get install gcc-4.8-multilib gcc-4.8-doc 
 $ systemctl status virtualbox.service
-
-
+```
+```
 $ sudo sh -c 'echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list
 $ sudo sh -c 'echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 $ sudo apt-get update
 $ sudo apt-get install oracle-java8-installer
-
+```
+```
 $ sudo leafpaf /etc/apt/sources.list
 deb http://archive.ubuntukylin.com:10006/ubuntukylin trusty main
-
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D259B7555E1D3C58
 $ sudo apt-get update
 
@@ -184,42 +194,26 @@ deb-src http://ppa.launchpad.net/fcitx-team/nightly/ubuntu trusty main
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 7E5FA1EE
 $ sudo apt-get update
 
-
-
-
-
-
-
 $ sudo apt-get install fcitx-googlepinyin
-
-
-
-
-
-
-
 //$ sudo apt-get install fcitx fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-all fcitx-frontend-gtk3:amd64 fcitx-libs:amd64 fcitx-libs-gclient:amd64 fcitx-libs-qt:amd64 fcitx-module-cloudpinyin fcitx-module-dbus fcitx-module-kimpanel fcitx-module-x11 fcitx-modules fcitx-qimpanel-configtool fcitx-ui-classic fcitx-sogoupinyin sogoupinyin
 
 $ sudo apt-get install fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-all fcitx-frontend-gtk3:amd64 fcitx-libs:amd64 fcitx-libs-gclient:amd64 fcitx-libs-qt:amd64 fcitx-module-cloudpinyin fcitx-module-dbus fcitx-module-kimpanel fcitx-module-x11 fcitx-modules fcitx-ui-classic sogoupinyin
 $ sudo apt-get install fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-all fcitx-frontend-gtk3:amd64 fcitx-libs:amd64 fcitx-libs-gclient:amd64 fcitx-libs-qt:amd64 fcitx-module-cloudpinyin fcitx-module-dbus fcitx-module-kimpanel fcitx-module-x11 fcitx-modules fcitx-pinyin fcitx-ui-classic fcitx-sunpinyin fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-table-all sogoupinyin fcitx-ui-classic fcitx-ui-light
 $ sudo apt-get install libopencc1
 
-
-
-
-
 $ sudo im-config
-
-出现如下图所示，点击确定>确定
+```
+出现窗口点击确定>确定
 这里选择fcitx即可，然后确定
 接下来注销系统重新登录，此时输入法应该就可以用了，如果依旧不行，请打开fcitx配置，将输入法顺序排列即可
 如果依旧不行的话，请运行如下命令检查输入法依赖是否安装齐全，这里给出我的依赖列表
+```
 dpkg --get-selections | grep fcitx
 fcitx -r --enable sogou-qimpanel
 fcitx -r --enable fcitx-qimpanel&&fcitx-qimpanel
+```
 重置托盘就行。。。汗
-
-
+```
 // sudo apt-get remove fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-all fcitx-frontend-gtk3:amd64 fcitx-libs:amd64 fcitx-libs-gclient:amd64 fcitx-libs-qt:amd64 fcitx-module-cloudpinyin fcitx-module-dbus fcitx-module-kimpanel fcitx-module-x11 fcitx-modules fcitx-qimpanel-configtool fcitx-ui-classic fcitx-sunpinyin fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-table-all sogoupinyin fcitx-ui-qimpanel --purge
 
 // sudo apt-get remove --purge fcitx-mozc fcitx fcitx-table-wubi-large fcitx-frontend-all fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt4 fcitx-config-gtk fcitx-ui-classic fcitx-module-kimpanel fcitx-module-dbus libopencc1 fcitx-libs-qt fcitx-m17n fcitx-tools m17n-docs
@@ -237,15 +231,18 @@ fcitx -r --enable fcitx-qimpanel&&fcitx-qimpanel
 //sogou-qimpanel 设置成6s
 
 //!!!最重要的，在启动器里调整sogou-qimpanel的启动延迟，就可以了，不要启动fcitx-qimpanel, 但是如果不安装fcitx-ui-qimpanel,搜狗面板又不能切出,看着很蛋疼
+```
 
 搞一些ubuntu kylin的工具过来使使
+```
 //andy@andy-dell ~ $ sudo apt-get install ubuntu-kylin-software-center indicator-china-weather youker-assistant chinese-calendar fcitx-ui-qimpanel libcurl3 libcurl3:i386 libqxt-core0 libqxt-gui0
 $ sudo apt-get install libqxt-core0 libqxt-gui0
 $ sudo apt-get install libboost-iostreams1.55.0 kuaipan4uk
 $ sudo apt-get -f install
-
+```
 
 搞一些deepinlinux的东东过来
+```
 # sudo gedit /etc/apt/sources.list &
 # add this line temperary
 # deb http://packages.linuxdeepin.com/deepin trusty main non-free universe
@@ -266,15 +263,15 @@ $ sudo apt-get -f install
 # andy@andy-dell ~ $ sudo apt-get update
 # andy@andy-dell ~ $ sudo apt-get install python-deepin-gsettings deepin-music-player wps-office opera
 
-
-
 apt-cache search libmng
 aptitude search libmng
 $ sudo apt-get install libmng1 libmng-dev 
 //$ sudo apt-get install deepin-music-player deepin-media-player deepin-terminal
+```
 会自动安装mplayer
 
-sudo apt-get -f install 不久得了，自动解决依赖问题。。。库依赖还是不太能解决，如果库里面都删除以前版本的话
+`sudo apt-get -f install` 不久得了，自动解决依赖问题。。。库依赖还是不太能解决，如果库里面都删除以前版本的话
+```
 #编译缺失的查找，没用过
 #apt-get install apt-file
 #apt-file update
@@ -285,13 +282,13 @@ sudo apt-get -f install 不久得了，自动解决依赖问题。。。库依�
 //sudo apt-key adv --recv-keys --keyserver wwwkeys.pgp.net 07DC563D1F41B907
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 07DC563D1F41B907
 
-
 sudo apt-get install python-javascriptcore git
 git clone https://github.com/sumary/dmusic-plugin-baidumusic.git
 cd dmusic-plugin-baidumusic
 cp -r baidumusic ~/.local/share/deepin-music-player/plugins/
-
+```
 再添加一些音频视频播放器
+```
 //$ sudo apt-get install ffmpeg smplayer smplayer-themes smplayer-translations
 $ sudo apt-get install smplayer smplayer-themes
 //$ sudo apt-get install rhythmbox rhythmbox-plugins rhythmbox-mozilla rhythmbox-plugin-cdrecorder rhythmbox-plugin-zeitgeist
@@ -307,10 +304,10 @@ sudo apt-get install gecko-mediaplayer
 //sudo aptitude install smplayer2 smplayer2-common		
 //sudo apt-get remove mplayer-gui mplayer-nogui mplayer-skin-blue mplayer-fonts 
 sudo apt-get autoremove
-
-
+```
 
 设置远程登录
+```
 andy@andy-dell:~$ sudo apt-get install rdesktop grdesktop 
 andy@andy-hp:~/kylinlog$ rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andy -f 192.168.1.99 &
 目标机器要打开桌面共享，取消每次都要确认
@@ -332,8 +329,9 @@ $ sudo /etc/init.d/xrdp restart
 $ x0vncserver -display :0 -passwordfile ~/.vnc/passwd 
 $ sudo /etc/init.d/xrdp status
 $ sudo systemctl start xrdp
+```
 
-
+```
 $ sudo apt-get install qemu skyeye
 
 //$ sudo apt-get install spacefm udevil
@@ -344,22 +342,27 @@ $ sudo apt-get install xarchiver fluid idesk
 
 $ sudo apt-get install qt-sdk qv4l2
 $ sudo apt-get install alsa-tools alsa-tools-gui alsamixergui 
-
+```
 Carbon  
 Openbox Theme
 http://openbox.org/wiki/Openbox:Themes
 http://box-look.org/content/show.php/Carbon?content=59418
- ~/.themes/ 
+
+~/.themes/ 
+```
 $ sudo aptitude install gtk-theme-switch gtk2-engines
 $ sudo aptitude install lxrandr
 $ sudo apt-get install volumeicon-alsa
-
+```
 
 在 ~/.config/openbox/autostart 下加入
-(The autostart script is located at ~/.config/openbox/autostart.sh. If that file does not exist, then the system-wide default script, located at /etc/xdg/openbox/autostart.sh, is run instead)
-背景图片
-feh --bg-scale /path/to/your/background/image.jpg
 
+(The autostart script is located at ~/.config/openbox/autostart.sh. If that file does not exist, then the system-wide default script, located at /etc/xdg/openbox/autostart.sh, is run instead)
+
+背景图片
+```
+feh --bg-scale /path/to/your/background/image.jpg
+```
 桌面图标使用的是 idesk，感觉比较复杂，没办法，除了 rox，没什么比较好的选择。
 idesk 的相关配置文件可以参考 /usr/share/idesk/
 引用：
@@ -370,6 +373,7 @@ Sample configuration files can be found in /usr/share/idesk/. These files contai
 
 自启动还可以在
 随桌面启动的autostart
+```
 /etc/xdg/autostart
 /usr/share/autostart
 /usr/share/gdm/autostart
@@ -377,90 +381,79 @@ Sample configuration files can be found in /usr/share/idesk/. These files contai
 ~/.config/autostart
 ~/.kde/share/autostart
 ~/.local/share/autostart
+```
 
-
-
+```
 $ sudo apt-get install apt-show-versions
 // apt-show-versions fcitx-ui-qimpanel
 安装dpkg-scanpackages
 $ sudo apt-get install dpkg-dev
-
 $ sudo apt-get install wps-office ttf-mscorefonts-installer
-
 $ sudo apt-get install aria2 axel curl
-
 //$ aptitude search proz
+```
 
-
-
-
+```
 $ sudo apt-get install vim ctags vim-doc vim-scripts exuberant-ctags libtemplate-perl ispell vim-addon-manager
 复制配置文件过来
 $ sudo apt-get install vim-gtk
-
-
+```
+```
 $ sudo apt-get install synaptic
 $ sudo apt-get install okular
 $ sudo apt-get install usbview iptux
 $ sudo aptitude install nautilus-share samba smbclient smbfs system-config-samba winbind
-
-
 sudo apt-get install libreoffice
 //sudo apt-get install xchm chmsee
 $ sudo apt-get install chm2pdf xchm
 //#sudo apt-get install ffmpeg smplayer smplayer-themes smplayer-translations
 //sudo apt-get install smplayer smplayer-l10n
 //sudo apt-get install rhythmbox rhythmbox-plugins rhythmbox-mozilla rhythmbox-plugin-cdrecorder rhythmbox-plugin-zeitgeist
-
+```
 audacious等，ref to https://pkgs.org/download/audacious
+
 For jessie (stable) amd64, armel, armhf, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel and powerpc packages
+
 add in your /etc/apt/sources.list
+
 non-free is for i386 and amd64 arches only.
+```
 deb http://www.deb-multimedia.org jessie main non-free
-
+```
 要安装libaudcore3 audacious audacious-plugins
-
+```
 sudo aptitude -f install audacious xmms2 audacious-plugins
 $ sudo apt-get install gecko-mediaplayer audacious xmms2 audacious-plugins
 $ sudo apt-get install gnome-mplayer gecko-mediaplayer libgda-5.0-bin libgda-5.0-mysql libgda-5.0-postgres libgmlib1-dbg libgmtk1-dbg
 sudo apt-get autoremove
 $ sudo apt-get install goldendict
-
-
-
-
+```
+```
 //# sudo add-apt-repository ppa:matthaeus123/mrw-gimp-svn
 //# sudo apt-get update
 $ sudo apt-get install gimp gimp-data gimp-plugin-registry gimp-data-extras
-
-
-
+```
+```
 $ sudo apt-get install htop w3m tmux awesome suckless-tools
-
 $ sudo apt-get install fbgrab netpbm dstat
-
-
 //$ sudo apt-get install openjdk-7-jdk
 // sudo apt-get install gcj-jdk
 // sudo apt-get install eclipse eclipse-cdt eclipse-jdt codeblocks
 $ sudo apt-get install eclipse eclipse-cdt eclipse-jdt
 $ sudo apt-get install xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf
 $ sudo apt-get install wps-office ttf-mscorefonts-installer wps2odt wps2epub
-
 $ sudo apt-get install aria2 axel
 $ sudo apt-get install filezilla
 //#sudo add-apt-repository ppa:deluge-team/ppa
 //#sudo apt-get update
 $ sudo apt-get install deluge
-
-
-
-
-
+```
+```
 $ sudo aptitude install xfce4 xfce4-goodies slim
+```
 不要用slim，用lxdm
 
-
+```
 $ sudo apt-get install libappindicator1
 $ sudo apt-get install pepperflashplugin-nonfree
 $ sudo update-pepperflashplugin-nonfree --install
@@ -477,14 +470,11 @@ The following packages will be REMOVED:
 The following NEW packages will be installed:
   conky-all libaudclient2 libxnvctrl0
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-
 // sudo apt-get install chromium-browser chromium-codecs-ffmpeg-extra chromium-browser-l10n
 $ sudo apt-get install chromium-l10n chromium-inspector chromium opera-stable
+```
 
-
-
-
+```
 deb http://ppa.launchpad.net/ubuntu-wine/ppa/ubuntu trusty main 
 #deb-src http://ppa.launchpad.net/ubuntu-wine/ppa/ubuntu trusty main
 
@@ -496,7 +486,6 @@ $ sudo sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 F9
 $ sudo sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 94625C2F
 
 //$ sudo apt-get install winetricks wine-mono4.5.6 wine-gecko2.40 
-
 
 $ sudo apt-get install qemu qemu-user-static vde2 sgabios ovmf debootstrap
 
@@ -517,13 +506,17 @@ env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
 //andy@andy-hp:~$ winetricks
 
 // sudo apt-get install wine winetricks wine-mono0.0.8 wine-mono0.0.8:i386 wine-gecko2.21 wine-gecko2.21:i386 liblcms2-utils:i386 dosbox:any pulseaudio-esound-compat oss-compat
-
+```
 
 
 pulseaudio会导致alsamixer的speaker开机静音 声音 音量
+
 修改
+```
 /usr/share/pulseaudio/alsa-mixer/paths/analog-output.conf
+```
 and change this:
+```
 [Element Speaker]
 switch = mute
 volume = off
@@ -531,13 +524,17 @@ to this:
 [Element Speaker]
 switch = mute
 volume = merge
+```
 类似这样的修改，重启之后就有声音了
 
-
+git log 显示一例
+```
 andy@andy-hp:~/kylinlog$ git commit -a -m "远程登陆,安装配置wine"
 andy@andy-hp:~/kylinlog$ git log --pretty=format:"%h %s" --graph
+```
 
 wine 纸黄金交易通
+```
 andy@andy-hp:~/.wine/drive_c/Program Files (x86)/纸黄金交易通$ export LANG=zh_CN.UTF-8
 andy@andy-hp:~/.wine/drive_c/Program Files (x86)/纸黄金交易通$ wine mygold.exe
 
@@ -559,9 +556,10 @@ sudo add-apt-repository ppa:ubuntu-wine/ppa
 sudo apt-get update
 sudo apt-get install wine1.7 winetricks wine-mono4.5.2 libwine-gecko-2.21 wine-gecko2.34 winbind
 $ winetricks riched20 riched30 ie8 vcrun6 vcrun2005sp1 gdiplus cjkfonts corefonts wenquanyi
+```
 这里字体可能影响了gnome的
 
-
+```
 sudo add-apt-repository ppa:ubuntu-wine/ppa
 sudo apt-get update
 
@@ -585,15 +583,27 @@ http://www.westernpacificresearch.com/downloads/
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 ie6 gdiplus
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash
-
+```
 安装wine的程序
+```
 beyond compare, source insight, winrar, thunder5, foxit reader 3.0, minithunder
-快捷方式在/home/andy/.local/share/applications
-桌面整合在/home/andy/.config/menus/applications-merged
+```
+快捷方式在
+```
+/home/andy/.local/share/applications
+```
+桌面整合在
+```
+/home/andy/.config/menus/applications-merged
+```
 
 不少是可以跑到windows分区去绿色执行的
+
 UltraEdit，汇金，迅雷5
 
+
+ia32-libs
+```
 sudo apt-get install libgtk2.0-0:i386
 而不是sudo apt-get install ia32-libs ia32-libs-gtk
 sudo apt-get install libp11-kit-gnome-keyring:i386
@@ -602,13 +612,17 @@ sudo chown root:root getlibs
 sudo chmod +x getlibs
 sudo mv -n getlibs /usr/bin
 sudo ln -s /usr/lib32/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so /usr/lib/i386-linux-gnu/pkcs11/gnome-keyring-pkcs11.so
-(http://askubuntu.com/questions/127848/wine-cant-find-gnome-keyring-pkcs11-so)
-
+```
+<http://askubuntu.com/questions/127848/wine-cant-find-gnome-keyring-pkcs11-so>
+```
 sudo cp qq2013.tar.gz /opt/longene/qq/
+```
 用自己重新做的qq2013.tar.gz替换/opt/longene/qq/qq2013.tar.gz
+
 可以用了
 
 要安装其他软件到longene的wine
+```
 export 
 LANG=zh_CN.utf8
 LONGENE_DIR=/opt/longene
@@ -616,11 +630,12 @@ WINE_DIR=$LONGENE_DIR/qq/wine-lib
 WINEPREFIX_DIR=$HOME/.longene/qq
 
 env WINEPREFIX=$WINEPREFIX_DIR $WINE_DIR/bin/winecfg
+```
 
 
-
-------------------------------------------------------------------------------------
-// add source.list
+***
+# source.list
+```
 deb http://mirrors.163.com/ubuntu/ trusty main universe restricted multiverse
 deb http://mirrors.163.com/ubuntu/ trusty-updates universe main multiverse restricted
 deb http://mirrors.163.com/ubuntu/ trusty-proposed universe main multiverse restricted
@@ -630,13 +645,16 @@ deb http://mirrors.163.com/ubuntu/ trusty-backports main multiverse restricted u
 # deb-src http://mirrors.163.com/ubuntu/ trusty-security universe main multiverse restricted
 # deb-src http://mirrors.163.com/ubuntu/ trusty-updates universe main multiverse restricted
 # deb-src http://mirrors.163.com/ubuntu/ trusty-proposed universe main multiverse restricted
-	# deb-src http://mirrors.163.com/ubuntu/ trusty-backports universe main multiverse restricted
-
+# deb-src http://mirrors.163.com/ubuntu/ trusty-backports universe main multiverse restricted
+```
+```
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 C0B21F32
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 437D05B5
+```
 
-
-
+***
+# gcc
+```
 $ sudo apt-get install gcc-arm-none-eabi gcc-avr avr-libc libnewlib-doc avrdude avrdude-doc avr-libc libnewlib-dev binutils-avr avrprog openocd skyeye
 $ sudo apt-get install gdb-arm-none-eabi gdb-avr gdb gdb-mingw-w64 gdbserver gdb-doc gcc-mingw-w64 gcc-msp430 gcc-multilib gdb-msp430 msp430-libc msp430mcu 
 
@@ -644,15 +662,18 @@ $ sudo apt-get install gdb-arm-none-eabi gdb-avr gdb gdb-mingw-w64 gdbserver gdb
 $ sudo apt-get install  mspdebug binutils-msp430 sdcc
 $ sudo apt-get install lib32z1 lib32ncurses5 g++-multilib gcc-multilib
 $ sudo apt-get install emacs vim-gtk cscope exuberant-ctags
-
-------------------------------------------------------
+```
+```
 http://ftp.yzu.edu.tw/eclipse/tools/cdt/releases/8.7/cdt-8.7.0.zip
 http://avr-eclipse.sourceforge.net/wiki/index.php/The_AVR_Eclipse_Plugin
 http://sourceforge.net/projects/gnuarmeclipse
 http://opensource.zylin.com/embeddedcdt.html
 http://opensource.zylin.com/zylincdt
 http://sourceforge.net/projects/eclipse-sdcc/?source=dlp
-------------------------------------------------------
+```
+
+
+```
 $ leafpad ~/.bashrc
 export WINEPREFIX=$HOME/.wine/
 export WINEARCH=win32
@@ -675,36 +696,39 @@ wine unins000.exe
 http://packages.linuxdeepin.com/deepin/pool/main/d/deepinwine-foxitreader4/deepinwine-foxitreader4_0.0.2_all.deb
 http://packages.linuxdeepin.com/deepin/pool/main/d/deepinwine-foxitreader5/deepinwine-foxitreader5_0.0.1_all.deb
 
+```
 
 
-//硬盘分区挂载出现“Not authorized to perform operation“的问题 
-
+***
+# 硬盘分区挂载出现“Not authorized to perform operation“的问题 
+```
 $ sudo mkdir /mnt/c_win /mnt/d_win /mnt/e_win
-
-// fstab
-
+```
+fstab
+```
 /dev/sda2	/               ext4    errors=remount-ro 0       1
 /dev/sda1	/mnt/c_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
 /dev/sdb1	/mnt/d_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
 /dev/sdb2	/mnt/e_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
-
-
+```
+```
 su 
 cd /etc/polkit-1/localauthority/50-local.d/
-
-（你的文件编辑器）
 leafpad 50-filesystem-mount-system-internal.pkla
-
-文件内：
+```
+文件内
+```
 [Mount a system-internal device]
 Identity=*
 Action=org.freedesktop.udisks2.filesystem-mount-system
 ResultActive=yes
-
+```
 立即生效。真有效
 
-
+```
 leafpad /usr/share/polkit-1/actions/org.freedesktop.udisks2.policy 
+```
+```
 Mount a device
 Mount a filesystem
 Mount a filesystem on a system device
@@ -712,12 +736,12 @@ Mount a filesystem on a system device
       <allow_any>yes</allow_any>
       <allow_inactive>yes</allow_inactive>
       <allow_active>yes</allow_active>
+```
 
-
-======================================
+***
+# pdf
+```
 $ sudo apt-get install pdftk
-
-
 $ sudo apt-get install gdebi
 ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 // 最好不要安装 
@@ -730,15 +754,17 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   libharfbuzz0b
 $ sudo apt-get install libatk1.0-0:i386 libcairo2:i386 libdatrie1:i386 libgdk-pixbuf2.0-0:i386 libgraphite2-3:i386 libgtk2.0-0:i386 libharfbuzz0b:i386 libjasper1:i386 libpango-1.0-0:i386 libpangocairo-1.0-0:i386 libpangoft2-1.0-0:i386 libpixman-1-0:i386 libthai0:i386 libxcb-render0:i386 libxcb-shm0:i386
+```
 
-
-
-
+***
+# wine-gecho
+```
 $ sudo apt-get install wine-gecko2.40:i386 wine-gecko2.36:i386 wine-gecko2.34:i386 wine-gecko2.24:i386 wine-gecko2.21:i386 wine-gecko2.40 wine-gecko2.36 wine-gecko2.34 wine-gecko2.24 wine-gecko2.21
+```
 
-
-
-
+***
+# xournal
+```
 // careful
 //$ sudo apt-get install xournal
 //可以加画线，但是删除了下面的包
@@ -762,11 +788,12 @@ The following NEW packages will be installed:
 The following packages will be upgraded:
   ghostscript libgs9 libgs9-common
 3 upgraded, 5 newly installed, 30 to remove and 195 not upgraded.
+```
 
 
-
-
-降级ghostscript libgs9 libgs9-common
+***
+# 降级ghostscript libgs9 libgs9-common
+```
 $ sudo apt-get remove libjpeg-turbo8 libjpeg8 xournal libgs9
 $ sudo apt-get install cups cups-filters evince gimp gimp-gmic gimp-plugin-registry gir1.2-evince-3.0 gnome gnome-core gnome-documents gnome-sushi hplip libevdocument3-4 libevview3-3 libspectre1 okular printer-driver-c2050 printer-driver-gutenprint printer-driver-hpcups printer-driver-pnm2ppa printer-driver-postscript-hp printer-driver-pxljr printer-driver-splix task-gnome-desktop task-print-server ghostscript 
 
@@ -781,74 +808,76 @@ $ sudo apt-get install libjpeg-turbo-progs libturbojpeg1 xscreensaver-data-extra
 
 $ sudo apt-get install cups cups-filters evince gimp gimp-gmic gimp-plugin-registry gir1.2-evince-3.0 gnome gnome-core gnome-documents gnome-sushi hplip libevdocument3-4 libevview3-3 libjpeg-turbo-progs libspectre1 libturbojpeg1 okular printer-driver-c2050 printer-driver-gutenprint printer-driver-hpcups printer-driver-pnm2ppa printer-driver-postscript-hp printer-driver-pxljr printer-driver-splix task-gnome-desktop task-print-server xscreensaver-data-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-webcollage
 
+$ sudo apt-get install thunderbird-mozilla-build
+$ sudo apt-get install libgnutls28
+```
 
-
-$ sudo apt-get install thunderbird-mozilla-build 
-
-////////////////////////////////////////////////////////
-
-
-
-
-
-sudo apt-get install libgnutls28
-
-
-////////////////////////////////////////////
-
-清理源去掉ubuntu的源
-升级gnome
+***
+# 清理源去掉ubuntu的源, 升级gnome
+```
 $ sudo aptitude install gnome-panel
 $ sudo apt-get install gnome-session*
 $ sudo apt-get install gnome-shell*
 $ sudo aptitude install gnome-a* libgtk-3-dev libgtk2.0-dev libpango1.0-dev libharfbuzz-dev libharfbuzz0b libharfbuzz0b gnome-themes gnome-games gnome-clocks gnome-ppp gnome-rdp gnome-audio gnome-boxes gnome-bluetooth gnome-tweak-tool gnome-user-guide gnome-user-share gnome-nettool gnome-mines gnome-icon-theme gnome-chess gnome-breakout gnome-calculator gnome-terminal gnome-system-tools gnome-genius gnome-hearts gnome-font-viewer gnome-extra-icons gnome-flashback gnome-nibbles gnome-mplayer gnome-schedule gnome-screensaver gnome-search-tool gnome-sound-recorder gnome-menus gnome-accessibility-themes gnome-keyring gnome-maps  
+```
 
-
+```
 $ sudo apt-get install pdfcube
 $ sudo apt-get install mupdf* pdfsam
+```
 直接用pdf studio好了。
 
 
-
+***
+# obmenu-generator
+```
 $ sudo cpan
 $ sudo cpan install Linux::DesktopFiles Data::Dump
-obmenu-generator
+$ obmenu-generator
+```
 
+```
 $ sudo mv /etc/xdg/autostar/fcitx-ui-sogou-qimpanel.desktop ~/Desktop/
+```
 
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-u盘挂载了但不能访问，检查一下挂载点的权限，要给r+x
-
-andy@debian-dell:~$ sudo leafpad /etc/apt/sources.list
-andy@debian-dell:~$ sudo apt-get update && sudo apt-get upgrade
+***
+# u盘挂载了但不能访问，检查一下挂载点的权限，要给r+x
 
 
-$ sudo apt-key add all_keys
+***
+# 还原备份后处理
+```
+sudo leafpad /etc/apt/sources.list
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-key add all_keys
 echo "alias cd..='cd ..'" >> ~/.bashrc
-
-
+```
 updata-doc放到/usr/bin
 
+***
+# winavr
 
-winavr
 https://sourceforge.net/p/winavr/code/HEAD/tree/
+
 https://github.com/embecosm/winavr.git
+
 winavr-code放到～
+
 目录名修改为winavr @@ 20180412
 
+***
+# gedit
+```
 $ sudo apt-get install dconf-tools
 $ dconf-editor
 依次点开->org->gnome->gedit->preferences->encodings
 改成
 ['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+```
 
-
-
-
-    让Leafpad不再乱码  
-      
+***
+#让Leafpad不再乱码  
+```
     系统自带的记事本-leafpad 默认是UTF8编码的，打开GBK的文本自然会乱码，但是leafpad其实也是支持GBK的  
       
     root打开 /usr/share/applications/leafpad.desktop 文件  
@@ -859,11 +888,16 @@ $ dconf-editor
     改为 name[zh_CN]=记事本[GBK]  
       
     或在Leafpad菜单命令中改也是一样  leafpad --codeset=gbk %f  
-
+```
 上面的办法不好，开uft的文件就会乱码
 
-mkdir -p ~/share
 
+***
+# samba share
+```
+mkdir -p ~/share
+```
+```
 [global]
 workgroup = WORKGROUP
 security = user
@@ -875,44 +909,62 @@ public = no
 writable = yes
 printable = no
 create mask = 0644
+```
 
-// 建立samba用户密码
+建立samba用户密码
+```
 $ sudo pdbedit -a -u andy
 == $ smbpasswd -a andy
 $ smbclient -L 192.168.1.106 -U%
 $ testparm -s
 //$ sudo /etc/init.d/samba restart
+```
 
+***
+# rarreg.key
+```
 //$ sudo chattr +a *
 //$ sudo chattr +a .*
 $ sudo chattr +i rarreg.key
 $ sudo chattr -i rarreg.key
 $ lsattr -a
+```
 
-
+***
+# apt-key
+```
 $ apt-key exportall > all_keys
 $ sudo apt-key add all_keys
+```
 
+***
+# flashplugin
+```
 $ sudo apt-get install flashplugin-nonfree-extrasound 
 $ sudo update-flashplugin-nonfree --install
+```
 
-
-
-
-
-
-
+***
+# getskype
 //$ wget http://www.skype.com/go/getskype-linux-deb-32
 //$ sudo dpkg -i getskype-linux-deb-32
 
-<log >
+***
+# minicom等
+```
 $ sudo apt-get install pidgin-otr 
 $ sudo apt-get install minicom lrzsz
 $ dconf write /org/gnome/shell/overrides/button-layout '":minimize,maximize,close"'
 $ sudo apt-get install k3b
-</log>
+$ sudo apt-get install ffmpegthumbs
+$ sudo apt-get install amarok
+$ sudo apt-get install k3b lame
+$ sudo apt-get install libncursesw5-dev
+```
 
-
+***
+# chrome
+```
 //Download and install Google Public key
 //$ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub
 //$ sudo apt-key add linux_signing_key.pub
@@ -921,13 +973,12 @@ $ sudo apt-get install k3b
 //# exit
 //$ sudo apt-get update
 //$ sudo apt-get install google-chrome-stable
+```
 
-<log >
-$ sudo apt-get install ffmpegthumbs
-$ sudo apt-get install amarok
-$ sudo apt-get install k3b lame
-</log>
 
+***
+# 生成grub的配置文件
+```
 // Debian or Ubuntu
 // 一定加sudo，普通用户不要直接用sbin下的
 //generate new grub.cfg
@@ -941,34 +992,26 @@ $ sudo apt-get install k3b lame
 //$ sudo apt-get install grub2-common  //没有 update-grub命令时,先运行这个安装命令 
 //or
 //$ sudo apt-get install grub-common  //没有 update-grub命令时,先运行这个安装命令 
+```
 
-<log >
-$ sudo apt-get install libncursesw5-dev
-</log>
-
-
-
-
-
-
-
-
-
+***
+# 剪贴板
 Gpaste 这个 Shell Extension
+```
 //$ sudo apt-get install gpaste-applet glippy
 //$ sudo apt-get install parcellite 
 //$ sudo apt-get install xmonad awesome
+```
 
-
-
-
-
-
-//dock 工具
+***
+# dock 工具
+```
 //$ sudo apt-get install plank
+```
 
-
-
+***
+# btsync
+```
 // btsync 太难搞了，老子不高兴弄了
 $ sudo gedit /etc/apt/sources.list
 
@@ -978,16 +1021,24 @@ $ sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 6BF18B15
 //$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 6BF18B15
 $ sudo apt-get update
 $ sudo apt-get install btsync btsync-gui
+```
 
-// 用iptux
+***
+#  用iptux
+```
 // $ export LANG=zh_CN.UTF-8
 // wine ipmsg
+```
+//iptux无法传文件, 但是可以传输文件夹
+```
+netstat -tanp
+killall pname
+ulimit -a  
+```
 
-
---------------------------------------
-ti dvsdk && ridgerun evsdk
-
-
+***
+# ti dvsdk && ridgerun evsdk
+```
 $ sudo apt-get install u-boot-tools lrzsz minicom nfs-kernel-server tftpd xinetd libncurses5-dev
 $ sudo apt-get install slang-xfig
 $ sudo apt-get install quilt
@@ -1005,20 +1056,24 @@ cd RidgeRun-SDK-DM36x-Turrialba-Eval/bsp/oscheck
 cp ubuntu.common debian.common
 cp ubuntu.tools debian.tools
 cp ubuntu-14.04_64.sh debian-8.2_64
-
+```
 安装之后立即把downloads包扔进安装目录
 且把 README.md 文件删除
-
+```
 make config
 make VERBOSE=1
 make clean -i
 make install
+```
 
-
-
+***
+# winrar
 wine winrar
 
-// 安装百度云
+
+***
+#  安装百度云
+```
 sudo apt-get install python3-dev python3-setuptools python3-crypto python3-keyring python3-lxml python3-pyinotify python3-secretstorage
 sudo apt-get install python-pip
 $ sudo apt-get install libssl-dev libssl1.0.0
@@ -1085,27 +1140,22 @@ sudo apt-get install python-tk
 https://openapi.baidu.com/oauth/2.0/authorize?scope=basic+netdisk&redirect_uri=oob&response_type=code&client_id=q8WE4EpCsau1oS0MplgMKNBn
 yxgi7@aliyun.com的授权码
 51f55a0346b6f13b21b84f509757f6b1
+```
 
-
-
-
-
+***
+# locales
+```
 sudo aptitude install locales
 //sudo apt-get install dpkg-awk
 sudo dpkg-reconfigure locales
+```
 
-
-//iptux无法传文件, 但是可以传输文件夹
-netstat -tanp
-killall pname
-
-ulimit -a  
-
-
-
-
+***
+# 默认浏览器
+```
 $ sudo update-alternatives --config x-www-browser
-[sudo] password for andy: 
+```
+```
 There are 4 choices for the alternative x-www-browser (providing /usr/bin/x-www-browser).
 
   Selection    Path                           Priority   Status
@@ -1117,17 +1167,22 @@ There are 4 choices for the alternative x-www-browser (providing /usr/bin/x-www-
   4            /usr/bin/opera                  200       manual mode
 
 Press enter to keep the current choice[*], or type selection number: 3
+```
 
-//default app 相关内容
+***
+# default app 相关内容
 https://wiki.archlinux.org/index.php/Default_applications#MIME_types_and_desktop_entries
-https://wiki.archlinux.org/index.php/Xdg-open#Set_the_default_browser
 
+https://wiki.archlinux.org/index.php/Xdg-open#Set_the_default_browser
+```
 $ xdg-mime default browser.desktop x-scheme-handler/http
 $ xdg-mime default browser.desktop x-scheme-handler/https
 $ xdg-mime default browser.desktop text/html
-// 上面三句有效
+```
+上面三句有效
 
-// 其他
+其他
+```
 Processing triggers for shared-mime-info (1.3-1) ...
 Unknown media type in type 'all/all'
 Unknown media type in type 'all/allfiles'
@@ -1137,16 +1192,19 @@ Unknown media type in type 'uri/mmsu'
 Unknown media type in type 'uri/pnm'
 Unknown media type in type 'uri/rtspt'
 Unknown media type in type 'uri/rtspu'
-
+```
+```
 $ sudo gedit /usr/share/mime/packages/kde.xml
+```
 删除上面有关的部分内容
 
 类似的
+```
 Unknown media type in type 'chemical
-...
-
+```
+```
 sudo rm /usr/share/mime/packages/chemical-mime-data.xml
-
+```
 
 
 该错误源于KDE，自2008年以来一直没有修复：
