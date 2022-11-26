@@ -85,6 +85,8 @@ fi
 export PATH
 ```
 
+firefox可以通过alt键调出menu bar，所以隐藏掉好了，隐藏digo signin bar
+
 ***
 #切换中文目录为英文目录 使用命令来转换中文目录为英文目录。
 
@@ -760,6 +762,7 @@ $ sudo apt-get install libatk1.0-0:i386 libcairo2:i386 libdatrie1:i386 libgdk-pi
 # wine-gecho
 ```
 $ sudo apt-get install wine-gecko2.40:i386 wine-gecko2.36:i386 wine-gecko2.34:i386 wine-gecko2.24:i386 wine-gecko2.21:i386 wine-gecko2.40 wine-gecko2.36 wine-gecko2.34 wine-gecko2.24 wine-gecko2.21
+$ sudo apt-get install libwine-gecko-2.21
 ```
 
 ***
@@ -1246,7 +1249,10 @@ $ sudo apt-get install qucs gtkwave
 
 ***
 # stellarium星空图
+```
 $ sudo apt-get install stellarium
+qtquick1-qml-plugins stellarium stellarium-data
+```
 
 
 ***
@@ -5485,22 +5491,26 @@ $ sudo apt-get install mdbtools mdbtools-gmdb mdbtools-dev
 $ sudo apt-get install unixodbc mdbtools
 $ gmdb2    
 ```
+```
 /etc/udev/rules.d/51-altera-usb-blaster.rules
+```
+```
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
-    
-    
+``` 
+```
 $ sudo apt-get install lzma lzma-dev liblzma-dev liblzma5 liblzma5:i386 python-lzma
 $ sudo apt-get install devscripts
 $ sudo apt-get install libxmu-dev:i386 libxmu-headers:i386
 $ sudo apt-get install putty
 $ sudo apt-get install hexedit dhex dmg2img
 $ sudo apt-get install libxft2:i386
+```
 重装uex，bcomapre
-    
+``` 
 $ sudo apt-get install isomaster    
 $ sudo apt-get install okteta
     
@@ -5641,23 +5651,22 @@ sudo apt-get install games-minesweeper
     
 fuseiso_20070708-3ubuntu1_amd64.deb
 acetoneiso_2.4-1_amd64.deb
-</log>     
-    
-    
-    
-    
-<log 安装 kwplayer>
+```
+
+
+***
+# 安装 kwplayer
+```
 sudo apt-get install python3-feedparser python3-html2text python3-ply kwplayer
 //# dpkg -i kwplayer_xx.deb
 //# apt-get -f install
-</log>   
-      
-    
-    
-    
-<log 重建 iptux>
-// 处理apt-get安装的iptux传输（准确说是发送）文件大小为0的问题
+```
 
+
+***
+# 重建 iptux
+处理apt-get安装的iptux传输（准确说是发送）文件大小为0的问题
+```
 $ sudo apt-get install libgst-dev
 Reading package lists... Done
 Building dependency tree       
@@ -5667,7 +5676,6 @@ The following extra packages will be installed:
 The following NEW packages will be installed:
   libgst-dev libgst7
 
-
 sudo apt-get purge iptux
 sudo apt-get install git libgtk2.0-dev libgconf2-dev g++ make autoconf libtool automake
 git clone git://github.com/iptux-src/iptux.git
@@ -5676,26 +5684,28 @@ cd iptux
 make
 sudo make install
 iptux
-
+```
 iptux设置
+```
 为了与windows网络通信，
 networking
 把通信用的coding改成gbk    
 候选设置是utf-16,utf-8
-
+```
 更新版本的用cmake编译
+```
 sudo apt-get install git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake
 git clone git://github.com/iptux-src/iptux.git
 cd iptux
 mkdir build && cd build && cmake .. && make
 sudo make install
 iptux
+```
 
-</log>
-  
-    
-    
-<log Unknown media type >
+
+***
+# Unknown media type
+```
 Processing triggers for shared-mime-info (1.3-1) ...
 Unknown media type in type 'all/all'
 Unknown media type in type 'all/allfiles'
@@ -5705,46 +5715,59 @@ Unknown media type in type 'uri/mmsu'
 Unknown media type in type 'uri/pnm'
 Unknown media type in type 'uri/rtspt'
 Unknown media type in type 'uri/rtspu'
-
+```
+```
 $ sudo gedit /usr/share/mime/packages/kde.xml
+```
 删除上面有关的部分内容
-</log>
-    
-    
 
-<log >
+
+***
+# freemat octave
+```
 $ sudo apt-get install freemat octave
+```
 运行 
+```
 freemat
+```
 或者
+```
 octave --force-gui
-</log>
+```
 
-    
-    
-<log 安装 xz>    
+
+***
+# 安装 xz
+``` 
 $ aptitude search lzma
 $ sudo apt-get install lzma lzma-dev liblzma-dev liblzma5 liblzma5:i386 python-lzma
-
-// 安装xz-git
+```
+安装xz-git
 5.2.2的xz-utils，默认配置安装后，要建立so文件的软链
-
+```
 ./autogen.sh
 ./configure --prefix=/usr --disable-rpath --enable-werror
 make
 sudo make install
-
+```
+```
 $ sudo rm /lib/x86_64-linux-gnu/liblzma.so.5
 $ sudo ln -s /usr/lib/liblzma.so.5.2.2 /lib/x86_64-linux-gnu/liblzma.so.5
 $ sudo ln -s /usr/lib/liblzma.so.5.2.2 /lib/x86_64-linux-gnu/liblzma.so
+```
 这样就能用-T=0 -z
 
-// 卸载
+卸载
+```
 sudo make uninstall
+```
 liblzma.so.5重新定向到liblzma.so.5.0
+
 重装deb包就行
 
-// 受liblzma.so.5影响的包,临时做软链接
+受liblzma.so.5影响的包,临时做软链接
+```
 $ sudo rm /lib/x86_64-linux-gnu/liblzma.so.5
 $ sudo rm /lib/x86_64-linux-gnu/liblzma.so
 $ sudo ln -s /lib/x86_64-linux-gnu/liblzma.so.5.0.0 /lib/x86_64-linux-gnu/liblzma.so.5
@@ -5756,39 +5779,44 @@ $ sudo ln -s /lib/x86_64-linux-gnu/liblzma.so.5.0.0 /lib/x86_64-linux-gnu/liblzm
 
 // xz最新版可用，支持-T哦
 $ xz --help
-</log>    
-    
+```
 
-    
-<log 安装 gparted>
+
+***
+# 安装 gparted
+```
 $ sudo apt-get install gparted jfsutils gpart
-</log>    
-    
-    
-    
-<log gdb图形界面前端>
+```    
+
+
+*** 
+# gdb图形界面前端
+```
 $ sudo apt-get install ddd
-</log>    
-    
-    
-    
-<log ntfs文件系统的权限问题>
+```   
+
+
+*** 
+# ntfs文件系统的权限问题
+```
 sudo apt-get install ntfs-config
 sudo ntfs-config
-点击ok，勾选Enable write support for external device
+```
+点击ok，勾选`Enable write support for external device`
+```
 $ sudo apt-get install fuse
-
 $ id
-
 $ sudo mount -t ntfs-3g -o users,auto,rw,dev,exec,locale=zh_CN.UTF-8 /dev/sdd1 /media/sdd1/
-</log>    
-    
-    
-    
-    
-<log ftp server>
+```
+
+
+***
+# ftp server
+```
 $ sudo apt-get install vsftpd
 $ sudo gedit /etc/vsftpd.conf
+```
+```
 #禁止匿名访问
 anonymous_enable=NO
 #接受本地用户
@@ -5798,26 +5826,32 @@ write_enable=YES
     
 chroot_local_user=YES
 allow_writeable_chroot=YES
-    
+```
 更多见《Ubuntu 用vsftpd 配置FTP服务器》
+```
 $ sudo /etc/init.d/vsftpd restart
-    
-    
-配置ftp受限账户,用于远程访问只用
+```
+
+配置ftp受限账户,只用于远程访问用
 
 收集资料
+```
 /etc/passwd中修改shell
 /usr/sbin/nologin
+```
 用户禁止shell登录、允许ftp登录方法
+
 最近装了个Ubuntu服务器，需要创建专用的ftp用户，为了安全要禁止ftp用户登录shell。按照在freebsd的操作习惯，我把ftp用户的shell设定为/usr/bin/nologin。岂料该用户居然无法登录ftp，把shell改成/bin/bash后，ftp又能登录了。难道不能禁止登录。网上一遍，解决方法居然很多，包括禁止22端口、设置/etc/hosts.deny或者/etc/hosts.allow等。然而这些方法都有不少局限性，最后发现原因是/usr/bin/nologin不在/etc/shells列表内，ftp登录时要检查该用户的shell设定是否正确，我把shell强行改成不存在的/usr/bin/nologin，结果就出错了。
+
 修改/etc/shells，在shell列表中添加一行/usr/sbin/nologin。把ftp用户的shell改为/usr/sbin/nologin
 
+```
 cat /etc/passwd
 cat /etc/group
-
 cat /etc/passwd | grep ftp
 cat /etc/group | grep ftp
-
+```
+```
 sudo useradd andy-ftp -d /home/andy -s /usr/sbin/nologin
 andy@debian-dell:~/Downloads$ sudo passwd andy-ftp
 Enter new UNIX password: 
@@ -5835,64 +5869,70 @@ andy@debian-dell:~/Downloads$ sudo usermod -s /usr/sbin/nologin andy-ftp
 andy@debian-dell:~/Downloads$ su - andy-ftp
 Password: 
 This account is currently not available.
-
+```
 
 更改/etc/pam.d/vsftpd
+```
 #注释掉下列行
 #auth required pam.shells.so
+```
+```
 sudo /etc/init.d/vsftpd restart
+```
 这样可以用andy-ftp帐号访问ftp服务器，这个帐号不能登录shell
-
+```
 sudo usermod -d /home/andy/Downloads andy-ftp
 $ chmod 777 ~/Downloads
-
-
+```
+```
 sudo gedit /etc/vsftpd.conf
+```
 添加
+```
 user_config_dir=/etc/vsftpd/vsftpd_user_conf
-
+```
+```
 sudo mkdir /etc/vsftpd/vsftpd_user_conf
 sudo gedit /etc/vsftpd/vsftpd_user_conf/andy-ftp
+```
 禁止删除和重命名
-----------------------
+```
 write_enable=YES
 cmds_denied=DELE,RNFR
-----------------------
+```
 可以从下面的命令选
+```
 cmds_allowed=ABOR,CWD,DELE,LIST,MDTM,MKD,NLST,PASS,PASV,PORT,PWD,QUIT,RETR,\ 
         RMD,RNFR,RNTO,SIZE,STOR,TYPE,USER,ACCT,APPE,CDUP,HELP,MODE,\ 
         NOOP,REIN,STAT,STOU,STRU,SYST 
 cmds_denied=ABOR,CWD,DELE,LIST,MDTM,MKD,NLST,PASS,PASV,PORT,PWD,QUIT,RETR,\ 
         RMD,RNFR,RNTO,SIZE,STOR,TYPE,USER,ACCT,APPE,CDUP,HELP,MODE,\ 
         NOOP,REIN,STAT,STOU,STRU,SYST 
-
+```
+```
 $ sudo gedit /etc/passwd
+```
 最后几行如下，注意andy-ftp后面几个数字，shell改成了/bin/false
+```
 ftp:x:130:140:ftp daemon,,,:/srv/ftp:/bin/false
 andy-ftp:x:134:145::/home/andy/Downloads:/bin/false
 mysql:x:131:141:MySQL Server,,,:/nonexistent:/bin/false
 telnetd:x:132:143::/nonexistent:/bin/false
 debian-tor:x:133:144::/var/lib/tor:/bin/false    
-    
-</log>
+```
 
-    
-    
-    
-<log 安装genymotion android模拟器>
+
+***
+# 安装 genymotion android 模拟器
+```
 $ ./genymotion-2.6.0-linux_x64.bin -d /opt/
 You can now use these tools from [/opt/genymotion]:
  - genymotion
  - genymotion-shell
  - gmtool
-
-    
-https://help.ubuntu.com/community/VirtualBox
-(16时10分32秒) andy-fujitsu:
-Ubuntu 12.04 LTS
-
-Module issues
-
+```
+<https://help.ubuntu.com/community/VirtualBox>
+```
 If you update virtualbox. The modules and the module API may change. Which means you have to compile the modules for your kernel.
 
 If you start an virtual machine in the gui you get a message. That you should run::
@@ -5927,33 +5967,31 @@ So you have to install them::
 Then we have to 'start' the modules::
 
     $ sudo /etc/init.d/virtualbox start 
-
-
+```
 
 下载的镜像在
-/home/andy/.Genymobile/Genymotion/ova
-</log>  
-    
-    
-    
-<log >
+`/home/andy/.Genymobile/Genymotion/ova`
+
+
+***
+# locale
+```
 $ sudo gedit /etc/default/locale
-///////////////////////////
+```
+```
 #  File generated by update-locale
 #LANG=en_US.UTF-8
 LANGUAGE="en_US:en"
 LANG="zh_CN.UTF-8"
 #LANGUAGE="zh_CN:zh"
-///////////////////////////
+```
 这样foxit就能完美注释了
-</log>
-    
-    
-    
-    
-<log URL字符编码解码>
+
+
+***
+# URL字符编码解码
 url-encode
-/---------------------------
+```
 #!/usr/bin/perl
  
 use URI::Escape;
@@ -5964,11 +6002,10 @@ print "\nOriginal string:\n$string\n";
 
 my $encode = uri_escape($string);
 print "URL Encoded string:\n$encode\n\n";
-
----------------------------/
+```
 
 url-decode
-/---------------------------
+```
 #!/usr/bin/perl
  
 use URI::Escape;
@@ -5982,14 +6019,13 @@ print "URL Decoded string:\n$decode\n";
 
 my $encode = uri_escape($decode);
 print "URL Encoded string:\n$encode\n\n";
----------------------------/
+```
+都chmod 777, 复制到/bin去, 就可以转换了
 
-都chmod 777，就可以转换了
-复制到/bin去
-</log>  
-    
-    
-<log realVNC>    
+
+***
+# realVNC
+```
 sudo apt-get remove tightvncserver
 sudo apt-get remove vnc4server
 sudo apt-get remove xtightvncviewer
@@ -6008,104 +6044,122 @@ Start or stop the service with:
 Mark or unmark the service to be started at boot time with:
   systemctl (enable|disable) vncserver-virtuald.service
 
-
-
 sudo systemctl start vncserver-x11-serviced.service
 sudo systemctl enable vncserver-virtuald.service
 sudo systemctl enable vncserver-x11-serviced.service
-ref https://www.realvnc.com/docs/man/vncserver-x11-serviced.html
 Created symlink /etc/systemd/system/multi-user.target.wants/vncserver-x11-serviced.service → /usr/lib/systemd/system/vncserver-x11-serviced.service.
-
+```
+<https://www.realvnc.com/docs/man/vncserver-x11-serviced.html>
 
 realvnc注册码
+```
 BQ24G-PDXE4-KKKRS-WBHZE-F5RCA
 BQ24G-PDXE4-KKKRS-WBHZE-F5RCA
 8ZEZH-QPANM-NX3A5-8C4TS-8B97A
 7AB4X-3YNXF-C5MRR-59DJG-7HGNA
 UPL8P-CN2MT-85ERA-N3E3B-GERDA
 X24XP-V247M-HEMNV-ZTMZK-FNB7A
-
+```
 要在 realvnc server 的option选项里添加用户，默认是root，不能以root远程登录吧，就添加用户账户(经测试,root就可以,远程还是要输入一下用户名密码,如果已经普通用户登录了,就直接看到普通用户的桌面)
 
+查看监听端口
+```
+netstat -tnl
+```
+重启服务
+```
+$ sudo service vncserver-virtuald restart
+$ sudo service vncserver-x11-serviced restart
+```
 
+
+***
+# teamviewer
+```
 sudo systemctl start teamviewerd.service
 sudo systemctl enable teamviewerd.service
 Created symlink /etc/systemd/system/multi-user.target.wants/teamviewerd.service → /etc/systemd/system/teamviewerd.service.
+```
 
-查看监听端口
-netstat -tnl
 
-重启服务
-$ sudo service vncserver-virtuald restart
-$ sudo service vncserver-x11-serviced restart
-
-</log>  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-****************************************************    
-备份ackup_170617.tar.xz
+***
+# 备份ackup_170617.tar.xz
 不含/opt和/home
-****************************************************
-先修改sources.list
 
-<log ftp服务器bugfix>
+
+***
+# ftp 服务器 bugfix
+```
 /etc/vsftpd.conf
 /etc/vsftpd.chroot_list
 /etc/vsftpd/vsftpd_user_conf/andy-ftp  
-    
+```
+```
 $ sudo gedit /etc/vsftpd.conf
+```
 添加
+```
 allow_writeable_chroot=YES
-效果是避免“500 OOPS: vsftpd: refusing to run with writable root inside chroot()”
-    
+```
+效果是避免
+```
+500 OOPS: vsftpd: refusing to run with writable root inside chroot()
+```
+```
 chroot_local_user=YES
+```
 修改为
+```
 chroot_local_user=NO
+```
 效果是根目录换成了系统根目录，而不是限于ftp账户的目录
 
 也可以
+```
 chroot_local_user=YES
 chroot_list_enable=YES
 chroot_list_file=/etc/vsftpd.chroot_list    
+```
 vsftpd.chroot_list里面是andy-ftp
+
 效果是vsftpd.chroot_list里面的用户没有限制，可以访问系统根目录
 而andy等普通用户没有权限在ftp客户端访问自己的home目录以外的目录
 
+```
     1、当chroot_list_enable=YES，chroot_local_user=YES时，在/etc/vsftpd/chroot_list文件中列出的用户，可以切换到其他目录；未在文件中列出的用户，不能切换到其他目录。
     2、当chroot_list_enable=YES，chroot_local_user=NO时，在/etc/vsftpd/chroot_list文件中列出的用户，不能切换到其他目录；未在文件中列出的用户，可以切换到其他目录。
     3、当chroot_list_enable=NO，chroot_local_user=YES时，所有的用户均不能切换到其他目录。
     4、当chroot_list_enable=NO，chroot_local_user=NO时，所有的用户均可以切换到其他目录。 
-    
- 
-# local_umask=022    
+```   
+```
+# local_umask=022
+```  
 修改为
+```
 local_umask=002
-
+```
+```
 sudo /etc/init.d/vsftpd restart
-    
+```
 到这里，普通用户andy还是可以通过ftp登录，这样还是不安全的
 
 只允许指定用户登录ftp的方法，没有密码传输，更安全
+```
 $ sudo gedit /etc/vsftpd.conf
+```
+```
 #/etc/ftpusers #这个黑名单总是有效的
 #userlist_file=/etc/vsftpd.user_list #这名单根据下面设置是白名单, yes或no后面不要带任何东西, 否则设置会失效
 userlist_enable=YES
 userlist_deny=NO
-    
+```
+```
 $ man vsftpd.conf
-<file /etc/vsftpd.user_list>
+```
+```
+cat /etc/vsftpd.user_list
+```
+```
 # vsftpd userlist  
 # If userlist_deny=NO, only allow users in this file  
 # If userlist_deny=YES (default), never allow users in this file, and  
@@ -6113,19 +6167,24 @@ $ man vsftpd.conf
 # Note that the default vsftpd pam config also checks /etc/ftpusers  
 # for users that are denied.  
 andy-ftp
-</file>
-
-
-
+```
 禁止某些用户登录的方法1，没有密码传输，更安全
+```
 $ sudo gedit /etc/vsftpd.conf
+```
+```
 #/etc/ftpusers #这个黑名单总是有效的
 #userlist_file=/etc/vsftpd.user_list #这名单根据下面设置是黑名单
 userlist_enable=YES
 userlist_deny=YES   
-
+```
+```
 $ man vsftpd.conf
-<file /etc/vsftpd.user_list>
+```
+```
+cat /etc/vsftpd.user_list
+```
+```
 # vsftpd userlist  
 # If userlist_deny=NO, only allow users in this file  
 # If userlist_deny=YES (default), never allow users in this file, and  
@@ -6147,13 +6206,20 @@ operator
 games  
 nobody
 andy
-</file>
-
+```
 禁止某些用户登录的方法2，会要求密码
+
 找ftpusers
+```
 $ man pam_ftp
+```
+```
 $ cat /etc/pam.d/vsftpd
-<file /etc/ftpusers>
+```
+```
+cat /etc/ftpusers
+```
+```
 # /etc/ftpusers: list of users disallowed FTP access. See ftpusers(5).
 
 # root
@@ -6184,36 +6250,49 @@ operator
 games  
 nobody 
 andy
-</file>
-    
-</log>
+```
 
-    
-    
-<log 用户、组、文件权限管理>
-查看所有用户/etc/passwd
-查看所有组/etc/group
-为了解决cannot find name for group ID 145 145
+
+***
+# 用户、组、文件权限管理
+查看所有用户
+```
+cat /etc/passwd
+```
+查看所有组
+```
+cat /etc/group
+```
+为了解决`cannot find name for group ID 145 145`
+
 需要在/etc/group添加组描述
-    
-$ sudo gedit /etc/passwd     
+
+```
+$ sudo gedit /etc/passwd  
 andy-ftp:x:134:145::/home/andy/Downloads:/bin/false    
 $ sudo gedit /etc/group
 andy-ftp:x:145:
 前面的1001组删掉
-    
+```
 添加andy用户到andy-ftp组
+```
 $ sudo usermod -G andy-ftp andy
 $ cat /etc/group
+```
 有变化
+```
 andy-ftp:x:145:andy
+```
+```
 $ id andy
 uid=1000(andy) gid=1000(andy) groups=1000(andy),145(andy-ftp)
-
+```
 但是ftp客户端默认新建文件、文件夹都是700权限（可以右键修改之），但是还是不方便
+
 添加普通用户andy到andy-ftp用户组，也不能访问的嘛
     
-<ref umask>
+## umask
+```
 默认情况下的umask值是022(可以用umask命令查看）
 新建文件 时候的默认权限是644(掩码是022)
 新建文件夹 时候的默认权限是755(掩码是022)
@@ -6221,11 +6300,11 @@ uid=1000(andy) gid=1000(andy) groups=1000(andy),145(andy-ftp)
 文件      666减umask
 文件夹     777减umask
 特例：文件权限为0的位对应umask位是7,对于文件来说6-7=-1,不应该有负值，所以还是0
-</ref>
+```
     
-<ref uid, gid,sticky(粘性)位>
-http://www.cnblogs.com/zjutzz/p/4229856.html   
-    
+## uid, gid,sticky(粘性)位
+<http://www.cnblogs.com/zjutzz/p/4229856.html> 
+```
 set uid bit(SUID): 设置使文件在执行阶段具有文件所有者的权限.
 set gid bit(SGID): 目录被设置该位后, 任何用户在此目录下创建的文件都具有和该目录所属的组相同的组.SGID位目录的文件，只有在复制时加上-p参数，才能保留原来的组群设置
              文件也是可以被设置为SGID的，比如一个可执行文件为赋予SGID，它就具有所有组的特权，任意存取所有组所能使用的系统资源，复制到拥有
@@ -6251,12 +6330,11 @@ chmod 1777是设sticky
 5: 只设置SUID和sticky
 6: 只设置SUID和SGID
 7: 设置3种权限    
-    
-    
-</ref>
+```
 
-<ref chmod操作>
-http://www.cnblogs.com/SunnyRainPlant/p/3749704.html
+## chmod操作
+<http://www.cnblogs.com/SunnyRainPlant/p/3749704.html>
+```
 r-->4
 w-->2
 x-->1    
@@ -6305,8 +6383,9 @@ drwx------  3 root root  4096 08-02 14:54 .metacity
 第二块：第 2到4 列，表示文件拥有者的权限。
 第三块：第5到7 列，表示拥有者同组人的权限。
 第四块：第8到10列，表示是非拥有者组人的权限。
-    
-    
+```
+## 用户组
+``` 
 查看当前用户的用户组命令：groups
 查看特定用户的用户组命令：groups username
 第一个用户组为用户的有效用户组
@@ -6356,109 +6435,87 @@ passwd相关参数操作：
 添加某帐号到组命令：gpasswd -M 用户名 用户组名
 从组中删除某帐号命令：gpasswd -d 用户名 用户组名    
 
-</ref>    
+```
     
-根据上面的材料，修改了/etc/vsftpd.conf的local_umask=002
-ftp新建一个文件夹xxxxxx
-ls -l | grep xxxxxx
+根据上面的材料
 
+修改了`/etc/vsftpd.conf`的`local_umask=002`
+ftp新建一个文件夹xxxxxx
+```
+ls -l | grep xxxxxx
+```
 重启系统之后组用户andy就能删掉andy-ftp用户上传上来的文件夹和文件了
 
-</log>
 
-
-<log 全局PATH修改>
+***
+# 全局PATH修改
+```
 $ sudo leafpad /etc/profile
-
+```
+```
 if [ "`id -u`" -eq 0 ]; then
   PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 else
   PATH="/usr/local/bin:/usr/bin:/bin:/sbin:/usr/local/games:/usr/games:/usr/sbin:/usr/local/sbin"
 fi
 export PATH
+```
 
-</log>  
-    
-    
-    
-    
-    
- 
-<log tty1~7的开启>不知道能有啥用,不管这个
+
+***
+# tty1~7的开启
 还是设置了吧原来就tty1是开的，现在全开;没有看出什么区别
+```
 $ for i in {1..7};do sudo systemctl enable getty@tty$i; done
+```
 检查
+```
 $ for i in {1..7};do echo -n "tty$i is ";systemctl is-enabled getty@tty$i; done
-    <ref [Ubuntu 17.04] XWayland on tty1, Xorg on tty2, tty3-8 not accessible></ref>
-</log>    
-    
-    
-    
-    
-    
-<ref bookmarks位置>
-/home/andy/.config/gtk-3.0    
-</ref>    
-    
-    
-    
-<log 安装 stellarium>   
-$ sudo apt-get install stellarium 
-The following NEW packages will be installed:
-  qtquick1-qml-plugins stellarium stellarium-data   
-</log>    
-    
-    
-<log thunderbird>    
-$ sudo apt-get install thunderbird
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  lightning
+```
+《[Ubuntu 17.04] XWayland on tty1, Xorg on tty2, tty3-8 not accessible》
+
+ 
+***
+# thunderbird
+```
+$ sudo apt-get install thunderbird lightning
+
 Suggested packages:
   calendar-google-provider apparmor
-The following NEW packages will be installed:
-  lightning thunderbird
-0 upgraded, 2 newly installed, 0 to remove and 27 not upgraded.
-Need to get 36.6 MB of archives.
-After this operation, 109 MB of additional disk space will be used.
-    
+```    
 备份的配置文件可以还原
-</log>    
-    
-    
-    
-   
 
-<log 编译gspiceui>
+
+***
+# 编译 gspiceui
+```
 sudo apt-get install libwxgtk3.0-dev libpangox-1.0-dev gnucap
 cd gspiceui-v1.1.00
 make GSPICEUI_WXLIB=3.0
 sudo make install    
-</log>
-    
-    
-    
-    
-    
-<log 安装 Universe Sandbox 2>
-先断网!!!
+```
+
+
+***
+# 安装/恢复 Universe Sandbox 2
+断网!!!
+
 首先steam go offline
+
 备份解压到
+```
 /home/andy/.steam/steam/steamapps/common/
-</log>    
-    
-    
-    
-    
-    
-    
-<log 安装gwave和gaw>   
+```
+
+
+***
+# 安装 gwave(abort) 和 gaw
+```
 $ sudo apt-get install guile-2.0-libs guile-2.0-dev guile-cairo libgnome2-dev 
 $ sudo apt-get install libgnome-2-0:i386 guile-1.8 guile-1.8-libs guile-library
+```
 编译gspiceui、gwave和gaw
-    
+```
 configure: error: required guile module not found: (gnome-2)
     
 This is because guile is installing itself in /usr/pkg/guile/1.8
@@ -6466,110 +6523,127 @@ instead of /usr/pkg, and guile-gnome hasn't been adjusted to match so
 guile can't find it.
 
 configure: error: Can not find Guile-gnome-platform
-    
+```
 虽然deb包都安装了，但是还找不到 guile-gnome-platform，所以还是编译不了gwave2-20170109.tar.gz
 
-http://gwave.sourceforge.net/
-http://gwave.sourceforge.net/oldbranch.html
+<http://gwave.sourceforge.net/>
+
+<http://gwave.sourceforge.net/oldbranch.html>
 
 降版本编译gwave-20080127.tar.gz，还是不行
+```
 checking for GTK - version >= 1.2.1... no
-
+```
 下载   guile-gnome-platform 源码
+
 编译安装之后还是找不到 guile-gnome-platform
+
 不干了，不编译gwave2了
-    
-https://www.gnu.org/software/guile/manual/html_node/Load-Paths.html
+
+<https://www.gnu.org/software/guile/manual/html_node/Load-Paths.html>
 
 看看configure文件
+```
 $ pkg-config --exists --print-errors "guile-gnome-gtk-2"
 Package guile-cairo was not found in the pkg-config search path.
-    
+```
 好像gwave源码要求了guile-cairo，这样就好办，找guile-cairo
+```
 $ sudo apt-get install guile-cairo-dev
+````
 至此configure通过
 
 编译时候guile/gh.h找不到，在guile-1.8-dev里，解压到指定位置，编译能过这个，但是也会在后面错误，所以，彻底放弃这个gwave2
-</log>  
-    
-    
-    
-<ref 一些可以用的设置>    
+
+
+
+***
+# 一些可以用的设置    
 新建一个用户会产生一些默认配置，系统默认的配置在哪里呢
+```
 /etc/xdg
-    
+```
 如果新建主目录
+```
 $ mkdir Desktop Downloads Templates Public Documents Music Pictures Videos    
 $ chmod 777 Downloads (为了让ftp账户可以操作这个目录)
-$ xscreensaver-demo  
+$ xscreensaver-demo
 $ sudo apt-get install python3-urllib3 python-urllib3
-</ref>    
-    
-    
-<log 安装zhcon>  不要安装  
-$ sudo aptitude install zhcon
-[sudo] password for andy: 
-The following NEW packages will be installed:
-  unicon-imc2{a} zhcon 
-0 packages upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
-Need to get 7,225 kB of archives. After unpacking 24.5 MB will be used.
-Do you want to continue? [Y/n/?] y
-Get: 1 http://mirrors.aliyun.com/debian/ jessie/main unicon-imc2 amd64 3.0.4-14 [2,817 kB]
-Get: 2 http://mirrors.aliyun.com/debian/ jessie/main zhcon amd64 1:0.2.6-10 [4,409 kB]    
-    
-    
-$ sudo apt-get remove unicon-imc2 zhcon
+``` 
 
-</log>
-    
-    
-<log console英文化>
-修改配置文件/etc/default/locale
+
+***
+# 安装zhcon(abort)
+```
+$ sudo aptitude install zhcon unicon-imc2
+$ sudo apt-get remove unicon-imc2 zhcon
+```
+
+
+***
+# console 英文化
+修改配置文件
+```
+/etc/default/locale
+```
 将原来的配置内容修改为
+```
 LANG=”en_US.UTF-8″
 LANGUAGE=”en_US:en”
+```
 再在终端下运行：
+```
 $ locale-gen -en_US:en
+```
 注销或重启后，Ubuntu Server真正服务器实体终端就恢复成了英文的语言环境。
-所以，此方法不是真正意义上的中文化，而是恢复英文的默认编码
-</log>
-    
-    
-    
-<log 恢复 nutstore>    
+
+
+***
+# 恢复 nutstore
 存档一个配置文件夹备份
-</log>    
-    
-    
-    
-    
-<log 使用qvfb>
+
+
+***
+# 使用 qvfb
 在10.04上
+```
 $ dpkg -S /usr/bin/qvfb
+```
 可以知道qvfb在qt4-dev-tools包里
+```
 $ dpkg -s qt4-dev-tools
 $ dpkg --listfiles qt4-dev-tools
+```
 找到了可执行文件在
+```
 /usr/lib/x86_64-linux-gnu/qt4/bin
-    
+```
 
-</log>
 
-    
-    
-<log bash prompt 修改>
+***  
+# bash prompt 修改
 原始的PS1
+```
 echo $PS1
 \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$
+```
 就是
+```
 PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$ "
+```
 等于
+```
 PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w\$ "
-
+```
 临时修改成
+```
 PS1="\[\033[1;34m\][\$(date +%H%M)][\u@\h:\w]$\[\033[0m\] "
+```
 从cygwin来的也挺好看啊
+```
 PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ "
+```
+```
 PS1="${debian_chroot:+($debian_chroot)}\[\033[0;32m\]\u@\h\[\033[00m\] \[\033[0;33m\]\w\[\033[00m\]\n\$ "
     
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
@@ -6577,18 +6651,22 @@ PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
 
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;33m\]\w\[\033[00m\]\n\$ "
-    
-参考关键词《bash_prompt》和《PS1》
+```
+参考关键词`bash_prompt`和`PS1`
+
+```
 echo -e "\033[1;33mxwx\033[00m"
 echo -e "\033[0;33mxwx\033[00m"   
 echo -e "\033[1;33;44mxwx\033[00m"
 echo -e "\E[1;33;44mxwx\033[00m"  
-
+```
+```
 \033=\E
 \033[00m=\E(B\E[m
-    
-    
-bash prompt 有效控制字：
+```
+
+## bash prompt 有效控制字
+```
 1 加粗（高亮）
 4 下划线
 7 反相
@@ -6599,8 +6677,9 @@ for C in {30..47}; do     echo -en "\e[${C}m$C "; done
 for C in {0..255}; do     tput setaf $C;     echo -n "$C "; done
 4+背景色彩代码0~7
 for C in {0..255}; do     tput setab $C;     echo -n "$C "; done
+```
 
-<ref >
+```
 Capability 	Escape sequence 	Description
 Text attributes
 blink 	\E[5m 	blinking text on
@@ -6635,25 +6714,27 @@ ech #1 	\E#1X 	clear #1 characters (without moving cursor)
 ed 	\E[J 	clear to bottom of screen
 el 	\E[K 	clear to end of line
 el1 	\E[1K 	clear to beginning of line     
-</ref>  
-</log>
-    
-    
+```
 
-<log 终端字符logo>
+
+***
+# 终端字符 logo
+```
 $ sudo apt-get install lsb-release scrot
 $ sudo apt-get install screenfetch
 wget http://github.com/downloads/djmelik/archey/archey-0.2.8.deb
     dpkg -i archey-0.2.8.deb
     then type "archey" in a terminal
-    
-<ref https://linoxide.com/ubuntu-how-to/install-archey-ubuntu></ref>
-<ref http://linuxforcynics.com/how-to/install-screenfetch-and-archey-in-ubuntu-or-debian>
+```
+<https://linoxide.com/ubuntu-how-to/install-archey-ubuntu>
+<http://linuxforcynics.com/how-to/install-screenfetch-and-archey-in-ubuntu-or-debian>
+```
 $ wget http://served.kittykatt.us/projects/screenfetch/screenfetch-2.5.0.deb  
 $ sudo dpkg -i screenfetch-2.5.0.deb 
-</ref>
-    
-<ref https://community.linuxmint.com/tutorial/view/850>
+```
+   
+<https://community.linuxmint.com/tutorial/view/850>
+```
 Install Archey:
 
     sudo apt-get install lsb-release scrot
@@ -6665,38 +6746,34 @@ Install Screenfetch:
     Get: wget -O screenfetch 'https://raw.github.com/KittyKatt/screenFetch/master/screenfetch-dev'
     Make executable: chmod +x screenfetch
     Move: sudo mv screenfetch /usr/bin/
+```
 
-</ref>
-</log>
-    
-    
-    
-<log>  
-firefox可以通过alt键调出menu bar，所以隐藏掉好了，隐藏digo signin bar
-</log>
-    
-    
-    
-    
-<log qt5 examples>    
+
+***
+# qt5 examples
+```    
 $ sudo aptitude install qtbase5-examples    
-</log>   
-    
-    
-    
-<log 为了运行pyw文件>    
+```
+
+
+***
+# 为了运行pyw文件
+```   
 $ sudo apt-get install python3-tk    
-</log>
-    
-    
-    
-<log vim只能一个个转换，用这个配合脚本可以批量互相转换>      
+```
+
+
+***
+# dos2unix
+vim只能一个个转换，用这个配合脚本可以批量互相转换
+``` 
 $ sudo apt-get install dos2unix
-</log>
-    
-    
-    
-<log XX 为了编译TTKMusicplayer，用qt5>
+```
+
+
+***
+# 编译TTKMusicplayer
+```
 $ sudo apt-get install libqt5x11extras5-dev libqt5multimediawidgets5 qtmultimedia5-dev qtmultimedia5-examples libphonon4qt5-4
     #不要安装libopusfile0 qmmp
 //手动安装libqmmp
@@ -6704,63 +6781,80 @@ $ sudo apt-get install libqt5x11extras5-dev libqt5multimediawidgets5 qtmultimedi
 //http://mirrors.kernel.org/ubuntu/pool/universe/q/qmmp/
 //libqmmp0_0.7.4-1_amd64.deb
 //libqmmp-dev_0.7.4-1_amd64.deb
-</log>
-    
-    
-<log pcmanfm右键选择总是以某应用打开>
-还原这个目录的内容$HOME/.cache/menus  
-就可有选择用什么默认程序打开了.依据是pcmanfm的archwiki
-</log>
+```
 
-    
-<log pyqt>
+
+***
+# pcmanfm 右键选择总是以某应用打开
+还原这个目录的内容$HOME/.cache/menus  
+
+就可有选择用什么默认程序打开了.依据是pcmanfm的archwiki
+
+
+***
+# pyqt
+```
 $ sudo apt-get install python3-pyqt5 python3-pyqt4 pyqt4-dev-tools pyqt5-dev-tools pyqt5-dev pyqt5-doc pyqt5-examples python-sip-doc
 $ sudo apt-get install python-qt4-doc python-qt4 python-qt4-dev python-qt4-gl python-qt4-phonon python-qt4-sql python-qt4reactor python-sip-dev
 $ sudo apt-get install ipython-qtconsole python-qscintilla2 ipython-doc libqscintilla2-designer
-</log>   
-    
-    
-    
-<log mp4v2>  
+```
+
+
+***
+# mp4v2
+```
 $ sudo apt-get install mp4v2-utils libmp4v2-dev
-</log>
-    
-    
-<log ffmpeg> 
+```
+
+
+***
+# ffmpeg
+```
 $ sudo apt-get install libavformat-dev libavfilter-dev
 $ sudo apt-get install libsdl2-dev
 $ sudo apt-get install linphone
 $ sudo apt-get install valgrind
-    
-/etc/apt/sources.list添加jessie-backports源，
+```
+/etc/apt/sources.list添加jessie-backports源
+```
 # Backports repository
 deb http://httpredir.debian.org/debian jessie-backports main contrib non-free
+```
+```
 $ sudo aptitude -t jessie-backports install libavformat-dev
 $ sudo aptitude -t jessie-backports install libavfilter-dev
 $ sudo aptitude -t jessie-backports install libavdevice-dev    
-</log>  
-    
-    
+```
+```
+$ sudo apt-get install yasm
+$ ffmpeg  -f  video4linux2  -s  320x240  -i  /dev/video0  ~/test.avi
+```
+
+
+***
+# something
+```
 $ sudo apt-get install mono-vbnc
-    
-    
 $ sudo apt-get install libx264-148 libx264-dev x264 libx265-dev x265 libx265-doc
 $ x264 -V
-    
 $ sudo apt-get install libjs-excanvas
 $ sudo dpkg -i mercurial-common_3.1.2-2+deb8u3_all.deb
 $ sudo dpkg -i mercurial_3.1.2-2+deb8u3_amd64.deb
-    
-    
 $ sudo apt-get install libglew-dev freeglut3-dev
+```
+```
 /usr/lib/x86_64-linux-gnu/libGL.so.1: error adding symbols: DSO missing from command line
 指定-lGL就可以
-    
+```
+
+***
+# latxt texlive
+```
 $ sudo apt-get install dia
 $ sudo apt-get install latex-cjk-common latex-cjk-chinese latex-cjk-chinese-arphic-bkai00mp latex-cjk-chinese-arphic-bsmi00lp latex-cjk-chinese-arphic-gbsn00lp latex-cjk-chinese-arphic-gkai00mp
-
-    
+```
 latxt太巨大了，又不会怎么用到，去他妈的，不用了，在win下用ctex很好很方便的
+```
 $ sudo apt-get install texlive-lang-chinese texlive-lang-cjk texlive-base
 Suggested packages:
   hbf-kanji48 latexdiff latexmk dvidvi fragmaster lacheck purifyeps xindy
@@ -6777,9 +6871,8 @@ The following NEW packages will be installed:
   texlive-latex-extra-doc texlive-latex-recommended
   texlive-latex-recommended-doc texlive-pictures texlive-pictures-doc
   texlive-pstricks texlive-pstricks-doc tipa vprerex
-    
-    
-    
+```
+```
 $ sudo apt-get install dot2tex python3-pydot python-pydot xdot 
 Suggested packages:
   latexdiff latexmk dvidvi fragmaster lacheck purifyeps xindy chktex dvipng
@@ -6790,69 +6883,69 @@ The following NEW packages will be installed:
   texlive-generic-recommended texlive-latex-recommended
   texlive-latex-recommended-doc texlive-pictures texlive-pictures-doc
   texlive-pstricks texlive-pstricks-doc vprerex xdot
-
-    
-编辑好一个dot文件后，用xdot预览    
+```
+编辑好一个dot文件后，用xdot预览
+```
 xdot test1.dot
 dot2tex test1.dot -o test1.tex
 pdflatex test1.tex
+```
 就产生pdf文件
+```
 dot -Tpdf test2.dot -o test2.pdf
+```
 一样的效果
 
 
 
+<https://tex.stackexchange.com/questions/137428/tlmgr-cannot-setup-tlpdb>
 
-
-
-
-UML建模工具
-$ sudo apt-get install umbrello
-
-
-
-结合emacs编辑的tex一体化工具
-$ sudo apt-get install auctex
-
-
-https://tex.stackexchange.com/questions/137428/tlmgr-cannot-setup-tlpdb
 tlmgr install xxx 如果出现这样的错误
+```
 (running on Debian, switching to user mode!) cannot setup TLPDB in /home/USER/texmf at /usr/bin/tlmgr line 5308.
+```
 要初始化tlmgr仓库
+```
 $ tlmgr init-usertree
-
+```
 接下来如果出现这样的错误
-
+```
   (running on Debian, switching to user mode!)
   Unknown directive ...containerchecksum
   c59200574a316416a23695c258edf3a32531fbda43ccdc09360ee105c3f07f9fb77df17c4ba4c2ea4f3a5ea6667e064b51e3d8c2fe6c984ba3e71b4e32716955...
   , please fix it! at /usr/share/texlive/tlpkg/TeXLive/TLPOBJ.pm line
   210, <$retfh> line 5579.
+```
 是 tlmgr 不是对应最新版本仓库导致的
-https://darrengoossens.wordpress.com/2016/06/20/a-little-trick-with-tlmgr-unknown-directive-containerchecksum-error/
+<https://darrengoossens.wordpress.com/2016/06/20/a-little-trick-with-tlmgr-unknown-directive-containerchecksum-error/>
 切换旧仓库
+```
 $ tlmgr option repository ftp://tug.org/historic/systems/texlive/2015/tlnet-final
-
+```
 这样差啥补啥吧，ctex cjk什么的包，碰到就算了，安装太巨大，用win下的ctex包更方便
 
-
-
+```
 $ pdflatex flowchar1.tex
+```
 
-
-前面的tex有关的包全安装上，磁盘足够用    
+前面的tex有关的包全安装上，磁盘足够用
+```    
 $ sudo apt-get install texlive-lang-chinese texlive-lang-cjk texlive-base
 $ pdflatex --shell-escape --synctex=1 test.tex
+```
 主要是simyou.ttf、simsun.ttc字体找不到
-参考https://tex.stackexchange.com/questions/168732/how-to-install-correctly-simhei-ttf-and-simsun-ttc-for-pdflatex-on-tex-live-2013
+<https://tex.stackexchange.com/questions/168732/how-to-install-correctly-simhei-ttf-and-simsun-ttc-for-pdflatex-on-tex-live-2013>
 
 复制字体到/usr/share/texlive/texmf-dist/fonts/truetype
+```
 $ sudo mktexlsr
-
+```
 就可以用了
+```
 $ pdflatex --shell-escape --synctex=1 test.tex
-
+```
 搞几个tex编辑器, 特别是texstudio
+```
 $ sudo apt-get install lyx texstudio texworks
 Suggested packages:
   rcs groff gnuhtml2latex wv chktex noweb sgmltools-lite linuxdoc-tools
@@ -6862,86 +6955,102 @@ The following NEW packages will be installed:
   dvipng elyxer lyx lyx-common psutils texlive-generic-extra texlive-science
   texlive-science-doc texstudio texstudio-doc texstudio-l10n texworks
   texworks-help-en
-
+```
 查看系统中文字体
+```
 fc-list :lang=zh-cn
-    
+```
 查看系统字体缓存
+```
 fc-cache -fv
-
-
+```
+```
 /home/andy/.wine/drive_c/windows/Fonts
+```
 目前没有复制到系统字体的truetype下并在目录下执行
+```
 /usr/share/fonts/truetype
 mkfontdir
 mkfontscale
 fc-cache
+```
 
 
-$ sudo apt-get install yasm
-$ ffmpeg  -f  video4linux2  -s  320x240  -i  /dev/video0  ~/test.avi
+***
+# UML建模工具
+```
+$ sudo apt-get install umbrello
+```
 
 
+***
+# 结合emacs编辑的tex一体化工具
+```
+$ sudo apt-get install auctex
+```
 
 
-
+***
+# something
+```
 $ sudo apt-get install phonon-backend-gstreamer libphonon4 libphonon-dev phonon
 $ sudo apt-get install libqt4-phonon # 危险,不要用
 
-
 $ sudo apt-get install intltool
-
-
-
 $ sudo apt-get install libecm-dev
-
-##手动安装extra-cmake-modules
-##只有stretch及以上版本才有https://packages.debian.org/stretch/amd64/extra-cmake-modules/download
-##jessie可以安装这个包。
+```
 
 
+***
+# 手动安装extra-cmake-modules
+只有stretch及以上版本才有
+<https://packages.debian.org/stretch/amd64/extra-cmake-modules/download>
+jessie可以安装这个包。
+```
 FindKDE4Internal.cmake
 $ sudo aptitude -t jessie-backports install kdelibs5-dev
 The following NEW packages will be installed:
   automoc{a} kdelibs5-dev libkidletime4{a} libkimproxy4{a} libknewstuff2-4{a} libkrossui4{a} libkunitconversion4{a} libkutils4{a} 
   libsoprano-dev{a}
+```
 
-链接用引号包起来
+
+***
+# 链接用引号包起来
+```
 aria2c "url"
+```
 
 
-
-sudo apt-get install qtquickcontrols5-examples qtquickcontrols5-doc-html qtquick1-5-examples
-
-
-
-
-
-
-
-language: rust
+***
+# language: rust
+```
 install:
   - sudo add-apt-repository "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse" -y
   - sudo apt-get update -qq
   - sudo apt-get install -qq libqt5core5a libqt5gui5 libqt5quick5 libqt5qml5 qtbase5-dev qtdeclarative5-dev cmake
+```
 
 
-
-
-
+***
+# qtquickc
+```
 sudo apt-get install qtquickcontrols5-examples qtquickcontrols5-doc-html qtquick1-5-examples qtquick1-5-dev libqt5core5a libqt5gui5 libqt5quick5 libqt5qml5 qtbase5-dev qtdeclarative5-dev cmake
-
+```
 qml文件中
+```
 import QtQuick 2.2
 import QtQuick.Controls 1.2
+```
 要用qmlscene而不是qmlviewer
+```
 $ qmlscene application.qml
+```
 
 
-
-
-
-dns服务器搭建
+***
+# dns服务器搭建
+```
 $ sudo apt-get install bind9 dnsutils bind9-doc
 $ sudo gedit /etc/bind/named.conf.options
 forwarders {
@@ -6949,75 +7058,91 @@ forwarders {
 	};
 $ sudo /etc/init.d/bind9 restart
 $ sudo gedit /etc/resolv.conf
+```
 未完,不研究这个了
 
 
+***
+# 一些硬件查询命令
+```
 $ sudo apt-get install ufraw
-
 $ sudo apt-get install lsscsi lshw
 $ sudo apt-get install inxi
-
-
-[一些硬件查询命令]
-
+```
 查看 CPU 和处理单元的信息
+```
 $ lscpu
-
-
+```
 查看 PCI 总线相连的设备的详细信息
+```
 $ lspci
-
+```
 过滤pci设备,比如显卡
+```
 $ lspci -v | grep "VGA"
 $ lspci -v | grep "VGA" -A 12
-
-列出多种硬件单元的详细或者概要的信息，比如 CPU、内存、usb 控制器、硬盘等。lshw能够从各个“/proc”文件中提取出相关的信息。
+```
+列出多种硬件单元的详细或者概要的信息，比如 CPU、内存、usb 控制器、硬盘等。lshw能够从各个“/proc”文件中提取出相关的信息
+```
 $ lshw -short
-
+```
 列出像硬盘和光驱等 scsi/sata 设备的信息
+```
 $ lsscsi
-
+```
 列出 USB 控制器和与 USB 控制器相连的设备的详细信息
+```
 $ lsusb
-
+```
 
 Inxi是一个 bash 脚本，能够从系统的多个来源和命令获取硬件信息，并打印出一个非技术人员也能看懂的友好的报告
+```
 $ inxi -Fx
+```
 
 列出不同分区的概要信息、挂载点、已用的和可用的空间
+```
 $ df -H
-
-
+```
 查看系统中使用的、闲置的和 RAM 的总体数量
+```
 $ free -m
-
-
+```
 
 用 dmidecode 从硬件中的 DMI 表中读取信息
+
 查看处理器的信息
+```
 $ sudo dmidecode -t processor
+```
 看内存的信息
+```
 $ sudo dmidecode -t memory
+```
 查看 bios 的信息
+```
 $ sudo dmidecode -t bios
+```
 
 hdparm命令可以用来显示像硬盘这样的 sata 设备的信息
+```
 $ sudo hdparm -i /dev/sda
-
+```
 
 文件数目参考javfree
 
 
-
-
-锁屏
+***
+# 锁屏
+```
 gnome-screensaver-command -l
-
 slimlock
 xscreensaver-command --lock
+```
 slock 这个空白正常，输入正确login就能进桌面
 
 在~/.config/rc.xml 合适位置添加如下内容
+```
     <keybind key="W-l">
       <action name="Execute">
         <command>xscreensaver-command --lock</command>
@@ -7027,11 +7152,13 @@ slock 这个空白正常，输入正确login就能进桌面
         </startupnotify>
       </action>
     </keybind>
+```
+然后运行`reconfigure openbox`，就可以通过快捷键锁屏了
 
-然后运行reconfigure openbox，就可以通过快捷键锁屏了
 
-
-opencv
+***
+# opencv
+```
 $ sudo apt-get install libcv-dev libopencv-dev opencv-data opencv-doc python-opencv
 The following extra packages will be installed:
   libcvaux-dev libdc1394-22-dev libhighgui-dev libilmbase-dev libjasper-dev
@@ -7046,25 +7173,19 @@ The following extra packages will be installed:
   libopencv2.4-jni libopenexr-dev libraw1394-dev libraw1394-tools
 Suggested packages:
   libraw1394-doc
+```
 
 
-
-
-
-
-
-
-
-
-
-条形码工具 bar code
+***
+# 条形码工具 bar code
+```
 $ sudo apt-get install zbar-tools barcode
+```
 
 
-
-
-
-安装amule
+***
+# 安装 amule
+```
 $ sudo apt-get install amule amule-utils-gui amule-gnome-support
 Reading package lists... Done
 Building dependency tree       
@@ -7074,66 +7195,53 @@ The following extra packages will be installed:
 The following NEW packages will be installed:
   amule amule-common amule-gnome-support amule-utils amule-utils-gui
   libcrypto++9
+```
 
 
-
-
-安装mldonkey(之前已经有了)
+***
+# 安装mldonkey
+```
 $ sudo apt-get install mldonkey-gui mldonkey-server
-
+```
 mldonkey本身没有图形界面，所以你看不到它的运行。可以尝试打开网页：http://127.0.0.1:4080，进入 mldonkey
 
 网页使用还是多有不便，我们推荐使用 mldonkey 的图形前端软件：mldonkey-gui 或kmldonkey
-
+```
 $ sudo apt-get install kmldonkey
-
+```
+```
 $ mlnet
+```
 打开浏览器 http://127.0.0.1:4080/ 或 http://localhost:4080/
 
 kmldonkey设置参考
+
 Linux电驴:mldonkey初体验
-http://www.mintos.org/skill/linux-mldonkey-skill.html
+<http://www.mintos.org/skill/linux-mldonkey-skill.html>
 
 
-
-
-
-
+***
+# something
+```
 sudo apt-get install bluez bluez-hcidump
 sudo apt-get install blueman gnome-bluetooth
 sudo apt-get purge blueman gir1.2-appindicator3-0.1 libappindicator3-1 libdbusmenu-gtk3-4 libindicator3-7
-
-
-
-
-
 
 sudo apt-get install kscope cscope ctags
 $ kscopeapp
 sudo apt-get purge kscope
 
-
-
-
-
-
 sudo apt-get install bison g++-multilib git gperf libxml2-utils make python-networkx zip
 sudo apt-get install flex libncurses5-dev zlib1g-dev gawk minicom
 Android源代码的下载需要使用repo
 
-
-
-
-
 sudo apt-get install remake
+```
 
 
-
-
-
-
-这是像ubunut一样使用add-apt-repository
-
+***
+# 像ubunut一样使用add-apt-repository
+```
 $ sudo apt-get install python-software-properties 
 The following NEW packages will be installed:
   python-software-properties unattended-upgrades
@@ -7141,51 +7249,58 @@ The following NEW packages will be installed:
 $ sudo apt-get install software-properties-common
 The following NEW packages will be installed:
   python3-software-properties software-properties-common
+```
 
 
-
-
-<log 自动挂载移动硬盘为uuid
+***
+# 自动挂载移动硬盘为uuid
 用gparted删除卷标就可以了
-/log>
-
-
-
-
-
-
-
-
+```
 sudo blkid
-
+```
 
 Permissions in external NTFS devices
+```
 sudo gedit /etc/udev/rules.d/99-usb-disks.rules
+```
 添加
-
+```
 ENV{ID_FS_TYPE}=="ntfs", ENV{ID_FS_TYPE}="ntfs-3g"
-
+```
+```
 cat /etc/mtab
+```
 没有default_permissions了吧
+
 缺陷是对vfat文件系统无效
+
 勉强算是一个解决方法吧,可以看出还是能够修改通过udev的挂载点权限的
+```
 sudo udevadm control --reload-rules
+```
 
 
-
-ntfs分区修复
+***
+# ntfs分区修复
+```
 sudo ntfsfix /dev/sda6
+```
 
 
-
-
-
+***
+# usbmount
+```
 sudo apt-get install usbmount
+```
 这个vfat格式挂载出来也还可以了,但是位置名称还是很扯.
+```
 sudo apt-get purge usbmount
+```
 
 
-
+***
+# udev
+```
 umount /dev/sdd1
 udisksctl mount -b /dev/sdd1 -o dmask=0022
 sudo udevadm info -a -p $(udevadm info -q path -n /dev/sdd1)
@@ -7193,34 +7308,42 @@ sudo udevadm monitor --environment --udev
 sudo udevadm info -a -n /dev/sdd1
 sudo udevadm test $(udevadm info -q path -n /dev/sdd1) 2>&1
 $ sudo journalctl -f
+```
 
-
-
-
-
+```
 $ sudo gedit /etc/udev/rules.d/99-usb-disks.rules
+```
+```
 KERNEL=="sd[a-z]*", ACTION=="add", RUN="/bin/systemctl restart media-mymount@%k.service"
-
+```
+```
 $ sudo gedit /etc/systemd/system/media-mymount@.service
+```
+```
 [Service]
 Type=forking
 GuessMainPID=no
 ExecStart=/usr/bin/udisksctl mount -o dmask=0022 -b /dev/%I
-
-
-
-
-
-
+```
+```
 $ sudo gedit /etc/udev/rules.d/99-usb-disks.rules
+```
+```
 KERNEL=="sd[a-z]*", ACTION=="add", RUN="/bin/systemctl restart media-mymount@%k.service"
-
+```
+```
 $ sudo gedit /etc/systemd/system/media-mymount@.service
+```
+```
 [Service]
 Type=forking
 GuessMainPID=no
 ExecStart=/home/andy/workspace/test.sh %I
+```
+```
 $ gedit /home/andy/workspace/test.sh
+```
+```
 #!/bin/bash
 
 if ! [ "$1" ]
@@ -7234,101 +7357,71 @@ sleep 1
 echo $dev
 umount /dev/$dev
 udisksctl mount -b /dev/$dev -o dmask=0022
-
-
-
+```
+```
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 sudo /etc/init.d/udev restart
 sudo systemctl daemon-reload
+```
 
 
-
-
-
-
-
-<log 图标要有
+***
+# icon 图标
+```
 $ sudo apt-get install gtrayicon
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following NEW packages will be installed:
-  gtrayicon
-0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-Need to get 12.9 kB of archives.
-After this operation, 67.6 kB of additional disk space will be used.
-
-
 $ sudo apt-get install gnome-icon-theme gnome-icon-theme-extras
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-gtrayicon is already the newest version (1.1-1+b2).
-The following NEW packages will be installed:
-  gnome-icon-theme
-0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
-Need to get 9,890 kB of archives.
-After this operation, 15.6 MB of additional disk space will be used.
-/log>
+```
 
 
-
-
-
-$ sudo apt-get install libwine-gecko-2.21
-
-
-
--------------------------------------------
-
-
-
-
-
--------------------------------------------
-先解决obmenu-generator失效的问题
+***
+# 解决obmenu-generator失效的问题
+```
 sudo cpanm --reinstall Linux::DesktopFiles
 sudo cpanm --reinstall Data::Dump
+```
 
-然后是apache2服务启动失败的问题
+***
+# apache2服务启动失败的问题
+```
 sudo apt-get purge apache2 apache2-utils apache2-doc
 sudo apt-get install apache2 apache2-utils apache2-doc
+```
 
-
-然后是mysql-server phpmyadmin的报错
+***
+# mysql-server phpmyadmin的报错
+```
 sudo apt-get install mysql-server phpmyadmin --reinstall
 sudo apt autoremove
-
--------------------------------------------
-
-
-
-
-
--------------------------------------------
+```
 root_bk171118.tar.xz还原后
 
 已知出现过php运行不正常的情况,可以这样恢复正常. 但有时候恢复了,又能用.(难道和~下面的config有关?)
+```
 sudo apt-get purge mysql-server phpmyadmin
 sudo apt-get autoremove
 sudo apt-get install mysql-server phpmyadmin
-http://localhost/phpmyadmin/user_password.php
+```
+<http://localhost/phpmyadmin/user_password.php>
+```
 root
 *
+```
+
+***
+# udev
 
 没有用,最后确认更新udisk2才行
+```
 $ sudo aptitude -t jessie-backports install udev udevil systemd-sysv libudev-dev libpam-systemd
 The following packages will be upgraded: 
   ifupdown libapparmor1 libpam-systemd libsystemd0 libsystemd0:i386 libudev-dev libudev1 libudev1:i386 systemd systemd-sysv udev 
   udevil usb-modeswitch 
 13 packages upgraded, 0 newly installed, 0 to remove and 386 not upgraded.
 Need to get 4,940 kB of archives. After unpacking 699 kB will be freed.
-
-
-
+```
 增加stretch源,更新一把udev,没有用,最后确认更新udisk2才行
+```
 $ sudo apt-get install udev udevil systemd-sysv libudev-dev libpam-systemd
 Reading package lists... Done
 Building dependency tree       
@@ -7362,9 +7455,9 @@ The following packages will be upgraded:
 69 upgraded, 6 newly installed, 0 to remove and 3564 not upgraded.
 Need to get 54.5 MB of archives.
 After this operation, 14.3 MB of additional disk space will be used.
-
-
+```
 没有用,最后确认更新udisk2才行
+```
 $ sudo apt-get install fuse fusefat 
 Reading package lists... Done
 Building dependency tree       
@@ -7378,10 +7471,9 @@ The following packages will be upgraded:
 2 upgraded, 1 newly installed, 0 to remove and 3562 not upgraded.
 Need to get 226 kB of archives.
 After this operation, 113 kB of additional disk space will be used.
-
-
-
+```
 到下面这个,真正有效了,u盘在media下的mount点权限就给得基本上满意了
+```
 $ sudo apt-get install udisks2
 Reading package lists... Done
 Building dependency tree       
@@ -7395,21 +7487,18 @@ The following packages will be upgraded:
 2 upgraded, 0 newly installed, 0 to remove and 3560 not upgraded.
 Need to get 392 kB of archives.
 After this operation, 135 kB disk space will be freed.
+```
 
 
-
-
-
-
+***
+# something
+```
 sudo apt-get install fbterm fbterm-ucimf
 The following NEW packages will be installed:
   fbterm fbterm-ucimf libucimf0 ucimf
 
-
 sudo apt-get install libucimf0 ucimf-openvanilla openvanilla-imgeneric
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 libucimf0 is already the newest version.
 libucimf0 set to manually installed.
 The following extra packages will be installed:
@@ -7417,86 +7506,36 @@ The following extra packages will be installed:
   openvanilla-imgeneric-data-ko openvanilla-imgeneric-data-th
   openvanilla-imgeneric-data-vi openvanilla-imgeneric-data-zh-cn
   openvanilla-imgeneric-data-zh-hk openvanilla-imgeneric-data-zh-tw
-The following NEW packages will be installed:
-  openvanilla-imgeneric openvanilla-imgeneric-data-all
-  openvanilla-imgeneric-data-ja openvanilla-imgeneric-data-ko
-  openvanilla-imgeneric-data-th openvanilla-imgeneric-data-vi
-  openvanilla-imgeneric-data-zh-cn openvanilla-imgeneric-data-zh-hk
-  openvanilla-imgeneric-data-zh-tw ucimf-openvanilla
-0 upgraded, 10 newly installed, 0 to remove and 10 not upgraded.
-Need to get 9,629 kB of archives.
-After this operation, 23.6 MB of additional disk space will be used.
-
 
 sudo apt-get install xfonts-wqy
+sudo apt-get install git-cola
+```
 
 
-
-
-
+***
+# qt
 解压 qt 4.7 的三个包
 
 
-leafpad乱码问题
+***
+# leafpad乱码问题
+```
 leafpad --codeset=gbk
+```
 
 
-
-
-
-$ sudo apt-get install ttf-wqy-zenhei
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  fonts-wqy-zenhei
-The following NEW packages will be installed:
-  fonts-wqy-zenhei ttf-wqy-zenhei
-0 upgraded, 2 newly installed, 0 to remove and 10 not upgraded.
-Need to get 7,485 kB of archives.
-After this operation, 16.9 MB of additional disk space will be used.
-
-
-
-
-
+***
+# wqy fonts
+```
+sudo apt-get install ttf-wqy-zenhei fonts-wqy-zenhei ttf-wqy-microhei
 sudo dpkg-reconfigure locales
+sudo apt-get install fonts-noto fonts-arphic-ukai
+```
+<http://edyfox.codecarver.org/html/debian_testing_chinese.html>
 
+和`/usr/share/fontconfig/conf.avail`
 
-sudo apt-get install ttf-wqy-zenhei fonts-noto ttf-wqy-microhei fonts-arphic-ukai
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-ttf-wqy-microhei is already the newest version.
-ttf-wqy-zenhei is already the newest version.
-The following NEW packages will be installed:
-  fonts-arphic-ukai fonts-noto
-0 upgraded, 2 newly installed, 0 to remove and 10 not upgraded.
-Need to get 9,920 kB of archives.
-After this operation, 23.8 MB of additional disk space will be used.
-
-
-可以参考
-http://edyfox.codecarver.org/html/debian_testing_chinese.html
-和/usr/share/fontconfig/conf.avail
-
-搞一个~/.config/fontconfig/fonts.conf
-
-
-
-
-
-
-
-
-
-
-
-sudo apt-get install git-cola
-
-
-
+搞一个`~/.config/fontconfig/fonts.conf`
 
 
 

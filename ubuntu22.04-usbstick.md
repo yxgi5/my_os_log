@@ -4992,8 +4992,9 @@ $ sudo apt-get install gcp
 
 
 ***
-#
+# screenfetch
 ```
+$ sudo apt install screenfetch
 ```
 
 
