@@ -5385,23 +5385,23 @@ $ cbatticon &
 ```
 
 
-
-<log >
+***
+# something
+```
 $ sudo apt-get install glibc-source
 $ sudo apt-get install u-boot-tools lrzsz minicom nfs-kernel-server tftpd xinetd libncurses5-dev
 $ sudo apt-get install slang-xfig
 $ sudo apt-get install quilt
 $ sudo apt-get install e2fsck-static
-
-
+```
+```
 $ ls /bin/sh -l
 /bin/sh -> dash
-    
 $ sudo rm /bin/sh
 $ sudo ln -s /bin/bash /bin/sh
-
-$ sudo apt-get install git-core libcrypt-ssleay-perl ccache libusb-dev libexpect-perl mono-devel    
-    
+```
+```
+$ sudo apt-get install git-core libcrypt-ssleay-perl ccache libusb-dev libexpect-perl mono-devel
 $ sudo apt-get install python3-dev python3-setuptools python3-crypto python3-keyring python3-lxml python3-pyinotify python3-secretstorage
 $ sudo apt-get install python-pip
 $ sudo apt-get install libssl-dev libssl1.0.0
@@ -5415,17 +5415,16 @@ Reading https://pypi.python.org/simple/
 Download error on https://pypi.python.org/simple/: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:600) -- Some packages may not be found!
 No local packages or download links found for pip
 error: Could not find suitable distribution for Requirement.parse('pip')
-
-
 $ wget http://curl.haxx.se/ca/cacert.pem
 $ mv cacert.pem ca-bundle.crt
 $ sudo cp ca-bundle.crt /etc/pki/tls/certs/
-<ref >
+```
+```
     /etc/pki/tls/certs/ca-bundle.crt not found
     On ubuntu/debian, this file is in /etc/ssl/certs/ca-certificates.crt. You could symlink it. 
     The /etc/pki/ path is used on Redhat.
-</ref>
-
+```
+```
 $ sudo easy_install3 pip
 Searching for pip
 Reading https://pypi.python.org/simple/pip/
@@ -5458,8 +5457,8 @@ Installing pip script to /usr/local/bin
 Installed /usr/local/lib/python3.4/dist-packages/pip-9.0.1-py3.4.egg
 Processing dependencies for pip
 Finished processing dependencies for pip
-
-
+```
+```
 $ sudo pip3 install --upgrade pycrypto
 $ sudo pip3 install --upgrade keyring
     
@@ -5481,12 +5480,11 @@ $ sudo apt-get install libxtst6:i386 libxt6:i386 libxp6:i386 libxpa1:i386
     
 $ sudo apt-get install libstdc++5 libstdc++5:i386
 $ sudo apt-get install libc-dev libc6-amd64:i386    
-    
-    
+
 $ sudo apt-get install mdbtools mdbtools-gmdb mdbtools-dev
 $ sudo apt-get install unixodbc mdbtools
 $ gmdb2    
-    
+```
 /etc/udev/rules.d/51-altera-usb-blaster.rules
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
