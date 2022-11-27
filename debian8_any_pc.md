@@ -10017,19 +10017,21 @@ $ sudo apt-get upgrade
 比如uex和bcompare什么的
 
 
+***
+# sqlitebrowser
+```
 sudo apt-get purge sqlitebrowser libqcustomplot1.2
-https://packages.debian.org/search?suite=jessie&mode=filename&searchon=contents&keywords=linguist
+```
+<https://packages.debian.org/search?suite=jessie&mode=filename&searchon=contents&keywords=linguist>
+```
 sudo apt-get install qttools5-dev qttools5-dev-tools libqscintilla2-dev libantlr-dev
 
 sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev
 
-
-
-
 $ sudo updatedb -U /media/andy/KINGIDISK/ -o /home/andy/Downloads/offen_used/locate/mlocate_n.db
 $ sudo chmod 777 mlocate_n.db
-
-
+```
+```
 sqlite3 test.db
 CREATE TABLE `files` (`files` TEXT);
 .tables
@@ -10037,9 +10039,10 @@ select * from files
 .import mlocate_n.txt files
 .exit;
 sqlitebrowser test.db
+```
 
-
-gui导入乱码，命令行导入ok， 编译如下，失败
+gui导入乱码，命令行导入ok，编译如下，失败
+```
 $ sudo apt install build-essential git-core cmake libsqlite3-dev qt5-default qttools5-dev-tools libsqlcipher-dev
 $ git clone https://github.com/sqlitebrowser/sqlitebrowser
 $ cd sqlitebrowser
@@ -10048,10 +10051,10 @@ $ cd build
 $ cmake -Dsqlcipher=1 -Wno-dev -DFORCE_INTERNAL_QSCINTILLA=ON ..
 $ make
 $ sudo make install
-
-
+```
 
 操作速记
+```
 mlocate -d mlocate_n.db / > mlocate_n.txt
 sort mlocate_n.txt > mlocate_n_ascii.txt
 find -name 'mlocate_n_ascii.txt' | xargs perl -pi -e 's|^/media/andy||g'
@@ -10063,22 +10066,22 @@ select * from files;
 .import mlocate_n_ascii.txt files
 .exit
 sqlitebrowser mlocate_n1.db
+```
 
 
-
-
-
-
-
+***
+# watch
+```
 watch -n 1 "cat /proc/cpuinfo"
 watch -n 1 "ps aux"
+```
 
 
+***
+# 将文件夹的内容制作为ISO镜像
+```
+@tech_log/cd_burning/cdrecord.doc
 
-
-
-
-将文件夹的内容制作为ISO镜像@tech_log/cd_burning/cdrecord.doc
 genisoimage -V 20100724B -J -jcharset=utf8 -joliet-long -r -o /TargetImage.iso /media/CB71A5FF367EFAC1/Temp/
 
 file(1) will show the volume label in an ISO file.
@@ -10087,31 +10090,36 @@ file(1) will show the volume label in an ISO file.
 I can use command "file" to view the volume label.
 I can use editors/bvi or editors/hexedit to modify the volume label. (notice: only modify the ISO9660 label, not Joliet label)
 Under X Windows, I can use sysutils/isomaster to do everything.
-
+```
 isomaster建立和编辑iso也是ok的
  
+
+***
+# 创建chm文件
 据说linux下用chmcmd可以创建chm文件
 
 
-递归显示目录内容
+***
+# 递归显示目录内容
+```
 ls -al -R
+```
 
-
-
-
+***
+# ntfslabel
 ntfs分区的卷标不喜欢，可以用ntfslabel换掉，然后自动挂载
+```
 sudo fdisk -l 或者 df -hT
 sudo umount /dev/sda5
 sudo ntfslabel /dev/sda5 music
+```
 
 
-
-
-
-
-
+***
+# iperf
+```
 $ sudo apt-get install iperf
-
+```
 
 
 
