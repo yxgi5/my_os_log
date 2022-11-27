@@ -10212,15 +10212,17 @@ Enter pass phrase for ./private/ca.key: $password
 
 ***
 # git config
-//git config --global merge.tool vimdiff  
-Git可以接受kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, 和 opendiff作为有效的合并工具
+```
+git config --global merge.tool vimdiff
 git help config
-
 git config --list
+```
+Git可以接受kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, 和 opendiff作为有效的合并工具
+
 命令来列出Git可以在该处找到的所有的设置
 
-
 $ cat /home/andy/.gitconfig
+```
 [user]
 	name = Andreas Zhang
 	email = denglitsch@gmail.com
@@ -10231,17 +10233,14 @@ $ cat /home/andy/.gitconfig
 	gpgsign = false
 [http]
 	sslVerify = false
+```
 
 
-
-
-
-
+***
+# qt doc
+```
 $ sudo apt-get install qt5-doc-html pyqt5-doc --reinstall
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   qtbase5-doc-html qtdeclarative5-doc-html qtenginio5-doc-html
   qtgraphicaleffects5-doc-html qtmultimedia5-doc-html qtpositioning5-doc-html
@@ -10249,27 +10248,26 @@ The following extra packages will be installed:
   qtsvg5-doc-html qttools5-doc-html qtwebkit5-doc-html
   qtwebkit5-examples-doc-html qtwebsockets5-doc-html qtx11extras5-doc-html
   qtxmlpatterns5-doc-html
-The following NEW packages will be installed:
-  qt5-doc-html qtbase5-doc-html qtdeclarative5-doc-html qtenginio5-doc-html
-  qtgraphicaleffects5-doc-html qtmultimedia5-doc-html qtpositioning5-doc-html
-  qtscript5-doc-html qtsensors5-doc-html qtserialport5-doc-html
-  qtsvg5-doc-html qttools5-doc-html qtwebkit5-doc-html
-  qtwebkit5-examples-doc-html qtwebsockets5-doc-html qtx11extras5-doc-html
-  qtxmlpatterns5-doc-html
-0 upgraded, 17 newly installed, 1 reinstalled
-
+```
+```
 sudo pip2 install pyqtdoc -i https://mirrors.163.com/pypi/simple
-/usr/local/Lib\site-packages\PyQt4\doc\qch
+```
+`/usr/local/Lib\site-packages\PyQt4\doc\qch`
 
-
+```
 sudo updatedb
 locate .qch
 locate qnetworkconfiguration.html
 locate qtnetwork.html
 locate site-packages
+```
 其实pyqt的参考文档在
+
 http://pyqt.sourceforge.net/Docs/PyQt4/modules.html
+
 也可以在对应win安装包里找到的
+
+```
 /usr/share/doc/python-qt4-doc/html
 /usr/share/doc/python-qt4-doc/examples
 /usr/share/doc/pyqt5-doc/html
@@ -10279,97 +10277,82 @@ http://pyqt.sourceforge.net/Docs/PyQt4/modules.html
 /usr/share/qt5/doc
 /usr/share/doc/python2.7/examples
 /usr/share/doc/python3.5/examples
+```
 
 
-
-
-
+***
+# dot2tex
+```
 sudo pip3.6 install --upgrade pip -i https://mirrors.163.com/pypi/simple
 sudo pip3.5 install --upgrade pip -i https://mirrors.163.com/pypi/simple
 sudo pip2 install --upgrade pip -i https://mirrors.163.com/pypi/simple
-
 sudo pip3.5 install dot2tex -i https://mirrors.163.com/pypi/simple
 sudo pip3.6 install dot2tex -i https://mirrors.163.com/pypi/simple
 sudo pip2 install dot2tex -i https://mirrors.163.com/pypi/simple
-
 sudo pip3.5 uninstall dot2tex
 sudo pip3.6 uninstall dot2tex
 sudo pip2 uninstall dot2tex
 sudo apt-get install dot2tex --reinstall
-
 sudo apt-get purge dot2tex
-
-
-安装sphinx-build
+```
+## 安装sphinx-build
+```
 sudo pip2 install sphinx -i https://mirrors.163.com/pypi/simple
-
 sphinx-build -b latex -d _build/doctrees   . _build/latex
+```
 Running Sphinx v1.8.1
+```
 Extension error:
 Could not import extension sphinx.ext.pngmath (exception: No module named pngmath)
-
-
+```
+```
 $ sudo apt-get install python-sphinx
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   python-jinja2 python-markupsafe sphinx-common sphinx-doc
 Suggested packages:
   python-jinja2-doc
-The following NEW packages will be installed:
-  python-jinja2 python-markupsafe python-sphinx sphinx-common sphinx-doc
-0 upgraded, 5 newly installed
-
-
-
+```
+```
 $ sudo pip3.6 install sphinx -i https://mirrors.163.com/pypi/simple
 $ sudo pip3.5 install -U sphinx -i https://mirrors.163.com/pypi/simple
 $ sudo pip2 install -U sphinx -i https://mirrors.163.com/pypi/simple
 $ sudo pip3.6 install -U sphinx -i https://mirrors.163.com/pypi/simple
 
+$ sudo apt-get install sphinxbase-utils libsphinxbase1
+```
+<http://gmt.soest.hawaii.edu/boards/1/topics/6109>
 
-$ sudo apt-get install sphinxbase-utils 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  libsphinxbase1
-The following NEW packages will be installed:
-  libsphinxbase1 sphinxbase-utils
-0 upgraded, 2 newly installed
-
-
-http://gmt.soest.hawaii.edu/boards/1/topics/6109
 Think your sphinx is too old. Mine is 1.6.5 and I remember there was a change from some older name (pngmath) to the imgmath around the 1.3,1.4 releases.
 
-修改dot2tex-git/docs/conf.py
+修改`dot2tex-git/docs/conf.py`
+```
 sphinx.ext.pngmath -> sphinx.ext.imgmath
+```
 运行make latex
-再运行make latexpdf，或到dot2tex-git/docs/_build/latex/运行make
+
+再运行make latexpdf
+
+或到dot2tex-git/docs/_build/latex/运行make
+
 就生成dot2tex.pdf了
 
-
-
-
-
+```
 $ tlmgr install collection-latexextra
-
-
-
-
+```
+```
 sudo apt-file update
 apt-file -x search '/multind.sty$'
-https://www.ctan.org/pkg/multind?lang=en
+```
+<https://www.ctan.org/pkg/multind?lang=en>
 
 
-
-
-
-
-
-抓取网站的mirror目录
+***
+# 抓取网站的mirror目录
+```
 wget -c -r -npH -k -e robots=off -E https://mirrors.tuna.tsinghua.edu.cn/CTAN/info/
+```
+```
 -c：断点续传
 -r：递归下载
 -np：递归下载时不搜索上层目录
@@ -10381,11 +10364,7 @@ wget -c -r -npH -k -e robots=off -E https://mirrors.tuna.tsinghua.edu.cn/CTAN/in
 -e robots=off //忽略robots协议
 -E //将所有text/html文档以.html扩展名保存
 find  . -name  '*?C*' -print -exec  rm -rf  {} \;
-
-
-
-
-
+```
 
 
 * * *
@@ -10397,13 +10376,11 @@ pip3查不到有PyQt4，但是书上的例子是python2+pyqt4
 python configure.py
 make
 sudo make install
-
 ```
-
-- - -
+---
 ## 为 python3 安装 PyQt4 -- 这样编译PyQt4
 
-== 源码安装 pyqt4 for pyhthon 3.5 ==
+### 源码安装 pyqt4 for pyhthon 3.5
 ```
 sudo pip3.5 uninstall sip
 cd sip-4.19.12/
@@ -10444,10 +10421,8 @@ ValueError: PyCapsule_GetPointer called with incorrect name
 ```
 我操哦，不能用。现在机器上3.5是apt安装的3.6是源码安装的，看来源码安装python是最好的
 
-
-- - -
-
-== 源码安装 python 3.5 ==
+---
+### 源码安装 python 3.5
 ```
 wget https://www.python.org/ftp/python/3.5.6/Python-3.5.6.tar.gz
 tar -zxvf Python-3.5.6.tar.xz
@@ -10460,11 +10435,8 @@ sudo make install -n
 sudo make install
 sudo pip3.5 install --upgrade pip -i https://mirrors.163.com/pypi/simple
 ```
-
-
-- - -
-
-== 源码安装 pyqt4 for pyhthon 3.6 ==
+---
+## 源码安装 pyqt4 for pyhthon 3.6
 ```
 sudo pip3.6 uninstall sip
 cd sip-4.19.12/
@@ -10494,12 +10466,7 @@ ok，可以用了，python3.6支持PyQt4了(就是可以import了)
 sudo pip3.6 uninstall sip
 sudo pip3.6 install --upgrade  sip -i https://mirrors.163.com/pypi/simple
 ```
-
-
-
-- - -
-
-
+---
 查看要安装的文件和位置
 ```
 sudo make install -n
@@ -10508,8 +10475,6 @@ sudo make install -n
 ```
 sudo make uninstall -n
 ```
-
-
 
 指定单次安装源
 ```
@@ -10526,81 +10491,46 @@ timeout = 6000
 ```
 
 
-
-
-
-
-
-端口占用情况
+***
+# 查看端口占用情况
+```
 netstat -tunlp 
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# JETPACK
+```
 sudo apt install /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv_3.3.1_amd64.deb /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv-dev_3.3.1_amd64.deb /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv-python_3.3.1_amd64.deb /home/alex/New/_NividaTX2/JETPACK/jetpack_download/libopencv-samples_3.3.1_amd64.deb
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# log | man doc
 find /var/log -maxdepth 1 -print0 -type f | xargs -0 ls -ld
 find /var/log  -type f -exec ls -ld {} \;
 find /var/log/ -type f -ls
 find /usr/share/man/ | sed -e "s#/usr/share/man##" | grep \^/man | awk -F/ '{ print $3 }' | sed -e "s/\.[0-9].gz//"
 
-
-
-
 find man doc
+```
 man -k [a-z] | more
 to search for anything hex related as an example:
 man -k hex | more
+```
 
 
-
-
-
-
-
-
-查看命令类型
+***
+# 查看命令类型
+```
 type -a xxx
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
+***
+# git config
 ~/.gitconfig
-
--------------------------------
+```
 [user]
 	name = Andreas Zhang
 	email = denglitsch@gmail.com
@@ -10614,37 +10544,17 @@ type -a xxx
 	gpgsign = false
 [http]
 	sslVerify = false
--------------------------------
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-date
-
+***
+# shadowsocks compiling
+```
 autoconf libjpeg-dev libpng12-dev libfreetype6-dev libgtk2.0-dev libjpeg-dev libpng12-dev libfreetype6-dev libsqlite3-dev libxml2-dev  electric-fence
 #libssl1.0-dev cannot
 
-
-
-
-
-
-
 sudo apt-get install qtbase5-dev
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   libqt5concurrent5 libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5
   libqt5opengl5 libqt5opengl5-dev libqt5printsupport5 libqt5sql5
@@ -10652,83 +10562,71 @@ The following extra packages will be installed:
   qtbase5-dev-tools qtbase5-examples
 Suggested packages:
   firebird-dev
-The following packages will be upgraded:
-  libqt5concurrent5 libqt5core5a libqt5dbus5 libqt5gui5 libqt5network5
-  libqt5opengl5 libqt5opengl5-dev libqt5printsupport5 libqt5sql5
-  libqt5sql5-sqlite libqt5test5 libqt5widgets5 libqt5xml5 qt5-qmake
-  qtbase5-dev qtbase5-dev-tools qtbase5-examples
-17 upgraded, 0 newly installed, 0 to remove and 1124 not upgraded.
-Need to get 16.3 MB of archives.
+```
 
 https://packages.debian.org/jessie/libbotan1.10-dev
+```
 $ sudo apt-get install libbotan1.10-dev 
-
+```
 
 编译libQtShadowsocks-1.11.0
+
 https://github.com/shadowsocks/libQtShadowsocks/wiki/Compiling
+
+https://github.com/shadowsocks/shadowsocks-qt5/wiki/Compiling
+```
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 make -j4
 sudo make install
-
-
-https://github.com/shadowsocks/shadowsocks-qt5/wiki/Compiling
-
+```
 
 botan2.10
 https://github.com/randombit/botan
+```
 sudo apt-get install libasio-dev
 python3 configure.py
 make -j8
 sudo make install
-
+```
 
 修改libQtShadowsocks-2.1.0的makelist的qt版本为5.3
+```
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 make -j8
 sudo make install
-
-
-
-
-
+```
 
 非要qt5.5,
-
-
-
-
-apt-get install shadowsocks-libev
-
-
-
-
+```
+sudo apt-get install shadowsocks-libev
 sudo apt-get install shadowsocks-qt5 
 ss-qt5
+```
 
 
-
-
-
-
-源过期处理
+## 源过期处理
+```
 InRelease is expired. Updates for this repository will not be applied.
+```
+```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
-
-
-
+```
+```
 deb http://ppa.launchpad.net/hzwhuang/ss-qt5/ubuntu trusty main
+```
+```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 6DA746A05F00FA99
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 648ACFD622F3D138
 sudo apt-get install shadowsocks-qt5
-
-
-
-
+```
+---
+```
 ss-local -v -c ./config.json
-------------
+```
+```
 {
     "server":"104.238.150.238",
     "server_port":5000,
@@ -10740,13 +10638,12 @@ ss-local -v -c ./config.json
     "fast_open": false,
     "workers": 1
 }
--------------
+```
 
-
+***
+# x265 x264
+```
 sudo apt-get install android-tools-fsutils
-
-
-
 sudo apt-get install klatexformula
 
 The following packages were automatically installed and are no longer required:
@@ -10757,12 +10654,7 @@ The following extra packages will be installed:
 The following NEW packages will be installed:
   klatexformula libklatexformula3
 
-
 sudo apt-get install equalx
-
-
-
-
 sudo dpkg-reconfigure dash
 sudo apt-get install libav-tools 
 sudo apt-get install libav-tools 
@@ -10833,28 +10725,25 @@ ffprobe
 ffmvforce --help
 sudo apt-get install libav-tools
 x264 --help
+```
 
 
-
-
-
-
-
-
+***
+# excel
 wps的et,等效于excel
 
 
+***
+# 目标文件调用库依赖
 readelf -d xxx 也有 类似 ldd的效果,查看交叉编译的目标文件调用库依赖
 
 
 
-
-
+***
+# petalinux
+```
 $ sudo apt-get install linaro-image-tools
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following packages were automatically installed and are no longer required:
   libavdevice55 libproxy-tools vlc-plugin-pulse
 Use 'apt-get autoremove' to remove them.
@@ -10863,65 +10752,61 @@ The following extra packages will be installed:
   python-linaro-image-tools python-parted udisks
 Suggested packages:
   python-gdbm-dbg xfsprogs reiserfsprogs mdadm
-The following NEW packages will be installed:
-  btrfs-tools command-not-found cryptsetup-bin liblvm2app2.2
-  linaro-image-tools python-gdbm python-linaro-image-tools python-parted
-  udisks
-0 upgraded, 9 newly installed, 0 to remove and 89 not upgraded.
-Need to get 1,632 kB of archives.
-After this operation, 7,594 kB of additional disk space will be used.
-Do you want to continue? [Y/n] 
-
-
-
-
-
-
+```
+```
 sudo apt-get install build-essential vim tofrodos iproute2 gawk gcc git make net-tools zlib1g-dev libssl-dev flex bison libselinux1 libncurses5-dev tftpd lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6 xvfb chrpath socat autoconf libtool
 
 ./petalinux-v2017.4-final-installer.run /opt/petalinux
-
+```
 Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+```
  $ . /opt/petalinux/components/yocto/source/microblaze_lite/environment-setup-microblazeel-v10.0-bs-cmp-ml-xilinx-linux
-
+```
 
 
 # 恢复wine的版本foxitreader
-```
 新foxitreader书签太坑人, 旧的怎么恢复wine的版本?
+
 wine-extension-pdf.desktop
+```
+...
 env WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen FoxitReader.Document %f
+...
+```
 FoxitReader.Document是在./.wine/system.reg中定义的, 修改成正确的就可以用了. 之前是定位到移动硬盘上的exe去了, 所以插移动硬盘能开pdf
-D:\\software\\reader\\pdf\\foxit\\Foxit Reader.exe替换成
+```
+D:\\software\\reader\\pdf\\foxit\\Foxit Reader.exe
+```
+替换成
+```
 C:\\Program Files\\Foxit Software\\Foxit Reader\\Foxit Reader.exe
 ```
 
 
 # 编译安装DSView, 并设置单独的运行库
 ```
-git clone https://github.com/DreamSourceLab/DSView.git
-sudo apt-get install libzip-dev check libfftw3-bin libfftw3-dev libfftw3-long3 libfftw3-quad3
+$ git clone https://github.com/DreamSourceLab/DSView.git
+$ sudo apt-get install libzip-dev check libfftw3-bin libfftw3-dev libfftw3-long3 libfftw3-quad3
 
+$ cd libsigrok4DSL
+$ ./autogen.sh
+$ ./configure
+$ make
+$ sudo make install
+$ cd ..
 
- $ cd libsigrok4DSL
- $ ./autogen.sh
- $ ./configure
- $ make
- $ sudo make install
- $ cd ..
+$ cd libsigrokdecode4DSL
+$ ./autogen.sh
+$ ./configure
+$ make
+$ sudo make install
+$ cd ..
 
- $ cd libsigrokdecode4DSL
- $ ./autogen.sh
- $ ./configure
- $ make
- $ sudo make install
- $ cd ..
+$ cd DSView
+$ cmake .
 
- $ cd DSView
- $ cmake .
-
- $ make
- $ sudo make install
+$ make
+$ sudo make install
 ```
 
 ## 重新编译python3.6
@@ -10929,79 +10814,94 @@ sudo apt-get install libzip-dev check libfftw3-bin libfftw3-dev libfftw3-long3 l
 ./configure --enable-shared CFLAGS=-fPIC
 make -j$(nproc)
 sudo make install
+```
 
+参考
 
-参考:
 运行ldd /usr/local/bin/python3，看看python3运行所需要的库，结果显示如下:
-
+```
 linux-vdso.so.1 =>  (0x00007fff70da5000)
 libpython3.6m.so.1.0 => not found
 libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f1496ff1000)
 libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1496c27000)
 /lib64/ld-linux-x86-64.so.2 (0x00007f149720e000)
+```
 发现那个依赖文件的确没有找到.。
 
 查找一下文件的位置:
-
+```
 find /-name 'libpython3.3m.so.1.0'
+```
 文件位置为:
-
+```
 /usr/local/lib/libpython3.6m.so.1.0
+```
 之后在目录/etc/ld.so.conf.d下，建立python3.conf文件
-
+```
 cd /etc
 cd ld.so.conf.d
 sudo touch python3.conf
+```
 然后编辑该文件，加入libpython3.6m.so.1.0文件所在的目录
-
+```
 sudo gedit python3.conf                   #编辑文件
-
+```
+```
+...
 /usr/local/lib/                           #加入文件所在的目录
-最后运行：sudo ldconfig
 ```
-## 现在可以继续编译了
+最后运行：
+```
+sudo ldconfig
+```
+---
+现在可以继续编译了
 
 ```
- $ cd DSView
- $ cmake .
-
+$ cd DSView
+$ cmake .
+```
 干你娘, apt安装的qt5版本还是太低了, 解决办法是安装高版本qt并设置环境变量并设置cmake配置路径就行了
+```
 The Qt:AA_EnableHighDpiScaling was introduced in QT 5.6 ( http://blog.qt.io/blog/2016/01/26/high-dpi-support-in-qt-5-6/ ) 
 Ubuntu Trusty provides 5.2.1, xenial provides 5.5.1 thus OBS will not compile without manually updating Qt until yakkety providing 5.6.1. 
 找到Qt5Core_DIR之类的路径指定为/opt/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core
+```
+```
+$ make
+$ sudo make install
+$ cp /usr/share/applications/DSView.desktop ~/Desktop/
+$ cd /usr/local/bin
+$ sudo mv DSView ../share/DSView/
+```
+复制`/usr/local/share/DSView`到`/opt`
 
- $ make
- $ sudo make install
-cp /usr/share/applications/DSView.desktop ~/Desktop/
-
-
-cd /usr/local/bin
-sudo mv DSView ../share/DSView/
-复制/usr/local/share/DSView到/opt
 建立相对目录如下
-/opt/DSView/bin,把可执行文件复制到这里
+```
+/opt/DSView/bin
+```
+把可执行文件复制到这里
+```
 /opt/DSView/share/DSView
-
+```
+```
 cd /usr/local/bin
 sudo gedit DSView
 sudo chmod +x DSView
--------------------------------------------------
+```
+```
 #!/bin/bash
 export QTDIR=/opt/Qt5.10.1/5.10.1/gcc_64
 export PATH=$QTDIR/bin:/opt/Qt5.10.1/Tools/QtCreator/bin:$PATH
 export LD_LIBRARY_PATH=$QTDIR/lib:/opt/Qt5.10.1/Tools/QtCreator/lib/qtcreator:$LD_LIBRARY_PATH
 /opt/DSView/bin/DSView
--------------------------------------------------
-修改/usr/share/applications/DSView.desktop里的desktop文件,图标要修改路径了
 ```
+修改/usr/share/applications/DSView.desktop里的desktop文件,图标要修改路径了
 
 
 
+***
 # 终于受不了qt5版本问题了,干脆弄个5.10版本的
-
-qt account
-202619.Mm5
-yxgi5@163.com
 
 ## 安装qt5.10到opt
 ```
@@ -11030,7 +10930,6 @@ sudo gedit /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf
 修改成
 /opt/Qt5.10.1/
 /opt/Qt5.10.1/5.10.1/gcc_64/bin
-
 
 ```
 
@@ -11078,11 +10977,7 @@ for i in /opt/fsl/lib/*.so; do echo $i; nm -D $i | grep -in glGenVertexArrays; d
 
 retext输入字符闪退....
 
-
-
 apt安装的retext果然是因为Qt库指定为5.10(ldconfig)才挂了.
-
-
 
 sudo pip3.6 install retext -i https://mirrors.163.com/pypi/simple
 7.0.4
@@ -11215,9 +11110,7 @@ export QT_QPA_PLATFORM_PLUGIN_PATH=
 为啥不动系统配置,要动配置也配置成用户配置,为了之前安装的东西还能继续用啊.
 ```
 
-
-
-
+***
 # 安装glmark
 ```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
@@ -11245,29 +11138,23 @@ sudo strip -s glmark2-out/usr/local/bin/glmark2-es2
 $ taskset -c 4-5 glmark2-es2
 ```
 
-
-
-
-
-
+***
 # apt强制更新过期源
 ```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
 sudo aptitude -o Acquire::Check-Valid-Until=false update
 ```
 
+
+***
 # 蓝牙 Bluetooth
 ```
 sudo apt-get install blueman
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   gir1.2-appindicator3-0.1 libopenobex1 obex-data-server
 The following NEW packages will be installed:
   blueman gir1.2-appindicator3-0.1 libopenobex1 obex-data-server
-0 upgraded, 4 newly installed, 0 to remove and 319 not upgraded.
-Need to get 1,847 kB of archives.
 
 sudo apt-get install blueman bluez*
 
@@ -11299,134 +11186,156 @@ sudo apt purge blueproximity
 ```
 
 
+***
+# 解压进度条
 
-解压进度条
 参考海思解压脚本
+
 run_command_progress_float在scripts/common.sh定义的
 
 
 
-几个讨厌的autorun程序去掉
+***
+# 几个讨厌的autorun程序去掉
 /home/andy/.config/autostart
 其他位置查autostart
 
 
 
-EDID调试讯息
+***
+# EDID调试讯息
+```
 cat /proc/umap/hdmi0_sink
+```
 
 
-
+***
 # 百度云盘
+```
 cd /usr/local/bin
 sudo gedit baidunetdisk
-------------------------------------
+```
+```
 #!/bin/bash
 /opt/baidunetdisk/baidunetdisk
-------------------------------------
+```
+```
 sudo chmod +x baidunetdisk
+```
 
 
-
-
+***
+# something
+```
 sudo apt-get install hwinfo
 sudo apt-get install mediainfo
 sudo apt-get install libgpac-dev
-
-
-
 
 sudo gedit /etc/resolv.conf
 sudo /etc/init.d/networking restart
 
 ping6 fe80::20c:29ff:fe1c:8c75%eth0
-
 ping -6 fe80::20c:29ff:fe1c:8c75
 
-
-
-
-
-
 sudo apt-get install archivemount
+```
 
 
+***
+# gcc 生成汇编文件 asm
+```
+gcc a.c -o a.S -S
+```
+就可以生成汇编
 
 
-
-gcc a.c -o a.S -S 就可以生成汇编
+***
+# dump | cat
 收发二进制可使用 dump 命令，cat 只是测试字符
 
 
-
-
-
-
-
+***
+# virt-manager
+```
 sudo apt install qemu-kvm qemu virt-manager libvirt-bin bridge-utils iptables dnsmasq uml-utilities
-
-
-
-
-
-
-
-
+```
+```
 sudo gedit /etc/libvirt/libvirtd.conf
+```
+```
 unix_sock_group = "libvirt"
 unix_sock_ro_perms = "0777"
 unix_sock_rw_perms = "0770"
-
+```
+```
 sudo systemctl start libvirtd
 sudo systemctl enable libvirtd
 
 sudo usermod -a -G libvirt $(whoami)
+```
 注销并重新登录
+
 可以通过命令行 （virsh） 或通过 virt-manager 图形界面管理 libvirt 系统
 
-
+```
 /var/lib/libvirt/images
+```
 
 
-
-shadowsocks有关
+***
+# shadowsocks有关
 安装 shadowsocks-libev(c++) 或者 shadowsocks(Python)
 
 shadowsocks-qt5采用aes-256-cfb可能会出现
+```
 ERR_SSL_VERSION_OR_CIPHER_MISMATCH
+```
 自带的ss-qt5不会出现这个问题
+
 可能和botan有关
 
-
+```
 $ sudo apt-get install shadowsocks
 The following NEW packages will be installed:
   python-m2crypto shadowsocks
 
 $ sudo apt-get shadowsocks-libev
+```
 
-
-编辑/etc/shadowsocks/config.json
-
+编辑`/etc/shadowsocks/config.json`
+```
 ss-local -c /etc/shadowsocks/config.json
 或者
 sslocal -c /etc/shadowsocks/config.json
-
+```
 参考
-https://wiki.archlinux.org/index.php/Shadowsocks_(简体中文)
 
+<https://wiki.archlinux.org/index.php/Shadowsocks_(简体中文)>
+
+---
 作为systemd服务启动
+
 从
-https://www.archlinux.org/packages/community/x86_64/shadowsocks-libev/
-https://www.archlinux.org/packages/community/any/shadowsocks/
+<https://www.archlinux.org/packages/community/x86_64/shadowsocks-libev/>
+<https://www.archlinux.org/packages/community/any/shadowsocks/>
+
 搞到systemd有关的文件
+
 community 源里安装的shadowsocks好像自带 systemd 服务
-只要编辑 /etc/shadowsocks/config.json 配置文件
-然后 sudo systemctl enable shadowsocks@config.service 就可以了
-##sudo systemctl start shadowsocks@config.service
 
+只要编辑 `/etc/shadowsocks/config.json` 配置文件
 
+然后 
+```
+sudo systemctl enable shadowsocks@config.service
+sudo systemctl start shadowsocks@config.service
+```
+就可以了
+
+```
 /usr/lib/systemd/system/shadowsocks@.service
--------------------------------
+```
+```
 [Unit]
 Description=Shadowsocks Client Service
 After=network.target
@@ -11438,10 +11347,11 @@ ExecStart=/usr/bin/sslocal -c /etc/shadowsocks/%i.json
 
 [Install]
 WantedBy=multi-user.target
--------------------------------
-
+```
+```
 /etc/shadowsocks/config.json
--------------------------------
+```
+```
 {
     "server":"119.28.9.79",
     "server_port":3588,
@@ -11453,126 +11363,130 @@ WantedBy=multi-user.target
     "fast_open": false,
     "workers": 10
 }
--------------------------------
-
+```
+```
+sudo systemctl enable shadowsocks@config.service
 sudo systemctl start shadowsocks@config.service
-
 netstat -ntlp | grep 1081
+```
 
 
+***
+# modelsim license
+```
 Failure to obtain a Verilog simulation license. Unable to checkout any of these license features: alteramtivsim or alteramtivlog
 /opt/altera/11.0/modelsim_ae/bin/vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L maxii_ver -L rtl_work -L work -voptargs="+acc" Top
 ./lmutil lmdiag -c /opt/altera/license.dat alteramtivsim
+```
 分明已经可以了,但是还是报错
+
 AE版本的modelsim是没辙了
 
 
-
-sudo systemctl enable shadowsocks@config.service
-
-
-
-
-
-
-
-
-配置lattice diamand
-
+***
+# 配置 lattice diamand
+```
 sudo apt-get install alien
 sudo alien diamond_3_2-base_x64-134-x86_64-linux.rpm
-#sudo dpkg --install diamond-3-2-base-x64_3.2-135_amd64.deb
-解压到/opt/lscc/
-
+//sudo dpkg --install diamond-3-2-base-x64_3.2-135_amd64.deb
+```
+解压到`/opt/lscc/`
+```
 cd /opt/lscc/diamond/3.2_x64/bin/lin64
 mv libpng12.so.0 libpng12.so.0.old
 cp /lib/x86_64-linux-gnu/libpng12.so.0.50.0 .
 ln -s libpng12.so.0.50.0 libpng12.so.0
-
+```
 配置lattice diamand 的 USB2A and HW-USBN-2B下载线驱动识别规则
+```
 cd /etc/udev/rules.d
 sudo gedit /etc/udev/rules.d/10-local.rules
-----------------------------------------------------------------
+```
+```
 #Lattice
 SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="andy",SYMLINK+="lattice-%n"
 #FTDI
 SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andy",SYMLINK+="ftdi-%n"
 SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'"
----------------------------------------------------------------
+```
+```
 sudo chmod 755 10-local.rules
 sudo udevadm control --reload-rules
 sudo rmmod ftdi_sio
-
-
-
+```
 
 /opt/lscc/diamond/3.9_x64/bin/lin64添加到~/.bashrc的PATH环境变量
+
 /opt/lscc/license.dat添加到~/.bashrc的LM_LICENSE_FILE环境变量
 
-
+```
 cd /usr/local/bin
 sudo gedit diamond
 sudo chmod +x diamond
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/lscc/diamond/3.9_x64/bin/lin64/
 ./diamond
--------------------------------------------------
+```
 
 
-
-
-
-
-定期清理内存占用, 释放内存
+***
+# 定期清理内存占用, 释放内存
 
 buff/cache占据了的内存,是可以被释放的
-
-andy@debian-dell ~
+```
 $ free -m
              total       used       free     shared    buffers     cached
 Mem:         15850      13950       1899        401       3164       3110
 -/+ buffers/cache:       7675       8174
 Swap:            0          0          0
-
-andy@debian-dell ~ [其实应该先sync]
+```
+```
+$ sync
+$ sync
+$ sync
 $ sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'
-andy@debian-dell ~
 $ sudo sh -c 'echo 2 > /proc/sys/vm/drop_caches'
-andy@debian-dell ~
 $ sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
-
-andy@debian-dell ~
 $ free -m
              total       used       free     shared    buffers     cached
 Mem:         15850       1997      13852        386         61        795
 -/+ buffers/cache:       1140      14709
 Swap:            0          0          0
-
-
+```
 see, 释放了吧
-
+---
 更安全的操作
 
 1. 切换到管理员权限
+```
 $ sudo su
-
+```
 2. 多次执行 sync 命令
+```
 # sync
 # sync
+# sync
+```
 sync 命令将所有未写的系统缓冲区写到磁盘中，包含已修改的 i-node、已延迟的块 I/O 和读写映射文件）。数据一般是先从硬盘调到内存来被CPU进行处理，sync是一个非常牛逼的命令，他可以将放在内存中暂时没有写入硬盘的数
+
 据写入到硬盘中，避免数据的丢失。在关机的时候默认的有这个命令.
 
 3. 将/proc/sys/vm/drop_caches值设为3
+```
 # echo 3 > /proc/sys/vm/drop_caches
+```
 /proc是一个虚拟文件系统，我们可以通过对它的读写操作做为与kernel实体间进行通信的一种手段。也就是说可以通过修改/proc中的文件，来对当前kernel的行为做出调整。那么我们可以通过调整/proc/sys/vm/drop_caches来释放内存。
+```
 drop_caches的值可以是0-3之间的数字，代表不同的含义：
 0：不释放（系统默认值）;默认情况下表示不释放内存，由操作系统自动管理;
 1：释放页缓存;To free pagecache.
 2：释放dentries和inodes；To free dentries and inodes.
 3：释放所有缓存；To free pagecache, dentries and inodes.
-
+```
 4. free -m 查看内存使用情况
+```
 $ free -m
     参数 说明
     total 内存总数
@@ -11583,63 +11497,46 @@ $ free -m
     -buffers/cache 的内存数:used – buffers – cached
     +buffers/cache 的内存数:free + buffers + cached
     可用的memory=free memory+buffers+cached。
+```
 
 
-
-
-
-
-
-
-
-
-thunderbird是可以最小化到托盘的
+***
+# thunderbird是可以最小化到托盘的
 MinimizeToTray Reanimated插件
 
 
-
-
-
-
-
-
-
-
-
-
-xlsx文件设置open with et (WPS)
-
+***
+# xlsx文件设置open with et (WPS)
+```
 ~/.config/mimeapps.list
 添加
 application/wps-office.xlsx=wps-office-et.desktop;
----不行
+```
+不行
 
 修改zip的部分
+```
 application/zip=org.gnome.FileRoller.desktop;libreoffice-calc.desktop;wps-office-wps.desktop;wps-office-et.desktop;wps-office-wpp.desktop;libreoffice-writer.desktop;xarchiver.desktop;wine-extension-zip.desktop;
-
+```
+```
 sudo update-mime-database /usr/share/mime
 update-mime-database ~/.local/share/mime
-
+```
 这样, 虽然xlsx, docx, pptx等还是识别为zip格式, 但是通过右键open with 可以选wps的对应软件打开
-
+```
 $ file --mime-type 11111.xlsx 
 11111.xlsx: application/zip
+```
 
-
-
-
-
-
-
-
-
-
-
-
+---
 据说assogiate可以修改mime数据库
-https://launchpad.net/ubuntu/+source/assogiate/0.2.1-3拿到src
+
+<https://launchpad.net/ubuntu/+source/assogiate/0.2.1-3>
+
+拿到src
 
 解决配置报的缺失
+```
 No package 'gnome-doc-utils' found
 $ sudo apt-get install gnome-doc-utils
 
@@ -11654,20 +11551,19 @@ $ sudo apt-get install libxml++2.6-dev
 
 No package 'gnome-vfsmm-2.6' found
 ??
-
+```
+```
 sudo update-desktop-database
+```
 没用
-
-
+```
 $ sudo apt-get install rox-filer
+```
 没用
 
-
-
-andy@debian-dell ~/Downloads
+```
 $ file -b 11111.xlsx 
 Zip archive data, at least v1.0 to extract
-andy@debian-dell ~/Downloads
 $ file --version
 file-5.22
 magic file from /etc/magic:/usr/share/misc/magic
@@ -11678,10 +11574,6 @@ The following extra packages will be installed:
   libmagic-mgc libmagic1
 The following packages will be REMOVED:
   python3-magic
-The following NEW packages will be installed:
-  libmagic-mgc
-The following packages will be upgraded:
-  file libmagic1
 
 $ file --version
 file-5.35
@@ -11689,23 +11581,17 @@ file-5.35
 $ file -b 11111.xlsx 
 Zip archive data, at least v1.0 to extract
 
-
-
 libfm-1.3.1
 sudo apt-get install libmenu-cache-dev
 
 sudo apt-get install libfm-dev libfm-gtk-dev
+```
 
 
-
-
-
-
-
-
-
-zip解压安装的eric6运行问题
+***
+# zip解压安装的eric6运行问题
 PyQt: undefined symbol:FT_Get_Font_Format Error
+```
 cd /usr/local/lib/python3.6/site-packages/PyQt5/Qt/lib
 sudo ln -s libfreetype.so.6.17.0 libfreetype.so
 sudo ln -s libfreetype.so.6.17.0 libfreetype.so.6
@@ -11714,27 +11600,27 @@ export QTDIR=/usr/local/lib/python3.6/site-packages/PyQt5/Qt
 export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
 
 $ eric6
+```
 ok
 
-
 修改/usr/local/bin/eric6
+```
 sudo gedit /usr/local/bin/eric6
-
+```
 添加上面两个export语句
 
 直接就可以运行
 
-/usr/lib/x86_64-linux-gnu里面的
-libfreetype.so和libfreetype.so.6保持链接到libfreetype.so.6.11.1
+/usr/lib/x86_64-linux-gnu里面的libfreetype.so和libfreetype.so.6
+
+保持链接到libfreetype.so.6.11.1
 
 
+***
+# pycharm添加启动器和desktop
 
-
-
-
-pycharm添加启动
 pycharm-2018.2.3.desktop
-------------------------------------------
+```
 [Desktop Entry]
 Name=pycharm-community-2018.2.3
 Comment=Pycharm IDE
@@ -11744,22 +11630,24 @@ Terminal=false
 Type=Application
 Categories=GNOME;Application;Development;
 StartupNotify=true
-------------------------------------------
-
+```
+```
 cd /usr/local/bin
 sudo gedit pycharm
----------------------------------
+```
+```
 #!/bin/bash
 cd /opt/pycharm-community-2018.2.3/bin/
 ./pycharm.sh &
----------------------------------
+```
+```
 sudo chmod +x pycharm
+```
 
 
-
-
-
-
+***
+# something
+```
 Accept this solution? [Y/n/q/?] y
 The following NEW packages will be installed:
   g++-multilib gcc-multilib gcj-4.9-jre-lib gnome-shell-dbg gnome-shell-extension-autohidetopbar 
@@ -11803,17 +11691,18 @@ The following packages will be REMOVED:
 0 packages upgraded, 0 newly installed, 11 to remove and 441 not upgraded.
 Need to get 0 B of archives. After unpacking 56.8 MB will be freed.
 
-
-
 dpkg: error processing /var/cache/apt/archives/*.deb
 
 sudo dpkg -i --force-overwrite <filename>
 sudo dpkg -i --force-overwrite *.deb
 
 再使用sudo apt-get -f install 即可修复
+```
 
 
-
+***
+# wine
+```
 $ sudo apt-get install wine1.7 wine1.7-amd64
 Reading package lists... Done
 Building dependency tree       
@@ -11843,49 +11732,54 @@ The following packages will be upgraded:
 Need to get 128 MB of archives.
 After this operation, 479 MB of additional disk space will be used.
 
-
 sudo apt-get install wine1.7 wine1.7-amd64 winetricks
-
-
-
-
+```
+```
 export WINEPREFIX=$HOME/.wine/
 export WINEARCH=win32
 export LANG=zh_CN.UTF-8
 wine xxx.exe
+```
 ==
+```
 env LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=/home/andy/.wine wine xxx.exe
+```
 
 
-
-
-
-visio画的vsd文件
+***
+# visio画的vsd文件
 可以用LibreOffice Draw编辑, 但是保存为odg文件
 
 
-
-
-
-在Debian上安装完整的内核源码
+***
+# 在Debian上安装完整的内核源码
+```
 sudo apt-get install dpkg-dev
 sudo gedit /etc/apt/sources.list
-打开deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+```
+打开
+```
+deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+```
+```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
 sudo apt-get source linux-image-$(uname -r)
 sudo apt-get build-dep linux-image-$(uname -r)
-然后关闭deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+```
+然后关闭
+```
+# deb-src http://mirrors.ustc.edu.cn/debian/ jessie main non-free contrib
+```
+```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
+```
 
 
-
-
-r language 安装 r 语言
+***
+# r language 安装 r 语言
+```
 $ sudo apt-get install r-base r-base-dev
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   cdbs r-base-core r-base-html r-cran-boot r-cran-class r-cran-cluster
   r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-mass
@@ -11898,161 +11792,157 @@ The following NEW packages will be installed:
   r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth
   r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet
   r-cran-rpart r-cran-spatial r-cran-survival r-doc-html r-recommended
-0 upgraded, 22 newly installed, 0 to remove and 446 not upgraded.
-Need to get 36.0 MB of archives.
+
+sudo proxychains aptitude install r-base r-base-core r-base-dev
+```
 
 
-
-
-pycharm设置r-interpreter
+***
+# pycharm设置r-interpreter
+```
 File->Settings->Languages & .. -> R Language
-填入/usr/bin/R
+```
+填入`/usr/bin/R`
+
 重启pycharm
 
 
-
+***
+# python安装模块
 
 python安装opencv模块
+```
 sudo pip3.6 install opencv-python -i https://mirrors.163.com/pypi/simple
+```
 python安装直方图模块
+```
 sudo pip3.6 install matplotlib -i https://mirrors.163.com/pypi/simple
+```
 
 
-JIRA安装配置
+
+***
+# JIRA安装配置
+```
 java -version
+```
+```
 mysql -uroot -pa
 mysql> create database jira default character set utf8 collate utf8_bin;
-
+```
+```
 $ locate my.cnf
 /etc/mysql/my.cnf
-
+```
 http://localhost/phpmyadmin 可视化管理mysql
 端口80
 
+`atlassian-jira-software-7.2.2-x64.bin`
 
-atlassian-jira-software-7.2.2-x64.bin
 安装路径
+```
 /opt/atlassian/jira
 /var/atlassian/application-data/jira
+```
 端口是
+```
 HTTP Port: 8080 
 RMI Port: 8005
+```
 配置文件
+```
 /opt/software/jira/conf/server.xml
-
+```
 开关jira的脚本在
+```
 /opt/atlassian/jira/bin
-
+```
 访问地址
 http://localhost:8080
 
 host name 修改见
+```
 /opt/atlassian/jira/conf/server.xml
+```
 
 破解
+```
 sudo /opt/atlassian/jira/bin/stop-jira.sh
 atlassian-extras-3.1.2.jar和mysql-connector-java-5.1.39-bin.jar
 两个文件复制到/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/目录下
 sudo /opt/atlassian/jira/bin/startup.sh
-
+```
 具体见 <JIRA安装配置记录.doc>
 
 关闭jira服务
+```
 sudo /opt/atlassian/jira/bin/stop-jira.sh
-
+```
 帐号
+```
 andy
 *
+```
 
 
-
-
-Jenkins安装配置
+***
+# Jenkins安装配置
 https://pkg.jenkins.io/debian-stable/
-http://updates.jenkins-ci.org
-选择了
-jenkins_2.89.2_all.deb
-实际上要安装一些插件要更新到jenkins_2.150.3_all.deb或以上
 
-andy@debian-dell ~/Downloads
+http://updates.jenkins-ci.org
+
+选择了
+`jenkins_2.89.2_all.deb`
+
+实际上要安装一些插件要更新到`jenkins_2.150.3_all.deb`或以上
+```
 $ sudo dpkg -i jenkins_2.89.2_all.deb 
-[sudo] password for andy: 
-Selecting previously unselected package jenkins.
-(Reading database ... 770638 files and directories currently installed.)
-Preparing to unpack jenkins_2.89.2_all.deb ...
-Unpacking jenkins (2.89.2) ...
-dpkg: dependency problems prevent configuration of jenkins:
+jenkins:
  jenkins depends on daemon; however:
   Package daemon is not installed.
-
-dpkg: error processing package jenkins (--install):
- dependency problems - leaving unconfigured
-Processing triggers for systemd (215-17+deb8u7) ...
-Errors were encountered while processing:
- jenkins
-andy@debian-dell ~/Downloads
 $ sudo apt-get install -f
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-Correcting dependencies... Done
 The following extra packages will be installed:
   daemon
-The following NEW packages will be installed:
-  daemon
-0 upgraded, 1 newly installed, 0 to remove and 433 not upgraded.
-1 not fully installed or removed.
-Need to get 97.4 kB of archives.
-After this operation, 283 kB of additional disk space will be used.
-Do you want to continue? [Y/n] y
-Get:1 https://mirrors.aliyun.com/debian/ jessie/main daemon amd64 0.6.4-1 [97.4 kB]
-Fetched 97.4 kB in 0s (241 kB/s)
-Selecting previously unselected package daemon.
-(Reading database ... 770649 files and directories currently installed.)
-Preparing to unpack .../daemon_0.6.4-1_amd64.deb ...
-Unpacking daemon (0.6.4-1) ...
-Processing triggers for man-db (2.7.0.2-5) ...
-Setting up daemon (0.6.4-1) ...
-Setting up jenkins (2.89.2) ...
-insserv: warning: script 'K01jira' missing LSB tags and overrides
-insserv: warning: script 'jira' missing LSB tags and overrides
-Processing triggers for systemd (215-17+deb8u7) ...
-
+```
 
 修改jenkins端口
+```
 sudo vim /etc/default/jenkins
-
-#修改如下内容
+```
+修改如下内容
+```
 HTTP_PORT=8090
-
-#重启jenkins服务
+```
+重启jenkins服务
+```
 $ sudo /etc/init.d/jenkins restart
-
-#启动jenkis
+```
+启动jenkis
+```
 sudo /etc/init.d/jenkins [start|restart|stop]
-
-
 sudo systemctl start jenkins
 sudo systemctl status jenkins
-
 sudo netstat -ntlp | grep 8090
-
-
 $ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 64c10730c5c747fc84c7673672ce008d
+```
+`/etc/default/jenkins` 中可以看出来
 
-/etc/default/jenkins 中可以看出来
-$JENKINS_HOME就是
-/var/lib/jenkins
+`$JENKINS_HOME`就是`/var/lib/jenkins`
 
 
-在http://localhost:8090/
+在<http://localhost:8090/>
+
 创建了admin用户为
+```
 admin
 202*****
+```
 
-sudo gedit /var/lib/jenkins/hudson.model.UpdateCenter.xml
+`sudo gedit /var/lib/jenkins/hudson.model.UpdateCenter.xml`
+
 原内容
+```
 <?xml version='1.0' encoding='UTF-8'?>
 <sites>
   <site>
@@ -12060,32 +11950,31 @@ sudo gedit /var/lib/jenkins/hudson.model.UpdateCenter.xml
     <url>https://updates.jenkins.io/update-center.json</url>
   </site>
 </sites>
+```
 修改镜像源为国内源
-https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+`https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json`
 
 或者
-进入jenkins系统管理 
-进入插件管理
-点击高级，修改升级站点的地址为清华大学镜像地址
+
+进入jenkins系统管理 > 进入插件管理 > 点击高级，修改升级站点的地址为清华大学镜像地址
 
 
 关闭jenkins服务
+```
 sudo /etc/init.d/jenkins stop
 sudo systemctl stop jenkins
+```
 
 
-
-
-
-Gitlab环境搭建
+***
+# Gitlab环境搭建
+```
 sudo apt-get install curl openssh-server ca-certificates
 sudo apt-get install postfix
 选 internet site
 
 $ sudo apt-get install -y postfix
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 Suggested packages:
   postfix-mysql postfix-pgsql postfix-ldap postfix-pcre sasl2-bin
   dovecot-common resolvconf postfix-cdb ufw postfix-doc
@@ -12093,12 +11982,17 @@ The following packages will be REMOVED:
   exim4 exim4-base exim4-config exim4-daemon-light
 The following NEW packages will be installed:
   postfix
-
+```
 
 企业版
+```
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+```
 或免费版
+```
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+```
+```
 sudo apt-get -o Acquire::Check-Valid-Until=false update
 
 sudo netstat -anptl | grep 80
@@ -12109,161 +12003,193 @@ sudo EXTERNAL_URL="http://127.0.0.1" apt-get install gitlab-ce
 sudo EXTERNAL_URL="http://." apt-get install gitlab-ee
 sudo EXTERNAL_URL="http://127.0.0.1:8091" apt-get install gitlab-ee --reinstall
 sudo EXTERNAL_URL="http://." apt-get install gitlab-ee --reinstall
-
+```
 https://packages.gitlab.com/gitlab/gitlab-ee
-https://packages.gitlab.com/gitlab/gitlab-ee/packages/debian/jessie/gitlab-ee_12.7.5-ee.0_amd64.deb
-wget --content-disposition https://packages.gitlab.com/gitlab/gitlab-ee/packages/debian/jessie/gitlab-ee_12.7.5-ee.0_amd64.deb/download.deb
 
+https://packages.gitlab.com/gitlab/gitlab-ee/packages/debian/jessie/gitlab-ee_12.7.5-ee.0_amd64.deb
+```
+wget --content-disposition https://packages.gitlab.com/gitlab/gitlab-ee/packages/debian/jessie/gitlab-ee_12.7.5-ee.0_amd64.deb/download.deb
+```
 或者安装
+
 https://packages.gitlab.com/gitlab/gitlab-ce/packages/debian/jessie/gitlab-ce_12.7.5-ce.0_amd64.deb/download.deb
 
 修改Nginx端口
+```
 sudo gedit /etc/gitlab/gitlab.rb
+```
 把文件中的
+```
 external_url 'http://localhost'
   改为：
 external_url 'http://127.0.0.1:8091'
-
+```
 影响
+```
 sudo gedit /var/opt/gitlab/nginx/conf/gitlab-http.conf
-
+```
 继续修改Unicorn端口
+```
 unicorn['port'] = 8092
 gitlab_workhorse['auth_backend'] = "http://localhost:8092"
-
+```
+```
 sudo netstat -tunlp | grep 8080
 sudo lsof -Pni |grep <port number>
+```
 先关闭8080端口占用
 
 生效配置
+```
 sudo gitlab-ctl reconfigure
+```
 重启运行中的服务, 也可有stop再start
+```
 sudo gitlab-ctl restart
+```
 
-
-
+```
 sudo gedit /var/opt/gitlab/gitlab-rails/etc/unicorn.rb
+```
 把文件中的
+```
 listen "127.0.0.1:8080"
 改为：
 listen "127.0.0.1:8092"
-
+```
+```
 sudo gedit /opt/gitlab/embedded/service/gitlab-shell/config.yml
+```
+```
 8092
+```
 
 重新配置(之后要重启服务)
+```
 sudo gitlab-ctl reconfigure
+```
 重启服务
+```
 sudo gitlab-ctl restart
 service sshd start
 service postfix start
-
-
-
-
-
+```
 查看gitlab服务器状态
+```
 sudo gitlab-ctl status
+```
 
+## nginx
+```
+sudo apt-get install nginx
 
-// sudo apt-get install nginx
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
 The following extra packages will be installed:
   nginx-common nginx-full
 Suggested packages:
   fcgiwrap nginx-doc
-The following NEW packages will be installed:
-  nginx nginx-common nginx-full
-
+```
 
 详细运行状态查看
+```
 sudo gitlab-rake gitlab:env:info
 sudo gitlab-rake gitlab:check SANITIZE=true
-
+```
 Nginx端口8091 (安装默认是80)
+
 Unicorn端口8092 (安装默认是8080)
 
 访问
+
 http://localhost:8091
+
 强制刷新几次
 
 设置默认账户 root 的密码 12345678
+
 接下来 account-->new user之类的普通账户设置
+
 创建仓库和设置项目分支用户权限
 
 
 卸载gitlab
+```
 sudo gitlab-ctl uninstall
 sudo dpkg -r gitlab-ce
 sudo rpm -e gitlab-ce
 sudo reboot
-
+```
 
 仓库存储位置, 邮件发送等参数
+
 http://blog.sina.com.cn/s/blog_4152a9f50102zo49.html
 
 
 关闭gitlab服务
+```
 sudo gitlab-ctl stop
+```
 
 
+***
+# something
+```
+$ sudo apt-get install libcunit1-dev libcunit1
 
-
-
-
-
-
-
-
-
-
-$ sudo apt-get install libcunit1-dev
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
-The following extra packages will be installed:
-  libcunit1
 Suggested packages:
   libcunit1-doc
-The following NEW packages will be installed:
-  libcunit1 libcunit1-dev
+```
 
 
-
-
-
+***
+# splint | cpplint
+```
 sudo apt-get install splint
+```
 一般启用严格检查
+```
 splint --strict *.c
+```
 头文件找不到时, 比如在/usr/local/include, 可以这样
+```
 splint -I/usr/local/include *.c
-
-
+```
 
 这个的规则还是自己写个好了, 不要用默认的规则
-##sudo pip3.6 install cpplint -i https://mirrors.163.com/pypi/simple
+```
+//sudo pip3.6 install cpplint -i https://mirrors.163.com/pypi/simple
 sudo pip3.6 uninstall cpplint
+```
 
 
-
-wine的环境变量
+***
+# wine的环境变量
+```
 wine regedit
-全局环境变量在HLM->System->CurrentControlSet->Control->SessionManager->Environment
-用户环境变量在HCU->Environment
-wineboot 重启wine
+```
+全局环境变量在
+```
+HLM->System->CurrentControlSet->Control->SessionManager->Environment
+```
+用户环境变量在
+```
+HCU->Environment
+```
+重启wine
+```
+wineboot
+```
 
-
-
-
-#这个不是最新的
-#sudo apt-get install libcmocka-dev
-#sudo apt-get remove cmocka-doc libcmocka-dev libcmocka0
-
+***
+# cmocka
+这个不是最新的
+```
+sudo apt-get install libcmocka-dev
+sudo apt-get remove cmocka-doc libcmocka-dev libcmocka0
+```
 源码编译安装cmocka
+
 https://cmocka.org/files/1.1/cmocka-1.1.5.tar.xz
+```
 cd cmocka-1.1.5
 mkdir build
 cd build
@@ -12272,8 +12198,8 @@ cmake -DWITH_STATIC_LIB=on ..
 cmake -DBUILD_STATIC_LIB=on ..
 make
 sudo make install
-
-
+```
+```
 -- Install configuration: ""
 -- Installing: /usr/local/lib/pkgconfig/cmocka.pc
 -- Installing: /usr/local/lib/cmake/cmocka/cmocka-config.cmake
@@ -12283,52 +12209,64 @@ sudo make install
 -- Installing: /usr/local/lib/libcmocka.so.0.7.0
 -- Installing: /usr/local/lib/libcmocka.so.0
 -- Installing: /usr/local/lib/libcmocka.so
-
+```
 cmocka测试导出报表
+```
 CMOCKA_XML_FILE='./out.xml' CMOCKA_MESSAGE_OUTPUT=xml ./sample_test
-
+```
 打桩可以利用链接工具ld的wrapper支持, 实现mock函数替换. will_return()和mock()照常使用
+
 __wrap_uptime()可以替换uptime()
+
 链接器选项
+```
 ld --wrap=uptime
+```
 间接传递连接器选项
+```
 gcc -Wl,--wrap=uptime
-
+```
 查看LD符号信息
+```
 LD_DEBUG=symbols ./example/uptime/test_uptime
+```
 
 
-makefile报错查原因
+***
+# makefile报错查原因 remake
 比如
+```
 make UNIT_TESTING=-DUNIT_TESTING test
+```
 报错
 
 那么通过下面命令查看为啥出错
+```
 remake -x -d UNIT_TESTING=-DUNIT_TESTING test
 make -d --debug=v V=s UNIT_TESTING=-DUNIT_TESTING test
+```
 
-
-可以这样指定临时动态库
+***
+# 临时指定动态链接库
+```
 LD_PRELOAD=./xxx.so ./run_test
+```
 
 
-
-
-编译安装cmockery [其实cmocka就源于cmockery]
+***
+# 编译安装cmockery
+其实cmocka就源于cmockery
+```
 /usr/local/share/doc/cmockery*
 /usr/local/include/google
 /usr/local/lib/libcmockery*
-修改默认头文件安装位置到/usr/local/include
+```
+修改默认头文件安装位置到`/usr/local/include`
 
 
-
-
-
-
-
-
-
-编译安装gtest
+***
+# 编译安装gtest
+```
 git clone https://github.com/google/googletest
 cd googletest
 mkdir build
@@ -12401,56 +12339,34 @@ sudo make install
 -- Installing: /usr/local/lib/libgtest_main.a
 -- Installing: /usr/local/lib/pkgconfig/gtest.pc
 -- Installing: /usr/local/lib/pkgconfig/gtest_main.pc
-
-
-
-
-
-
-
-
-
-
+```
+```
 sudo apt-get install libuptimed-dev
+```
 
 
-
-
-
-
-测试mysql
+***
+# 测试mysql
+```
 mysqlcheck -u root -p --all-databases
+```
 
 
-
-
-gcov代码覆盖统计工具和前端处理
+***
+# gcov代码覆盖统计工具和前端处理
+```
 sudo dpkg -i lcov_1.14-2_all.deb
 sudo pip3.6 install gcovr -i https://mirrors.163.com/pypi/simple
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+# morse code 摩尔斯电码
 
 好像不是这个，看起来有趣的玩意。先删
+```
 $ sudo apt-get install morse-simulator
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following extra packages will be installed:
   blender blender-data libavdevice55 libopencolorio1 libopenimageio1.4 libyaml-cpp0.3 morse-simulator-data morse-simulator-doc
   python3-morse-simulator
@@ -12459,55 +12375,38 @@ The following NEW packages will be installed:
   morse-simulator-doc python3-morse-simulator
 
 sudo apt-get remove blender blender-data libavdevice55 libopencolorio1 libopenimageio1.4 libyaml-cpp0.3 morse-simulator morse-simulator-data   morse-simulator-doc python3-morse-simulator
-
-
-
-摩尔斯电码
+```
+```
 xdemorse
 morse2ascii
 morsegen
 morse
+```
 
 
+***
+# 降级 opera
+60.0.3255.27，download页面打不开 降级为 --> 66.0.3515.72 
 
 
-<log 更新安装opera>
-
-60.0.3255.27，download页面打不开
---> 66.0.3515.72
-
-
-
-
-
+***
+# pandas
 Getting Started with TensorFlow.pdf
+```
 sudo pip3.6 install pandas  -i https://mirrors.163.com/pypi/simple
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-andy@debian-dell ~/Downloads/docker
+***
+# docker
+```
 $ curl -fsSL https://get.docker.com -o get-docker.sh
-andy@debian-dell ~/Downloads/docker
+
 $ sudo sh get-docker.sh
-[sudo] password for andy: 
 # Executing docker install script, commit: f45d7c11389849ff46a6b4d94e0dd1ffebca32c1
 + sh -c 'apt-get update -qq >/dev/null'
 E: Release file for http://archive.debian.org/debian/dists/jessie-backports/InRelease is expired (invalid since 370d 4h 46min 12s). Updates for this repository will not be applied.
-andy@debian-dell ~/Downloads/docker
+
 $ sudo sh get-docker.sh
 # Executing docker install script, commit: f45d7c11389849ff46a6b4d94e0dd1ffebca32c1
 + sh -c 'apt-get -o Acquire::Check-Valid-Until=false update -qq >/dev/null'
@@ -12550,13 +12449,8 @@ WARNING: Adding a user to the "docker" group will grant the ability to run
          for more information.
 
 
-andy@debian-dell ~/Downloads/docker
 $ sudo usermod -aG docker andy
-[sudo] password for andy: 
-
-
 newgrp docker
-
 
 $ docker run hello-world
 
@@ -12564,116 +12458,141 @@ sudo systemctl enable docker
 //sudo systemctl disable docker
 //echo manual | sudo tee /etc/init/docker.override
 sudo apt-get install chkconfig
+```
+
 查询服务列表
+```
 sudo chkconfig --list
+```
 默认就是开启服务的
-//sudo chkconfig docker on
+```
+sudo chkconfig docker on
+```
 服务管理也可以用sysv-rc-conf
+```
 sudo apt-get install sysv-rc-conf
 sudo sysv-rc-conf
+```
 
 
-
-
-
+***
+# libffmpeg
 32 bit
+
 https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/0.32.3/0.32.3-linux-ia32.zip
+
 64 bit
+
 https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/0.32.3/0.32.3-linux-x64.zip
+```
 unzip 0.32.3-linux-x64.zip
 sudo mv /usr/lib/x86_64-linux-gnu/opera/libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/libffmpeg.so.bk
 sudo cp libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/
+```
 其他地方暂时不动
+```
 /opt/electronic-wechat-linux-x64/libffmpeg.so
 /usr/lib/x86_64-linux-gnu/opera/libffmpeg.so
 /usr/share/atom/libffmpeg.so
 /usr/share/code/libffmpeg.so
-
+```
+```
 dpkg -S libffmpeg.so
-测试https://www.youtube.com/watch?v=4LoSNnJaxNA
-经过验证，用/opt/baidunetdisk/libffmpeg.so
+```
+测试<https://www.youtube.com/watch?v=4LoSNnJaxNA>
+
+经过验证，用`/opt/baidunetdisk/libffmpeg.so`
+```
 sudo cp /opt/baidunetdisk/libffmpeg.so /usr/lib/x86_64-linux-gnu/opera/
+```
 
 
-查看网速
+***
+# 查看网速
+```
 sudo apt install nethogs
 nethogs eth0
+```
 
 
-
-
-
-
-
-
-
-
-
-工具找出USB驱动器的名称
+***
+# 查看磁盘驱动器的名称（/dev/sdx）
+```
 lsblk
+```
 
 
-
-
-
-
-
-查看历史记录：
+***
+# 查bash看历史记录：
+```
 $ history
-$ $USER/.bash_history
+$ cat $USER/.bash_history
+```
 对于查询不到刚刚执行的命令，是因为还在缓存中, 写缓存
+```
 $ history -w
+```
 清除历史记录
+```
 $ history -c
-可以通过修改 /etc/profile 中 HISTSIZE 的大小来改变记录历史的记录条数
+```
+可以通过修改 `/etc/profile` 中 `HISTSIZE` 的大小来改变记录历史的记录条数
 
 
 
-
-
-
-
-
+***
+# sunloginclient
 安装sunloginclient10
+
 然后就可以运行
+```
 /usr/local/sunlogin/bin/sunloginclient
+```
 既可以作为主机,也可以作为客户机
+
 主机开机就默认后台运行,客户机可以从远端登录主机
 
-
 创建快速启动命令
+```
 cd /usr/local/bin
 sudo gedit sunloginclient
-------------------------------------
+```
+```
 #!/bin/bash
 /usr/local/sunlogin/bin/sunloginclient
-------------------------------------
+```
+```
 sudo chmod +x sunloginclient
-
+```
 
 sunlogin_remote
+
 可以从远端访问账户绑定的主机, 可以被sunloginclient取代
 
 从10版本起,已经不通过bs方式配置主机了
+
 http://127.0.0.1:30080
+
 就没有了
 
 
-
-
 删除sunloginclient需要删掉
+```
 /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
+```
 否则gdm服务启动失败
-还是9的client版本方便，修改一下支持debian就好了，已经存档
 
+还是9的client版本方便，修改一下支持debian就好了，已经存档
+```
 $ sudo systemctl status gdm.service 
 ● gdm.service - GNOME Display Manager
    Loaded: loaded (/lib/systemd/system/gdm.service; enabled)
    Active: failed (Result: start-limit) since Wed 2020-03-04 20:57:07 CST; 3min 9s ago
   Process: 4636 ExecStartPre=/usr/share/gdm/generate-config (code=exited, status=1/FAILURE)
   Process: 4631 ExecStartPre=/bin/sh -c [ "$(cat /etc/X11/default-display-manager 2>/dev/null)" = "/usr/sbin/gdm3" ] (code=exited, status=0/SUCCESS)
-
+```
 那么执行
+```
 $ /usr/share/gdm/generate-config
 /usr/share/gdm/dconf/50-slscreenagrentsvr.conf: [SeatDefaults]: greeter-setup-script: invalid value: xhost + (0-5:unknown keyword)
 
@@ -12681,65 +12600,71 @@ $ cat /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
 [SeatDefaults]
 greeter-setup-script=xhost +
 display-setup-script=xhost +
+```
 
-
-得出这玩意影响了gdm
-删掉
+得出这玩意影响了gdm。 删掉
+```
 sudo rm /usr/share/gdm/dconf/50-slscreenagrentsvr.conf
-
+```
 实际上在/etc/gdm3/Init/Default添加一行 xhost + 到头部
+```
+dpkg -i --force-all xxx ## 强制安装deb包
+dpkg -r xxx             ## 删除安装好的deb包
+```
 
 
-
-dpkg -i --force-all xxx
-dpkg -r xxx
-
-
-
-
-
-串口调试助手
+***
+# 串口助手
+```
 sudo apt-get install cutecom lrzsz
+```
 
 
-
-
-
-
+***
+# minigui(abort)
 minigui的repo添加
+
 1. Add FMSoft GPG Key
+```
 wget -qO - http://files.fmsoft.cn/ubuntu/key/fmsoft.gpg | sudo apt-key add -
+```
 2. Add MiniGUI Software Source
+```
 sudo gedit /etc/apt/sources.list
+```
 添加
+```
 #deb http://files.fmsoft.cn/ubuntu/ trusty restricted #没有trusty分支
 deb http://files.fmsoft.cn/ubuntu/ xenial restricted
+```
+```
 sudo apt -o Acquire::Check-Valid-Until=false update
+```
 拉倒吧,不能展开.
 
 
 
-
-
-
-查询局域网主机名对应的ip
+***
+# 查询局域网主机名对应的ip
+```
 sudo apt install nbtscan
 nbtscan -v -s : 192.168.1.0/24 | grep printer
 arp -a
+```
 nmap命令应该也可以
 
 
-
-
-
-
-
-xilinx驱动
+***
+# xilinx cable 驱动
+```
 /opt/Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers
-安装后在/etc/udev/rules.d
+```
+安装后在`/etc/udev/rules.d`
 
 
-
+***
+# petalinux
+```
 sudo apt-get install tofrodos iproute2 gawk
 sudo apt-get install gcc git make
 sudo apt-get install xvfb
@@ -12750,119 +12675,147 @@ sudo apt-get install autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib 
 sudo apt-get install screen pax gzip tar
 sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6
 //sudo apt-get install tftp-hpa tftpd-hpa xinetd
-
 $ mkdir -p /opt/petalinux/v2017.4
 $ ./petalinux-v2018.1-final-installer.run /opt/petalinux/v2017.4
+```
 
 
+***
+# wine安装ORCAD Capture 16.3精简版
 
-
-
-
-
-
-
-
-wine安装ORCAD Capture 16.3精简版，只是为了看或者画16.2以上格式的原理图
+只是为了看或者画16.2以上格式的原理图
+```
 //首先，修改安装文件exe的名字，不要有中文
 
 //export LANG=zh_CN.utf8
 //wine capture.exe
 //这个屌货强制安装到d:盘哇
 先到虚拟机里安装一个复制出来好了
-
-
+```
 以前wine过orcad10
+```
 ~/.local/share/applications/wine-extension-dsn.desktop
-查到Exec=env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
-OrCADDesign-FileType是在~/.wine/system.reg中定义的
+```
+查到
+```
+Exec=env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
+```
+`OrCADDesign-FileType`是在`~/.wine/system.reg`中定义的
 
+```
 Z:\\home\\andy\\DOWN~NTG\\ORCA~RWC\\Capture\\Capture.exe
 Z:\\home\\andy\\Downloads\\OrCAD_Demo\\Capture\\Capture.exe
+```
 替换成
+```
 C:\\Program Files\\ORCAD16.3\\Capture.exe
+```
 
-看上去是C:\\Program Files\\ORCAD16.3\\Capture.exe
-实际上gedit用C:\\\\Program Files\\\\ORCAD16.3\\\\Capture.exe注意区别
+看上去是`C:\\Program Files\\ORCAD16.3\\Capture.exe`
+
+实际上gedit用`C:\\\\Program Files\\\\ORCAD16.3\\\\Capture.exe`注意区别
 
 重启wine
+```
 wineboot
-
+```
 试一下
+```
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType  machxo3-9400_dev_board_schematic_source.DSN
+```
 缺少 MFC80.DLL
+```
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks --gui
-
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks win2k vcrun2005
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks vcrun2005sp1
 env WINEARCH=win32 WINEPREFIX=/home/andy/.wine winetricks win2k vcrun2005sp1
-
+```
 安装vcrun2005不能
-那么直接给mfc80.dll文件吧，可以运行了
-
+那么直接给`mfc80.dll`文件吧，可以运行了
+```
 export CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType  machxo3-9400_dev_board_schematic_source.DSN
+```
 
-
-修改一下~/.local/share/applications/wine-extension-dsn.desktop
+修改一下`~/.local/share/applications/wine-extension-dsn.desktop`
+```
 Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADDesign-FileType %f
-
+```
 另外修改
+```
 gedit ~/.local/share/applications/wine-extension-opj.desktop
+```
+```
 Exec=env CDS_LIC_FILE=/home/andy/.wine/drive_c/Program\ Files/ORCAD16.3/license.txt LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen OrCADProject-FileType %f
+```
 
 
-
-解决wine程序打印问题
+***
+# 解决wine程序打印问题
+```
 sudo apt-get install cups-pdf
 The following NEW packages will be installed:
   cups-pdf printer-driver-cups-pdf
 
 sudo apt install libcups2:i386
+```
 重启之后可以打印到pdf什么的
+```
 sudo systemctl status cups.service
-
+```
 输出pdf用pdf打印机的话是输出到~/PDF目录，不用选输出到文件(prn格式)
 
 关于SystemPrinting
+
 https://wiki.debian.org/SystemPrinting
+
 管理SystemPrinting
+
 http://localhost:631
 
 
 
-
-
-
-wine运行pads9.3精简版
+***
+# wine运行pads9.3精简版
 假设放到
-/home/andy/.wine/drive_c/Program Files/MentorGraphics/
 
-license文件在/home/andy/.wine/drive_c/Program Files/MentorGraphics/flexlm
+```
+/home/andy/.wine/drive_c/Program Files/MentorGraphics/
+```
+
+license文件在`/home/andy/.wine/drive_c/Program Files/MentorGraphics/flexlm`
+
 需要修改mac地址
 
-需要修改比如/home/andy/.wine/drive_c/Program Files/MentorGraphics/9.3PADS/SDD_HOME/Programs/powerpcb.ini文件
+需要修改比如`/home/andy/.wine/drive_c/Program Files/MentorGraphics/9.3PADS/SDD_HOME/Programs/powerpcb.ini`文件
+
 否则会出现: "The directory pointed by the FileDir INI file entry cannot be found.Aborting."
 
-
 然后按set.txt来设置linux环境变量和执行pads
+```
 env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphics/flexlm/LICENSE.dat LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine powerpcb.exe
-
+```
 修改
+```
 gedit ~/.local/share/applications/wine-extension-pcb.desktop
+```
+```
 Exec=env MGLS_LICENSE_FILE=/home/andy/.wine/drive_c/Program\ Files/MentorGraphics/flexlm/LICENSE.dat LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine start /ProgIDOpen PowerPCB.Design %f
+```
 
 
+***
+# hopper-v3
 
+反汇编分析工具
 
-
-安装 hopper-v3, (反汇编分析工具)
 修改了deb包，补全了一些缺的库，steam里面找来的，安装好就能用
 
 
-
-
-安装 quilt（补丁管理工具）
+***
+# quilt
+补丁管理工具
+```
 sudo apt install quilt gquilt
 
 cat > ~/.quiltrc<<EOF  
@@ -12871,102 +12824,133 @@ QUILT_REFRESH_ARGS="--no-timestamps --no-index -p ab"  
 QUILT_PATCH_OPTS="--unified"  
 QUILT_DIFF_OPTS="-p"  
 EDITOR="vi"  
+```
 
 
-
-
-
-
-通过shadowsocks加速github
+***
+# 通过 shadowsocks 加速 github
 安装和配置shadowsocks客户端, 在前面有，我的本地端口是1081
+
 安装和配置proxychains
+```
 sudo apt install proxychains
 The following NEW packages will be installed:
   libproxychains3 proxychains
-
+```
+```
 sudo gedit /etc/proxychains.conf
-----------------------------
+```
+```
 [ProxyList]
 # add proxy here ...
 # meanwile
 # defaults set to "tor"
 socks5  127.0.0.1 1081
-----------------------------
+```
 测试代理
+```
 proxychains curl www.google.com
+```
 加速github
+```
 proxychains git clone https://github.com/xxx/xxx.git
-
+```
 全局github代理加速
+```
 git config --global http.proxy 'socks5://127.0.0.1:1081'
 git config --global https.proxy 'socks5://127.0.0.1:1081'
+```
 查询是否启用代理
+```
 git config --global http.proxy
 git config --list
+```
 取消代理
+```
 git config --global --unset http.proxy
-
+```
 这下好了，不用忍龟速了。
 
-sudo proxychains aptitude install r-base r-base-core r-base-dev
 
 
+***
+# privoxy
+```
 sudo apt-get install privoxy
 sudo gedit /etc/privoxy/config
-------
+```
+```
+...
 listen-address  localhost:8118
 forward-socks5 / 127.0.0.1:1081 .
-------
-privoxy /etc/privoxy/config启动
+...
+```
+```
+privoxy /etc/privoxy/config
+```
+启动
+```
 systemctl status privoxy.service
 sudo systemctl start privoxy.service
 sudo systemctl enable privoxy.service
 Created symlink /etc/systemd/system/multi-user.target.wants/privoxy.service → /usr/lib/systemd/system/privoxy.service.
-
+```
 类似于这样
+```
 aria2c --all-proxy='http://127.0.0.1:8118' -D
-
-
+```
+```
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
+```
 (可以添加到类似/etc/profile的地方去)
 
 测试
+```
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
 curl www.google.com
-
-
+```
+```
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
 yay
+```
 就可以加速了
 
 
 
-
-解决git clone 完成后提示'error: RPC failed; curl 56 GnuTLS recv error (-9)
-
+***
+# git config
+解决git clone 完成后提示`error: RPC failed; curl 56 GnuTLS recv error (-9)`
+```
 sudo apt-get install gnutls-bin
 The following NEW packages will be installed:
   gnutls-bin libopts25
 
 git config --global http.sslVerify false
 git config --global http.postBuffer 1048576000
+```
 还是不行
 
-
-
-查询源码包
+## 查询deb源码包
+```
 sudo apt-cache showsrc tree
+```
 
-
-考证应该是 Gnutls_handshake() Failed
+考证应该是 `Gnutls_handshake() Failed`
+```
 sudo apt-get build-dep libcurl4-openssl-dev
 sudo apt-get install libcurl4-openssl-dev
 sudo apt-get build-dep git
+```
 这里，如果实在安装不了libcurl4-gnutls-dev，就把其他缺的安装好就行了
+```
 sudo apt-get install cvsps libdbd-sqlite3-perl
 sudo apt-get install libcurl4-openssl-dev 用于替换libcurl4-gnutls-dev
 apt-get source git
-
-
+```
+```
 debian/control
 Replace all the occurences of “libcurl4-gnutls-dev” to “libcurl4-openssl-dev”
 debian/rules
@@ -12975,49 +12959,53 @@ delete the line “TEST =test”
 
 sudo dpkg-buildpackage -rfakeroot -b
 sudo dpkg -i git_... 
+```
+目前可排除`curl 56 GnuTLS recv error (-9)`
 
-目前可排除curl 56 GnuTLS recv error (-9)
 
-
-但是出现error: RPC failed; result=18, HTTP code = 200
+但是出现`error: RPC failed; result=18, HTTP code = 200`
 经查是curl的报错导致
-
+```
 git config --global http.postBuffer 1048576000
 git config --global https.postBuffer 1048576000
+```
 无法排除
+```
 --depth 1
+```
 也无法排除
-
+```
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 sudo apt-get install git-lfs
 git lfs install
 
 git lfs clone ...
 
-
 git config --global ssh.postBuffer 1048576000
-
+```
 
 那么新建一个空repo用pull方式来拉取？未验证
+```
 git remote remove origin
 git remote add origin https://github..com/user/repo
 git push --set-upstream origin master
-
 
 git clone --progress -v ....
 git clone --depth 1
 
 GIT_CURL_VERBOSE=1 git clone --progress -v https://github.com/pamsimochen/ipnc_5.1-acs1910.git --depth 1
+```
 可以看到curl的报错信息，但是不给出curl的错误号
-
+```
 sudo apt-get install libcurl4-gnutls-dev
 sudo apt-get install libcurl4-openssl-dev
 
-
 GIT_CURL_VERBOSE=1 git clone --progress -v git@github.com:pamsimochen/ipnc_5.1-acs1910.git
+```
 没有详细输出
 
 git的更多详细信息输出
+```
 #on linux
 export GIT_TRACE_PACKET=1
 export GIT_TRACE=1
@@ -13027,15 +13015,13 @@ export GIT_CURL_VERBOSE=1
 set GIT_TRACE_PACKET=1
 set GIT_TRACE=1
 set GIT_CURL_VERBOSE=1
-
-
+```
+---
 经过验证，ssh方式可以获取超级大的repo
 
 
-
-
-
 下载
+```
 git_2.11.0.orig.tar.xz
 git_2.11.0-3+deb9u5.debian.tar.xz
 git_2.11.0-3+deb9u5.dsc
@@ -13043,49 +13029,44 @@ sudo apt-get install dh-exec dh-apache2
 dpkg-source -x git_2.11.0-3+deb9u5.dsc
 cd git-2.11.0
 dpkg-buildpackage -rfakeroot -uc -b
-
+```
 这里'-rfakeroot'指定命令使用fakeroot程序来模仿root权限(来实现所有者(ownership)目的)，'-uc'表示"Don't cryptographically sign the changelog"，'-b'代表只建立二进制包。
 
-
+```
 sudo proxychains apt-get install -f 安装其他依赖包
 sudo proxychains aptitude install -f 彻底清理依赖关系
+```
+dpkg的状态标志都写在`/var/lib/dpkg/status`
 
-dpkg的状态标志都写在/var/lib/dpkg/status
-
-
-
-
-
+```
 sudo apt-get build-dep curl
 proxychains apt-get source curl
 cd curl-7.38.0/
 //sudo dpkg-buildpackage -rfakeroot -b
 dpkg-buildpackage -rfakeroot -uc -b
-
-
-
-
-
+```
+```
 sudo gedit /etc/apt/apt.conf.d/apt.conf
+```
 
 
+***
+# virtualenv
 
-
-
-
-
-
+```
 which virtualenv 
 /usr/local/bin/virtualenv
-
 virtualenv --no-site-packages venv
-最新的virtualenv没有--no-site-packages，默认就是
-最后支持--no-site-packages的virtualenv==16.7.9
+```
+最新的virtualenv没有`--no-site-packages`，默认就是
+最后支持`--no-site-packages`的virtualenv==16.7.9
+```
 sudo pip3 install --upgrade virtualenv==16.7.9 -i https://mirrors.163.com/pypi/simple
-
-
+```
+```
 source venv/bin/activate
-
+```
+```
 pip install six==1.12.0 -i https://mirrors.163.com/pypi/simple
 pip install colorama==0.3.9 -i https://mirrors.163.com/pypi/simple
 pip install contextlib2==0.5.1 -i https://mirrors.163.com/pypi/simple
@@ -13098,230 +13079,220 @@ pip install PyYAML==3.13 -i https://mirrors.163.com/pypi/simple
 pip install sockjs-tornado==1.0.3 -i https://mirrors.163.com/pypi/simple
 pip install tornado==4.3 -i https://mirrors.163.com/pypi/simple
 pip install spintop-openhtf -i https://mirrors.163.com/pypi/simple
-
+```
+```
 git clone https://github.com/google/openhtf.git
 cd openhtf/
 python setup.py install
 cd examples/
 python frontend_example.py
-http://localhost:4444
+```
+<http://localhost:4444>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-串口助手
-sudo apt-get install cutecom
-
-
-
-
-
-
-
-
-
-
-
-
-安装ffmpy3
+***
+# 安装ffmpy3
 https://ffmpy3.readthedocs.io/en/latest/
+```
 sudo pip3 install ffmpy3 -i https://mirrors.163.com/pypi/simple
+```
 
 
-
-
-
-
-
-
-
-
-更新spb166到spb172
+***
+# 更新spb166到spb172
+```
 cd /usr/local/bin
-
 sudo gedit allegro
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_172_patch/
 source spb172
 /opt/cadence/SPB172/tools/bin/allegro
--------------------------------------------------
+```
+```
 sudo gedit concepthdl
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_172_patch/
 source spb172
 /opt/cadence/SPB172/tools/bin/concepthdl
--------------------------------------------------
+```
+```
 sudo gedit pad_designer
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_172_patch/
 source spb172
 /opt/cadence/SPB172/tools/bin/padstack_editor
--------------------------------------------------
+```
+```
 sudo chmod +x allegro pad_designer concepthdl
 
 sudo gedit projmgr
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/cadence/allegro_172_patch/
 source spb172
 /opt/cadence/SPB172/tools/bin/projmgr
--------------------------------------------------
+```
+```
 sudo chmod +x projmgr
+```
 
 
-
-
-
+***
+# diamond
+```
 cd /usr/local/bin
 sudo gedit diamond
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/lscc/diamond/3.9_x64/bin/lin64/
 #cd /opt/lscc/diamond/3.11_x64/bin/lin64/
 ./diamond
--------------------------------------------------
+```
 
 
+***
+# v2ray
 
+原始的go.sh脚本需要修改, 已经修改好的go_mod.sh
 
-
-v2ray
-原始的go.sh脚本需要修改
-已经修改好的go_mod.sh
 v2ray-linux-64.zip下载到相同目录就可以安装到本机
+
 然后
+```
 sudo gedit /etc/v2ray/config.json
 sudo service v2ray start
-可以使用 service v2ray start|stop|status|reload|restart|force-reload 控制 V2Ray 的运行
+```
+可以使用 `service v2ray start|stop|status|reload|restart|force-reload` 控制 V2Ray 的运行
 
-然后是opera和chrome等浏览器的代理自动切换设置，协议和端口查/etc/v2ray/config.json
+然后是opera和chrome等浏览器的代理自动切换设置，协议和端口查`/etc/v2ray/config.json`
 
+用X-Tunnel或者tor-browser-linux64-9.5获取最新的free vmess
 
-anti-g*f*w 20200630
-首先，用X-Tunnel或者tor-browser-linux64-9.5获取最新的free vmess
 虚拟机里贴进v2rayN
+
 再得到最新的uuid填入/etc/v2ray/config.json
 
+fucking C C P， 你丫拦得住俺？
 
-CC fucking P， 你丫拦得住俺？
-
-
-
-
-
+---
 v2ray for terminal
-
+```
 export ALL_PROXY="socks5://127.0.0.1:10808"
 或者
 export https_proxy="socks5://127.0.0.1:10808"
 export http_proxy="socks5://127.0.0.1:10808"
 export ftp_proxy="socks5://127.0.0.1:10808"
+```
 
+ref: Scientific_Toolworks_Understand
 
-
-
-Scientific_Toolworks_Understand
-
-
-
-
-
-magnetw现在还算好用吧
+***
+# magnetw(abort)
 
 使用文档
+
 https://magnetw.app/advanced/rule-apply.html
 
 下载地址
+
 https://github.com/xiandanin/magnetW/releases
 
 这样运行linux版本
 ./magnetw-3.1.1-linux.AppImage --no-sandbox
 
 设置v2ray
+
 设置-->启用代理
+```
 Socks5, 127.0.0.1:10808
+```
 也可以设置为ss代理
+```
 Socks5, 127.0.0.1:1080
+```
 
-
-运行freecad最新版本
+***
+# 运行freecad最新版本
+```
 ./FreeCAD_0.18-16146-Linux-Conda_Py3Qt5_glibc2.12-x86_64.AppImage
+```
 
 
-
-
+***
+# diagrams
 diagrams的AppImage版本这样运行
+```
 chmod +x draw.io-x86_64-13.3.9.AppImage
 ./draw.io-x86_64-13.3.9.AppImage --no-sandbox
-
+```
 可以直接安装diagrams的deb包
+```
 sudo dpkg -i draw.io-amd64-13.3.9.deb
+```
 
 
-
-wine 一些游戏
+***
+# wine 一些游戏
+```
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine age2.exe
+```
 
 
-perl脚本 Can't locate autobox/Core.pm 之类的模块未安装问题
+***
+# cpan
+perl脚本 `Can't locate autobox/Core.pm` 之类的模块未安装问题
 cpan方式安装
+```
 sudo cpanm autobox::Core
 sudo cpanm Try::Tiny
 sudo cpanm XML::TreePP
 sudo cpanm XML::TreePP::XMLPath
 sudo cpanm Text::Xslate
 sudo cpanm Readonly
-
+```
 或者apt方式安装
-# 查找在哪个apt包 apt-cache search perl autobox::Core
+```
+apt-cache search perl autobox::Core # 查找在哪个apt包 
+```
 
 
-
-
-dos emulator dos模拟器
+***
+# dos emulator dos模拟器
+```
 sudo apt-get install dosbox dosemu
+```
 
 
-
-
-
-ttf字体编辑工具
+***
+# ttf字体编辑工具
+```
 sudo apt-get install fontforge
+```
 
 
-
-
-
-
-
-source insight 中文显示等
+***
+# source insight 中文显示等
 原理
+```
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine XXXXXXXX.exe
-
-
+```
 双击打开也想支持, 修改
+```
 ~/.local/share/applications/wine-extension-pr.desktop
+```
 
 
-
-
-livecd+chroot维护系统（也可安装debootstrap安装包）
+***
+# livecd+chroot维护系统（也可安装debootstrap安装包）
+```
 //sudo fdisk -l
 //sudo mount /dev/sda1 /mnt
 cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
@@ -13366,40 +13337,54 @@ umount /proc
 exit
 umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/var/lib/os-prober/mount
 umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/dev
+```
 
+
+***
+# baidunetdisk
+```
 sudo dpkg -i baidunetdisk_3.3.2_amd64.deb
 cd /opt/baidunetdisk
 ./baidunetdisk --no-sandbox
 
 cd /usr/local/bin
 sudo gedit baidunetdisk
--------------------------------------------------
+```
+```
 #!/bin/bash
 cd /opt/baidunetdisk/
 ./baidunetdisk --no-sandbox
--------------------------------------------------
+```
+```
 sudo chmod +x baidunetdisk
+```
 
 
-
-
-sudo gedit /etc/fstab
--------------------------------------------------
+***
+# fstab
+/etc/fstab
+```
 UUID=f5cd428a-7bcc-4026-80b7-9f570e5966cf	/               ext4    errors=remount-ro 0       1
 UUID=08D8BF9DD8BF8788	/mnt/c_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
 UUID=0CC416CC0CC416CC	/mnt/d_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
 UUID=0CC416BF0CC416BF	/mnt/e_win	ntfs-3g	users,auto,rw,dev,exec,locale=zh_CN.UTF-8      0      0
 UUID=bdeccf6e-c968-4741-86e0-e0b3f15e62ff	/home	ext4	errors=remount-ro 	0       1
 UUID=3bc97d5e-cdc7-49fc-aeeb-4b455100c5df	/opt	ext4	errors=remount-ro 	0       1
--------------------------------------------------
+```
 
 
-
+***
+# release code
+```
 cat /etc/*-release
+```
 
-
-
+***
+# apt加速(abort)
+```
 gedit ~/Documents/apt_proxy_conf
+```
+```
 Acquire::http::proxy "http://127.0.0.1:10808";
 Acquire::ftp::proxy "ftp://127.0.0.1:10808";
 Acquire::https::proxy "https://127.0.0.1:10808";
@@ -13407,49 +13392,61 @@ or
 Acquire::http::proxy "socks5://127.0.0.1:10808";
 Acquire::ftp::proxy "socks5://127.0.0.1:10808";
 Acquire::https::proxy "socks5://127.0.0.1:10808";
-
+```
+```
 sudo apt-get -c ~/Documents/apt_proxy_conf upgrade
+```
 Proxy CONNECT aborted
 
-
+打印所有环境变量
+```
 export -p
+```
 查看有没有类似proxy的环境变量，例如
 
+```
 declare -x ftp_proxy="127.0.0.1:8118"
 declare -x http_proxy="127.0.0.1:8118"
 declare -x https_proxy="127.0.0.1:8118"
+```
 
 如果有，则全部删掉（具体名字要看你自己的终端显示）：
-
+```
 export -n ftp_proxy 
 export -n http_proxy
 export -n https_proxy 
+```
+然后再`sudo apt-get update`
 
-然后再sudo apt-get update
-
+```
 gedit ~/.bashrc
-set proxy
+```
+```
+# set proxy
 export http_proxy="http://127.0.0.1:8118"
 export https_proxy="https://127.0.0.1:8118"
 export ftp_proxy="ftp://127.0.0.1:8118"
-
+```
 还是不行算了
 
 
-
-
-
+***
+# security源
 不就是美国源 security.debian.org 慢的问题嘛
+
 下面的两个应该等效
+```
 deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
 deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+```
 
 
-
-
-pcmanfm的application为空处理
+***
+# pcmanfm 的 application 为空处理
+```
 /home/andy/.config/menus/lxde-applications.menu
-
+```
+```
 <!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN'
  'http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd'>
 <Menu>
@@ -13514,15 +13511,12 @@ pcmanfm的application为空处理
         <Deleted/>
     </Menu>
 </Menu>
+```
 
 
-
-
-
-
-
-
-
+***
+# xrandr
+```
 xrandr --output default --gamma 1:1:1 --mode 1920x1080
 cvt
 lspci -vnn
@@ -13532,18 +13526,24 @@ sudo lshw -C display
 Xorg -configure
 xrandr --verbose
 lspci | grep VGA
+```
+关于xrandr 
+```
+Failed to get size of gamma for output default
+```
+启动参数加上`i915.alpha_support=1`(未验证)
+```
+lspci -k | grep -iEA5 'vga|display|3d'
+sudo lshw -numeric -class video
+lspci -vnn 
+inxi -G
+inxi -Fxz
+```
 
 
-
-
-
-
-
-
-
-
-
-
+***
+# safe-upgrade
+```
 you should be able to repair your system by repeatedly running dpkg --configure --pending, apt-get -f install, and apt-get dist-upgrade until there are no errors.
 $ aptitude search '~i(!~ODebian)'
 $ apt-forktracer | sort
@@ -13558,13 +13558,10 @@ $ apt-forktracer | sort
 # aptitude search '~o'
 # aptitude purge '~o'
 
-
 sudo dpkg --purge --force-depends xxx
 sudo apt-get install -f 
 
 dpkg --configure -a
-
-
 
 # dpkg --configure -a
 Setting up apt-listchanges (3.10) ...
@@ -13577,20 +13574,12 @@ dpkg: error processing package apt-listchanges (--configure):
 Errors were encountered while processing:
  apt-listchanges
 
-
-
 dpkg --status debconf
 ls -l /usr/lib/python*/dist-packages/debconf.py
 cp /usr/lib/python3/dist-packages/debconf.py /usr/local/lib/python3.6/site-packages/
 cp /usr/lib/python3/dist-packages/debconf.py /usr/local/lib/python3.5/dist-packages/
 cp /usr/lib/python3/dist-packages/debconf.py /usr/local/lib/python3.4/dist-packages/
 //sudo gedit /etc/profile
-
-
-
-
-
-
 
 aptitude install -f
 
@@ -13603,133 +13592,105 @@ dpkg: error while cleaning up:
  subprocess installed post-installation script returned error exit status 1
 Errors were encountered while processing:
 
-
 rm /var/lib/dpkg/info/google-chrome-stable.*
 sudo dpkg --purge --force-depends google-chrome-stable
 
 rm /var/lib/dpkg/info/jd-gui*
 sudo dpkg --purge --force-depends jd-gui
 
-
-
-
-
 dpkg --configure -a
 dpkg: dependency problems prevent configuration of va-driver-all:amd64:
 apt-get install -f
 trying to overwrite 'YYY', which is also in package xxx：[ver]
 dpkg --force-depends -r xxx
-
-
-
-
-
-
+```
 ok
 
- 更好啊
+更好啊
+```
 aptitude update
 aptitude safe-upgrade
 aptitude full-upgrade
+```
 
 
-
-
-关于xrandr 
-Failed to get size of gamma for output default
-
-启动参数加上i915.alpha_support=1
-未验证
-
-lspci -k | grep -iEA5 'vga|display|3d'
-sudo lshw -numeric -class video
-lspci -vnn 
-inxi -G
-inxi -Fxz
-
-
-
-
-
-
--------strech---
+***
+# 升级到 strech (debian9)之后 一些补救
+```
 sudo apt-get install compiz
+```
 
- Debian 9系统下修改默认网卡为eth0的方法
+## Debian 9系统下修改默认网卡为eth0的方法
 方法操作
-
+```
 vim /etc/default/grub
-
+```
 查找
-
+```
 GRUB_CMDLINE_LINUX=""
-
+```
 修改为
-
+```
 GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
-
+```
 重新生成grub引导配置文件
-
+```
 grub-mkconfig -o /boot/grub/grub.cfg
-
+```
 最后重启即可恢复默认网卡为eth0，操作结束。
 
-
-
+```
 sudo apt-get install libnet-ifconfig-wrapper-perl
+```
 
 
-
-------------buster--------------------------------------
-
+***
+# 升级到 buster (debian10)之后 一些补救
+```
 not initialized in udev database even after waiting 10000000 microseconds
 mount --bind /run/lvm run/lvm  ??
-
-
-
+```
+```
 sudo apt-get install orage
 sudo apt-get purge dropbear
-
-
+```
+```
 sudo update-initramfs -u
+```
 https://www.kutu66.com//ubuntu/article_164784
 
-
 dnsmasq 替代 bind9
+```
 sudo systemctl stop bind9.service
 sudo systemctl status dnsmasq.service
-
-
 sudo rm /lib/systemd/system/bind9.service
-
-
+```
+```
 sudo apt-get dselect-upgrade
-
-
-
+```
 https://bbs.archlinux.org/viewtopic.php?pid=1807200
 
 https://blog.csdn.net/weixin_42720824/article/details/104790247
+```
 sudo apt-get install firmware-misc-nonfree
+```
 ??
 
 https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/i915
 
-下载kbl_dmc_ver1_04.bin
+下载`kbl_dmc_ver1_04.bin`
 
 最后拷贝到/lib/firmware文件夹下：
-
+```
 cd /lib/firmware
 sudo mkdir i915
 sudo cp Downloads/kbl_dmc_ver1_04.bin /lib/firmware/i915
+```
 
 
-
-
-
-
-
----------------jessie---------------
+***
+# something
+```
 cat /sys/class/scsi_host/host*/link_power_management_policy
 sudo blkid
 sudo systemctl status nxserver.service
@@ -13737,24 +13698,23 @@ sudo rm /etc/systemd/system/multi-user.target.wants/nxserver.service
 sudo systemctl stop nxserver.service
 sudo cat /var/log/kern.log
 sudo journalctl -f _TRANSPORT=kernel
-
-
 ls /etc/apt/sources.list.d/
 docker.list          github_git-lfs.list  opera-stable.list
 rm /etc/apt/sources.list.d/*
+```
 
 
-
-
-
-
-dmenu_run
+***
+# dmenu_run
 Missing menu entries
+```
 $ rm ~/.dmenu_cache
-$ rm ~/.cache/dmenu_run    #这条有效，ref https://wiki.archlinux.org/index.php/Dmenu
+$ rm ~/.cache/dmenu_run    #这条有效
+```
+https://wiki.archlinux.org/index.php/Dmenu
 
-rc.xml
-修改
+`rc.xml`修改
+```
     <keybind key="A-F3">
       <action name="Execute">
         <command>~/.config/dmenu/dmenu-bind.sh</command>
@@ -13764,8 +13724,9 @@ rc.xml
         </startupnotify>
       </action>
     </keybind>
-
+```
 修改W-r组合键
+```
     <keybind key="W-r">
       <action name="Execute">
         <command>~/.config/dmenu/dmenu-bind.sh</command>
@@ -13775,11 +13736,8 @@ rc.xml
         </startupnotify>
       </action>
     </keybind>
-
-
-
-
-
+```
+```
 /home/andy/.config/opera/Opera Add-ons Downloads
 sudo rm /usr/local/share/applications/CCSv5-ReleaseNote.desktop
 sudo rm /etc/xdg/menus/applications-merged/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-TexasInstruments-60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-CodeComposerStudio5.menu
@@ -13809,22 +13767,22 @@ $ cat /etc/xdg/menus/applications-merged/60556FE5-C1A1-4061-8DF8-FFB8393BAE2D-Te
 </Menu>
 </Menu>
 </Menu>
+```
 
-
-
+```
 sudo systemctl status dnsmasq.service
 sudo systemctl stop dnsmasq.service
+```
 
 
-
-
-
-
-steam repair
+***
+# steam repair
+```
 Unable to preload the following plugins:
 	libAsyncGPUReadbackPlugin.so
 	libresonanceaudio.so
-
+```
+```
 cd /home/andy/.local/share/Steam/steamapps/common/Universe\ Sandbox\ 2/Universe\ Sandbox_Data/Plugins
 ldd libAsyncGPUReadbackPlugin.so
 /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.21' not found 
@@ -13832,59 +13790,72 @@ ldd libAsyncGPUReadbackPlugin.so
 
 strings /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21 | grep GLIBCXX
 strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
+```
 
-
-
-
-
-
-
-------------------------buster----------------------------------
-安装opera并设置默认浏览器
+***
+# 安装opera并设置默认浏览器
+```
 sudo update-alternatives --config x-www-browser
-
 sudo update-alternatives --config gnome-www-browser 
+```
 
 
-安装bcompare
+***
+# 安装bcompare
 
 
-
-
+***
+# 右键wine运行
+```
 cd .wine/drive_c/windows/
 wine regedit.exe
 cp /usr/share/doc/wine-development/examples/wine.desktop /home/andy/.local/share/applications
 xfce4-mime-settings
+```
 这样就能右键wine可执行的windows的exe程序
 
 
+***
+# real vnc
+
 安装VNC-Server
+```
 systemctl (enable|disable|start|stop) vncserver-virtuald.service
 systemctl (enable|disable|start|stop) vncserver-x11-serviced.service
-
+```
 安装VNC-Viewer
 
 
+***
+# 编译 leafpad
 库里也没有leafpad了，编译安装好了
+```
 sudo apt-get install build-essential checkinstall intltool libgtk2.0-dev
 
 mkdir -v $HOME/leafpad_build && cd $HOME/leafpad_build && \
 wget http://savannah.nongnu.org/download/leafpad/leafpad-0.8.18.1.tar.gz && \
 tar xvf leafpad-0.8.18.1.tar.gz && cd leafpad-0.8.18.1 && \
 ./configure && make && \
-制作deb包
+```
+制作leafpad的deb包
+```
 sudo checkinstall -D --install=yes --fstrans=no --pakdir "$HOME/leafpad_build" \
      --pkgname leafpad --backup=no --deldoc=yes --deldesc=yes --delspec=yes \
      --default --pkgversion "0.8.18.1" && \
 make distclean && sudo ldconfig
+```
 
 
-安装vbox
+***
+# 安装vbox
 
 
-重新配置conky
+***
+# 重新配置conky
+```
 mv /home/andy/.conkyrc conkyrc.bk
-/------------------------
+```
+```
 background yes
 use_xft yes
 xftfont monospace:size=9
@@ -13997,11 +13968,12 @@ Super+c$alignr Move to Center
 Super+Arrow$alignr Move
 Alt+F3$alignr Dmenu
 Alt+Super+Arrow$alignr Resize
-------------------------/
-
+```
+```
 mkdir -p /home/andy/.config/conky
 /home/andy/.config/conky/conky.conf
-/------------------------
+```
+```
 -- Conky config for ArchBang
 -- by Mr Green
 
@@ -14090,48 +14062,69 @@ Super+c$alignr Move to Center
 Super+Arrow$alignr Move
 Alt+F3$alignr Dmenu
 Alt+Super+Arrow$alignr Resize]]
-------------------------/
+```
 
 调试conky配置
+```
 conky -DD -c ~/.config/conky/conky.conf
-ref
+```
 http://conky.sourceforge.net/variables.html
 
 
 
-
-
-
-
-临时修改mac地址
+***
+# 临时修改mac地址
+```
 sudo ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+```
 可能需要，debian 10 看来不需要这样
+```
 sudo ifconfig eth0 down
 sudo ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
 sudo ifconfig eth0 up
+```
 
 重启也有效就在etc/rc.local添加
+```
 ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+```
 
 物理mac读取失败
+```
 "ethtool -e wlan0" and "ethtool -E wlan0..." give the error "Cannot get EEPROM data: Operation not supported".
+```
 
 
-
-
-
-
+***
+# ros
+```
 sudo apt-get install ros-desktop-full ros-desktop-full-dev
+```
 
 
+***
+# fonts
+```
 sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic
+```
 
 
+***
+# vlc
+```
 sudo apt-get install vlc
+```
 
-替代shutter
+
+***
+# 替代shutter
+```
 sudo apt-get install flameshot
+```
 
+***
+# ufw
+```
 sudo apt install ufw
 sudo ufw default deny incoming
 sudo ufw default allow incoming
@@ -14141,29 +14134,44 @@ sudo ufw allow 80
 sudo ufw allow 443
 sudo ufw enable
 sudo ufw status
+```
 
+
+***
+# something
+```
 sudo apt-get install maxima fig2ps
 sudo apt-get install octave
 sudo apt-get install gimp shotwell zim gftp  network-manager-gnome
 sudo apt-get install libwnck-dev
-
+```
 设置默认终端
+```
 sudo update-alternatives --config  x-terminal-emulator
+```
 
 
-恢复shutter
+***
+# 重新安装wps
+
+
+***
+#重新安装baidunetdisk
+
+
+***
+# 恢复shutter
 https://shutter-project.org/downloads/source-code/
+
 https://launchpad.net/debian/buster/+source/shutter
+
 https://launchpad.net/shutter/+download
+```
 git clone https://github.com/shutter-project/shutter.git
 cd shutter
 make install
-
-
-
-重新安装wps
-重新安装baidunetdisk
-
+```
+```
 sudo apt-get install libgtkimageview-dev libunique-dev libwnck-dev libgnomecanvas2-dev libgoocanvas-2.0-dev libgoocanvas2-perl libgoocanvasmm-2.0-dev
 sudo cpanm Number::Bytes::Human
 sudo cpanm Gnome2::Wnck
@@ -14178,7 +14186,9 @@ sudo cpanm Proc::Killfam
 sudo cpanm Goo::Canvas
 
 sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Image::ExifTool
-也可以在vim ~/.bashrc中添加alias cpanm='cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only'使alias生效既可解决
+```
+也可以在`vim ~/.bashrc`中添加`alias cpanm='cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only'`使alias生效既可解决
+```
 sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only App::cpanminus
 
 sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only JSON::MaybeXS
@@ -14186,15 +14196,19 @@ sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only WWW::Mechanize
 
 sudo apt-get install libappindicator-dev gir1.2-appindicator-0.1
 sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Gtk2::AppIndicator
-
+```
+```
 echo $PKG_CONFIG_PATH 
 /usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig
 wget http://ftp.gnome.org/pub/GNOME/sources/goocanvas/1.0/goocanvas-1.0.0.tar.gz
+```
 解压
+```
 ./configure
 make
 sudo make install
-
+```
+```
 Making install in src
 make[1]: Entering directory '/home/andy/Downloads/goocanvas-1.0.0/src'
 make  install-am
@@ -14210,7 +14224,8 @@ libtool: install: /usr/bin/install -c .libs/libgoocanvas.a /usr/local/lib/libgoo
 libtool: install: chmod 644 /usr/local/lib/libgoocanvas.a
 libtool: install: ranlib /usr/local/lib/libgoocanvas.a
 libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
-----------------------------------------------------------------------
+```
+```
 Libraries have been installed in:
    /usr/local/lib
 
@@ -14227,7 +14242,8 @@ flag during linking and do at least one of the following:
 
 See any operating system documentation about shared libraries for
 more information, such as the ld(1) and ld.so(8) manual pages.
-----------------------------------------------------------------------
+```
+```
 test -z "/usr/local/include/goocanvas-1.0" || /bin/mkdir -p "/usr/local/include/goocanvas-1.0"
  /usr/bin/install -c -m 644 goocanvasellipse.h goocanvasgrid.h goocanvasgroup.h goocanvasimage.h goocanvasitem.h goocanvasitemmodel.h goocanvasitemsimple.h goocanvaspolyline.h goocanvaspath.h goocanvasrect.h goocanvasstyle.h goocanvastable.h goocanvastext.h goocanvasutils.h goocanvaswidget.h goocanvas.h goocanvasenumtypes.h goocanvasmarshal.h '/usr/local/include/goocanvas-1.0'
 make[3]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0/src'
@@ -14322,25 +14338,25 @@ test -z "/usr/local/lib/pkgconfig" || /bin/mkdir -p "/usr/local/lib/pkgconfig"
  /usr/bin/install -c -m 644 goocanvas.pc '/usr/local/lib/pkgconfig'
 make[2]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0'
 make[1]: Leaving directory '/home/andy/Downloads/goocanvas-1.0.0'
+```
 
-
-
-
-
+```
 sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Goo::Canvas
-
+```
 
 gnome-web-photo
+```
 Goo::Canvas/libgoo-canvas-perl
-
+```
 
 libgoo-canvas-perl这玩意不能通过deb安装了，编译安装好了
-
+```
 wget http://deb.debian.org/debian/pool/main/libg/libgoo-canvas-perl/libgoo-canvas-perl_0.06.orig.tar.gz
 perl Makefile.PL （无视Unrecognized argument in LIBS ignored: '-pthread')
 make
 sudo make install
-
+```
+```
 "/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- Canvas.bs blib/arch/auto/Goo/Canvas/Canvas.bs 644
 Manifying 2 pod documents
 Manifying 29 pod documents
@@ -14414,12 +14430,10 @@ Installing /home/andy/perl5/man/man3/Goo::Canvas::Group.3pm
 Installing /home/andy/perl5/bin/perltetris.pl
 Installing /home/andy/perl5/bin/perlmine.pl
 Appending installation info to /home/andy/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/perllocal.pod
-
-
-
-
+```
 
 ##编译goocanvas-2.0.4
+```
 sudo apt-get install gtk-doc-tools
 
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
@@ -14428,17 +14442,27 @@ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/local/lib/pkgcon
 sudo apt-get install libextutils-depends-perl libextutils-pkgconfig-perl
 sudo dpkg -i libgoocanvas-common_1.0.0-1_all.deb
 sudo dpkg -i libgoocanvas3_1.0.0-1_amd64.deb
-
+```
 最后，尝试解决gnome-web-photo is missing
+```
 sudo apt-get install libjavascriptcoregtk-4.0-dev libwebkit2gtk-4.0-dev gnome-common
+```
 编译不行
+
 https://packages.debian.org/source/
+
 https://download.gnome.org/sources/gnome-web-photo/0.10/gnome-web-photo-0.10.6.tar.xz
+
 下载gnome-web-photo_0.10.6.orig.tar.gz
-这玩意是要一个网页截图工具，这样用 $ gnome-web-photo -t 0 --mode=photo http://www.linuxidc.com linuxidc.png
+
+这玩意是要一个网页截图工具，这样用
+```
+$ gnome-web-photo -t 0 --mode=photo http://www.linuxidc.com linuxidc.png
+```
 编译依赖webkit而目前是webkit2，间接依赖TMD一大串，其实之前debian8也没有安装
 
 测试gnome-web-photo
+```
 先从deb包提取bin和lib，放到/opt/gnome-web-photo
 ├── bin
 │   ├── gnome-web-photo
@@ -14469,87 +14493,87 @@ https://download.gnome.org/sources/gnome-web-photo/0.10/gnome-web-photo-0.10.6.t
         ├── libwebkitgtk-3.0.so.0.22.17
         └── pkgconfig
             └── webkitgtk-3.0.pc
-
+```
 测试命令
+```
 cd /opt/gnome-web-photo/bin
 export LD_LIBRARY_PATH=/opt/gnome-web-photo/lib/x86_64-linux-gnu
 ./gnome-web-photo --mode=photo "http://www.163.com" ~/Pictures/ttt.jpg
+```
 成功
 
 查看shutter调用时候传的参数
+```
 gedit /usr/local/share/shutter/resources/modules/Shutter/Screenshot/Web.pm
+```
 有5个
-
+```
 cd /usr/local/bin
 sudo gedit gnome-web-photo
----------------------------------
+```
+```
 #!/bin/bash
 export LD_LIBRARY_PATH=/opt/gnome-web-photo/lib/x86_64-linux-gnu
 cd /opt/gnome-web-photo/bin
 ./gnome-web-photo $@
----------------------------------
+```
+```
 sudo chmod +x gnome-web-photo
-
+```
 完美运行shutter，目前的tab关闭图标不正常，不影响功能的
-
+```
 sudo cpanm --mirror http://mirrors.163.com/cpan/ --mirror-only Encode::X11
+```
 (debian8,9的deb解开实际上还是不能运行的，只能运行git下来的shutter)
 
 
 shutter好就好在编辑方便易用
+
 简单图片编辑可以用flameshot和ksnip-1.7.3.deb
 
 
-
-
-
-
+***
+# bcompare4
 bcompare4 更新之后要执行
+```
 cd /usr/lib/beyondcompare/
 sudo sed -i "s/keexjEP3t4Mue23hrnuPtY4TdcsqNiJL-5174TsUdLmJSIXKfG2NGPwBL6vnRPddT7tH29qpkneX63DO9ECSPE9rzY1zhThHERg8lHM9IBFT+rVuiY823aQJuqzxCKIE1bcDqM4wgW01FH6oCBP1G4ub01xmb4BGSUG6ZrjxWHJyNLyIlGvOhoY2HAYzEtzYGwxFZn2JZ66o4RONkXjX0DF9EzsdUef3UAS+JQ+fCYReLawdjEe6tXCv88GKaaPKWxCeaUL9PejICQgRQOLGOZtZQkLgAelrOtehxz5ANOOqCaJgy2mJLQVLM5SJ9Dli909c5ybvEhVmIC0dc9dWH+/N9KmiLVlKMU7RJqnE+WXEEPI1SgglmfmLc1yVH7dqBb9ehOoKG9UE+HAE1YvH1XX2XVGeEqYUY-Tsk7YBTz0WpSpoYyPgx6Iki5KLtQ5G-aKP9eysnkuOAkrvHU8bLbGtZteGwJarev03PhfCioJL4OSqsmQGEvDbHFEbNl1qJtdwEriR+VNZts9vNNLk7UGfeNwIiqpxjk4Mn09nmSd8FhM4ifvcaIbNCRoMPGl6KU12iseSe+w+1kFsLhX+OhQM8WXcWV10cGqBzQE9OqOLUcg9n0krrR3KrohstS9smTwEx9olyLYppvC0p5i7dAx2deWvM1ZxKNs0BvcXGukR+/g" BCompare
+```
 
 
-
-
-
-
-
-
-
-medusa
+***
+# medusa
+```
 medusa -M ssh -h 192.168.1.8 -u andy -P wordlist1.txt -e ns -F -O ssh.log
 hydra
 hydra -l andy -P wordlist.txt -t 4 ssh://192.168.1.8
 crunch
 crunch 3 4 "1234crunch "
+```
 
 
-
-
-
-
-
-
-
+***
+# iconv
+```
 iconv -c -f utf-8 -t gb2312 BlogSohu_utf8.py >> BlogSohu_ansi_gb2312.py
 iconv -f utf-8 -t  gb18030 file1.txt -o file2.txt
+```
 
 
-
-
-
-
+***
+# openocd
 openocd invalid subcommand "newtap stm32f1x bs -irlen 5" in procedure 'script'
-
+```
 /opt/openocd/0.10.0-12-20190422-2015/scripts/target/stm32f1x.cfg
+```
 line 50
-
+```
 if {[using_jtag]} {
    jtag newtap $_CHIPNAME bs -irlen 5
 }
-
+```
 change to 
-
+```
 if {[using_jtag]} {
    if {[using_hla]} {
       hla newtap $_CHIPNAME bs -irlen 5
@@ -14557,34 +14581,47 @@ if {[using_jtag]} {
       jtag newtap $_CHIPNAME bs -irlen 5
    }
 }
+```
 
 
-
+***
+# lz4
 
 Novatek SDK/ 据说RK3399也会碰到
+
 解决/bin/sh: lz4c: 未找到命令
+
 LZ4是一种压缩算法，解决方法如下：
 
 安装lz4:
+```
 sudo apt-get update
 sudo apt-get install liblz4-tool
+```
 重新编译 ok
 
 解lz4文件:
+```
 lz4 -d 文件名
+```
 
 
-
-
-
+***
+# something
+```
 sudo apt-get install build-essential libc6-dev libncurses5-dev libncurses5:i386 libgl1-mesa-dev g++-multilib mingw-w64 tofrodos lib32z1 u-boot-tools zlib1g-dev bison libbison-dev flex mtd-utils vim squashfs-tools gawk cmake cmake-data liblz4-tool  libmpc3 libstdc++6 device-tree-compiler gcc-8-locales lib32ncurses6 lib32ncursesw6 lib32tinfo6 lib32ncurses5-dev openssh-server samba
+```
 
 
-debian buster提示无libmpfr.so.4
+***
+# debian buster提示无libmpfr.so.4
+
 问题描述：使用arm-linux-gcc 编译.c文件时提示错误
+```
 error while loading shared libraries:libmpfr.so.4: cannot open shared object file: No such file or directory.
+```
 通过ldd查看cc1的库调用情况
-
+```
 ldd /opt/arm/arm-ca53-linux-gnueabihf-4.9-2017.05/usr/bin/../libexec/gcc/arm-ca53-linux-gnueabihf/4.9.4/cc1
 	linux-vdso.so.1 (0x00007fff6e29f000)
 	libmpc.so.3 => /usr/lib/x86_64-linux-gnu/libmpc.so.3 (0x00007f74efa3d000)
@@ -14595,33 +14632,37 @@ ldd /opt/arm/arm-ca53-linux-gnueabihf-4.9-2017.05/usr/bin/../libexec/gcc/arm-ca5
 	/lib64/ld-linux-x86-64.so.2 (0x00007f74efcd2000)
 	libmpfr.so.6 => /usr/lib/x86_64-linux-gnu/libmpfr.so.6 (0x00007f74ef770000)
 	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f74ef5ed000)
-
+```
 
 发现这个库找不到，
 解决办法：
-
+```
 sudo ln -s /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4
+```
 
 
-
-
+***
+# chromium | chromium-driver
+```
 sudo apt-get install chromium chromium-l10n chromium-shell chromium-driver
+```
 
 
-
+***
+# git err
+```
 error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet
-
+```
+```
 git config --global http.sslVerify false
 git config --global http.postBuffer 1048576000
 
 export GIT_TRACE_PACKET=1; export GIT_TRACE=1; export GIT_CURL_VERBOSE=1
 git pull
-
+```
+```
 $ sudo apt-get purge git
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following packages were automatically installed and are no longer required:
   elpa-async elpa-dash elpa-ghub elpa-git-commit elpa-graphql elpa-let-alist
   elpa-magit-popup elpa-treepy elpa-with-editor git-man
@@ -14631,52 +14672,55 @@ Use 'sudo apt autoremove' to remove them.
 The following packages will be REMOVED:
   elpa-magit* git* git-all* git-cola* git-cvs* git-el* git-email* git-gui*
   git-lfs* git-mediawiki* git-svn* gitg* gitk* gitweb* keyringer*
-0 upgraded, 0 newly installed, 15 to remove and 1 not upgraded.
-After this operation, 65.4 MB disk space will be freed.
-
 
 sudo apt-get install git git-daemon-run git-el git-email git-gui gitk gitweb git-cvs git-mediawiki git-svn git-lfs git-cola git-all git-cvs git-el git-email git-gui git-mediawiki git-svn gitg gitk gitweb
-
+```
+```
 git config http.sslVerify false
 git config http.postBuffer 1048576000
+```
 
 ssh方式可以获取超级大的repo
-proxychains进行代理 proxychains git clone xxx， proxychains git pull
+
+proxychains进行代理
+```
+proxychains git clone xxx
+proxychains git pull
+```
 
 
+***
+# 开机时服务等待时间太久
+ubuntu 18 / debian 10 (buster) 开机时，比如
+```
+a start job is running for networking ...
+```
+等太久了，可以修改
 
-
-
-
-
-
-##ubuntu 18 / debian 10 (buster)
-##开机时
-##a start job is running for networking ...
-##等太久了，可以修改
+```
 sudo vim /etc/systemd/system/network-online.target.wants/networking.service
-
+```
+```
 TimeoutStartSec=5min
+```
 修改为
+```
 TimeoutStartSec=2sec
+```
+类似修改其他服务
 
-
-
+---
+## 分析开机服务时间占用和报错
+```
 systemd-analyze blame
 systemctl list-units --state=failed
+```
 
 
 
-apt-get update --allow-releaseinfo-change
-
-
-
-sudo apt install -t buster-backports kicad kicad-demos kicad-footprints kicad-symbols kicad-templates libngspice0
-
-
-##ubuntu 18 / debian 10 (buster)
-##compile notepadqq
-
+***
+# ubuntu 18 / debian 10 (buster) compile notepadqq
+```
 git clone --recursive https://github.com/notepadqq/notepadqq.git
 cd notepadqq
 apt search Qt5WebChannel
@@ -14684,14 +14728,19 @@ sudo apt install libqt5svg5-dev libqt5websockets5-dev libqt5webchannel5-dev libu
 sudo apt-get install -y libqt5webkit5-dev libqt5svg5-dev qttools5-dev-tools qtwebengine5-dev
 sudo apt-get install qt5-default qttools5-dev-tools qtwebengine5-dev libqt5websockets5-dev libqt5svg5 libqt5svg5-dev libuchardet-dev pkg-config
 ./configure --prefix /usr
+```
+
+***
+# apt 跨版本
+```
+apt-get update --allow-releaseinfo-change
+```
 
 
-
-
-
-
-
-
+***
+# kicad
+```
+sudo apt install -t buster-backports kicad kicad-demos kicad-footprints kicad-symbols kicad-templates libngspice0
 
 sudo apt-get purge kicad*
 
@@ -14701,8 +14750,6 @@ Use 'sudo apt autoremove' to remove them.
 The following packages will be REMOVED:
   kicad* kicad-demos* kicad-doc-en* kicad-footprints* kicad-libraries* kicad-symbols* kicad-templates*
 0 upgraded, 0 newly installed, 7 to remove and 1 not upgraded
-
-
 
 sudo apt-get install kicad
 The following package was automatically installed and is no longer required:
@@ -14723,8 +14770,6 @@ The following NEW packages will be installed:
 The following packages will be REMOVED:
   python3-wxgtk4.0{u} 
 0 packages upgraded, 6 newly installed, 1 to remove and 1 not upgraded.
-
-
 
 git clone git@gitlab.com:kicad/code/kicad.git
 https://docs.kicad.org/doxygen/md_Documentation_development_compiling.html#build_linux
@@ -14783,13 +14828,12 @@ Call Stack (most recent call first):
   /usr/share/cmake-3.13/Modules/FindPackageHandleStandardArgs.cmake:378 (_FPHSA_FAILURE_MESSAGE)
   CMakeModules/FindwxWidgets.cmake:1019 (find_package_handle_standard_args)
   CMakeLists.txt:863 (find_package)
-
-
+```
+```
 dpkg --get-selections | grep wx
-
-
-
+```
 换kicad-5.1.7的源码
+```
 -- Found GLM: /usr/include (found suitable version "0.9.9.3", minimum required is "0.9.5.1") 
 CMake Error at CMakeLists.txt:564 (MESSAGE):
   
@@ -14798,23 +14842,13 @@ CMake Error at CMakeLists.txt:564 (MESSAGE):
 
   Please downgrade to GLM version 0.9.9.2 or older or use clang instead
 
-
 -- Configuring incomplete, errors occurred!
 
-
-
-
-
-
-
-
-
+```
 
 修改库运行原有的
-
+```
 export LD_LIBRARY_PATH=/home/andy/Documents:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu:/opt/gnuarmeclipse/qemu/2.8.0-201703022210-head/bin/:$LD_LIBRARY_PATH
-
-
 
 export LD_LIBRARY_PATH=/media/andy/f5cd428a-7bcc-4026-80b7-9f570e5966cf/usr/lib/x86_64-linux-gnu/:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/:/home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
@@ -14840,24 +14874,29 @@ sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x8
 sudo cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/usr/lib/x86_64-linux-gnu/libtasn1.so.3.1.12 /usr/lib/x86_64-linux-gnu/
 
 $ Segmentation fault
-
+```
 =====give it up===== :(
-
+```
 cd /usr/lib/x86_64-linux-gnu/
 sudo rm libGLEW.so.1.10 libGLEW.so.1.10.0 libssl.so.1.0.0 libcrypto.so.1.0.0 librtmp.so.0 libgnutls.so.26 libgnutls.so.26.21.8 libgcrypt.so.11 libgcrypt.so.11.7.0 libtasn1.so.3 libtasn1.so.3.1.12
+```
 =====clean up done===== :(
 
 后来发现
-其实，这个/usr/local/bin/kicad是编译的版本
-apt安装的其实在/usr/bin/kicad
-怎么删除老版本OS的编译版本呢，再编译一次咯
-/media/andy/M4B/software/kicad/installkicad-source-mirror-git.tar.xz解压到ext4分区的目录下
 
+其实，这个/usr/local/bin/kicad是编译的版本
+
+apt安装的其实在/usr/bin/kicad
+
+怎么删除老版本OS的编译版本呢，再编译一次咯
+
+`/media/andy/M4B/software/kicad/installkicad-source-mirror-git.tar.xz`解压到ext4分区的目录下
+```
 sudo aptitude install libwxgtk3.0-gtk3-0v5 libwxgtk3.0-gtk3-dev libwxgtk3.0-dev
 libwxgtk-media3.0-dev libwxgtk-media3.0-0v5 libwxgtk-media3.0-gtk3-0v5 libwxgtk-media3.0-gtk3-dev libwxgtk-webview3.0-gtk3-0v5 libwxgtk-webview3.0-gtk3-dev 
-
-
-see https://forum.kicad.info/t/solved-linux-mint-19-3-build-problem-with-wxwidgets/23762
+```
+<https://forum.kicad.info/t/solved-linux-mint-19-3-build-problem-with-wxwidgets/23762>
+```
 $ sudo apt install libwxgtk3.0-gtk3-dev
 $ sudo update-alternatives --config wx-config
 There are 3 choices for the alternative wx-config (providing /usr/bin/wx-config).
@@ -14886,132 +14925,154 @@ $ sudo make uninstall
 if CMake does not provide a sudo make uninstall target
 see https://wiki.codelite.org/pmwiki.php/Developers/Linux
 $ sudo xargs rm < install_manifest.txt
-
-
-
+```
+```
 sudo apt-get install --reinstall -t buster-backports kicad kicad-demos kicad-footprints kicad-symbols kicad-templates libngspice0 kicad-packages3d kicad-doc-en
+```
 
 
-
-
-
-thunderbird启动
-
+***
+# thunderbird启动
+```
 XPCOMGlueLoad error for file /usr/lib/thunderbird/libmozgtk.so:
 liblzma.so.5: failed to map segment from shared object
 Couldn't load XPCOM.
-
+```
+```
 dpkg-query -S /usr/local/lib/liblzma.so.5
+```
 解决办法
+```
 sudo rm /usr/local/lib/liblzma.so.5 (这是个软链接，删掉也没事)
+```
 
 
-
-
-
-
-
-
-
+***
+# gedit
+```
 sudo apt install dconf-editor
 依次点开->org->gnome->gedit->preferences->encodings
 改成
 ['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
+```
 
 
-
-
-
-##ubuntu 18 / debian 10 (buster)
-uex 
+***
+# ubuntu 18 / debian 10 (buster) uex 
+```
 cd /opt/uex/bin
 cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libpng12.so.0 .
 cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu/libpng12.so.0.46.0 .
-
+```
+```
 cd /usr/local/bin
 sudo gedit uex
----------------------------------
+```
+```
 #!/bin/bash
 cd /opt/uex/bin
 ./uex
----------------------------------
+```
+```
 sudo chmod +x uex
+```
+alt+f3 启动不能, 终端启动可以
 
-alt+f3 启动不能
-终端启动可以
 修改
+```
 sudo gedit /usr/local/bin/uex
----------------------------------
+```
+```
 #!/bin/bash
 export LD_LIBRARY_PATH=/opt/uex/bin:$LD_LIBRARY_PATH
 cd /opt/uex/bin
 ./uex
----------------------------------
+```
 这样alt+f3 启动就可以了
 
 
+***
+# vsim
+```
 sudo gedit /usr/local/bin/vsim
----------------------------------
+```
+```
 #!/bin/bash
 export LD_LIBRARY_PATH=/opt/modelsim/modeltech/lib
 cd /opt/modelsim/modeltech/bin
 ./vsim
----------------------------------
+```
+```
 sudo chmod +x /usr/local/bin/vsim
+```
 alt+f3 启动不能
+```
 sudo rm /usr/local/bin/vsim
+```
 
 
-
-
+***
+# foxitreader多实例
 解决os升级后foxitreader多实例问题，我希望单实例打开多个文件
 参考arch的情况，解决办法如下
-/home/andy/.local/share/mime下搜索删除
+
+`/home/andy/.local/share/mime`下搜索删除
+```
 ppdf.xml
 pdf.xml
 FoxitReader.xml
+```
+```
 update-mime-database ~/.local/share/mime
-FoxitReader.desktop复制到/home/andy/.local/share/applications，保持一份就行
+```
+`FoxitReader.desktop`复制到`/home/andy/.local/share/applications`，保持一份就行
+
 这样就解决了
 
 
+***
+# vivado rlwrap
 
 关于vivado的xsct, xsdb, xmd, and tclsh/xtclsh运行报错
+```
 Segmentation fault (core dumped) "$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap -rc -f "$RDI_APPROOT"/scripts/xsdb/xsdb/cmdlist -H "$HOME"/.xsctcmdhistory "$RDI_BINROOT"/loader -exec rdi_xsct "${RDI_ARGS[@]}"
-
+```
 https://wiki.archlinux.org/index.php/Xilinx_Vivado#xsct,_xsdb,_xmd,_and_tclsh_segfault
 
 安装rlwrap后，类似于替换
+```
 #"$RDI_BINROOT"/unwrapped/"$RDI_PLATFORM$RDI_OPT_EXT"/rlwrap -rc -f "$RDI_APPROOT"/scripts/xsdb/xsdb/cmdlist -H "$HOME"/.xsctcmdhistory "$RDI_BINROOT"/loader -exec rdi_xsct "${RDI_ARGS[@]}"
+```
 为如下
+```
 /usr/bin/rlwrap -rc -f "$RDI_APPROOT"/scripts/xsdb/xsdb/cmdlist -H "$HOME"/.xsctcmdhistory "$RDI_BINROOT"/loader -exec rdi_xsct "${RDI_ARGS[@]}"
+```
 
 
-
-
-
-
-
-
+***
+# python
+```
 sudo pip3.6 install tifffile==2018.10.18 -i https://mirrors.163.com/pypi/simple
 sudo pip3.6 install scikit-image==0.16.2 -i https://mirrors.163.com/pypi/simple
-
 sudo pip3.6 install libscrc==0.1.5  -i https://mirrors.163.com/pypi/simple
+```
 
+***
+# 从pacman包制作成ariang-allinone的deb包
+```
 sudo apt install zstd
 tar -I zstd -xvf archive.tar.zst
-
+```
+```
 Decompress from .zst: unzstd filename.tar.zst or zstd -d filename.tar.zst. filename.tar will be created.
 List compressed archive: tar tf filename.tar.
 Extract the compressed archive: tar xf filename.tar.
-
-从pacman包制作成ariang-allinone的deb包
-
+```
 
 
-
-
-buster:
+***
+# buster electronics 等
+```
 sudo apt install electronics-all
 expeyes-web
 systemctl reload apache2
@@ -15019,17 +15080,18 @@ systemctl reload apache2
 sudo apt install pbuilder debootstrap devscripts
 sudo apt install dpkg-repack
 
-
 sudo apt install snap
+```
 不能用，也没有snapd
 
-
-
-
+```
 sudo apt install libpoppler-glib-dev libpoppler-qt5-dev libpopplerkit-dev libpoppler-cpp-dev libpoppler-cil-dev xpdf
+```
 
 
-
+***
+# java
+```
 sudo tar zxvf jdk-8u291-linux-x64.tar.gz -C /usr/lib/jvm
 sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_291/bin/java" 1
 sudo update-alternatives --config java
@@ -15037,17 +15099,18 @@ sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8
 sudo update-alternatives --config javac
 sudo update-alternatives --install "/usr/bin/javah" "javah" "/usr/lib/jvm/jdk1.8.0_291/bin/javah" 1
 sudo update-alternatives --config javah
-
-
-
+```
 for j8:
+```
 sudo apt-get install libarchive-dev libarchive13 bsdcpio bsdtar asciidoctor jq tkgate systemc verilator
+```
 
+
+***
+# gnat
+```
 $ sudo apt-get install gnat
-[sudo] password for andy: 
-Reading package lists... Done
-Building dependency tree       
-Reading state information... Done
+
 The following package was automatically installed and is no longer required:
   gdb-mingw-w64-target
 Use 'apt-get autoremove' to remove it.
@@ -15065,12 +15128,12 @@ The following NEW packages will be installed:
   libgnatcoll-doc libgnatcoll-gtk1.6 libgnatcoll-iconv1.6 libgnatcoll-python1.6 libgnatcoll-readline1.6 libgnatcoll-sqlite-bin
   libgnatcoll-sqlite1.6 libgnatcoll1.6 libgnatprj4.9 libgnatvsn4.9 libgtkada2.24.4 libjs-prototype libjs-scriptaculous
   libtemplates-parser11.8.2014 libxmlada4.4.0
-0 upgraded, 25 newly installed, 2 to remove and 1 not upgraded.
-Need to get 50.7 MB of archives.
-After this operation, 148 MB of additional disk space will be used.
-Do you want to continue? [Y/n]
+```
 
 
+***
+# ghdl
+```
 $ ./configure --prefix=/usr/local
 $ make
 $ sudo make install
@@ -15139,34 +15202,52 @@ install -m 644 -p ./ghw/libghw.h /usr/local/include/ghdl/
 /usr/local/bin/ghdl --disp-standard --std=87 > /usr/local/lib/ghdl/src/std/v87/standard.vhdl
 /usr/local/bin/ghdl --disp-standard --std=93 > /usr/local/lib/ghdl/src/std/v93/standard.vhdl
 /usr/local/bin/ghdl --disp-standard --std=08 > /usr/local/lib/ghdl/src/std/v08/standard.vhdl
+```
 
 
+***
+# gdb
+```
 sudo apt-get install gdb gdb-mingw-w64
+```
 
+
+***
+# compile bash
 
 https://mirrors.aliyun.com/gnu/bash/bash-5.1.8.tar.gz
+```
   ./configure \
     --prefix=/usr \
     --with-curses \
     --enable-readline \
     --without-bash-malloc \
     --with-installed-readline
-
+```
+```
 /usr/bin/bash
-安装makedeb
+```
+
+
+***
+# 安装makedeb
 git@github.com:makedeb/makedeb.git
+
 需要修改一下config文件的cflag配置
 
 补充安装
+```
 git clone git@github.com:facebook/zstd.git
   make
   make -C contrib/pzstd
 sudo make PREFIX=/usr install
 sudo ln -sf /usr/bin/zstd /usr/bin/zstdmt
 sudo cp contrib/pzstd/pzstd /usr/bin/
-
-
+```
+```
 bsdtar: Option --no-fflags is not supported
+```
+```
 sudo apt-get remove libarchive-dev bsdcpio bsdtar
 git clone git@github.com:libarchive/libarchive.git
   cd libarchive/build
@@ -15179,9 +15260,11 @@ git clone git@github.com:libarchive/libarchive.git
       --disable-static
 
   make
+```
 修改makedeb-makepkg，去掉--no-fflags就可以了，最多PKGBUILD里修改一下owner咯
-下面的各种错误，不要尝试了
 
+下面的各种错误，不要尝试了
+```
 git clone git@github.com:lz4/lz4.git
 make
 sudo make install
@@ -15189,15 +15272,18 @@ sudo mv /usr/lib/x86_64-linux-gnu/liblz4.so.1.3.0 /usr/lib/x86_64-linux-gnu/libl
 sudo mv /usr/lib/x86_64-linux-gnu/liblz4.a /usr/lib/x86_64-linux-gnu/liblz4.a.bk
 sudo cp /usr/local/lib/liblz4.a /usr/lib/x86_64-linux-gnu/
 sudo cp /usr/local/lib/liblz4.so.1.9.3 /usr/lib/x86_64-linux-gnu/
-
+```
+```
 cd libarchive
 make -j8
 sudo make install
-
-
+```
+```
 sudo apt-get install libjudy-dev
+```
+```
 PKGBUILD gtkwave
-
+```
 
 
 
