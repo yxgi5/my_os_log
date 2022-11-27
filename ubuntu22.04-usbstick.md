@@ -5048,14 +5048,162 @@ $ sudo snap remove firefox
 ```
 $ sudo apt purge snapd
 //$ sudo apt-get autoremove --purge snapd
+$ sudo rm /etc/systemd/system/default.target.wants/ -rf
+```
+
+```
+$ systemd-analyze blame
+7.261s NetworkManager-wait-online.service
+4.685s privoxy.service
+3.904s systemd-journal-flush.service
+3.741s logrotate.service
+3.628s ModemManager.service
+3.589s networkd-dispatcher.service
+3.570s systemd-udev-settle.service
+2.138s dev-sdc2.device
+2.055s accounts-daemon.service
+1.775s kerneloops.service
+1.442s polkit.service
+1.363s avahi-daemon.service
+1.352s NetworkManager.service
+1.310s thermald.service
+1.308s systemd-logind.service
+1.298s wpa_supplicant.service
+1.279s ubuntu-system-adjustments.service
+1.105s systemd-udevd.service
+ 924ms gpu-manager.service
+ 857ms cups.service
+ 781ms networking.service
+ 659ms rsyslog.service
+ 537ms udisks2.service
+ 533ms ssh.service
+ 524ms lightdm.service
+ 520ms plymouth-quit-wait.service
+ 412ms systemd-fsck@dev-disk-by\x2duuid-187B\x2dEBA3.service
+ 405ms e2scrub_reap.service
+ 372ms apparmor.service
+ 366ms grub-common.service
+ 337ms zfs-load-module.service
+ 309ms grub-initrd-fallback.service
+ 302ms systemd-modules-load.service
+ 295ms lvm2-monitor.service
+ 285ms systemd-udev-trigger.service
+ 253ms systemd-sysusers.service
+ 238ms systemd-random-seed.service
+ 224ms update-notifier-download.service
+ 222ms systemd-resolved.service
+ 206ms systemd-tmpfiles-setup.service
+ 181ms casper-md5check.service
+ 180ms lm-sensors.service
+ 172ms colord.service
+ 161ms ubiquity.service
+ 161ms systemd-backlight@backlight:intel_backlight.service
+ 150ms keyboard-setup.service
+ 128ms user@1000.service
+ 127ms systemd-tmpfiles-setup-dev.service
+ 126ms blueman-mechanism.service
+ 115ms systemd-sysctl.service
+ 109ms upower.service
+  99ms plymouth-start.service
+  92ms systemd-journald.service
+  91ms swapfile.swap
+  84ms alsa-restore.service
+  77ms modprobe@chromeos_pstore.service
+  61ms systemd-timesyncd.service
+  58ms boot-efi.mount
+  57ms systemd-rfkill.service
+  48ms zfs-volume-wait.service
+  45ms setvtrgb.service
+  40ms systemd-remount-fs.service
+  36ms dev-hugepages.mount
+  35ms dev-mqueue.mount
+  35ms sys-kernel-debug.mount
+  34ms sys-kernel-tracing.mount
+  29ms kmod-static-nodes.service
+  28ms zfs-mount.service
+  27ms dns-clean.service
+  27ms ifupdown-pre.service
+  27ms modprobe@configfs.service
+  26ms modprobe@drm.service
+  25ms openvpn.service
+  25ms modprobe@fuse.service
+  24ms systemd-user-sessions.service
+  19ms console-setup.service
+  16ms systemd-update-utmp.service
+  14ms finalrd.service
+  13ms rtkit-daemon.service
+  13ms plymouth-read-write.service
+  11ms ufw.service
+   8ms systemd-update-utmp-runlevel.service
+   8ms user-runtime-dir@1000.service
+   6ms zfs-share.service
+   5ms modprobe@efi_pstore.service
+   4ms modprobe@pstore_blk.service
+   4ms modprobe@pstore_zone.service
+   3ms modprobe@ramoops.service
+   3ms e2scrub_all.service
+   1ms sys-kernel-config.mount
+   1ms sys-fs-fuse-connections.mount
+  34us blk-availability.service
+```
+```
+cat /etc/fstab
+lsblk -f
+ll /dev/disk/by-uuid/
+systemd-analyze blame
+systemd-analyze critical-chain
+sudo systemctl disable NetworkManager-wait-online.service
+sudo systemctl disable NetworkManager-dispatcher.service 
+sudo systemctl mask plymouth-quit-wait.service
+sudo aa-status
+sudo apparmor_status
+ls /etc/apparmor.d/
+sudo systemctl disable apparmor.service 
+sudo systemctl mask lvm2-monitor.service
+sudo systemctl mask systemd-udev-settle.service
+```
+```
+ll /lib/systemd/system
+ll /etc/systemd/system/multi-user.target.wants
+```
+```
+sudo systemctl enable apparmor.service 
+sudo systemctl unmask lvm2-monitor.service
+sudo systemctl unmask systemd-udev-settle.service
+```
+```
+sudo systemctl unmask apport-forward.socket
+sudo systemctl disable apport-forward.socket
+sudo systemctl disable tor.service
+sudo systemctl disable power-profiles-daemon.service  ## 多节电模式
+sudo systemctl disable switcheroo-control.service     ## 多gpu
+sudo systemctl disable binfmt-support.service         ## 多bin格式
+sudo systemctl disable systemd-oomd.service           ## 高内存占用清理
+sudo systemctl disable whoopsie.path                  ## 报告错误
+```
+```
+systemctl --failed
+```
+```
+journalctl -xeu networking.service
+journalctl -xf
+sudo systemctl enable NetworkManager-wait-online.service
+sudo systemctl enable NetworkManager-dispatcher.service 
+sudo systemctl unmask plymouth-quit-wait.service
 ```
 
 
 ***
-#
+# systemctl status networking.service 报错
+```
+/etc/network/if-up.d/resolved: line 12: mystatedir: command not found
 ```
 ```
+sudo apt remove ifupdown ## 顺带删了 pppoeconf
+```
+就可以networking.service不报错
 
+那么 ifupdown 有bug
 
 ***
 #
