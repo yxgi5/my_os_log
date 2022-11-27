@@ -5204,6 +5204,54 @@ sudo apt remove ifupdown ## 顺带删了 pppoeconf
 就可以networking.service不报错
 
 那么 ifupdown 有bug
+```
+sudo rm /etc/systemd/system/basic.target.wants/ -rf
+sudo rm /etc/systemd/system/network.target.wants/ -rf
+```
+```
+$ sudo ifup -av
+run-parts --exit-on-error --verbose /etc/network/if-pre-up.d
+run-parts: executing /etc/network/if-pre-up.d/ethtool
+run-parts: executing /etc/network/if-pre-up.d/wireless-tools
+run-parts: executing /etc/network/if-pre-up.d/wpasupplicant
+ip link set up dev lo 2>/dev/null
+
+ifup: configuring interface lo=lo (inet)
+run-parts --exit-on-error --verbose /etc/network/if-pre-up.d
+run-parts: executing /etc/network/if-pre-up.d/ethtool
+run-parts: executing /etc/network/if-pre-up.d/wireless-tools
+run-parts: executing /etc/network/if-pre-up.d/wpasupplicant
+run-parts --exit-on-error --verbose /etc/network/if-up.d
+run-parts: executing /etc/network/if-up.d/avahi-autoipd
+run-parts: executing /etc/network/if-up.d/ethtool
+run-parts: executing /etc/network/if-up.d/openvpn
+run-parts: executing /etc/network/if-up.d/resolved
+/etc/network/if-up.d/resolved: line 12: mystatedir: command not found
+/etc/network/if-up.d/resolved: line 20: return: can only `return' from a function or sourced script
+run-parts: /etc/network/if-up.d/resolved exited with return code 2
+ifup: failed to bring up lo
+run-parts --exit-on-error --verbose /etc/network/if-up.d
+run-parts: executing /etc/network/if-up.d/avahi-autoipd
+run-parts: executing /etc/network/if-up.d/ethtool
+run-parts: executing /etc/network/if-up.d/openvpn
+run-parts: executing /etc/network/if-up.d/resolved
+run-parts: executing /etc/network/if-up.d/wpasupplicant
+
+```
+```
+$ sudo /sbin/ifup -av --read-environment
+run-parts --exit-on-error --verbose /etc/network/if-pre-up.d
+run-parts: executing /etc/network/if-pre-up.d/ethtool
+run-parts: executing /etc/network/if-pre-up.d/wireless-tools
+run-parts: executing /etc/network/if-pre-up.d/wpasupplicant
+run-parts --exit-on-error --verbose /etc/network/if-up.d
+run-parts: executing /etc/network/if-up.d/avahi-autoipd
+run-parts: executing /etc/network/if-up.d/ethtool
+run-parts: executing /etc/network/if-up.d/openvpn
+run-parts: executing /etc/network/if-up.d/resolved
+run-parts: executing /etc/network/if-up.d/wpasupplicant
+
+```
 
 ***
 #
