@@ -264,7 +264,7 @@ $ apt-mark showhold
 ```
 Remove Old PPA
 ```
-$ sudo apt-get autoremove -purge PACKAGENAME
+$ sudo apt-get autoremove --purge PACKAGENAME
 $ sudo apt-get install ppa-purge
 $ sudo add-apt-repository -remove ppa:someppa/ppa
 $ sudo apt-get autoclean
@@ -5018,14 +5018,36 @@ xdot可以直接查看dot文件
 
 
 ***
-#
+# 开机服务时间占用分析
 ```
+systemd-analyze blame            #开机启动项耗时
+systemd-analyze critical-chain   #启动时间树状图
+systemd-analyze time             #总的开机时间
+systemd-analyze plot > ~/SystemdAnalyzePlot.svg    #生产开机时间分析图
 ```
 
 
 ***
-#
+# 删除 snap
 ```
+$ snap list
+Name                       Version           Rev    Tracking         Publisher   Notes
+bare                       1.0               5      latest/stable    canonical✓  base
+core20                     20221027          1695   latest/stable    canonical✓  base
+firefox                    107.0-2           2088   latest/stable/…  mozilla✓    -
+gnome-3-38-2004            0+git.6f39565     119    latest/stable/…  canonical✓  -
+gtk-common-themes          0.1-81-g442e511   1535   latest/stable/…  canonical✓  -
+snap-store                 41.3-64-g512c0ff  599    latest/stable/…  canonical✓  -
+snapd                      2.57.5            17576  latest/stable    canonical✓  snapd
+snapd-desktop-integration  0.1               14     latest/stable/…  canonical✓  -
+```
+```
+$ sudo snap remove firefox
+```
+直接把snapd删了吧
+```
+$ sudo apt purge snapd
+//$ sudo apt-get autoremove --purge snapd
 ```
 
 
