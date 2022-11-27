@@ -7996,7 +7996,7 @@ vm.mmap_min_addr = 0
 xxd: 按字节解释。因为它来自于文本编辑器 Vim 嘛。
 hexdump: 默认类似于 -x 格式，两字节数值解释。你的机器是小端序的。
 od: -t x 指定格式为十六进制整数，省略了大小所以是 sizeof(int)。你指定 -t c 就是字符了。指定 -t x1 就是单字节十六进制整数。
-```
+ ```
 
 
 ***
@@ -10122,10 +10122,10 @@ $ sudo apt-get install iperf
 ```
 
 
+***
+# svn 认证
 
-
-
-
+```
 Run
 sudo dpkg-reconfigure ca-certificates
 That should give you a list where you can deselect CAs.
@@ -10133,9 +10133,9 @@ The list of CAs is stored in the file /etc/ca-certificates.conf. If you edit thi
 sudo update-ca-certificates
 to update the actual certificates in /etc/ssl/certs/ (if you use dpkg-reconfigure that is done automatically).
 See /usr/share/doc/ca-certificates/README.Debian for more information.
+```
 
-
-
+```
 git svn clone https://47.254.25.14/svn/repo_us repo_us -T trunk -b branches -t tags
 Error validating server certificate for 'https://47.254.25.14:443':
  - The certificate is not issued by a trusted authority. Use the
@@ -10167,7 +10167,7 @@ $ cat ~/.subversion/auth/svn.simple/832bbdd4a613f14f73dd66e46af83d6c
 
 密钥号
 CD804564527D8490
-
+```
 
 
 
@@ -10175,9 +10175,9 @@ CD804564527D8490
 
 
 How to remove all .svn directories from my application directories？
+```
 find . -name .svn | rm -fr
 It didn't work...
-
 
 Before running a command like that, I often like to run this first:
 find . -type d -name .svn -exec ls '{}' \;
@@ -10203,20 +10203,15 @@ echo "t" | svn checkout --username name --password password --no-auth-cache -r r
 yes 't' | svn checkout --username name --password password --no-auth-cache -r revision https://server.address/trunk/
 svn checkout --username name --password password --no-auth-cache -r revision https://server.address/trunk/
 {sleep 3; echo "t"; } | svn checkout ...
-
-
-
-
-
-
-
-
+```
 Revoke a Certificate
+```
 openssl ca -config openssl.cnf（/etc/ssl里有一个） -revoke certs/$domain.crt
 Enter pass phrase for ./private/ca.key: $password
+```
 
-
-
+***
+# git config
 //git config --global merge.tool vimdiff  
 Git可以接受kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge, 和 opendiff作为有效的合并工具
 git help config
