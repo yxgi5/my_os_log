@@ -357,23 +357,25 @@ $ sudo aptitude install lxrandr
 $ sudo apt-get install volumeicon-alsa
 ```
 
-在 ~/.config/openbox/autostart 下加入
-
-(The autostart script is located at ~/.config/openbox/autostart.sh. If that file does not exist, then the system-wide default script, located at /etc/xdg/openbox/autostart.sh, is run instead)
-
-背景图片
+在 `~/.config/openbox/autostart` 下加入背景图片
 ```
 feh --bg-scale /path/to/your/background/image.jpg
 ```
+```
+(The autostart script is located at ~/.config/openbox/autostart.sh. If that file does not exist, then the system-wide default script, located at /etc/xdg/openbox/autostart.sh, is run instead)
+```
 桌面图标使用的是 idesk，感觉比较复杂，没办法，除了 rox，没什么比较好的选择。
-idesk 的相关配置文件可以参考 /usr/share/idesk/
-引用：
 
+idesk 的相关配置文件可以参考 `/usr/share/idesk/`
+
+引用：
+```
 The main configuration file is called .ideskrc and must reside in the users home-directory (~/.ideskrc). The icons are loaded from lnk-files, which must placed in ~/.idesktop/*.lnk.
 
 Sample configuration files can be found in /usr/share/idesk/. These files contains all available options. Please you must read them. 
-
+```
 自启动还可以在
+
 随桌面启动的autostart
 ```
 /etc/xdg/autostart
@@ -9249,7 +9251,7 @@ sudo chmod +x draftsight
 
 ***
 # markdown-preview.vim
-配置文件添加
+配置文件`.vimrc`添加
 ```
 Bundle 'iamcco/mathjax-support-for-mkdp'
 Bundle 'iamcco/markdown-preview.vim'
@@ -9258,10 +9260,58 @@ Bundle 'iamcco/markdown-preview.vim'
 ```
 :BundleInstall
 ```
+---
+新版本
+
+`.vimrc`添加
+```
+Plugin 'iamcco/markdown-preview.nvim'
+```
+```
+Plugin 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown','vim-plug']}
+```
+vim里面执行
+```
+:PluginInstall
+```
+```
+:PluginInstall
+:call mkdp#util#install()
+```
+---
 打开md文件后启用
 ```
 :MarkdownPreview
 ```
+关闭
+```
+:MarkdownPreviewStop
+```
+
+---
+配置浏览器
+```
+let g:mkdp_path_to_chrome = "google-chrome"
+    " 设置 chrome 浏览器的路径（或是启动 chrome（或其他现代浏览器）的命令）
+
+let g:mkdp_auto_start = 0
+" 设置为 1 可以在打开 markdown 文件的时候自动打开浏览器预览，只在打开
+" markdown 文件的时候打开一次
+
+let g:mkdp_auto_open = 0
+" 设置为 1 在编辑 markdown 的时候检查预览窗口是否已经打开，否则自动打开预
+" 览窗口
+
+let g:mkdp_auto_close = 1
+" 在切换 buffer 的时候自动关闭预览窗口，设置为 0 则在切换 buffer 的时候不
+" 自动关闭预览窗口
+
+let g:mkdp_refresh_slow = 0
+" 设置为 1 则只有在保存文件，或退出插入模式的时候更新预览，默认为 0，实时
+" 更新预览</pre> <p><br />
+```
+
+
 
 to check if vim supports python:
 ```
