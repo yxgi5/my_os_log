@@ -340,6 +340,8 @@ to
 PermitRootLogin yes
 ```
 
+
+
 # openssh
 ```
 $ sudo apt install openssh-server
@@ -2556,10 +2558,11 @@ change
 ```
 [SeatDefaults]
 user-session=cinnamon
-greeter-setup-script=xhost +
 ```
 to
 ```
+[Seat:*]
+greeter-show-manual-login=true
 [SeatDefaults]
 user-session=cinnamon
 greeter-setup-script=xhost +
@@ -5049,6 +5052,7 @@ $ sudo snap remove firefox
 $ sudo apt purge snapd
 //$ sudo apt-get autoremove --purge snapd
 $ sudo rm /etc/systemd/system/default.target.wants/ -rf
+$ rm -rf /home/andy/snap
 ```
 
 ```
