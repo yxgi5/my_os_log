@@ -142,15 +142,15 @@ $ sudo apt install vim vim-runtime universal-ctags vim-doc vim-scripts
 ```
 ```
 Suggested packages:
-  perlsgml libtemplate-perl
+  perlsgml libtemplate-perl indent
 ```
 ```
-$ sudo  apt install vim-addon-manager
+$ sudo apt install vim-addon-manager
 
 The following additional packages will be installed:
   fonts-lato libruby3.0 rake ruby ruby-net-telnet ruby-rubygems ruby-webrick ruby-xmlrpc ruby3.0 rubygems-integration
 Suggested packages:
-  ri ruby-dev bundler
+  apache2 | lighttpd | httpd ri ruby-dev bundler
 ```
 ```
 $ sudo apt install vim-gtk3 ubuntu-minimal vim vim-addon-manager vim-common vim-scripts vim-gtk cscope
@@ -160,6 +160,10 @@ The following additional packages will be installed:
 ```
 ```
 $ sudo apt-get install vim universal-ctags vim-doc vim-scripts cscope
+The following additional packages will be installed:
+  liblua5.2-0 vim-gui-common
+Suggested packages:
+  cscope-el fonts-dejavu gnome-icon-theme
 ```
 ```
 $ sudo apt install vim vim-doc vim-scripts exuberant-ctags libtemplate-perl ispell vim-addon-manager cscope
@@ -276,6 +280,39 @@ $ apt list --upgradable
 ```
 
 
+
+# openssh
+```
+$ sudo apt install openssh-server
+```
+```
+The following additional packages will be installed:
+  ncurses-term openssh-sftp-server ssh-import-id
+Suggested packages:
+  molly-guard monkeysphere ssh-askpass
+
+Created symlink /etc/systemd/system/sshd.service → /lib/systemd/system/ssh.servi
+ce.
+Created symlink /etc/systemd/system/multi-user.target.wants/ssh.service → /lib/s
+ystemd/system/ssh.service.
+```
+```
+Creating config file /etc/ssh/sshd_config with new version
+Creating SSH2 RSA key; this may take some time ...
+3072 SHA256:gg2OY9UlLpXuWo6S7goGPyaWBfwWD8c3aeSxXGE9PV0 root@andy-usbstick (RSA)
+Creating SSH2 ECDSA key; this may take some time ...
+256 SHA256:b5o62/Kotzq7gdUrdZyHn0WBAYOAKouDTjHbn34lJPI root@andy-usbstick (ECDSA)
+Creating SSH2 ED25519 key; this may take some time ...
+256 SHA256:s02D3Tyljg7qLYal4b/lOVuo5rAKg1hixbm3imI4HWE root@andy-usbstick (ED25519)
+Created symlink /etc/systemd/system/sshd.service → /lib/systemd/system/ssh.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/ssh.service → /lib/systemd/system/ssh.service.
+rescue-ssh.target is a disabled or a static unit, not starting it.
+ssh.socket is a disabled or a static unit, not starting it.
+Setting up ssh-import-id (5.11-0ubuntu1) ...
+Setting up ncurses-term (6.3-2) ...
+```
+
+
 # rootlogin.sh
 ubuntu22.04桌面版开启root用户登陆并开启root用户远程ssh连接
 <https://blog.csdn.net/w553692064/article/details/127145272>
@@ -294,6 +331,7 @@ sudo sed -i 's/^mesg.*/tty -s \&\& mesg n \|\| true/' /root/.profile
 
 # install openssh
 sudo apt install openssh-server
+sudo apt autoremove
 
 # delay
 sleep 1
@@ -302,6 +340,7 @@ sleep 1
 sudo sed -i 's/^#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # restart server
+sudo systemctl restart ssh
 sudo systemctl status ssh
 ```
 
@@ -341,39 +380,6 @@ PermitRootLogin yes
 ```
 
 
-
-# openssh
-```
-$ sudo apt install openssh-server
-```
-```
-The following additional packages will be installed:
-  ncurses-term openssh-sftp-server ssh-import-id
-Suggested packages:
-  molly-guard monkeysphere ssh-askpass
-
-Created symlink /etc/systemd/system/sshd.service → /lib/systemd/system/ssh.servi
-ce.
-Created symlink /etc/systemd/system/multi-user.target.wants/ssh.service → /lib/s
-ystemd/system/ssh.service.
-```
-```
-Creating config file /etc/ssh/sshd_config with new version
-Creating SSH2 RSA key; this may take some time ...
-3072 SHA256:gg2OY9UlLpXuWo6S7goGPyaWBfwWD8c3aeSxXGE9PV0 root@andy-usbstick (RSA)
-Creating SSH2 ECDSA key; this may take some time ...
-256 SHA256:b5o62/Kotzq7gdUrdZyHn0WBAYOAKouDTjHbn34lJPI root@andy-usbstick (ECDSA)
-Creating SSH2 ED25519 key; this may take some time ...
-256 SHA256:s02D3Tyljg7qLYal4b/lOVuo5rAKg1hixbm3imI4HWE root@andy-usbstick (ED25519)
-Created symlink /etc/systemd/system/sshd.service → /lib/systemd/system/ssh.service.
-Created symlink /etc/systemd/system/multi-user.target.wants/ssh.service → /lib/systemd/system/ssh.service.
-rescue-ssh.target is a disabled or a static unit, not starting it.
-ssh.socket is a disabled or a static unit, not starting it.
-Setting up ssh-import-id (5.11-0ubuntu1) ...
-Setting up ncurses-term (6.3-2) ...
-```
-
-
 ***
 # apt / aptitude
 
@@ -383,8 +389,9 @@ Setting up ncurses-term (6.3-2) ...
 
 ```
 The following additional packages will be installed:
-  libapt-pkg-perl libexporter-tiny-perl liblist-moreutils-perl
-  liblist-moreutils-xs-perl libregexp-assemble-perl
+  aptitude-common libapt-pkg-perl libcwidget4 libdpkg-perl
+  libexporter-tiny-perl libfile-fcntllock-perl liblist-moreutils-perl
+  liblist-moreutils-xs-perl libregexp-assemble-perl libxapian30
 ```
 ```
 $ apt-file search /etc/proxychains.conf
@@ -410,6 +417,112 @@ process output
 
 
 ***
+# save etc-cut1.tar.xz
+```
+$ systemd-analyze blame
+6.421s NetworkManager-wait-online.service
+2.651s plymouth-quit-wait.service
+1.341s snapd.apparmor.service
+1.324s systemd-resolved.service
+1.322s systemd-timesyncd.service
+ 462ms udisks2.service
+ 420ms dev-sdd2.device
+ 374ms snapd.service
+ 300ms networkd-dispatcher.service
+ 198ms accounts-daemon.service
+ 185ms dev-loop3.device
+ 182ms dev-loop2.device
+ 180ms dev-loop6.device
+ 178ms apparmor.service
+ 176ms dev-loop4.device
+ 170ms dev-loop5.device
+ 170ms dev-loop1.device
+ 162ms dev-loop0.device
+ 161ms apport.service
+ 161ms dev-loop7.device
+ 146ms polkit.service
+ 145ms avahi-daemon.service
+ 144ms power-profiles-daemon.service
+ 142ms NetworkManager.service
+ 138ms switcheroo-control.service
+ 135ms user@1000.service
+ 124ms systemd-udev-trigger.service
+ 121ms systemd-tmpfiles-setup.service
+ 118ms systemd-udevd.service
+ 111ms wpa_supplicant.service
+ 111ms thermald.service
+ 109ms systemd-logind.service
+  99ms systemd-fsck@dev-disk-by\x2duuid-BF74\x2d2B72.service
+  97ms systemd-oomd.service
+  97ms e2scrub_reap.service
+  93ms gpu-manager.service
+  90ms ModemManager.service
+  88ms systemd-journald.service
+  87ms modprobe@chromeos_pstore.service
+  86ms systemd-rfkill.service
+  81ms console-setup.service
+  79ms snapd.seeded.service
+  76ms systemd-journal-flush.service
+  76ms systemd-modules-load.service
+  74ms geoclue.service
+  74ms plymouth-read-write.service
+  72ms keyboard-setup.service
+  71ms cups.service
+  66ms grub-common.service
+  61ms rtkit-daemon.service
+  60ms ssh.service
+  59ms gdm.service
+  55ms upower.service
+  41ms ufw.service
+  38ms packagekit.service
+  36ms dev-hugepages.mount
+  35ms rsyslog.service
+  35ms dev-mqueue.mount
+  34ms sys-kernel-debug.mount
+  34ms sys-kernel-tracing.mount
+  31ms kmod-static-nodes.service
+  31ms modprobe@drm.service
+  30ms modprobe@configfs.service
+  29ms modprobe@pstore_blk.service
+  28ms modprobe@efi_pstore.service
+  28ms modprobe@fuse.service
+  28ms modprobe@pstore_zone.service
+  28ms modprobe@ramoops.service
+  25ms boot-efi.mount
+  23ms grub-initrd-fallback.service
+  21ms systemd-sysctl.service
+  19ms plymouth-start.service
+  19ms colord.service
+  18ms alsa-restore.service
+  18ms systemd-remount-fs.service
+  18ms systemd-pstore.service
+  16ms snap-bare-5.mount
+  15ms snap-core20-1587.mount
+  14ms kerneloops.service
+  14ms snap-firefox-1635.mount
+  13ms systemd-backlight@backlight:intel_backlight.service
+  13ms snap-gnome\x2d3\x2d38\x2d2004-112.mount
+  11ms systemd-update-utmp.service
+  11ms snap-gtk\x2dcommon\x2dthemes-1535.mount
+  10ms snap-snap\x2dstore-582.mount
+  10ms systemd-sysusers.service
+   9ms snap-snapd-16292.mount
+   9ms user-runtime-dir@1000.service
+   9ms systemd-tmpfiles-setup-dev.service
+   8ms snap-snapd\x2ddesktop\x2dintegration-14.mount
+   8ms openvpn.service
+   8ms proc-sys-fs-binfmt_misc.mount
+   7ms systemd-random-seed.service
+   6ms systemd-update-utmp-runlevel.service
+   4ms sys-fs-fuse-connections.mount
+   4ms systemd-user-sessions.service
+   4ms sys-kernel-config.mount
+   1ms setvtrgb.service
+ 626us snapd.socket
+```
+
+
+***
 # vscode
 don't install by snap, using deb package or apt-repo
 ```
@@ -428,19 +541,6 @@ $ cat /etc/apt/sources.list.d/scootersoftware.list
 deb https://www.scootersoftware.com/ bcompare4 non-free
 ```
 
-***
-# v2ray
-科^学%上$网, FUCK CCP!!
-
-原始的go.sh脚本需要修改, 已经修改好的go_mod.sh
-`sudo ./go_mod.sh`
-v2ray-linux-64.zip下载到相同目录就可以安装到本机, 然后
-```
-sudo gedit /etc/v2ray/config.json
-sudo systemctl enable v2ray.service
-sudo systemctl start v2ray.service
-sudo systemctl restart v2ray.service
-```
 
 ***
 # opera
@@ -574,6 +674,21 @@ SDL_IM_MODULE DEFAULT=fcitx
 
 
 ***
+# v2ray
+科^学%上$网, FUCK CCP!!
+
+原始的go.sh脚本需要修改, 已经修改好的go_mod.sh
+`sudo ./go_mod.sh`
+v2ray-linux-64.zip下载到相同目录就可以安装到本机, 然后
+```
+sudo gedit /etc/v2ray/config.json
+sudo systemctl enable v2ray.service
+sudo systemctl start v2ray.service
+sudo systemctl restart v2ray.service
+```
+
+
+***
 # wqy fonts
 ```
 sudo apt install fonts-wqy-microhei fonts-wqy-zenhei fonts-ipafont-gothic fonts-ipafont-mincho fonts-indic fonts-freefont-ttf fonts-dejavu fonts-mathjax-extras fonts-stix fonts-freefont-otf fonts-freefont-ttf 
@@ -652,8 +767,11 @@ run 'dpkg-reconfigure ttf-mscorefonts-installer' to perform the installation aga
 ***
 # anydesk
 安装deb文件
+附加安装 libgtkglext1
+添加服务
+/etc/systemd/system/multi-user.target.wants/anydesk.service → /etc/systemd/system/anydesk.service.
 usbstick地址码:
-`782657791`
+`949370177`
 
 
 ***
@@ -1638,6 +1756,8 @@ Suggested packages:
 ```
 $ sudo apt-get install git-gui
 ```
+vscode安装插件`Git Graph`
+
 
 ***
 # 7z
@@ -1655,7 +1775,7 @@ cabextract is already the newest version (1.9-3).
 The following additional packages will be installed:
   libjlha-java libuu0
 Suggested packages:
-  libjlha-java-doc-ja default-mta | mail-transport-agent inews sharutils-doc
+  default-jre libjlha-java-doc-ja default-mta | mail-transport-agent inews sharutils-doc
   bsd-mailx | mailx xdeview
 ```
 $ cat /etc/rarreg.key
@@ -1699,12 +1819,14 @@ build deb by makedeb, then install deb
 
 # locate
 ```
-$ sudo apt install plocate
+$ sudo apt install mlocate plocate
 $ sudo updatedb
 ```
 ```
 The following NEW packages will be installed:
-  liburing2 plocate
+  liburing2 mlocate plocate
+  
+/etc/systemd/system/timers.target.wants/plocate-updatedb.timer → /lib/systemd/system/plocate-updatedb.timer
 ```
 
 
@@ -1910,17 +2032,19 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2i/Lu18LrmuAFTsiATM6DPbmqfhhZ2hreUSw0t9I6
 ***
 # git config 初步配置
 ```
-$ git config --global user.name "Andreas Zhang"
-$ git config --global user.email denglitsch@gmail.com
-$ git config --global core.editor "vim"
+git config --global user.name "Andreas Zhang"
+git config --global user.email denglitsch@gmail.com
+git config --global core.editor "vim"
+git config --list
 ```
-`$ git config --list`
 ```
 user.name=Andreas Zhang
 user.email=denglitsch@gmail.com
 core.editor=vim
 ```
-`$ git config --list --show-origin`
+```
+git config --list --show-origin
+```
 ```
 file:/home/andy/.gitconfig      user.name=Andreas Zhang
 file:/home/andy/.gitconfig      user.email=denglitsch@gmail.com
@@ -2103,7 +2227,10 @@ Suggested packages:
 # sunloginclient
 `$ sudo dpkg -i sunloginclient-11.0.0.36662-amd64.deb`
 garbage! not as good as anydesk.
-
+```
+sudo dpkg -i SunloginClient_11.0.1.44968_amd64.deb
+/etc/systemd/system/multi-user.target.wants/runsunloginclient.service → /etc/systemd/system/runsunloginclient.service
+```
 
 
 ***
@@ -2271,6 +2398,8 @@ deb http://archive.canonical.com/ubuntu jammy partner
 deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport
 
 $ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A6616109451BBBF2
+$ sudo apt update
+$ sudo apt upgrade
 $ sudo apt install mint-meta-cinnamon
 The following additional packages will be installed:
   app-install-data bulky catdoc cinnamon cinnamon-common cinnamon-control-center cinnamon-control-center-data cinnamon-desktop-data cinnamon-l10n
@@ -2412,6 +2541,7 @@ deb http://mirrors.cqu.edu.cn/ubuntu jammy-updates main restricted universe mult
 deb http://mirrors.cqu.edu.cn/ubuntu jammy-backports main restricted universe multiverse
 
 deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://archive.canonical.com/ubuntu jammy partner
 ```
 ```
 $ cat /usr/lib/os-release
@@ -2433,6 +2563,11 @@ DISTRIB_ID=LinuxMint
 DISTRIB_RELEASE=21
 DISTRIB_CODENAME=vanessa
 DISTRIB_DESCRIPTION="Linux Mint 21 Vanessa"
+```
+
+## mintwelcome
+```
+/usr/bin/python3 /usr/bin/mintwelcome
 ```
 
 ## 解决`yout apt configuration is corrupt`
@@ -2520,6 +2655,7 @@ sudo dpkg-query -f '${binary:Package}\n' -W > packages_list.txt
 ```
 导入列表
 ```
+sudo apt install grub-efi-amd64 grub-efi grub-common grub2-common grub-efi-amd64-bin grub-efi-amd64-signed
 xargs sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install < pkg_list.txt
 ```
 或者
@@ -2568,7 +2704,7 @@ user-session=cinnamon
 greeter-setup-script=xhost +
 ```
 ```
-$ sudo gedit /etc/gdm3/custom.con
+$ sudo gedit /etc/gdm3/custom.conf
 ```
 change
 ```
@@ -2674,7 +2810,7 @@ Suggested packages:
 
 
 ***
-# xed
+# xed for mint21
 ```
 $ sudo apt install xed xed-common
 ```
@@ -2814,7 +2950,7 @@ Suggested packages:
 
 ## Note, selecting 'suckless-tools' instead of 'dmenu'
 ```
-$ sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm feh suckless-tools fonts-dejavu
+$ sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm feh suckless-tools fonts-dejavu gnome-screenshot
 ```
 ```
 pkg-config is already the newest version (0.29.2-1ubuntu3).
@@ -3085,6 +3221,9 @@ The following additional packages will be installed:
 Suggested packages:
   libposix-strptime-perl imagemagick-doc libencode-hanextra-perl
   libpod2-base-perl
+```
+```
+cp shutter.desktop ~/.config/autostart
 ```
 
 ## 基本编译工具
@@ -4017,6 +4156,8 @@ $ winetricks dlls list | grep -e "\[可下载\]" | tee list.txt
 ```
 $ sudo dpkg -i crossover-22.deb
 ```
+可以先不安装这玩意
+
 
 ***
 # cvs
@@ -5191,6 +5332,7 @@ systemctl --failed
 ```
 journalctl -xeu networking.service
 journalctl -xf
+journalctl --unit systemd-rfkill.service -f
 sudo systemctl enable NetworkManager-wait-online.service
 sudo systemctl enable NetworkManager-dispatcher.service 
 sudo systemctl unmask plymouth-quit-wait.service
@@ -5256,6 +5398,36 @@ run-parts: executing /etc/network/if-up.d/resolved
 run-parts: executing /etc/network/if-up.d/wpasupplicant
 
 ```
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
 
 ***
 #
