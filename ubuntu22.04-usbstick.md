@@ -771,7 +771,7 @@ run 'dpkg-reconfigure ttf-mscorefonts-installer' to perform the installation aga
 添加服务
 /etc/systemd/system/multi-user.target.wants/anydesk.service → /etc/systemd/system/anydesk.service.
 usbstick地址码:
-`949370177`
+`286168448`
 
 
 ***
@@ -2007,7 +2007,7 @@ Suggested packages:
   xfsprogs exfatprogs
 ```
 ```
-$ sudo apt install gparted dmraid gpart jfsutils kpartx reiser4progs reiserfsprogs udftools xfsprogs dvd+rw-tools udfclient xfsdump attr quota  dosfstools mtools
+$ sudo apt install gparted dmraid gpart jfsutils kpartx reiser4progs reiserfsprogs udftools xfsprogs dvd+rw-tools udfclient xfsdump attr quota dosfstools mtools
 ```
 ```
 The following additional packages will be installed:
@@ -2397,7 +2397,8 @@ $ sudo gedit /etc/apt/sources.list
 deb http://archive.canonical.com/ubuntu jammy partner
 deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport
 
-$ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 A6616109451BBBF2
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys A6616109451BBBF2
+
 $ sudo apt update
 $ sudo apt upgrade
 $ sudo apt install mint-meta-cinnamon
@@ -2662,6 +2663,9 @@ xargs sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install < pkg_list
 ```
 sudo apt-get -y  -o Dpkg::Options::="--force-overwrite" install $(cat pkg_list.txt)
 ```
+```
+sudo apt-get -o DPkg::options::=--force-confnew --reinstall install mint-info-cinnamon
+```
 ## Failed to start casper-md5check Verify Live ISO checksums
 ```
 $ sudo cat /var/log/boot.log
@@ -2777,7 +2781,7 @@ $ sudo gedit /etc/ssh/ssh_config
 ```
 change
 ```
-#   ForwardX11 yes
+#   ForwardX11 no
 #   ForwardX11Trusted yes
 ```
 to
@@ -2997,7 +3001,6 @@ Suggested packages:
 ```
 ```
 //sudo cpan install YAML Gtk2 Pango Linux::DesktopFiles Data::Dump
-sudo cpan install YAML Gtk3 Pango Linux::DesktopFiles Data::Dump File::DesktopEntry
 sudo cpan install YAML Gtk3 Pango Linux::DesktopFiles Data::Dump File::DesktopEntry Log::Log4perl
 sudo cpanm Linux::DesktopFiles
 sudo cpanm Data::Dump
@@ -3016,7 +3019,7 @@ sudo chmod 755 /usr/bin/obmenu-generator
 obmenu-generator -i
 ```
 
-## 安装浏览器，比如opera
+## 安装浏览器 for mint21，比如opera
 ```
 $ sudo apt install opera-stable chromium-browser 
 ```
@@ -3223,7 +3226,7 @@ Suggested packages:
   libpod2-base-perl
 ```
 ```
-cp shutter.desktop ~/.config/autostart
+cp /usr/share/applications/shutter.desktop ~/.config/autostart
 ```
 
 ## 基本编译工具
@@ -3369,7 +3372,7 @@ The following NEW packages will be installed:
 
 
 ```
-sudo apt install libreoffice-l10n-en-za libreoffice-l10n-en-gb libreoffice-help-en-gb hyphen-en-gb hunspell-en-ca mythes-en-au hunspell-en-za hunspell-en-au hunspell-en-gb gimp-help-common gimp-help-en thunderbird-locale-en-gb
+sudo apt install libreoffice-l10n-en-za libreoffice-l10n-en-gb libreoffice-help-en-gb hyphen-en-gb hunspell-en-ca mythes-en-au hunspell-en-za hunspell-en-au hunspell-en-gb gimp-help-common gimp-help-en thunderbird-locale-en-gb gimp gimp-data-extras
 ```
 
 ## home_andy_openbox_base.tar.bz2
@@ -3545,6 +3548,7 @@ NAME      TYPE SIZE USED PRIO
 
 ## wine quick config
 比如已经安装了winehq-7.21-staging，winetricks-20220411-next
+`sudo apt-get install --install-recommends --fix-missing --reinstall winehq-staging=7.21~jammy-1 wine-staging=7.21~jammy-1 wine-staging-amd64=7.21~jammy-1 wine-staging-i386=7.21~jammy-1`
 ```
 //rm -rf ~/.wine
 rm -f ~/.local/share/applications/wine-extension*.desktop
@@ -3641,7 +3645,7 @@ $ gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 76F1A20FF987672F
 <https://wiki.winehq.org/Wine_User%27s_Guide#Wine_from_WineHQ>
 ```
 $ sudo apt update
-$ sudo apt install --install-recommends winehq-staging
+$ sudo apt install --install-recommends winehq-staging --fix-missing
 ```
 ```
 The following additional packages will be installed:
@@ -4865,7 +4869,7 @@ The following packages will be REMOVED:
 ```
 确认openjdk-11这俩安装了
 ```
-$ sudo apt install openjdk-11-jdk openjdk-11-jdk-headless
+$ sudo apt install default-jre openjdk-11-jdk openjdk-11-jdk-headless
 ```
 
 
