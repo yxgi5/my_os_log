@@ -5177,29 +5177,68 @@ systemd-analyze plot > ~/SystemdAnalyzePlot.svg    #生产开机时间分析图
 
 ***
 # 删除 snap
+<https://www.simplified.guide/ubuntu/remove-snapd>
+<https://www.debugpoint.com/remove-snap-ubuntu/>
+<https://fedingo.com/how-to-remove-snap-in-ubuntu/>
 ```
 $ snap list
 Name                       Version           Rev    Tracking         Publisher   Notes
 bare                       1.0               5      latest/stable    canonical✓  base
 core20                     20221027          1695   latest/stable    canonical✓  base
-firefox                    107.0-2           2088   latest/stable/…  mozilla✓    -
+firefox                    107.0.1-1         2154   latest/stable/…  mozilla✓    -
 gnome-3-38-2004            0+git.6f39565     119    latest/stable/…  canonical✓  -
 gtk-common-themes          0.1-81-g442e511   1535   latest/stable/…  canonical✓  -
-snap-store                 41.3-64-g512c0ff  599    latest/stable/…  canonical✓  -
-snapd                      2.57.5            17576  latest/stable    canonical✓  snapd
+snap-store                 41.3-66-gfe1e325  638    latest/stable/…  canonical✓  -
+snapd                      2.57.6            17883  latest/stable    canonical✓  snapd
 snapd-desktop-integration  0.1               14     latest/stable/…  canonical✓  -
 ```
 ```
-$ sudo snap remove firefox
+sudo snap remove --purge firefox
+sudo snap remove --purge snap-store
+sudo snap remove --purge gnome-3-38-2004
+sudo snap remove --purge gtk-common-themes
+sudo snap remove --purge snapd-desktop-integration
+sudo snap remove --purge bare
+sudo snap remove --purge core20
+sudo snap remove --purge snapd
+
+sudo systemctl stop snapd.socket
+sudo systemctl stop snapd.apparmor.service
+sudo systemctl stop snapd.seeded.service
+sudo systemctl disable snapd.socket
+sudo systemctl disable snapd.apparmor.service
+sudo systemctl disable snapd.seeded.service
+sudo rm /etc/systemd/system/default.target.wants/ -rf
+
+sudo apt purge snapd
+sudo apt remove --purge --assume-yes snapd gnome-software-plugin-snap
+rm -rf ~/snap/
+sudo rm -rf /var/cache/snapd/ 
+
+已经从mint源安装了firefox就不用下面几个了
+sudo apt install --install-suggests gnome-software
+sudo add-apt-repository ppa:mozillateam/ppa
+sudo apt update
+sudo apt install -t 'o=LP-PPA-mozillateam' firefox
+
+确保不再安装snap
+sudo gedit /etc/apt/preferences.d/nosnap.pref
 ```
-直接把snapd删了吧
 ```
-$ sudo apt purge snapd
-//$ sudo apt-get autoremove --purge snapd
-$ sudo rm /etc/systemd/system/default.target.wants/ -rf
-$ rm -rf /home/andy/snap
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+```
+恢复安装snap
+```
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update && sudo apt upgrade
+sudo snap install snap-store
+sudo apt install firefox
 ```
 
+***
+# 启动速度分析优化
 ```
 $ systemd-analyze blame
 7.261s NetworkManager-wait-online.service
@@ -5404,14 +5443,134 @@ run-parts: executing /etc/network/if-up.d/wpasupplicant
 ```
 
 ***
-#
+# livecd backup + ACLs（Access Control List）
+
+<https://unix.stackexchange.com/questions/391/what-to-use-to-backup-files-preserving-acls>
+
+方法1:
 ```
+star -c -p -acl artype=exustar -f archive.tar  files...
+star -x -acl -f archive.tar
+```
+方法2:
+```
+getfacl -R /a_folder > folder.acl
+tar -czvf folder.tar.gz /a_folder
+tar -xvf folder.tar.gz
+setfacl --restore=folder.acl
+```
+方法3:
+```
+tar --acls -cpf backup.tar some-dir-or-file
+tar --acls -xpf backup.tar
+```
+方法4:(bsdtar backups extended ACL by default, it uses the same syntax as GNU tar, and the archives it produces are readable by GNU tar)
+```
+bsdtar cf archive.tar /my/folder/using/extd_acl 
+bsdtar xf archive.tar 
+```
+方法5:
+```
+ZSTD_CLEVEL=19 tar --acls --xattrs -caPf systemd-network-conf.tzst --directory=/etc systemd/network systemd/networkd.conf.d
+sudo tar --acls --xattrs -xvf systemd-network-conf.tzst
+```
+
+复制注意
+```
+rsync with the -A and/or -X options.
+```
+
+手动修改目录ACL属性例子
+```
+setfacl -m u:umesh:rw Codespace
+getfacl Codespace
+# file: Codespace/
+# owner: root
+# group: root
+user::rwx
+user:umesh:rw-
+group::r-x
+mask::rwx
+other::r-x
+
+setfacl -x u:umesh Codespace/
+getfacl Codespace
+# file: Codespace/
+# owner: root
+# group: root
+user::rwx
+group::r-x
+mask::rwx
+other::r-x
+```
+已知要
+
+`sudo setfacl -m u:andy:rx /media/andy`
+
+`sudo setfacl -m u:andy:r /var/log/journal/442b07a4c9b14abd98e876955e27980d/user-1000@ac516f3b49894d2793c8b9ad4f7b4243-00000000000006f8-0005ee98336a9c14.journal`
+
+查找的办法
+```
+$ sudo getfacl -R / > /home/andy/Downloads/folder.acl
+$ sudo cat folder.acl | grep -C 5 "user:andy:"
+
+# file: var/log/journal/b0d275fb46fa48c6820be57edaa22cf5/user-1000.journal
+# owner: root
+# group: systemd-journal
+user::rw-
+user:andy:r--
+group::r-x	#effective:r--
+group:adm:r-x	#effective:r--
+mask::r--
+other::---
+
+--
+
+# file: var/log/journal/b0d275fb46fa48c6820be57edaa22cf5/user-1000@0005edd1f7919d0d-2de7b960b28e0a38.journal~
+# owner: root
+# group: systemd-journal
+user::rw-
+user:andy:r--
+group::r-x	#effective:r--
+group:adm:r-x	#effective:r--
+mask::r--
+other::---
+
+--
+
+# file: var/lib/systemd/coredump/core.file-roller.1000.5ec63b10cdf842bd92f4e02a6882716b.6066.1669533484000000.zst
+# owner: root
+# group: root
+user::rw-
+user:andy:r--
+group::r--
+mask::r--
+other::---
+
+# file: var/lib/systemd/timesync
+--
+
+# file: media/andy
+# owner: root
+# group: root
+user::rwx
+user:andy:r-x
+group::---
+mask::r-x
+other::---
+
+# file: media/andy/e93f7f27-d29a-4a58-bbec-243395df32ad
+
 ```
 
 
 ***
-#
+# grep显示多行信息
 ```
+grep -C 5 foo file  #显示file文件中匹配foo字串那行以及上下5行
+grep -B 5 foo file  #显示foo及前5行
+grep -A 5 foo file  #显示foo及后5行
+
 ```
 
 
