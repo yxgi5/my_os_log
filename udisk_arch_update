@@ -1044,9 +1044,249 @@ sudo chmod +x /usr/local/bin/vitis
 
 
 
+* * *
+# full system upgrade handle
+
+:: Starting full system upgrade...
+:: Replace absl-py with community/python-absl? [Y/n] y
+warning: gcc10: local (1:10.3.0-2) is newer than archlinuxcn (10.4.0-1)
+warning: gcc10-libs: local (1:10.3.0-2) is newer than archlinuxcn (10.4.0-1)
+:: Replace intel-mkl with community/intel-oneapi-mkl? [Y/n] y
+:: Replace kwayland-server with extra/kwin? [Y/n] y
+:: Replace wxgtk-common with extra/wxwidgets-common? [Y/n] y
+:: Replace wxgtk3 with extra/wxwidgets-gtk3? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+:: python-mistune and python-mistune1 are in conflict. Remove python-mistune1? [y/N] y
+error: failed to prepare transaction (could not satisfy dependencies)
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by pcbdraw
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by pyuv
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk2
+
+pactree -r python-mistune1
+
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by jupyter-nbconvert
+:: removing python-mistune1 breaks dependency 'python-mistune1' required by pcbdraw
+yay -Rdd python-mistune1
+yay -S python-mistune
+
+yay -R wxgtk-common
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by pyuv
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk2
+:: removing wxgtk-common breaks dependency 'wxgtk-common' required by wxgtk3
+yay -Rdd wxgtk-common
+yay -S wxwidgets-common
+
+:: Replace intel-mkl with community/intel-oneapi-mkl? [Y/n] y
+:: Replace kwayland-server with extra/kwin? [Y/n] y
+:: Replace wxgtk3 with extra/wxwidgets-gtk3? [Y/n] y
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+yay -R pipewire-media-session
+checking dependencies...
+error: failed to prepare transaction (could not satisfy dependencies)
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by gst-plugin-pipewire
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by kwin
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by pipewire-alsa
+:: removing pipewire-media-session breaks dependency 'pipewire-session-manager' required by pipewire-v4l2
+yay -S wireplumber
+resolving dependencies...
+looking for conflicting packages...
+:: wireplumber and pipewire-media-session are in conflict. Remove pipewire-media-session? [y/N] y
+
+yay -S python-absl
+[sudo] password for andy: 
+resolving dependencies...
+looking for conflicting packages...
+:: python-absl and absl-py are in conflict. Remove absl-py? [y/N] y
+
+yay -S intel-oneapi-mkl
+resolving dependencies...
+looking for conflicting packages...
+:: intel-oneapi-mkl and intel-mkl are in conflict. Remove intel-mkl? [y/N] y
+warning: dependency cycle detected:
+warning: intel-oneapi-openmp will be installed before its intel-oneapi-compiler-dpcpp-cpp-runtime dependency
+
+Packages (8) intel-mkl-2020.4.304-1 [removal]  intel-oneapi-common-2022.1.0-3
+             intel-oneapi-compiler-dpcpp-cpp-runtime-2022.1.0-7
+             intel-oneapi-compiler-shared-runtime-2022.1.0-8
+             intel-oneapi-openmp-2022.1.0-8  intel-oneapi-tbb-2021.6.0-4
+             level-zero-loader-1.8.1-1  intel-oneapi-mkl-2022.1.0_223-4
+
+yay -S kwin wxwidgets-gtk3 --overwrite=*
+
+yay -S gcc10 gcc10-libs
+:: Import PGP key F9F9FA97A403F63E
+sudo pacman-key -r F9F9FA97A403F63E
+gpg --keyserver keyserver.ubuntu.com --recv-keys F9F9FA97A403F63E
+
+sudo pacman -Syu --overwrite=*
+
+NOTE: GnuPG's systemd sockets are now enabled in the vendor location /usr/lib/systemd/user/!
+/etc/pacman.d/mirrorlist installed as /etc/pacman.d/mirrorlist.pacnew
+warning: directory permissions differ on /etc/bluetooth/
+filesystem: 755  package: 555
+Please add your user to the brlapi group.
+
+warning: directory permissions differ on /opt/
+filesystem: 1777  package: 755
+
+warning: directory permissions differ on /usr/lib/gap/pkg/atlasrep/dataext/
+filesystem: 755  package: 1755
+warning: directory permissions differ on /usr/lib/gap/pkg/
+filesystem: 755  package: 700
+
+Created symlink /etc/systemd/user/pipewire-session-manager.service → /usr/lib/systemd/user/wireplumber.service.
+Created symlink /etc/systemd/user/pipewire.service.wants/wireplumber.service → /usr/lib/systemd/user/wireplumber.service.
+
+:: To use the new features provided in this GRUB update, it is recommended
+   to install it to the MBR or UEFI. Due to potential configuration
+   incompatibilities, it is advised to run both, installation and generation
+   of configuration:
+     $ grub-install ...
+     $ grub-mkconfig -o /boot/grub/grub.cfg
+     
+warning: directory permissions differ on /usr/lib/mysql/plugin/auth_pam_tool_dir/
+filesystem: 700  package: 755
+:: MariaDB was updated to a new feature release. To update the data run:
+   systemctl restart mariadb.service && mariadb-upgrade -u root -p
+
+warning: directory permissions differ on /etc/NetworkManager/system-connections/
+filesystem: 755  package: 700
+warning: directory permissions differ on /usr/share/doc/nfs-utils/
+filesystem: 644  package: 755
+
+"/var/lib/postgres/data" is missing or empty. Use a command like
+  su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+with relevant options, to initialize the database cluster.
+
+warning: directory permissions differ on /var/lib/samba/private/
+filesystem: 755  package: 700
+
+==> The copy of Tor Browser in your home directory will be upgraded at the
+==> first time you run it as your normal user. Just start it and have fun!
+
+>>> xf86-input-synaptics driver is on maintenance mode and
+    xf86-input-libinput driver must be prefered over.
 
 
+warning: /etc/sudoers installed as /etc/sudoers.pacnew
+
+(13/39) Install DKMS modules
+==> dkms install --no-depmod deepin-anything/5.0.18 -k 5.15.70-1-lts
+==> dkms install --no-depmod deepin-anything/5.0.18 -k 5.19.11-arch1-1
+==> dkms install --no-depmod vboxhost/6.1.38_OSE -k 5.19.11-arch1-1
+==> dkms install --no-depmod vboxhost/6.1.38_OSE -k 5.15.70-1-lts
+==> dkms install --no-depmod tty0tty/git -k 5.15.70-1-lts
+Error! Bad return status for module build on kernel: 5.15.70-1-lts (x86_64)
+Consult /var/lib/dkms/tty0tty/git/build/make.log for more information.
+==> WARNING: `dkms install --no-depmod tty0tty/git -k 5.15.70-1-lts' exited 10
+==> dkms install --no-depmod tty0tty/git -k 5.19.11-arch1-1
+Error! Bad return status for module build on kernel: 5.19.11-arch1-1 (x86_64)
+Consult /var/lib/dkms/tty0tty/git/build/make.log for more information.
+==> WARNING: `dkms install --no-depmod tty0tty/git -k 5.19.11-arch1-1' exited 10
+==> depmod 5.19.11-arch1-1
+==> depmod 5.15.70-1-lts
+
+[ yay -S tty0tty-dkms-git ]ok
+
+(15/39) Updating linux initcpios...
+==> Building image from preset: /etc/mkinitcpio.d/linux-lts.preset: 'default'
+  -> -k /boot/vmlinuz-linux-lts -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-lts.img
+==> Starting build: 5.15.70-1-lts
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [autodetect]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+  -> Running build hook: [filesystems]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image: /boot/initramfs-linux-lts.img
+==> Image generation successful
+==> Building image from preset: /etc/mkinitcpio.d/linux-lts.preset: 'fallback'
+  -> -k /boot/vmlinuz-linux-lts -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-lts-fallback.img -S autodetect
+==> Starting build: 5.15.70-1-lts
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: qed
+==> WARNING: Possibly missing firmware for module: qla2xxx
+==> WARNING: Possibly missing firmware for module: qla1280
+==> WARNING: Possibly missing firmware for module: bfa
+  -> Running build hook: [filesystems]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image: /boot/initramfs-linux-lts-fallback.img
+==> Image generation successful
+==> Building image from preset: /etc/mkinitcpio.d/linux.preset: 'default'
+  -> -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==> Starting build: 5.19.11-arch1-1
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [autodetect]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+  -> Running build hook: [filesystems]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image: /boot/initramfs-linux.img
+==> Image generation successful
+==> Building image from preset: /etc/mkinitcpio.d/linux.preset: 'fallback'
+  -> -k /boot/vmlinuz-linux -c /etc/mkinitcpio.conf -g /boot/initramfs-linux-fallback.img -S autodetect
+==> Starting build: 5.19.11-arch1-1
+  -> Running build hook: [base]
+  -> Running build hook: [udev]
+  -> Running build hook: [modconf]
+  -> Running build hook: [block]
+==> WARNING: Possibly missing firmware for module: qed
+==> WARNING: Possibly missing firmware for module: qla2xxx
+==> WARNING: Possibly missing firmware for module: qla1280
+==> WARNING: Possibly missing firmware for module: bfa
+  -> Running build hook: [filesystems]
+  -> Running build hook: [keyboard]
+  -> Running build hook: [fsck]
+==> Generating module dependencies
+==> Creating zstd-compressed initcpio image: /boot/initramfs-linux-fallback.img
+==> Image generation successful
 
 
+(17/39) Updating the appstream cache...
+
+** (appstreamcli:148148): WARNING **: 10:12:27.752: Found icon of unknown type 'unknown' in 'system/flatpak/flatpak/cc.nift.nsm/*', skipping it.
+
+** (appstreamcli:148148): WARNING **: 10:12:27.752: Found icon of unknown type 'unknown' in 'system/flatpak/flatpak/cc.nift.nsm/*', skipping it.
+✔ Metadata cache was updated successfully.
+
+
+(20/39) Warn about old perl modules
+WARNING: '/usr/lib/perl5/5.30' contains data from at least 2 packages which will NOT be used by the installed perl interpreter.
+ -> Run the following command to get a list of affected packages: pacman -Qqo '/usr/lib/perl5/5.30'
+WARNING: '/usr/lib/perl5/5.32' contains data from at least 9 packages which will NOT be used by the installed perl interpreter.
+ -> Run the following command to get a list of affected packages: pacman -Qqo '/usr/lib/perl5/5.32'
+WARNING: 135 file(s) in /usr/lib/perl5/5.32 are not tracked by pacman and need to be rebuilt.
+ -> These were most likely installed directly by cpan or a similar tool.
+    Run the following command to get a list of these files:
+    LC_ALL=C find "/usr/lib/perl5/5.32" -type f -exec pacman -Qqo {} + |& sed -n 's/^error: No package owns \(.*\)$/\1/p'
+WARNING: '/usr/lib/perl5/5.34' contains data from at least 1 packages which will NOT be used by the installed perl interpreter.
+ -> Run the following command to get a list of affected packages: pacman -Qqo '/usr/lib/perl5/5.34'
+
+
+sudo pacman-key -r 139B09DA5BF0D338 --keyserver hkp://keyserver.ubuntu.com
+sudo pacman-key -r F4AA4E0ED2568E87
+sudo pacman-key -r 493DE21C824E9541
+sudo pacman-key -r C32217F6F13FF192
+
+
+//yay -S libva-mesa-driver serd-docs sord-docs lv2-docs lv2-example-plugins sratom-docs lilv-docs audacity-docs brltty-udev-generic python-email-validator docker-buildx iptables-nft seabios-docs qemu-user-static libgit2-glib-docs wireplumber-docs lib32-libva-mesa-driver plasma-workspace python-lockfile python-redis python-database-cubic-hecke cvc4 yices z3 
+yay -S libva-mesa-driver serd-docs sord-docs lv2-docs lv2-example-plugins sratom-docs lilv-docs audacity-docs brltty-udev-generic python-email-validator docker-buildx seabios-docs qemu-user-static libgit2-glib-docs wireplumber-docs lib32-libva-mesa-driver plasma-workspace python-lockfile python-redis python-database-cubic-hecke cvc4 yices z3 
+yay -S python-aubio harvid new-session-manager xjadeo noto-fonts-cjk noto-fonts-extra networkmanager-qt plasma-workspace-wallpapers gpsd kdepim-addons appmenu-gtk-module discover
+yay -S fwupd php-gd grammalecte
 
 
