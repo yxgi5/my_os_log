@@ -14631,10 +14631,10 @@ yay -S electron11-bin
 
 
 ***
-# 准备放弃arch
-
-越来越没有精力和时间处理滚动升级的各种问题，而且长期使用下来每次需要进行大量更新，更新周期也逐渐拉长，遗留大量aur包未更新。
-
-准备存档后就使用ubuntu，两年一次大升级就可以。
-
-考虑虚拟机里弄个最简化的arch，arch的好处就是软件真新，aur提供的选择真多。
+# 
+```
+systemctl --failed
+systemd-analyze blame
+sudo systemctl disable shadow.service
+sudo systemctl disable systemd-networkd-wait-online.service
+```

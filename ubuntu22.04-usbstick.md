@@ -5441,6 +5441,11 @@ run-parts: executing /etc/network/if-up.d/resolved
 run-parts: executing /etc/network/if-up.d/wpasupplicant
 
 ```
+关闭服务
+```
+sudo systemctl disable networking.service
+```
+
 
 ***
 # livecd backup + ACLs（Access Control List）
@@ -5575,8 +5580,15 @@ grep -A 5 foo file  #显示foo及后5行
 
 
 ***
-#
+# openbox brightness
 ```
+sudo apt install xfce4-power-manager
+journalctl -xf
+acpi_listen
+```
+有类似
+```
+/usr/sbin/xfpm-power-backlight-helper
 ```
 
 

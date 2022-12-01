@@ -15336,6 +15336,12 @@ PKGBUILD gtkwave
 ```
 
 
+***
+# 普通用户添加到journalctl组
+```
+sudo usermod -a -G systemd-journal andy
+journalctl -xf
+```
 
 
 
