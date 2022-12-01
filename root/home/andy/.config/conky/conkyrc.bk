@@ -1,0 +1,112 @@
+background yes
+use_xft yes
+xftfont monospace:size=9
+xftalpha 1
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_colour black
+double_buffer yes
+minimum_size 1 1
+maximum_width 240
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color gray
+default_shade_color 000000
+default_outline_color d9d7d6
+alignment tr
+gap_x 12
+gap_y 12
+no_buffers yes
+uppercase no
+cpu_avg_samples 8
+override_utf8_locale no
+color1 red
+color2 gray
+##############################################
+#  Output
+##############################################
+TEXT
+CPU:
+#CPU0: $alignr${cpu cpu0}%
+#${cpubar cpu0}
+#CPU1: $alignr${cpu cpu1}%
+#${cpubar cpu1}
+#CPU2: $alignr${cpu cpu2}%
+#${cpubar cpu2}
+#CPU3: $alignr${cpu cpu3}%
+#${cpubar cpu3}
+#CPU4: $alignr${cpu cpu4}%
+#${cpubar cpu4}
+#CPU5: $alignr${cpu cpu5}%
+#${cpubar cpu5}
+#CPU6: $alignr${cpu cpu6}%
+#${cpubar cpu6}
+#CPU7: $alignr${cpu cpu7}%
+#${cpubar cpu7}
+${if_match "${cpu cpu0}"!=""}${cpubar cpu0}${endif}
+${if_match "${cpu cpu1}"!=""}${cpubar cpu1}${endif}
+${if_match "${cpu cpu2}"!=""}${cpubar cpu2}${endif}
+${if_match "${cpu cpu3}"!=""}${cpubar cpu3}${endif}
+${if_match "${cpu cpu4}"!=""}${cpubar cpu4}${endif}
+${if_match "${cpu cpu5}"!=""}${cpubar cpu5}${endif}
+${if_match "${cpu cpu6}"!=""}${cpubar cpu6}${endif}
+${if_match "${cpu cpu7}"!=""}${cpubar cpu7}${endif}
+${if_match "${cpu cpu8}"!=""}${cpubar cpu8}${endif}
+${if_match "${cpu cpu9}"!=""}${cpubar cpu9}${endif}
+${if_match "${cpu cpu10}"!=""}${cpubar cpu10}${endif}
+${if_match "${cpu cpu11}"!=""}${cpubar cpu11}${endif}
+${if_match "${cpu cpu12}"!=""}${cpubar cpu12}${endif}
+${if_match "${cpu cpu13}"!=""}${cpubar cpu13}${endif}
+${if_match "${cpu cpu14}"!=""}${cpubar cpu14}${endif}
+${if_match "${cpu cpu15}"!=""}${cpubar cpu15}${endif}
+RAM: $alignr$mem/$memmax
+$membar
+NET1: wireless 
+${upspeed wlan0}/s$alignr${totalup wlan0}
+${upspeedgraph wlan0 25,150 0000ff ff0000}
+${downspeed wlan0}/s$alignr${totaldown wlan0}
+${downspeedgraph wlan0 25,150 00ff00 d000d0}
+NET2: wired
+${upspeed eth0}/s$alignr${totalup eth0}
+${upspeedgraph eth0 25,150 0000ff ff0000}
+${downspeed eth0}/s$alignr${totaldown eth0}
+${downspeedgraph eth0 25,150 00ff00 d000d0}
+#
+#${font sans-serif:bold:size=8}SYSTEM ${hr 2}
+#${font sans-serif:normal:size=8}$sysname $kernel $alignr $machine
+#Host:$alignr$nodename
+#Uptime:$alignr$uptime
+#RUNNING:$alignr$running_processes
+#PROCESSES:$alignr${processes}
+#SWAP:$alignr${swapperc}
+#
+${font sans-serif:bold:size=8}TOP PROCESSES ${hr 2}
+${font sans-serif:normal:size=8}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+$font${top_mem name 3}${alignr}${top mem 3} %
+$font${top_mem name 4}${alignr}${top mem 4} %
+$font${top_mem name 5}${alignr}${top mem 5} %
+$font${top_mem name 6}${alignr}${top mem 6} %
+
+${font sans-serif:bold:size=8}SHORTCUT KEYS ${hr 2}
+${font sans-serif:normal:size=8}
+Super+space$alignr Main Menu
+Super+t$alignr Terminal
+Super+f$alignr File Manager
+Super+e$alignr Editor
+Super+w$alignr Web Browser
+Super+q$alignr Force Quit
+Super+r$alignr Read the DOC
+Super+a$alignr Toggle Maximize
+Super+h$alignr Toggle Horizontal
+Super+v$alignr Toggle Vertical
+Super+c$alignr Move to Center
+Super+Arrow$alignr Move
+Alt+F3$alignr Dmenu
+Alt+Super+Arrow$alignr Resize
