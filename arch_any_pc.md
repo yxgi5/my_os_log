@@ -13152,6 +13152,18 @@ VBoxManage: error: Context: "RTEXITCODE handleExtPack(HandlerArg*)" at line 1424
 error: command failed to execute correctly
 
 yay -S qt6-speech qemu-user-binfmt python-database-cubic-hecke
+
+
+sudo pacman-key -r 139B09DA5BF0D338 --keyserver hkp://keyserver.ubuntu.com
+sudo pacman-key -r F4AA4E0ED2568E87
+sudo pacman-key -r 493DE21C824E9541
+sudo pacman-key -r C32217F6F13FF192
+
+
+//yay -S libva-mesa-driver serd-docs sord-docs lv2-docs lv2-example-plugins sratom-docs lilv-docs audacity-docs brltty-udev-generic python-email-validator docker-buildx iptables-nft seabios-docs qemu-user-static libgit2-glib-docs wireplumber-docs lib32-libva-mesa-driver plasma-workspace python-lockfile python-redis python-database-cubic-hecke cvc4 yices z3 
+yay -S libva-mesa-driver serd-docs sord-docs lv2-docs lv2-example-plugins sratom-docs lilv-docs audacity-docs brltty-udev-generic python-email-validator docker-buildx seabios-docs qemu-user-static libgit2-glib-docs wireplumber-docs lib32-libva-mesa-driver plasma-workspace python-lockfile python-redis python-database-cubic-hecke cvc4 yices z3 
+yay -S python-aubio harvid new-session-manager xjadeo noto-fonts-cjk noto-fonts-extra networkmanager-qt plasma-workspace-wallpapers gpsd kdepim-addons appmenu-gtk-module discover
+yay -S fwupd php-gd grammalecte
 ```
 
 
@@ -14629,12 +14641,55 @@ yay -S electron11-bin
 ```
 
 
-
 ***
-# 
+# 开机服务清理
 ```
 systemctl --failed
 systemd-analyze blame
 sudo systemctl disable shadow.service
 sudo systemctl disable systemd-networkd-wait-online.service
 ```
+
+
+***
+# 清理
+```
+yay -R python-keras python-tensorflow
+yay -R tensorflow-opt
+yay -R jupyterlab jupyterlab_pygments jupyterlab-widgets jupyter-nbconvert jupyter-notebook jupyter-server sage-notebook-exporter jupyter-jsmol jupyter-nbclassic jupyter-notebook-shim jupyter-server-mathjax jupyter-widgetsnbextension python-jupyterlab_server
+yay -R python-argon2-cffi-bindings python-argon2-cffi-bindings python-argon2_cffi
+yay -R python-google-auth python-google-api-core python-google-auth-httplib2 python-google-auth-oauthlib python-google-auth-httplib2 python-google-api-python-client python-google-api-core python-google-api-python-client python-google-auth-oauthlib tensorboard python-tensorboard_plugin_wit
+yay -R python-pytorch python-skorch
+```
+
+删除这些，最好用-Rsn
+```
+yay -Rsn intellij-idea-ultimate-edition clion goland webstorm
+yay -Rsn cuda cuda-tools
+yay -Rdd nvidia-utils
+yay -Rc bumblebee nvidia-cg-toolkit
+yay -Rdd lib32-opencl-nvidia lib32-nvidia-utils
+yay -Rss nccl
+yay -Rdd qt6-doc qt6-examples
+yay -Rss webstorm-jre intellij-idea-ultimate-edition-jre clion-jre goland-jre
+yay -Rc clion-lldb clion-gdb
+yay -Rc clion-cmake
+yay -Rss linux-zen linux-zen-headers
+yay -Rss tor-browser
+yay -Rss ogre
+yay -Rc java11-openjfx
+yay -Rc java11-openjfx ganttproject
+yay -Rc teamviewer []
+yay -Rdd vtk
+yay -Rsn balena-etcher
+yay -Rsn sdkmanager
+yay -Rsn bcloud btsync
+sudo rm -rf /var/lib/btsync
+```
+```
+yay -S etcher-bin
+yay -Rdd downgrade downgrader-git
+yay -S downgrade
+```
+
+
