@@ -14664,6 +14664,12 @@ yay -R python-pytorch python-skorch
 
 删除这些，最好用-Rsn
 ```
+yay -Rss android-studio android-emulator
+yay -Rsn anaconda
+yay -Rsn python-keras python-tensorflow-opt
+yay -Rsn tensorflow-opt
+yay -Rsn jupyterlab jupyterlab-widgets jupyterlab_pygments jupyter-nbconvert jupyter-notebook jupyter-server sage-notebook-exporter jupyter-jsmol jupyter-server-mathjax jupyter-widgetsnbextension
+yay -Rsn python-google-auth python-google-auth-oauthlib python-google-auth-oauthlib tensorboard
 yay -Rsn intellij-idea-ultimate-edition clion goland webstorm
 yay -Rsn cuda cuda-tools
 yay -Rdd nvidia-utils
@@ -14676,20 +14682,40 @@ yay -Rc clion-lldb clion-gdb
 yay -Rc clion-cmake
 yay -Rss linux-zen linux-zen-headers
 yay -Rss tor-browser
+rm -rf ~/.local/opt/tor-browser
 yay -Rss ogre
 yay -Rc java11-openjfx
 yay -Rc java11-openjfx ganttproject
-yay -Rc teamviewer []
+repacman teamviewer
+yay -Rc teamviewer
 yay -Rdd vtk
 yay -Rsn balena-etcher
 yay -Rsn sdkmanager
 yay -Rsn bcloud btsync
 sudo rm -rf /var/lib/btsync
+yay -Rsn smpeg2 lib32-smpeg2
 ```
 ```
 yay -S etcher-bin
+repacman downgrader-git
 yay -Rdd downgrade downgrader-git
 yay -S downgrade
+
+sudo pacman-key --keyserver hkp://keyserver.ubuntu.com:80 -r  F9F9FA97A403F63E
+
+yay -Rsn 115pc addinclude 
+yay -Rsn archassault-keyring  archassault-mirrorlist
+
+yay -Rdd zoom
 ```
+
+
+***
+# vivado "boost::filesystem::current_path: No such file or directory"
+```
+yay -S boost boost-libs lib32-boost lib32-boost-libs
+```
+
+
 
 
