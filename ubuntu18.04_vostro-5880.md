@@ -2893,6 +2893,48 @@ $ sudo a2dissite 000-default.conf
 $ sudo a2ensite zhang.conf
 $ sudo /etc/init.d/apache2 restart
 ```
+后续错误处理
+
+`Apache Configuration Error AH00558: Could not reliably determine the server's fully qualified domain name`
+
+On Ubuntu and Debian-derived systems, run the following command:
+```
+sudo systemctl status apache2.service -l --no-pager
+sudo journalctl -u apache2.service --since today --no-pager
+```
+
+On Rocky Linux, Fedora, and Red Hat-derived systems, use this command to inspect the logs:
+```
+sudo systemctl status apache2.service -l --no-pager
+sudo journalctl -u httpd.service --since today --no-pager
+```
+
+To check your Apache configuration 
+
+`sudo apachectl configtest`
+
+按<https://mk-55.hatenablog.com/entry/2014/07/07/004510>修改无效且无更多信息
+```
+echo ServerName $HOSTNAME | sudo tee /etc/apache2/conf-available/fqdn.conf
+sudo a2enconf fqdn
+sudo systemctl reload apache2
+sudo systemctl start apache2.service
+```
+还是启动不了服务
+
+那么查看
+```
+cat /var/log/apache2/error.log
+AH00016: Configuration Failed
+[Thu Dec 08 12:57:56.828896 2022] [wsgi:crit] [pid 28505] mod_wsgi (pid=28505): The mod_python module can not be used in conjunction with mod_wsgi 4.0+. Remove the mod_python module from the Apache configuration.
+```
+看来根本问题是 python module
+```
+sudo a2dismod python
+sudo systemctl status apache2.service
+```
+就修复了，其他的恢复原状。
+
 
 * * *
 # 安装 php
