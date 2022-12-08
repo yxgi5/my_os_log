@@ -3610,6 +3610,8 @@ ok
 <https://archive.archlinux.org>
 <https://wiki.archlinux.org/index.php/Arch_Linux_Archive>
 
+过期的aur到这里找
+<https://github.com/aur-archive>
 
 * * *
 # 备份arch_root_only_20171119还原之后
