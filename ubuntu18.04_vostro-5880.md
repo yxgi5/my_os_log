@@ -5795,6 +5795,10 @@ apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreame
 sudo snap install kompozer
 sudo apt install bluefish
 ```
+不要用snap安装
+```
+sudo snap remove --purge kompozer
+```
 
 
 * * *
@@ -9618,6 +9622,134 @@ drwsr-s---  2 redis       adm            4096 12月  8 13:51 redis/
 $ sudo systemctl start redis-server.service 
 ```
 就好了
+
+
+***
+# 删除 cheat / cheatsheet
+<https://github.com/cheat/cheat>
+```
+$ sudo snap remove --purge cheat
+```
+
+***
+# 删除 snap gradle
+```
+$ sudo snap remove --purge gradle
+```
+
+# 删除 snap
+```
+$ snap list
+Name                  Version             Rev    Tracking         Publisher   Notes
+bare                  1.0                 5      latest/stable    canonical✓  base
+core                  16-2.57.6           14399  latest/stable    canonical✓  core
+core18                20221103            2632   latest/stable    canonical✓  base
+core20                20221123            1738   latest/stable    canonical✓  base
+core22                20220902            310    latest/stable    canonical✓  base
+gnome-3-34-1804       0+git.3556cb3       77     latest/stable/…  canonical✓  -
+gnome-3-38-2004       0+git.6f39565       119    latest/stable    canonical✓  -
+gnome-42-2204         0+git.c271a86       44     latest/stable    canonical✓  -
+gnome-calculator      41.1-4-g5c9869a58c  920    latest/stable/…  canonical✓  -
+gnome-characters      42.0                781    latest/stable/…  canonical✓  -
+gnome-logs            42.0                115    latest/stable/…  canonical✓  -
+gnome-system-monitor  42.0                181    latest/stable/…  canonical✓  -
+gtk-common-themes     0.1-81-g442e511     1535   latest/stable/…  canonical✓  -
+gtk2-common-themes    0.1                 13     latest/stable    canonical✓  -
+snapd                 2.57.6              17883  latest/stable    canonical✓  snapd
+```
+删掉snap容器
+```
+sudo snap remove --purge gtk2-common-themes
+sudo snap remove --purge gtk-common-themes
+sudo snap remove --purge gnome-3-34-1804
+sudo snap remove --purge gnome-3-38-2004
+sudo snap remove --purge gnome-42-2204
+sudo snap remove --purge gnome-calculator
+sudo snap remove --purge gnome-characters
+sudo snap remove --purge gnome-logs
+sudo snap remove --purge gnome-system-monitor
+sudo snap remove --purge bare
+sudo snap remove --purge core18
+sudo snap remove --purge core20
+sudo snap remove --purge core22
+
+sudo service snapd restart
+df
+sudo umount /snap/core/14399
+sudo snap remove --purge core
+sudo snap remove --purge snapd
+```
+删掉有关服务
+```
+sudo systemctl stop snapd.aa-prompt-listener.service
+sudo systemctl stop snapd.apparmor.service
+sudo systemctl stop snapd.autoimport.service
+sudo systemctl stop snapd.core-fixup.service
+sudo systemctl stop snapd.failure.service
+sudo systemctl stop snapd.recovery-chooser-trigger.service
+sudo systemctl stop snapd.seeded.service
+sudo systemctl stop snapd.service
+sudo systemctl stop snapd.snap-repair.service
+sudo systemctl stop snapd.snap-repair.timer
+sudo systemctl stop snapd.socket
+sudo systemctl stop snapd.system-shutdown.service
+
+sudo systemctl disable snapd.aa-prompt-listener.service
+sudo systemctl disable snapd.apparmor.service
+sudo systemctl disable snapd.autoimport.service
+sudo systemctl disable snapd.core-fixup.service
+sudo systemctl disable snapd.failure.service
+sudo systemctl disable snapd.recovery-chooser-trigger.service
+sudo systemctl disable snapd.seeded.service
+sudo systemctl disable snapd.service
+sudo systemctl disable snapd.snap-repair.service
+sudo systemctl disable snapd.snap-repair.timer
+sudo systemctl disable snapd.socket
+sudo systemctl disable snapd.system-shutdown.service
+
+Removed /etc/systemd/system/multi-user.target.wants/snapd.aa-prompt-listener.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.apparmor.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.autoimport.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.core-fixup.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.recovery-chooser-trigger.service.
+Removed /etc/systemd/system/cloud-final.service.wants/snapd.seeded.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.seeded.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.service.
+Removed /etc/systemd/system/timers.target.wants/snapd.snap-repair.timer.
+Removed /etc/systemd/system/sockets.target.wants/snapd.socket.
+Removed /etc/systemd/system/final.target.wants/snapd.system-shutdown.service.
+
+ll /etc/systemd/system/default.target.wants/
+sudo rm /etc/systemd/system/default.target.wants/snap* -rf
+```
+删掉snapd
+```
+sudo apt purge snapd
+sudo apt remove --purge --assume-yes snapd gnome-software-plugin-snap
+rm -rf ~/snap/
+sudo rm -rf /var/cache/snapd/ 
+```
+确保不再安装snap
+`sudo gedit /etc/apt/preferences.d/nosnap.pref`
+```
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+```
+补上几个删掉的玩意
+```
+sudo apt install gnome-calculator gnome-characters gnome-logs gnome-system-monitor
+实际上只缺gnome-characters
+sudo apt install gnome-themes-ubuntu
+```
+
+恢复安装snap
+```
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update && sudo apt upgrade
+sudo snap install snap-store
+sudo apt install firefox
+```
 
 
 * * *
