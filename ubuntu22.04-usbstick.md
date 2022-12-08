@@ -5091,7 +5091,7 @@ git add .
 
 ***
 # unzip
-在`/etc/environment`添加
+在`$HOME/.bashrc`添加
 ```
 alias unzip='unzip -O cp936'
 ```
