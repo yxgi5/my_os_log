@@ -9563,6 +9563,62 @@ user.email=denglitsch@gmail.com
 core.editor=vim
 ```
 
+
+***
+# redis-server.service 启动修复
+```
+sudo journalctl -u redis-server.service --no-pager
+
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: *** FATAL CONFIG FILE ERROR ***
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: Reading the configuration file, at line 171
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: >>> 'logfile /var/log/redis/redis-server.log'
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: Can't open the log file: Permission denied
+```
+```
+$ grep ReadWriteDirectories /etc/systemd/system/redis.service
+ReadWriteDirectories=-/var/lib/redis
+ReadWriteDirectories=-/var/log/redis
+ReadWriteDirectories=-/var/run/redis
+ReadWriteDirectories=-/etc/redis
+
+$ mount | grep 'ro,'
+$ cat /lib/systemd/system/redis-server.service
+```
+```
+$ sudo sed -n '171p' /etc/redis/redis.conf
+logfile /var/log/redis/redis-server.log
+```
+```
+$ ls -l /var/log/ | grep redis
+```
+没有这个目录及文件，创建
+
+```
+$ sudo mkdir -p redis
+$ sudo touch /var/log/redis/redis-server.log
+$ sudo systemctl start redis-server.service
+$ journalctl -xe
+$ sudo journalctl -u redis-server.service --no-pager
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: *** FATAL CONFIG FILE ERROR ***
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: Reading the configuration file, at line 171
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: >>> 'logfile /var/log/redis/redis-server.log'
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: Can't open the log file: Permission denied
+```
+权限据查应该是
+```
+# ls -l /var/log/ | grep redis
+drwxr-s---  2 redis         adm         4096 Sep 18 11:50 redis
+```
+那么按这个要求设置权限
+```
+$ sudo chmod 2750 -R /var/log/redis/
+$ ll /var/log/ | grep redis
+drwsr-s---  2 redis       adm            4096 12月  8 13:51 redis/
+$ sudo systemctl start redis-server.service 
+```
+就好了
+
+
 * * *
 # Next Topic
 
