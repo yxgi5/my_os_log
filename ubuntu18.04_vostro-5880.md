@@ -1154,6 +1154,48 @@ sudo miredo
 ```
 另外可以作为系统服务启动参考arch wiki等
 
+报错`Invalid host name “teredo-debian.remlab.net” at line 6: Name or service not known`
+```
+$ cat /etc/miredo.conf 
+# Please refer to the miredo.conf(5) man page for details.
+InterfaceName	teredo
+
+# Pick a Teredo server:
+ServerAddress	win10.ipv6.microsoft.com
+#ServerAddress	teredo.ipv6.microsoft.com
+#ServerAddress	teredo-debian.remlab.net
+#ServerAddress 83.170.6.76 # ip of teredo-debian.remlab.net
+
+# Some firewall/NAT setups require a specific UDP port number:
+#BindPort	3545
+
+$ sudo systemctl start miredo.service
+$ systemctl status miredo.service -l --no-pager
+```
+就可以了
+
+下面这个办法没有测试
+```
+I've wrote in /etc/miredo/miredo.conf
+
+# Pick a Teredo server:
+#ServerAddress teredo.ipv6.microsoft.com
+#ServerAddress teredo-debian.remlab.net
+ServerAddress 83.170.6.76 # ip of teredo-debian.remlab.net
+
+And in /etc/network/if-up.d/miredo
+
+if [ "$ADDRFAM" = "ipx" ] || [ "$ADDRFAM" = "inet6" ]; then
+exit 0
+fi
+
+replaced for
+
+if [ "$ADDRFAM" = "ipx" ] || [ "$ADDRFAM" = "inet6" ]; then
+ip -6 route add default dev teredo; exit 0
+fi
+```
+
 
 * * *
 # 安装 SaleaeLogic 驱动信息
@@ -2893,6 +2935,48 @@ $ sudo a2dissite 000-default.conf
 $ sudo a2ensite zhang.conf
 $ sudo /etc/init.d/apache2 restart
 ```
+后续错误处理
+
+`Apache Configuration Error AH00558: Could not reliably determine the server's fully qualified domain name`
+
+On Ubuntu and Debian-derived systems, run the following command:
+```
+sudo systemctl status apache2.service -l --no-pager
+sudo journalctl -u apache2.service --since today --no-pager
+```
+
+On Rocky Linux, Fedora, and Red Hat-derived systems, use this command to inspect the logs:
+```
+sudo systemctl status apache2.service -l --no-pager
+sudo journalctl -u httpd.service --since today --no-pager
+```
+
+To check your Apache configuration 
+
+`sudo apachectl configtest`
+
+按<https://mk-55.hatenablog.com/entry/2014/07/07/004510>修改无效且无更多信息
+```
+echo ServerName $HOSTNAME | sudo tee /etc/apache2/conf-available/fqdn.conf
+sudo a2enconf fqdn
+sudo systemctl reload apache2
+sudo systemctl start apache2.service
+```
+还是启动不了服务
+
+那么查看
+```
+cat /var/log/apache2/error.log
+AH00016: Configuration Failed
+[Thu Dec 08 12:57:56.828896 2022] [wsgi:crit] [pid 28505] mod_wsgi (pid=28505): The mod_python module can not be used in conjunction with mod_wsgi 4.0+. Remove the mod_python module from the Apache configuration.
+```
+看来根本问题是 python module
+```
+sudo a2dismod python
+sudo systemctl status apache2.service
+```
+就修复了，其他的恢复原状。
+
 
 * * *
 # 安装 php
@@ -5710,6 +5794,10 @@ apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreame
 ```
 sudo snap install kompozer
 sudo apt install bluefish
+```
+不要用snap安装
+```
+sudo snap remove --purge kompozer
 ```
 
 
@@ -9478,6 +9566,191 @@ user.name=Andreas Zhang
 user.email=denglitsch@gmail.com
 core.editor=vim
 ```
+
+
+***
+# redis-server.service 启动修复
+```
+sudo journalctl -u redis-server.service --no-pager
+
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: *** FATAL CONFIG FILE ERROR ***
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: Reading the configuration file, at line 171
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: >>> 'logfile /var/log/redis/redis-server.log'
+12月 08 13:51:42 Vostro-5880 redis-server[17609]: Can't open the log file: Permission denied
+```
+```
+$ grep ReadWriteDirectories /etc/systemd/system/redis.service
+ReadWriteDirectories=-/var/lib/redis
+ReadWriteDirectories=-/var/log/redis
+ReadWriteDirectories=-/var/run/redis
+ReadWriteDirectories=-/etc/redis
+
+$ mount | grep 'ro,'
+$ cat /lib/systemd/system/redis-server.service
+```
+```
+$ sudo sed -n '171p' /etc/redis/redis.conf
+logfile /var/log/redis/redis-server.log
+```
+```
+$ ls -l /var/log/ | grep redis
+```
+没有这个目录及文件，创建
+
+```
+$ sudo mkdir -p redis
+$ sudo touch /var/log/redis/redis-server.log
+$ sudo systemctl start redis-server.service
+$ journalctl -xe
+$ sudo journalctl -u redis-server.service --no-pager
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: *** FATAL CONFIG FILE ERROR ***
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: Reading the configuration file, at line 171
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: >>> 'logfile /var/log/redis/redis-server.log'
+12月 08 13:51:58 Vostro-5880 redis-server[17830]: Can't open the log file: Permission denied
+```
+权限据查应该是
+```
+# ls -l /var/log/ | grep redis
+drwxr-s---  2 redis         adm         4096 Sep 18 11:50 redis
+```
+那么按这个要求设置权限
+```
+$ sudo chown redis:adm -R /var/log/redis/
+$ sudo chmod 2750 -R /var/log/redis/
+$ ll /var/log/ | grep redis
+drwsr-s---  2 redis       adm            4096 12月  8 13:51 redis/
+$ sudo systemctl start redis-server.service 
+```
+就好了
+
+
+***
+# 删除 cheat / cheatsheet
+<https://github.com/cheat/cheat>
+```
+$ sudo snap remove --purge cheat
+```
+
+***
+# 删除 snap gradle
+```
+$ sudo snap remove --purge gradle
+```
+
+# 删除 snap
+```
+$ snap list
+Name                  Version             Rev    Tracking         Publisher   Notes
+bare                  1.0                 5      latest/stable    canonical✓  base
+core                  16-2.57.6           14399  latest/stable    canonical✓  core
+core18                20221103            2632   latest/stable    canonical✓  base
+core20                20221123            1738   latest/stable    canonical✓  base
+core22                20220902            310    latest/stable    canonical✓  base
+gnome-3-34-1804       0+git.3556cb3       77     latest/stable/…  canonical✓  -
+gnome-3-38-2004       0+git.6f39565       119    latest/stable    canonical✓  -
+gnome-42-2204         0+git.c271a86       44     latest/stable    canonical✓  -
+gnome-calculator      41.1-4-g5c9869a58c  920    latest/stable/…  canonical✓  -
+gnome-characters      42.0                781    latest/stable/…  canonical✓  -
+gnome-logs            42.0                115    latest/stable/…  canonical✓  -
+gnome-system-monitor  42.0                181    latest/stable/…  canonical✓  -
+gtk-common-themes     0.1-81-g442e511     1535   latest/stable/…  canonical✓  -
+gtk2-common-themes    0.1                 13     latest/stable    canonical✓  -
+snapd                 2.57.6              17883  latest/stable    canonical✓  snapd
+```
+删掉snap容器
+```
+sudo snap remove --purge gtk2-common-themes
+sudo snap remove --purge gtk-common-themes
+sudo snap remove --purge gnome-3-34-1804
+sudo snap remove --purge gnome-3-38-2004
+sudo snap remove --purge gnome-42-2204
+sudo snap remove --purge gnome-calculator
+sudo snap remove --purge gnome-characters
+sudo snap remove --purge gnome-logs
+sudo snap remove --purge gnome-system-monitor
+sudo snap remove --purge bare
+sudo snap remove --purge core18
+sudo snap remove --purge core20
+sudo snap remove --purge core22
+
+sudo service snapd restart
+df
+sudo umount /snap/core/14399
+sudo snap remove --purge core
+sudo snap remove --purge snapd
+```
+删掉有关服务
+```
+sudo systemctl stop snapd.aa-prompt-listener.service
+sudo systemctl stop snapd.apparmor.service
+sudo systemctl stop snapd.autoimport.service
+sudo systemctl stop snapd.core-fixup.service
+sudo systemctl stop snapd.failure.service
+sudo systemctl stop snapd.recovery-chooser-trigger.service
+sudo systemctl stop snapd.seeded.service
+sudo systemctl stop snapd.service
+sudo systemctl stop snapd.snap-repair.service
+sudo systemctl stop snapd.snap-repair.timer
+sudo systemctl stop snapd.socket
+sudo systemctl stop snapd.system-shutdown.service
+
+sudo systemctl disable snapd.aa-prompt-listener.service
+sudo systemctl disable snapd.apparmor.service
+sudo systemctl disable snapd.autoimport.service
+sudo systemctl disable snapd.core-fixup.service
+sudo systemctl disable snapd.failure.service
+sudo systemctl disable snapd.recovery-chooser-trigger.service
+sudo systemctl disable snapd.seeded.service
+sudo systemctl disable snapd.service
+sudo systemctl disable snapd.snap-repair.service
+sudo systemctl disable snapd.snap-repair.timer
+sudo systemctl disable snapd.socket
+sudo systemctl disable snapd.system-shutdown.service
+
+Removed /etc/systemd/system/multi-user.target.wants/snapd.aa-prompt-listener.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.apparmor.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.autoimport.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.core-fixup.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.recovery-chooser-trigger.service.
+Removed /etc/systemd/system/cloud-final.service.wants/snapd.seeded.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.seeded.service.
+Removed /etc/systemd/system/multi-user.target.wants/snapd.service.
+Removed /etc/systemd/system/timers.target.wants/snapd.snap-repair.timer.
+Removed /etc/systemd/system/sockets.target.wants/snapd.socket.
+Removed /etc/systemd/system/final.target.wants/snapd.system-shutdown.service.
+
+ll /etc/systemd/system/default.target.wants/
+sudo rm /etc/systemd/system/default.target.wants/snap* -rf
+```
+删掉snapd
+```
+sudo apt purge snapd
+sudo apt remove --purge --assume-yes snapd gnome-software-plugin-snap
+rm -rf ~/snap/
+sudo rm -rf /var/cache/snapd/ 
+```
+确保不再安装snap
+`sudo gedit /etc/apt/preferences.d/nosnap.pref`
+```
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+```
+补上几个删掉的玩意
+```
+sudo apt install gnome-calculator gnome-characters gnome-logs gnome-system-monitor
+实际上只缺gnome-characters
+sudo apt install gnome-themes-ubuntu
+```
+
+恢复安装snap
+```
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update && sudo apt upgrade
+sudo snap install snap-store
+sudo apt install firefox
+```
+
 
 * * *
 # Next Topic
