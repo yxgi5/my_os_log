@@ -1154,6 +1154,48 @@ sudo miredo
 ```
 另外可以作为系统服务启动参考arch wiki等
 
+报错`Invalid host name “teredo-debian.remlab.net” at line 6: Name or service not known`
+```
+$ cat /etc/miredo.conf 
+# Please refer to the miredo.conf(5) man page for details.
+InterfaceName	teredo
+
+# Pick a Teredo server:
+ServerAddress	win10.ipv6.microsoft.com
+#ServerAddress	teredo.ipv6.microsoft.com
+#ServerAddress	teredo-debian.remlab.net
+#ServerAddress 83.170.6.76 # ip of teredo-debian.remlab.net
+
+# Some firewall/NAT setups require a specific UDP port number:
+#BindPort	3545
+
+$ sudo systemctl start miredo.service
+$ systemctl status miredo.service -l --no-pager
+```
+就可以了
+
+下面这个办法没有测试
+```
+I've wrote in /etc/miredo/miredo.conf
+
+# Pick a Teredo server:
+#ServerAddress teredo.ipv6.microsoft.com
+#ServerAddress teredo-debian.remlab.net
+ServerAddress 83.170.6.76 # ip of teredo-debian.remlab.net
+
+And in /etc/network/if-up.d/miredo
+
+if [ "$ADDRFAM" = "ipx" ] || [ "$ADDRFAM" = "inet6" ]; then
+exit 0
+fi
+
+replaced for
+
+if [ "$ADDRFAM" = "ipx" ] || [ "$ADDRFAM" = "inet6" ]; then
+ip -6 route add default dev teredo; exit 0
+fi
+```
+
 
 * * *
 # 安装 SaleaeLogic 驱动信息
