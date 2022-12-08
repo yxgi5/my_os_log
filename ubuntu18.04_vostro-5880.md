@@ -9611,6 +9611,7 @@ drwxr-s---  2 redis         adm         4096 Sep 18 11:50 redis
 ```
 那么按这个要求设置权限
 ```
+$ sudo chown redis:adm -R /var/log/redis/
 $ sudo chmod 2750 -R /var/log/redis/
 $ ll /var/log/ | grep redis
 drwsr-s---  2 redis       adm            4096 12月  8 13:51 redis/
