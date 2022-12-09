@@ -6629,6 +6629,8 @@ sh /usr/share/i4tools/i4toolslinux.sh
 ```
 `sudo chmod +x /usr/local/bin/i4toolslinux`
 
+可以查看微信记录 备份后 wechat 可查看聊天记录
+
 
 * * *
 # 安装steam
