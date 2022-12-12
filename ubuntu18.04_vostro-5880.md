@@ -10075,6 +10075,11 @@ snap remove 删除包
 snap run 软件名 运行某个软件，也可以直接 软件名 运行（在目录 /usr/snap/bin 下）
 ```
 
+understanding the output of "apt-cache policy"
+```
+The *** just means installed, as far as I know. Once it has been installed, you see both 500 and 100, corresponding to the version in the archives and the locally installed version respectively.
+500 and 100 are the priority numbers. To learn more about them, I recommend man apt_preferences. 500 corresponds to installable, 100 means installed.
+```
 
 * * *
 # Next Topic
