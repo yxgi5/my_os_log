@@ -9962,6 +9962,7 @@ apt-mark showhold
 ```
 
 PPA
+
 <https://itsfoss.com/ppa-guide/>
 ```
 添加 ppa
@@ -9992,11 +9993,15 @@ sudo apt autoremove <package-name>
 ```
 comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
 ```
-列出所有没有被依赖的包（无论是怎么安装的）<https://askubuntu.com/questions/1114733/how-do-i-list-all-packages-that-no-package-depends-on>
+列出所有没有被依赖的包（无论是怎么安装的）
+
+<https://askubuntu.com/questions/1114733/how-do-i-list-all-packages-that-no-package-depends-on>
 ```
 dpkg-query --show --showformat='${Package}\t${Status}\n' | tac | awk '/installed$/ {print $1}' | xargs apt-cache rdepends --installed | tac | awk '{ if (/^ /) ++deps; else if (!/:$/) { if (!deps) print; deps = 0 } }'
 ```
+
 注意这里面有一些重要的系统包（包括 linux 内核）如果不是自己装的包要删除时要小心．
+
 <https://askubuntu.com/questions/2389/how-to-list-manually-installed-packages>
 ```
 comm -23 <(aptitude search '~i !~M' -F '%p' | sed "s/ *$//" | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
@@ -10016,6 +10021,7 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 ```
 
 apt-clone
+
 <https://ubunlog.com/en/apt-clone-copia-seguridad-paquetes/>
 ```
 sudo apt-clone clone --with-dpkg-repack <文件夹>    # 可以把本机所有安装包备份到文件夹中的一个压缩文件．
@@ -10056,6 +10062,7 @@ deb 文件其实就是一个压缩包，里面包含所有需要安装的文件�
 ```
 
 Snap
+
 <https://www.howtogeek.com/660193/how-to-work-with-snap-packages-on-linux/>
 ```
 snap 基本就是一些微小的 container 每个都包含所有的依赖文件，使用虚拟硬盘以解决不同的包使用同一个 dependency 的不同版本．
