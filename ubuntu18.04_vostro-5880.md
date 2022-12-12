@@ -9790,10 +9790,13 @@ aptitude -V -s upgrade <package-name>
 
 显示软件包的细节或者简要信息（即使它没有被安装）
 ```
+apt search <package-name>
 apt-cache showpkg <package-name>
 
 apt show <package-name>             # 显示包的详细信息，包括依赖（可以是存在但没有安装的包）
-dpkg -l | grep -i 关键字 可以查找已安装的某个包
+
+dpkg -l                             # 查询已经安装的所有软件包
+dpkg -l | grep -i 关键字             # 可以查找已安装的某个包
 
 apt policy <package-name>           # 显示包的来源
 apt-cache policy <package-name>     # 显示包的来源
@@ -9816,8 +9819,124 @@ sudo apt upgrade 自动更新所有包，但并不删除已存在的包，
 sudo apt dist-upgrade 或者等效的 sudo apt full-upgrade 更激进，会删除已有的包，可能会更新内核，可能造成一些破坏．
 
 sudo apt clean 和 sudo apt autoclean 可以清除缓存（例如下载的 deb 安装包等，后者清的没那么干净）
+
+
+sudo apt install <package-name>     # 为安装包时安装包/ 已安装包时升级包
+sudo apt-get --reinstall install <package-name>     # 重新安装包
+
+sudo apt-get remove <package-name>  # 不完全卸载包
+sudo apt-get --purge remove <package-name>          # 完全卸载包
+
+sudo apt-get upgrade                # 将所有软件包(包括内核)升级到最高版本(不包括标记为hold的包)
+
+sudo apt-get -f install             # 安装中途退出后继续安装
+sudo apt-get update                 # 修改仓库配置后重新构建缓存
+sudo apt-get clean                  # 清理本地缓存 
+sudo apt-get autoclean              # 清空重复的低版本的软件包
 ```
 
+本地数据库文件
+```
+/var/lib/dpkg
+/var/lib/apt
+/var/cache/apt/archives 下载后的deb文件存放位置
+```
+客户端配置
+```
+/etc/apt/sources.list   文件
+/etc/apt/sources.list.d 目录中的文件
+```
+客户端配置内容
+```
+deb http://us.archive.ubuntu.com/ubuntu/ xenial main restricted                  
+deb-src http://us.archive.ubuntu.com/ubuntu/ xenial main restricted
+
+每一行 格式如下  : {必选} [可选]
+{deb/deb-src} {URL} {发行版代号及扩展} {分类1} [分类2] [分类3] [分类4]
+每一个字段解释如下
+{deb/deb-src} : deb 表示二进制可执行文件 deb-src 表示包的源代码
+{URL} 		  : 仓库地址
+{发行版代号及扩展}    :  
+				发行版代号: 16.04为 xenial  12.04为focal
+				另外还有 扩展 xenial-security xenial-updates xenial-proposed xenial-backports
+{分类1} 		  : 和分类2 分类3 分类4 一样
+				从 main restricted universe multiverse 中4选1
+				main 包是免费的/开源的，并受 ubuntu 官方的支持
+				restricted 包含各种设备的专用驱动程序
+				universe 包是免费的/开源的，由社区支持
+				multiverse 由于法律/版权问题，这些软件包受到限制
+		
+分类1...分类4 在 apt update 过程中是怎么被解析的?
+apt 将 软件分类4类(main restricted universe multiverse)
+如果一行中只有一类,那么意思是只包括该类的软件包
+如果一行中只有4类,那么意思是包括所有类的软件包
+http://us.archive.ubuntu.com/ubuntu/indices/ 中 有 一些文件
+每个文件描述了一类软件包
+ 
+在这些文件中
+override.xenial.main 对应 deb http://us.archive.ubuntu.com/ubuntu/ xenial main 
+override.xenial.restricted 对应 deb http://us.archive.ubuntu.com/ubuntu/ xenial  restricted
+
+override.xenial.main.src 对应 deb-src http://us.archive.ubuntu.com/ubuntu/ xenial main 
+override.xenial.restricted.src 对应 deb-src http://us.archive.ubuntu.com/ubuntu/ xenial restricted
+
+```
+|   |自由软件|非自由软件|
+|---|---|---|
+|官方支持的|Main|Restricted|
+|非官方支持的|Universe|Multiverse|
+
+服务器仓库内容
+```
+可以这么说,apt 只有一个仓库,但是 仓库 按级别分类
+	1.第1级别(xxxx yyyy zzzz 分别为不同版本的发行版代号)
+		xxxx
+		yyyy
+		zzzz
+	2.第2级别
+		deb
+		deb-src
+	3.第3级别 (xxxx为发行版代号)
+		xxxx
+		xxxx-security
+		xxxx-updates
+		xxxx-proposed
+		xxxx-backports
+	4.第4级别
+		main
+		restricted
+		universe
+		multiverse
+所以一个发行版共 1*2*5*4=40个类
+
+在 http://us.archive.ubuntu.com/ubuntu/indices/  中 xenial 发行版相关的文件共80个
+	其中 5(第3级别的类数目)*4(每个第3级别类由4个文件描述) = 20 个文件
+	其中 5(第3级别的类数目)*4(第4级别的类数目)*3(第2级别的类数目+1(1为debian-installer))= 60 个文件
+
+```
+
+客户端更改仓库配置
+```
+一般来说我们只更改 链接就行,不需要更改其他内容
+sudo sed -i 's/us.archive.ubuntu/mirrors.aliyun/' /etc/apt/sources.list
+ubuntu可选的 配置 : https://wiki.ubuntu.org.cn/模板:16.04source
+// 阿里云的镜像站点攘括了很多 镜像 , 网址: https://developer.aliyun.com/mirror/
+
+```
+
+包依赖问题
+```
+the following pakages have unmet depencies
+xxx:
+	....
+	....
+解决方案:
+sudo apt-get install aptitude
+sudo aptitude  install xxx // 该命令有交互模式,会给你提供一个方案,如果你不喜欢(n),他会再给你提供方案
+
+```
+
+aptitude search 使用
 ```
 aptitude search vim -F "%c %p %d %V"
 -F 用于指定应使用哪种格式来显示输出，
@@ -9899,24 +10018,35 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)
 apt-clone
 <https://ubunlog.com/en/apt-clone-copia-seguridad-paquetes/>
 ```
-sudo apt-clone clone --with-dpkg-repack <文件夹>     # 可以把本机所有安装包备份到文件夹中的一个压缩文件．
-apt-clone info 备份文件.gz 可以查看包的信息
-sudo apt-clone restore 备份文件.gz 可以进行恢复（注意一定要相同架构相同 ubuntu 版本）
+sudo apt-clone clone --with-dpkg-repack <文件夹>    # 可以把本机所有安装包备份到文件夹中的一个压缩文件．
+apt-clone info 备份文件.gz                          # 可以查看包的信息
+sudo apt-clone restore 备份文件.gz                  # 可以进行恢复（注意一定要相同架构相同 ubuntu 版本）
 直接解压备份文件即可得到所有备份的 deb，可单独用 sudo apt install xxx.deb 安装
-sudo apt-clone restore 备份文件.gz --destination 某文件夹 把包安装到某个文件夹（使用 chroot）．
+sudo apt-clone restore 备份文件.gz --destination <某文件夹>     # 把包安装到某个文件夹（使用 chroot）．
 aptic 软件据说也有类似的功能
 ```
 
 dpkg
 ```
-dpkg -l | grep -i 关键字 可以查找已安装的某个包
-sudo dpkg -i 名字.deb 安装 deb 安装包，其中 名字 可以带 *．完了以后用 sudo apt install -fy 安装缺失的依赖包（dpkg 不自动安装依赖）．
-sudo apt install *.deb，会自动安装依赖
+dpkg -l | grep -i 关键字                           # 可以查找已安装的某个包
+sudo dpkg -i 名字.deb                             # 安装 deb 安装包，其中 名字 可以带 *．完了以后用 sudo apt install -fy 安装缺失的依赖包（dpkg 不自动安装依赖）．
+sudo apt install *.deb                           # 会自动安装依赖
 sudo apt remove 包 或者 dpkg --remove 包 卸载，dpkg --purge 包 可以连配置文件一起卸载．
 dpkg -S 文件 查看该文件是哪个包安装的．例如 dpkg -S /bin/gcc
+$ dpkg -S /bin/ls
+coreutils: /bin/ls
+
+apt-file search 文件 查看该文件是哪个包安装的．
+$ apt-file search alsa/asoundlib.h
+libasound2-dev: /usr/include/alsa/asoundlib.h
+libdssialsacompat-dev: /usr/include/dssi/alsa/asoundlib.h
+
 dpkg -f 文件名.deb [field名] 查看 deb 的某个属性，如果省略 field名 则查看所有属性
 sudo apt show *.deb 同样可以检查包的信息．
 要卸载某个 .deb 包中的所有包，用 sudo dpkg -r $(dpkg -f 文件名.deb Package)（不支持 *）
+dpkg -L 包名 查询对应的已安装的包有什么文件（安装后位置）
+apt-file list 包名 查询对应的已安装的包有什么文件（安装后位置）
+dpkg -s 包名 查询安装版本及依赖
 ```
 dpkg-deb
 ```
