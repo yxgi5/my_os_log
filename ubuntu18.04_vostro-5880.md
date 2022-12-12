@@ -9776,6 +9776,169 @@ The following packages have been kept back:
 ```
 
 
+***
+# apt 有关记录
+模拟安装（了解安装时会发生什么）
+```
+apt-get -s install <package-name>
+apt-get -s upgrade <package-name>
+apt-get -s upgrade
+
+aptitude -V -s install <package-name>
+aptitude -V -s upgrade <package-name>
+```
+
+显示软件包的细节或者简要信息（即使它没有被安装）
+```
+apt-cache showpkg <package-name>
+
+apt show <package-name>             # 显示包的详细信息，包括依赖（可以是存在但没有安装的包）
+dpkg -l | grep -i 关键字 可以查找已安装的某个包
+
+apt policy <package-name>           # 显示包的来源
+apt-cache policy <package-name>     # 显示包的来源
+apt-show-versions <package-name>    # 已经安装了给定的软件包
+apt-show-versions -a <package-name> # 打印给定软件包的所有可用版本
+
+apt list <package-name>             # 已经安装的包简要信息
+apt list -a <package-name>          # 所有可用安装包简要信息
+apt --installed list                # 列出所有已安装的包
+
+aptitude versions <package-name>    # 所有可用安装包简要信息
+
+apt download <package-name>         # 可以不安装只下载某个包的 deb（但不会下载它的依赖！）
+
+apt-cache depends <package-name>    # 依赖什么
+apt-cache rdepends <package-name>   # 被什么依赖
+aptitude why <package-name>         # 被什么依赖
+
+sudo apt upgrade 自动更新所有包，但并不删除已存在的包，
+sudo apt dist-upgrade 或者等效的 sudo apt full-upgrade 更激进，会删除已有的包，可能会更新内核，可能造成一些破坏．
+
+sudo apt clean 和 sudo apt autoclean 可以清除缓存（例如下载的 deb 安装包等，后者清的没那么干净）
+```
+
+```
+aptitude search vim -F "%c %p %d %V"
+-F 用于指定应使用哪种格式来显示输出，
+%c – 包的状态（已安装或未安装），
+%p – 包的名称，
+%d – 包的简介，
+%V – 包的版本。
+```
+
+使用apt-show-versions
+```
+sudo apt install apt-show-versions
+apt-show-versions <package-name1> <package-name2> <package-name3> 
+apt-show-versions <package-name>    # 已经安装了给定的软件包
+apt-show-versions -a <package-name> # 打印给定软件包的所有可用版本
+```
+
+自定安装了啥
+```
+apt-mark showauto
+apt-mark showauto <package-name>
+apt-mark showhold
+```
+
+PPA
+<https://itsfoss.com/ppa-guide/>
+```
+添加 ppa
+sudo add-apt-repository ppa:dr-akulavich/lighttable
+然后就可以 update 和 install 了．
+添加 ppa 并不会改变 sources.list，而是会在 /etc/apt/sources.list.d 添加两个文件，一个 .list 文件，一个 .list.save
+上面例子添加PPA的网址是 http://ppa.launchpad.net/dr-akulavich/lighttable/ubuntu/
+```
+
+Remove Old PPA
+```
+sudo apt-get autoremove --purge PACKAGENAME
+sudo apt-get install ppa-purge
+sudo add-apt-repository -remove ppa:someppa/ppa
+sudo apt-get autoclean
+```
+
+
+```
+sudo apt remove <package-name>      # 不会清除它依赖的包，但是会清除依赖它的包！
+sudo apt autoremove                 # 清除没有被依赖的, 被自动安装的包
+==
+sudo apt autoremove <package-name>
+```
+
+
+列出所有手动安装的包
+```
+comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
+```
+列出所有没有被依赖的包（无论是怎么安装的）<https://askubuntu.com/questions/1114733/how-do-i-list-all-packages-that-no-package-depends-on>
+```
+dpkg-query --show --showformat='${Package}\t${Status}\n' | tac | awk '/installed$/ {print $1}' | xargs apt-cache rdepends --installed | tac | awk '{ if (/^ /) ++deps; else if (!/:$/) { if (!deps) print; deps = 0 } }'
+```
+注意这里面有一些重要的系统包（包括 linux 内核）如果不是自己装的包要删除时要小心．
+<https://askubuntu.com/questions/2389/how-to-list-manually-installed-packages>
+```
+comm -23 <(aptitude search '~i !~M' -F '%p' | sed "s/ *$//" | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
+```
+`/var/lib/apt/extended_states` 文件储存了哪些包是自动安装的哪些是手动安装的
+
+
+查询可升级的包
+```
+sudo apt update
+apt list --upgradable
+```
+
+第三方的 source 添加
+```
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+```
+
+apt-clone
+<https://ubunlog.com/en/apt-clone-copia-seguridad-paquetes/>
+```
+sudo apt-clone clone --with-dpkg-repack <文件夹>     # 可以把本机所有安装包备份到文件夹中的一个压缩文件．
+apt-clone info 备份文件.gz 可以查看包的信息
+sudo apt-clone restore 备份文件.gz 可以进行恢复（注意一定要相同架构相同 ubuntu 版本）
+直接解压备份文件即可得到所有备份的 deb，可单独用 sudo apt install xxx.deb 安装
+sudo apt-clone restore 备份文件.gz --destination 某文件夹 把包安装到某个文件夹（使用 chroot）．
+aptic 软件据说也有类似的功能
+```
+
+dpkg
+```
+dpkg -l | grep -i 关键字 可以查找已安装的某个包
+sudo dpkg -i 名字.deb 安装 deb 安装包，其中 名字 可以带 *．完了以后用 sudo apt install -fy 安装缺失的依赖包（dpkg 不自动安装依赖）．
+sudo apt install *.deb，会自动安装依赖
+sudo apt remove 包 或者 dpkg --remove 包 卸载，dpkg --purge 包 可以连配置文件一起卸载．
+dpkg -S 文件 查看该文件是哪个包安装的．例如 dpkg -S /bin/gcc
+dpkg -f 文件名.deb [field名] 查看 deb 的某个属性，如果省略 field名 则查看所有属性
+sudo apt show *.deb 同样可以检查包的信息．
+要卸载某个 .deb 包中的所有包，用 sudo dpkg -r $(dpkg -f 文件名.deb Package)（不支持 *）
+```
+dpkg-deb
+```
+dpkg-deb -I xxx.deb 查看信息
+dpkg-deb -c xxx.deb 列出所有要安装的文件和路径．这和安装完以后用 dpkg -L 包名 列出的文件一样．
+deb 文件其实就是一个压缩包，里面包含所有需要安装的文件，以及一些配置文件．
+```
+
+Snap
+<https://www.howtogeek.com/660193/how-to-work-with-snap-packages-on-linux/>
+```
+snap 基本就是一些微小的 container 每个都包含所有的依赖文件，使用虚拟硬盘以解决不同的包使用同一个 dependency 的不同版本．
+snap list 列出所有的安装包（注意 Ubuntu Software 中安装的未必都是 snap）
+snap find 关键词 搜索包
+或者到 snap 官网，查找软件，然后按 install 就会得到安装命令，例如 snap install code --classic 安装 vscode
+如果不加 --classic，会出现如下错误 error: This revision of snap "code" was published using classic confinement and thus may perform arbitrary system changes outside of the security sandbox that snaps are usually confined to, which may put your system at risk. If you understand and want to proceed repeat the command including --classic.
+snap version 查看版本
+snap remove 删除包
+snap run 软件名 运行某个软件，也可以直接 软件名 运行（在目录 /usr/snap/bin 下）
+```
+
+
 * * *
 # Next Topic
 
