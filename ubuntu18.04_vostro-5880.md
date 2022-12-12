@@ -7033,7 +7033,7 @@ Universe Sandbox
 
 `aptitude hold libvte9` #来保持这个包的状态，避免在以后upgrade过程中被升回feisty的版本
 
-`aptitude keep libvte9` #可以清除包的hold标志
+`aptitude unhold libvte9` #可以清除包的hold标志
 
 ```
 sudo apt-get install nvidia-driver-470 libnvidia-gl-470:i386
@@ -9751,6 +9751,28 @@ sudo rm /etc/apt/preferences.d/nosnap.pref
 sudo apt update && sudo apt upgrade
 sudo snap install snap-store
 sudo apt install firefox
+```
+
+
+***
+# apt降级软件包 apt保持特定版本
+```
+apt-cache showpkg <package-name>列出所有可用的版本
+apt-get install <pkg>=<version>
+sudo aptitude install <pkg>=<version>
+apt-mark hold <package-name> 将软件包“保留”为当前版本，以防止自动升级
+还可以在/etc/apt/preferences.d/写pref文件来通过Pin-Priority控制是否升级
+```
+```
+sudo apt update
+apt list --upgradable
+sudo aptitude hold cuda cuda-drivers cuda-drivers-470 nvidia-compute-utils-470 nvidia-dkms-470 nvidia-driver-470 nvidia-kernel-common-470 nvidia-kernel-source-470 nvidia-modprobe nvidia-settings nvidia-utils-470 libcudnn8 libcudnn8-dev opera-stable
+sudo apt upgrade
+
+The following packages have been kept back:
+  cuda cuda-drivers cuda-drivers-470 libcudnn8 libcudnn8-dev libnvidia-cfg1-470 libnvidia-compute-470 libnvidia-compute-470:i386 libnvidia-decode-470 libnvidia-decode-470:i386 libnvidia-encode-470
+  libnvidia-encode-470:i386 libnvidia-extra-470 libnvidia-fbc1-470 libnvidia-fbc1-470:i386 libnvidia-gl-470 libnvidia-gl-470:i386 libnvidia-ifr1-470 libnvidia-ifr1-470:i386 nvidia-compute-utils-470
+  nvidia-dkms-470 nvidia-driver-470 nvidia-kernel-common-470 nvidia-kernel-source-470 nvidia-modprobe nvidia-settings nvidia-utils-470 opera-stable xserver-xorg-video-nvidia-470
 ```
 
 
