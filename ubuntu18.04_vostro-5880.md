@@ -5851,6 +5851,24 @@ sudo cp calltree /usr/local/bin
 sudo chmod +x /usr/local/bin/{tree2dotx,tree2svg,callgraph,calltree}
 
 ```
+生成调用图
+```
+callgraph -f main -d ./file.c -b firefox
+指定分析file.c文件中的main函数，并使用firefox显示图片，也可以使用其他浏览器。生成的函数
+调用关系图默认保存为main.file_c.svg
+```
+```
+指定函数所在文件（或者指定函数搜索路径）
+使用 -d 选项
+砍掉不感兴趣的函数分支
+callgraph -f main -d file.c -F printf -b firefox
+同时指定多个函数分支：
+callgraph -f main -d file.c -F “printf test3 test2” -b firefox
+指定函数调用深度：
+用 -D 命令可以指定：callgraph -f main -d file.c -D 2 -b firefox
+```
+
+
 * * *
 # 零星安装
 ```
@@ -10080,6 +10098,134 @@ understanding the output of "apt-cache policy"
 The *** just means installed, as far as I know. Once it has been installed, you see both 500 and 100, corresponding to the version in the archives and the locally installed version respectively.
 500 and 100 are the priority numbers. To learn more about them, I recommend man apt_preferences. 500 corresponds to installable, 100 means installed.
 ```
+
+***
+# doxygen
+<http://www.doxygen.nl/>
+```
+sudo apt install doxygen doxygen-gui doxygen-latex
+```
+使用doxywizard配置路径及build extract，dot graph啥的直接产生doxygen风格的文档及调用图
+
+doxygen风格注释语法参考官方manual
+
+
+***
+# cscope + tceetree
+<https://github.com/mihais/tceetree>
+```
+#列出cscope需要分析的文件
+find . -name "*.[c|h]" > cscope.files
+
+#生成标签
+cscope -Rcbkq
+或
+cscope -b -c -R
+
+#分析标签，生成dot
+tceetree -f -o filename.dot  # f选项带文件名
+
+#生成图形 png svg pdf等，函数调用不建议png，放不下
+dot -Tpdf -O filename.dot -o filename.pdf
+dot -Tpng -O tceetree.out
+```
+
+
+***
+# cppman 离线帮助
+```
+sudo apt install cppman
+cppman std::thread
+默认是在线请求 cppreference.com / cplusplus.com 的内容，可以花半小时一次性全部缓存到本地，提供离线帮助
+cppman -c
+```
+
+
+***
+# mc 命令行编辑器（比vim emacs弱 比nano强点）
+```
+sudo apt install mc
+
+The following additional packages will be installed:
+  mc-data
+Suggested packages:
+  dbview djvulibre-bin gv links | w3m | lynx odt2txt python-boto
+```
+
+***
+# icdiff 分屏显示 diff（看起来比直接用diff好使） 
+```
+sudo apt install icdiff
+```
+
+
+***
+# ncdu 磁盘空间分析程序（命令行下类似baobab的玩意）
+```
+sudo apt install ncdu
+```
+
+
+***
+# glances
+htop 代替 top，glances 代替 htop
+```
+sudo apt install glances
+
+The following additional packages will be installed:
+  golang-docker-credential-helpers python3-bottle python3-docker
+  python3-dockerpycreds python3-influxdb python3-ply python3-pyasn1
+  python3-pycryptodome python3-pysmi python3-pysnmp4 python3-pystache
+  python3-websocket
+Suggested packages:
+  glances-doc python-ply-doc
+```
+
+
+***
+# ranger 命令行浏览/预览文件或网页
+```
+sudo apt install ranger
+
+The following additional packages will be installed:
+  w3m w3m-img
+Suggested packages:
+  atool caca-utils highlight cmigemo dict dict-wn dictd libsixel-bin mpv
+  w3m-el
+
+```
+
+
+***
+# dstat
+代替vmstat,能输出比 vmstat 更加 美观，整洁，强大的内容
+```
+sudo apt install dstat
+```
+
+
+***
+# tmux multitail 多重 tail
+终端软件里一个tab显示多窗
+
+multitail 比 tmux + tail 强多了，操作也比 tmux 方便 
+```
+sudo apt install tmux multitail
+```
+
+
+***
+# bropages 用例为主的帮助系统
+man 以外的帮助系统有很多，除去 cheat, tldr 外，还有一款有意思的帮助系统 -- bro，它是以用例为主的帮助，所有用例都是由用户提供，并且由用户投票筛选出来的
+```
+sudo apt install ruby ruby-dev
+The following additional packages will be installed:
+  ruby2.5-dev ruby2.5-doc
+
+sudo gem install bropages
+bro cut
+```
+
 
 * * *
 # Next Topic
