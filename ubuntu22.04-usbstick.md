@@ -3786,7 +3786,7 @@ alias wine='env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=/h
 
 winehq-staging 自动安装的wine-mono-7.4.0-x86.msi等
 
-winehq-stable 自动安装的wine-mono-7.0.0-x86.msi，wine-mono-2.47.2-x64.msi，wine-mono-2.47.2-x86.msi
+winehq-stable 自动安装的wine-mono-7.0.0-x86.msi，wine-gecko-2.47.2-x64.msi，wine-gecko-2.47.2-x86.msi
 
 winecfg时候自动安装mono，比如安装winrar-x64-611.exe之前会自动安装64位gecho，安装winrar-x32-611.exe之前会自动安装32位gecho
 
@@ -5589,12 +5589,6 @@ acpi_listen
 有类似
 ```
 /usr/sbin/xfpm-power-backlight-helper
-```
-
-
-***
-#
-```
 ```
 
 
