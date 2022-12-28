@@ -10282,6 +10282,20 @@ then take effect after re-login
 <https://www.linuxdiyf.com/linux/29771.html>
 
 
+
+***
+# bitarray-2.3.4
+<https://pypi.org/project/bitarray/>
+```
+sudo -H pip3 install bitarray -i https://mirrors.163.com/pypi/simple
+source ~/anaconda3/bin/activate python3.10
+conda install bitarray
+conda update -n base -c defaults conda
+conda update conda anaconda-navigator
+conda update --update-all
+conda upgrade --all
+```
+
 * * *
 # Next Topic
 
