@@ -10295,6 +10295,12 @@ conda update conda anaconda-navigator
 conda update --update-all
 conda upgrade --all
 ```
+```
+sudo -H pip3 install pilkit -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install scikit-image==0.17.2 -i https://mirrors.163.com/pypi/simple
+source ~/anaconda3/bin/activate python3.10
+conda install -c conda-forge scikit-image scikit-build scikit-learn
+```
 
 * * *
 # Next Topic
