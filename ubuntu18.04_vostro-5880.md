@@ -10302,6 +10302,99 @@ source ~/anaconda3/bin/activate python3.10
 conda install -c conda-forge scikit-image scikit-build scikit-learn
 ```
 
+
+***
+# 安装 nutstore
+
+```
+$ sudo apt install libnautilus-extension-dev
+$ pkg-config --cflags libnautilus-extension
+```
+从 aur 下载 nutstore 的 PKGBUILD 文件，修改编译
+```
+# Maintainer: Bhoppi Chaw <bhoppi#outlook,com>
+
+pkgname=nutstore-experimental
+pkgver=5.1.7
+pkgrel=1
+pkgdesc='Nutstore experimental version.'
+arch=(x86_64)
+url='https://www.jianguoyun.com/'
+license=(custom)
+depends=(
+#    libappindicator-gtk3
+#    libnotify
+    python-gobject
+#    webkit2gtk
+)
+optdepends=('nautilus-nutstore: Nautilus plugin')
+provides=(nutstore)
+conflicts=(nutstore)
+source=(nutstore license)
+source_x86_64=("https://pkg-cdn.jianguoyun.com/static/exe/ex/$pkgver/nutstore_client-$pkgver-linux-x86_64-public.tar.gz")
+sha256sums=('a4aa358d45b306cbeac449f2256f00a5b81a95197394eba7efa96eaae820cf5b'
+            'd320e071403cdad44881beb880f5ccfa8ec0a625718a9f572dce0cc9fff81ade')
+sha256sums_x86_64=('b55d3ab8744da92151949ab088171cfae1f80464b356fd1720f24be0708f15c4')
+
+build() {
+    cd $srcdir/gnome-config
+    sed -i '/Exec=/s|~/\.nutstore/dist/bin/nutstore-pydaemon.py|/usr/bin/nutstore|' menu/nutstore-menu.desktop
+    sed -i '/Exec=/s|~/\.nutstore/dist|/opt/nutstore|' autostart/nutstore-daemon.desktop
+    cd $srcdir/bin
+    sed -i '/gvfs-set-attribute/s|gvfs-set-attribute|gio set|' nutstore-pydaemon.py
+    python -m compileall .
+}
+
+package() {
+    cd $srcdir
+    install -D -m755 nutstore $pkgdir/usr/bin/nutstore
+    install -D -m644 license $pkgdir/usr/share/licenses/nutstore/license
+    rm nutstore license *.tar.gz
+    mkdir -p $pkgdir/opt/nutstore && cp -aR ./ $pkgdir/opt/nutstore
+    install -D -m644 gnome-config/menu/nutstore-menu.desktop $pkgdir/usr/share/applications/nutstore.desktop
+    install -D -m644 app-icon/nutstore.png $pkgdir/usr/share/icons/hicolor/512x512/apps/nutstore.png
+}
+```
+```nautilus-nutstore
+$ makedeb
+```
+## nautilus-nutstore
+```
+# Maintainer: Bhoppi Chaw <bhoppi#outlook,com>
+
+pkgname=nautilus-nutstore
+pkgver=5.1.7
+pkgrel=1
+pkgdesc='Nutstore integration for Nautilus.'
+arch=(x86_64)
+url='https://www.jianguoyun.com/'
+license=(CCPL:by-nd GPL2)
+depends=(libnautilus-extension-dev nutstore)
+source=("https://www.jianguoyun.com/static/exe/installer/nutstore_linux_src_installer.tar.gz")
+sha256sums=('545e0d393f3e529d0c0a8f51fe652749a1067f84c78dfb445ffb6023c5a7bfa1')
+
+build() {
+    cd $srcdir/nutstore_linux_src_installer
+    ./configure || return 1
+    make || return 1
+}
+
+package() {
+    cd $srcdir/nutstore_linux_src_installer
+    make DESTDIR=$pkgdir install
+    install -D -m 644 COPYING $pkgdir/usr/share/licenses/$pkgname/COPYING
+}
+```
+
+<https://github.com/chrisjbillington/git-nautilus-icons>
+
+<https://aur.archlinux.org/packages/git-nautilus-icons>
+
+```
+$ sudo apt-get install python-gi python-{nautilus,nemo,caja} python-pathlib python-enum34 python-pip
+```
+
+
 * * *
 # Next Topic
 
