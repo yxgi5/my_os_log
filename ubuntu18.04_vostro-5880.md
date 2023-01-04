@@ -10426,6 +10426,83 @@ proftpd 是 webmin 推荐使用的，和vsftpd是冲突的
 sudo apt install proftpd proftpd-doc
 ```
 
+
+***
+# gitlab-ce
+
+映射目录
+```
+/home/docker/gitlab         权限root:root
+```
+映射端口
+```
+443-->443
+80-->8091
+22-->2222
+```
+docker 安装 gitlab-ce
+```
+docker pull gitlab/gitlab-ce
+```
+运行容器
+```
+docker run -d -p 443:443 \
+	-p 8091:80 -p 2222:22 \
+	--name gitlab \
+	--restart always \
+	-v /home/docker/gitlab/config:/etc/gitlab \
+	-v /home/docker/gitlab/logs:/var/log/gitlab \
+	-v /home/docker/gitlab/data:/var/opt/gitlab \
+	gitlab/gitlab-ce
+```
+查看 登录用户 root 的初始密码
+```
+docker exec -it gitlab cat /etc/gitlab/initial_root_password
+sudo cat /home/docker/gitlab/config/initial_root_password
+```
+
+修改配置
+```
+sudo gedit /home/docker/gitlab/config/gitlab.rb
+```
+```
+external_url 'http://192.168.0.100'
+gitlab_rails['gitlab_ssh_host'] = '192.168.0.100'
+gitlab_rails['gitlab_shell_ssh_port'] = 2222 # 此端口是run时22端口映射的222端口
+
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = "smtp.qq.com"
+gitlab_rails['smtp_port'] = 465
+gitlab_rails['smtp_user_name'] = "253951005@qq.com"
+gitlab_rails['smtp_password'] = "hgdgnlpnqosebggf" # qq邮箱的 设置->账户 smtp设置里
+gitlab_rails['smtp_domain'] = "smtp.qq.com"
+gitlab_rails['smtp_authentication'] = "login"
+gitlab_rails['smtp_enable_starttls_auto'] = true
+gitlab_rails['smtp_tls'] = true
+# gitlab_rails['smtp_pool'] = false
+gitlab_rails['gitlab_email_from'] = '253951005@qq.com'
+```
+登入容器shell
+```
+sudo docker exec -it gitlab bash
+```
+容器shell内 更新容器 apt repo
+```
+apt update
+apt install postfix
+```
+容器shell内 生效配置
+```
+gitlab-ctl reconfigure
+```
+容器shell 测试邮件发送
+```
+gitlab-rails console
+
+Notify.test_email('zhaoguo.zhang@figkey.com', '邮件标题', '邮件正文').deliver_now
+```
+
+
 * * *
 # Next Topic
 
