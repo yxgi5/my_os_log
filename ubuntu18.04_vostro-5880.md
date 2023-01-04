@@ -10395,6 +10395,37 @@ $ sudo apt-get install python-gi python-{nautilus,nemo,caja} python-pathlib pyth
 ```
 
 
+***
+# Baloo 关闭 index
+<https://wiki.archlinux.org/index.php/Baloo>
+<https://forum.manjaro.org/t/solved-baloo-file-extractor-using-100-cpu/70737/5>
+<https://community.kde.org/Baloo>
+<https://wiki.gentoo.org/wiki/Baloo>
+<https://zh.opensuse.org/Baloo>
+
+
+一层一层找下去
+```
+du -h --max-depth=1 /home/username
+```
+```
+#检查状态
+balooctl status
+#立即停止
+balooctl suspend
+#禁用框架
+balooctl disable
+```
+如果不想停用，可以编辑 `~/.config/baloofilerc` ，在里面添加 exclude folders 一项来忽略某些目录，加速 baloo index 速度
+
+
+***
+# proftpd 一个 tfp server
+proftpd 是 webmin 推荐使用的，和vsftpd是冲突的
+```
+sudo apt install proftpd proftpd-doc
+```
+
 * * *
 # Next Topic
 

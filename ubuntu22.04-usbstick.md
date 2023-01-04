@@ -5593,6 +5593,14 @@ acpi_listen
 
 
 ***
+# proftpd 一个 tfp server
+proftpd 是 webmin 推荐使用的，和vsftpd是冲突的
+```
+sudo apt install proftpd proftpd-doc
+```
+
+
+***
 #
 ```
 ```
@@ -5604,9 +5612,4 @@ acpi_listen
 ```
 
 
-***
-#
-```
-```
-
-
+proftpd
