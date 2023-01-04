@@ -5600,6 +5600,24 @@ sudo apt install proftpd proftpd-doc
 ```
 
 
+* * *
+# webmin
+<https://github.com/webmin/webmin/releases>
+```
+$ sudo apt-get install libauthen-pam-perl
+$ sudo dpkg -i webmin_2.001_all.deb
+$ sudo /usr/share/webmin/changepass.pl /etc/webmin root [密码]
+Password for Webmin user root updated successfully
+```
+说明：
+root是webmin的用户名，不是OS的
+xxx为密码
+/etc/webmin是webmin的配置目录
+```
+https://localhost:10000
+```
+
+
 ***
 #
 ```
