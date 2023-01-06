@@ -3854,8 +3854,10 @@ cd /usr/local/sunloginremote/bin/
 ./sunloginremote
 ```
 `sudo chmod +x sunloginremote`
-
-
+```
+547163371
+5747
+```
 
 
 * * *
@@ -5455,10 +5457,29 @@ $ uname -r
 下载内核源码
 ```
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git
-如果网络状态不好,只clone一层
+如果网络状态不好,只clone一层(shallow clone + single branch)
 git clone --depth 1 --single-branch --branch master git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git
 
+拉取当前分支更多层
+git fetch --depth=10
+
+添加其他分支(get access to all the branches)
+git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+或者
+git remote set-branches origin '*'
+
+取消浅克隆
+git fetch --unshallow
+
+如果先 取消浅克隆，然后再添加其他分支 还需要fetch一遍("git fetch","git fetch --all","git fetch -v"都行)
+
+取回tag
+git fetch --tags
+
 git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+git fetch --all
+git pull --all
+
 git checkout -b tmp Ubuntu-hwe-5.4-5.4.0-105.119_18.04.1
 ```
 根据<https://gist.github.com/rometsch/dfd24fb09c85c1ad2f25223dc1481aaa>修改
@@ -10428,7 +10449,7 @@ sudo apt install proftpd proftpd-doc
 
 
 ***
-# gitlab-ce
+# gitlab-ce (太占资源了，直接用gitlab.com)
 
 映射目录
 ```
@@ -10500,6 +10521,15 @@ gitlab-ctl reconfigure
 gitlab-rails console
 
 Notify.test_email('zhaoguo.zhang@figkey.com', '邮件标题', '邮件正文').deliver_now
+```
+
+
+
+
+***
+# 
+```
+
 ```
 
 
