@@ -10527,10 +10527,118 @@ Notify.test_email('zhaoguo.zhang@figkey.com', '邮件标题', '邮件正文').de
 
 
 ***
-# 
+# git-lfs
+
+git clone xxx 之后出现
+```
+Cloning into 'Hi06701A'...
+remote: Enumerating objects: 46882, done.
+remote: Total 46882 (delta 0), reused 0 (delta 0), pack-reused 46882
+Receiving objects: 100% (46882/46882), 351.60 MiB | 173.00 KiB/s, done.
+Resolving deltas: 100% (3890/3890), done.
+git-lfs filter-process: line 1: git-lfs: command not found
+fatal: the remote end hung up unexpectedly
+warning: Clone succeeded, but checkout failed.
+You can inspect what was checked out with 'git status'
+and retry with 'git restore --source=HEAD :/'
+```
+```
+git config --system core.longpaths true
+git restore --source=HEAD :/
+```
+提示找不到 git-lfs
+```
+sudo apt install git-lfs
+cd [clone-dir]
+git lfs install
+```
+```
+$ git lfs install
+Updated git hooks.
+Git LFS initialized.
+```
+```
+$ echo $(git --exec-path)
+/usr/lib/git-core
 ```
 
+下面命令奇慢无比
 ```
+git restore --source=HEAD :/
+```
+```
+git reset --hard
+```
+If you intentionally removed git-lfs, and don't want to install it back as other answers suggest, your way out is:
+```
+git config --global --remove-section filter.lfs
+```
+
+## git-lfs tips
+
+1. Download and install the Git command line extension. Once downloaded and installed, set up Git LFS for your user account by running:
+```
+git lfs install
+```
+You only need to run this once per user account.
+
+2. In each Git repository where you want to use Git LFS, select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
+```
+git lfs track "*.psd"
+```
+跟踪文件夹中的所有文件
+```
+忽略文件夹中的所有文件(包含文件夹)
+// git lfs track "Pods/TXLiteAVSDK_Professional/**"
+git lfs track "dir/**"
+忽略文件夹中的文件(不包含文件夹)
+git lfs track "dir/*"
+```
+执行完上面的命令后，会生成一个.gitattributes文件，要将其上传到远程gitee仓库
+
+Now make sure .gitattributes is tracked:
+```
+git add .gitattributes
+git commit -m '提交 .gitattributes 文件'
+git push origin master（如果提交不了，后面可以加一个-f）
+```
+配置提交后就可正常上传文件
+```
+git add -A   提交所有 或指定当前大文件提交
+git commit -m "大文件"
+git push origin master -f
+```
+上传报错Message: LFS only supported repository in paid enterprise.: exit status 128, 解决方法：
+```
+rm .git/hooks/pre-push
+git push -u origin "master"
+```
+报错message：WARNING: Authentication error: Authentication required: LFS only supported repository in paid enterprise.解决办法
+```
+git config lfs.https://gitee.com/{your_gitee}/{your_repo}.git/info/lfs.locksverify false
+```
+报错信息：Remote “origin” does not support the LFS locking API. Consider disabling it with:…
+```
+git lfs push origin master --all
+```
+## git 回退
+1. 查看提交记录获取commit_id
+```
+git log
+```
+2. 回退命令
+```
+git reset --hard HEAD^` 回退到上个版本
+git reset --hard HEAD~3` 回退到前3次提交之前，以此类推，回退到n次提交之前
+git reset --hard commit_id` 退到/进到 指定[commit]的sha码
+```
+3. 强推到远程仓库
+```
+git push origin HEAD --force
+```
+
+
+
 
 
 * * *
