@@ -10638,7 +10638,63 @@ git push origin HEAD --force
 ```
 
 
+***
+# 本机缓存清理
+```
+~/.cache/pip
+~/.cache/angrysearch
+~/.cache/tracker/mata.db       [其实这里没有，如果有就删]
+~/.cache/vmware/drag_and_drop  [其实这里没有，如果有就删]
+```
+Tracker is used (by gnome) to index files to make them searchable and appear automatically in some programs (like Rhythmbox for music files, etc). More info from the Ubuntu wiki on it here https://wiki.ubuntu.com/Tracker.
 
+You can do a hard reset of the tags database and restart all the tracker processes with this command:
+```
+tracker reset -r
+```
+这会像跟踪程序守护进程kill那样杀死所有进程，但它也会删除所有进程数据库。重新启动跟踪器存储将重新创建数据库。
+
+Use `tracker daemon -t` to terminate and `tracker daemon -s` to start the processes.
+
+check the status,
+```
+tracker status
+```
+## ~/.cache 大文件清理
+逐级排查，即进入逐步进入占用空间大的文件夹，然后删除
+```
+sudo -i //进入root模式
+du -h max-depth=1   //查看各文件占用的内存
+cd ./目录名称    //进入占用内存大的文件下查看情况
+```
+文件管理器里删除完一定要清空回收站，例如
+```
+sudo rm -fr /root/.local/share/Trash/
+sudo rm -fr ~/.local/share/Trash/
+sudo rm -fr /opt/.Trash-1000/
+```
+## 清除cache缓存
+先进入root模式
+```
+sudo -i
+```
+仅清除页面缓存（PageCache）
+```
+echo 1 > /proc/sys/vm/drop_caches
+```
+清除目录项和inode
+```
+echo 2 > /proc/sys/vm/drop_caches
+```
+清除页面缓存，目录项和inode
+```
+echo 3 > /proc/sys/vm/drop_caches
+```
+## 清除arp缓存
+```
+arp -n|awk '/^[1-9]/ {print "arp -d "$1}' | sh
+for((ip=2;ip<255;ip++));do arp -d 192.168.0.$ip &>/dev/null;done
+```
 
 
 * * *

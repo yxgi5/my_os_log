@@ -273,12 +273,21 @@ $ sudo apt-get install ppa-purge
 $ sudo add-apt-repository -remove ppa:someppa/ppa
 $ sudo apt-get autoclean
 ```
+清理缓存
+```
+$ sudo apt-get autoclean //清理旧版本的软件缓存
+$ sudo apt-get clean //清理所有软件缓存
+$ sudo apt-get autoremove  //删除系统不再使用的孤立软件
+```
+清除rc标记的包
+```
+dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
+```
 查询可升级的包
 ```
 $ sudo apt update
 $ apt list --upgradable
 ```
-
 
 
 # openssh

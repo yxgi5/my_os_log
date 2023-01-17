@@ -1514,7 +1514,7 @@ http://www.gosoa.com.cn/category/linux%E5%BC%80%E5%8F%91
 
 http://www.gosoa.com.cn/linux-%E6%89%BE%E5%87%BA%E5%A4%A7%E6%96%87%E4%BB%B6%E6%B1%87%E6%80%BB
 
-/home/user/.cache/tracker目录，找到meta.db（多媒体文件索引数据），删除这个文件（可以放心删除，手机重启后会自动生成），然后重启
+/home/user/.cache/tracker目录，找到meta.db（多媒体文件索引数据缓存），删除这个文件（可以放心删除，手机重启后会自动生成），然后重启
 
 `$ find . -type f -size +10000k -exec ls -lh {} \; | awk ‘{ print $8 “: ” $5 }’
 `
