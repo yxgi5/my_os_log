@@ -3855,8 +3855,8 @@ cd /usr/local/sunloginremote/bin/
 ```
 `sudo chmod +x sunloginremote`
 ```
-547163371
-5747
+599801458
+4397
 ```
 
 
@@ -10698,18 +10698,49 @@ for((ip=2;ip<255;ip++));do arp -d 192.168.0.$ip &>/dev/null;done
 
 
 * * *
-# Next Topic
+# 修改mac地址
+```
+sudo gedit /etc/rc.local
+```
+```
+#!/bin/sh
+#ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+ifconfig eth0 hw ether 00:d8:61:a6:62:b7
+exit 0
+```
+```
+sudo chmod +x /etc/rc.local
+```
 
 
+***
+#
+```
+```
 
 
+***
+#
+```
+```
 
 
+***
+#
+```
+```
 
 
+***
+#
+```
+```
 
 
-
+***
+#
+```
+```
 
 
 

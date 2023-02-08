@@ -5677,6 +5677,130 @@ package() {
   #install -Dm644 icons/logo_color.png "$pkgdir/usr/share/pixmaps/dsview.png"
 }
 ```
+```
+makedeb
+会 fatal: No tags can describe . Try --always, or create some tags.
+git fetch --prune --unshallow 就可以解决
+```
+
+
+***
+# electronic-wechat
+<https://github.com/zzy-ac/electronic-wechat/releases>
+```
+sudo dpjg -i electronic-wechat_2.3.2_amd64.deb
+```
+
+
+***
+# Xilinx vivado vitis
+```
+sudo apt install blt
+sudo apt install gcc-multilib
+sudo apt install texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev
+sudo apt install lib32atomic1 lib32gomp1 lib32itm1 lib32quadmath0 lib32stdc++6 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32atomic1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+```
+ERROR: ld.so: object '/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
+```
+sudo apt-get install libgtk3-nocsd0
+```
+
+
+***
+# geany
+```
+sudo apt-get install geany libvte9
+```
+
+* * *
+# 修改mac地址
+```
+sudo gedit /etc/rc.local
+```
+```
+#!/bin/sh
+#ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+ifconfig eth0 hw ether 00:d8:61:a6:62:b7
+exit 0
+```
+```
+sudo chmod +x /etc/rc.local
+sudo systemctl status rc-local
+sudo gedit /etc/systemd/system/rc-local.service
+```
+```
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionPathExists=/etc/rc.local
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+WantedBy=multi-user.target
+```
+```
+sudo systemctl enable rc-local
+sudo systemctl start rc-local
+sudo systemctl status rc-local
+```
+
+
+***
+# "modelsim" Fontconfig error: Cannot load default config file
+```
+/opt/modelsim/modeltech/lib
+删掉libfontconfig.so.1和libfontconfig.so.1.6.2，因为系统库有
+/usr/lib/x86_64-linux-gnu/libfontconfig.so
+/usr/lib/x86_64-linux-gnu/libfontconfig.so.1
+/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.0
+```
+
+
+***
+# github "X11 forwarding request failed on channel 0"
+test
+```
+ssh -T git@github.com
+```
+```
+$ git clone git@github.com:Itseez/opencv.git
+Cloning into 'opencv'
+Warning: Permanently added the RSA host key for IP address '192.30.252.128' to the list of known hosts.
+X11 forwarding request failed on channel 0
+(...)
+```
+disable ForwardX11 just for github.com in `~/.ssh/config` or `/etc/ssh/ssh_config`
+```
+Host github.com
+    ForwardX11 no
+
+Host *
+    ForwardX11 yes
+```
+
+
+***
+# upgrade20230208
+```
+sudo apt install grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed
+sudo apt autoremove
+The following packages will be REMOVED:
+libllvm13:i386 libvulkan1:i386 mesa-vulkan-drivers:i386
+sudo apt install casper fonts-noto-color-emoji gnome-initial-setup ubiquity-casper ubuntu-advantage-tools update-notifier update-notifier-common apport-gtk
+```
 
 
 ***
@@ -5685,4 +5809,30 @@ package() {
 ```
 
 
-proftpd
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+***
+#
+```
+```
+
+
+
+
+
+
+
+
+
+
+
