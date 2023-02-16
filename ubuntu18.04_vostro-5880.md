@@ -3882,8 +3882,8 @@ cd /usr/local/sunloginremote/bin/
 ```
 `sudo chmod +x sunloginremote`
 ```
-547163371
-5747
+599801458
+4397
 ```
 
 
@@ -10735,18 +10735,49 @@ curl -L -C - "https://d.pcs.baidu.com/file/27bc4e6499bd212d76fc513e2c2c227c?fid=
 
 
 * * *
-# Next Topic
+# 修改mac地址
+```
+sudo gedit /etc/rc.local
+```
+```
+#!/bin/sh
+#ifconfig eth0 hw ether e0:d5:5e:f8:a6:7a
+ifconfig eth0 hw ether 00:d8:61:a6:62:b7
+exit 0
+```
+```
+sudo chmod +x /etc/rc.local
+```
 
 
+***
+#
+```
+```
 
 
+***
+#
+```
+```
 
 
+***
+#
+```
+```
 
 
+***
+#
+```
+```
 
 
-
+***
+#
+```
+```
 
 
 
