@@ -614,7 +614,34 @@ VBoxManage extpack install [--replace] <tarball> |
 ```
 
 
+#### Solve "Cannot change group vboxusers for device /dev/vboxdrv" Virtualbox Error
+<https://ostechnix.com/solve-cannot-change-group-vboxusers-for-device-dev-vboxdrv-virtualbox-error/>
 
+To fix this issue, first create vboxusers group using command:
+```
+$ sudo groupadd vboxusers
+```
+Then add the current user to the above group:
+```
+$ sudo usermod -a -G vboxusers andreas
+```
+Check if the user is added to the group:
+```
+$ grep vboxusers /etc/group
+vboxusers:x:1002:andreas
+```
+Finally, restart the virtualbox kernel module using command:
+```
+$ sudo /sbin/vboxconfig
+```
+or
+```
+$ sudo modprobe vboxdrv
+```
+or
+```
+$ sudo /sbin/rcvboxdrv setup
+```
 
 
 * * *
@@ -10694,6 +10721,16 @@ echo 3 > /proc/sys/vm/drop_caches
 ```
 arp -n|awk '/^[1-9]/ {print "arp -d "$1}' | sh
 for((ip=2;ip<255;ip++));do arp -d 192.168.0.$ip &>/dev/null;done
+```
+
+
+***
+# 百度插件更新后获取API链接
+```
+https://d.pcs.baidu.com/file/27bc4e6499bd212d76fc513e2c2c227c?fid=1100873503712-250528-144130801647605&dstime=1675390432&rt=sh&sign=FDtAERVJouK-DCb740ccc5511e5e8fedcff06b081203-PTvly6C1Xx8%2FV8kIm8JlHMZWpxk%3D&expires=8h&chkv=1&chkbd=0&chkpc=&dp-logid=8845700870123587901&dp-callid=0&shareid=21224254387&r=777438278&resvsflag=1-12-0-1-1-1&vuk=81288970&file_type=0
+```
+```
+curl -L -C - "https://d.pcs.baidu.com/file/27bc4e6499bd212d76fc513e2c2c227c?fid=1100873503712-250528-144130801647605&dstime=1675389666&rt=sh&sign=FDtAERVJouK-DCb740ccc5511e5e8fedcff06b081203-Gn4A2CyM%2BMFe%2BGGYWc4u1vyq7zg%3D&expires=8h&chkv=1&chkbd=0&chkpc=&dp-logid=8845495149683191085&dp-callid=0&shareid=21224254387&r=115101242&resvsflag=1-12-0-1-1-1&vuk=81288970&file_type=0" -o "Qt5.9 C++开发指南例程源码.zip" -A "pan.baidu.com" -b "BDUSS=TZ0cXZraUxCUG5WRmFTZjFhN1VHaVVUQmNoSjVDVnBvSTBMMjZMeDJENXI5d05rSVFBQUFBJCQAAAAAAAAAAAEAAAARBNXceXhnaWxpa2UxMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGtq3GNratxjb"
 ```
 
 
