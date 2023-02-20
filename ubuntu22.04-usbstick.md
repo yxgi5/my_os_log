@@ -5699,6 +5699,9 @@ sudo apt install blt
 sudo apt install gcc-multilib
 sudo apt install texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev
 sudo apt install lib32atomic1 lib32gomp1 lib32itm1 lib32quadmath0 lib32stdc++6 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32atomic1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+sudo apt install libtinfo-dev
+sudo apt install libstdc++6:i386 libgtk2.0-0:i386 dpkg-dev:i386
+sudo apt install libtinfo5 libncurses5
 ```
 ERROR: ld.so: object '/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
 ```
@@ -5804,25 +5807,152 @@ sudo apt install casper fonts-noto-color-emoji gnome-initial-setup ubiquity-casp
 
 
 ***
-#
+# 星空图stellarium
+```
+sudo apt install stellarium
+```
+
+
+***
+# wps
+```
+wget https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11664/wps-office_11.1.0.11664.XA_amd64.deb
+sudo dpkg -i wps-office_11.1.0.11664.XA_amd64.deb
+sudo apt install wps-office ttf-mscorefonts-installer wps2odt wps2epub
+```
+some formula symbols might be not display correctly due to missing fonts Symbol,wingdings,wingdings 2,wingdings 3,webding
+```
+sudo dpkg -i symbol-fonts_1.2_all.deb
+```
+manual install symbol-fonts
+```
+For this tutorial we will use the /tmp directory to temporary save the files.
+
+Change to the /tmp directory.
+cd /tmp
+
+Clone the Git repository.
+git clone https://github.com/iamdh4/ttf-wps-fonts.git
+
+Create a sub directory in your system's fonts directory. This is usually /usr/share/fonts, otherwise consult your distribution's documentation.
+sudo mkdir /usr/share/fonts/wps-fonts
+
+Move fonts to the new directory.
+sudo mv ttf-wps-fonts/* /usr/share/fonts/wps-fonts
+
+Fix the file permissions.
+sudo chmod 644 /usr/share/fonts/wps-fonts/*
+
+Rebuild the font cache.
+sudo fc-cache -vfs
+
+Clean up the tmp directory.
+rm -rf /tmp/ttf-wps-fonts
+```
+
+
+***
+# qalculate
+```
+sudo apt install qalculate-gtk
+Suggested packages:
+  gnuplot-doc
+The following NEW packages will be installed:
+  aglfn gnuplot-data gnuplot-x11 liblua5.4-0 libqalculate-data libqalculate22 qalc qalculate-gtk
+```
+
+
+***
+# 安装docker
+see 
+<https://docs.docker.com/engine/install/linux-postinstall/>
+
+<https://docs.docker.com/engine/install/ubuntu/>
+
+```
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
+$ sudo apt-get update
+$ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+$ sudo mkdir -m 0755 -p /etc/apt/keyrings
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+$ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+$ sudo apt update
+$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+$ sudo docker run hello-world
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+$ docker run hello-world
+$ sudo systemctl enable docker.service
+$ sudo systemctl enable containerd.service
+```
+## docker 源加速
+/etc/docker/daemon.json，加上如下的键值:
+```
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+```
+
+## 阿里云镜像加速docker
+<https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors>
+
+修改daemon配置文件`/etc/docker/daemon.json`来使用加速器
+```
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://3m45wpca.mirror.aliyuncs.com"]
+}
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+验证
+```
+docker info
+```
+
+
+***
+# apt加速
+apt临时加速(shadowsocks通过privoxy把socks5映射为http/https..,默认privoxy的端口8118)
+```
+sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8118/" upgrade
+sudo apt-get -o Acquire::https::proxy="http://127.0.0.1:8118/" upgrade
+sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8118/" install xxx
+sudo apt-get -o Acquire::https::proxy="http://127.0.0.1:8118/" install xxx
+```
+新建~/apt_proxy_conf
+`gedit ~/apt_proxy_conf`
+```
+Acquire::http::proxy "http://127.0.0.1:8118";
+Acquire::ftp::proxy "http://127.0.0.1:8118";
+Acquire::https::proxy "http://127.0.0.1:8118";
+```
+运行
+```
+sudo apt-get -c ~/apt_proxy_conf update
+sudo apt-get -c ~/apt_proxy_conf upgrade
+```
+
+
+***
+# pycharm
 ```
 ```
 
 
 ***
-#
-```
-```
-
-
-***
-#
-```
-```
-
-
-***
-#
+# 
 ```
 ```
 

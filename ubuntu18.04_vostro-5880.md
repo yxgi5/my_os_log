@@ -882,10 +882,12 @@ sudo gedit /etc/lsb-release
 
 ```
 sudo apt install blt 
-sudo apt install lib32asan4 lib32atomic1 lib32cilkrts5 lib32gcc-7-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx2 lib32quadmath0 lib32stdc++6 lib32ubsan0 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32asan4 libx32atomic1 libx32cilkrts5 libx32gcc-7-dev libx32gcc1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 libx32ubsan0 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
-sudo apt install gcc-7-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev
 
-sudo apt install gcc-multilib
+sudo apt install lib32asan4 lib32atomic1 lib32cilkrts5 lib32gcc-7-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx2 lib32quadmath0 lib32stdc++6 lib32ubsan0 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32asan4 libx32atomic1 libx32cilkrts5 libx32gcc-7-dev libx32gcc1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 libx32ubsan0 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+
+sudo apt install gcc-7-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev tcl
+
+sudo apt install gcc-multilib libapr1 libapr1-dev libaprutil1 net-tools libc6-dev-i386 fonts-liberation graphviz libann0 libcdt5 libcgraph6 libgts-0.7-5 libgts-bin libgvc6 libgvpr2 liblab-gamut1 libpathplan4
 ```
 冲突删除了一些包，安装完petalinux再换回来
 ```
@@ -896,7 +898,8 @@ vpi1-cross-aarch64-l4t是nvidia的sdk包里的
 vitis后续
 ```
 sudo /opt/Xilinx/.xinstall/Vitis_2020.1/scripts/installAIeDepLibs.sh
-sudo /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/install_drivers
+cd /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/
+sudo ./install_drivers
 ```
 这些包还是留着，不要auto remove了
 ```
@@ -3503,7 +3506,7 @@ $ sudo apt-get install \
 Add Docker’s official GPG key:
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 $ echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/ \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
@@ -3513,6 +3516,12 @@ $ sudo docker run hello-world
 $ sudo usermod -aG docker $USER
 $ newgrp docker
 $ docker run hello-world
+## docker 源加速
+/etc/docker/daemon.json，加上如下的键值:
+```
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
 ```
 ## 在dock安装ubuntu1604 [原来是为了在arch执行xsct, 不过看起来对ubunut多版本还是个很好的解决方案]
 ```
@@ -3855,6 +3864,7 @@ cd /usr/local/sunloginremote/bin/
 ```
 `sudo chmod +x sunloginremote`
 ```
+http://127.0.0.1:30080
 599801458
 4397
 ```
@@ -3892,7 +3902,7 @@ sudo -H pip3 install --no-deps PyQt5-stubs==5.15.2.0 -i https://mirrors.163.com/
 
 
 * * *
-# apt临时加速
+# apt加速
 apt临时加速(shadowsocks通过privoxy把socks5映射为http/https..,默认privoxy的端口8118)
 ```
 sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8118/" upgrade
