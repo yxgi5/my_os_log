@@ -5839,12 +5839,24 @@ sudo update-alternatives --config gnome-www-browser
 * * *
 # opencv and gstreamer
 ```
-sudo apt install libopencv-dev opencv-data opencv-doc python-opencv
+sudo apt install libopencv-dev opencv-data opencv-doc python-opencv python3-opencv
 sudo apt install python3-gi python3-gst-1.0 python3-tk
 sudo -H pip3.6 install -i https://mirrors.163.com/pypi/simple opencv-contrib-python opencv-python
 pip3 show opencv-contrib-python
 sudo -H pip3.6 install -i https://mirrors.163.com/pypi/simple gst gobject tkVideo
 apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+```
+```
+pkg-config opencv --modversion
+pkg-config opencv --libs
+sudo find / -iname "*opencv*"
+sudo find / -iname "*opencv*" > opencv_find.txt
+```
+```
+/usr/include/opencv
+/usr/include/opencv2
+/usr/lib/x86_64-linux-gnu/libopencv_core.so
+...
 ```
 
 * * *
@@ -10761,22 +10773,75 @@ sudo chmod +x /etc/rc.local
 
 
 ***
-#
+# edid-generator
 ```
-```
-
-
-***
-#
-```
+git clone git@github.com:akatrevorjay/edid-generator.git
+sudo apt install zsh edid-decode automake dos2unix
+wget https://www.deltacast.tv/media/1145/EEDID_Editor_1.4.00_Setup_Win64.zip
 ```
 
 
 ***
-#
+# 汉英辞典-星际译王
 ```
+sudo apt install stardict espeak-data libespeak1 libestools2.5 stardict-common stardict-gnome stardict-plugin stardict-plugin-espeak stardict-plugin-festival
+
+sudo apt purge --auto-remove stardict
 ```
 
+
+***
+# webp 图片转换
+```
+sudo apt-get install webp
+
+可以使用如下命令将 JPG 或 PNG 转换为 WEBP
+cwebp -q [图像质量] [JPEG/PNG文件名] -o [WebP文件名]
+
+使用如下命令或将 WEBP 图片转换成 PNG
+dwebp [WebP文件名] -o [PNG文件名]
+```
+```
+sudo apt install libwebp-dev libgdk-pixbuf2.0-dev
+sudo apt install libwebp-dev libgdk-pixbuf2.0-dev libgtk-3-dev meson build-essential
+```
+```
+# Maintainer: Andeas Zhang
+_name="webp-pixbuf-loader"
+pkgname="${_name}-git"
+pkgdesc="WebM GDK Pixbuf Loader library - Git version"
+pkgver=0.2.4.r0.ga350141
+pkgrel=1
+url="https://github.com/aruiz/webp-pixbuf-loader"
+license=("GPL")
+depends=("libgdk-pixbuf2.0-dev" "libwebp-dev")
+makedepends=("meson" "git")
+arch=("i686" "x86_64" "i486" "pentium4" "aarch64" "armv7h")
+conflicts=("${_name}")
+#source=("${_name}::git+${url}.git")
+source=("${_name}::git+ssh://git@github.com/aruiz/webp-pixbuf-loader.git")
+sha256sums=("SKIP")
+
+pkgver() {
+	cd "${_name}"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "${_name}"
+	meson build
+	ninja -C build
+}
+
+package() {
+	cd "$srcdir/${_name}"
+	DESTDIR="${pkgdir}" ninja -C build install
+}
+```
+比较好的的办法
+```
+lximage-qt 或 Gwenview Qview gThumb LibreOffice 打开并另存
+```
 
 ***
 #
