@@ -383,6 +383,20 @@ dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
 $ sudo apt update
 $ apt list --upgradable
 ```
+---
+# git
+```
+sudo apt install git git-gui gitk git-svn meld subversion xxdiff
+```
+```
+git config --global user.name "name"
+git config --global user.email "name@xxx.com"
+git config --global core.autocrl false
+git config --global core.fileMode false
+git config --global merge.ff false
+git config --global pull.ff true
+```
+---
 
 # openssh
 
@@ -682,12 +696,15 @@ deb https://deb.opera.com/opera-stable/ stable non-free #Opera Browser (final re
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys DD3C368A8DE1B7A0
 ```
+```
 W: http://packages.microsoft.com/repos/code/dists/stable/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 W: https://deb.opera.com/opera-stable/dists/stable/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 W: https://www.scootersoftware.com/dists/bcompare4/Release.gpg: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 ```
+```
 $ sudo apt update
 $ sudo apt upgrade
+$ sudo apt install bcompare opera-stable code
 ```
 
 `opera://settings`
@@ -2061,7 +2078,7 @@ sudo apt update
 # git
 
 ```
-$ sudo apt-get install git gitk git-doc git-svn subversion
+$ sudo apt-get install git gitk git-doc git-svn subversion xxdiff
 ```
 
 ```
