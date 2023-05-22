@@ -6521,6 +6521,23 @@ ERROR: ld.so: object '/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0' from LD_PREL
 sudo apt-get install libgtk3-nocsd0
 ```
 
+
+删除多余库
+
+```
+rm /opt/Xilinx/Vitis/2020.1/lib/lnx64.o/Ubuntu/libstdc++.so.6
+rm /opt/Xilinx/Vivado/2020.1/lib/lnx64.o/Ubuntu/libstdc++.so.6
+```
+
+
+安装驱动
+
+```
+cd /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/
+sudo ./install_drivers.sh
+```
+
+
 ---
 
 # geany
