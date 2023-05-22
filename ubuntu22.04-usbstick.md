@@ -6,6 +6,40 @@
 
 ---
 
+# 还原ext2/ext3/ext4文件系统分区的uuid
+
+```
+sudo tune2fs -U f5cd428a-7bcc-4026-80b7-9f570e5966cf /dev/sda2
+```
+
+创建fat32件系统分区的时候，可以定于uuid
+```
+mkdosfs -i ABCD1234 /dev/sdc1
+```
+
+The volume ID of FAT32 is stored in the first sector at offset 67 (0x43), for FAT16 it's at 39 (0x27). One can use the dd command to read it (replace /dev/sdc1 with your real partition):
+```
+sudo dd bs=1 skip=67 count=4 if=/dev/sdc1 2>/dev/null \
+| xxd -plain -u \
+| sed -r 's/(..)(..)(..)(..)/\4\3-\2\1/'
+```
+And, of course, one can also store a new UUID (replace 1234-ABCD with your desired value):
+```
+UUID="1234-ABCD"
+printf "\x${UUID:7:2}\x${UUID:5:2}\x${UUID:2:2}\x${UUID:0:2}" \
+| sudo dd bs=1 seek=67 count=4 conv=notrunc of=/dev/sdc1
+```
+
+---
+
+# 恢复grub
+
+```
+sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot --removable
+```
+
+---
+
 # 加载ubuntu的iso镜像
 
 grub4dos
