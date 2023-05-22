@@ -6506,13 +6506,15 @@ sudo dpjg -i electronic-wechat_2.3.2_amd64.deb
 # Xilinx vivado vitis
 
 ```
+sudo source /opt/Xilinx/.xinstall/Vitis_2020.1/scripts/installAIeDepLibs.sh
 sudo apt install blt libcanberra-gtk-module libcanberra-gtk0
-sudo apt install gcc-multilib
+sudo apt install gcc-multilib libexpat1-dev 
 sudo apt install texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev
 sudo apt install lib32atomic1 lib32gomp1 lib32itm1 lib32quadmath0 lib32stdc++6 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32atomic1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
 sudo apt install libtinfo-dev
 sudo apt install libstdc++6:i386 libgtk2.0-0:i386 dpkg-dev:i386
 sudo apt install libtinfo5 libncurses5
+sudo apt install libapr1 libapr1-dev libaprutil1 libc6-dev-i386 net-tools graphviz lsb
 ```
 
 ERROR: ld.so: object '/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
