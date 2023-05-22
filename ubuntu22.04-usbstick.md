@@ -651,7 +651,9 @@ $ cat /etc/apt/sources.list.d/vscode.list
 # You may comment out this entry, but any other modifications may be lost.
 deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable main
 ```
-
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EB3E94ADBE1229CF
+```
 ---
 
 # bcompare
@@ -662,7 +664,9 @@ apt-repo
 $ cat /etc/apt/sources.list.d/scootersoftware.list 
 deb https://www.scootersoftware.com/ bcompare4 non-free
 ```
-
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 331D6DDE7F8840CE
+```
 ---
 
 # opera
@@ -675,7 +679,12 @@ $ cat /etc/apt/sources.list.d/opera-stable.list
 
 deb https://deb.opera.com/opera-stable/ stable non-free #Opera Browser (final releases)
 ```
-
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys DD3C368A8DE1B7A0
+```
+W: http://packages.microsoft.com/repos/code/dists/stable/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: https://deb.opera.com/opera-stable/dists/stable/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+W: https://www.scootersoftware.com/dists/bcompare4/Release.gpg: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 ```
 $ sudo apt update
 $ sudo apt upgrade
