@@ -653,6 +653,12 @@ $ systemd-analyze blame
  626us snapd.socket
 ```
 
+
+---
+
+# 安装drawio
+https://github.com/jgraph/drawio-desktop/releases/
+
 ---
 
 # vscode
@@ -668,6 +674,16 @@ deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable mai
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EB3E94ADBE1229CF
 ```
+插件
+outline: AL code outline, Outline map
+bash: bash debug, bash beautify, bash ide
+c/c++: c/c++, c/c++ Themes, c/c++ extension pack, cmake(至少安装了cmake 和 cmake-gui)， cmake tools
+flowchart: flowchart, code flowchart
+java: extension pack for java, debugger for java, project manager for java, maven for java, test runner for java, ...by red hat, gradle for java
+docker: docker, dev container
+doxygen: doxygen documentation generator
+drawio: drawio integration, RTL plugin, wavedrom plugin
+
 ---
 
 # bcompare
@@ -681,7 +697,7 @@ deb https://www.scootersoftware.com/ bcompare4 non-free
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 331D6DDE7F8840CE
 ```
-
+这时候把俺要用的scrpits放到老位置
 ---
 
 # v2ray
@@ -854,7 +870,7 @@ QT4_IM_MODULE DEFAULT=fcitx
 XMODIFIERS DEFAULT=@im=fcitx
 SDL_IM_MODULE DEFAULT=fcitx
 ```
-
+还需要在输入法选项里选择google-pinyin什么的
 
 ---
 
