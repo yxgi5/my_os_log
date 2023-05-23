@@ -77,5 +77,6 @@ our $CONFIG = {
   "locale_support"      => 1,
   "missing_icon"        => "gtk-missing-image",
   "terminal"            => "lxterminal",
+  "use_gtk3"            => 1,
   "VERSION"             => 0.91,
 }
