@@ -675,6 +675,7 @@ deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable mai
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EB3E94ADBE1229CF
 ```
 插件
+```
 outline: AL code outline, Outline map
 bash: bash debug, bash beautify, bash ide
 c/c++: c/c++, c/c++ Themes, c/c++ extension pack, cmake(至少安装了cmake 和 cmake-gui)， cmake tools
@@ -697,6 +698,8 @@ verilog: Verilog-HDL/SystemVerilog/Bluespec SystemVerilog
 VHDL: VHDL by VHDLwhiz, VHDL
 Vim: Vim(disable it)
 other: EditorConfig for VS Code
+```
+
 ---
 
 # bcompare
@@ -771,6 +774,24 @@ https://clients2.google.com/service/update2/crx?response=redirect&os=linux&arch=
 don't login opera account for now
 
 ---
+
+extensions:
+```
+Opera Ad Blocker(disable)
+Proxy SwitchyOmega
+AdBlock — best ad blocker
+DownThemAll!
+Install Chrome Extensions(DEPRECATED)
+Enhancer for Telegram
+Tampermonkey
+Telegram Browser  
+TICloudAgent Bridge(disable)
+Video Downloader VeeVee
+Video Downloader for Chrome
+Video Downloader Pro
+Video Downloader Professional
+Web Scraper
+```
 
 # fcitx
 
