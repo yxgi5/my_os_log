@@ -683,7 +683,20 @@ java: extension pack for java, debugger for java, project manager for java, mave
 docker: docker, dev container
 doxygen: doxygen documentation generator
 drawio: drawio integration, RTL plugin, wavedrom plugin
-
+markdown: markdown, markdown all in one, markdown pdf, markdown preview enhanced, Markdown Checkboxes, Markdown Emoji, Markdown Paste, Markdown Preview Github Styling, Markdown Shortcuts, Markdown TOC, Markdown Math, Markdown+Math, markdownlint, Office Viewer, Excel to Markdown table, Markdown Table Prettifier
+git: Git Graph, Git History, GitLens — Git supercharged
+python: isort, Jupyter, Jupyter Slide Show, Jupyter Keymap, Jupyter Cell Tags, py2flowchart, PYQT Integration, Tabnine AI Autocomplete
+kotlin: Kotlin Language
+path: Path Intellisense, Path Autocomplete
+ppm: PBM/PPM/PGM Viewer for Visual Studio Code
+pdf: vscode-pdf, PDF Viewer
+ssh: Remote - SSH
+svn: SVN
+tcl: TCL
+verilog: Verilog-HDL/SystemVerilog/Bluespec SystemVerilog
+VHDL: VHDL by VHDLwhiz, VHDL
+Vim: Vim(disable it)
+other: EditorConfig for VS Code
 ---
 
 # bcompare
