@@ -681,6 +681,24 @@ deb https://www.scootersoftware.com/ bcompare4 non-free
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 331D6DDE7F8840CE
 ```
+
+---
+
+# v2ray
+
+科^学%上$网, FUCK CCP!!
+
+原始的go.sh脚本需要修改, 已经修改好的go_mod.sh
+`sudo ./go_mod.sh`
+v2ray-linux-64.zip下载到相同目录就可以安装到本机, 然后
+
+```
+sudo gedit /etc/v2ray/config.json
+sudo systemctl enable v2ray.service
+sudo systemctl start v2ray.service
+sudo systemctl restart v2ray.service
+```
+
 ---
 
 # opera
@@ -837,22 +855,6 @@ XMODIFIERS DEFAULT=@im=fcitx
 SDL_IM_MODULE DEFAULT=fcitx
 ```
 
----
-
-# v2ray
-
-科^学%上$网, FUCK CCP!!
-
-原始的go.sh脚本需要修改, 已经修改好的go_mod.sh
-`sudo ./go_mod.sh`
-v2ray-linux-64.zip下载到相同目录就可以安装到本机, 然后
-
-```
-sudo gedit /etc/v2ray/config.json
-sudo systemctl enable v2ray.service
-sudo systemctl start v2ray.service
-sudo systemctl restart v2ray.service
-```
 
 ---
 
