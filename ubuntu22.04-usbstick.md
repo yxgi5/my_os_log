@@ -1000,6 +1000,8 @@ run 'dpkg-reconfigure ttf-mscorefonts-installer' to perform the installation aga
 usbstick地址码:
 `286168448`
 
+`1439765824`
+
 ---
 
 # check boot log
@@ -2228,6 +2230,8 @@ $ sudo updatedb
 ```
 The following NEW packages will be installed:
   liburing2 mlocate plocate
+
+update-alternatives: using /usr/bin/plocate to provide /usr/bin/locate (locate) in auto mode
   
 /etc/systemd/system/timers.target.wants/plocate-updatedb.timer → /lib/systemd/system/plocate-updatedb.timer
 ```
@@ -4207,6 +4211,15 @@ NAME      TYPE SIZE USED PRIO
 `sudo cp /etc/fstab /etc/fstab.bak`
 
 `echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab`
+
+---
+
+# pasystray
+
+```
+sudo apt install xfce4-pulseaudio-plugin pulseaudio-utils pulseaudio-module-zeroconf pulseaudio-module-raop pulseaudio-module-lirc pulseaudio-module-jack pulseaudio-module-bluetooth pulseaudio-equalizer pulseaudio-dlna gstreamer1.0-pulseaudio mkchromecast-pulseaudio osspd-pulseaudio pulsemixer
+sudo apt install pasystray paprefs pavumeter pulseaudio-module-zeroconf
+```
 
 ---
 

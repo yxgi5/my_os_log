@@ -3,8 +3,8 @@
 (sleep 1s && tint2) &
 
 # Set wallpaper
-#(sleep 1s && feh --bg-scale /usr/share/wallpapers/backgroud.jpg)  &
-(sleep 1s && feh --bg-scale /usr/share/backgrounds/linuxmint/sele_linuxmint_center.jpg)  &
+(sleep 1s && feh --bg-scale /usr/share/wallpapers/background.jpg)  &
+#(sleep 1s && feh --bg-scale /usr/share/backgrounds/linuxmint/sele_linuxmint_center.jpg)  &
 
 # Enable as required
 #xbacklight -set 100 &
