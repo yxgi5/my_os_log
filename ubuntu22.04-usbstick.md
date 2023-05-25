@@ -3666,12 +3666,33 @@ sudo gedit /etc/default/grub
 GRUB_CMDLINE_LINUX=""
 修改为
 GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+或
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0 nomodeset"
 ```
 
 重新生成grub引导配置文件
 
 ```
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+或者
+sudo update-grub
+```
+---
+# modprob blacklist
+
+```
+ll /etc/modprobe.d/blacklist.conf
+sudo cp /etc/modprobe.d/blacklist.conf /etc/modprobe.d/blacklist.conf.bk
+sudo chmod 666 /etc/modprobe.d/blacklist.conf
+sudo sh -c 'echo "blacklist vga16fb">>/etc/modprobe.d/blacklist.conf'
+sudo sh -c 'echo "blacklist nouveau">>/etc/modprobe.d/blacklist.conf'
+sudo sh -c 'echo "blacklist rivafb">>/etc/modprobe.d/blacklist.conf'
+sudo sh -c 'echo "blacklist rivatv">>/etc/modprobe.d/blacklist.conf'
+sudo sh -c 'echo "blacklist nvidiafb">>/etc/modprobe.d/blacklist.conf'
+cat /etc/modprobe.d/blacklist.conf
+sudo chmod 644 /etc/modprobe.d/blacklist.conf
+sudo update-initramfs -u
+sudo reboot -h now
 ```
 
 ## 安装配置 conky
@@ -5591,6 +5612,15 @@ Suggested packages:
   vim-addon-manager
 ```
 
+`/home/andy/.cache/torbrowser/download`
+
+删掉torbrowser-launcher 
+```
+sudo apt purge torbrowser-launcher 
+sudo apt install python3-gpg python3-packaging
+```
+直接下载解压用，不要打包成deb，一大堆权限要解决
+
 ---
 
 # usbview
@@ -6562,7 +6592,7 @@ https://localhost:10000
 
 ```
 sudo apt install fftw-dev libboost-all-dev
-sudo apt install git gcc g++ make cmake libglib2.0-dev zlib1g-dev     libusb-1.0-0-dev libboost-dev libfftw3-dev python3-dev libudev-dev pkg-config
+sudo apt install git gcc g++ make cmake libglib2.0-dev zlib1g-dev doxygen libusb-1.0-0-dev libboost-dev libfftw3-dev python3-dev libudev-dev pkg-config doxygen-gui
 ```
 
 PKGBUILD
@@ -6624,7 +6654,7 @@ git fetch --prune --unshallow 就可以解决
 [https://github.com/zzy-ac/electronic-wechat/releases](https://github.com/zzy-ac/electronic-wechat/releases)
 
 ```
-sudo dpjg -i electronic-wechat_2.3.2_amd64.deb
+sudo dpkg -i electronic-wechat_2.3.2_amd64.deb
 ```
 
 ---
@@ -6671,7 +6701,7 @@ sudo ./install_drivers.sh
 # geany
 
 ```
-sudo apt-get install geany libvte9
+sudo apt-get install geany libvte9 geany-plugins geany-plugins-common
 ```
 
 ---
