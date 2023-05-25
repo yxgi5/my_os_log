@@ -10842,10 +10842,19 @@ package() {
 ```
 lximage-qt 或 Gwenview Qview gThumb LibreOffice 打开并另存
 ```
-
+---
 ***
-#
+# emacs
 ```
+$ sudo apt install emacs25
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  emacs25-bin-common emacs25-common emacs25-el liblockfile-bin liblockfile1
+  libm17n-0 libotf0 m17n-db
+Suggested packages:
+  emacs25-common-non-dfsg m17n-docs
 ```
 
 
