@@ -2894,7 +2894,8 @@ sudo apt install ubuntu-mate-desktop
 sudo apt install ubuntu-unity-desktop
 sudo apt install ubuntu-budgie-desktop
 aptitude search lxde
-sudo apt install lxde
+sudo apt install lxde 
+sudo apt install task-lxde-desktop
 aptitude search openbox
 ```
 
