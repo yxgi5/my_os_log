@@ -16,19 +16,19 @@ lsblk -f
 ll /dev/disk/by-uuid/
 blkid
 ```
-## 备份还原系统分区例子
+## 备份还原系统分区例子（ACL权限要添加）
 ```
 su
-tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --strip-components 3
+tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --strip-components 3 --acls
 
 因为压缩包里面的多余3层目录，所以加 --strip-components 3
-tar cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
+tar cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --acls
 
 
 如果要解决这个问题
-tar cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad .
+tar --acls -cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad .
 再用这个命令解压
-tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
+tar --acls -xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
 ```
 ---
 
@@ -1066,6 +1066,7 @@ total 3.5G
 -rw-r-x---+ 1 root systemd-journal  72M 2018-04-13 18:25:01.967846109 +0800 system@00000000000000000000000000000000-0000000000033800-00056949207ae8a1.journal
 -rw-r-x---+ 1 root systemd-journal  72M 2018-04-18 04:12:35.385621922 +0800 system@00000000000000000000000000000000-0000000000045c3e-000569b848f6f86c.journal
 ```
+这些都有ACL权限
 
 查看垃圾文件
 `$ sudo du -t 100M /var`
@@ -6423,7 +6424,7 @@ sudo systemctl disable networking.service
 
 ---
 
-# livecd backup + ACLs（Access Control List）
+# livecd backup + ACLs（Access Control List） acl权限
 
 [https://unix.stackexchange.com/questions/391/what-to-use-to-backup-files-preserving-acls](https://unix.stackexchange.com/questions/391/what-to-use-to-backup-files-preserving-acls)
 
@@ -7029,6 +7030,24 @@ sudo reboot -h now
 ```
 
 ---
+# 硬盘分区挂载出现“you do not have permission necessary to view the contents of“的问题 (), ACL权限
+```
+$ ll /media
+total 12
+drwxr-xr-x  3 root root 4096 Dec  2 11:48 ./
+drwxr-xr-x 20 root root 4096 May 26 09:50 ../
+drwxr-x---  5 root root 4096 May 26 14:10 andy/
+
+$ sudo setfacl -m u:andy:rx /media/andy
+
+$ ll /media
+total 12
+drwxr-xr-x   3 root root 4096 Dec  2 11:48 ./
+drwxr-xr-x  20 root root 4096 May 26 09:50 ../
+drwxr-x---+  5 root root 4096 May 26 14:10 andy/
+
+```
+---
 #
 ```
 ```
@@ -7036,7 +7055,6 @@ sudo reboot -h now
 #
 ```
 ```
-
 
 
 
