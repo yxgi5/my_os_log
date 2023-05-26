@@ -6,6 +6,32 @@
 
 ---
 
+# 存档系统和还原
+
+如果有EFI分区，也要备份，并记录uuid。可以在gparted里清除esp和boot标志，自动挂载备份。
+
+## 查看uuid
+```
+lsblk -f
+ll /dev/disk/by-uuid/
+blkid
+```
+## 备份还原系统分区例子
+```
+su
+tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --strip-components 3
+
+因为压缩包里面的多余3层目录，所以加 --strip-components 3
+tar cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
+
+
+如果要解决这个问题
+tar cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad .
+再用这个命令解压
+tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
+```
+---
+
 # 还原ext2/ext3/ext4文件系统分区的uuid
 
 ```
@@ -17,17 +43,19 @@ sudo tune2fs -U f5cd428a-7bcc-4026-80b7-9f570e5966cf /dev/sda2
 mkdosfs -i ABCD1234 /dev/sdc1
 ```
 
+## 读取 fat32 分区的 uuid，sdx1 根据实际替换
 The volume ID of FAT32 is stored in the first sector at offset 67 (0x43), for FAT16 it's at 39 (0x27). One can use the dd command to read it (replace /dev/sdc1 with your real partition):
 ```
-sudo dd bs=1 skip=67 count=4 if=/dev/sdc1 2>/dev/null \
+sudo dd bs=1 skip=67 count=4 if=/dev/sdx1 2>/dev/null \
 | xxd -plain -u \
 | sed -r 's/(..)(..)(..)(..)/\4\3-\2\1/'
 ```
+## 写入 新uuid 到 fat32 分区，sdx1 根据实际替换
 And, of course, one can also store a new UUID (replace 1234-ABCD with your desired value):
 ```
 UUID="1234-ABCD"
 printf "\x${UUID:7:2}\x${UUID:5:2}\x${UUID:2:2}\x${UUID:0:2}" \
-| sudo dd bs=1 seek=67 count=4 conv=notrunc of=/dev/sdc1
+| sudo dd bs=1 seek=67 count=4 conv=notrunc of=/dev/sdx1
 ```
 
 ---
