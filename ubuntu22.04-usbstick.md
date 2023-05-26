@@ -7018,3 +7018,25 @@ lspci
 inxi -Fxpmrz
 
 ```
+---
+# RTL8723DE wifi网卡驱动失效
+
+```
+git clone https://github.com/lwfinger/rtw88.git
+cd rtw88
+make && sudo make install
+sudo reboot -h now
+```
+
+---
+#
+```
+```
+---
+#
+```
+```
+
+
+
+
