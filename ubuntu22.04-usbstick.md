@@ -6976,7 +6976,17 @@ sudo apt-get -c ~/apt_proxy_conf upgrade
 ```
 
 ---
+# 
 
 ```
+sudo apt install inxi libxml-dumper-perl fancontrol read-edid i2c-tools python3-smbus
+sudo apt install lxrandr
+sudo apt install lxde
+sudo apt install task-lxde-desktop
+sudo apt install lxde
+sudo apt install desktop-base
+
+lspci
+inxi -Fxpmrz
 
 ```
