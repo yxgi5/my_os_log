@@ -10857,14 +10857,37 @@ Suggested packages:
   emacs25-common-non-dfsg m17n-docs
 ```
 
+---
+***
+# 文件权限查找并修改
+```
+$ find . -type f -perm -o=r+w -exec chmod 755 {} \;
+$ find . -type f -perm -o=r+w -exec chmod o+x {} \;
+//$ sudo chmod -R a+w /var/www
+//$ sudo find /var/www -type d -exec chmod 755 {} \;
+//$ sudo find /var/www -type f -exec chmod 666 {} \;
+```
 
+
+---
 ***
 #
 ```
 ```
 
 
+---
+***
+#
+```
+```
 
+
+---
+***
+#
+```
+```
 
 
 
