@@ -10871,17 +10871,155 @@ $ find . -type f -perm -o=r+w -exec chmod o+x {} \;
 
 ---
 ***
-#
+# gpac(MP4Box) mediainfo libmp4v2
+```
+sudo apt install gpac gpac-modules-base libgpac4 libgpac-dev
+sudo apt install libmp4v2-dev mediainfo mediainfo-gui libmediainfo0v5 libtinyxml2-6 libzen0v5
 ```
 ```
+$ MP4Box -v -add test.h264:FMT=AVC -fps 30 -new output1.mp4
+$ MP4Box -v -add test.h265:FMT=HEVC -fps 30 -new output2.mp4
 
+播放mp4（可以选vlc）
+ffplay output_h265.mp4
+检测视频信息
+ffprobe output_h265.mp4
+mediainfo output_h265.mp4
+MP4Box -info file
+提取 h264数据
+ffmpeg -i 001.mp4 -codec copy -bsf: h264_mp4toannexb -f h264 001.h264
+保留编码格式
+ffmpeg -i test.mp4 -vcodec copy -an test_copy.h264
+ffmpeg -i test.mp4 -acodec copy -vn test.aac
+强制编码格式
+ffmpeg -i test.mp4 -vcodec libx264 -an test.h264
+ffmpeg -i test.mp4 -vcodec libx265 -an test.h265
+ffmpeg -i 1920x1080.mp4 -vcodec libx265  -preset ultrafast -x265-params "bframes=0"  out.h265  #去除B帧
+ffmpeg -i test.mp4 -acodec libmp3lame -vn test.mp3
+ffmpeg -i juren.mp4 -c:v hevc -c:a copy juren-h265.mp4
+保留封装格式
+ffmpeg -i test.mp4 -acodec copy -vn audio.mp4
+ffmpeg -i test.mp4 -vcodec copy -an video.mp4
+查看 FFmpeg 支持的编解码标准
+ffmpeg -codecs
+ffmpeg -codecs > codecs.txt
+打包
+ffmpeg -f h264 -i xxx.h264 -vcodec copy xxx.mp4
+ffmpeg -i test.h265 -vcodec copy xx4x.mp4
+ffmpeg -i encoded.265 -c copy out.mp
+ffmpeg -i input.h265 -c:v libx264 -crf 23 output.mp4 # -crf参数表示质量，从0到51可以选择，数字越小质量越好，23是一个常用的质量值
+ffmpeg -f hevc -i test.h265 -vcodec copy xxx1.mp4
+ffmpeg -f hevc -i test.h265 -vcodec copy -x265-params crf=25 xxx1.mp4
+ffmpeg -i test.h265 -c:v libx265 -an -x265-params crf=25 xxx1.mp4
+ffmpeg -i test.h265 -c:v libx265 -c:a copy -x265-params crf=25 xxx1.mp4 # With audio
+# Using MP4Box
+MP4Box -add test.h265 out.mp4
+MP4Box -add xxx.h264 out.mp4 -inter 500
+# With audio
+MP4Box -add {INPUT}#audio -add raw.265 out.mp4
+MP4Box -add file.mpg#audio new_file.mp4
+
+转换h264为h265
+ffmpeg -f h264 -i xxx.h264 -vcodec libx265 -an xxx.h265
+ffmpeg -i xxx.h265 -vcodec copy xxx.mp4
+ffmpeg -i cuc_ieschool.h265 -pix_fmt yuv444p test444p.yuv
+
+FLV 转 MP4
+ffmpeg -i juren.flv juren.mp4
+FLV 转 MP4 不进行编解码
+ffmpeg -i juren.mp4 -c copy juren.flv
+ffmpeg -f flv -i juren.flv -c copy juren.mp4
+FLV 转 TS
+ffmpeg -i juren.flv juren.ts
+MP4 转 FLV
+ffmpeg -i juren.mp4 juren.flv
+
+https://www.jianshu.com/p/5702783153df
+
+提取AAC
+ffmpeg -i test.mp4 -acodec copy -vn output.aac
+ffmpeg 提取 yuv 数据
+ffmpeg -i out.mp4 -an -c:v rawvideo -pix_fmt yuv420p out.yuv
+播放yuv文件
+ffplay -s 2880x1800 -pix_fmt uyvy422 screen.yuv
+提取 pcm 数据
+ffmpeg -i 1.mp4 -vn -ar 44100 -ac 2 -f s16le out.pcm
+播放 pcm 数据
+ffplay -ac 2 -ar 44100 -f s16le out.pcm
+提取 rgb 数据(提取17分15秒~17分30秒)
+ffmpeg -ss 00:17:15 -t 00:00:15-i 12.mkv -pix_fmt rgb24  11.rgb
+去掉视频中的音频
+ffmpeg -i input.mp4 -vcodec copy -an output.mp4
+提取视频中的音频
+ffmpeg -i input.mp4 -acodec copy -vn output.mp3
+音视频合成
+ffmpeg -y –i input.mp4 –i input.mp3 –vcodec copy –acodec copy output.mp4
+剪切视频
+ffmpeg -ss 0:1:30 -t 0:0:20 -i input.mp4 -vcodec copy -acodec copy output.mp4
+视频截图
+ffmpeg –i test.mp4 –f image2 -t 0.001 -s 320x240 image-%3d.jpg
+视频分解为图片
+ffmpeg –i test.mp4 –r 1 –f image2 image-%3d.jpg
+将图片合成视频
+ffmpeg -f image2 -i image%d.jpg output.mp4
+视频拼接
+ffmpeg -f concat -i filelist.txt -c copy output.mp4
+将视频转为gif
+ffmpeg -i input.mp4 -ss 0:0:30 -t 10 -s 320x240 -pix_fmt rgb24 output.gif
+将视频前30帧转为gif
+ffmpeg -i input.mp4 -vframes 30 -f gif output.gif
+旋转视频
+ffmpeg -i input.mp4 -vf rotate=PI/2 output.mp4
+缩放视频
+ffmpeg -i input.mp4 -vf scale=iw/2:-1 output.mp4
+视频变速
+ffmpeg -i input.mp4 -filter:v setpts=0.5*PTS output.mp4
+音频变速
+ffmpeg -i input.mp3 -filter:a atempo=2.0 output.mp3
+音视频同时变速，但是音视频为互倒关系
+ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]" -map "[v]" -map "[a]" output.mp4
+视频添加水印
+ffmpeg -i input.mp4 -i logo.jpg -filter_complex [0:v][1:v]overlay=main_w-overlay_w-10:main_h-overlay_h-10[out] -map [out] -map 0:a -codec:a copy output.mp4
+
+
+ffmpeg -y -r 25.0 -f rawvideo -s 1920x1080 -pix_fmt uyvy422 -i input.avi -vcodec copy -pix_fmt yuv420p -f avi -r 25 -s 1920x1080 output.avi
+ffmpeg -y -pix_fmt yuv420p -s 1920x1080 -r 30 -i ldr_420.yuv -f rawvideo -pix_fmt yuv444p -s 1920x1080 -r 30 ldr_444.yuv
+
+$ ffmpeg -y -r 25.0 -f rawvideo -s 480x272 -pix_fmt yuv444p -i output_yuv444.yuv -pix_fmt yuv420p -f rawvideo -r 25 -s 480x272 out1_yuv420p.yuv
+$ ffmpeg -y -r 25.0 -f rawvideo -s 480x272 -pix_fmt yuv444p -i output_yuv444.yuv -pix_fmt yuv420p -f rawvideo -r 25 -s 800x450 out2_yuv420p.yuv
+ffmpeg -y -r 30.0 -f rawvideo -s 384x384 -pix_fmt yuv420p -i test.264 -vcodec copy -pix_fmt yuv420p -f rawvideo -r 25 -s 384x384 out1_yuv420p.yuv
+ffmpeg -y -r 30.0 -s 384x384 -pix_fmt yuv420p -i test.YUV -pix_fmt yuv420p -f h264 -r 30 -s 384x384 out1_yuv420p.264
+ffmpeg -y -r 25.0 -f rawvideo -s 384x384 -pix_fmt yuv420p -i test.YUV -pix_fmt yuv420p -f h264 -r 25 -s 384x384 out2_yuv420p.264
+ffmpeg -y -r 25.0 -f rawvideo -s 384x384 -pix_fmt yuv420p -i test.YUV -pix_fmt yuv420p -f mp4 -r 25 -s 384x384 out2_yuv420p.mp4
+ffmpeg -s 384x384 -i test.YUV -c:v libx265 -preset medium -crf 28 -c:a aac -b:a 128k output_h265.mp4
+ffplay -vf "hflip,vflip" -i test1.mp4
+ffmpeg -i test1.mp4 -vf "rotate=PI:bilinear=0,format=yuv420p" -metadata:s:v rotate=0 -codec:v libx264 -codec:a copy test1_output.mp4
+ffmpeg -i test1.mp4 -vf "rotate=45*(PI/180),format=yuv420p" -metadata:s:v rotate=0 -codec:v libx264 -codec:a copy output_rotate.mp4
+https://superuser.com/questions/578321/how-to-rotate-a-video-180-with-ffmpeg
+ffmpeg -s 384x384 -i test.YUV -c:v libx265 -preset medium -b:a 128k output_h265.265
+```
 
 ---
 ***
-#
+# sudo-gdb
+add to /etc/sudoers
+```
+andreas ALL=(root) NOPASSWD:/usr/bin/gdb
+```
+/usr/bin/sudo-gdb
+```
+#!/bin/bash
+sudo gdb $@
 ```
 ```
-
+sudo chmod a+x /usr/bin/sudo-gdb
+```
+这样eclipse和qtcreater都可以在sudo权限运行gdb
+如果只是run，qtcreator要在
+```
+In the Tab General under **System** Group there is a Terminal Option.
+The default value is set to /usr/bin/xterm -e . Replace it with /usr/bin/xterm -e sudo or /usr/bin/gnome-terminal -x sudo
+```
 
 ---
 ***
