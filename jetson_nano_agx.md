@@ -1050,6 +1050,15 @@ $ python3 -V
 Python 3.6.9
 ```
 
+* * *
+# qt5
+```
+sudo apt install qt5-default qmake qtcreator
+sudo apt install qtbase5-dev qtbase5-dev-tools qtbase5-doc qtbase5-doc-html qtbase5-examples qtbase5-private-dev qt5-qmake qt5-default qt5-doc qt5-doc-html qt5-assistant qt5ct qtcreator-data qtcreator-doc qtchooser libevdev-doc qt5-style-plugins default-libmysqlclient-dev firebird-dev libpq-dev libsqlite3-dev unixodbc-dev
+```
+
+* * *
+# geany
 
 
 * * *
