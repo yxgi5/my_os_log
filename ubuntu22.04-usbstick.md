@@ -2464,6 +2464,12 @@ git config --global --unset http.proxy
 ```
 sudo apt install net-tools
 ```
+## 查看网速
+```
+sudo apt install nethogs
+sudo nethogs eth0
+sudo nethogs wlan0
+```
 
 ---
 
