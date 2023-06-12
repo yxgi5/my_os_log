@@ -2437,6 +2437,25 @@ export PROXY_DNS_SERVER=8.8.8.8
 PROXYCHAINS_SOCKS5=10808 proxychains4 -f /etc/proxychains.conf curl www.google.com
 proxychains curl www.google.com
 ```
+## git加速 加速githubgi
+```
+proxychains git clone https://github.com/xxx/xxx.git
+```
+全局github代理加速
+```
+git config --global http.proxy 'socks5://127.0.0.1:10808'
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+```
+查询是否启用代理
+```
+git config --global http.proxy
+git config --list
+```
+取消代理
+```
+git config --global --unset http.proxy
+```
+这下好了，不用忍龟速了。
 
 ---
 
