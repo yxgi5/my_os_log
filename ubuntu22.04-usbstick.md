@@ -4295,6 +4295,7 @@ NAME      TYPE SIZE USED PRIO
 ```
 sudo apt install xfce4-pulseaudio-plugin pulseaudio-utils pulseaudio-module-zeroconf pulseaudio-module-raop pulseaudio-module-lirc pulseaudio-module-jack pulseaudio-module-bluetooth pulseaudio-equalizer pulseaudio-dlna gstreamer1.0-pulseaudio mkchromecast-pulseaudio osspd-pulseaudio pulsemixer
 sudo apt install pasystray paprefs pavumeter pulseaudio-module-zeroconf
+sudo apt install bluetooth bluez bluez-cups bluez-tools btscanner gnome-bluetooth python3-bluez pulseaudio-module-bluetooth blueman rfkill bluez-meshd
 ```
 
 ---
