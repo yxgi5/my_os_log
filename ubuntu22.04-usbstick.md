@@ -2667,7 +2667,10 @@ $ dconf-editor
 ['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'ISO-8859-15', 'UTF-16']
 ```
 
-nautilus显示绝对路径
+桌面的trashcan是在这里设置显示
+/org/gnome/shell/extensions/ding/
+
+nautilus显示绝对路径（还是不要设置这个）
 
 ```
 Then navigate to 
@@ -2951,6 +2954,15 @@ aptitude search lxde
 sudo apt install lxde 
 sudo apt install task-lxde-desktop
 aptitude search openbox
+```
+```
+$ sudo apt update
+$ sudo apt install gnome-session gdm3
+$ sudo apt install tasksel
+$ sudo tasksel install gnome-desktop
+$ sudo systemctl get-default 
+graphical.target
+//$ sudo systemctl set-default graphical.targets
 ```
 
 ---
