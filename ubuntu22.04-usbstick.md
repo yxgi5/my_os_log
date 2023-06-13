@@ -6218,6 +6218,7 @@ Pin-Priority: -10
 ```
 sudo rm /etc/apt/preferences.d/nosnap.pref
 sudo apt update && sudo apt upgrade
+sudo apt install snap snapd
 sudo snap install snap-store
 sudo apt install firefox
 ```
