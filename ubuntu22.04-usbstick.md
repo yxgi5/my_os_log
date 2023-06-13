@@ -3935,7 +3935,7 @@ Suggested packages:
 ```
 
 ```
-cp /usr/share/applications/shutter.desktop ~/.config/autostart
+cp /usr/share/applications/shutter.desktop ~/.config/autostart/
 ```
 
 ## 基本编译工具
