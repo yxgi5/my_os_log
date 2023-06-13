@@ -7072,6 +7072,13 @@ drwxr-xr-x  20 root root 4096 May 26 09:50 ../
 drwxr-x---+  5 root root 4096 May 26 14:10 andy/
 
 ```
+
+---
+# qqmusic
+```
+sudo dpkg -i qqmusic_1.1.5_amd64.deb
+```
+
 ---
 #
 ```
