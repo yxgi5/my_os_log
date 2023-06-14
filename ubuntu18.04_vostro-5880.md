@@ -11245,7 +11245,26 @@ alias wine='env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFI
 
 ---
 ***
-# gstreamer0.10-qapt
+# gstreamer
+
+https://gstreamer.freedesktop.org/documentation/tutorials/index.html
+
+https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html
+
+https://gstreamer.freedesktop.org/documentation/installing/on-linux.html
+
+官方已经用gstreamer1.0来演示tutorials
+```
+$ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+
+$ pkg-config --cflags --libs gstreamer-1.0
+-pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0
+```
+```
+git clone https://gitlab.freedesktop.org/gstreamer/gstreamer
+cd gstreamer/subprojects/gst-docs/examples/tutorials
+gcc basic-tutorial-1.c -o basic-tutorial-1 `pkg-config --cflags --libs gstreamer-1.0`
+```
 ```
 $ sudo apt-get install gstreamer0.10-qapt
 Reading package lists... Done
@@ -11256,6 +11275,25 @@ The following additional packages will be installed:
 Suggested packages:
   app-install-data xapian-doc
 
+```
+## 一般gst命令
+```
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! audioconvert ! autoaudiosink
+gst-launch-1.0 souphttpsrc location=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! decodebin ! autovideosink
+//gst-launch-1.0 filesrc location=f:\\media\\sintel\\sintel_trailer-480p.webm ! decodebin ! autovideosink
+gst-launch-1.0 filesrc location=./sintel_trailer-480p.webm ! decodebin ! autovideosink
+gst-launch-1.0 audiotestsrc ! vorbisenc ! oggmux ! filesink location=test.ogg
+gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
+gst-launch-1.0 audiotestsrc ! audioconvert ! autoaudiosink
+gst-launch-1.0 videotestsrc ! video/x-raw,framerate=30/1 ! videorate ! video/x-raw,framerate=1/1 ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! videoscale ! video/x-raw,width=178,height=100 ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! queue ! videoscale ! video/x-raw,width=320,height=200 ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! audioresample ! audio/x-raw,rate=4000 ! audioconvert ! autoaudiosink
+gst-launch-1.0 audiotestsrc ! tee name=t ! queue ! audioconvert ! autoaudiosink t. ! queue ! wavescope ! videoconvert ! autovideosink
+gst-launch-1.0 videotestsrc ! video/x-raw, format=GRAY8 ! videoconvert ! autovideosink
+gst-launch-1.0 audiotestsrc num-buffers=1000 ! fakesink sync=false
+gst-launch-1.0 audiotestsrc ! identity drop-probability=0.1 ! audioconvert ! autoaudiosink
 ```
 
 
