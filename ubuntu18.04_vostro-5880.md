@@ -11245,13 +11245,39 @@ alias wine='env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFI
 
 ---
 ***
+# gstreamer0.10-qapt
+```
+$ sudo apt-get install gstreamer0.10-qapt
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  apt-xapian-index gstreamer-qapt libqapt3 libqapt3-runtime python3-xapian
+Suggested packages:
+  app-install-data xapian-doc
+
+```
+
+
+---
+***
 #
 ```
 ```
 
 
+---
+***
+#
+```
+```
 
 
+---
+***
+#
+```
+```
 
 
 
