@@ -11078,6 +11078,13 @@ pip3.6  uninstall retext
 /home/andy/.local/lib/python3.6/
 
 ```
+  
+## Debian Jessie Stable等发行版中，您可以执行以下操作：
+```
+sudo apt-get install -y qt4-qmake qt4-dev-tools
+sudo update-alternatives --install "/usr/bin/qmake" "qmake" "/usr/bin/qmake-qt4" 40
+sudo update-alternatives --config qmake
+```
 
 ## 更安全的办法,使用qtchooser
 ```

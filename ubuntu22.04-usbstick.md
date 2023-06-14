@@ -5332,6 +5332,7 @@ Suggested packages:
 
 ```
 $ sudo apt install gcc g++ gdb binutils build-essential openssl libssl-dev libssl-dev libgl1-mesa-dev
+$ sudo apt install build-essential cmake ninja-build git
 ```
 
 ```
@@ -5344,6 +5345,135 @@ qtchooser set to manually installed.
 qtcreator is already the newest version (6.0.2-2build1).
 The following additional packages will be installed:
   libqt6designer6 libqt6designercomponents6 libqt6help6 libqt6qml6 libqt6qmlmodels6 libqt6quick6 libqt6quickwidgets6 libqt6uitools6
+```
+
+```
+$ sudo apt install libglx-dev libgl1-mesa-dev
+$ sudo apt install qt6-declarative-dev
+The following additional packages will be installed:
+  libqt6labsanimation6 libqt6labsfolderlistmodel6 libqt6labsqmlmodels6
+  libqt6labssettings6 libqt6labssharedimage6 libqt6labswavefrontmesh6
+  libqt6qmlcore6 libqt6qmllocalstorage6 libqt6qmlworkerscript6
+  libqt6qmlxmllistmodel6 libqt6quickcontrols2-6 libqt6quickcontrols2impl6
+  libqt6quickdialogs2-6 libqt6quickdialogs2quickimpl6
+  libqt6quickdialogs2utils6 libqt6quicklayouts6 libqt6quickparticles6
+  libqt6quickshapes6 libqt6quicktemplates2-6 libqt6quicktest6
+  qt6-declarative-dev-tools
+
+```
+```
+$ sudo apt install libgl1-mesa-dev libvulkan-dev libxcb-xinput-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xkb1 libxcb-randr0 libxcb-icccm4
+$ sudo apt install qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev qt6-tools-dev qt6-tools-private-dev qt6-scxml-dev qt6-documentation-tools libqt6core5compat6-dev qt6-tools-dev-tools qt6-l10n-tools qt6-shader-baker libqt6shadertools6-dev qt6-quick3d-dev qt6-quick3d-dev-tools libqt6svg6-dev libqt6quicktimeline6-dev libqt6serialport6-dev
+
+The following additional packages will be installed:
+  libevdev-dev libgudev-1.0-dev libinput-dev libmtdev-dev libqt6core5compat6 libqt6quick3d6 libqt6quick3dassetimport6 libqt6quick3dassetutils6 libqt6quick3deffects6 libqt6quick3dhelpers6
+  libqt6quick3diblbaker6 libqt6quick3dparticles6 libqt6quick3druntimerender6 libqt6quick3dutils6 libqt6quicktimeline6 libqt6scxml6 libqt6scxml6-bin libqt6scxmlqml6 libqt6serialport6 libqt6shadertools6
+  libqt6statemachine6 libqt6statemachineqml6 libqt6svg6 libqt6svgwidgets6 libwacom-dev
+Suggested packages:
+  libevdev-doc
+```
+
+```
+$ sudo apt install qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev qt6-tools-dev qt6-tools-private-dev qt6-scxml-dev qt6-documentation-tools libqt6core5compat6-dev qt6-tools-dev-tools qt6-l10n-tools qt6-shader-baker libqt6shadertools6-dev qt6-quick3d-dev qt6-quick3d-dev-tools libqt6svg6-dev libqt6quicktimeline6-dev libqt6serialport6-dev
+```
+
+```
+sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake
+sudo apt install qtbase5-dev qt5-qmake qtcreator qtbase5-examples qtbase5-doc-html
+
+sudo apt install -y libclang-dev
+sudo apt install clang clangd
+//sudo apt install clang-15 clangd-15 libclang-15-dev
+
+$ sudo apt install build-essential libx11-dev ninja-build openssl libssl-dev libmd4c-dev libmd4c-html0-dev pkg-config mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev libglew-dev libglfw3-dev libglm-dev libao-dev libmpg123-dev
+Suggested packages:
+  glew-utils libglfw3-doc
+
+```
+
+## qtdesigner 使用qt6
+```
+PC一般在(man qtchooser 可查)
+cat /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf 
+ls /usr/lib/x86_64-linux-gnu/qtchooser/
+ls /usr/share/qtchooser                     # 软链接来源
+
+比如aarch64平台的添加了5.9的conf，这样来启用特定版本
+cd /usr/lib/aarch64-linux-gnu/qtchooser
+sudo ln -s /usr/share/qtchooser/qt-5.9-aarch64-linux-gnu.conf qt5.9.conf
+export QT_SELECT=qt5.9
+qmake -v
+```
+
+```
+$ cd /usr/share/qtchooser/
+$ sudo cp qt5-x86_64-linux-gnu.conf qt6-x86_64-linux-gnu.conf
+$ sudo gedit qt6-x86_64-linux-gnu.conf
+/usr/lib/qt6/bin
+/usr/lib/x86_64-linux-gnu
+$ cd /usr/lib/x86_64-linux-gnu/qtchooser
+$ sudo ln -s ../../../share/qtchooser/qt6-x86_64-linux-gnu.conf qt6.conf
+$ sudo ln -s ../../../share/qtchooser/qt6-x86_64-linux-gnu.conf 6.conf
+$ env QT_SELECT=qt6 designer
+$ export QT_SELECT=qt6
+$ qmake -v
+QMake version 3.1
+Using Qt version 6.2.4 in /usr/lib/x86_64-linux-gnu
+```
+
+## 使用qtchooser（示例）
+```
+$ qtchooser  -l
+4
+5
+default
+qt4-x86_64-linux-gnu
+qt4
+qt5-x86_64-linux-gnu
+qt5
+
+应该是对应
+/usr/lib/x86_64-linux-gnu/qtchooser
+下面的几个软链接
+
+实际位置
+/usr/share/qtchooser/
+文件为
+qt4-x86_64-linux-gnu.conf
+qt5-x86_64-linux-gnu.conf
+
+/usr/lib/x86_64-linux-gnu/qt-default/qtchooser
+下面实际上是个软链接
+指向/usr/share/qtchooser/中qt的某个conf文件
+
+$ qtchooser -print-env
+QT_SELECT="default"
+QTTOOLDIR="/usr/lib/qt5/bin"
+QTLIBDIR="/usr/lib/x86_64-linux-gnu"
+
+qmake（/usr/bin/qmake）实际上只是qtchooser（/usr/bin/qtchooser）的符号链接。
+$ file /usr/bin/qmake
+/usr/bin/qmake: symbolic link to qtchooser
+
+
+qtchooser -install qt5.10 /opt/Qt5.10.1/5.10.1/gcc_64/bin/qmake
+/home/andy/.config/qtchooser/
+会有
+qt5.10.conf
+内容是
+/opt/Qt5.10.1/5.10.1/gcc_64/bin
+/opt/Qt5.10.1/5.10.1/gcc_64/lib
+
+$ export QT_SELECT=qt5.10
+
+$ qmake -v
+QMake version 3.1
+Using Qt version 5.10.1 in /opt/Qt5.10.1/5.10.1/gcc_64/lib
+
+
+qmake -qt=qt5.10 -v
+和
+export QT_SELECT=qt5.10是一样的
 ```
 
 ---
@@ -6168,7 +6298,7 @@ systemd-analyze plot > ~/SystemdAnalyzePlot.svg    #生产开机时间分析图
 
 ---
 
-# 删除 snap
+# 删除 snap(没有必要)
 
 [https://www.simplified.guide/ubuntu/remove-snapd](https://www.simplified.guide/ubuntu/remove-snapd)
 [https://www.debugpoint.com/remove-snap-ubuntu/](https://www.debugpoint.com/remove-snap-ubuntu/)
@@ -7279,10 +7409,45 @@ $ sudo dpkg -i baidunetdisk_4.17.7_amd64.deb
 
 
 ---
+# pyqt5 etc.
+```
+$ sudo apt install pyqt5-examples pyqt5-dev-tools python3-pyqt5.qtmultimedia python3-pyqt5.qtopengl python3-pyqt5.qtquick python3-pyqt5.qtsvg
+
+```
+---
+# 最新snap状态、
+```
+$ snap list 
+Name                       Version           Rev    Tracking         Publisher      Notes
+bare                       1.0               5      latest/stable    canonical✓     base
+chromium                   114.0.5735.106    2497   latest/stable    canonical✓     -
+core20                     20230503          1891   latest/stable    canonical✓     base
+core22                     20230531          750    latest/stable    canonical✓     base
+cups                       2.4.2-5           872    latest/stable    openprinting✓  -
+firefox                    113.0.1-1         2667   latest/stable/…  mozilla✓       -
+gnome-3-38-2004            0+git.6f39565     140    latest/stable/…  canonical✓     -
+gnome-42-2204              0+git.ff35a85     111    latest/stable    canonical✓     -
+gtk-common-themes          0.1-81-g442e511   1535   latest/stable/…  canonical✓     -
+snap-store                 41.3-71-g709398e  959    latest/stable/…  canonical✓     -
+snapd                      2.59.4            19361  latest/stable    canonical✓     snapd
+snapd-desktop-integration  0.9               83     latest/stable/…  canonical✓     -
+
+```
+
+
+---
 # 
 ```
 
 ```
+
+
+---
+# 
+```
+
+```
+
 
 ---
 # 
