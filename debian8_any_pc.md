@@ -15404,6 +15404,8 @@ $ su
 # mount -t devpts devpts /dev/pts
 # mkdir -p /run/lock
 # mount -t tmpfs tmpfs /run/lock
+上面可以用 arch-chroot .
+
 # mount /dev/sdx2 /home
 # mount /dev/sdx3 /opt
 # mount -t vfat /dev/sdx1 /boot/efi/
@@ -15412,9 +15414,17 @@ $ su
 The following additional packages will be installed:
   efibootmgr mokutil shim-helpers-amd64-signed shim-signed shim-signed-common shim-unsigned
 
+# grub-install --target=x86_64-efi /dev/sde --efi-directory=/boot/efi/ --boot-directory=/boot
+
 # grub-install --target=x86_64-efi /dev/sde --efi-directory=/boot/efi/ --boot-directory=/boot --removable
 
 // # grub-mkconfig -o /boot/grub/grub.cfg # 如果需要
+
+# efibootmgr -v
+
+# efibootmgr -c -d /dev/sdb -p 1 -w -L debian -l '\EFI\debian\grubx64.efi'
+or
+# efibootmgr -c -d /dev/sdb -p 1 -w -L debian -l '\EFI\debian\shimx64.efi'
 
 # umount /dev/sdx3
 # umount /dev/sdx2
@@ -15426,6 +15436,7 @@ The following additional packages will be installed:
 # exit
 # umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/var/lib/os-prober/mount
 # umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/dev
+
 ```
 
 
