@@ -13374,7 +13374,7 @@ mount | grep efi 显示
 sudo fdisk -l
 sudo grub-install /dev/sdx
 磁盘mbr分区才可以BIOS引导+EFI引导
-?sudo grub-install --root-directory=/boot/ /dev/sdx
+?sudo grub-install --root-directory=/boot/ /dev/sdx   # ref: sudo grub-install --root-directory=/mnt/sda5 /dev/sda
 sudo grub-install --boot-directory=/boot/ /dev/sdx
 sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
 sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot --removable

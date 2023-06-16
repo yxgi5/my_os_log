@@ -11299,8 +11299,41 @@ gst-launch-1.0 audiotestsrc ! identity drop-probability=0.1 ! audioconvert ! aut
 
 ---
 ***
-#
+# Change the number of the partition from sdx1 to sdx2
+保存分区表 backup the disk partition table
 ```
+# sfdisk --dump /dev/sdx > sdx.bkp
+# cp sdx.bkp sdx.new 
+```
+编辑分区表
+
+from
+```
+# partition table of /dev/sdx
+unit: sectors
+
+/dev/sdx1 : start=  1026048, size=975747120, Id=83
+/dev/sdx2 : start=     2048, size=   204800, Id=83
+/dev/sdx3 : start=   206848, size=   819200, Id= b
+/dev/sdx4 : start=        0, size=        0, Id= 0
+```
+to
+```
+# partition table of /dev/sdx
+unit: sectors
+
+/dev/sdx1 : start=     2048, size=   204800, Id=83
+/dev/sdx2 : start=   206848, size=   819200, Id= b
+/dev/sdx3 : start=  1026048, size=975747120, Id=83
+/dev/sdx4 : start=        0, size=        0, Id= 0
+```
+throw it back to the disk partition table (carefull)
+```
+# sfdisk /dev/sdx < sdx.new
+```
+If the last command does not work, change it for
+```
+# sfdisk --no-reread --force /dev/sdx < sdx.new
 ```
 
 
