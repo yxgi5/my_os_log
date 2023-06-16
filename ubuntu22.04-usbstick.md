@@ -7511,9 +7511,9 @@ cat /etc/apt/sources.list.d/vscode.list
 
 
 ---
-# 
+# evince
 ```
-
+sudo apt install evince evince-common libevince-dev gir1.2-evince-3.0
 ```
 
 
