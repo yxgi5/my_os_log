@@ -7513,7 +7513,56 @@ cat /etc/apt/sources.list.d/vscode.list
 ---
 # evince
 ```
-sudo apt install evince evince-common libevince-dev gir1.2-evince-3.0
+$ sudo apt install evince evince-common libevince-dev gir1.2-evince-3.0
+$ cat /usr/share/thumbnailers/evince.thumbnailer
+```
+
+
+---
+# 
+```
+$ sudo apt install ffmpegthumbnailer tumbler
+```
+```
+tumbler: Image files. This must also be installed to expand thumbnailing capabilities to other file types
+poppler-glib or evince: Adobe .pdf files
+ffmpegthumbnailer: Video files
+freetype2: Font files
+libgsf: .odf files
+raw-thumbnailer: .raw files
+```
+
+
+---
+# pcmanfm pdf thumbnails and markdown type recognise as text file (not solved)
+```
+mimeopen ubuntu22.04-usbstick.md
+mimetype ubuntu22.04-usbstick.md
+xdg-mime query default text/markdown
+xdg-mime query default inode/directory
+cat ~/.local/share/applications/defaults.list
+cat /usr/share/mime/types
+/home/$USER/.config/mimeapps.list
+/home/$USER/.local/share/applications/mimeapps.list
+
+sudo apt install qtxdg-dev-tools
+qtxdg-mat defapp inode/directory
+
+sudo apt install libfile-mimeinfo-perl
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
 ```
 
 
