@@ -2723,17 +2723,20 @@ $ gsettings get org.cinnamon.desktop.default-applications.terminal exec
 
 $ gsettings set org.cinnamon.desktop.default-applications.terminal exec gnome-terminal
 
+$ gsettings get org.gnome.desktop.default-applications.terminal exec
+'x-terminal-emulator'
+
 $ sudo apt install terminator
 $ sudo update-alternatives --config x-terminal-emulator
 $ gsettings list-schemas | grep terminal
 
-for Nemo
-$ gsettings set org.cinnamon.desktop.default-applications.terminal exec terminator
-for ubuntu de
-$ gsettings set org.gnome.desktop.default-applications.terminal exec terminator
+//for Nemo
+//$ gsettings set org.cinnamon.desktop.default-applications.terminal exec terminator
+//for ubuntu de
+//$ gsettings set org.gnome.desktop.default-applications.terminal exec terminator
 
 or
-$ dconf write /org/cinnamon/desktop/applications/terminal/exec "'xfce4-terminal'"
+//$ dconf write /org/cinnamon/desktop/applications/terminal/exec "'xfce4-terminal'"
 ```
 
 ---
