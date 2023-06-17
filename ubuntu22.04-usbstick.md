@@ -712,7 +712,7 @@ java: extension pack for java, debugger for java, project manager for java, mave
 docker: docker, dev container
 doxygen: doxygen documentation generator
 drawio: drawio integration, RTL plugin, wavedrom plugin
-markdown: markdown, markdown all in one, markdown pdf, markdown preview enhanced, Markdown Checkboxes, Markdown Emoji, Markdown Paste, Markdown Preview Github Styling, Markdown Shortcuts, Markdown TOC, Markdown Math, Markdown+Math, markdownlint, Office Viewer, Excel to Markdown table, Markdown Table Prettifier
+markdown: markdown, markdown all in one, markdown pdf, markdown preview enhanced, Markdown Checkboxes, Markdown Emoji, Markdown Paste, Markdown Preview Github Styling, Markdown Shortcuts, Markdown TOC, Markdown Math, Markdown+Math, markdownlint, Office Viewer, Excel to Markdown table, Markdown Table Prettifier, Graphviz Markdown Preview
 git: Git Graph, Git History, GitLens — Git supercharged
 python: isort, Jupyter, Jupyter Slide Show, Jupyter Keymap, Jupyter Cell Tags, py2flowchart, PYQT Integration, Tabnine AI Autocomplete
 kotlin: Kotlin Language
@@ -2680,6 +2680,28 @@ and check always-use-location-entry.
 
 or
 `dconf write /org/gnome/nautilus/preferences/always-use-location-entry true`
+
+
+## 修改 默认 终端
+```
+$ gsettings get org.cinnamon.desktop.default-applications.terminal exec
+'gnome-terminal'
+
+$ gsettings set org.cinnamon.desktop.default-applications.terminal exec gnome-terminal
+
+$ sudo apt install terminator
+$ sudo update-alternatives --config x-terminal-emulator
+$ gsettings list-schemas | grep terminal
+
+for Nemo
+$ gsettings set org.cinnamon.desktop.default-applications.terminal exec terminator
+for ubuntu de
+$ gsettings set org.gnome.desktop.default-applications.terminal exec terminator
+
+or
+$ dconf write /org/cinnamon/desktop/applications/terminal/exec "'xfce4-terminal'"
+```
+
 
 ---
 
@@ -7553,10 +7575,44 @@ sudo apt install libfile-mimeinfo-perl
 
 
 ---
-# 
+# Nemo 有关
+```
+//sudo apt install nemo-terminal # （默认 F4 切换） 不喜欢这样的
+
+Edit > Preferences > Toolbar > Open in terminal (不是很好)
 ```
 
+## Nemo F4 打开 terminal
+默认 终端 terminal 修改见前面
 ```
+mkdir -p ~/.gnome2/accels
+touch ~/.gnome2/accels/nemo
+gedit ~/.gnome2/accels/nemo
+```
+```
+(gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
+```
+会自动生成其他参考的键，但是都是注释状态，参考看就是了
+
+
+In case you want not to replace, but to add "Open in Terminator" in your right-click menu,
+1. go to `/home/$USER/.local/share/nemo/actions` folder,
+2. create `open_in_terminator.nemo_action` file:
+```
+ [Nemo Action]
+
+ Name=Open in Terminator
+ Comment=Open the 'terminator' terminal in the selected folder
+ Exec=terminator --working-directory="%F"
+ Icon-Name=terminator
+ Selection=any
+ Extensions=dir;
+```
+References:
+
+1. [Blog post: "Add Right-Click Commands in Linux Mint / Ubuntu", by Angelos Kyritsis](https://www.pcsteps.com/4434-add-right-click-commands-linux-mint-ubuntu/)
+
+2. [Sample Nemo right-click menu action file from /usr/share/nemo/actions/sample.nemo_action](https://github.com/linuxmint/nemo/blob/master/files/usr/share/nemo/actions/sample.nemo_action)
 
 
 ---
