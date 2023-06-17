@@ -7768,7 +7768,7 @@ gnome-terminal
 ```
 ```
 touch ~/.local/share/nautilus/scripts/Terminal
-chmod+x ~/.local/share/nautilus/scripts/Terminal
+chmod +x ~/.local/share/nautilus/scripts/Terminal
 gedit ~/.local/share/nautilus/scripts/Terminal
 ```
 2. Make it executable, then close any Nautilus instance:
@@ -7851,19 +7851,46 @@ fi
 
 
 ---
+# mate-desktop
+```
+$ sudo apt update
+$ sudo apt install mate-session-manager gdm3
+$ sudo apt install tasksel
+$ sudo tasksel install mate-desktop
+$ sudo systemctl get-default 
+graphical.target
+//$ sudo systemctl set-default graphical.targets
+```
 
+---
+# 
 ```
 
 ```
 
 ---
-
+# 
 ```
 
 ```
+
 
 ---
+# 
+```
 
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
 ```
 
 ```
