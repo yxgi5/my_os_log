@@ -1,22 +1,22 @@
 ---
-
 # set gnome online acount and livepath
 
 `/usr/libexec/gnome-initial-setup --existing-user`
-
 ---
-
 # 存档系统和还原
 
 如果有EFI分区，也要备份，并记录uuid。可以在gparted里清除esp和boot标志，自动挂载备份。
 
 ## 查看uuid
+
 ```
 lsblk -f
 ll /dev/disk/by-uuid/
 blkid
 ```
+
 ## 备份还原系统分区例子（ACL权限要添加）
+
 ```
 su
 tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --strip-components 3 --acls
@@ -30,6 +30,7 @@ tar --acls -cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f
 再用这个命令解压
 tar --acls -xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
 ```
+
 ---
 
 # 还原ext2/ext3/ext4文件系统分区的uuid
@@ -39,19 +40,25 @@ sudo tune2fs -U f5cd428a-7bcc-4026-80b7-9f570e5966cf /dev/sda2
 ```
 
 创建fat32件系统分区的时候，可以定于uuid
+
 ```
 mkdosfs -i ABCD1234 /dev/sdc1
 ```
 
 ## 读取 fat32 分区的 uuid，sdx1 根据实际替换
+
 The volume ID of FAT32 is stored in the first sector at offset 67 (0x43), for FAT16 it's at 39 (0x27). One can use the dd command to read it (replace /dev/sdc1 with your real partition):
+
 ```
 sudo dd bs=1 skip=67 count=4 if=/dev/sdx1 2>/dev/null \
 | xxd -plain -u \
 | sed -r 's/(..)(..)(..)(..)/\4\3-\2\1/'
 ```
+
 ## 写入 新uuid 到 fat32 分区，sdx1 根据实际替换
+
 And, of course, one can also store a new UUID (replace 1234-ABCD with your desired value):
+
 ```
 UUID="1234-ABCD"
 printf "\x${UUID:7:2}\x${UUID:5:2}\x${UUID:2:2}\x${UUID:0:2}" \
@@ -411,11 +418,15 @@ dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
 $ sudo apt update
 $ apt list --upgradable
 ```
+
 ---
+
 # git
+
 ```
 sudo apt install git git-gui gitk git-svn meld subversion xxdiff
 ```
+
 ```
 git config --global user.name "name"
 git config --global user.email "name@xxx.com"
@@ -424,6 +435,7 @@ git config --global core.fileMode false
 git config --global merge.ff false
 git config --global pull.ff true
 ```
+
 ---
 
 # openssh
@@ -681,10 +693,10 @@ $ systemd-analyze blame
  626us snapd.socket
 ```
 
-
 ---
 
 # 安装drawio
+
 https://github.com/jgraph/drawio-desktop/releases/
 
 ---
@@ -699,10 +711,13 @@ $ cat /etc/apt/sources.list.d/vscode.list
 # You may comment out this entry, but any other modifications may be lost.
 deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable main
 ```
+
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EB3E94ADBE1229CF
 ```
+
 插件
+
 ```
 outline: AL code outline, Outline map
 bash: bash debug, bash beautify, bash ide
@@ -738,11 +753,13 @@ apt-repo
 $ cat /etc/apt/sources.list.d/scootersoftware.list 
 deb https://www.scootersoftware.com/ bcompare4 non-free
 ```
+
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 331D6DDE7F8840CE
 ```
+
 这时候把俺要用的scrpits放到老位置
----
+---------------------------------
 
 # v2ray
 
@@ -771,15 +788,18 @@ $ cat /etc/apt/sources.list.d/opera-stable.list
 
 deb https://deb.opera.com/opera-stable/ stable non-free #Opera Browser (final releases)
 ```
+
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys DD3C368A8DE1B7A0
 ```
+
 ```
 W: http://packages.microsoft.com/repos/code/dists/stable/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 W: https://deb.opera.com/opera-stable/dists/stable/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 W: https://www.scootersoftware.com/dists/bcompare4/Release.gpg: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 then just keep EB3E94ADBE1229CF key in /etc/apt/trusted.gpg
 ```
+
 ```
 $ sudo apt update
 $ sudo apt upgrade
@@ -804,6 +824,7 @@ don't login opera account for now
 ---
 
 extensions:
+
 ```
 Opera Ad Blocker(disable)
 Proxy SwitchyOmega
@@ -932,6 +953,7 @@ QT4_IM_MODULE DEFAULT=fcitx
 XMODIFIERS DEFAULT=@im=fcitx
 SDL_IM_MODULE DEFAULT=fcitx
 ```
+
 还需要在输入法选项里选择google-pinyin什么的
 
 ---
@@ -1066,6 +1088,7 @@ total 3.5G
 -rw-r-x---+ 1 root systemd-journal  72M 2018-04-13 18:25:01.967846109 +0800 system@00000000000000000000000000000000-0000000000033800-00056949207ae8a1.journal
 -rw-r-x---+ 1 root systemd-journal  72M 2018-04-18 04:12:35.385621922 +0800 system@00000000000000000000000000000000-0000000000045c3e-000569b848f6f86c.journal
 ```
+
 这些都有ACL权限
 
 查看垃圾文件
@@ -2437,24 +2460,33 @@ export PROXY_DNS_SERVER=8.8.8.8
 PROXYCHAINS_SOCKS5=10808 proxychains4 -f /etc/proxychains.conf curl www.google.com
 proxychains curl www.google.com
 ```
+
 ## git加速 加速githubgi
+
 ```
 proxychains git clone https://github.com/xxx/xxx.git
 ```
+
 全局github代理加速
+
 ```
 git config --global http.proxy 'socks5://127.0.0.1:10808'
 git config --global https.proxy 'socks5://127.0.0.1:10808'
 ```
+
 查询是否启用代理
+
 ```
 git config --global http.proxy
 git config --list
 ```
+
 取消代理
+
 ```
 git config --global --unset http.proxy
 ```
+
 这下好了，不用忍龟速了。
 
 ---
@@ -2464,7 +2496,9 @@ git config --global --unset http.proxy
 ```
 sudo apt install net-tools
 ```
+
 ## 查看网速
+
 ```
 sudo apt install nethogs
 sudo nethogs eth0
@@ -2681,8 +2715,8 @@ and check always-use-location-entry.
 or
 `dconf write /org/gnome/nautilus/preferences/always-use-location-entry true`
 
-
 ## 修改 默认 终端
+
 ```
 $ gsettings get org.cinnamon.desktop.default-applications.terminal exec
 'gnome-terminal'
@@ -2701,7 +2735,6 @@ $ gsettings set org.gnome.desktop.default-applications.terminal exec terminator
 or
 $ dconf write /org/cinnamon/desktop/applications/terminal/exec "'xfce4-terminal'"
 ```
-
 
 ---
 
@@ -2759,13 +2792,13 @@ Suggested packages:
 
 ```
 $ sudo aptitude search multiarch
-p   binutils-multiarch                                                 - Binary utilities that support multi-arch targets                           
-p   binutils-multiarch:i386                                            - Binary utilities that support multi-arch targets                           
-p   binutils-multiarch-dbg                                             - Binary utilities that support multi-arch targets (debug symbols)           
-p   binutils-multiarch-dbg:i386                                        - Binary utilities that support multi-arch targets (debug symbols)           
+p   binutils-multiarch                                                 - Binary utilities that support multi-arch targets                         
+p   binutils-multiarch:i386                                            - Binary utilities that support multi-arch targets                         
+p   binutils-multiarch-dbg                                             - Binary utilities that support multi-arch targets (debug symbols)         
+p   binutils-multiarch-dbg:i386                                        - Binary utilities that support multi-arch targets (debug symbols)         
 p   binutils-multiarch-dev                                             - GNU binary utilities that support multi-arch targets (BFD development files) 
 p   binutils-multiarch-dev:i386                                        - GNU binary utilities that support multi-arch targets (BFD development files) 
-p   gdb-multiarch                                                      - GNU Debugger (with support for multiple architectures)                     
+p   gdb-multiarch                                                      - GNU Debugger (with support for multiple architectures)                   
 p   gdb-multiarch:i386                                                 - GNU Debugger (with support for multiple architectures)  
 ```
 
@@ -2977,6 +3010,7 @@ sudo apt install lxde
 sudo apt install task-lxde-desktop
 aptitude search openbox
 ```
+
 ```
 $ sudo apt update
 $ sudo apt install gnome-session gdm3
@@ -3766,7 +3800,9 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 或者
 sudo update-grub
 ```
+
 ---
+
 # modprob blacklist
 
 ```
@@ -5383,6 +5419,7 @@ The following additional packages will be installed:
   qt6-declarative-dev-tools
 
 ```
+
 ```
 $ sudo apt install libgl1-mesa-dev libvulkan-dev libxcb-xinput-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xkb1 libxcb-randr0 libxcb-icccm4
 $ sudo apt install qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev qt6-tools-dev qt6-tools-private-dev qt6-scxml-dev qt6-documentation-tools libqt6core5compat6-dev qt6-tools-dev-tools qt6-l10n-tools qt6-shader-baker libqt6shadertools6-dev qt6-quick3d-dev qt6-quick3d-dev-tools libqt6svg6-dev libqt6quicktimeline6-dev libqt6serialport6-dev
@@ -5414,6 +5451,7 @@ Suggested packages:
 ```
 
 ## qtdesigner 使用qt6
+
 ```
 PC一般在(man qtchooser 可查)
 cat /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf 
@@ -5444,6 +5482,7 @@ Using Qt version 6.2.4 in /usr/lib/x86_64-linux-gnu
 ```
 
 ## 使用qtchooser（示例）
+
 ```
 $ qtchooser  -l
 4
@@ -5834,11 +5873,13 @@ Suggested packages:
 
 `/home/andy/.cache/torbrowser/download`
 
-删掉torbrowser-launcher 
+删掉torbrowser-launcher
+
 ```
 sudo apt purge torbrowser-launcher 
 sudo apt install python3-gpg python3-packaging
 ```
+
 直接下载解压用，不要打包成deb，一大堆权限要解决
 
 ---
@@ -6900,7 +6941,6 @@ ERROR: ld.so: object '/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0' from LD_PREL
 sudo apt-get install libgtk3-nocsd0
 ```
 
-
 删除多余库
 
 ```
@@ -6908,14 +6948,12 @@ rm /opt/Xilinx/Vitis/2020.1/lib/lnx64.o/Ubuntu/libstdc++.so.6
 rm /opt/Xilinx/Vivado/2020.1/lib/lnx64.o/Ubuntu/libstdc++.so.6
 ```
 
-
 安装驱动
 
 ```
 cd /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/
 sudo ./install_drivers.sh
 ```
-
 
 ---
 
@@ -7196,7 +7234,6 @@ sudo apt-get -c ~/apt_proxy_conf upgrade
 ```
 
 ---
-# 
 
 ```
 sudo apt install inxi libxml-dumper-perl fancontrol read-edid i2c-tools python3-smbus
@@ -7210,7 +7247,9 @@ lspci
 inxi -Fxpmrz
 
 ```
+
 ---
+
 # RTL8723DE wifi网卡驱动失效
 
 ```
@@ -7221,7 +7260,9 @@ sudo reboot -h now
 ```
 
 ---
+
 # 硬盘分区挂载出现“you do not have permission necessary to view the contents of“的问题 (), ACL权限
+
 ```
 $ ll /media
 total 12
@@ -7240,20 +7281,24 @@ drwxr-x---+  5 root root 4096 May 26 14:10 andy/
 ```
 
 ---
+
 # qqmusic
+
 ```
 sudo dpkg -i qqmusic_1.1.5_amd64.deb
 ```
 
+---
 
-***
 # 安装 nutstore
 
 ```
 $ sudo apt install libnautilus-extension-dev
 $ pkg-config --cflags libnautilus-extension
 ```
+
 从 aur 下载 nutstore 的 PKGBUILD 文件，修改编译
+
 ```
 # Maintainer: Bhoppi Chaw <bhoppi#outlook,com>
 
@@ -7298,11 +7343,14 @@ package() {
     install -D -m644 app-icon/nutstore.png $pkgdir/usr/share/icons/hicolor/512x512/apps/nutstore.png
 }
 ```
+
 ```
 $ makedeb
 $ sudo dpkg -i nutstore-experimental_5.1.7-1_amd64.deb
 ```
+
 ## nautilus-nutstore
+
 ```
 # Maintainer: Bhoppi Chaw <bhoppi#outlook,com>
 
@@ -7329,21 +7377,24 @@ package() {
     install -D -m 644 COPYING $pkgdir/usr/share/licenses/$pkgname/COPYING
 }
 ```
+
 ```
 $ makedeb
 $ sudo dpkg -i nautilus-nutstore_5.1.7-1_amd64.deb
 ```
 
-<https://github.com/chrisjbillington/git-nautilus-icons>
+[https://github.com/chrisjbillington/git-nautilus-icons](https://github.com/chrisjbillington/git-nautilus-icons)
 
-<https://aur.archlinux.org/packages/git-nautilus-icons>
+[https://aur.archlinux.org/packages/git-nautilus-icons](https://aur.archlinux.org/packages/git-nautilus-icons)
 
 ```
 $ sudo apt-get install python3-gi python3-caja python3-nautilus python-nemo pypy-enum34 python3-pip
 ```
 
 ---
+
 # vbox
+
 ```
 $ sudo dpkg -i virtualbox-7.0_7.0.8-156879~Ubuntu~jammy_amd64.deb
 $ cat /etc/group | grep vbox
@@ -7355,12 +7406,15 @@ $ sudo /sbin/vboxconfig
 $ sudo /sbin/rcvboxdrv setup
 $ sudo modprobe vboxdrv
 ```
+
 ## 安装 vbox 扩展包
+
 `sudo virtualbox`
 
-安装`extension`包
+安装 `extension`包
 
 或者用命令行添加
+
 ```
 VBoxManage extpack install [--replace] <tarball> |
                    uninstall [--force] <name> |
@@ -7368,7 +7422,9 @@ VBoxManage extpack install [--replace] <tarball> |
 ```
 
 ---
+
 # codeblocks
+
 ```
 $ sudo apt install codeblocks
 Reading package lists... Done
@@ -7382,7 +7438,9 @@ Suggested packages:
 ```
 
 ---
+
 # virtualenv
+
 ```
 $ sudo apt install virtualenv
 Reading package lists... Done
@@ -7396,7 +7454,9 @@ Suggested packages:
 ```
 
 ---
+
 # wps office
+
 ```
 $ sudo dpkg -i wps-office_11.1.0.11698.XA_amd64.deb
 $ sudo dpkg -i wps-office-fonts_1.0_all.deb
@@ -7404,8 +7464,10 @@ $ sudo dpkg -i symbol-fonts_1.2_all.deb
 $ sudo apt-get install wps-office ttf-mscorefonts-installer wps2odt wps2epub
 ```
 
-* * *
+---
+
 # google-chrome
+
 ```
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
@@ -7424,20 +7486,26 @@ Nothing to configure.
 ```
 
 ---
+
 # baidunetdisk 百度云盘
+
 ```
 $ sudo dpkg -i baidunetdisk_4.17.7_amd64.deb
 ```
 
-
 ---
+
 # pyqt5 etc.
+
 ```
 $ sudo apt install pyqt5-examples pyqt5-dev-tools python3-pyqt5.qtmultimedia python3-pyqt5.qtopengl python3-pyqt5.qtquick python3-pyqt5.qtsvg
 
 ```
+
 ---
+
 # 最新snap状态、
+
 ```
 $ snap list 
 Name                       Version           Rev    Tracking         Publisher      Notes
@@ -7456,32 +7524,37 @@ snapd-desktop-integration  0.9               83     latest/stable/…  canonical
 
 ```
 
-
 ---
+
 # vscode key
 
 ## 方法1（不是最好的）
+
 ```
 $ sudo apt update
 ...
 W: https://packages.microsoft.com/ubuntu/22.04/prod/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 ```
+
 ```
 sudo apt-key list
 sudo apt-key export BE1229CF | sudo gpg --dearmour -o /usr/share/keyrings/microsoft.gpg
 ```
+
 ```
 sudo gedit /etc/apt/sources.list.d/vscode.list 
 ```
+
 ```
 deb [signed-by=/usr/share/keyrings/microsoft.gpg arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code stable main
 ```
+
 ```
 sudo apt-key del BE1229CF
 ```
 
-
 ## 方法2(最好)
+
 ```
 sudo rm /usr/share/keyrings/microsoft.gpg
 sudo rm /etc/apt/sources.list.d/vscode.list
@@ -7492,6 +7565,7 @@ cat /etc/apt/sources.list.d/vscode.list
 ```
 
 ## 方法3(实际就是deb包的postinst的动作)
+
 ```
 $ eval $(apt-config shell APT_SOURCE_PARTS Dir::Etc::sourceparts/d)
 $ echo $APT_SOURCE_PARTS
@@ -7531,20 +7605,21 @@ apt-key list
 cat /etc/apt/sources.list.d/vscode.list
 ```
 
-
 ---
+
 # evince
+
 ```
 $ sudo apt install evince evince-common libevince-dev gir1.2-evince-3.0
 $ cat /usr/share/thumbnailers/evince.thumbnailer
 ```
 
-
 ---
-# 
+
 ```
 $ sudo apt install ffmpegthumbnailer tumbler
 ```
+
 ```
 tumbler: Image files. This must also be installed to expand thumbnailing capabilities to other file types
 poppler-glib or evince: Adobe .pdf files
@@ -7554,9 +7629,10 @@ libgsf: .odf files
 raw-thumbnailer: .raw files
 ```
 
-
 ---
+
 # pcmanfm pdf thumbnails and markdown type recognise as text file (not solved)
+
 ```
 mimeopen ubuntu22.04-usbstick.md
 mimetype ubuntu22.04-usbstick.md
@@ -7573,9 +7649,10 @@ qtxdg-mat defapp inode/directory
 sudo apt install libfile-mimeinfo-perl
 ```
 
-
 ---
+
 # Nemo 有关
+
 ```
 //sudo apt install nemo-terminal # （默认 F4 切换） 不喜欢这样的
 
@@ -7583,21 +7660,26 @@ Edit > Preferences > Toolbar > Open in terminal (不是很好)
 ```
 
 ## Nemo F4 打开 terminal
+
 默认 终端 terminal 修改见前面
+
 ```
 mkdir -p ~/.gnome2/accels
 touch ~/.gnome2/accels/nemo
 gedit ~/.gnome2/accels/nemo
 ```
+
 ```
 (gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
 ```
+
 会自动生成其他参考的键，但是都是注释状态，参考看就是了
 
-
 In case you want not to replace, but to add "Open in Terminator" in your right-click menu,
+
 1. go to `/home/$USER/.local/share/nemo/actions` folder,
 2. create `open_in_terminator.nemo_action` file:
+
 ```
  [Nemo Action]
 
@@ -7608,23 +7690,175 @@ In case you want not to replace, but to add "Open in Terminator" in your right-c
  Selection=any
  Extensions=dir;
 ```
+
 References:
 
-1. [Blog post: "Add Right-Click Commands in Linux Mint / Ubuntu", by Angelos Kyritsis](https://www.pcsteps.com/4434-add-right-click-commands-linux-mint-ubuntu/)
-
+1. [Blog post: &#34;Add Right-Click Commands in Linux Mint / Ubuntu&#34;, by Angelos Kyritsis](https://www.pcsteps.com/4434-add-right-click-commands-linux-mint-ubuntu/)
 2. [Sample Nemo right-click menu action file from /usr/share/nemo/actions/sample.nemo_action](https://github.com/linuxmint/nemo/blob/master/files/usr/share/nemo/actions/sample.nemo_action)
 
+---
+
+# ubuntu shortcuts, nautilus shortcuts
+
+```
+https://help.ubuntu.com/stable/ubuntu-help/shell-keyboard-shortcuts.html.en
+https://keycombiner.com/collections/nautilus/
+http://www.fifi.org/doc/gnome-users-guide/html/gnome-users-guide/C/shortcuts.html
+```
+
+## change Nautilus shortcuts
+
+1. Change the configuration to allow to change the shortcuts, either from command line:
+
+* `gsettings set org.gnome.desktop.interface can-change-accels true`
+
+*   or alternatively by using graphical interface of  `dconf-editor` to change this option.
+
+2. Open Nautilus without global menu by `UBUNTU_MENUPROXY=0 nautilus` and highlight the menu item whose key binding you want to change, either with your mouse or via the keyboard, and press the key(s) you want to use as the shortcut.
+
+3. After you finished with it, change back `can-change-accels` to false.
+
+
+```
+$ gsettings get org.gnome.desktop.interface can-change-accels
+false
+$ gsettings set org.gnome.desktop.interface can-change-accels true
+$ nautilus -q
+$ UBUNTU_MENUPROXY=0 nautilus
+$ gsettings set org.gnome.desktop.interface can-change-accels false
+
+$ gsettings get org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab
+'<Control>Page_Down'
+
+$ gsettings get org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab
+'<Control>Page_Up'
+```
+
+
+添加 `~/.config/nautilus/accels`， 无效，据说Ubuntu 14.04 and up可用
+```
+(gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
+```
+添加`~/.config/nautilus/accels`，也无效，据说Ubuntu 15.10 and 16.04可用
+```
+(gtk_accel_path "<Actions>/ExtensionsMenuGroup/TerminalNautilus:OpenFolderLocal" "F4")
+```
+早期的版本要`sudo apt-get install dconf-tools nautilus-open-terminal`
+
+
+下面方法适用 Ubuntu 18.10 GNOME Shell 3.30.1 以上
+
+Since version 3.15.4 Nautilus doesn't load the accel file anymore [(Souece)](https://gitlab.gnome.org/GNOME/nautilus/blob/master/NEWS#L422)
+
+Fortunatelly there's a better aproach in order to get what you want. Long explanation/useful resources can be found [here](https://help.ubuntu.com/community/NautilusScriptsHowto) and also [here](https://askubuntu.com/questions/680016/keyboard-shortcut-for-open-terminal-nautilus-3-16/696901#696901). 
+[参考1](https://github.com/echo-devim/nautilusaccelsmanager)
+[参考2](https://gist.github.com/dreua/2e399ffcfb42c4b6932de73a5ad5f268#file-nautilus_terminal_shortcut-md)
+
+In short:
+
+1. Create a script called `Terminal` (yes, without a extension) inside the folder `~/.local/share/nautilus/scripts` with the following content:
+```
+#!/bin/sh
+gnome-terminal
+```
+```
+touch ~/.local/share/nautilus/scripts/Terminal
+chmod+x ~/.local/share/nautilus/scripts/Terminal
+gedit ~/.local/share/nautilus/scripts/Terminal
+```
+2. Make it executable, then close any Nautilus instance:
+```
+$ chmod +x Terminal
+$ nautilus -q
+```
+3. Create (or edit) the `~/.config/nautilus/scripts-accels` file adding these lines:
+```
+F4 Terminal
+; Commented lines must have a space after the semicolon
+; Examples of other key combinations:
+; <Control>F12 Terminal
+; <Alt>F12 Terminal
+; <Shift>F12 Terminal
+```
+4. Test it! Open Nautilus, right click, and choose Scripts > Terminal. Or, use the keyboard shortcut that you've just configured :)
+
+改进的脚本，没有再实验下去，前面的已经达到我的目的
+
+Changed `~/.local/share/nautilus/scripts/Terminal` script to:
+```
+#! /bin/sh
+export F=$@
+gnome-terminal
+```
+And added to `~/.bashrc`:
+```
+if [ -n "$F" ]; then 
+	# F is set (i.e. this was called from Nautilus and my special script)
+	echo "\$F is set to $F"
+fi
+```
+
+Another Change for spaces and multiple arguments:
+
+Script:
+```
+#!/bin/sh
+# Sadly it's not possible to properly "export" an array,
+# so we use a newline as delimiter. Expect this to break if you have
+# newline characters in your paths. (Yes, this is possible in linux
+# but not recommended.)
+
+# join function https://stackoverflow.com/a/17841619/4529404
+function join_by { local IFS="$1"; shift; echo "$*"; }
+export F=$(join_by $'\n' "$@")
+gnome-terminal
+```
+.bashrc:
+```
+if [ -n "$F" ]; then 
+	# F is set (i.e. this was called from Nautilus and my special script)
+	#printf "%s" "$IFS" | od -bc
+	IFS=$'\n' read -rd '' -a y <<<"$F" # split at \n
+	#printf "%s" "$IFS" | od -bc
+	# I checked it: IFS is changed only for one command
+	if [ ${#y[@]} = 1 ] ; then
+		export F=${y[0]}
+		set -- "$F"
+		echo "\$F and \$@ are set to $F"
+		if [[ -f $F && -x "$F" ]]; then
+			echo "File '$F' is executable. Run f to execute it."
+			function f() {
+				./$F
+			}
+		fi
+	else
+		export F="" # can not export arrays :/
+		set -- "${y[@]}"
+		echo "\$@ consists of ${#y[@]} entries:"
+		
+		for i in "$@"; do
+			echo " - " $i
+		done
+		echo "Use via 'command \"\$@\"'"
+	fi
+fi
+```
+
 
 ---
-# 
-```
 
 ```
 
+```
 
 ---
-# 
-```
 
 ```
 
+```
+
+---
+
+```
+
+```
