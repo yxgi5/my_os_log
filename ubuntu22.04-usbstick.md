@@ -7735,6 +7735,8 @@ $ gsettings get org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy
 
 $ gsettings get org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab
 '<Control>Page_Up'
+
+$ gsettings list-recursively | grep --ignore-case nautilus
 ```
 
 
