@@ -8886,7 +8886,7 @@ exec lxterminal
 `gedit ~/.config/caja/accels`
 添加
 ```
-"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
 ```
 有效
 

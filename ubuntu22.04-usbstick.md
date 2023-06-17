@@ -7394,8 +7394,32 @@ $ sudo dpkg -i nautilus-nutstore_5.1.7-1_amd64.deb
 $ sudo apt-get install python3-gi python3-caja python3-nautilus python-nemo pypy-enum34 python3-pip
 ```
 
----
+## 安装 nutstore 之后 markdown 有关的 mime 修复
+要修改
+```
+~/.local/share/applications/defaults.list  # 去掉 application/x-md=nutstore-lightapp.desktop
+~/.local/share/applications/mimeinfo.cache # 去掉 application/x-md=nutstore-lightapp.desktop;text/markdown=nutstore-lightapp.desktop;text/x-markdown=nutstore-lightapp.desktop;
+~/.local/share/applications/nutstore-lightapp.desktop # 去掉 application/x-md;text/markdown;text/x-markdown;
+~/.local/share/mime/types # 去掉 application/x-md
+mv ~/.local/share/mime/application/x-md.xml ~/.local/share/mime/application/x-md.xml.bk
+mv ~/.local/share/mime/packages/nutstore-lightapp.xml ~/.local/share/mime/packages/nutstore-lightapp.xml.bk
+mv ~/.local/share/icons/hicolor/scalable/mimetypes/application-x-md.svg ~/.local/share/icons/hicolor/scalable/mimetypes/application-x-md.svg.bk
 
+update-mime-database ~/.local/share/mime
+```
+这样 markdown 文件就在 pcmanfm 里面显示为 Markdown document, 顺带的 pdf thumbnails (见evince)也正常了
+
+## 重置所有坚果云设置(ref)
+```
+rm ~/.config/autostart/nutstore-daemon.desktop
+rm ~/.local/share/applications/nutstore-menu.desktop
+rm ~/.local/share/icons/hicolor/64x64/apps/nutstore.png
+gtk-update-icon-cache --ignore-theme-index "~/.local/share/icons/hicolor" > /dev/null 2>&1
+rm -r ~/.nutstore/dist
+```
+
+
+---
 # vbox
 
 ```
@@ -7675,10 +7699,17 @@ gedit ~/.gnome2/accels/nemo
 ```
 (gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
 ```
+```
+nemo -q
+
+NEMO_DEBUG=thumbnails nemo --debug
+
+nemo
+```
 
 会自动生成其他参考的键，但是都是注释状态，参考看就是了
 
-In case you want not to replace, but to add "Open in Terminator" in your right-click menu,
+In case you want not to replace, but to add "Open in Terminator" in your right-click menu,(参考)
 
 1. go to `/home/$USER/.local/share/nemo/actions` folder,
 2. create `open_in_terminator.nemo_action` file:
@@ -7863,9 +7894,161 @@ graphical.target
 ```
 
 ---
-# 
+# cinnamon
+Installing Cinnamon Desktop on Ubuntu 20.04 and Above
+```
+//sudo add-apt-repository universe # 默认就应该有
+//sudo apt update
+sudo apt install cinnamon-desktop-environment task-cinnamon-desktop nemo-python
+sudo tasksel install cinnamon-desktop
+sudo reboot
+screenfetch
+```
+如果要删除
+```
+sudo apt purge cinnamon-desktop-environment
+sudo apt autoremove
 ```
 
+ref:
+```
+sudo add-apt-repository ppa:linuxmint-daily-build-team/daily-builds
+sudo apt update
+sudo apt install cinnamon nemo-python
+
+sudo apt remove cinnamon nemo-python
+sudo add-apt-repository -r ppa:linuxmint-daily-build-team/daily-builds
+```
+
+---
+# add “open in terminal” to the right-click mouse menu for caja
+
+Installing caja-open-terminal via :
+```
+sudo apt-get install caja-open-terminal caja-actions caja-actions-common
+```
+change `mate-terminal` to `lxterminal`：
+<https://github.com/mate-desktop/caja-extensions/issues/31>
+
+## 可以配置F4快捷键打开terminal
+方法1
+在 `gedit ~/.config/caja/accels` 添加
+```
+(gtk_accel_path "<Actions>/ExtensionsMenuGroup/CajaOpenTerminal::open_terminal" "F4")
+```
+```
+$ gsettings get org.mate.caja-open-terminal desktop-opens-home-dir
+false
+$ gsettings set org.mate.caja-open-terminal desktop-opens-home-dir true
+
+$ gsettings get org.mate.applications-terminal exec
+'mate-terminal'
+$ gsettings get org.mate.applications-terminal exec-arg
+'-x'
+想换terminal，就改这个好了
+```
+
+方法2
+```
+touch ~/.config/caja/scripts/open-terminal-here
+chmod +x ~/.config/caja/scripts/open-terminal-here
+gedit ~/.config/caja/scripts/open-terminal-here
+```
+内容
+```
+#!/bin/sh
+#
+# This script opens a gnome-terminal in the current directory.
+#
+# Distributed under the terms of GNU GPL version 2 or later
+#
+# Original author: Keith Conger <acid@twcny.rr.com>
+#
+# Sourced from
+# https://forums.linuxmint.com/viewtopic.php?p=773382&sid=9939ce160bd97313f849367231eb721a#p773382
+# http://g-scripts.sourceforge.net/nautilus-scripts/Execute/Open%20terminal/terminal-here
+#
+# Put this file in your ~/.config/caja/scripts/ directory.
+# You need to have caja-actions installed to use scripts.
+
+cd $CAJA_SCRIPT_CURRENT_URI
+exec lxterminal
+```
+
+在 `gedit ~/.config/caja/accels` 添加
+```
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+```
+
+After type in terminal
+```
+caja -q
+```
+
+ref：
+```
+Is there a way to configure the Caja open-in-terminal extension to open the user's preferred terminal rather than mate-terminal?
+Not specifically for CAJA, but it honors the general setting that you can change:
+from the menu: System => Preferences =>Personal => Preferred Applications => System => Terminal Emulator.
+from the Control Center: (either type mate-control-center or from the menu: System =>Control Center) in the Personal group.
+
+Alt+F2 and command mate-terminal
+find $HOME ! -user $USER -type f
+sudo chmod 755 -R ~/.cache
+sudo chown $USER:$USER -R /home/$USER/.cache
+
+Change terminal when using open terminal here
+gsettings get org.gnome.desktop.default-applications.terminal exec
+gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/mate-terminal
+gsettings set org.gnome.desktop.default-applications.terminal exec-arg "-x"
+
+You could either find our how to change Xfce’s default terminal (exo-open is Xfce’s command to open the default program) or just change it to
+
+mate-terminal --working-directory=%f
+```
+
+
+---
+# gtk-update-icon-cache
+```
+//sudo touch /usr/share/icons/hicolor ~/.local/share/icons/hicolor
+//sudo gtk-update-icon-cache
+
+也可以把这玩意删了
+mv ~/.local/share/icons/hicolor/icon-theme.cache ~/.local/share/icons/hicolor/icon-theme.cache.bk
+```
+
+
+---
+# Cinnamon menu ("start") bar
+```
+$ gsettings get org.cinnamon favorite-apps
+['opera.desktop', 'cinnamon-settings.desktop', 'pidgin.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop']
+$ dconf-editor # 编辑就可以
+$ dconf list /
+$ dconf list /org/
+$ dconf read /org/cinnamon/favorite-apps 
+['opera.desktop', 'cinnamon-settings.desktop', 'pidgin.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop']
+//$ dconf write /org/cinnamon/favorite-apps "['opera.desktop', 'cinnamon-settings.desktop', 'pidgin.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop']"
+~/.config/dconf/user
+man dconf
+The database is typically located in $XDG_CONFIG_HOME/dconf (i.e., ~/.config/dconf by default)，The files in /etc/dconf are for affecting settings system-wide though
+```
+It's ok to save all donf settings like this :
+```
+dconf dump / > dconf-settings.ini
+```
+But you have to restore them like that ! :
+```
+dconf load / < dconf-settings.ini
+```
+or
+```
+cat dconf-settings.ini | dconf load /
+```
+find files last modified less than 5 minutes
+```
+find ~/.[!.]* -mmin -5
 ```
 
 ---
@@ -7894,3 +8077,5 @@ graphical.target
 ```
 
 ```
+
+
