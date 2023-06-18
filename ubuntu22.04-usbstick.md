@@ -3307,6 +3307,21 @@ sudo systemctl enable lightdm.service
 sudo systemctl start lightdm.service
 sudo systemctl stop gdm.service
 ```
+备份系统已安装软件的清单，采用如下命令 （dpkg命令后的参数前是两个减号“-”）：
+```
+sudo dpkg --get-selections > ~/Desktop/package.selections
+```
+恢复安装软件，升级系统。先将以前备份的package.selections文件拷贝到桌面，后采用如下命令：
+```
+sudo dpkg --set-selections < ~/Desktop/package.selections && apt-get dselect-upgrade
+```
+
+下面也是一种备份安装列表方式
+```
+dpkg -l | grep ^ii | awk '{print $2}' > installed
+# another server
+sudo apt-get install $(cat installed)
+```
 
 查询已经安装软件和导出列表
 [https://www.myfreax.com/how-to-list-installed-packages-on-ubuntu/](https://www.myfreax.com/how-to-list-installed-packages-on-ubuntu/)
@@ -3316,7 +3331,7 @@ sudo apt list --installed | less
 sudo apt list --installed
 sudo dpkg-query -l
 sudo dpkg-query -l | less
-sudo dpkg-query -f '${binary:Package}\n' -W > packages_list.txt
+sudo dpkg-query -f '${binary:Package}\n' -W > pkg_list.txt
 ```
 
 导入列表
@@ -8075,11 +8090,68 @@ start menu ==> keyboard ==> shortcuts ==> Launchers ==> Launch terminal ==> Keyb
 
 
 ---
-# 
+# 提取已安装的软件并重新打包
+##方法1，手动重打包
 ```
+/var/lib/dpkg/info  # 旧版本在/usr/lib/dpkg-db/info
+这个目录里面保留了安装包的"conffiles", “md5sums”, “postinst”, "prerm"四个文件，以及一个list文件
+DEBIAN文件夹内也是这四个文件加上额外的control文件
+
+control文件，则都被保存到了/var/lib/dpkg/status(旧版本在/usr/lib/dpkg-db/status)这个文本文件中
+这样手动提取
+//释放安装内容
+//dpkg -X mingw-w64-binutils_2.36.1-1_amd64.deb extract
+//释放控制信息
+//dpkg -e mingw-w64-binutils_2.36.1-1_amd64.deb extract/DEBIAN/
+重新打包到build目录
+dpkg-deb -b extract/ build/
+
+Use folowing steps to repackage dep package:
+1: Extract deb package
+# dpkg-deb -x <package.deb> <dir>
+2: Extract control-information from a package
+# dpkg-deb -e <package.deb> <dir/DEBIAN>
+3. After completed to make changes to the package, repack the deb
+# dpkg-deb -b <dir> <new-package.deb>
+```
+##方法2，用 dpkg-repack
+```
+sudo apt install dpkg-repack
+fakeroot -u dpkg-repack xed
+```
+这样xed仅control相比原始deb添加了一个dpkg-repack说明而已
+```
+sudo dpkg -i <package-name>
+# install the dependencies
+sudo apt-get -f install
+```
+We can print the dependencies on the main server running the original software
+```
+apt-cache depends Package_name |awk '{print $2}'
+```
+You can create a script to automate the dependency installation :
 
 ```
+package=package
+dpkg-repack $(apt-cache depends --false-suggests $package |awk '{print $2}') $package
+```
+However, dpkg-repack utility will not copy your custom settings. dpkg-repack is helpful to get the original deb file we used on our main server. That is helpful in a certain scenario where an exact copy of the settings is not desired.
 
+## 方法3，用 apt-clone
+apt-clone is another utility which copies all the settings and create a debian installation file :
+```
+sudo apt-get install apt-clone
+```
+打包
+```
+//apt-clone clone xed --with-dpkg-repack
+apt-clone clone xed
+```
+恢复
+```
+sudo apt-get install apt-clone
+sudo apt-clone restore xed.apt-clone.tar.gz
+```
 
 ---
 # 
