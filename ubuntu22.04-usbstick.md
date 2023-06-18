@@ -8052,9 +8052,25 @@ find ~/.[!.]* -mmin -5
 ```
 
 ---
-# 
-```
+# Customize keyboard shortcuts in Cinnamon Desktop Environment
+[How to add custom keybindings with gsettings](https://community.linuxmint.com/tutorial/view/1171)
 
+<https://wiki.archlinux.org/title/cinnamon>
+```
+备份
+$ dconf dump /org/cinnamon/desktop/keybindings/ > dconf-settings.conf
+载入
+$ dconf load /org/cinnamon/desktop/keybindings/ < dconf-settings.conf
+
+$ dconf-editor
+
+$ gsettings get org.cinnamon.desktop.keybindings.media-keys terminal
+['<Primary><Alt>t']
+其实默认的ctrl+alt+t挺好的，通用
+//$ gsettings set org.cinnamon.desktop.keybindings.media-keys terminal "['<Super>t']"
+or
+$ cinnamon-settings keyboard
+start menu ==> keyboard ==> shortcuts ==> Launchers ==> Launch terminal ==> Keyboard bindings, 输入按键组合就更新了。
 ```
 
 
