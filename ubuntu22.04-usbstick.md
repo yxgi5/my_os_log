@@ -4733,6 +4733,11 @@ $ wine taskmgr
 $ wine explorer
 $ wine explorer /desktop=name,1024x768 program.exe
 $ WINEDEBUG=+all,-relay wine program_name
+
+$ wineboot
+
+$ wineserver -k
+$ wineserver -k9
 ```
 
 WINEARCH
@@ -7309,6 +7314,11 @@ sudo dpkg -i qqmusic_1.1.5_amd64.deb
 ---
 
 # 安装 nutstore
+
+可以直接在官网下载
+```
+wget https://pkg-cdn.jianguoyun.com/static/exe/installer/ubuntu/nautilus_nutstore_amd64.deb
+```
 
 ```
 $ sudo apt install libnautilus-extension-dev

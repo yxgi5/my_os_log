@@ -15406,8 +15406,8 @@ $ su
 # mount -t tmpfs tmpfs /run/lock
 上面可以用 arch-chroot .
 
-# mount /dev/sdx2 /home
-# mount /dev/sdx3 /opt
+# mount /dev/sdx3 /home
+# mount /dev/sdx4 /opt
 # mount -t vfat /dev/sdx1 /boot/efi/
 
 # apt install grub-efi-amd64-bin grub-efi-amd64-signed
