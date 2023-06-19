@@ -8204,9 +8204,63 @@ If the last command does not work, change it for
 
 
 ---
-# 
+# ltspice-mod
+PKGBUILD
 ```
+# Maintainer: Jan-Henrik Bruhn <aur@jhbruhn.de>
 
+pkgname=ltspice
+pkgver=17.0.18.0
+pkgrel=1
+pkgdesc="SPICE simulator, schematic capture and waveform viewer of electronic circuits."
+arch=('amd64')
+url="http://www.linear.com/designtools/software/"
+license=('custom')
+depends=('wine')
+makedepends=('git')
+source=("$pkgname::git+https://github.com/jhbruhn/$pkgname#branch=${pkgver//_/-}"
+        "$pkgname.sh"
+        "$pkgname-help.sh")
+sha256sums=('SKIP'
+            'SKIP'
+            'SKIP')
+
+package()
+{
+    cd "$pkgname"
+
+    # Install License
+    install -Dm644 License.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    #rm License.txt
+
+    # Install docs to /usr/share/doc/
+    install -Dm644 LTspiceHelp.chm "${pkgdir}/usr/share/doc/${pkgname}/ltspice.chm"
+
+    # Install binary files to /usr/share
+    install -m755 -d "$pkgdir/usr/share/$pkgname"
+    cp -r * "$pkgdir/usr/share/$pkgname"
+    #chmod 755 -R "$pkgdir/usr/share/$pkgname"
+
+    #Install /usr/bin startscript
+    install -Dm755 "$srcdir/$pkgname.sh" "$pkgdir/usr/bin/$pkgname"
+    install -Dm755 "$srcdir/$pkgname-help.sh" "$pkgdir/usr/bin/$pkgname-help"
+}
+```
+ltspice.sh
+```
+#!/bin/sh
+if [ ! -d "$HOME"/.wine ] ; then
+   mkdir -p "$HOME"/.wine
+   touch "$HOME"/.wine/LTspiceXVII.ini
+fi
+export WINEPREFIX=$HOME/.wine
+wine /usr/share/ltspice/XVIIx64.exe -ini "$HOME"/.wine/LTspiceXVII.ini "$@"
+```
+ltspice-help.sh
+```
+#!/bin/sh
+export WINEPREFIX=$HOME/.wine
+wine hh /usr/share/doc/ltspice/ltspice.chm "$@"
 ```
 
 
