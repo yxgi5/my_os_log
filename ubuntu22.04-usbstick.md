@@ -8204,7 +8204,7 @@ If the last command does not work, change it for
 
 
 ---
-# ltspice-mod
+# ltspice-mod(不如直接wine的)
 PKGBUILD
 ```
 # Maintainer: Jan-Henrik Bruhn <aur@jhbruhn.de>
