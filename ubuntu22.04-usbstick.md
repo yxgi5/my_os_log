@@ -8265,9 +8265,51 @@ wine hh /usr/share/doc/ltspice/ltspice.chm "$@"
 
 
 ---
+# ubuntukylin 有一些有趣的deb包
+<https://archive.ubuntukylin.com/ubuntukylin/pool/partner/>
+
+<http://mirrors.163.com/ubuntukylin/pool/partner/>
+```
+源添加
+deb http://archive.ubuntukylin.com/ubuntukylin jammy-partner main
+添加公钥
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D259B7555E1D3C58
+```
+or for 22.04
+```
+wget https://archive.ubuntukylin.com/ubuntukylin/pool/main/k/kylin-software-keyring/kylin-software-keyring_2022.03.30_all.deb
+sudo dpkg -i kylin-software-keyring_2022.03.30_all.deb
+```
+
+```
+
+```
+
+
+---
 # 
 ```
 
 ```
 
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
 
