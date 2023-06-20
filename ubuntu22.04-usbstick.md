@@ -8272,19 +8272,110 @@ wine hh /usr/share/doc/ltspice/ltspice.chm "$@"
 ```
 源添加
 deb http://archive.ubuntukylin.com/ubuntukylin jammy-partner main
+deb http://archive.ubuntukylin.com/ubuntukylin jammy main
 添加公钥
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D259B7555E1D3C58
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 9C949F2093F565FF
+sudo add-apt-repository ppa:ubuntukylin-members/ubuntukylin
+sudo apt update
+sudo add-apt-repository -r ppa:ubuntukylin-members/ubuntukylin
 ```
 or for 22.04
 ```
 wget https://archive.ubuntukylin.com/ubuntukylin/pool/main/k/kylin-software-keyring/kylin-software-keyring_2022.03.30_all.deb
 sudo dpkg -i kylin-software-keyring_2022.03.30_all.deb
+
+还要添加源
+deb http://archive.ubuntukylin.com/ubuntukylin jammy main
 ```
+
+```
+$ sudo apt install ubuntu-kylin-software-center 
+
+The following additional packages will be installed:
+  apt-xapian-index language-pack-zh-hans language-pack-zh-hans-base python3-piston-mini-client python3-xapian ubuntukylin-keyring
+Suggested packages:
+  xapian-doc
 
 ```
 
 ```
+$ sudo apt install kylin-software-center
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  python3-piston-mini-client
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  wmctrl
+The following packages will be REMOVED:
+  ubuntu-kylin-software-center
 
+```
+
+```
+sudo apt install libukui-log4qt1
+sudo aptitude install kylin-camera
+The following NEW packages will be installed:
+  kwayland-data{a} kwayland-integration{a} kylin-camera kylincameralibs{a} libfaac0{a} libgpac11{a} libkf5guiaddons-bin{a} libkf5guiaddons-data{a} libkf5guiaddons5{a} libkf5idletime5{a} 
+  libkf5waylandclient5{a} libkf5windowsystem-data{a} libkf5windowsystem5{a} libqt5waylandclient5{a} libqt5waylandcompositor5{a} qtwayland5{a} 
+
+```
+
+```
+sudo apt install com.xunlei.download com.alibabainc.dingtalk indicator-china-weather skypeforlinux xmind-vana
+
+```
+
+```
+$ sudo apt install kylin-burner 
+The following additional packages will be installed:
+  cdrskin libgsettings-qt-dev libiso9660-11 libvcdinfo0 vcdimager
+Suggested packages:
+  xorriso
+
+```
+
+
+---
+# uget
+```
+sudo apt install uget
+```
+
+
+---
+# vlc
+```
+sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization
+
+The following additional packages will be installed:
+  libcddb2 libdvbpsi10 libebml5 libixml10 libmatroska7 libopenmpt-modplug1 libprotobuf-lite23 libproxy-tools libresid-builder0c2a libsidplay2 libspatialaudio0 libupnp13 libvlc-bin libvlc5
+  libvlccore9 libxcb-composite0 vlc-bin vlc-data vlc-l10n vlc-plugin-access-extra vlc-plugin-base vlc-plugin-video-output
+Suggested packages:
+  vlc-plugin-fluidsynth vlc-plugin-jack vlc-plugin-svg libdvdcss2
+```
+
+
+---
+# qqmusic启动失败
+```
+[76516:0620/164308.168641:FATAL:gpu_data_manager_impl_private.cc(1034)] The display compositor is frequently crashing. Goodbye.
+```
+Electron 在新的GPU驱动上使用有这个问题，启动时加上 --no-sandbox 参数就好了
+
+```
+qqmusic --no-sandbox
+
+```
+
+
+---
+# 
+```
+
+```
 
 ---
 # 
@@ -8306,10 +8397,4 @@ sudo dpkg -i kylin-software-keyring_2022.03.30_all.deb
 
 ```
 
-
----
-# 
-```
-
-```
 
