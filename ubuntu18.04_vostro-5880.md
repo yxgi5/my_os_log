@@ -11339,6 +11339,86 @@ If the last command does not work, change it for
 
 ---
 ***
+# goldendict
+```
+sudo apt-get install goldendict goldendict-wordnet
+```
+
+
+---
+***
+# youdao-dict报错
+youdao-dict_6.0.0-0_ubuntu_amd64.deb
+```
+Traceback (most recent call last):
+  File "/usr/bin/youdao-dict", line 27, in <module>
+    from dae.daeclient import DAEClient
+  File "/usr/share/youdao-dict/dae/daeclient.py", line 36, in <module>
+    from dae.window import Window
+  File "/usr/share/youdao-dict/dae/window.py", line 29, in <module>
+    from dae.webview import WebView
+  File "/usr/share/youdao-dict/dae/webview.py", line 27, in <module>
+    from dae.webpage import WebPage
+  File "/usr/share/youdao-dict/dae/webpage.py", line 27, in <module>
+    from PyQt5.QtWebKitWidgets import QWebPage, QWebInspector
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+```
+
+PYTHONPATH环境变量
+```
+export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages
+```
+然后运行,ok
+<https://github.com/yomun/youdaodict_5.5>
+```
+如果依赖软件包安装完后,
+还是会出现 ModuleNotFoundError: No module named 'PyQt5.QtWebKitWidgets'
+先检查是否用 pip3 安装了 PyQt5, 如有就卸载
+
+如还不行, 建议加入 PYTHONPATH 环境变量
+
+$ python3
+Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import os
+>>> print(os.sys.path)
+['', '/usr/lib/python36.zip', '/usr/lib/python3.6', '/usr/lib/python3.6/lib-dynload',
+ '/usr/lib/python3/dist-packages']
+
+选一个以上可用的路径为 $PYTHONPATH
+
+$ su root
+$ gedit /usr/share/applications/youdao-dict.desktop
+
+### Exec=youdao-dict %f
+Exec=env PYTHONPATH=/usr/lib/python3/dist-packages youdao-dict %f
+
+也可以在 ~/.bashrc 或 ~/.profile 加入
+
+$ su $USERNAME
+$ gedit ~/.bashrc 或 gedit ~/.profile
+
+export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages
+
+然后运行
+
+$ source ~/.bashrc 或 source ~/.profile
+$ youdao-dict
+```
+
+---
+***
+# xunlei dingtalk
+```
+com.xunlei.download_1.0.0.1_amd64.deb
+com.alibabainc.dingtalk_1.3.0.20214_amd64.deb
+```
+
+
+---
+***
 #
 ```
 ```
@@ -11351,9 +11431,25 @@ If the last command does not work, change it for
 ```
 
 
+---
+***
+#
+```
+```
 
 
+---
+***
+#
+```
+```
 
+
+---
+***
+#
+```
+```
 
 
 
