@@ -8269,6 +8269,8 @@ wine hh /usr/share/doc/ltspice/ltspice.chm "$@"
 <https://archive.ubuntukylin.com/ubuntukylin/pool/partner/>
 
 <http://mirrors.163.com/ubuntukylin/pool/partner/>
+可以下载dingtalk，xunlei，weixin什么的deb包
+
 ```
 源添加
 deb http://archive.ubuntukylin.com/ubuntukylin jammy-partner main
@@ -8325,7 +8327,13 @@ The following NEW packages will be installed:
 
 ```
 sudo apt install com.xunlei.download com.alibabainc.dingtalk indicator-china-weather skypeforlinux xmind-vana
-
+//sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  1F3045A5DF7587C3
+sudo rm /etc/apt/sources.list.d/skype-stable.list
+//sudo rm /etc/apt/trusted.gpg
+sudo apt-key del 1F3045A5DF7587C3
+or
+删掉
+deb [arch=amd64] https://repo.skype.com/deb stable main
 ```
 
 ```
@@ -8336,6 +8344,69 @@ Suggested packages:
   xorriso
 
 ```
+
+
+```
+sudo apt-get install kylin-kwre-wechat # (not work) 不如直接wine或者crossover安装个呢
+```
+---
+# ynote youdao-dict
+```
+ynote youdao-dict 
+```
+都大量报错，设置环境变量也不成，python版本问题吧，懒得处理了。目前环境只有3.10版本
+```
+$ youdao-dict
+...
+Load "youdao" plugin error: setX(self, int): argument 1 has unexpected type 'float'
+Traceback (most recent call last):
+  File "/usr/share/youdao-dict/dae/plugins.py", line 81, in load
+    assets.pluginobjects += self.get_plugin_object(plugin_name)
+  File "/usr/share/youdao-dict/dae/plugins.py", line 72, in get_plugin_object
+    for obj in plugin.export_objects():
+  File "/usr/share/youdao-dict/app/plugins/youdao/__init__.py", line 64, in export_objects
+    splash_window.showCenter()
+  File "/usr/share/youdao-dict/app/plugins/youdao/window.py", line 290, in showCenter
+    self.setX(x)
+TypeError: setX(self, int): argument 1 has unexpected type 'float'
+```
+patch
+```
+--- a/src/app/plugins/youdao/window.py	2022-01-24 00:21:08.317867190 +0800
++++ b/src/app/plugins/youdao/window.py	2022-01-24 00:22:33.509467326 +0800
+@@ -287,8 +287,8 @@
+         geometry = desktop.screenGeometry(desktop.primaryScreen())
+         x = geometry.x() + (geometry.width() - self.width())/2
+         y = geometry.y() + (geometry.height() - self.height())/2
+-        self.setX(x)
+-        self.setY(y)
++        self.setX(int(x))
++        self.setY(int(y))
+         self.show()
+ 
+     @QtCore.pyqtSlot()
+--- a/src/dae/window.py	2022-01-24 00:21:08.301200209 +0800
++++ b/src/dae/window.py	2022-01-24 00:21:44.845222361 +0800
+@@ -641,5 +641,5 @@
+         geometry = screen.availableGeometry()
+         x = geometry.x() + (geometry.width() - self.width())/2
+         y = geometry.y() + (geometry.height() - self.height())/2
+-        self.move(x, y)
++        self.move(int(x), int(y))
+         self.show()
+```
+```
+sudo gedit /usr/share/youdao-dict/dae/window.py
+sudo gedit /usr/share/youdao-dict/app/plugins/youdao/window.py
+```
+就好了
+
+
+ynote报错
+```
+gpu_data_manager_impl_private.cc(445)] GPU process isn't usable. Goodbye.
+```
+运行时候加--no-sandbox就ok了
 
 
 ---
@@ -8372,10 +8443,187 @@ qqmusic --no-sandbox
 
 
 ---
+# crossover
+```
+sh -c "apt-get update --allow-releaseinfo-change-Suite; echo -n Waiting for the dpkg lock; while fuser /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/run/unattended-upgrades.lock >/dev/null 2>&1; do echo -n .; sleep 1; done; DEBIAN_FRONTEND=noninteractive; export DEBIAN_FRONTEND; apt-get install -y gstreamer1.0-plugins-good:i386 gstreamer1.0-plugins-ugly:i386 libnss-mdns:i386 libvulkan1:i386"
+
+The following additional packages will be installed:
+  glib-networking:i386 gstreamer1.0-x:i386 liba52-0.7.4:i386 libaa1:i386
+  libavc1394-0:i386 libcaca0:i386 libcdio19:i386 libdv4:i386 libdvdread8:i386
+  libgstreamer-plugins-good1.0-0:i386 libiec61883-0:i386 libmp3lame0:i386
+  libmpeg2-4:i386 libmpg123-0:i386 libncurses6:i386 libncursesw6:i386
+  libopencore-amrnb0:i386 libopencore-amrwb0:i386 libproxy1v5:i386
+  libraw1394-11:i386 libshout3:i386 libsidplay1v5:i386 libslang2:i386
+  libsoup2.4-1:i386 libspeex1:i386 libtag1v5:i386 libtag1v5-vanilla:i386
+  libtwolame0:i386 libvpx7:i386 libwavpack1:i386 libx264-163:i386 libxv1:i386
+  mesa-vulkan-drivers:i386
+Suggested packages:
+  libdv-bin:i386 libdvdcss2:i386 avahi-autoipd:i386 | zeroconf:i386
+  libraw1394-doc:i386 sidplay-base:i386 speex:i386
+
+```
+
+---
+# playonlinux(弃用)
+```
+$ sudo apt-get install playonlinux 
+The following additional packages will be installed:
+  icoutils jq libjq1 libonig5 python3-natsort python3-wxgtk4.0
+Suggested packages:
+  libterm-readline-gnu-perl | libterm-readline-perl-perl winbind
+  python-natsort-doc wx3.0-doc
+$ sudo apt-get purge playonlinux
+$ sudo apt autoremove
+```
+
+
+---
+# iptux 降级
+```
+sudo apt-get install git libgtk2.0-dev libglib2.0-dev libgstreamer1.0-dev libjsoncpp-dev g++ make cmake
+用0.7.6版本编译
+```
+```
+$ sudo make install
+[ 64%] Built target iptux
+[ 72%] Built target libiptux_test
+[ 76%] Built target iptuxbin
+[100%] Built target translations_1
+Install the project...
+-- Install configuration: ""
+-- Installing: /usr/local/bin/iptux
+-- Up-to-date: /usr/local/share/locale/de/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/en_GB/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/es/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/fr/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/gl/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/it/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/lb/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/pl/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/pt_BR/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/ru/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/zh_CN/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/locale/zh_TW/LC_MESSAGES/iptux.mo
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-dog.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-daemon.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-rabbit.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-cow.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-penguin.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-scream.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-konqui.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-ghost.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-teddybear.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-blowfish.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-frog.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-tux.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-qq.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-monkey.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-elephant.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-pig.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-turtle.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-bug.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/icon/icon-lion.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/menu
+-- Up-to-date: /usr/local/share/iptux/pixmaps/menu/menu-board.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/menu/menu-share.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/menu/menu-group.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/menu/menu-detect.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip/tip-hide.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip/tip-send.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip/tip-error.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip/tip-finish.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip/tip-recv.png
+-- Up-to-date: /usr/local/share/iptux/pixmaps/tip/tip-show.png
+-- Up-to-date: /usr/local/share/iptux/sound/msg.ogg
+-- Up-to-date: /usr/local/share/iptux/sound/trans.ogg
+-- Up-to-date: /usr/local/share/applications/iptux.desktop
+-- Up-to-date: /usr/local/share/icons/hicolor
+-- Up-to-date: /usr/local/share/icons/hicolor/32x32
+-- Up-to-date: /usr/local/share/icons/hicolor/32x32/apps
+-- Up-to-date: /usr/local/share/icons/hicolor/32x32/apps/iptux-i.png
+-- Up-to-date: /usr/local/share/icons/hicolor/32x32/apps/iptux.png
+-- Up-to-date: /usr/local/share/icons/hicolor/48x48
+-- Up-to-date: /usr/local/share/icons/hicolor/48x48/apps
+-- Up-to-date: /usr/local/share/icons/hicolor/48x48/apps/iptux-i.png
+-- Up-to-date: /usr/local/share/icons/hicolor/48x48/apps/iptux.png
+-- Up-to-date: /usr/local/share/icons/hicolor/22x22
+-- Up-to-date: /usr/local/share/icons/hicolor/22x22/apps
+-- Up-to-date: /usr/local/share/icons/hicolor/22x22/apps/iptux-i.png
+-- Up-to-date: /usr/local/share/icons/hicolor/22x22/apps/iptux.png
+-- Up-to-date: /usr/local/share/icons/hicolor/24x24
+-- Up-to-date: /usr/local/share/icons/hicolor/24x24/apps
+-- Up-to-date: /usr/local/share/icons/hicolor/24x24/apps/iptux-i.png
+-- Up-to-date: /usr/local/share/icons/hicolor/24x24/apps/iptux.png
+-- Up-to-date: /usr/local/share/icons/hicolor/16x16
+-- Up-to-date: /usr/local/share/icons/hicolor/16x16/apps
+-- Up-to-date: /usr/local/share/icons/hicolor/16x16/apps/iptux-i.png
+-- Up-to-date: /usr/local/share/icons/hicolor/16x16/apps/iptux.png
+-- Up-to-date: /usr/local/share/icons/hicolor/64x64
+-- Up-to-date: /usr/local/share/icons/hicolor/64x64/apps
+-- Up-to-date: /usr/local/share/icons/hicolor/64x64/apps/iptux-i.png
+-- Up-to-date: /usr/local/share/icons/hicolor/64x64/apps/iptux.png
+
+```
+
+## PKGBUILD
+<https://wiki.archlinux.org/title/CMake_package_guidelines>
+```
+# Maintainer: andreas <yxgi5@163.com>
+
+pkgname=iptux
+pkgver=0.7.6
+pkgrel=1
+pkgdesc='LAN messenger and file sender, an IP Messenger client'
+arch=('x86_64')
+url='https://github.com/iptux-src/iptux/'
+license=('GPL2')
+depends=('libgoogle-glog0v5' 'libjsoncpp25' 'libgtk-3-0' 'libglib2.0-0' 'libgdk-pixbuf-2.0-0' 'libgcc-s1' 'libc6' 'libpango-1.0-0' 'libsigc++-2.0-0v5' 'libstdc++6')
+source=("iptux-0.7.6.tar.gz"
+        "googletest-release-1.8.0.tar.gz") # https://github.com/google/googletest/archive/release-1.8.0.tar.gz
+sha256sums=('SKIP'
+            'SKIP')
+
+
+build()
+{
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    #[[ -d build ]] && rm -r build
+    mkdir -p build
+    mkdir -p build/src/googletest-download/googletest-prefix/src/
+    cp "$srcdir/googletest-release-1.8.0.tar.gz" build/src/googletest-download/googletest-prefix/src/release-1.8.0.tar.gz
+    #cd build
+    #cmake .. && make
+
+    cd "${srcdir}"
+    cmake -B build -S "$pkgname-$pkgver" \
+        -DCMAKE_BUILD_TYPE='None' \
+        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -Wno-dev
+    cmake --build build
+}
+
+check()
+{
+    ctest --test-dir build --output-on-failure
+}
+
+package()
+{
+    DESTDIR="$pkgdir" cmake --install build
+}
+
+
+```
+
+
+---
 # 
 ```
 
 ```
+
 
 ---
 # 
