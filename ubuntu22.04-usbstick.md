@@ -8619,16 +8619,82 @@ package()
 
 
 ---
-# 
+# netease-cloud-music
+<https://blog.csdn.net/leibris/article/details/124895824>
+```
+$ sudo dpkg -i netease-cloud-music_1.2.1_amd64_ubuntu_20190428.deb
+
+$ netease-cloud-music 
+/opt/netease/netease-cloud-music/netease-cloud-music: /opt/netease/netease-cloud-music/libs/libselinux.so.1: no version information available (required by /lib/x86_64-linux-gnu/libgio-2.0.so.0)
+/opt/netease/netease-cloud-music/netease-cloud-music: symbol lookup error: /lib/x86_64-linux-gnu/libgio-2.0.so.0: undefined symbol: g_module_open_full
+
+
+```
+```
+sudo apt install libssl-dev \
+    libxdo-dev libxtst-dev libx11-dev \
+    libxkbcommon-dev libwxgtk3.0-gtk3-dev libdbus-1-dev \
+    wget git file build-essential pkg-config
+sudo apt install libqt5webchannel5
 ```
 
 ```
+sudo cp /opt/netease/netease-cloud-music/netease-cloud-music.bash /opt/netease/netease-cloud-music/netease-cloud-music.bash.bk
+sudo gedit /opt/netease/netease-cloud-music/netease-cloud-music.bash
+```
+```
+#!/bin/sh
+HERE="$(dirname "$(readlink -f "${0}")")"
+export LD_LIBRARY_PATH="${HERE}"/libs:$LD_LIBRARY_PATH
+export QT_PLUGIN_PATH="${HERE}"/plugins
+export QT_QPA_PLATFORM_PLUGIN_PATH="${HERE}"/plugins/platforms
+cd /lib/x86_64-linux-gnu/
+exec "${HERE}"/netease-cloud-music $@
+```
+好了
+
 
 
 ---
-# 
+# winetricks更新、加速
+
+## winetricks要尽量更新
+```
+su
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+winetricks --self-update
 ```
 
+## winetricks安装组建
+```
+export https_proxy="127.0.0.1:8118"
+export http_proxy="127.0.0.1:8118"
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --gui
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --help
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks allfonts
+//env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks cjkfonts
+//env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks pptfonts
+//env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks fakechinese fakejapanese fakekorean
+//env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --force fakejapanese_vlgothic
+思源字体要单独补
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 wine a5e60928164fabca05c8ea91d02d4efa.sourcescfont3.exe
+
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q dotnet20sp2 # failed
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks dotnet20
+
+ ie8 msxml3
+
+
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks riched20 riched30 ie8 vcrun6 vcrun2005sp1 gdiplus cjkfonts corefonts wenquanyi
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 ie6 gdiplus
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash
+```
+
+```
+~/.cache/winetricks/
+wine winecfg -v win7
 ```
 
 
