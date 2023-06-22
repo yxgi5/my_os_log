@@ -8664,37 +8664,76 @@ su
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
 winetricks --self-update
+
+实际上会备份并
+sudo chmod -x /usr/bin/winetricks.bak
+```
+最好安装winbind
+```
+$ sudo apt install winbind 
+Suggested packages:
+  libnss-winbind libpam-winbind
+The following NEW packages will be installed:
+  winbind
 ```
 
 ## winetricks安装组建
 ```
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
+rm ~/.wine_x86/ -rf
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winecfg
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --gui
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --help
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks allfonts
+
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks allfonts # 特别是wenquanyi什么的
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks cjkfonts
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks pptfonts
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks fakechinese fakejapanese fakekorean
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --force fakejapanese_vlgothic
 思源字体要单独补
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 wine a5e60928164fabca05c8ea91d02d4efa.sourcescfont3.exe
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 wine sourcescfont3.exe # 暂时放到sourcehansans里
 
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q dotnet20sp2 # failed
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks dotnet20
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q corefonts # 至少需要安装的字体
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun6 # 包括了msvcirt mfc42
+//env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q dotnet11sp1 # 不安装这个额。包括了dotnet11 与 dotnet20 dotnet20sp1 dotnet20sp2 冲突
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q dotnet20sp2 # if failed，update winetricks, 没有必要安装 dotnet20 dotnet20sp1
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q dotnet35sp1 # 没有必要安装dotnet35, dotnet30sp1, dotnet30
 
- ie8 msxml3
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q dotnet48 # 没有必要安装dotnet40 dotnet40_kb2468871
 
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks list-all | grep msxml3
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q msxml3
+$ find ~/.cache/winetricks -type f -name "InstMsiW.exe"
+/home/andy/.cache/winetricks/msls31/InstMsiW.exe
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q msls31
 
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks riched20 riched30 ie8 vcrun6 vcrun2005sp1 gdiplus cjkfonts corefonts wenquanyi
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks vb6run vcrun6 vcrun6sp6 secur32 msvcirt mfc42 riched20 riched30 ie6 gdiplus
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks cmd comctl32 gdiplus mfc42 vcrun2003 vcrun2005 vcrun2008 vcrun2010 riched20 riched30
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks msxml3 gdiplus riched20 riched30 vcrun6 vcrun2005 ie6 flash
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q ie8
+
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q riched30 riched20
+
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vb6run
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun6sp6 # with fixes in ATL and MFC
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2003
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2005
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2008
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2010
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2012
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2013
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q vcrun2015
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q gdiplus
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q secur32
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q mfc40
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q cmd
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q comctl32
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q comctl32ocx
 ```
 
 ```
 ~/.cache/winetricks/
 wine winecfg -v win7
+wine winecfg -v winxp
+
 ```
 
 
