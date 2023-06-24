@@ -8678,6 +8678,8 @@ The following NEW packages will be installed:
 ```
 
 ## winetricks安装组建
+
+实际上维护x64的arch就够了
 ```
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
@@ -8686,7 +8688,7 @@ env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x8
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --gui
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks --help
 
-env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks allfonts # 特别是wenquanyi什么的
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks allfonts # 特别是wenquanyi，opensymbol什么的
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks cjkfonts
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks pptfonts
 //env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks fakechinese fakejapanese fakekorean
@@ -8728,13 +8730,50 @@ env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x8
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q comctl32
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q comctl32ocx
 ```
-
+tips
 ```
 ~/.cache/winetricks/
 wine winecfg -v win7
 wine winecfg -v winxp
+wine C:\\windows\\command\\start.exe /Unix /home/...
+env WINEPREFIX="/home/pc/.wine" wine C:\\windows\\command\\start.exe /Unix /home/pc/.wine/dosdevices/c:/users/pc/AppData/Roaming/Microsoft/Windows/Start\ Menu/Programs/Tracker\ Software/PDF-XChange\ Editor.lnk Z:%U
+strings filename.lnk
+
+https://unix.stackexchange.com/questions/509360
+It explains how to add a program to the Wine menu:
+wine winemenubuilder /path/to/link.lnk
+
+重启wine
+wineboot
+
+wineserver -k
+```
+
+## ie8
+```
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine winecfg -v win7
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine winetricks -q -f ie8
+To start ie8 (32-bit), from a terminal shell, use the command "wine" 'C:\Program Files (x86)\Internet Explorer\iexplore.exe'
+To start ie8 (64-bit), from a terminal shell, use the command "wine" 'C:\Program Files\Internet Explorer\iexplore.exe'
+如果不行就到winetricks里面删掉ie再更新一个版本咯
+
+测试.lnk文件看是否能打开
+env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine wine start Notepad++.lnk
+不行就放弃这次更改
+```
+
+## created .desktop files
+```
+scans your Wine drive for windows .lnk files
+creates a Linux .desktop file for each .lnk file
+creates a folder $HOME/.local/share/applications/wine
+places all of the newly created .desktop files in there
 
 ```
+```
+find $HOME/.wine -name '*.lnk' -type f -exec bash -c 'wine winemenubuilder "$0"' {} \;
+```
+
 
 
 ---
