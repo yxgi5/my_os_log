@@ -9089,10 +9089,10 @@ sudo apt install pkg-config libtag1-dev libicu-dev libcue-dev libtag1-dev libavu
 ```
 
 ---
-# python2
+# python2（尽量用虚拟环境）
 ```
 $ sudo apt-get install python-is-python3
-$ sudo apt-get install python2 python2-dev  python2-setuptools-whl python2-pip-whl python2-minimal
+$ sudo apt-get install python2 python2-dev  python2-setuptools-whl python2-pip-whl python2-minimal   # 不要安装python-pip， 不然要补sudo apt-get install python3-pip python3-virtualenv virtualenv 
 
 Suggested packages:
   python2-doc python-tk python2.7-doc
@@ -9100,43 +9100,653 @@ The following NEW packages will be installed:
   libpython2-dev libpython2-stdlib libpython2.7 libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib python2 python2-dev python2-minimal python2-pip-whl python2-setuptools-whl python2.7 python2.7-dev
   python2.7-minimal
 
+
+```
+
+## virtualenv
+
+
+因为冲突不安装python-pip，那么没有pip2怎么办呢？ 可以用`virtualenv`
+```
+$ sudo python2 -m pip install --upgrade pip
+/usr/bin/python2: No module named pip
+
+$ sudo python2 -m ensurepip 
+ensurepip is disabled in Debian/Ubuntu for the system python.
+
+Python modules For the system python are usually handled by dpkg and apt-get.
+
+    apt-get install python-<module name>
+
+Install the python-pip package to use pip itself.  Using pip together
+with the system python might have unexpected results for any system installed
+module, so use it on your own risk, or make sure to only use it in virtual
+environments.
+
+```
+
+```
+$ sudo apt install virtualenv
+$ virtualenv -p /usr/bin/python2 --system-site-packages ~/python2_env # (Or wherever you want your environment to live)
+```
+
+
+如果只想使用本地安装的软件包(例如，使用pip安装的软件包，而不是使用pacman安装的软件包)，则在创建环境时请删除--system-site-packages选项
+`~/.bash_profile`或`~/.profile`(或任何您喜欢的shell配置文件)中，进行如下设置：
+```
+source ~/python2_env/bin/activate
+```
+
+```
+(python2_env):
+$ python -V
+Python 2.7.18
+
+(python2_env):
+$ python -m pip install --upgrade pip
+DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. pip 21.0 will drop support for Python 2.7 in January 2021. More details about Python 2 support in pip can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support pip 21.0 will remove support for this functionality.
+Requirement already up-to-date: pip in /home/andy/env/lib/python2.7/site-packages (20.3.4)
+
+(python2_env):
+$ python -m ensurepip --upgrade
+
+ensurepip is disabled in Debian/Ubuntu for the system python.
+
+Python modules For the system python are usually handled by dpkg and apt-get.
+
+    apt-get install python-<module name>
+
+Install the python-pip package to use pip itself.  Using pip together
+with the system python might have unexpected results for any system installed
+module, so use it on your own risk, or make sure to only use it in virtual
+environments.
+
+easy_install看来不能直接用, 下面这样安装
+
+(python2_env):
+$ python -m pip install easy_install
+
+```
+
+tips
+```
+python -m ensurepip
+easy_install pip
+python -m pip install --upgrade pip
+```
+
+
+关闭虚拟环境：
+```
+(python2_env):
+$ deactivate
 ```
 
 
 ---
-# 
+# 安装 anaconda
+<https://docs.anaconda.com/anaconda/install/linux/>
+
+```
+$ wget https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh
+$ sudo apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6 fish
+$ bash Anaconda3-2023.03-1-Linux-x86_64.sh
+
+
+
+
+$ source ~/anaconda3/bin/activate
+$ conda config --set auto_activate_base false
+$ conda init
+必须自动修改
+~/.bashrc
+~/.condarc
+```
+迁移过来的要找修改的
+```
+find . -type f -name "*" | xargs grep -i "andreas"
+```
+实际上在.bashrc添加了
+```
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/andy/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/andy/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/andy/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/andy/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 ```
 
+~/.condarc
+```
+channels:
+  - defaults
+auto_activate_base: false
+```
+
+在~/anaconda3/condabin/conda里面第一行是
+```
+#!/home/andreas/anaconda3/bin/python
+```
+
+其他影响：
+conda base环境引起了gitk的字体变化，还是sans但是无法显示全部中文，字体怪异。推出base环境就恢复正常。
+最好的办法，正常不启用base环境，就是~/.bashrc下面这个添加的部分注释掉，需要的时候
+`$ source ~/anaconda3/bin/activate`
+或者
+`$ source ~/anaconda3/bin/activate <env_name>`
+<env_name>就是在~/anaconda3/envs内的目录名
+
+
+生效环境变量
+```
+re-open terminal 或者source ~/.bashrc
+$ conda --version
+$ conda list
+$ conda --help
+$ conda -h
+$ which conda
+$ conda info
+```
+
+To use conda with fish shel
+```
+$ conda init fish
+```
+~/.config/fish/config.fish
+```
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f /home/andy/anaconda3/bin/conda
+    eval /home/andy/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+end
+# <<< conda initialize <<<
+```
+
+using the GUI (.pkg) installer
+```
+$ anaconda-navigator
+```
+
+update pkg or all pkg
+```
+$ conda update conda anaconda-navigator
+$ conda update --update-all
+or
+$ conda update --all
+or
+$ conda upgrade --all
+
+```
+
+uninstall
+```
+rm -rf ~/.condarc ~/.conda ~/.continuum ~/anaconda3
+修改~/.bashrc
+```
+
+查看之前安装的镜像
+```
+$ conda config --show channels
+默认是
+channels:
+  - defaults
+```
+
+删除所有的镜像源，恢复到默认
+```
+$ conda config --remove-key channels 
+```
+
+删除指定的镜像源
+```
+$ conda config --remove channels [urls]
+```
+
+配置国内镜像源[网速可以的话不设置也行]
+```
+$ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+$ conda config --set show_channel_urls yes
+$ conda config --show channels
+channels:
+- https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+- defaults
+```
+可以修改~/.condarc
+```
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+```
+然后运⾏ conda clean -i 清除索引缓存，保证⽤的是镜像站提供的索引。
+//然后运⾏ `conda create -n myenv numpy`
+
+
+创建运行环境
+```
+$ conda create -y -n some_pip_test python=3.7 imagesize=1.0
+$ conda create --name snakes python=3.9
+```
+active运行环境
+```
+$ conda activate some_pip_test
+$ conda activate snakes // conda 4.6之前的版本是 $ source activate snakes
+```
+确认当前env环境
+```
+$ conda info --envs
+$ conda-env list
+```
+deactive当前运行环境
+```
+$ conda deactivate  // conda 4.6之前的版本是 $ source deactivate
+```
+active运行环境后用升级模块 先`conda activate <some_pip_env>`哦
+```
+$ pip install -U imagesize
+```
+确认当前环境python版本
+```
+$ python --version
+```
+查询当前环境已经安装的包
+```
+$ conda list
+```
+删除自定义env（谨慎操作）
+```
+$ conda remove -n some_pip_test --all
+```
+重命名环境
+conda 其实没有重命名指令，实现重命名是通过 clone 完成的，分两步：
+
+①先 clone 一份 new name 的环境
+
+②删除 old name 的环境
+
+如，将nlp重命名成tf2
+```
+conda create -n tf2 --clone nlp
+```
+删除原环境
+```
+conda remove -n nlp --all
+```
+
+
+精确查找
+```
+$ conda search --full-name <package_full_name>
+```
+模糊查找
+```
+$ conda search <text>
+```
+在指定环境中安装包
+```
+$ conda install --name <env_name> <package_name>
+$ conda install --name python3 pandas
+```
+在当前环境中安装包
+```
+$ conda install <package_name>
+```
+使用pip安装包
+
+是否需要启用？
+```
+$ conda config --set pip_interop_enabled True
+```
+```
+$ pip install <package_name>
+```
+```
+1. pip只是包管理器，无法对环境进行管理。因此如果想在指定环境中使用pip进行安装包，则需
+要先切换到指定环境中，再使用pip命令安装包。
+2. pip无法更新python，因为pip并不将python视为包。
+3. pip可以安装一些conda无法安装的包；conda也可以安装一些pip无法安装的包。因此当使用
+一种命令无法安装包时，可以尝试用另一种命令。
+```
+当使用 conda install 无法进行安装时，可以考虑从Anaconda.org中获取安装包的命令，并进行安装
+
+<https://anaconda.org>
+
+卸载指定环境中的包
+```
+$ conda remove --name <env_name> <package_name>
+$ conda remove --name python3 pandas
+```
+卸载当前环境中的包
+```
+$ conda remove <package_name>
+```
+
+更新所有包(在安装Anaconda之后执行上述命令更新Anaconda中的所有包至最新版本，便于使用)
+```
+$ conda update --all
+或
+$ conda upgrade --all
+```
+
+更新指定包
+```
+$ conda update <package_name>
+或
+$ conda upgrade <package_name>
+```
+更新多个指定包，则包名以空格隔开，向后排列。如： `conda update pandas numpy matplotlib` 即更新pandas、numpy、matplotlib包
+
+
+
+## Active Python配置管理
+<https://platform.activestate.com/yxgi5>
+
+* * *
+# pip down
+比如 <https://pypi.org/project/mxnet-cu102>，在 download files 就可以获得直接下载链接和hash
+
+`/home/andreas/.cache/pip` 内有缓存文件，但是文件名是校验码，路径是文件名前5个字符,类似位置win在`C:\Users\Administrator\AppData\Local\pip\cache\`
+
+离线下载，比如 packages 是目标目录
+```
+python -m pip download --only-binary :all: --dest . --no-cache <package_name>
+
+pip download -d “Downloads” pymysql
+
+pip download -d packages -r requirements.txt
+
+pip download open3d=0.12 -i https://pypi.tuna.tsinghua.edu.cn/simple/ -d ./open3d_dabao
+
+pip download \
+--only-binary=:all: \ # 对于包以及包的依赖包，都使⽤⼆进制
+--platform linux_x86_64 \ # 指定系统环境
+-d \home\packs # 下载的⽂件的存储⽬录
+-r requirement.txt # 指定要下载的包
+实际使⽤中，会发现⼀些包找不到，⽐如tornado，会报错
+pip download \
+--no-binary=:all: \ # 使⽤⾮⼆进制包安装
+tornado==6.0 \
+-d pkg/
+```
+
+将下载的包的名字输出到requirements.txt中
+```
+ls open3d_dabao >requirements.txt
+```
+离线安装，比如本地目录packages内有需要的wheels
+```
+pip install --no-index --find-links=packages -r requirements.txt
+pip install packages/PyMySQL-0.9.3-py2.py3-none-any.whl
+pip install --no-index --find-links=open3d_dabao -r requirements.txt
+sudo pip3 install -r /xxxx/xxxx/requirement.txt --no-index --find-links /xxxx/xxxxx/xxxxx/（存放下载好的包的⽬录）
+```
+在线安装多包
+```
+pip install -r requirements.txt
+pip install pymysql xxxxx
 ```
 
 
 ---
-# 
+# octave
+```
+$ sudo apt install octave
+
+Suggested packages:
+  libfftw3-mpi-dev libiodbc2-dev default-libmysqlclient-dev graphicsmagick-dbg scalapack-doc octave-dev
+The following NEW packages will be installed:
+  epstool libaec0 libarpack2 libbtf1 libcombblas1.16.0 libcxsparse3 libemf1 libfftw3-mpi3 libfltk-gl1.3 libfltk1.3 libgl2ps1.4 libglpk40 libgraphicsmagick++-q16-12 libgraphicsmagick-q16-3 libhdf5-103-1
+  libhdf5-openmpi-103-1 libhypre-2.22.1 libklu1 libmumps-5.4 libopenblas0 libopenblas0-pthread libpetsc-real3.15 libplot2c2 libportaudio2 libpstoedit0c2a libptscotch-6.1 libqhull8.0 libqrupdate1
+  libscalapack-openmpi2.1 libscotch-6.1 libsundials-ida4 libsundials-nvecparallel-petsc4 libsundials-nvecserial4 libsundials-sunlinsol2 libsundials-sunmatrix2 libsuperlu-dist7 libsuperlu5 libsz2
+  libtrilinos-amesos-13.2 libtrilinos-aztecoo-13.2 libtrilinos-epetra-13.2 libtrilinos-epetraext-13.2 libtrilinos-galeri-13.2 libtrilinos-ifpack-13.2 libtrilinos-kokkos-13.2 libtrilinos-ml-13.2
+  libtrilinos-teuchos-13.2 libtrilinos-trilinosss-13.2 libtrilinos-triutils-13.2 libtrilinos-zoltan-13.2 libzip4 octave octave-common octave-doc pstoedit
+
 ```
 
+***
+# git-lfs
+
+git clone xxx 之后出现
+```
+Cloning into 'Hi06701A'...
+remote: Enumerating objects: 46882, done.
+remote: Total 46882 (delta 0), reused 0 (delta 0), pack-reused 46882
+Receiving objects: 100% (46882/46882), 351.60 MiB | 173.00 KiB/s, done.
+Resolving deltas: 100% (3890/3890), done.
+git-lfs filter-process: line 1: git-lfs: command not found
+fatal: the remote end hung up unexpectedly
+warning: Clone succeeded, but checkout failed.
+You can inspect what was checked out with 'git status'
+and retry with 'git restore --source=HEAD :/'
+```
+```
+git config --system core.longpaths true
+git restore --source=HEAD :/
+```
+提示找不到 git-lfs
+```
+sudo apt install git-lfs
+cd [clone-dir]
+git lfs install
+```
+```
+$ git lfs install
+Updated git hooks.
+Git LFS initialized.
+```
+```
+$ echo $(git --exec-path)
+/usr/lib/git-core
+```
+
+下面命令奇慢无比
+```
+git restore --source=HEAD :/
+```
+```
+git reset --hard
+```
+If you intentionally removed git-lfs, and don't want to install it back as other answers suggest, your way out is:
+```
+git config --global --remove-section filter.lfs
+```
+
+## git-lfs tips
+
+1. Download and install the Git command line extension. Once downloaded and installed, set up Git LFS for your user account by running:
+```
+git lfs install
+```
+You only need to run this once per user account.
+
+2. In each Git repository where you want to use Git LFS, select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
+```
+git lfs track "*.psd"
+```
+跟踪文件夹中的所有文件
+```
+忽略文件夹中的所有文件(包含文件夹)
+// git lfs track "Pods/TXLiteAVSDK_Professional/**"
+git lfs track "dir/**"
+忽略文件夹中的文件(不包含文件夹)
+git lfs track "dir/*"
+```
+执行完上面的命令后，会生成一个.gitattributes文件，要将其上传到远程gitee仓库
+
+Now make sure .gitattributes is tracked:
+```
+git add .gitattributes
+git commit -m '提交 .gitattributes 文件'
+git push origin master（如果提交不了，后面可以加一个-f）
+```
+配置提交后就可正常上传文件
+```
+git add -A   提交所有 或指定当前大文件提交
+git commit -m "大文件"
+git push origin master -f
+```
+上传报错Message: LFS only supported repository in paid enterprise.: exit status 128, 解决方法：
+```
+rm .git/hooks/pre-push
+git push -u origin "master"
+```
+报错message：WARNING: Authentication error: Authentication required: LFS only supported repository in paid enterprise.解决办法
+```
+git config lfs.https://gitee.com/{your_gitee}/{your_repo}.git/info/lfs.locksverify false
+```
+报错信息：Remote “origin” does not support the LFS locking API. Consider disabling it with:…
+```
+git lfs push origin master --all
+```
+## git 回退
+1. 查看提交记录获取commit_id
+```
+git log
+```
+2. 回退命令
+```
+git reset --hard HEAD^` 回退到上个版本
+git reset --hard HEAD~3` 回退到前3次提交之前，以此类推，回退到n次提交之前
+git reset --hard commit_id` 退到/进到 指定[commit]的sha码
+```
+3. 强推到远程仓库
+```
+git push origin HEAD --force
 ```
 
 
 ---
-# 
+# webp 图片转换
 ```
+sudo apt-get install webp
 
+可以使用如下命令将 JPG 或 PNG 转换为 WEBP
+cwebp -q [图像质量] [JPEG/PNG文件名] -o [WebP文件名]
+
+使用如下命令或将 WEBP 图片转换成 PNG
+dwebp [WebP文件名] -o [PNG文件名]
+```
+```
+sudo apt install libwebp-dev libgdk-pixbuf2.0-dev libgtk-3-dev meson build-essential lximage-qt
+```
+```
+# Maintainer: Andeas Zhang
+_name="webp-pixbuf-loader"
+pkgname="${_name}-git"
+pkgdesc="WebM GDK Pixbuf Loader library - Git version"
+pkgver=0.2.4.r0.ga350141
+pkgrel=1
+url="https://github.com/aruiz/webp-pixbuf-loader"
+license=("GPL")
+depends=("libgdk-pixbuf2.0-dev" "libwebp-dev")
+makedepends=("meson" "git")
+arch=("i686" "x86_64" "i486" "pentium4" "aarch64" "armv7h")
+conflicts=("${_name}")
+#source=("${_name}::git+${url}.git")
+source=("${_name}::git+ssh://git@github.com/aruiz/webp-pixbuf-loader.git")
+sha256sums=("SKIP")
+
+pkgver() {
+	cd "${_name}"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "${_name}"
+	meson build
+	ninja -C build
+}
+
+package() {
+	cd "$srcdir/${_name}"
+	DESTDIR="${pkgdir}" ninja -C build install
+}
+```
+比较好的的办法
+```
+lximage-qt 或 Gwenview Qview gThumb LibreOffice 打开并另存
 ```
 
 
 ---
-# 
+# mplayer
+```
+$ sudo apt install kmplayer mplayer mplayer-gui mplayer-skins vdr-plugin-mplayer # vdr-plugin-mplayer应该用不着
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  gamin kded5 keditbookmarks kio libaudio2 libdbusmenu-qt5-2 libenca0 libftdi1-2 libgamin0 libhfstospell11 libkf5archive5 libkf5auth-data libkf5auth5 libkf5authcore5 libkf5bookmarks-data libkf5bookmarks5
+  libkf5completion-data libkf5completion5 libkf5config-bin libkf5config-data libkf5configcore5 libkf5configgui5 libkf5configwidgets-data libkf5configwidgets5 libkf5coreaddons-data libkf5coreaddons5
+  libkf5crash5 libkf5dbusaddons-bin libkf5dbusaddons-data libkf5dbusaddons5 libkf5doctools5 libkf5globalaccel-bin libkf5globalaccel-data libkf5globalaccel5 libkf5globalaccelprivate5 libkf5i18n-data libkf5i18n5
+  libkf5iconthemes-bin libkf5iconthemes-data libkf5iconthemes5 libkf5itemviews-data libkf5itemviews5 libkf5jobwidgets-data libkf5jobwidgets5 libkf5kdelibs4support-data libkf5kdelibs4support5
+  libkf5kdelibs4support5-bin libkf5kiocore5 libkf5kiofilewidgets5 libkf5kiogui5 libkf5kiontlm5 libkf5kiowidgets5 libkf5mediaplayer-data libkf5mediaplayer5 libkf5notifications-data libkf5notifications5
+  libkf5parts-data libkf5parts-plugins libkf5parts5 libkf5service-bin libkf5service-data libkf5service5 libkf5solid5 libkf5solid5-data libkf5sonnet5-data libkf5sonnetcore5 libkf5sonnetui5
+  libkf5textwidgets-data libkf5textwidgets5 libkf5wallet-bin libkf5wallet-data libkf5wallet5 libkf5widgetsaddons-data libkf5widgetsaddons5 libkf5xmlgui-bin libkf5xmlgui-data libkf5xmlgui5 libkwalletbackend5-5
+  liblirc0 libphonon4qt5-4 libphonon4qt5-data libpolkit-qt5-1-1 libqt5texttospeech5 libvoikko1 libvorbisidec1 lirc phonon4qt5 phonon4qt5-backend-vlc qtspeech5-speechd-plugin sonnet-plugins vdr
+Suggested packages:
+  xawtv konqueror nas voikko-fi lirc-compat-remotes lirc-drv-irman lirc-doc lirc-x setserial ir-keytable mplayer-doc netselect | fping phonon4qt5-backend-gstreamer hspell vdr-plugin-dvbsddevice
+The following NEW packages will be installed:
+  gamin kded5 keditbookmarks kio kmplayer libaudio2 libdbusmenu-qt5-2 libenca0 libftdi1-2 libgamin0 libhfstospell11 libkf5archive5 libkf5auth-data libkf5auth5 libkf5authcore5 libkf5bookmarks-data
+  libkf5bookmarks5 libkf5completion-data libkf5completion5 libkf5config-bin libkf5config-data libkf5configcore5 libkf5configgui5 libkf5configwidgets-data libkf5configwidgets5 libkf5coreaddons-data
+  libkf5coreaddons5 libkf5crash5 libkf5dbusaddons-bin libkf5dbusaddons-data libkf5dbusaddons5 libkf5doctools5 libkf5globalaccel-bin libkf5globalaccel-data libkf5globalaccel5 libkf5globalaccelprivate5
+  libkf5i18n-data libkf5i18n5 libkf5iconthemes-bin libkf5iconthemes-data libkf5iconthemes5 libkf5itemviews-data libkf5itemviews5 libkf5jobwidgets-data libkf5jobwidgets5 libkf5kdelibs4support-data
+  libkf5kdelibs4support5 libkf5kdelibs4support5-bin libkf5kiocore5 libkf5kiofilewidgets5 libkf5kiogui5 libkf5kiontlm5 libkf5kiowidgets5 libkf5mediaplayer-data libkf5mediaplayer5 libkf5notifications-data
+  libkf5notifications5 libkf5parts-data libkf5parts-plugins libkf5parts5 libkf5service-bin libkf5service-data libkf5service5 libkf5solid5 libkf5solid5-data libkf5sonnet5-data libkf5sonnetcore5 libkf5sonnetui5
+  libkf5textwidgets-data libkf5textwidgets5 libkf5wallet-bin libkf5wallet-data libkf5wallet5 libkf5widgetsaddons-data libkf5widgetsaddons5 libkf5xmlgui-bin libkf5xmlgui-data libkf5xmlgui5 libkwalletbackend5-5
+  liblirc0 libphonon4qt5-4 libphonon4qt5-data libpolkit-qt5-1-1 libqt5texttospeech5 libvoikko1 libvorbisidec1 lirc mplayer mplayer-gui mplayer-skins phonon4qt5 phonon4qt5-backend-vlc qtspeech5-speechd-plugin
+  sonnet-plugins vdr vdr-plugin-mplayer
+
+By default VDR is configured to use /var/lib/video to store recordings. You can either create this directory now, or change this behavior later by modifying the config file /etc/vdr/conf.d/00-vdr.conf. 
+```
+```
+sudo apt purge kmplayer vdr-plugin-mplayer
+The following packages will be REMOVED:
+  kmplayer* vdr-plugin-mplayer*
+
+The following packages were automatically installed and are no longer required:
+  kded5 keditbookmarks kio libhfstospell11 libkf5archive5 libkf5auth5 libkf5bookmarks-data libkf5bookmarks5 libkf5completion-data libkf5completion5 libkf5crash5 libkf5doctools5 libkf5globalaccel-bin
+  libkf5globalaccel-data libkf5globalaccel5 libkf5globalaccelprivate5 libkf5iconthemes-bin libkf5iconthemes-data libkf5iconthemes5 libkf5itemviews-data libkf5itemviews5 libkf5jobwidgets-data libkf5jobwidgets5
+  libkf5kdelibs4support-data libkf5kdelibs4support5 libkf5kdelibs4support5-bin libkf5kiocore5 libkf5kiofilewidgets5 libkf5kiogui5 libkf5kiontlm5 libkf5kiowidgets5 libkf5mediaplayer-data libkf5mediaplayer5
+  libkf5parts-data libkf5parts-plugins libkf5parts5 libkf5solid5 libkf5solid5-data libkf5sonnet5-data libkf5sonnetcore5 libkf5sonnetui5 libkf5textwidgets-data libkf5textwidgets5 libkf5xmlgui-bin
+  libkf5xmlgui-data libkf5xmlgui5 libphonon4qt5-4 libphonon4qt5-data libvoikko1 phonon4qt5 phonon4qt5-backend-vlc sonnet-plugins vdr
+Use 'sudo apt autoremove' to remove them.
 ```
 
 ```
-
+mplayer
+gmplayer
+```
 
 ---
-# 
+# gstreamer
 ```
-
+sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 ```
+<https://gstreamer.freedesktop.org/documentation/tutorials/index.html>
 
+<https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html>
+
+<https://gstreamer.freedesktop.org/documentation/installing/on-linux.html>
 
 ---
 # 
