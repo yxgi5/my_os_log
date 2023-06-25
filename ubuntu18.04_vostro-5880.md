@@ -5330,7 +5330,7 @@ sudo apt-get install python3-pyqt5.qtopengl
 sudo apt-get install python3-dbus
 sudo apt-get install python3-dbus.mainloop.pyqt5
 ```
-3.6的也可以pip比较旧版本的
+3.6的也可以pip比较旧版本的(不建议)
 ```
 sudo -H pip3.6 install pyopengl feeluown fuo-local fuo-netease fuo-qqmusic -i https://mirrors.163.com/pypi/simple
 
@@ -5355,7 +5355,9 @@ pip3 -V
 ```
 安装feeluown及插件, pyqt修复fcitx
 ```
-sudo -H pip3.8 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
+//sudo -H pip3.8 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
+sudo -H pip3.8 install feeluown==3.8.3 fuo-local fuo-netease fuo-qqmusic fuo-kuwo --upgrade --proxy=http://127.0.0.1:8118
+
 sudo cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so /usr/local/lib/python3.8/dist-packages/PyQt5/Qt5/plugins/platforminputcontexts
 ```
 看来以后通过pip安装了pyqt就要把libfcitxplatforminputcontextplugin.so这个插件复制进来
@@ -7424,7 +7426,7 @@ Collecting setuptools>=41.0.0
 Building wheels for collected packages: clang, wrapt
   Building wheel for clang (setup.py) ... done
   Created wheel for clang: filename=clang-5.0-py3-none-any.whl size=32138 sha256=c45501252940c6c4250781aea9d2a542378ae75792badc9d5bcaa898172c2694
-  Stored in directory: /root/.cache/pip/wheels/ec/a9/12/087d69e91487891648f3939464ded26746f686b03daf507db9
+  Stored in directory: /root/fe/wheels/ec/a9/12/087d69e91487891648f3939464ded26746f686b03daf507db9
   Building wheel for wrapt (setup.py) ... done
   Created wheel for wrapt: filename=wrapt-1.12.1-cp36-cp36m-linux_x86_64.whl size=69376 sha256=d0fcd982be34667eb49031e63413c3f8aa3861c5f64484eda7b9ffa6b34b2f97
   Stored in directory: /root/.cache/pip/wheels/1f/06/08/d93e1998b76829b1b785863b7ad22095e6608744e04118c094
