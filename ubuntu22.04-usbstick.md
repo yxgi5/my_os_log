@@ -8775,6 +8775,224 @@ find $HOME/.wine -name '*.lnk' -type f -exec bash -c 'wine winemenubuilder "$0"'
 ```
 
 
+---
+# 安装feeluown及插件
+## 准备工作参考官方文档
+<https://feeluown.readthedocs.io/en/latest/quickstart.html#id2>
+```
+# 安装 Python 3 和 pip3（大部分系统已经安装好了）
+sudo apt-get install python3 python3-pip
+
+# 安装 libmpv1
+sudo apt-get install libmpv1
+
+# 安装 PyQt5
+sudo apt-get install python3-pyqt5
+sudo apt-get install python3-pyqt5.qtopengl
+sudo apt-get install python3-pyqt5.qtsvg
+
+# 安装 dbus-python
+sudo apt-get install python3-dbus
+sudo apt-get install python3-dbus.mainloop.pyqt5
+
+# （可能还需要安装）使用 fcitx 输入法的用户可能需要安装
+sudo apt-get install fcitx-frontend-qt5
+
+# netcat
+sudo apt-get install netcat
+```
+
+## 安装feeluown及插件
+```
+sudo -H pip3 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
+sudo -H pip3 install feeluown==3.8.1 --upgrade
+```
+## 再安装一个下载插件(这个屌软件最有价值的就这个了，按理说和3.8.1配合最好)
+```
+git clone git@github.com:feeluown/feeluown-download.git
+cd feeluown-download
+sudo python3.8 setup.py build (实际上install就可以)
+sudo python3.8 setup.py install
+下载位置在~/.FeelUOwn/songs
+```
+
+```
+// 普通用户模式安装（不采用）
+pip3 install 'feeluown>=3.0[battery]' --upgrade --user
+pip3 install pyopengl
+```
+Requirement already satisfied: pyopengl in /usr/lib/python3/dist-packages (3.1.5)
+Requirement already satisfied: pyqt5 in /usr/lib/python3/dist-packages (5.15.6)
+
+Successfully installed PyQtWebEngine-Qt5-5.15.2 feeluown-3.7.12 fuo-kuwo-0.1.5 fuo-local-0.2.1 fuo-netease-0.8 fuo-qqmusic-0.3.3 fuzzywuzzy-0.18.0 janus-0.6.1 marshmallow-3.13.0 pycryptodome-3.10.1 pydantic-1.8.2 pyqtwebengine-5.15.4 qasync-0.22.0 tomlkit-0.7.0
+
+
+Successfully installed feeluown-3.7.12 fuo-kuwo-0.1.5 fuo-local-0.2.1 fuo-netease-0.8 fuo-qqmusic-0.3.3 fuzzywuzzy-0.18.0 janus-0.6.1 marshmallow-3.13.0 pycryptodome-3.10.1 pydantic-1.8.2 qasync-0.22.0 tomlkit-0.7.0
+
+Successfully installed fuo-kuwo-0.1.5 fuo-local-0.2.1 fuo-qqmusic-0.3.3 pyopengl-3.1.5 pyqt5-5.15.6 pyqtwebengine-5.15.4
+
+$ feeluown -nw
+/usr/local/lib/python3.10/dist-packages/feeluown/utils/dispatch.py:42: DeprecationWarning: There is no current event loop
+  loop = asyncio.get_event_loop()
+/usr/local/lib/python3.10/dist-packages/janus/__init__.py:26: DeprecationWarning: There is no current event loop
+  self._loop = current_loop()
+/usr/local/lib/python3.10/dist-packages/feeluown/models/uri.py:62: DeprecationWarning: There is no current event loop
+  cls.loop = asyncio.get_event_loop()
+/usr/local/lib/python3.10/dist-packages/feeluown/app.py:182: DeprecationWarning: There is no current event loop
+  loop = asyncio.get_event_loop()
+/usr/local/lib/python3.10/dist-packages/feeluown/player/playlist.py:62: DeprecationWarning: There is no current event loop
+  self._loop = asyncio.get_event_loop()
+/usr/local/lib/python3.10/dist-packages/mpv.py:860: DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+  self._event_thread.setDaemon(True)
+/usr/local/lib/python3.10/dist-packages/feeluown/plugin.py:145: DeprecationWarning: SelectableGroups dict interface is deprecated. Use select.
+  entry_points = importlib.metadata.entry_points().get('fuo.plugins_v1', [])
+/usr/local/lib/python3.10/dist-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+/usr/local/lib/python3.10/dist-packages/marshmallow/__init__.py:14: DeprecationWarning: The distutils package is deprecated and slated for removal in Python 3.12. Use setuptools or check PEP 632 for potential alternatives
+  from distutils.version import LooseVersion
+/usr/local/lib/python3.10/dist-packages/fuo_local/provider.py:18: DeprecationWarning: use feeluown.library please
+  from fuocore.provider import AbstractProvider
+/usr/local/lib/python3.10/dist-packages/fuo_local/provider.py:19: DeprecationWarning: use feeluown.utils.utils please
+  from fuocore.utils import elfhash
+/usr/local/lib/python3.10/dist-packages/fuo_local/provider.py:21: DeprecationWarning: use feeluown.media please
+  from fuocore.media import Media, MediaType
+/usr/local/lib/python3.10/dist-packages/fuo_local/provider.py:22: DeprecationWarning: use feeluown.models please
+  from fuocore.models import AlbumType
+/usr/local/lib/python3.10/dist-packages/marshmallow/fields.py:181: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/fuo_local/models.py:10: DeprecationWarning: use feeluown.utils.reader please
+  from fuocore.reader import RandomSequentialReader
+/usr/local/lib/python3.10/dist-packages/fuo_local/__init__.py:35: DeprecationWarning: There is no current event loop
+  loop = asyncio.get_event_loop()
+/usr/local/lib/python3.10/dist-packages/marshmallow/fields.py:181: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/fuo_qqmusic/excs.py:1: DeprecationWarning: use feeluown.excs please
+  from fuocore.excs import ProviderIOError
+/usr/local/lib/python3.10/dist-packages/fuo_qqmusic/ui.py:6: DeprecationWarning: use feeluown.utils.aio please
+  from fuocore import aio
+/usr/local/lib/python3.10/dist-packages/feeluown/task.py:56: DeprecationWarning: There is no current event loop
+  self._task = aio.create_task(coro)
+/usr/local/lib/python3.10/dist-packages/feeluown/app.py:337: DeprecationWarning: There is no current event loop
+  loop = asyncio.get_event_loop()
+QSocketNotifier: Can only be used with threads started with QThread
+QSocketNotifier: Can only be used with threads started with QThread
+[2023-06-24 16:34:23,048 asyncio:1744] [ERROR]: Task exception was never retrieved
+future: <Task finished name='Task-4' coro=<start_server() done, defined at /usr/lib/python3.10/asyncio/streams.py:53> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'loop'")>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/streams.py", line 84, in start_server
+    return await loop.create_server(factory, host, port, **kwds)
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'loop'
+[2023-06-24 16:34:24,657 feeluown.task:83] [ERROR]: Task prepare-media failed
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/task.py", line 81, in _cb
+    future.result()
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/library/library.py", line 449, in song_prepare_media
+    media, _ = song.select_media(policy)  # type: ignore
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/media.py", line 149, in select_media
+    available_q_set = set(self.list_quality())
+  File "/usr/local/lib/python3.10/dist-packages/fuo_kuwo/models.py", line 129, in list_quality
+    if not self.lossless:
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/models/base.py", line 437, in __getattribute__
+    fv = object.__getattribute__(obj, field)
+  File "/usr/local/lib/python3.10/dist-packages/fuo_kuwo/models.py", line 89, in url
+    data = self._api.get_song_url(self.identifier)
+  File "/usr/local/lib/python3.10/dist-packages/fuo_kuwo/api.py", line 211, in get_song_url
+    data = response.json()
+  File "/usr/lib/python3/dist-packages/requests/models.py", line 900, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/usr/lib/python3/dist-packages/simplejson/__init__.py", line 525, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3/dist-packages/simplejson/decoder.py", line 370, in decode
+    obj, end = self.raw_decode(s)
+  File "/usr/lib/python3/dist-packages/simplejson/decoder.py", line 400, in raw_decode
+    return self.scan_once(s, idx=_w(s, idx).end())
+simplejson.errors.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2023-06-24 16:34:24,661 feeluown.player.playlist:426] [ERROR]: prepare media failed due to unknown error, so we mark the song as a bad one
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/player/playlist.py", line 390, in a_set_current_song
+    media = await self._prepare_media(song)
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/player/playlist.py", line 463, in _prepare_media
+    return await task_spec.bind_blocking_io(
+simplejson.errors.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2023-06-24 16:34:24,666 asyncio:1744] [ERROR]: Exception in callback PreemptiveTaskSpec._cb(<Task cancell...ylist.py:386>>)
+handle: <Handle PreemptiveTaskSpec._cb(<Task cancell...ylist.py:386>>)>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/local/lib/python3.10/dist-packages/feeluown/task.py", line 81, in _cb
+    future.result()
+asyncio.exceptions.CancelledError
+
+
+
+[2023-06-24 16:34:33,531 feeluown.version:37] [WARNING]: 检测到新版本 3.8.12，当前版本为 3.7.12
+
+
+
+
+
+
+Successfully installed feeluown-3.8.12
+Successfully installed PyQt5-Qt5-5.15.2 PyQt5-sip-12.12.1 fuo-kuwo-0.1.6 fuo-local-0.3 fuo-netease-0.9.6 fuo-qqmusic-0.4.1 pyopengl-3.1.7 pyqt5-5.15.9 pyqtwebengine-5.15.6
+Requirement already satisfied: pyopengl in /usr/local/lib/python3.10/dist-packages (3.1.7)
+Requirement already satisfied: pyqt5 in /usr/local/lib/python3.10/dist-packages (5.15.9)
+Requirement already satisfied: pyqtwebengine in /usr/local/lib/python3.10/dist-packages (5.15.6)
+Requirement already satisfied: feeluown in /usr/local/lib/python3.10/dist-packages (3.8.12)
+Requirement already satisfied: fuo-local in /usr/local/lib/python3.10/dist-packages (0.3)
+Requirement already satisfied: fuo-netease in /usr/local/lib/python3.10/dist-packages (0.9.6)
+Requirement already satisfied: fuo-qqmusic in /usr/local/lib/python3.10/dist-packages (0.4.1)
+Requirement already satisfied: fuo-kuwo in /usr/local/lib/python3.10/dist-packages (0.1.6)
+Requirement already satisfied: PyQt5-sip<13,>=12.11 in /usr/local/lib/python3.10/dist-packages (from pyqt5) (12.12.1)
+Requirement already satisfied: PyQt5-Qt5>=5.15.2 in /usr/local/lib/python3.10/dist-packages (from pyqt5) (5.15.2)
+Requirement already satisfied: PyQtWebEngine-Qt5>=5.15.0 in /usr/local/lib/python3.10/dist-packages (from pyqtwebengine) (5.15.2)
+Requirement already satisfied: mutagen>=1.37 in /usr/lib/python3/dist-packages (from feeluown) (1.45.1)
+Requirement already satisfied: packaging in /usr/lib/python3/dist-packages (from feeluown) (21.3)
+Requirement already satisfied: janus in /usr/local/lib/python3.10/dist-packages (from feeluown) (0.6.1)
+Requirement already satisfied: requests in /usr/lib/python3/dist-packages (from feeluown) (2.25.1)
+Requirement already satisfied: pydantic>=1.8.1 in /usr/local/lib/python3.10/dist-packages (from feeluown) (1.8.2)
+Requirement already satisfied: tomlkit in /usr/local/lib/python3.10/dist-packages (from feeluown) (0.7.0)
+Requirement already satisfied: qasync in /usr/local/lib/python3.10/dist-packages (from feeluown) (0.22.0)
+Requirement already satisfied: fuzzywuzzy in /usr/local/lib/python3.10/dist-packages (from fuo-local) (0.18.0)
+Requirement already satisfied: marshmallow>=3.0 in /usr/local/lib/python3.10/dist-packages (from fuo-local) (3.13.0)
+Requirement already satisfied: pycryptodome in /usr/local/lib/python3.10/dist-packages (from fuo-netease) (3.10.1)
+Requirement already satisfied: beautifulsoup4 in /usr/lib/python3/dist-packages (from fuo-netease) (4.10.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in /usr/lib/python3/dist-packages (from pydantic>=1.8.1->feeluown) (3.10.0.2)
+
+sudo -H pip3 uninstall pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo PyQt5-sip PyQt5-Qt5 PyQtWebEngine-Qt5 mutagen packaging janus requests pydantic tomlkit qasync fuzzywuzzy marshmallow pycryptodome beautifulsoup4 typing-extensions
+
+sudo apt-get install --reinstall python3 python3-pip libmpv1 python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsvg python3-dbus python3-dbus.mainloop.pyqt5 fcitx-frontend-qt5 python3-pyqt5.sip pyqt5-dev-tools pyqt5-examples pyqt5-dev python3-pyqt5.qtmultimedia python3-pyqt5.qtquick python3-pyqt5.qtwebkit python3-opengl libqt6opengl6 libqt6opengl6-dev libqt6openglwidgets6 libqt5opengl5 libopengl0 libopengl0:i386 libopengl-perl libopengl-dev  qtwebengine5-dev qtwebengine5-doc python3-sip python3-pyqt6.sip
+
+
+## 试安装是否成功
+```
+feeluown -h
+```
+
+## 生成桌面图标
+```
+feeluown-genicon
+```
+直接双击桌面 FeelUOwn 图标，这时启动 GUI/Daemon 混合模式
+
+##  Daemon 模式
+```
+feeluown -nw    # 使用 Daemon 模式启动 feeluown
+
+
+fuo status  # 查看播放器状态
+fuo search 周杰伦  # 搜索歌曲
+fuo play fuo://netease/songs/470302665
+fuo pause
+fuo resume
+
+nc localhost 23333  # 使用netcat连接Daemon
+# 输入 `status` 命令，可以查看播放器状态
+# 输入 `fuo play fuo://netease/songs/470302665` 可以播放音乐
+```
+
+
 
 ---
 # 
