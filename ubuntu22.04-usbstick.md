@@ -4169,6 +4169,8 @@ The following additional packages will be installed:
   python3-setuptools python3-wheel
 Suggested packages:
   python-setuptools-doc
+
+sudo apt-get install python-is-python3
 ```
 
 ```
@@ -9087,6 +9089,21 @@ sudo apt install pkg-config libtag1-dev libicu-dev libcue-dev libtag1-dev libavu
 ```
 
 ---
+# python2
+```
+$ sudo apt-get install python-is-python3
+$ sudo apt-get install python2 python2-dev  python2-setuptools-whl python2-pip-whl python2-minimal
+
+Suggested packages:
+  python2-doc python-tk python2.7-doc
+The following NEW packages will be installed:
+  libpython2-dev libpython2-stdlib libpython2.7 libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib python2 python2-dev python2-minimal python2-pip-whl python2-setuptools-whl python2.7 python2.7-dev
+  python2.7-minimal
+
+```
+
+
+---
 # 
 ```
 
@@ -9099,4 +9116,31 @@ sudo apt install pkg-config libtag1-dev libicu-dev libcue-dev libtag1-dev libavu
 
 ```
 
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
 
