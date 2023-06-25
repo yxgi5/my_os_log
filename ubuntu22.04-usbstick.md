@@ -8805,11 +8805,104 @@ sudo apt-get install fcitx-frontend-qt5
 sudo apt-get install netcat
 ```
 
-## 安装feeluown及插件
+## 安装feeluown及插件(3.8.8)
 ```
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
-sudo -H pip3 install feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic fuo-bilibili --upgrade
+sudo -H pip3 install feeluown fuo-netease fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic fuo-bilibili --upgrade
+
+Requirement already satisfied: feeluown in /usr/local/lib/python3.10/dist-packages (3.8.12)
+Requirement already satisfied: fuo-local in /usr/local/lib/python3.10/dist-packages (0.3)
+Requirement already satisfied: fuo-netease in /usr/local/lib/python3.10/dist-packages (0.9.6)
+Requirement already satisfied: fuo-qqmusic in /usr/local/lib/python3.10/dist-packages (0.4.1)
+Requirement already satisfied: fuo-kuwo in /usr/local/lib/python3.10/dist-packages (0.1.6)
+Requirement already satisfied: fuo-xiami in /usr/local/lib/python3.10/dist-packages (0.2.4)
+Requirement already satisfied: fuo-ytmusic in /usr/local/lib/python3.10/dist-packages (0.2.0)
+Requirement already satisfied: fuo-bilibili in /usr/local/lib/python3.10/dist-packages (0.1.3)
+Requirement already satisfied: tomlkit in /usr/local/lib/python3.10/dist-packages (from feeluown) (0.7.0)
+Requirement already satisfied: qasync in /usr/local/lib/python3.10/dist-packages (from feeluown) (0.22.0)
+Requirement already satisfied: packaging in /usr/lib/python3/dist-packages (from feeluown) (21.3)
+Requirement already satisfied: mutagen>=1.37 in /usr/lib/python3/dist-packages (from feeluown) (1.45.1)
+Requirement already satisfied: pydantic>=1.8.1 in /usr/local/lib/python3.10/dist-packages (from feeluown) (1.8.2)
+Requirement already satisfied: requests in /usr/lib/python3/dist-packages (from feeluown) (2.25.1)
+Requirement already satisfied: janus in /usr/local/lib/python3.10/dist-packages (from feeluown) (0.6.1)
+Requirement already satisfied: fuzzywuzzy in /usr/local/lib/python3.10/dist-packages (from fuo-local) (0.18.0)
+Requirement already satisfied: marshmallow>=3.0 in /usr/local/lib/python3.10/dist-packages (from fuo-local) (3.13.0)
+Requirement already satisfied: beautifulsoup4 in /usr/local/lib/python3.10/dist-packages (from fuo-netease) (4.9.3)
+Requirement already satisfied: pycryptodome in /usr/local/lib/python3.10/dist-packages (from fuo-netease) (3.10.1)
+Requirement already satisfied: pytube in /usr/local/lib/python3.10/dist-packages (from fuo-ytmusic) (15.0.0)
+Requirement already satisfied: ytmusicapi in /usr/local/lib/python3.10/dist-packages (from fuo-ytmusic) (1.1.0)
+Requirement already satisfied: cachetools in /usr/local/lib/python3.10/dist-packages (from fuo-ytmusic) (5.3.1)
+Requirement already satisfied: aiohttp in /usr/local/lib/python3.10/dist-packages (from fuo-bilibili) (3.7.4.post0)
+Requirement already satisfied: bilibili-api>=9.0.1 in /usr/local/lib/python3.10/dist-packages (from fuo-bilibili) (9.1.0)
+Requirement already satisfied: brotli~=1.0.9 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (1.0.9)
+Requirement already satisfied: lxml~=4.6.1 in /usr/local/lib/python3.10/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (4.6.5)
+Requirement already satisfied: urllib3~=1.26.3 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (1.26.5)
+Requirement already satisfied: colorama~=0.4.4 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (0.4.4)
+Requirement already satisfied: pyyaml~=5.4.1 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (5.4.1)
+Requirement already satisfied: chardet<5.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp->fuo-bilibili) (4.0.0)
+Requirement already satisfied: attrs>=17.3.0 in /usr/lib/python3/dist-packages (from aiohttp->fuo-bilibili) (21.2.0)
+Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->fuo-bilibili) (1.9.2)
+Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp->fuo-bilibili) (6.0.4)
+Requirement already satisfied: async-timeout<4.0,>=3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->fuo-bilibili) (3.0.1)
+Requirement already satisfied: typing-extensions>=3.6.5 in /usr/lib/python3/dist-packages (from aiohttp->fuo-bilibili) (3.10.0.2)
+Requirement already satisfied: soupsieve>1.2 in /usr/lib/python3/dist-packages (from beautifulsoup4->fuo-netease) (2.3.1)
+Requirement already satisfied: idna>=2.0 in /usr/lib/python3/dist-packages (from yarl<2.0,>=1.0->aiohttp->fuo-bilibili) (3.3)
+
+
+sudo -H pip3 install feeluown==3.8.3 fuo-local fuo-netease fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic fuo-bilibili --upgrade
+feeluown-3.8.3 fuo-netease-0.9.2 fuo-ytmusic-0.1.1
+
+
+sudo -H pip3 install feeluown==3.8.1 fuo-local fuo-netease fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic fuo-bilibili --upgrade
+feeluown-3.8.1 fuo-netease-0.8 fuo-netease-0.9.2
+
+
+3.8.8 need fuo-local
+Requirement already satisfied: feeluown==3.8.8 in /usr/local/lib/python3.10/dist-packages (3.8.8)
+Requirement already satisfied: fuo-local in /usr/local/lib/python3.10/dist-packages (0.3)
+Requirement already satisfied: fuo-netease in /usr/local/lib/python3.10/dist-packages (0.9.2)
+Requirement already satisfied: fuo-qqmusic in /usr/local/lib/python3.10/dist-packages (0.4.1)
+Requirement already satisfied: fuo-kuwo in /usr/local/lib/python3.10/dist-packages (0.1.6)
+Requirement already satisfied: fuo-xiami in /usr/local/lib/python3.10/dist-packages (0.2.4)
+Requirement already satisfied: fuo-ytmusic in /usr/local/lib/python3.10/dist-packages (0.1.1)
+Requirement already satisfied: fuo-bilibili in /usr/local/lib/python3.10/dist-packages (0.1.3)
+Requirement already satisfied: pydantic>=1.8.1 in /usr/local/lib/python3.10/dist-packages (from feeluown==3.8.8) (1.8.2)
+Requirement already satisfied: janus in /usr/local/lib/python3.10/dist-packages (from feeluown==3.8.8) (0.6.1)
+Requirement already satisfied: qasync in /usr/local/lib/python3.10/dist-packages (from feeluown==3.8.8) (0.22.0)
+Requirement already satisfied: tomlkit in /usr/local/lib/python3.10/dist-packages (from feeluown==3.8.8) (0.7.0)
+Requirement already satisfied: packaging in /usr/lib/python3/dist-packages (from feeluown==3.8.8) (21.3)
+Requirement already satisfied: requests in /usr/lib/python3/dist-packages (from feeluown==3.8.8) (2.25.1)
+Requirement already satisfied: mutagen>=1.37 in /usr/lib/python3/dist-packages (from fuo-local) (1.45.1)
+Requirement already satisfied: fuzzywuzzy in /usr/local/lib/python3.10/dist-packages (from fuo-local) (0.18.0)
+Requirement already satisfied: marshmallow>=3.0 in /usr/local/lib/python3.10/dist-packages (from fuo-local) (3.13.0)
+Requirement already satisfied: beautifulsoup4 in /usr/local/lib/python3.10/dist-packages (from fuo-netease) (4.9.3)
+Requirement already satisfied: pycryptodome in /usr/local/lib/python3.10/dist-packages (from fuo-netease) (3.10.1)
+Requirement already satisfied: cachetools in /usr/local/lib/python3.10/dist-packages (from fuo-ytmusic) (5.3.1)
+Requirement already satisfied: pytube in /usr/local/lib/python3.10/dist-packages (from fuo-ytmusic) (15.0.0)
+Requirement already satisfied: ytmusicapi in /usr/local/lib/python3.10/dist-packages (from fuo-ytmusic) (1.1.0)
+Requirement already satisfied: bilibili-api>=9.0.1 in /usr/local/lib/python3.10/dist-packages (from fuo-bilibili) (9.1.0)
+Requirement already satisfied: aiohttp in /usr/local/lib/python3.10/dist-packages (from fuo-bilibili) (3.7.4.post0)
+Requirement already satisfied: colorama~=0.4.4 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (0.4.4)
+Requirement already satisfied: lxml~=4.6.1 in /usr/local/lib/python3.10/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (4.6.5)
+Requirement already satisfied: brotli~=1.0.9 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (1.0.9)
+Requirement already satisfied: urllib3~=1.26.3 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (1.26.5)
+Requirement already satisfied: pyyaml~=5.4.1 in /usr/lib/python3/dist-packages (from bilibili-api>=9.0.1->fuo-bilibili) (5.4.1)
+Requirement already satisfied: async-timeout<4.0,>=3.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->fuo-bilibili) (3.0.1)
+Requirement already satisfied: attrs>=17.3.0 in /usr/lib/python3/dist-packages (from aiohttp->fuo-bilibili) (21.2.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.10/dist-packages (from aiohttp->fuo-bilibili) (6.0.4)
+Requirement already satisfied: typing-extensions>=3.6.5 in /usr/lib/python3/dist-packages (from aiohttp->fuo-bilibili) (3.10.0.2)
+Requirement already satisfied: chardet<5.0,>=2.0 in /usr/lib/python3/dist-packages (from aiohttp->fuo-bilibili) (4.0.0)
+Requirement already satisfied: yarl<2.0,>=1.0 in /usr/local/lib/python3.10/dist-packages (from aiohttp->fuo-bilibili) (1.9.2)
+Requirement already satisfied: soupsieve>1.2 in /usr/lib/python3/dist-packages (from beautifulsoup4->fuo-netease) (2.3.1)
+Requirement already satisfied: idna>=2.0 in /usr/lib/python3/dist-packages (from yarl<2.0,>=1.0->aiohttp->fuo-bilibili) (3.3)
+
+
+3.8.9 开始内嵌  fuo-local 识别曲名有缺陷，最好安装 3.8.8/3.8.3/3.8.1
+
+sudo -H pip3 uninstall fuo-local
+sudo -H pip3 install feeluown==3.8.10 fuo-netease fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic fuo-bilibili --upgrade
+
 ```
 
 ## 再安装一个下载插件(这个屌软件最有价值的就这个了，按理说和3.8.1配合最好)
@@ -8832,7 +8925,8 @@ sudo -H pip3 uninstall pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netea
 
 sudo apt-get install --reinstall python3 python3-pip libmpv1 python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsvg python3-dbus python3-dbus.mainloop.pyqt5 fcitx-frontend-qt5 python3-pyqt5.sip pyqt5-dev-tools pyqt5-examples pyqt5-dev python3-pyqt5.qtmultimedia python3-pyqt5.qtquick python3-pyqt5.qtwebkit python3-opengl libqt6opengl6 libqt6opengl6-dev libqt6openglwidgets6 libqt5opengl5 libopengl0 libopengl0:i386 libopengl-perl libopengl-dev  qtwebengine5-dev qtwebengine5-doc python3-sip python3-pyqt6.sip
 
-sudo -H pip3 install feeluown==3.8.1 --upgrade
+sudo -H pip3 install feeluown==3.8.1 fuo-local fuo-netease fuo-ytmusic --upgrade
+sudo -H pip3 install feeluown==3.8.3 fuo-local fuo-netease fuo-ytmusic --upgrade
 
 pip3 show xxx
 
@@ -8916,6 +9010,62 @@ when('app.plugin_mgr.about_to_enable', load_plugin_rcfiles, use_symbol=True, aio
 
 
 ```
+
+
+## pip3 conf 
+位置
+```
+$ sudo pip3 config -v list
+For variant 'global', will try loading '/etc/xdg/pip/pip.conf'
+For variant 'global', will try loading '/etc/pip.conf'
+For variant 'user', will try loading '/root/.pip/pip.conf'
+For variant 'user', will try loading '/root/.config/pip/pip.conf'
+For variant 'site', will try loading '/usr/pip.conf'
+
+```
+
+```
+[global]
+timeout = 6000
+  index-url = http://pypi.douban.com/simple
+```
+```
+[global]
+timeout = 600
+index-url = http://pypi.v2ex.com/simple
+[install]
+use-mirrors = true
+mirrors = https://pypi.tuna.tsinghua.edu.cn/simple/
+```
+临时的就加上参数
+`-i https://pypi.tuna.tsinghua.edu.cn/simple/`
+例如
+`pip install --upgrade tensorflow -i http://pypi.douban.com/simple --trusted-host pypi.douban.com`
+
+其他国内镜像还有
+```
+http://pypi.hustunique.com/
+http://pypi.sdutlinux.org/
+https://pypi.mirrors.ustc.edu.cn/simple/
+http://mirrors.aliyun.com/pypi/simple/
+http://pypi.douban.com/simple/
+```
+
+pip设置代理
+
+```
+[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+proxy     = http://XXXX.com:port
+[install]
+trusted-host=pypi.tuna.tsinghua.edu.cn
+```
+```
+直接在pip时设置代理也是可以的：
+
+pip install -r requirements.txt --proxy=代理服务器IP:端口号
+```
+
 
 ---
 # 
