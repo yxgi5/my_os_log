@@ -8975,7 +8975,7 @@ import os
 
 
 # 自定义配置
-config.THEME = 'dark'
+#config.THEME = 'dark'
 config.COLLECTIONS_DIR = '~/.FeelUOwn/songs'
 config.AUDIO_SELECT_POLICY = '>>>'
 
@@ -8998,12 +8998,12 @@ when('app.playlist.song_changed', notify_song_changed)
 #
 # vim: ft=python
 
-config.ytmusic.HTTP_PROXY='http://127.0.0.1:8118'
+# config.ytmusic.HTTP_PROXY='http://127.0.0.1:8118' # 报错了
 
 def load_plugin_rcfiles(plugin):
     if plugin.name == 'fuo_local':
-        #config.fuo_local.MUSIC_FOLDERS = [os.path.expanduser('~') + '/Music']
-        config.fuo_local.MUSIC_FOLDERS = [os.path.expanduser('~') + '/Music', '/home/andy/.FeelUOwn/songs']
+        config.fuo_local.MUSIC_FOLDERS = [os.path.expanduser('~') + '/Music']
+        #config.fuo_local.MUSIC_FOLDERS = [os.path.expanduser('~') + '/Music', '/home/andy/.FeelUOwn/songs']
         config.fuo_local.MUSIC_FORMATS = ['mp3', 'ogg', 'wma', 'm4a', 'm4v', 'mp4', 'flac']
 
 when('app.plugin_mgr.about_to_enable', load_plugin_rcfiles, use_symbol=True, aioqueue=False)
@@ -9066,6 +9066,12 @@ trusted-host=pypi.tuna.tsinghua.edu.cn
 pip install -r requirements.txt --proxy=代理服务器IP:端口号
 ```
 
+---
+# music players
+```
+sudo apt install audacious audacious-dev audacious-plugins audacious-plugins-data osdlyrics rhythmbox rhythmbox-plugins rhythmbox-dev 
+sudo apt install pkg-config libtag1-dev libicu-dev libcue-dev libtag1-dev libavutil-dev libavcodec-dev libavformat-dev libdtkcore-dev qt5-qmake libqt5svg5-dev qttools5-dev-tools qtmultimedia5-dev libkf5codecs-dev libdtkwidget-dev
+```
 
 ---
 # 
