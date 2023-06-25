@@ -11402,13 +11402,14 @@ Exec=env PYTHONPATH=/usr/lib/python3/dist-packages youdao-dict %f
 $ su $USERNAME
 $ gedit ~/.bashrc 或 gedit ~/.profile
 
-export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages
+export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages    # 已经是系统维护的，不是现在的pip3.6所在的dist-packages 目录
 
 然后运行
 
 $ source ~/.bashrc 或 source ~/.profile
 $ youdao-dict
 ```
+
 
 ---
 ***
@@ -11420,9 +11421,15 @@ com.alibabainc.dingtalk_1.3.0.20214_amd64.deb
 
 
 ---
-***
-#
+# pip 整理
 ```
+python3 -m pip install --upgrade pip
+/root/.cache/pip/wheels
+sudo ls /root/.cache/pip/wheels
+
+sudo apt install python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsvg python3-dbus python3-dbus.mainloop.pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtwebengine python3-pyqt5.qtwebkit --reinstall
+
+sudo -H pip3.6 install PyQt5==5.15.2 pyqtwebengine==5.15.2 pyqt5-tools pyqt5-plugins --upgrade --proxy=http://127.0.0.1:8118
 ```
 
 
@@ -11453,6 +11460,24 @@ com.alibabainc.dingtalk_1.3.0.20214_amd64.deb
 ```
 ```
 
+
+---
+***
+#
+```
+```
+
+---
+***
+#
+```
+```
+
+---
+***
+#
+```
+```
 
 
 

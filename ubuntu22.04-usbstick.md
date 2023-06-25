@@ -8407,7 +8407,9 @@ ynote报错
 gpu_data_manager_impl_private.cc(445)] GPU process isn't usable. Goodbye.
 ```
 运行时候加--no-sandbox就ok了
-
+```
+ynote-desktop --no-sandbox
+```
 
 ---
 # uget
@@ -9013,7 +9015,7 @@ when('app.plugin_mgr.about_to_enable', load_plugin_rcfiles, use_symbol=True, aio
 
 
 ## pip3 conf 
-位置
+配置文件可用位置
 ```
 $ sudo pip3 config -v list
 For variant 'global', will try loading '/etc/xdg/pip/pip.conf'
@@ -9065,6 +9067,17 @@ trusted-host=pypi.tuna.tsinghua.edu.cn
 
 pip install -r requirements.txt --proxy=代理服务器IP:端口号
 ```
+
+## pip tips
+```
+python3 -m pip install --upgrade pip
+/root/.cache/pip/wheels
+sudo ls /root/.cache/pip/wheels  # 类似位置存放下载后的wheels
+
+sudo apt install python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsvg python3-dbus python3-dbus.mainloop.pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtwebengine python3-pyqt5.qtwebkit --reinstall
+
+```
+
 
 ---
 # music players
