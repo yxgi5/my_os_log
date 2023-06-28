@@ -11435,8 +11435,10 @@ sudo -H pip3.6 install PyQt5==5.15.2 pyqtwebengine==5.15.2 pyqt5-tools pyqt5-plu
 
 ---
 ***
-#
+# inxi
 ```
+sudo apt install inxi
+inxi -Fxxxrz
 ```
 
 
