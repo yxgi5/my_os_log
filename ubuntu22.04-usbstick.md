@@ -9749,8 +9749,96 @@ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgst
 <https://gstreamer.freedesktop.org/documentation/installing/on-linux.html>
 
 ---
+# libopencv
+```
+sudo apt-get install libopencv-core-dev libopencv-core4.5d
+```
+
+
+---
+# libx264 libx265
+```
+sudo apt install libx264-163 libx264-dev x264 libx265-199 libx265-dev x265
+
+The following additional packages will be installed:
+  libffms2-5
+Suggested packages:
+  libx265-doc
+The following NEW packages will be installed:
+  libffms2-5 libx264-dev libx265-dev x264 x265 libx264-163 libx265-199
+
+```
+
+
+---
 # 
 ```
 
 ```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+
 
