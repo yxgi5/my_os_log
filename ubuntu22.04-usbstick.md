@@ -9752,6 +9752,7 @@ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgst
 # libopencv
 ```
 sudo apt-get install libopencv-core-dev libopencv-core4.5d
+sudo ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 ```
 
 
@@ -9771,10 +9772,52 @@ The following NEW packages will be installed:
 
 
 ---
-# 
+# kernel build-dep
 ```
+$ sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
 
+Picking 'linux-hwe-5.19' as source package instead of 'linux-image-unsigned-5.19.0-45-generic'
+The following NEW packages will be installed:
+  asciidoc asciidoc-base asciidoc-common default-jdk-headless docbook-dsssl docbook-utils docbook-xsl dvipng fonts-font-awesome latexmk libapache-pom-java libaudit-dev libcap-dev
+  libcap-ng-dev libcommons-logging-java libcommons-parent-java libfontbox-java libiberty-dev libnewt-dev libosp5 libostyle1c2 libpci-dev libpdfbox-java librsvg2-bin libsgmls-perl lynx
+  lynx-common makedumpfile openjade openjdk-11-jdk-headless opensp pahole preview-latex-style python3-alabaster python3-imagesize python3-snowballstemmer python3-sphinx
+  python3-sphinx-rtd-theme sgmlspl sphinx-common sphinx-rtd-theme-common teckit texlive-fonts-recommended texlive-formats-extra texlive-latex-base texlive-latex-extra
+  texlive-latex-recommended texlive-pictures texlive-plain-generic texlive-xetex tipa xmlto xsltproc
+0 upgraded, 53 newly installed, 0 to remove and 9 not upgraded.
+
+
+$ uname -srmv
+$ uname -mrs
+$ hostnamectl
+$ cat /proc/version
+$ sudo apt update
+//$ sudo apt full-upgrade
+//$ sudo apt remove linux-image-$(uname -r) linux-headers-$(uname -r)
+$ cat /proc/version_signature
 ```
+<https://stackoverflow.com/questions/75695258/how-to-fix-broken-packages-of-linux-unsigned-image>
+
+<https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel>
+
+<https://help.ubuntu.com/community/UpdatingADeb>
+
+<https://git.launchpad.net/ubuntu/+source/linux-hwe-5.19>
+
+<https://launchpad.net/~ubuntu-kernel>
+
+<https://code.launchpad.net/~ubuntu-kernel/+git>
+
+<https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy>
+
+<https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy>
+
+<https://wiki.ubuntu.com/Kernel>
+
+<http://kernel.ubuntu.com/git>
+
+<https://launchpad.net/~ubuntu-kernel-team>
+
+<https://git.launchpad.net/ubuntu/+source/linux>
 
 
 ---

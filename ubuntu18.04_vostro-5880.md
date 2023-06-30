@@ -5454,24 +5454,26 @@ apt-cache showsrc linux
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-<release codename>.git
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git ## 用这个命令吧
 
-sudo apt-get build-dep linux linux-image-$(uname -r)
+//sudo apt build-dep linux linux-image-generic
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r) # sudo apt-get build-dep linux linux-image-$(uname -r)
 sudo apt-get install libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
 sudo apt-get install git
+打开源
 deb-src http://archive.ubuntu.com/ubuntu bionic main
 deb-src http://archive.ubuntu.com/ubuntu bionic-updates main
+
 apt-get source linux-image-unsigned-$(uname -r)
-
-
-
+或者
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git
 
-
+Modifying the configuration:
 chmod a+x debian/rules
 chmod a+x debian/scripts/*
 chmod a+x debian/scripts/misc/*
 LANG=C fakeroot debian/rules clean
 LANG=C fakeroot debian/rules editconfigs # you need to go through each (Y, Exit, Y, Exit..) or get a complaint about config later
 
+Building the kernel:
 LANG=C fakeroot debian/rules clean
 # quicker build:
 LANG=C fakeroot debian/rules binary-headers binary-generic binary-perarch
@@ -9588,6 +9590,10 @@ makedeb制作了一个deb包，已经有alist.service，postinstall脚本没有�
 curl -L -X GET 'http://localhost:5244/d/baiduyun_yxgi12/2022082106.tar' -H 'User-Agent: pan.baidu.com'
 ```
 
+```
+/opt/alist/alist admin  # 这里查的密码如果不能登录管理面板，如下
+/opt/alist/data/data.db 里查看的admin密码才是对的
+```
 
 * * *
 # snap常用操作
@@ -11444,8 +11450,36 @@ inxi -Fxxxrz
 
 ---
 ***
-#
+# libdw-dev
 ```
+sudo aptitude install libdw-dev
+     Downgrade the following packages:                                                 
+1)     libdw1 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]      
+2)     libelf-dev [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]  
+3)     libelf1 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]     
+4)     libelf1:i386 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]
+
+sudo apt-get install libunwind8-dev
+sudo apt --fix-broken install
+sudo update-initramfs -u -k all
+
+sudo apt-get build-dep linux
+
+The following NEW packages will be installed:
+  asciidoc asciidoc-base asciidoc-common dh-systemd docbook-dsssl
+  docbook-utils kernel-wedge libaudit-dev libcap-ng-dev libnewt-dev
+  libsgmls-perl makedumpfile opensp python-alabaster python-babel
+  python-babel-localedata python-docutils python-imagesize python-jinja2
+  python-markupsafe python-roman python-sphinx python-sphinx-rtd-theme sgmlspl
+  sphinx-common xmlto
+
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
+
+The following NEW packages will be installed:
+  dwarves libcap-dev
+
+$ apt list --installed | grep linux
+
 ```
 
 
