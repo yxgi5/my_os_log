@@ -9752,14 +9752,33 @@ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgst
 # music-dl
 <https://github.com/0xHJK/music-dl>
 ```
-
-
 virtualenv -p /usr/bin/python3 --system-site-packages ~/python3_env
 source ~/python3_env/bin/activate
 pip3 install pymusic-dl
 music-dl -k "周杰伦" -n 20
 ```
 
+# libopencv
+```
+sudo apt-get install libopencv-core-dev libopencv-core4.5d
+sudo ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
+```
+
+
+---
+# libx264 libx265
+```
+sudo apt install libx264-163 libx264-dev x264 libx265-199 libx265-dev x265
+
+The following additional packages will be installed:
+  libffms2-5
+Suggested packages:
+  libx265-doc
+The following NEW packages will be installed:
+  libffms2-5 libx264-dev libx265-dev x264 x265 libx264-163 libx265-199
+
+```
+
 
 ---
 # 
@@ -9815,3 +9834,21 @@ music-dl -k "周杰伦" -n 20
 ```
 
 ```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+
+
