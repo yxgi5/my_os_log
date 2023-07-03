@@ -9749,6 +9749,15 @@ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgst
 <https://gstreamer.freedesktop.org/documentation/installing/on-linux.html>
 
 ---
+# music-dl
+<https://github.com/0xHJK/music-dl>
+```
+virtualenv -p /usr/bin/python3 --system-site-packages ~/python3_env
+source ~/python3_env/bin/activate
+pip3 install pymusic-dl
+music-dl -k "周杰伦" -n 20
+```
+
 # libopencv
 ```
 sudo apt-get install libopencv-core-dev libopencv-core4.5d
