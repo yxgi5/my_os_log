@@ -9830,9 +9830,61 @@ $ cat /proc/version_signature
 
 
 ---
-# 
+# Build Deb Packages From Source
 ```
+sudo apt install dpkg-dev build-essential fakeroot devscripts
 
+/etc/apt/sources.list
+deb-src
+
+sudo su -c "grep '^deb ' /etc/apt/sources.list | sed 's/^deb/deb-src/g' > /etc/apt/sources.list.d/deb-src.list"
+sudo apt update -y
+$ sudo sed -i.back -e "s/^# deb-src/deb-src/g" /etc/apt/sources.list
+$ sudo apt-get update
+
+
+sudo sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && sudo sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
+
+Bash script that could be used to uncomment deb-src lines in sources.list :
+
+tempdir=$(mktemp -d)
+cd "$tempdir"
+source_file=/etc/apt/sources.list
+new_file=sources.list.new
+perl -pE 's/^#\s+(deb-src)/$1/' "$source_file" > "$new_file"
+sudo cp "$new_file" "$source_file"
+sudo apt-get update
+
+
+sudo perl -p -i -n -e "s/# *deb-src/deb-src/"  /etc/apt/sources.list
+
+(cd /etc/apt/; sudo tar cvf sources.list.tar sources.list sources.list.d);  for i in /etc/apt/sources.list /etc/apt/sources.list.d/*; do sudo perl -p -i -n -e "s/# *deb-src/deb-src/" $i; done
+
+This adds \s\? which is an optional white space (note the ? needs to be escaped).
+sed -i -- 's/#\s\?deb-src/deb-src/g' /etc/apt/sources.list
+
+
+
+sudo apt source xxx
+
+change src if needed
+
+sudo dpkg-buildpackage -b -uc -us
+
+
+==
+
+manaul download three files
+xxx.orig.tar.gz
+xxx.debian.tar.gz
+xxx.dsc
+
+then
+dpkg-source -x xxx.dsc
+
+change src if needed
+
+dpkg-buildpackage -rfakeroot -b -uc -us
 ```
 
 
