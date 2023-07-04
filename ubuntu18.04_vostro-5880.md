@@ -3543,6 +3543,7 @@ $ sudo docker run hello-world
 $ sudo usermod -aG docker $USER
 $ newgrp docker
 $ docker run hello-world
+```
 ## docker 源加速
 /etc/docker/daemon.json，加上如下的键值:
 ```
