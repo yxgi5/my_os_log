@@ -12196,8 +12196,9 @@ sudo udevadm control --reload-rules
 
 ---
 ***
-#
+# something
 ```
+sudo apt-get install libftdi-dev fxload libc6-dev libusb-dev build-essential
 ```
 
 ---
