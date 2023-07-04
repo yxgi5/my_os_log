@@ -1,8 +1,9 @@
----
+***
 # set gnome online acount and livepath
 
 `/usr/libexec/gnome-initial-setup --existing-user`
----
+
+***
 # 存档系统和还原
 
 如果有EFI分区，也要备份，并记录uuid。可以在gparted里清除esp和boot标志，自动挂载备份。
