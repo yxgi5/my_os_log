@@ -11503,6 +11503,18 @@ SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",
 SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andreas",SYMLINK+="ftdi-%n"
 SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'"
 ```
+改进后
+```
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="plugdev",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="plugdev",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6014",MODE=="0666",GROUP=="plugdev",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6014",RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+```
+
+
 39-i4tools.rules
 ```
 SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1281", TAG+="uaccess"
@@ -12203,8 +12215,11 @@ sudo apt-get install libftdi-dev fxload libc6-dev libusb-dev build-essential
 
 ---
 ***
-#
+# su权限文件怎么 通过管道修改
 ```
+cat xxx | sudo tee xxxx
+echo xxx | sudo tee xxxx
+echo xxx | sudo tee -a xxxx
 ```
 
 ---
