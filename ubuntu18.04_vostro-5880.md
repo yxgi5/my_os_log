@@ -3543,6 +3543,7 @@ $ sudo docker run hello-world
 $ sudo usermod -aG docker $USER
 $ newgrp docker
 $ docker run hello-world
+```
 ## docker 源加速
 /etc/docker/daemon.json，加上如下的键值:
 ```
@@ -5454,24 +5455,26 @@ apt-cache showsrc linux
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-<release codename>.git
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git ## 用这个命令吧
 
-sudo apt-get build-dep linux linux-image-$(uname -r)
+//sudo apt build-dep linux linux-image-generic
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r) # sudo apt-get build-dep linux linux-image-$(uname -r)
 sudo apt-get install libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
 sudo apt-get install git
+打开源
 deb-src http://archive.ubuntu.com/ubuntu bionic main
 deb-src http://archive.ubuntu.com/ubuntu bionic-updates main
+
 apt-get source linux-image-unsigned-$(uname -r)
-
-
-
+或者
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git
 
-
+Modifying the configuration:
 chmod a+x debian/rules
 chmod a+x debian/scripts/*
 chmod a+x debian/scripts/misc/*
 LANG=C fakeroot debian/rules clean
 LANG=C fakeroot debian/rules editconfigs # you need to go through each (Y, Exit, Y, Exit..) or get a complaint about config later
 
+Building the kernel:
 LANG=C fakeroot debian/rules clean
 # quicker build:
 LANG=C fakeroot debian/rules binary-headers binary-generic binary-perarch
@@ -9588,6 +9591,10 @@ makedeb制作了一个deb包，已经有alist.service，postinstall脚本没有�
 curl -L -X GET 'http://localhost:5244/d/baiduyun_yxgi12/2022082106.tar' -H 'User-Agent: pan.baidu.com'
 ```
 
+```
+/opt/alist/alist admin  # 这里查的密码如果不能登录管理面板，如下
+/opt/alist/data/data.db 里查看的admin密码才是对的
+```
 
 * * *
 # snap常用操作
@@ -11444,35 +11451,775 @@ inxi -Fxxxrz
 
 ---
 ***
-#
+# libdw-dev
 ```
+sudo aptitude install libdw-dev
+     Downgrade the following packages:                                                 
+1)     libdw1 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]      
+2)     libelf-dev [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]  
+3)     libelf1 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]     
+4)     libelf1:i386 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]
+
+sudo apt-get install libunwind8-dev
+sudo apt --fix-broken install
+sudo update-initramfs -u -k all
+
+sudo apt-get build-dep linux
+
+The following NEW packages will be installed:
+  asciidoc asciidoc-base asciidoc-common dh-systemd docbook-dsssl
+  docbook-utils kernel-wedge libaudit-dev libcap-ng-dev libnewt-dev
+  libsgmls-perl makedumpfile opensp python-alabaster python-babel
+  python-babel-localedata python-docutils python-imagesize python-jinja2
+  python-markupsafe python-roman python-sphinx python-sphinx-rtd-theme sgmlspl
+  sphinx-common xmlto
+
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
+
+The following NEW packages will be installed:
+  dwarves libcap-dev
+
+$ apt list --installed | grep linux
+
 ```
 
 
 ---
 ***
-#
+# doxygen
 ```
-```
-
-
----
-***
-#
-```
+sudo apt-get install doxygen doxygen-gui graphviz graphviz-doc
 ```
 
 
 ---
 ***
-#
+# /etc/udev/rules.d/
+10-local.rules
 ```
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="andreas",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andreas",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'"
+```
+改进后
+```
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="plugdev",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="plugdev",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6014",MODE=="0666",GROUP=="plugdev",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6014",RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+```
+
+
+39-i4tools.rules
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1281", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1282", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1283", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1227", TAG+="uaccess"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*|5ac/1901/*|5ac/8600/*", MODE=0666
+
+# Some user need to "reload rules", use this command:
+# sudo udevadm control --reload-rules && udevadm trigger
+```
+39-usbmuxd.rules
+```
+# usbmuxd (Apple Mobile Device Muxer listening on /var/run/usbmuxd)
+
+# systemd should receive all events relating to device
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", TAG+="systemd"
+
+# Initialize iOS devices into "deactivated" USB configuration state and activate usbmuxd
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", ACTION=="add", ENV{USBMUX_SUPPORTED}="1", ATTR{bConfigurationValue}="0", OWNER="usbmux", ENV{SYSTEMD_WANTS}="usbmuxd.service"
+
+# Make sure properties don't get lost when bind action is called
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", ACTION=="bind", ENV{USBMUX_SUPPORTED}="1", OWNER="usbmux", ENV{SYSTEMD_WANTS}="usbmuxd.service"
+
+# Exit usbmuxd when the last device is removed
+#SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", ACTION=="remove", RUN+="/usr/sbin/usbmuxd -x"
+```
+49-stlinkv1.rules
+```
+# stm32 discovery boards, with onboard st/linkv1
+# ie, STM32VL.
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3744", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv1_%n"
+```
+49-stlinkv2-1.rules
+```
+# stm32 nucleo boards, with onboard st/linkv2-1
+# ie, STM32F0, STM32F4.
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv2-1_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3752", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv2-1_%n"
+
+```
+49-stlinkv2.rules
+```
+# stm32 discovery boards, with onboard st/linkv2
+# ie, STM32L, STM32F4.
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv2_%n"
+```
+49-stlinkv3.rules
+```
+# stlink-v3 boards (standalone and embedded) in usbloader mode and standard (debug) mode
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374d", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3loader_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374e", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374f", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3753", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3754", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3755", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3loader_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3757", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+```
+51-altera-usb-blaster.rules
+```
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
+```
+52-xilinx-digilent-usb.rules
+```
+###########################################################################
+#                                                                         #
+#  52-digilent-usb.rules -- UDEV rules for Digilent USB Devices           #
+#                                                                         #
+###########################################################################
+#  Author: MTA                                                            #
+#  Copyright 2010 Digilent Inc.                                           #
+###########################################################################
+#  File Description:                                                      #
+#                                                                         #
+#  This file contains the rules used by UDEV when creating entries for    #
+#  Digilent USB devices. In order for Digilent's shared libraries and     #
+#  applications to access these devices without root privalages it is     #
+#  necessary for UDEV to create entries for which all users have read     #
+#  and write permission.                                                  #
+#                                                                         #
+#  Usage:                                                                 #
+#                                                                         #
+#  Copy this file to "/etc/udev/rules.d/" and execute                     #
+#  "/sbin/udevcontrol reload_rules" as root. This only needs to be done   #
+#  immediately after installation. Each time you reboot your system the   #
+#  rules are automatically loaded by UDEV.                                #
+#                                                                         #
+###########################################################################
+#  Revision History:                                                      #
+#                                                                         #
+#  04/15/2010(MTA): created                                               #
+#  02/28/2011(MTA): modified to support FTDI based devices                #
+#  07/10/2012(MTA): modified to work with UDEV versions 098 or newer      #
+#  04/19/2013(MTA): modified mode assignment to use ":=" insetead of "="  #
+#       so that our permission settings can't be overwritten by other     #
+#       rules files                                                       #
+#  07/28/2014(MTA): changed default application path                      #
+#                                                                         #
+###########################################################################
+
+# Create "/dev" entries for Digilent device's with read and write
+# permission granted to all users.
+ATTR{idVendor}=="1443", MODE:="666"
+ACTION=="add", ATTR{idVendor}=="0403", ATTR{manufacturer}=="Digilent", MODE:="666"
+
+# The following rules (if present) cause UDEV to ignore all UEVENTS for
+# which the subsystem is "usb_endpoint" and the action is "add" or
+# "remove". These rules are necessary to work around what appears to be a
+# bug in the Kernel used by Red Hat Enterprise Linux 5/CentOS 5. The Kernel
+# sends UEVENTS to remove and then add entries for the endpoints of a USB
+# device in "/dev" each time a process releases an interface. This occurs
+# each time a data transaction occurs. When an FPGA is configured or flash
+# device is written a large number of transactions take place. If the
+# following lines are commented out then UDEV will be overloaded for a long
+# period of time while it tries to process the massive number of UEVENTS it
+# receives from the kernel. Please note that this work around only applies
+# to systems running RHEL5 or CentOS 5 and as a result the rules will only
+# be present on those systems.
+```
+52-xilinx-ftdi-usb.rules
+```
+###########################################################################
+#                                                                         #
+#  52-xilinx-ftdi-usb.rules -- UDEV rules for Xilinx USB Devices          #
+#                                                                         #
+###########################################################################
+#  Author: EST                                                            #
+#  Copyright 2016 Xilinx Inc.                                             #
+###########################################################################
+#  File Description:                                                      #
+#                                                                         #
+#  This file contains the rules used by UDEV when creating entries for    #
+#  Xilinx USB devices. In order for Xilinx's shared libraries and         #
+#  applications to access these devices without root privalages it is     #
+#  necessary for UDEV to create entries for which all users have read     #
+#  and write permission.                                                  #
+#                                                                         #
+#  Usage:                                                                 #
+#                                                                         #
+#  Copy this file to "/etc/udev/rules.d/" and execute                     #
+#  "/sbin/udevcontrol reload_rules" as root. This only needs to be done   #
+#  immediately after installation. Each time you reboot your system the   #
+#  rules are automatically loaded by UDEV.                                #
+#                                                                         #
+###########################################################################
+#  Revision History:                                                      #
+#                                                                         #
+#  10/18/2016(EST): created                                               #
+#                                                                         #
+###########################################################################
+# version 0001
+# Create "/dev" entries for Xilinx device's with read and write
+# permission granted to all users.
+ACTION=="add", ATTR{idVendor}=="0403", ATTR{manufacturer}=="Xilinx", MODE:="666"
+
+# The following rules (if present) cause UDEV to ignore all UEVENTS for
+# which the subsystem is "usb_endpoint" and the action is "add" or
+# "remove". These rules are necessary to work around what appears to be a
+# bug in the Kernel used by Red Hat Enterprise Linux 6/CentOS 5. The Kernel
+# sends UEVENTS to remove and then add entries for the endpoints of a USB
+# device in "/dev" each time a process releases an interface. This occurs
+# each time a data transaction occurs. When an FPGA is configured or flash
+# device is written a large number of transactions take place. If the
+# following lines are commented out then UDEV will be overloaded for a long
+# period of time while it tries to process the massive number of UEVENTS it
+# receives from the kernel. Please note that this work around only applies
+# to systems running RHEL6 or CentOS 5 and as a result the rules will only
+# be present on those systems.
+```
+52-xilinx-pcusb.rules
+```
+# version 0002
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0008", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0007", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0009", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="000d", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="000f", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0013", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0015", MODE="666"
+```
+60-dreamsourcelab.rules
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2a0e", MODE="0666"
+```
+60-vboxdrv.rules
+```
+KERNEL=="vboxdrv", NAME="vboxdrv", OWNER="root", GROUP="vboxusers", MODE="0660"
+KERNEL=="vboxdrvu", NAME="vboxdrvu", OWNER="root", GROUP="root", MODE="0666"
+KERNEL=="vboxnetctl", NAME="vboxnetctl", OWNER="root", GROUP="vboxusers", MODE="0660"
+SUBSYSTEM=="usb_device", ACTION=="add", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh $major $minor $attr{bDeviceClass}"
+SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh $major $minor $attr{bDeviceClass}"
+SUBSYSTEM=="usb_device", ACTION=="remove", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh --remove $major $minor"
+SUBSYSTEM=="usb", ACTION=="remove", ENV{DEVTYPE}=="usb_device", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh --remove $major $minor"
+```
+61-msp430uif.rules
+```
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0010",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0013",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0014",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0203",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0204",MODE="0666"
+ATTRS{idVendor}=="0451",ATTRS{idProduct}=="f432",MODE="0666"
+```
+70-mm-no-ti-emulators.rules
+```
+ACTION!="add|change", GOTO="mm_usb_device_blacklist_end"
+SUBSYSTEM!="usb", GOTO="mm_usb_device_blacklist_end"
+ENV{DEVTYPE}!="usb_device",  GOTO="mm_usb_device_blacklist_end"
+
+# TI USB Emulators
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0010", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0013", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0014", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0203", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0204", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="0451", ATTRS{idProduct}=="F432", ENV{ID_MM_DEVICE_IGNORE}="1"
+
+LABEL="mm_usb_device_blacklist_end"
+```
+70-ttyusb.rules
+```
+KERNEL=="ttyUSB[0-9]*",MODE="0666"
+```
+71-ti-permissions.rules
+```
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="a6d0",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="a6d1",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="bcd9",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="bcda",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="00fd",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="00ff",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef1",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef2",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef3",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef4",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="c32a",MODE:="0666"
+ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef0",ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="0c55",ATTRS{idProduct}=="0220",ENV{ID_MM_DEVICE_IGNORE}="1"
+KERNEL=="ttyACM[0-9]*",MODE:="0666"
+
+```
+cat 95-tty0tty.rules
+```
+KERNEL=="tnt[0-7]", SUBSYSTEM=="tty", GROUP="uucp", MODE="0660"
+```
+99-jlink.rules
+```
+#
+# This file is going to be stored at /etc/udev/rules.d on installation of the J-Link package
+# It makes sure that non-superuser have access to the connected J-Links, so JLinkExe etc. can be executed as non-superuser and can work with J-Link
+#
+#
+# Matches are AND combined, meaning: a==b,c==d,do stuff
+# results in:                        if (a == b) && (c == d) -> do stuff
+#
+ACTION!="add", SUBSYSTEM!="usb_device", GOTO="jlink_rules_end"
+#
+# Give all users read and write access.
+# Note: NOT all combinations are supported by J-Link right now. Some are reserved for future use, but already added here
+#
+# ATTR{filename}
+#                  Match sysfs attribute values of the event device. Trailing
+#                  whitespace in the attribute values is ignored unless the specified
+#                  match value itself contains trailing whitespace.
+#
+# ATTRS{filename}
+#                  Search the devpath upwards for a device with matching sysfs
+#                  attribute values. If multiple ATTRS matches are specified, all of
+#                  them must match on the same device. Trailing whitespace in the
+#                  attribute values is ignored unless the specified match value itself
+#                  contains trailing whitespace.
+#
+# How to find out about udev attributes of device:
+# Connect J-Link to PC
+# Terminal: cat /var/log/syslog
+# Find path to where J-Link device has been "mounted"
+# sudo udevadm info --query=all --attribute-walk --path=<PathExtractedFromSyslog>
+# sudo udevadm info --attribute-walk /dev/bus/usb/<Bus>/<Device> (extract <Bus> and <Device> from "lsusb")
+# Reload udev rules after rules file change:
+#   sudo udevadm control --reload-rules
+#   sudo udevadm trigger
+#
+# [old format]
+# 0x0101 - J-Link (default)                 | Flasher STM8 | Flasher ARM | Flasher 5 PRO
+# 0x0102 - J-Link USBAddr = 1 (obsolete)
+# 0x0103 - J-Link USBAddr = 2 (obsolete)
+# 0x0104 - J-Link USBAddr = 3 (obsolete)
+# 0x0105 - CDC + J-Link
+# 0x0106 - CDC
+# 0x0107 - RNDIS  + J-Link
+# 0x0108 - J-Link + MSD
+#
+ATTR{idProduct}=="0101", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0102", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0103", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0104", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0105", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0107", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0108", ATTR{idVendor}=="1366", MODE="666"
+#
+# Make sure that J-Links are not captured by modem manager service
+# as this service would try detect J-Link as a modem and send AT commands via the VCOM component which might not be liked by the target...
+#
+ATTR{idProduct}=="0101", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0102", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0103", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0104", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0105", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0107", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0108", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# J-Link Product-Id assignment:
+# 0x1000 +
+# Bit 0: MSD
+# Bit 1: RNDIS
+# Bit 2: CDC
+# Bit 3: HID
+# Bit 4: J-Link (BULK via SEGGER host driver)
+# Bit 5: J-Link (BULK via WinUSB driver. Needs to be enabled in J-Link config area)
+#
+# [new format]
+# 0x1001: MSD
+# 0x1002: RNDIS
+# 0x1003: RNDIS  + MSD
+# 0x1004: CDC
+# 0x1005: CDC    + MSD
+# 0x1006: RNDIS  + CDC
+# 0x1007: RNDIS  + CDC    + MSD
+# 0x1008: HID
+# 0x1009: MSD    + HID
+# 0x100a: RNDIS  + HID
+# 0x100b: RNDIS  + MSD    + HID
+# 0x100c: CDC    + HID
+# 0x100d: CDC    + MSD    + HID
+# 0x100e: RNDIS  + CDC    + HID
+# 0x100f: RNDIS  + CDC    + MSD + HID
+# 0x1010: J_LINK_SEGGER_DRV
+# 0x1011: J_LINK_SEGGER_DRV                             + MSD
+# 0x1012: J_LINK_SEGGER_DRV                  + RNDIS
+# 0x1013: J_LINK_SEGGER_DRV                  + RNDIS    + MSD
+# 0x1014: J_LINK_SEGGER_DRV          + CDC              
+# 0x1015: J_LINK_SEGGER_DRV          + CDC              + MSD
+# 0x1016: J_LINK_SEGGER_DRV          + CDC   + RNDIS
+# 0x1017: J_LINK_SEGGER_DRV          + CDC   + RNDIS    + MSD
+# 0x1018: J_LINK_SEGGER_DRV + HID
+# 0x1019: J_LINK_SEGGER_DRV + HID                       + MSD
+# 0x101a: J_LINK_SEGGER_DRV + HID            + RNDIS
+# 0x101b: J_LINK_SEGGER_DRV + HID            + RNDIS    + MSD
+# 0x101c: J_LINK_SEGGER_DRV + HID    + CDC
+# 0x101d: J_LINK_SEGGER_DRV + HID    + CDC              + MSD
+# 0x101e: J_LINK_SEGGER_DRV + HID    + CDC   + RNDIS
+# 0x101f: J_LINK_SEGGER_DRV + HID    + CDC   + RNDIS    + MSD
+# 0x1020: J_LINK_WINUSB_DRV 
+# 0x1021: J_LINK_WINUSB_DRV                             + MSD
+# 0x1022: J_LINK_WINUSB_DRV                  + RNDIS
+# 0x1023: J_LINK_WINUSB_DRV                  + RNDIS    + MSD
+# 0x1024: J_LINK_WINUSB_DRV          + CDC              
+# 0x1025: J_LINK_WINUSB_DRV          + CDC              + MSD
+# 0x1026: J_LINK_WINUSB_DRV          + CDC   + RNDIS
+# 0x1027: J_LINK_WINUSB_DRV          + CDC   + RNDIS    + MSD
+# 0x1028: J_LINK_WINUSB_DRV + HID
+# 0x1029: J_LINK_WINUSB_DRV + HID                       + MSD
+# 0x102a: J_LINK_WINUSB_DRV + HID            + RNDIS
+# 0x102b: J_LINK_WINUSB_DRV + HID            + RNDIS    + MSD
+# 0x102c: J_LINK_WINUSB_DRV + HID    + CDC
+# 0x102d: J_LINK_WINUSB_DRV + HID    + CDC              + MSD
+# 0x102e: J_LINK_WINUSB_DRV + HID    + CDC   + RNDIS
+# 0x102f: J_LINK_WINUSB_DRV + HID    + CDC   + RNDIS    + MSD
+# 0x103x: J_LINK_SEGGER_DRV + J_LINK_WINUSB_DRV does not make any sense, therefore skipped
+# 0x1050: J_LINK_SEGGER_DRV          + 2x CDC
+# 0x1051: J_LINK_SEGGER_DRV          + 2x CDC              + MSD
+# 0x1052: J_LINK_SEGGER_DRV          + 2x CDC   + RNDIS
+# 0x1053: J_LINK_SEGGER_DRV          + 2x CDC   + RNDIS    + MSD
+# 0x1054: J_LINK_SEGGER_DRV          + 3x CDC
+# 0x1055: J_LINK_SEGGER_DRV          + 3x CDC              + MSD
+# 0x1056: J_LINK_SEGGER_DRV          + 3x CDC   + RNDIS
+# 0x1057: J_LINK_SEGGER_DRV          + 3x CDC   + RNDIS    + MSD
+# 0x1058: J_LINK_SEGGER_DRV + HID    + 2x CDC
+# 0x1059: J_LINK_SEGGER_DRV + HID    + 2x CDC              + MSD
+# 0x105a: J_LINK_SEGGER_DRV + HID    + 2x CDC   + RNDIS
+# 0x105b: J_LINK_SEGGER_DRV + HID    + 2x CDC   + RNDIS    + MSD
+# 0x105c: J_LINK_SEGGER_DRV + HID    + 3x CDC
+# 0x105d: J_LINK_SEGGER_DRV + HID    + 3x CDC              + MSD
+# 0x105e: J_LINK_SEGGER_DRV + HID    + 3x CDC   + RNDIS
+# 0x105f: J_LINK_SEGGER_DRV + HID    + 3x CDC   + RNDIS    + MSD
+# 0x1060: J_LINK_WINUSB_DRV          + 2x CDC
+# 0x1061: J_LINK_WINUSB_DRV          + 2x CDC              + MSD
+# 0x1062: J_LINK_WINUSB_DRV          + 2x CDC   + RNDIS
+# 0x1063: J_LINK_WINUSB_DRV          + 2x CDC   + RNDIS    + MSD
+# 0x1064: J_LINK_WINUSB_DRV          + 3x CDC
+# 0x1065: J_LINK_WINUSB_DRV          + 3x CDC              + MSD
+# 0x1066: J_LINK_WINUSB_DRV          + 3x CDC   + RNDIS
+# 0x1067: J_LINK_WINUSB_DRV          + 3x CDC   + RNDIS    + MSD
+# 0x1068: J_LINK_WINUSB_DRV + HID    + 2x CDC
+# 0x1069: J_LINK_WINUSB_DRV + HID    + 2x CDC              + MSD
+# 0x106a: J_LINK_WINUSB_DRV + HID    + 2x CDC   + RNDIS
+# 0x106b: J_LINK_WINUSB_DRV + HID    + 2x CDC   + RNDIS    + MSD
+# 0x106c: J_LINK_WINUSB_DRV + HID    + 3x CDC
+# 0x106d: J_LINK_WINUSB_DRV + HID    + 3x CDC              + MSD
+# 0x106e: J_LINK_WINUSB_DRV + HID    + 3x CDC   + RNDIS
+# 0x106f: J_LINK_WINUSB_DRV + HID    + 3x CDC   + RNDIS    + MSD
+#
+ATTR{idProduct}=="1001", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1002", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1003", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1004", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1005", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1006", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1007", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1008", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1009", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1010", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1011", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1012", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1013", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1014", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1016", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1017", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1018", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1019", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1020", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1021", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1022", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1023", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1024", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1025", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1026", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1027", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1028", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1029", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1050", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1051", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1052", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1053", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1054", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1055", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1056", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1057", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1058", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1059", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1060", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1061", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1062", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1063", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1064", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1065", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1066", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1067", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1068", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1069", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", MODE="666"
+#
+# Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0x1366 (SEGGER)
+#     PID 0x1008-100f, 0x1018-101f, 0x1028-102f, 0x1058-105f, 0x1068-106f (SEGGER J-Link)
+#     We cover all of them via idProduct=10* and idVendor=1366
+#
+#   VID 0xC251 (Keil)
+#     PID 0xF001: (LPC-Link-II CMSIS_DAP)
+#     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
+#     PID 0x2722: (Keil ULINK2 CMSIS-DAP)
+#   VID 0x0D28 (mbed)
+#     PID 0x0204: MBED CMSIS-DAP
+#
+KERNEL=="hidraw*", ATTRS{idProduct}=="10*",  ATTRS{idVendor}=="1366", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="0204", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="0204", ATTRS{idVendor}=="0d28", MODE="666"
+#
+# Make sure that J-Links are not captured by modem manager service
+# as this service would try detect J-Link as a modem and send AT commands via the VCOM component which might not be liked by the target...
+#
+ATTR{idProduct}=="1001", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1002", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1003", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1004", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1005", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1006", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1007", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1008", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1009", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1010", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1011", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1012", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1013", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1014", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1016", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1017", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1018", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1019", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1020", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1021", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1022", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1023", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1024", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1025", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1026", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1027", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1028", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1029", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1050", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1051", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1052", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1053", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1054", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1055", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1056", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1057", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1058", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1059", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1060", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1061", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1062", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1063", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1064", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1065", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1066", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1067", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1068", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1069", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0xC251 (Keil)
+#     PID 0xF001: (LPC-Link-II CMSIS_DAP)
+#     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
+#     PID 0x2722: (Keil ULINK2 CMSIS-DAP)
+#   VID 0x0D28 (mbed)
+#     PID 0x0204: MBED CMSIS-DAP
+#
+ATTR{idProduct}=="f001", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f002", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="2722", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0204", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f001", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f002", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="2722", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0204", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# Make sure that VCOM ports of J-Links can be opened with user rights
+# We simply say that all devices from SEGGER which are in the "tty" domain are enumerated with normal user == R/W
+#
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1366", MODE="0666", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="c251", MODE="0666", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0d28", MODE="0666", GROUP="dialout"
+#
+# End of list
+#
+LABEL="jlink_rules_end"
+```
+99-Kingst.rules
+```
+# Kingst Virtual Instruments
+# This file should be installed to /etc/udev/rules.d so that you can access the hardware without being root
+#
+# type this at the command prompt: sudo cp 99-Kingst.rules /etc/udev/rules.d
+
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a1", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a2", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a3", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a4", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="02a1", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="02a2", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="02a3", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="03a1", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="03a2", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="03a3", MODE="0666"
+```
+99-SaleaeLogic.rules
+```
+# Saleae Logic Analyzer
+# This file should be installed to /etc/udev/rules.d so that you can access the Logic hardware without being root
+#
+# type this at the command prompt: sudo cp 99-SaleaeLogic.rules /etc/udev/rules.d
+
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0925", ATTR{idProduct}=="3881", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1001", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1003", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1004", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1005", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1006", MODE="0666"
+
+```
+reload rules
+```
+sudo udevadm control --reload-rules
 ```
 
 ---
 ***
-#
+# something
 ```
+sudo apt-get install libftdi-dev fxload libc6-dev libusb-dev build-essential
+```
+
+---
+***
+# su权限文件怎么 通过管道修改
+```
+cat xxx | sudo tee xxxx
+echo xxx | sudo tee xxxx
+echo xxx | sudo tee -a xxxx
 ```
 
 ---

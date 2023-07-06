@@ -1,8 +1,9 @@
----
+***
 # set gnome online acount and livepath
 
 `/usr/libexec/gnome-initial-setup --existing-user`
----
+
+***
 # 存档系统和还原
 
 如果有EFI分区，也要备份，并记录uuid。可以在gparted里清除esp和boot标志，自动挂载备份。
@@ -9787,6 +9788,112 @@ sudo apt install csh
 sudo apt install tcsh
 ```
 
+---
+# kernel build-dep
+```
+$ sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
+
+Picking 'linux-hwe-5.19' as source package instead of 'linux-image-unsigned-5.19.0-45-generic'
+The following NEW packages will be installed:
+  asciidoc asciidoc-base asciidoc-common default-jdk-headless docbook-dsssl docbook-utils docbook-xsl dvipng fonts-font-awesome latexmk libapache-pom-java libaudit-dev libcap-dev
+  libcap-ng-dev libcommons-logging-java libcommons-parent-java libfontbox-java libiberty-dev libnewt-dev libosp5 libostyle1c2 libpci-dev libpdfbox-java librsvg2-bin libsgmls-perl lynx
+  lynx-common makedumpfile openjade openjdk-11-jdk-headless opensp pahole preview-latex-style python3-alabaster python3-imagesize python3-snowballstemmer python3-sphinx
+  python3-sphinx-rtd-theme sgmlspl sphinx-common sphinx-rtd-theme-common teckit texlive-fonts-recommended texlive-formats-extra texlive-latex-base texlive-latex-extra
+  texlive-latex-recommended texlive-pictures texlive-plain-generic texlive-xetex tipa xmlto xsltproc
+0 upgraded, 53 newly installed, 0 to remove and 9 not upgraded.
+
+
+$ uname -srmv
+$ uname -mrs
+$ hostnamectl
+$ cat /proc/version
+$ sudo apt update
+//$ sudo apt full-upgrade
+//$ sudo apt remove linux-image-$(uname -r) linux-headers-$(uname -r)
+$ cat /proc/version_signature
+```
+<https://stackoverflow.com/questions/75695258/how-to-fix-broken-packages-of-linux-unsigned-image>
+
+<https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel>
+
+<https://help.ubuntu.com/community/UpdatingADeb>
+
+<https://git.launchpad.net/ubuntu/+source/linux-hwe-5.19>
+
+<https://launchpad.net/~ubuntu-kernel>
+
+<https://code.launchpad.net/~ubuntu-kernel/+git>
+
+<https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy>
+
+<https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy>
+
+<https://wiki.ubuntu.com/Kernel>
+
+<http://kernel.ubuntu.com/git>
+
+<https://launchpad.net/~ubuntu-kernel-team>
+
+<https://git.launchpad.net/ubuntu/+source/linux>
+
+
+---
+# Build Deb Packages From Source
+```
+sudo apt install dpkg-dev build-essential fakeroot devscripts
+
+/etc/apt/sources.list
+deb-src
+
+sudo su -c "grep '^deb ' /etc/apt/sources.list | sed 's/^deb/deb-src/g' > /etc/apt/sources.list.d/deb-src.list"
+sudo apt update -y
+$ sudo sed -i.back -e "s/^# deb-src/deb-src/g" /etc/apt/sources.list
+$ sudo apt-get update
+
+
+sudo sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && sudo sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
+
+Bash script that could be used to uncomment deb-src lines in sources.list :
+
+tempdir=$(mktemp -d)
+cd "$tempdir"
+source_file=/etc/apt/sources.list
+new_file=sources.list.new
+perl -pE 's/^#\s+(deb-src)/$1/' "$source_file" > "$new_file"
+sudo cp "$new_file" "$source_file"
+sudo apt-get update
+
+
+sudo perl -p -i -n -e "s/# *deb-src/deb-src/"  /etc/apt/sources.list
+
+(cd /etc/apt/; sudo tar cvf sources.list.tar sources.list sources.list.d);  for i in /etc/apt/sources.list /etc/apt/sources.list.d/*; do sudo perl -p -i -n -e "s/# *deb-src/deb-src/" $i; done
+
+This adds \s\? which is an optional white space (note the ? needs to be escaped).
+sed -i -- 's/#\s\?deb-src/deb-src/g' /etc/apt/sources.list
+
+
+
+sudo apt source xxx
+
+change src if needed
+
+sudo dpkg-buildpackage -b -uc -us
+
+
+==
+
+manaul download three files
+xxx.orig.tar.gz
+xxx.debian.tar.gz
+xxx.dsc
+
+then
+dpkg-source -x xxx.dsc
+
+change src if needed
+
+dpkg-buildpackage -rfakeroot -b -uc -us
+```
 
 ---
 # scheme2c
@@ -9811,6 +9918,11 @@ The following NEW packages will be installed:
   libxrender-dev:i386 uuid-dev:i386
 ```
 
+---
+# 
+```
+
+```
 
 ---
 # 
