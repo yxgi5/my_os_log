@@ -1949,7 +1949,7 @@ git_2.11.0-3+deb9u5.dsc
 sudo apt-get install dh-exec dh-apache2
 dpkg-source -x git_2.11.0-3+deb9u5.dsc
 cd git-2.11.0
-dpkg-buildpackage -rfakeroot -uc -b
+dpkg-buildpackage -rfakeroot -uc -b      # dpkg-buildpackage -rfakeroot -D -us -uc
 ```
 这里'-rfakeroot'指定命令使用fakeroot程序来模仿root权限(来实现所有者(ownership)目的)，'-uc'表示"Don't cryptographically sign the changelog"，'-b'代表只建立二进制包。
 

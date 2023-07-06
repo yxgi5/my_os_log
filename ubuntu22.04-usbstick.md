@@ -9781,23 +9781,34 @@ The following NEW packages will be installed:
 
 
 ---
-# 
+# csh tcsh
 ```
+sudo apt install csh
+sudo apt install tcsh
+```
+
+
+---
+# scheme2c
+```
+sudo apt install scheme2c libsigsegv-dev
 
 ```
 
 
 ---
-# 
+# lscc diamond
 ```
+sudo apt install libxft-dev:i386
 
-```
-
-
----
-# 
-```
-
+Suggested packages:
+  freetype2-doc:i386 libx11-doc:i386 libxcb-doc:i386
+The following NEW packages will be installed:
+  libbrotli-dev:i386 libexpat1-dev:i386 libfontconfig-dev:i386
+  libfontconfig1-dev:i386 libfreetype-dev:i386 libfreetype6-dev:i386
+  libpng-dev:i386 libpthread-stubs0-dev:i386 libx11-dev:i386 libxau-dev:i386
+  libxcb1-dev:i386 libxdmcp-dev:i386 libxft-dev:i386 libxft2:i386
+  libxrender-dev:i386 uuid-dev:i386
 ```
 
 
