@@ -9918,16 +9918,109 @@ The following NEW packages will be installed:
   libxrender-dev:i386 uuid-dev:i386
 ```
 
+/etc/udev/rules.d/10-lattice.rules
+```
+#lattice
+SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="1134", ATTRS{idProduct}=="8001", MODE="0666", GROUP="plugdev", SYMLINK+="lattice-%n"
+#FTDI
+#SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666", GROUP="plugdev", SYMLINK+="ftdi-%n"
+#SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", RUN+="/bin/sh -c 'basename %p >/sys/bus/usb/drivers/ftdi_sio/unbind'"
+#SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666", GROUP="plugdev", SYMLINK+="ftdi-%n"
+#SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+#SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666", OWNER="andy", GROUP="plugdev", SYMLINK+="ftdi-%n"
+#SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666", GROUP="plugdev", SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", RUN+="/bin/sh -c 'basename %p >/sys/bus/usb/drivers/ftdi_sio/unbind'"
+SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666", GROUP="plugdev", SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", RUN+="/bin/sh -c 'basename %p >/sys/bus/usb/drivers/ftdi_sio/unbind'"
+```
+
+```
+ls -l /dev/bus/usb/003/005
+ls -l /dev/bus/usb/*/*
+getfacl /dev/bus/usb/003/005
+```
+reload udev rules
+```
+sudo skill -HUP udevd
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+then，Plug in the USB cable.
+
+
+if unbind, no need rommod
+```
+$ lsmod | grep ftdi_sio
+ftdi_sio               65536  0
+usbserial              57344  1 ftdi_sio
+```
+
 ---
-# 
+# backup kylin， 安装ukylin之后，release信息会被修改，这样恢复
+
+$ cat /usr/lib/os-release.bk
+```
+PRETTY_NAME="Ubuntu 22.04.1 LTS"
+NAME="Ubuntu Kylin"
+VERSION_ID="22.04"
+VERSION="22.04.1 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+```
+$ sudo cat /etc/lsb-release.bk 
+```
+DISTRIB_ID=Kylin
+DISTRIB_RELEASE=V10
+DISTRIB_CODENAME=kylin
+DISTRIB_DESCRIPTION="Kylin V10 SP1"
+DISTRIB_KYLIN_RELEASE=V10
+DISTRIB_VERSION_TYPE=enterprise
+DISTRIB_VERSION_MODE=normal
 ```
 
+$ cat /usr/lib/os-release
 ```
+PRETTY_NAME="Ubuntu 22.04.1 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.1 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+```
+
+$ sudo cat /etc/lsb-release
+```
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Ubuntu 22.04.1 LTS"
+```
+
 
 ---
-# 
-```
+# 51-altera-usb-blaster.rules
 
+/etc/udev/rules.d/51-altera-usb-blaster.rules
+```
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
 ```
 
 
