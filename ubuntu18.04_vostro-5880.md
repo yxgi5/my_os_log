@@ -12222,11 +12222,87 @@ echo xxx | sudo tee xxxx
 echo xxx | sudo tee -a xxxx
 ```
 
----
+
+***
+# FT2232C
+```
+$ ls -l /dev/bus/usb/001/008
+crw-rw-rw-+ 1 root plugdev 189, 7 Jul 10 13:28 /dev/bus/usb/001/008
+```
+```
+$ getfacl /dev/bus/usb/001/008
+getfacl: Removing leading '/' from absolute path names
+# file: dev/bus/usb/001/008
+# owner: root
+# group: plugdev
+user::rw-
+user:andreas:rw-
+group::rw-
+mask::rw-
+other::rw-
+
+```
+```
+$ ls -l /dev/bus/usb/*/*
+crw-rw-r--  1 root root    189,   0 Jul 10 09:19 /dev/bus/usb/001/001
+crw-rw-r--  1 root root    189,   1 Jul 10 09:19 /dev/bus/usb/001/002
+crw-rw----+ 1 root plugdev 189,   2 Jul 10 09:19 /dev/bus/usb/001/003
+crw-rw-r--  1 root root    189,   3 Jul 10 09:19 /dev/bus/usb/001/004
+crw-rw-r--  1 root root    189,   4 Jul 10 09:19 /dev/bus/usb/001/005
+crw-rw-r--  1 root root    189,   6 Jul 10 09:19 /dev/bus/usb/001/007
+crw-rw-rw-+ 1 root plugdev 189,   7 Jul 10 13:28 /dev/bus/usb/001/008
+crw-rw-r--  1 root root    189,  10 Jul 10 13:04 /dev/bus/usb/001/011
+crw-rw-r--  1 root root    189,  12 Jul 10 13:09 /dev/bus/usb/001/013
+crw-rw-r--  1 root root    189, 128 Jul 10 09:19 /dev/bus/usb/002/001
+crw-rw-r--  1 root root    189, 129 Jul 10 09:19 /dev/bus/usb/002/002
+crw-rw-r--  1 root root    189, 130 Jul 10 09:19 /dev/bus/usb/002/003
+crw-rw-r--  1 root root    189, 131 Jul 10 09:19 /dev/bus/usb/002/004
+crw-rw-r--  1 root root    189, 132 Jul 10 09:23 /dev/bus/usb/002/005
+```
+
 ***
 #
 ```
 ```
-
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
 
 
