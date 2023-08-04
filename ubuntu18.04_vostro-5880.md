@@ -662,7 +662,7 @@ sudo apt install openocd
 
 foxitreader有两个, 一个是linux的原生版本,这个基本上大部分情况都胜任, 但是在制作书签时候很可能出错并导致文档破坏性后果, 所以, 编辑pdf咱还是用另一个就是wine的旧版foxitreader
 
-wine 的 foxitreader.desktop
+wine 的桌面用 foxitreader.desktop
 ```
 [Desktop Entry]
 Name=Foxit Reader Pro
@@ -673,6 +673,7 @@ StartupNotify=true
 Path=/home/andreas/.wine/dosdevices/c:/Program Files/Foxit Software/Foxit Reader
 Icon=6EB5_Foxit Reader.0
 ```
+
 右键关联并用wine版本打开的, 需要修改mime配置
 这里记录 ~/.local/share/applications/wine-extension-pdf.desktop
 ```
@@ -685,6 +686,20 @@ NoDisplay=true
 StartupNotify=true
 Icon=E361_Foxit Reader.0
 ```
+
+参考 试试看 fdf
+~/.local/share/applications/wine-extension-fdf.desktop
+```
+[Desktop Entry]
+Type=Application
+Name=福昕阅读器，最好的PDF阅读软件!
+MimeType=application/x-wine-extension-fdf;
+Exec=env WINEPREFIX="/home/andreas/.wine" wine start /ProgIDOpen FoxitReader.FDFDoc %f
+NoDisplay=true
+StartupNotify=true
+Icon=E361_Foxit Reader.0
+```
+
 
 * * *
 # 安装 retext 和 haroopad
