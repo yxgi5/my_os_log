@@ -1053,6 +1053,10 @@ usbstick地址码:
 
 `1439765824`
 
+```
+sudo systemctl enable anydesk.service
+sudo systemctl start anydesk.service
+```
 ---
 
 # check boot log
@@ -10025,12 +10029,29 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
 
 
 ---
-# 
+# lightdm
+想设置背景 /usr/share/backgrounds/warty-final-ubuntu.png 还没有成功
+
+sudo gedit /etc/lightdm/lightdm.conf
+```
+[SeatDefaults]
+user-session=ubuntu
+```
+上面没有必要，直接
+```
+lightdm --test-mode
+```
+```
+sudo rm /etc/lightdm/lightdm.conf
 ```
 
+sudo gedit lightdm.conf.d/91-arctica-greeter-mate.conf
 ```
+[SeatDefaults]
 
-
+# don't show a username / password login prompt for local login
+greeter-show-manual-login=false
+```
 ---
 # 
 ```
