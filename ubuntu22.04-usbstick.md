@@ -2830,16 +2830,21 @@ Suggested packages:
 # sunloginclient
 
 `$ sudo dpkg -i sunloginclient-11.0.0.36662-amd64.deb`
-garbage! not as good as anydesk.
 
 ```
 sudo dpkg -i SunloginClient_11.0.1.44968_amd64.deb
 /etc/systemd/system/multi-user.target.wants/runsunloginclient.service → /etc/systemd/system/runsunloginclient.service
 ```
+/usr/local/sunlogin/bin/sunloginclient  获取当前ID，PC端可以登录绑定ID
+```
+sudo systemctl enable runsunloginclient.service
+sudo systemctl start runsunloginclient.service
+```
+更换lightdm之后就可以了。
 
 ---
 
-# SunloginRemote
+# SunloginRemote [老旧]
 
 ```
 $ ./SunloginRemote 
@@ -10239,9 +10244,10 @@ greeter-show-manual-login=true
 
 
 ---
-# 
+# 设置 anydesk 无人值守
 ```
-
+echo password | sudo anydesk --set-password
+sudo systemctl restart anydesk.service 
 ```
 
 
