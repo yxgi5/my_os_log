@@ -10045,13 +10045,14 @@ lightdm --test-mode
 sudo rm /etc/lightdm/lightdm.conf
 ```
 
-sudo gedit lightdm.conf.d/91-arctica-greeter-mate.conf
+sudo gedit lightdm.conf.d/91-arctica-greeter-mate.conf 存档
 ```
 [SeatDefaults]
 
 # don't show a username / password login prompt for local login
 greeter-show-manual-login=false
 ```
+
 ---
 # 
 ```
