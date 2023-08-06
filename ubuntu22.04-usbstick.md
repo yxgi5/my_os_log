@@ -10285,6 +10285,8 @@ libva.so.2
 libvdpau.so.1
 libva.so.2
 
+也可以  STEAM_RUNTIME=0 steam 来报告 missing dependencies
+
 steam --reset
 sudo apt-get install policykit-desktop-privileges policykit-1-gnome
 sudo systemctl status polkit.service
@@ -10378,14 +10380,100 @@ lspci | grep -i VGA
 lspci -vs 00:02.0
 lspci -vs 00:02.0 | grep -i -E 'size|ram|memory|prefetchable'
 sudo lshw -C display
+sudo lshw -class display
 glxinfo | grep -E -i 'device|memory'
 glxinfo | grep -E -i 'device|memory|video'
 glxinfo -B
+sudo dmesg | grep drm
+LC_ALL=C lspci -v | grep -EA10 "3D|VGA" | grep 'prefetchable' 
 如果是n卡
 nvidia-smi
 ```
 
 ---
+# 修改软链接 change what a symlink points to after it is created
+```
+ln -sfn source_file_or_directory_name softlink_name
+```
+```
+ln -s /media/files/tb-prod/files files
+The -s option means to make a symbolic link. To update a link, either delete the link and create it as above, or use the -f option to ln as well. If you are linking to a folder, you should include the -n option:
+
+ln -sfn /a/new/path files
+This will replace the link with a new one pointing at /a/new/path.
+
+The -n option is necessary when linking to a different target folder to avoid creating a sub-folder inside that symbolic link and instead replace the symbolic link completely.
+```
+下面比较有没有-n选项的情况，特别是在 symlink 初始指向folder的情况
+```
+mkdir test test1
+ln -s test ttt
+到这创建一个文件夹的软链接指向test目录
+
+case1: symlink folder 内放一个 没有路径的 symlink
+ln -sf test1 ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> test/ 没有变化
+ll ttt/*    查看ttt目录下有啥
+显示 ttt/test1 -> test1 这symlink里没有路径，因为创建的时候target就没有给路径，那么这个 symlink 显然是无效的
+
+结论:那么没有加 -n 的 ln -sf [target] [folder-symlink] 就是在 symlink 指向的目录下，放一个[target]除去路径名称这样的软链接，如果[target]给了路径就指向带路径的名称。[target]可以是目录、文件，应该要给路径才能指向有效路径，看case2、case3、case4。
+
+case2: symlink folder 内放一个绝对路径的 symlink
+ln -sf $PWD/test ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> test/ 没有变化
+ll ttt/*
+显示 ttt/test -> /home/andy/Documents/tmp/test/  绝对路径的 symlink，有效
+
+case3: symlink folder 内放一个相对路径的 symlink
+ln -sf ../test ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> test/ 没有变化
+ll ttt/*
+显示 ttt/test -> ../test/                        相对路径的 symlink，有效
+
+
+case4: [target]是文件也一样
+touch file
+ln -sf ../file ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> test/ 没有变化
+ll ttt/*
+显示 ttt/file -> ../file
+
+
+case5: 修改[folder-symlink]指向另一个folder
+ln -sfn test1 ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> test1/  已经修改了symlink，比较case1的不同
+
+
+case6: 修改[folder-symlink]指向一个文件
+ln -sfn file ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> file 现在 symlink 指向了文件
+
+
+case7:
+如果要修改的[symlink]指向的是一个文件，那么ln -sf 和ln -sfn 效果是一样的，不过带-n选项更通用
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> file
+ln -sf test ttt
+ll ttt  == ls -l ttt 查看现在软链接指向哪里
+显示 ttt -> test/  symlink修改成功了
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
 # 
 ```
 
@@ -10404,6 +10492,15 @@ nvidia-smi
 ```
 
 ```
+
+
+---
+# 
+```
+
+```
+
+
 
 
 
