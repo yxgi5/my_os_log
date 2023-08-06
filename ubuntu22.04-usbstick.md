@@ -10252,11 +10252,138 @@ sudo systemctl restart anydesk.service
 
 
 ---
-# 
+# steam
+
+steam的最大意义在于提供各种库，基本上需要的库都可以在这找到
+
+Download deb from <https://store.steampowered.com/about/>
 ```
+$ sudo dpkg -i steam_latest.deb
+$ steam
+```
+```
+The packages cache seems to be out of date
+
+Press return to update the list of available packages: 
+==== AUTHENTICATING FOR org.freedesktop.policykit.exec ===
+Authentication is needed to run `/usr/bin/steamdeps' as the super user
+Authenticating as: andy,,, (andy)
+Password: 
+polkit-agent-helper-1: error response to PolicyKit daemon: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: No session for cookie
+==== AUTHENTICATION FAILED ===
+Error executing command as another user: Not authorized
+
+This incident has been reported.
+
+Press return to continue:
+
+同时运行 /usr/lib/x86_64-linux-gnu/polkit-mate/polkit-mate-authentication-agent-1 的话会提示
+libXtst.so.6
+libpipewire-0.3.so.0
+libxcb-res.so.0
+libva.so.2
+libvdpau.so.1
+libva.so.2
+
+steam --reset
+sudo apt-get install policykit-desktop-privileges policykit-1-gnome
+sudo systemctl status polkit.service
+/usr/lib/x86_64-linux-gnu/polkit-mate/polkit-mate-authentication-agent-1
+
+
+SOLUTION:
+
+Besides the polkit service, a polkit agent is needed. If you don't use a DE, then you will only have a tty polkit agent installed, and apparently it's broken. The error above is from the tty polkit agent.
+
+So what I needed to do is install another polkit agent and make sure it is running (best to autostart with the system).
+```
+
+ubuntu DE 正常显示
+```
+The packages cache seems to be out of date
+
+Press return to update the list of available packages: 
+...........................
+Package steam-libs-amd64:amd64 needs to be installed
+Package steam-libs-i386:i386 needs to be installed
+
+Steam needs to install these additional packages:
+libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 steam-libs-amd64:amd64 steam-libs-i386:i386
+
+Press return to proceed with the installation: 
+.................
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+libegl1 is already the newest version (1.4.0-1).
+libegl1 set to manually installed.
+libgl1 is already the newest version (1.4.0-1).
+libgl1 set to manually installed.
+libegl1:i386 is already the newest version (1.4.0-1).
+libegl1:i386 set to manually installed.
+libgl1:i386 is already the newest version (1.4.0-1).
+libc6 is already the newest version (2.35-0ubuntu3.1).
+libc6 set to manually installed.
+libc6:i386 is already the newest version (2.35-0ubuntu3.1).
+The following additional packages will be installed:
+  i965-va-driver:i386 intel-media-va-driver:i386 libdrm-intel1:i386
+  libegl-mesa0 libegl-mesa0:i386 libgbm-dev libgl1-amber-dri libglapi-mesa
+  libglapi-mesa:i386 libglx-mesa0 libglx-mesa0:i386 libigdgmm12:i386
+  libnm0:i386 libosmesa6 libosmesa6:i386 libpciaccess0:i386 libva-drm2:i386
+  libva-glx2 libva-glx2:i386 libva-x11-2:i386 libva2:i386 mesa-va-drivers
+  mesa-va-drivers:i386 va-driver-all:i386
+Suggested packages:
+  i965-va-driver-shaders:i386 nvidia-driver-libs nvidia-vulkan-icd
+  nvidia-driver-libs:i386 nvidia-vulkan-icd:i386
+Recommended packages:
+  libgl1-amber-dri:i386
+The following NEW packages will be installed:
+  i965-va-driver:i386 intel-media-va-driver:i386 libdrm-intel1:i386
+  libigdgmm12:i386 libnm0:i386 libpciaccess0:i386 libva-drm2:i386 libva-glx2
+  libva-glx2:i386 libva-x11-2:i386 libva2:i386 mesa-va-drivers:i386
+  steam-libs-amd64 steam-libs-i386:i386 va-driver-all:i386
+The following packages will be upgraded:
+  libegl-mesa0 libegl-mesa0:i386 libgbm-dev libgbm1 libgbm1:i386
+  libgl1-amber-dri libgl1-mesa-dri libgl1-mesa-dri:i386 libglapi-mesa
+  libglapi-mesa:i386 libglx-mesa0 libglx-mesa0:i386 libosmesa6 libosmesa6:i386
+  mesa-va-drivers
+15 upgraded, 15 newly installed, 0 to remove and 107 not upgraded.
+Need to get 38.5 MB of archives.
+After this operation, 37.5 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+
+```
+```
+这两个下载慢
+Get:1 https://repo.steampowered.com/steam stable/steam amd64 steam-libs-amd64 amd64 1:1.0.0.78 [14.2 kB]
+Get:2 https://repo.steampowered.com/steam stable/steam i386 steam-libs-i386 i386 1:1.0.0.78 [14.2 kB]
 
 ```
 
+```
+$ sudo apt  -c ~/apt_proxy_conf install libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 steam-libs-amd64:amd64 steam-libs-i386:i386
+```
+已经安装的app可以跳过steam来调用
+```
+比较旧版本steam的app在 ~/.steam/steam/steamapps
+最新版本steam的app在 ~/.local/share/Steam/steamapps/common
+比如 Universe Sandbox 2
+运行
+$ ./Universe\ Sandbox.x86_6
+```
+集成显卡显存过小
+```
+lspci 找到vga什么的
+lspci | grep -i VGA
+lspci -vs 00:02.0
+lspci -vs 00:02.0 | grep -i -E 'size|ram|memory|prefetchable'
+sudo lshw -C display
+glxinfo | grep -E -i 'device|memory'
+glxinfo | grep -E -i 'device|memory|video'
+glxinfo -B
+如果是n卡
+nvidia-smi
+```
 
 ---
 # 
