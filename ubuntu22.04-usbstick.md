@@ -10545,7 +10545,11 @@ $ sudo apt remove gnome-themes-standard lightdm-gtk-greeter
 [SeatDefaults]
 greeter-setup-script=xhost +
 ```
-
+备份(/INSTALL/lightdm/)后删掉
+```
+sudo rm /etc/lightdm/lightdm.conf.d/91-arctica-greeter-mate.conf
+sudo rm /etc/lightdm/lightdm-gtk-greeter.conf
+```
 ## gdm3登陆器有关设置[未验证]
 
 /etc/gdm3/Init/Default添加一行 xhost + 到头部
