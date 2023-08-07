@@ -3948,7 +3948,7 @@ http://127.0.0.1:30080
 ## sunloginremote 1.6
 只能用来访问远程桌面和绑定本机，绑定机器免密
 
-安装更换登陆器为lightdm
+## 安装更换登陆器为lightdm
 ```
 sudo apt install lightdm 不要安装 lightdm-gtk-greeter
 ```
@@ -3957,6 +3957,14 @@ sudo apt install lightdm 不要安装 lightdm-gtk-greeter
 [SeatDefaults]
 greeter-setup-script=xhost +
 ```
+
+然后启用lightdm登陆器
+```
+sudo dpkg-reconfigure lightdm
+```
+
+## gdm3登陆器有关设置[未验证]
+
 /etc/gdm3/Init/Default添加一行 xhost + 到头部
 ```
 #!/bin/sh
@@ -3970,12 +3978,7 @@ OLD_IFS=$IFS
 xhost +
 ......
 ```
-然后启用lightdm登陆器
-```
-sudo dpkg-reconfigure lightdm
-```
 
-gdm3登陆器有关设置[未验证]
 /etc/gdm3/custom.conf
 ```
 # GDM configuration storage

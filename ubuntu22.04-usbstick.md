@@ -3276,7 +3276,7 @@ $ xrandr
 # lightdm
 
 ```
-$ sudo apt install lightdm lightdm-gtk-greeter
+$ sudo apt install lightdm lightdm-gtk-greeter  [最好不安装 lightdm-gtk-greeter]
 The following additional packages will be installed:
   gnome-themes-standard liblightdm-gobject-1-0
 Suggested packages:
@@ -3375,7 +3375,7 @@ $ systemctl --failed
 $ sudo systemctl disable casper-md5check.service
 ```
 
-## lightdm 配置
+## lightdm 配置 for mint
 
 ```
 sudo gedit /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
@@ -10065,7 +10065,76 @@ lightdm --test-mode
 ```
 ok, user-background必须设置false才换成功背景图
 
-
+/etc/lightdm/lightdm-gtk-greeter.conf
+```
+# LightDM GTK+ Configuration
+# Available configuration options listed below.
+#
+# Appearance:
+#  theme-name = GTK+ theme to use
+#  icon-theme-name = Icon theme to use
+#  cursor-theme-name = Cursor theme to use
+#  cursor-theme-size = Cursor size to use
+#  background = Background file to use, either an image path or a color (e.g. #772953)
+#  user-background = false|true ("true" by default)  Display user background (if available)
+#  transition-duration = Length of time (in milliseconds) to transition between background images ("500" by default)
+#  transition-type = ease-in-out|linear|none  ("ease-in-out" by default)
+#
+# Fonts:
+#  font-name = Font to use
+#  xft-antialias = false|true  Whether to antialias Xft fonts
+#  xft-dpi = Resolution for Xft in dots per inch (e.g. 96)
+#  xft-hintstyle = none|slight|medium|hintfull  What degree of hinting to use
+#  xft-rgba = none|rgb|bgr|vrgb|vbgr  Type of subpixel antialiasing
+#
+# Login window:
+#  active-monitor = Monitor to display greeter window (name or number). Use #cursor value to display greeter at monitor with cursor. Can be a semicolon separated list
+#  position = x y ("50% 50%" by default)  Login window position
+#  default-user-image = Image used as default user icon, path or #icon-name
+#  hide-user-image = false|true ("false" by default)
+#
+# Panel:
+#  panel-position = top|bottom ("top" by default)
+#  clock-format = strftime-format string, e.g. %H:%M
+#  indicators = semi-colon ";" separated list of allowed indicator modules. Built-in indicators include "~a11y", "~language", "~session", "~power", "~clock", "~host", "~spacer". Unity indicators can be represented by short name (e.g. "sound", "power"), service file name, or absolute path
+#
+# Accessibility:
+#  a11y-states = states of accessibility features: "name" - save state on exit, "-name" - disabled at start (default value for unlisted), "+name" - enabled at start. Allowed names: contrast, font, keyboard, reader.
+#  keyboard = command to launch on-screen keyboard (e.g. "onboard")
+#  keyboard-position = x y[;width height] ("50%,center -0;50% 25%" by default)  Works only for "onboard"
+#  reader = command to launch screen reader (e.g. "orca")
+#  at-spi-enabled = false|true ("true" by default) Enables accessibility at-spi-command if the greeter is built with it enabled
+#
+# Security:
+#  allow-debugging = false|true ("false" by default)
+#  screensaver-timeout = Timeout (in seconds) until the screen blanks when the greeter is called as lockscreen
+#
+# Template for per-monitor configuration:
+#  [monitor: name]
+#  background = overrides default value
+#  user-background = overrides default value
+#  laptop = false|true ("false" by default) Marks monitor as laptop display
+#  transition-duration = overrides default value
+#
+[greeter]
+ackground=/usr/share/backgrounds/warty-final-ubuntu.png
+user-background=false
+#theme-name=
+#icon-theme-name=
+#font-name=
+#xft-antialias=
+#xft-dpi=
+#xft-hintstyle=
+#xft-rgba=
+#indicators=
+#clock-format=
+#keyboard=
+#reader=
+#position=
+#screensaver-timeout=
+activate-numlock=true
+show-language-selector=true
+```
 
 
 sudo gedit lightdm.conf.d/91-arctica-greeter-mate.conf 存档
@@ -10464,9 +10533,76 @@ ll ttt  == ls -l ttt 查看现在软链接指向哪里
 
 
 ---
-# 
+# lightdm for sunlogin
+
+实际上安装了lightdm-gtk-greeter会导致显示很不爽，丢失默认配置
+```
+$ sudo apt remove gnome-themes-standard lightdm-gtk-greeter
 ```
 
+/etc/lightdm/lightdm.conf
+```
+[SeatDefaults]
+greeter-setup-script=xhost +
+```
+
+## gdm3登陆器有关设置[未验证]
+
+/etc/gdm3/Init/Default添加一行 xhost + 到头部
+```
+#!/bin/sh
+# Stolen from the debian kdm setup, aren't I sneaky
+# Plus a lot of fun stuff added
+#  -George
+
+PATH="/usr/bin:$PATH"
+OLD_IFS=$IFS
+
+xhost +
+......
+```
+
+/etc/gdm3/custom.conf
+```
+# GDM configuration storage
+#
+# See /usr/share/gdm/gdm.schemas for a list of available options.
+
+[daemon]
+# Uncoment the line below to force the login screen to use Xorg
+WaylandEnable=false
+
+# Enabling automatic login
+#  AutomaticLoginEnable = true
+#  AutomaticLogin = user1
+
+# Enabling timed login
+#  TimedLoginEnable = true
+#  TimedLogin = user1
+#  TimedLoginDelay = 10
+
+[security]
+DisallowTCP=false
+
+[xdmcp]
+Enable=true
+DisplaysPerHost=10 
+
+[chooser]
+
+[debug]
+# Uncomment the line below to turn on debugging
+# More verbose logs
+# Additionally lets the X server dump core if it crashes
+#Enable=true
+```
+
+## 配置 ssh
+```
+/etc/ssh/ssh_config
+ForwardX11 yes
+ForwardX11Trusted yes
+# systemctl restart sshd
 ```
 
 
