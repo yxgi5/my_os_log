@@ -3061,7 +3061,7 @@ sudo apt install p7zip convmv
 * * *
 # 安装 配置 lightdm
 ```
-sudo apt install lightdm lightdm-gtk-greeter
+sudo apt install lightdm 不要安装 lightdm-gtk-greeter
 ```
 `$ cat /etc/lightdm/lightdm.conf`
 ```
@@ -3085,7 +3085,7 @@ WaylandEnable=false
 
 [daemon]
 # Uncoment the line below to force the login screen to use Xorg
-#WaylandEnable=false
+WaylandEnable=false
 
 # Enabling automatic login
 #  AutomaticLoginEnable = true
@@ -3610,7 +3610,7 @@ sudo apt-get purge gtk3-nocsd
 
 
 * * *
-# anydesk
+# anydesk [abort]
 安装在/opt/anydesk-6.1.1
 
 建立服务配置
@@ -3892,7 +3892,10 @@ $ su
 
 
 * * *
-# 安装 sunloginremote
+# 安装 sunlogin
+
+## sunloginremote 5
+没啥用，基本上只能用来访问远程桌面和绑定本机，绑定机器免密
 ```
 sudo dpkg -i sunloginremote-5.1.0.36963-amd64.deb
 /usr/local/sunloginremote/bin/sunloginremote
@@ -3906,12 +3909,115 @@ cd /usr/local/sunloginremote/bin/
 ./sunloginremote
 ```
 `sudo chmod +x sunloginremote`
+
+
+
+## sunloginclient 11 (与 sunloginclient 9 冲突)
+
+`$ sudo dpkg -i sunloginclient-11.0.0.36662-amd64.deb`
+
 ```
-http://127.0.0.1:30080
-599801458
-4397
+sudo dpkg -i SunloginClient_11.0.1.44968_amd64.deb
+/etc/systemd/system/multi-user.target.wants/runsunloginclient.service → /etc/systemd/system/runsunloginclient.service
+```
+/usr/local/sunlogin/bin/sunloginclient  获取当前ID，PC端可以登录绑定ID
+```
+sudo systemctl enable runsunloginclient.service
+sudo systemctl start runsunloginclient.service
+```
+更换lightdm之后就可以了。
+```
+dpkg -S /usr/local/sunlogin/bin/oray_rundaemon
+sunloginclient: /usr/local/sunlogin/bin/oray_rundaemo
+
+apt-cache showpkg sunloginclient
+11.0.1.44968
 ```
 
+## sunloginclient 9
+```
+$ cat /etc/orayconfig.conf
+fastcode=k122163255
+password=0975
+```
+```
+http://127.0.0.1:30080
+122163255
+0975
+```
+## sunloginremote 1.6
+只能用来访问远程桌面和绑定本机，绑定机器免密
+
+安装更换登陆器为lightdm
+```
+sudo apt install lightdm 不要安装 lightdm-gtk-greeter
+```
+`$ cat /etc/lightdm/lightdm.conf`
+```
+[SeatDefaults]
+greeter-setup-script=xhost +
+```
+/etc/gdm3/Init/Default添加一行 xhost + 到头部
+```
+#!/bin/sh
+# Stolen from the debian kdm setup, aren't I sneaky
+# Plus a lot of fun stuff added
+#  -George
+
+PATH="/usr/bin:$PATH"
+OLD_IFS=$IFS
+
+xhost +
+......
+```
+然后启用lightdm登陆器
+```
+sudo dpkg-reconfigure lightdm
+```
+
+gdm3登陆器有关设置[未验证]
+/etc/gdm3/custom.conf
+```
+# GDM configuration storage
+#
+# See /usr/share/gdm/gdm.schemas for a list of available options.
+
+[daemon]
+# Uncoment the line below to force the login screen to use Xorg
+WaylandEnable=false
+
+# Enabling automatic login
+#  AutomaticLoginEnable = true
+#  AutomaticLogin = user1
+
+# Enabling timed login
+#  TimedLoginEnable = true
+#  TimedLogin = user1
+#  TimedLoginDelay = 10
+
+[security]
+DisallowTCP=false
+
+[xdmcp]
+Enable=true
+DisplaysPerHost=10 
+
+[chooser]
+
+[debug]
+# Uncomment the line below to turn on debugging
+# More verbose logs
+# Additionally lets the X server dump core if it crashes
+#Enable=true
+```
+
+## 配置 ssh
+```
+/etc/ssh/ssh_config
+ForwardX11 yes
+ForwardX11Trusted yes
+# systemctl restart sshd
+```
 
 * * *
 # 按键精灵 xdotool
@@ -12278,11 +12384,35 @@ crw-rw-r--  1 root root    189, 132 Jul 10 09:23 /dev/bus/usb/002/005
 ***
 #
 ```
+$ sudo apt install lightdm lightdm-gtk-greeter
+/var/log/apt/*.log
+
+实际上安装了lightdm-gtk-greeter会导致显示很不爽，丢失默认配置
+$ sudo apt remove gnome-themes-standard lightdm-gtk-greeter
+
 ```
+
+
+
 ***
-#
+# anydesk
+安装deb文件
+附加安装 libgtkglext1
+添加服务
+/etc/systemd/system/multi-user.target.wants/anydesk.service → /etc/systemd/system/anydesk.service.
+usbstick地址码:
+`711 296 904`
+
 ```
+sudo systemctl enable anydesk.service
+sudo systemctl start anydesk.service
 ```
+设置 anydesk 无人值守
+```
+echo "password" | sudo anydesk --set-password
+sudo systemctl restart anydesk.service 
+```
+
 ***
 #
 ```

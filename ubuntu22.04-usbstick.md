@@ -1049,7 +1049,7 @@ run 'dpkg-reconfigure ttf-mscorefonts-installer' to perform the installation aga
 添加服务
 /etc/systemd/system/multi-user.target.wants/anydesk.service → /etc/systemd/system/anydesk.service.
 usbstick地址码:
-`286168448`
+`286168448`[abort]
 
 `1439765824`
 
@@ -1057,6 +1057,12 @@ usbstick地址码:
 sudo systemctl enable anydesk.service
 sudo systemctl start anydesk.service
 ```
+设置 anydesk 无人值守
+```
+echo "password" | sudo anydesk --set-password
+sudo systemctl restart anydesk.service 
+```
+
 ---
 
 # check boot log
@@ -2844,7 +2850,7 @@ sudo systemctl start runsunloginclient.service
 
 ---
 
-# SunloginRemote [老旧]
+# SunloginRemote 1.6 [老旧]
 
 ```
 $ ./SunloginRemote 
@@ -10241,15 +10247,6 @@ greeter-show-manual-login=true
 #height=768
 #depth=8
 ```
-
-
----
-# 设置 anydesk 无人值守
-```
-echo password | sudo anydesk --set-password
-sudo systemctl restart anydesk.service 
-```
-
 
 ---
 # steam
