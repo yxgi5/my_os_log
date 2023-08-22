@@ -14718,6 +14718,45 @@ yay -Rdd zoom
 yay -S boost boost-libs lib32-boost lib32-boost-libs
 ```
 
+***
+# update20230210
+```
+yay -Rdd lib32-db
+$ yay
+:: Synchronizing package databases...
+ core is up to date
+ extra is up to date
+ community is up to date
+ multilib is up to date
+ archlinuxcn is up to date
+:: Starting full system upgrade...
+:: Replace i3-gaps with community/i3-wm? [Y/n] n
+:: Replace pandoc with community/pandoc-cli? [Y/n] n
+:: Replace python-jupyter_client with community/python-jupyter-client? [Y/n] n
+:: Replace python-jupyter_core with community/python-jupyter-core? [Y/n] n
+resolving dependencies...
+looking for conflicting packages...
+:: python-jupyter-client and python-jupyter_client are in conflict. Remove python-jupyter_client? [y/N] y
+warning: dependency cycle detected:
+warning: mesa will be installed before its libglvnd dependency
+warning: dependency cycle detected:
+warning: nvidia-utils will be installed before its libglvnd dependency
+...
+Total Download Size:    8187.16 MiB
+Total Installed Size:  32170.93 MiB
+Net Upgrade Size:       2110.41 MiB
 
+warning: /etc/shells installed as /etc/shells.pacnew
+warning: /etc/skel/.bashrc installed as /etc/skel/.bashrc.pacnew
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+If you use GDM on Wayland, you might have to run systemctl enable --now nvidia-resume.service
+warning: /etc/pacman.d/mirrorlist installed as /etc/pacman.d/mirrorlist.pacnew
+==> WARNING: Possibly missing firmware for module: ast
+==> WARNING: Possibly missing firmware for module: qed
+==> WARNING: Possibly missing firmware for module: qla2xxx
+==> WARNING: Possibly missing firmware for module: qla1280
+==> WARNING: Possibly missing firmware for module: bfa
+
+```
 
 
