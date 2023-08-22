@@ -11078,6 +11078,13 @@ pip3.6  uninstall retext
 /home/andy/.local/lib/python3.6/
 
 ```
+  
+## Debian Jessie Stable等发行版中，您可以执行以下操作：
+```
+sudo apt-get install -y qt4-qmake qt4-dev-tools
+sudo update-alternatives --install "/usr/bin/qmake" "qmake" "/usr/bin/qmake-qt4" 40
+sudo update-alternatives --config qmake
+```
 
 ## 更安全的办法,使用qtchooser
 ```
@@ -13367,7 +13374,7 @@ mount | grep efi 显示
 sudo fdisk -l
 sudo grub-install /dev/sdx
 磁盘mbr分区才可以BIOS引导+EFI引导
-?sudo grub-install --root-directory=/boot/ /dev/sdx
+?sudo grub-install --root-directory=/boot/ /dev/sdx   # ref: sudo grub-install --root-directory=/mnt/sda5 /dev/sda
 sudo grub-install --boot-directory=/boot/ /dev/sdx
 sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
 sudo grub-install /dev/sdx --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot --removable
@@ -15344,6 +15351,93 @@ journalctl -xf
 ```
 
 
+
+---
+***
+# Change the number of the partition from sdx1 to sdx2
+保存分区表 backup the disk partition table
+```
+# sfdisk --dump /dev/sdx > sdx.bkp
+# cp sdx.bkp sdx.new 
+```
+编辑分区表
+
+from
+```
+# partition table of /dev/sdx
+unit: sectors
+
+/dev/sdx1 : start=  1026048, size=975747120, Id=83
+/dev/sdx2 : start=     2048, size=   204800, Id=83
+/dev/sdx3 : start=   206848, size=   819200, Id= b
+/dev/sdx4 : start=        0, size=        0, Id= 0
+```
+to
+```
+# partition table of /dev/sdx
+unit: sectors
+
+/dev/sdx1 : start=     2048, size=   204800, Id=83
+/dev/sdx2 : start=   206848, size=   819200, Id= b
+/dev/sdx3 : start=  1026048, size=975747120, Id=83
+/dev/sdx4 : start=        0, size=        0, Id= 0
+```
+throw it back to the disk partition table (carefull)
+```
+# sfdisk /dev/sdx < sdx.new
+```
+If the last command does not work, change it for
+```
+# sfdisk --no-reread --force /dev/sdx < sdx.new
+```
+
+
+---
+# usb-stick添加efi分区，调整分区大小和分区表后，产生efi引导
+```
+$ cd /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be
+$ su
+# mount -o bind /dev dev
+# chroot .
+# mount -t proc proc /proc
+# mount -t sysfs sysfs /sys
+# mount -t devpts devpts /dev/pts
+# mkdir -p /run/lock
+# mount -t tmpfs tmpfs /run/lock
+上面可以用 arch-chroot .
+
+# mount /dev/sdx3 /home
+# mount /dev/sdx4 /opt
+# mount -t vfat /dev/sdx1 /boot/efi/
+
+# apt install grub-efi-amd64-bin grub-efi-amd64-signed
+The following additional packages will be installed:
+  efibootmgr mokutil shim-helpers-amd64-signed shim-signed shim-signed-common shim-unsigned
+
+# grub-install --target=x86_64-efi /dev/sde --efi-directory=/boot/efi/ --boot-directory=/boot
+
+# grub-install --target=x86_64-efi /dev/sde --efi-directory=/boot/efi/ --boot-directory=/boot --removable
+
+// # grub-mkconfig -o /boot/grub/grub.cfg # 如果需要
+
+# efibootmgr -v
+
+# efibootmgr -c -d /dev/sdb -p 1 -w -L debian -l '\EFI\debian\grubx64.efi'
+or
+# efibootmgr -c -d /dev/sdb -p 1 -w -L debian -l '\EFI\debian\shimx64.efi'
+
+# umount /dev/sdx3
+# umount /dev/sdx2
+# umount /run/lock
+# rmdir /run/lock
+# umount /dev/pts
+# umount /sys
+# umount /proc
+# exit
+# umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/var/lib/os-prober/mount
+# umount /media/andy/3702fe4a-d5cc-435a-8875-1b5ac9a9a7be/dev
+
+```
 
 
 

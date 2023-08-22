@@ -614,7 +614,34 @@ VBoxManage extpack install [--replace] <tarball> |
 ```
 
 
+#### Solve "Cannot change group vboxusers for device /dev/vboxdrv" Virtualbox Error
+<https://ostechnix.com/solve-cannot-change-group-vboxusers-for-device-dev-vboxdrv-virtualbox-error/>
 
+To fix this issue, first create vboxusers group using command:
+```
+$ sudo groupadd vboxusers
+```
+Then add the current user to the above group:
+```
+$ sudo usermod -a -G vboxusers andreas
+```
+Check if the user is added to the group:
+```
+$ grep vboxusers /etc/group
+vboxusers:x:1002:andreas
+```
+Finally, restart the virtualbox kernel module using command:
+```
+$ sudo /sbin/vboxconfig
+```
+or
+```
+$ sudo modprobe vboxdrv
+```
+or
+```
+$ sudo /sbin/rcvboxdrv setup
+```
 
 
 * * *
@@ -635,7 +662,7 @@ sudo apt install openocd
 
 foxitreader有两个, 一个是linux的原生版本,这个基本上大部分情况都胜任, 但是在制作书签时候很可能出错并导致文档破坏性后果, 所以, 编辑pdf咱还是用另一个就是wine的旧版foxitreader
 
-wine 的 foxitreader.desktop
+wine 的桌面用 foxitreader.desktop
 ```
 [Desktop Entry]
 Name=Foxit Reader Pro
@@ -646,6 +673,7 @@ StartupNotify=true
 Path=/home/andreas/.wine/dosdevices/c:/Program Files/Foxit Software/Foxit Reader
 Icon=6EB5_Foxit Reader.0
 ```
+
 右键关联并用wine版本打开的, 需要修改mime配置
 这里记录 ~/.local/share/applications/wine-extension-pdf.desktop
 ```
@@ -658,6 +686,20 @@ NoDisplay=true
 StartupNotify=true
 Icon=E361_Foxit Reader.0
 ```
+
+参考 试试看 fdf
+~/.local/share/applications/wine-extension-fdf.desktop
+```
+[Desktop Entry]
+Type=Application
+Name=福昕阅读器，最好的PDF阅读软件!
+MimeType=application/x-wine-extension-fdf;
+Exec=env WINEPREFIX="/home/andreas/.wine" wine start /ProgIDOpen FoxitReader.FDFDoc %f
+NoDisplay=true
+StartupNotify=true
+Icon=E361_Foxit Reader.0
+```
+
 
 * * *
 # 安装 retext 和 haroopad
@@ -882,10 +924,12 @@ sudo gedit /etc/lsb-release
 
 ```
 sudo apt install blt 
-sudo apt install lib32asan4 lib32atomic1 lib32cilkrts5 lib32gcc-7-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx2 lib32quadmath0 lib32stdc++6 lib32ubsan0 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32asan4 libx32atomic1 libx32cilkrts5 libx32gcc-7-dev libx32gcc1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 libx32ubsan0 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
-sudo apt install gcc-7-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev
 
-sudo apt install gcc-multilib
+sudo apt install lib32asan4 lib32atomic1 lib32cilkrts5 lib32gcc-7-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx2 lib32quadmath0 lib32stdc++6 lib32ubsan0 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32asan4 libx32atomic1 libx32cilkrts5 libx32gcc-7-dev libx32gcc1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 libx32ubsan0 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+
+sudo apt install gcc-7-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev tcl
+
+sudo apt install gcc-multilib libapr1 libapr1-dev libaprutil1 net-tools libc6-dev-i386 fonts-liberation graphviz libann0 libcdt5 libcgraph6 libgts-0.7-5 libgts-bin libgvc6 libgvpr2 liblab-gamut1 libpathplan4
 ```
 冲突删除了一些包，安装完petalinux再换回来
 ```
@@ -896,7 +940,8 @@ vpi1-cross-aarch64-l4t是nvidia的sdk包里的
 vitis后续
 ```
 sudo /opt/Xilinx/.xinstall/Vitis_2020.1/scripts/installAIeDepLibs.sh
-sudo /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/install_drivers
+cd /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/
+sudo ./install_drivers
 ```
 这些包还是留着，不要auto remove了
 ```
@@ -1919,7 +1964,7 @@ git_2.11.0-3+deb9u5.dsc
 sudo apt-get install dh-exec dh-apache2
 dpkg-source -x git_2.11.0-3+deb9u5.dsc
 cd git-2.11.0
-dpkg-buildpackage -rfakeroot -uc -b
+dpkg-buildpackage -rfakeroot -uc -b      # dpkg-buildpackage -rfakeroot -D -us -uc
 ```
 这里'-rfakeroot'指定命令使用fakeroot程序来模仿root权限(来实现所有者(ownership)目的)，'-uc'表示"Don't cryptographically sign the changelog"，'-b'代表只建立二进制包。
 
@@ -3016,7 +3061,7 @@ sudo apt install p7zip convmv
 * * *
 # 安装 配置 lightdm
 ```
-sudo apt install lightdm lightdm-gtk-greeter
+sudo apt install lightdm 不要安装 lightdm-gtk-greeter
 ```
 `$ cat /etc/lightdm/lightdm.conf`
 ```
@@ -3040,7 +3085,7 @@ WaylandEnable=false
 
 [daemon]
 # Uncoment the line below to force the login screen to use Xorg
-#WaylandEnable=false
+WaylandEnable=false
 
 # Enabling automatic login
 #  AutomaticLoginEnable = true
@@ -3503,7 +3548,7 @@ $ sudo apt-get install \
 Add Docker’s official GPG key:
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 $ echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/ \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
@@ -3513,6 +3558,13 @@ $ sudo docker run hello-world
 $ sudo usermod -aG docker $USER
 $ newgrp docker
 $ docker run hello-world
+```
+## docker 源加速
+/etc/docker/daemon.json，加上如下的键值:
+```
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
 ```
 ## 在dock安装ubuntu1604 [原来是为了在arch执行xsct, 不过看起来对ubunut多版本还是个很好的解决方案]
 ```
@@ -3558,7 +3610,7 @@ sudo apt-get purge gtk3-nocsd
 
 
 * * *
-# anydesk
+# anydesk [abort]
 安装在/opt/anydesk-6.1.1
 
 建立服务配置
@@ -3840,7 +3892,10 @@ $ su
 
 
 * * *
-# 安装 sunloginremote
+# 安装 sunlogin
+
+## sunloginremote 5
+没啥用，基本上只能用来访问远程桌面和绑定本机，绑定机器免密
 ```
 sudo dpkg -i sunloginremote-5.1.0.36963-amd64.deb
 /usr/local/sunloginremote/bin/sunloginremote
@@ -3854,11 +3909,118 @@ cd /usr/local/sunloginremote/bin/
 ./sunloginremote
 ```
 `sudo chmod +x sunloginremote`
+
+
+
+## sunloginclient 11 (与 sunloginclient 9 冲突)
+
+`$ sudo dpkg -i sunloginclient-11.0.0.36662-amd64.deb`
+
 ```
-599801458
-4397
+sudo dpkg -i SunloginClient_11.0.1.44968_amd64.deb
+/etc/systemd/system/multi-user.target.wants/runsunloginclient.service → /etc/systemd/system/runsunloginclient.service
+```
+/usr/local/sunlogin/bin/sunloginclient  获取当前ID，PC端可以登录绑定ID
+```
+sudo systemctl enable runsunloginclient.service
+sudo systemctl start runsunloginclient.service
+```
+更换lightdm之后就可以了。
+```
+dpkg -S /usr/local/sunlogin/bin/oray_rundaemon
+sunloginclient: /usr/local/sunlogin/bin/oray_rundaemo
+
+apt-cache showpkg sunloginclient
+11.0.1.44968
 ```
 
+## sunloginclient 9
+```
+$ cat /etc/orayconfig.conf
+fastcode=k122163255
+password=0975
+```
+```
+http://127.0.0.1:30080
+122163255
+0975
+```
+## sunloginremote 1.6
+只能用来访问远程桌面和绑定本机，绑定机器免密
+
+## 安装更换登陆器为lightdm
+```
+sudo apt install lightdm 不要安装 lightdm-gtk-greeter
+```
+`$ cat /etc/lightdm/lightdm.conf`
+```
+[SeatDefaults]
+greeter-setup-script=xhost +
+```
+
+然后启用lightdm登陆器
+```
+sudo dpkg-reconfigure lightdm
+```
+
+## gdm3登陆器有关设置[未验证]
+
+/etc/gdm3/Init/Default添加一行 xhost + 到头部
+```
+#!/bin/sh
+# Stolen from the debian kdm setup, aren't I sneaky
+# Plus a lot of fun stuff added
+#  -George
+
+PATH="/usr/bin:$PATH"
+OLD_IFS=$IFS
+
+xhost +
+......
+```
+
+/etc/gdm3/custom.conf
+```
+# GDM configuration storage
+#
+# See /usr/share/gdm/gdm.schemas for a list of available options.
+
+[daemon]
+# Uncoment the line below to force the login screen to use Xorg
+WaylandEnable=false
+
+# Enabling automatic login
+#  AutomaticLoginEnable = true
+#  AutomaticLogin = user1
+
+# Enabling timed login
+#  TimedLoginEnable = true
+#  TimedLogin = user1
+#  TimedLoginDelay = 10
+
+[security]
+DisallowTCP=false
+
+[xdmcp]
+Enable=true
+DisplaysPerHost=10 
+
+[chooser]
+
+[debug]
+# Uncomment the line below to turn on debugging
+# More verbose logs
+# Additionally lets the X server dump core if it crashes
+#Enable=true
+```
+
+## 配置 ssh
+```
+/etc/ssh/ssh_config
+ForwardX11 yes
+ForwardX11Trusted yes
+# systemctl restart sshd
+```
 
 * * *
 # 按键精灵 xdotool
@@ -3892,7 +4054,7 @@ sudo -H pip3 install --no-deps PyQt5-stubs==5.15.2.0 -i https://mirrors.163.com/
 
 
 * * *
-# apt临时加速
+# apt加速
 apt临时加速(shadowsocks通过privoxy把socks5映射为http/https..,默认privoxy的端口8118)
 ```
 sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8118/" upgrade
@@ -5293,7 +5455,7 @@ sudo apt-get install python3-pyqt5.qtopengl
 sudo apt-get install python3-dbus
 sudo apt-get install python3-dbus.mainloop.pyqt5
 ```
-3.6的也可以pip比较旧版本的
+3.6的也可以pip比较旧版本的(不建议)
 ```
 sudo -H pip3.6 install pyopengl feeluown fuo-local fuo-netease fuo-qqmusic -i https://mirrors.163.com/pypi/simple
 
@@ -5318,7 +5480,9 @@ pip3 -V
 ```
 安装feeluown及插件, pyqt修复fcitx
 ```
-sudo -H pip3.8 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
+//sudo -H pip3.8 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
+sudo -H pip3.8 install feeluown==3.8.3 fuo-local fuo-netease fuo-qqmusic fuo-kuwo --upgrade --proxy=http://127.0.0.1:8118
+
 sudo cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so /usr/local/lib/python3.8/dist-packages/PyQt5/Qt5/plugins/platforminputcontexts
 ```
 看来以后通过pip安装了pyqt就要把libfcitxplatforminputcontextplugin.so这个插件复制进来
@@ -5415,24 +5579,26 @@ apt-cache showsrc linux
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-<release codename>.git
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git ## 用这个命令吧
 
-sudo apt-get build-dep linux linux-image-$(uname -r)
+//sudo apt build-dep linux linux-image-generic
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r) # sudo apt-get build-dep linux linux-image-$(uname -r)
 sudo apt-get install libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf
 sudo apt-get install git
+打开源
 deb-src http://archive.ubuntu.com/ubuntu bionic main
 deb-src http://archive.ubuntu.com/ubuntu bionic-updates main
+
 apt-get source linux-image-unsigned-$(uname -r)
-
-
-
+或者
 git clone git://kernel.ubuntu.com/ubuntu/ubuntu-bionic.git
 
-
+Modifying the configuration:
 chmod a+x debian/rules
 chmod a+x debian/scripts/*
 chmod a+x debian/scripts/misc/*
 LANG=C fakeroot debian/rules clean
 LANG=C fakeroot debian/rules editconfigs # you need to go through each (Y, Exit, Y, Exit..) or get a complaint about config later
 
+Building the kernel:
 LANG=C fakeroot debian/rules clean
 # quicker build:
 LANG=C fakeroot debian/rules binary-headers binary-generic binary-perarch
@@ -5802,12 +5968,24 @@ sudo update-alternatives --config gnome-www-browser
 * * *
 # opencv and gstreamer
 ```
-sudo apt install libopencv-dev opencv-data opencv-doc python-opencv
+sudo apt install libopencv-dev opencv-data opencv-doc python-opencv python3-opencv
 sudo apt install python3-gi python3-gst-1.0 python3-tk
 sudo -H pip3.6 install -i https://mirrors.163.com/pypi/simple opencv-contrib-python opencv-python
 pip3 show opencv-contrib-python
 sudo -H pip3.6 install -i https://mirrors.163.com/pypi/simple gst gobject tkVideo
 apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+```
+```
+pkg-config opencv --modversion
+pkg-config opencv --libs
+sudo find / -iname "*opencv*"
+sudo find / -iname "*opencv*" > opencv_find.txt
+```
+```
+/usr/include/opencv
+/usr/include/opencv2
+/usr/lib/x86_64-linux-gnu/libopencv_core.so
+...
 ```
 
 * * *
@@ -7375,7 +7553,7 @@ Collecting setuptools>=41.0.0
 Building wheels for collected packages: clang, wrapt
   Building wheel for clang (setup.py) ... done
   Created wheel for clang: filename=clang-5.0-py3-none-any.whl size=32138 sha256=c45501252940c6c4250781aea9d2a542378ae75792badc9d5bcaa898172c2694
-  Stored in directory: /root/.cache/pip/wheels/ec/a9/12/087d69e91487891648f3939464ded26746f686b03daf507db9
+  Stored in directory: /root/fe/wheels/ec/a9/12/087d69e91487891648f3939464ded26746f686b03daf507db9
   Building wheel for wrapt (setup.py) ... done
   Created wheel for wrapt: filename=wrapt-1.12.1-cp36-cp36m-linux_x86_64.whl size=69376 sha256=d0fcd982be34667eb49031e63413c3f8aa3861c5f64484eda7b9ffa6b34b2f97
   Stored in directory: /root/.cache/pip/wheels/1f/06/08/d93e1998b76829b1b785863b7ad22095e6608744e04118c094
@@ -9039,7 +9217,7 @@ $ cdrecord -scanbus
 
 see <https://docs.anaconda.com/anaconda/install/linux/>
 ```
-$ sudo apt install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6 fish
+$ sudo apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6 fish
 $ bash Anaconda3-2022.10-Linux-x86_64.sh
 
 yes|yes
@@ -9537,6 +9715,10 @@ makedeb制作了一个deb包，已经有alist.service，postinstall脚本没有�
 curl -L -X GET 'http://localhost:5244/d/baiduyun_yxgi12/2022082106.tar' -H 'User-Agent: pan.baidu.com'
 ```
 
+```
+/opt/alist/alist admin  # 这里查的密码如果不能登录管理面板，如下
+/opt/alist/data/data.db 里查看的admin密码才是对的
+```
 
 * * *
 # snap常用操作
@@ -10697,6 +10879,16 @@ for((ip=2;ip<255;ip++));do arp -d 192.168.0.$ip &>/dev/null;done
 ```
 
 
+***
+# 百度插件更新后获取API链接
+```
+https://d.pcs.baidu.com/file/27bc4e6499bd212d76fc513e2c2c227c?fid=1100873503712-250528-144130801647605&dstime=1675390432&rt=sh&sign=FDtAERVJouK-DCb740ccc5511e5e8fedcff06b081203-PTvly6C1Xx8%2FV8kIm8JlHMZWpxk%3D&expires=8h&chkv=1&chkbd=0&chkpc=&dp-logid=8845700870123587901&dp-callid=0&shareid=21224254387&r=777438278&resvsflag=1-12-0-1-1-1&vuk=81288970&file_type=0
+```
+```
+curl -L -C - "https://d.pcs.baidu.com/file/27bc4e6499bd212d76fc513e2c2c227c?fid=1100873503712-250528-144130801647605&dstime=1675389666&rt=sh&sign=FDtAERVJouK-DCb740ccc5511e5e8fedcff06b081203-Gn4A2CyM%2BMFe%2BGGYWc4u1vyq7zg%3D&expires=8h&chkv=1&chkbd=0&chkpc=&dp-logid=8845495149683191085&dp-callid=0&shareid=21224254387&r=115101242&resvsflag=1-12-0-1-1-1&vuk=81288970&file_type=0" -o "Qt5.9 C++开发指南例程源码.zip" -A "pan.baidu.com" -b "BDUSS=TZ0cXZraUxCUG5WRmFTZjFhN1VHaVVUQmNoSjVDVnBvSTBMMjZMeDJENXI5d05rSVFBQUFBJCQAAAAAAAAAAAEAAAARBNXceXhnaWxpa2UxMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGtq3GNratxjb"
+```
+
+
 * * *
 # 修改mac地址
 ```
@@ -10714,46 +10906,1551 @@ sudo chmod +x /etc/rc.local
 
 
 ***
-#
+# edid-generator
 ```
+git clone git@github.com:akatrevorjay/edid-generator.git
+sudo apt install zsh edid-decode automake dos2unix
+wget https://www.deltacast.tv/media/1145/EEDID_Editor_1.4.00_Setup_Win64.zip
 ```
 
+
+***
+# 汉英辞典-星际译王
+```
+sudo apt install stardict espeak-data libespeak1 libestools2.5 stardict-common stardict-gnome stardict-plugin stardict-plugin-espeak stardict-plugin-festival
+
+sudo apt purge --auto-remove stardict
+```
+
+
+***
+# webp 图片转换
+```
+sudo apt-get install webp
+
+可以使用如下命令将 JPG 或 PNG 转换为 WEBP
+cwebp -q [图像质量] [JPEG/PNG文件名] -o [WebP文件名]
+
+使用如下命令或将 WEBP 图片转换成 PNG
+dwebp [WebP文件名] -o [PNG文件名]
+```
+```
+sudo apt install libwebp-dev libgdk-pixbuf2.0-dev
+sudo apt install libwebp-dev libgdk-pixbuf2.0-dev libgtk-3-dev meson build-essential
+```
+```
+# Maintainer: Andeas Zhang
+_name="webp-pixbuf-loader"
+pkgname="${_name}-git"
+pkgdesc="WebM GDK Pixbuf Loader library - Git version"
+pkgver=0.2.4.r0.ga350141
+pkgrel=1
+url="https://github.com/aruiz/webp-pixbuf-loader"
+license=("GPL")
+depends=("libgdk-pixbuf2.0-dev" "libwebp-dev")
+makedepends=("meson" "git")
+arch=("i686" "x86_64" "i486" "pentium4" "aarch64" "armv7h")
+conflicts=("${_name}")
+#source=("${_name}::git+${url}.git")
+source=("${_name}::git+ssh://git@github.com/aruiz/webp-pixbuf-loader.git")
+sha256sums=("SKIP")
+
+pkgver() {
+	cd "${_name}"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "${_name}"
+	meson build
+	ninja -C build
+}
+
+package() {
+	cd "$srcdir/${_name}"
+	DESTDIR="${pkgdir}" ninja -C build install
+}
+```
+比较好的的办法
+```
+lximage-qt 或 Gwenview Qview gThumb LibreOffice 打开并另存
+```
+---
+***
+# emacs
+```
+$ sudo apt install emacs25
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  emacs25-bin-common emacs25-common emacs25-el liblockfile-bin liblockfile1
+  libm17n-0 libotf0 m17n-db
+Suggested packages:
+  emacs25-common-non-dfsg m17n-docs
+```
+
+---
+***
+# 文件权限查找并修改
+```
+$ find . -type f -perm -o=r+w -exec chmod 755 {} \;
+$ find . -type f -perm -o=r+w -exec chmod o+x {} \;
+//$ sudo chmod -R a+w /var/www
+//$ sudo find /var/www -type d -exec chmod 755 {} \;
+//$ sudo find /var/www -type f -exec chmod 666 {} \;
+```
+
+
+---
+***
+# gpac(MP4Box) mediainfo libmp4v2
+```
+sudo apt install gpac gpac-modules-base libgpac4 libgpac-dev
+sudo apt install libmp4v2-dev mediainfo mediainfo-gui libmediainfo0v5 libtinyxml2-6 libzen0v5
+```
+```
+$ MP4Box -v -add test.h264:FMT=AVC -fps 30 -new output1.mp4
+$ MP4Box -v -add test.h265:FMT=HEVC -fps 30 -new output2.mp4
+
+播放mp4（可以选vlc）
+ffplay output_h265.mp4
+检测视频信息
+ffprobe output_h265.mp4
+mediainfo output_h265.mp4
+MP4Box -info file
+提取 h264数据
+ffmpeg -i 001.mp4 -codec copy -bsf: h264_mp4toannexb -f h264 001.h264
+保留编码格式
+ffmpeg -i test.mp4 -vcodec copy -an test_copy.h264
+ffmpeg -i test.mp4 -acodec copy -vn test.aac
+强制编码格式
+ffmpeg -i test.mp4 -vcodec libx264 -an test.h264
+ffmpeg -i test.mp4 -vcodec libx265 -an test.h265
+ffmpeg -i 1920x1080.mp4 -vcodec libx265  -preset ultrafast -x265-params "bframes=0"  out.h265  #去除B帧
+ffmpeg -i test.mp4 -acodec libmp3lame -vn test.mp3
+ffmpeg -i juren.mp4 -c:v hevc -c:a copy juren-h265.mp4
+保留封装格式
+ffmpeg -i test.mp4 -acodec copy -vn audio.mp4
+ffmpeg -i test.mp4 -vcodec copy -an video.mp4
+查看 FFmpeg 支持的编解码标准
+ffmpeg -codecs
+ffmpeg -codecs > codecs.txt
+打包
+ffmpeg -f h264 -i xxx.h264 -vcodec copy xxx.mp4
+ffmpeg -i test.h265 -vcodec copy xx4x.mp4
+ffmpeg -i encoded.265 -c copy out.mp
+ffmpeg -i input.h265 -c:v libx264 -crf 23 output.mp4 # -crf参数表示质量，从0到51可以选择，数字越小质量越好，23是一个常用的质量值
+ffmpeg -f hevc -i test.h265 -vcodec copy xxx1.mp4
+ffmpeg -f hevc -i test.h265 -vcodec copy -x265-params crf=25 xxx1.mp4
+ffmpeg -i test.h265 -c:v libx265 -an -x265-params crf=25 xxx1.mp4
+ffmpeg -i test.h265 -c:v libx265 -c:a copy -x265-params crf=25 xxx1.mp4 # With audio
+# Using MP4Box
+MP4Box -add test.h265 out.mp4
+MP4Box -add xxx.h264 out.mp4 -inter 500
+# With audio
+MP4Box -add {INPUT}#audio -add raw.265 out.mp4
+MP4Box -add file.mpg#audio new_file.mp4
+
+转换h264为h265
+ffmpeg -f h264 -i xxx.h264 -vcodec libx265 -an xxx.h265
+ffmpeg -i xxx.h265 -vcodec copy xxx.mp4
+ffmpeg -i cuc_ieschool.h265 -pix_fmt yuv444p test444p.yuv
+
+FLV 转 MP4
+ffmpeg -i juren.flv juren.mp4
+FLV 转 MP4 不进行编解码
+ffmpeg -i juren.mp4 -c copy juren.flv
+ffmpeg -f flv -i juren.flv -c copy juren.mp4
+FLV 转 TS
+ffmpeg -i juren.flv juren.ts
+MP4 转 FLV
+ffmpeg -i juren.mp4 juren.flv
+
+https://www.jianshu.com/p/5702783153df
+
+提取AAC
+ffmpeg -i test.mp4 -acodec copy -vn output.aac
+ffmpeg 提取 yuv 数据
+ffmpeg -i out.mp4 -an -c:v rawvideo -pix_fmt yuv420p out.yuv
+播放yuv文件
+ffplay -s 2880x1800 -pix_fmt uyvy422 screen.yuv
+提取 pcm 数据
+ffmpeg -i 1.mp4 -vn -ar 44100 -ac 2 -f s16le out.pcm
+播放 pcm 数据
+ffplay -ac 2 -ar 44100 -f s16le out.pcm
+提取 rgb 数据(提取17分15秒~17分30秒)
+ffmpeg -ss 00:17:15 -t 00:00:15-i 12.mkv -pix_fmt rgb24  11.rgb
+去掉视频中的音频
+ffmpeg -i input.mp4 -vcodec copy -an output.mp4
+提取视频中的音频
+ffmpeg -i input.mp4 -acodec copy -vn output.mp3
+音视频合成
+ffmpeg -y –i input.mp4 –i input.mp3 –vcodec copy –acodec copy output.mp4
+剪切视频
+ffmpeg -ss 0:1:30 -t 0:0:20 -i input.mp4 -vcodec copy -acodec copy output.mp4
+视频截图
+ffmpeg –i test.mp4 –f image2 -t 0.001 -s 320x240 image-%3d.jpg
+视频分解为图片
+ffmpeg –i test.mp4 –r 1 –f image2 image-%3d.jpg
+将图片合成视频
+ffmpeg -f image2 -i image%d.jpg output.mp4
+视频拼接
+ffmpeg -f concat -i filelist.txt -c copy output.mp4
+将视频转为gif
+ffmpeg -i input.mp4 -ss 0:0:30 -t 10 -s 320x240 -pix_fmt rgb24 output.gif
+将视频前30帧转为gif
+ffmpeg -i input.mp4 -vframes 30 -f gif output.gif
+旋转视频
+ffmpeg -i input.mp4 -vf rotate=PI/2 output.mp4
+缩放视频
+ffmpeg -i input.mp4 -vf scale=iw/2:-1 output.mp4
+视频变速
+ffmpeg -i input.mp4 -filter:v setpts=0.5*PTS output.mp4
+音频变速
+ffmpeg -i input.mp3 -filter:a atempo=2.0 output.mp3
+音视频同时变速，但是音视频为互倒关系
+ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]" -map "[v]" -map "[a]" output.mp4
+视频添加水印
+ffmpeg -i input.mp4 -i logo.jpg -filter_complex [0:v][1:v]overlay=main_w-overlay_w-10:main_h-overlay_h-10[out] -map [out] -map 0:a -codec:a copy output.mp4
+
+
+ffmpeg -y -r 25.0 -f rawvideo -s 1920x1080 -pix_fmt uyvy422 -i input.avi -vcodec copy -pix_fmt yuv420p -f avi -r 25 -s 1920x1080 output.avi
+ffmpeg -y -pix_fmt yuv420p -s 1920x1080 -r 30 -i ldr_420.yuv -f rawvideo -pix_fmt yuv444p -s 1920x1080 -r 30 ldr_444.yuv
+
+$ ffmpeg -y -r 25.0 -f rawvideo -s 480x272 -pix_fmt yuv444p -i output_yuv444.yuv -pix_fmt yuv420p -f rawvideo -r 25 -s 480x272 out1_yuv420p.yuv
+$ ffmpeg -y -r 25.0 -f rawvideo -s 480x272 -pix_fmt yuv444p -i output_yuv444.yuv -pix_fmt yuv420p -f rawvideo -r 25 -s 800x450 out2_yuv420p.yuv
+ffmpeg -y -r 30.0 -f rawvideo -s 384x384 -pix_fmt yuv420p -i test.264 -vcodec copy -pix_fmt yuv420p -f rawvideo -r 25 -s 384x384 out1_yuv420p.yuv
+ffmpeg -y -r 30.0 -s 384x384 -pix_fmt yuv420p -i test.YUV -pix_fmt yuv420p -f h264 -r 30 -s 384x384 out1_yuv420p.264
+ffmpeg -y -r 25.0 -f rawvideo -s 384x384 -pix_fmt yuv420p -i test.YUV -pix_fmt yuv420p -f h264 -r 25 -s 384x384 out2_yuv420p.264
+ffmpeg -y -r 25.0 -f rawvideo -s 384x384 -pix_fmt yuv420p -i test.YUV -pix_fmt yuv420p -f mp4 -r 25 -s 384x384 out2_yuv420p.mp4
+ffmpeg -s 384x384 -i test.YUV -c:v libx265 -preset medium -crf 28 -c:a aac -b:a 128k output_h265.mp4
+ffplay -vf "hflip,vflip" -i test1.mp4
+ffmpeg -i test1.mp4 -vf "rotate=PI:bilinear=0,format=yuv420p" -metadata:s:v rotate=0 -codec:v libx264 -codec:a copy test1_output.mp4
+ffmpeg -i test1.mp4 -vf "rotate=45*(PI/180),format=yuv420p" -metadata:s:v rotate=0 -codec:v libx264 -codec:a copy output_rotate.mp4
+https://superuser.com/questions/578321/how-to-rotate-a-video-180-with-ffmpeg
+ffmpeg -s 384x384 -i test.YUV -c:v libx265 -preset medium -b:a 128k output_h265.265
+```
+
+---
+***
+# sudo-gdb
+add to /etc/sudoers
+```
+andreas ALL=(root) NOPASSWD:/usr/bin/gdb
+```
+/usr/bin/sudo-gdb
+```
+#!/bin/bash
+sudo gdb $@
+```
+```
+sudo chmod a+x /usr/bin/sudo-gdb
+```
+这样eclipse和qtcreater都可以在sudo权限运行gdb
+如果只是run，qtcreator要在
+```
+In the Tab General under **System** Group there is a Terminal Option.
+The default value is set to /usr/bin/xterm -e . Replace it with /usr/bin/xterm -e sudo or /usr/bin/gnome-terminal -x sudo
+```
+
+# ~/.gitconfig
+```
+[user]
+	name = Andreas Zhang
+	email = denglitsch@gmail.com
+[core]
+	autocrlf = false    
+	longpaths = true
+	fileMode = false
+	autocrl = false
+[color]
+	ui = auto
+[commit]
+	gpgsign = false
+[http]
+	sslVerify = false
+	postBuffer = 2000000000
+[https]
+	proxy = socks5://127.0.0.1:10808
+	postBuffer = 2000000000
+[ssh]
+	postBuffer = 1048576000
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[merge]
+	ff = false
+[pull]
+	ff = true
+
+```
+
+# ~/.bashrc
+```
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+
+export LM_LICENSE_FILE=/opt/questasim/license.dat:/opt/modelsim/license.dat:/opt/altera/license.dat:/opt/lscc/license.dat:/opt/synopsys/synopsys.dat
+export PATH=$PATH:/opt/questasim/questasim/bin:/opt/questasim/questasim/linux_x86_64:/opt/modelsim/modeltech/bin:/opt/modelsim/modeltech/linux_x86_64:/opt/altera/11.0/quartus/bin:/opt/altera/11.0/nios2eds/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/altera/11.0/quartus/dsp_builder/bin64:/opt/altera/11.0/quartus/dspba/Blocksets/BaseBlocks/linux64:/opt/natinst/LabVIEW-2020-64/AppLibs:/opt/natinst/niPythonInterface/lib64:/opt/natinst/share/NI-VISA:/opt/natinst/LabVIEW-2020-64/resource
+#export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+
+#export DVE_HOME=/opt/synopsys/vcs/O-2018.09-SP2
+export DVE_HOME=/opt/synopsys/vcs/O-2018.09-SP2/gui/dve
+export VCS_HOME=/opt/synopsys/vcs/O-2018.09-SP2
+export VCS_MX_HOME=/opt/synopsys/vcs-mx/O-2018.09-SP2
+#export LD_LIBRARY_PATH=/opt/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64:/opt/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUX64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/opt/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64:/opt/synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/lib/LINUX64
+export VERDI_HOME=/opt/synopsys/verdi/Verdi_O-2018.09-SP2
+export SCL_HOME=/opt/synopsys/scl/2018.06
+
+#dve
+PATH=$PATH:$VCS_HOME/gui/dve/bin
+alias dve="dve -full64"
+
+#VCS
+PATH=$PATH:$VCS_MX_HOME/bin:$VCS_HOME/bin
+alias vcs="vcs -full64 -cpp g++-4.8 -cc gcc-4.8 -LDFLAGS -Wl,--no-as-needed"
+#alias vcs="vcs -full64 -cpp g++-5 -cc gcc-5 -LDFLAGS -Wl,--no-as-needed"
+
+#VERDI
+PATH=$PATH:$VERDI_HOME/bin
+alias verdi="verdi -full64"
+
+#scl
+PATH=$PATH:$SCL_HOME/linux64/bin
+export VCS_ARCH_OVERRIDE=linux
+#export VCS_TARGET_ARCH=amd64
+export VCS_TARGET_ARCH=linux64
+
+#LICENCE
+#export LM_LICENSE_FILE=27000@Vostro-5880
+#alias lmg_synopsys="lmgrd -c /opt/synopsys/synopsys.dat"
+
+### cuda path
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+
+PATH=/usr/local/texlive/2022/bin/x86_64-linux:$PATH; export PATH 
+MANPATH=/usr/local/texlive/2022/texmf-dist/doc/man:$MANPATH; export MANPATH 
+INFOPATH=/usr/local/texlive/2022/texmf-dist/doc/info:$INFOPATH; export INFOPATH
+
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/home/andreas/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/andreas/anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/home/andreas/anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/andreas/anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
+
+alias wine='env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFIX="/home/andreas/.wine-x64" wine'
+
+```
+
+---
+***
+# gstreamer
+
+https://gstreamer.freedesktop.org/documentation/tutorials/index.html
+
+https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html
+
+https://gstreamer.freedesktop.org/documentation/installing/on-linux.html
+
+官方已经用gstreamer1.0来演示tutorials
+```
+$ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+
+$ pkg-config --cflags --libs gstreamer-1.0
+-pthread -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0
+```
+```
+git clone https://gitlab.freedesktop.org/gstreamer/gstreamer
+cd gstreamer/subprojects/gst-docs/examples/tutorials
+gcc basic-tutorial-1.c -o basic-tutorial-1 `pkg-config --cflags --libs gstreamer-1.0`
+```
+```
+$ sudo apt-get install gstreamer0.10-qapt
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  apt-xapian-index gstreamer-qapt libqapt3 libqapt3-runtime python3-xapian
+Suggested packages:
+  app-install-data xapian-doc
+
+```
+## 一般gst命令
+```
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! audioconvert ! autoaudiosink
+gst-launch-1.0 souphttpsrc location=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! decodebin ! autovideosink
+//gst-launch-1.0 filesrc location=f:\\media\\sintel\\sintel_trailer-480p.webm ! decodebin ! autovideosink
+gst-launch-1.0 filesrc location=./sintel_trailer-480p.webm ! decodebin ! autovideosink
+gst-launch-1.0 audiotestsrc ! vorbisenc ! oggmux ! filesink location=test.ogg
+gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
+gst-launch-1.0 audiotestsrc ! audioconvert ! autoaudiosink
+gst-launch-1.0 videotestsrc ! video/x-raw,framerate=30/1 ! videorate ! video/x-raw,framerate=1/1 ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! videoscale ! video/x-raw,width=178,height=100 ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=http://docs.gstreamer.com/media/sintel_trailer-480p.webm ! queue ! videoscale ! video/x-raw,width=320,height=200 ! videoconvert ! autovideosink
+gst-launch-1.0 uridecodebin uri=https://gstreamer.freedesktop.org/data/media/sintel_trailer-480p.webm ! audioresample ! audio/x-raw,rate=4000 ! audioconvert ! autoaudiosink
+gst-launch-1.0 audiotestsrc ! tee name=t ! queue ! audioconvert ! autoaudiosink t. ! queue ! wavescope ! videoconvert ! autovideosink
+gst-launch-1.0 videotestsrc ! video/x-raw, format=GRAY8 ! videoconvert ! autovideosink
+gst-launch-1.0 audiotestsrc num-buffers=1000 ! fakesink sync=false
+gst-launch-1.0 audiotestsrc ! identity drop-probability=0.1 ! audioconvert ! autoaudiosink
+```
+
+
+---
+***
+# Change the number of the partition from sdx1 to sdx2
+保存分区表 backup the disk partition table
+```
+# sfdisk --dump /dev/sdx > sdx.bkp
+# cp sdx.bkp sdx.new 
+```
+编辑分区表
+
+from
+```
+# partition table of /dev/sdx
+unit: sectors
+
+/dev/sdx1 : start=  1026048, size=975747120, Id=83
+/dev/sdx2 : start=     2048, size=   204800, Id=83
+/dev/sdx3 : start=   206848, size=   819200, Id= b
+/dev/sdx4 : start=        0, size=        0, Id= 0
+```
+to
+```
+# partition table of /dev/sdx
+unit: sectors
+
+/dev/sdx1 : start=     2048, size=   204800, Id=83
+/dev/sdx2 : start=   206848, size=   819200, Id= b
+/dev/sdx3 : start=  1026048, size=975747120, Id=83
+/dev/sdx4 : start=        0, size=        0, Id= 0
+```
+throw it back to the disk partition table (carefull)
+```
+# sfdisk /dev/sdx < sdx.new
+```
+If the last command does not work, change it for
+```
+# sfdisk --no-reread --force /dev/sdx < sdx.new
+```
+
+
+---
+***
+# goldendict
+```
+sudo apt-get install goldendict goldendict-wordnet
+```
+
+
+---
+***
+# youdao-dict报错
+youdao-dict_6.0.0-0_ubuntu_amd64.deb
+```
+Traceback (most recent call last):
+  File "/usr/bin/youdao-dict", line 27, in <module>
+    from dae.daeclient import DAEClient
+  File "/usr/share/youdao-dict/dae/daeclient.py", line 36, in <module>
+    from dae.window import Window
+  File "/usr/share/youdao-dict/dae/window.py", line 29, in <module>
+    from dae.webview import WebView
+  File "/usr/share/youdao-dict/dae/webview.py", line 27, in <module>
+    from dae.webpage import WebPage
+  File "/usr/share/youdao-dict/dae/webpage.py", line 27, in <module>
+    from PyQt5.QtWebKitWidgets import QWebPage, QWebInspector
+ValueError: PyCapsule_GetPointer called with incorrect name
+
+```
+
+PYTHONPATH环境变量
+```
+export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages
+```
+然后运行,ok
+<https://github.com/yomun/youdaodict_5.5>
+```
+如果依赖软件包安装完后,
+还是会出现 ModuleNotFoundError: No module named 'PyQt5.QtWebKitWidgets'
+先检查是否用 pip3 安装了 PyQt5, 如有就卸载
+
+如还不行, 建议加入 PYTHONPATH 环境变量
+
+$ python3
+Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import os
+>>> print(os.sys.path)
+['', '/usr/lib/python36.zip', '/usr/lib/python3.6', '/usr/lib/python3.6/lib-dynload',
+ '/usr/lib/python3/dist-packages']
+
+选一个以上可用的路径为 $PYTHONPATH
+
+$ su root
+$ gedit /usr/share/applications/youdao-dict.desktop
+
+### Exec=youdao-dict %f
+Exec=env PYTHONPATH=/usr/lib/python3/dist-packages youdao-dict %f
+
+也可以在 ~/.bashrc 或 ~/.profile 加入
+
+$ su $USERNAME
+$ gedit ~/.bashrc 或 gedit ~/.profile
+
+export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages    # 已经是系统维护的，不是现在的pip3.6所在的dist-packages 目录
+
+然后运行
+
+$ source ~/.bashrc 或 source ~/.profile
+$ youdao-dict
+```
+
+
+---
+***
+# xunlei dingtalk
+```
+com.xunlei.download_1.0.0.1_amd64.deb
+com.alibabainc.dingtalk_1.3.0.20214_amd64.deb
+```
+
+
+---
+# pip 整理
+```
+python3 -m pip install --upgrade pip
+/root/.cache/pip/wheels
+sudo ls /root/.cache/pip/wheels
+
+sudo apt install python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsvg python3-dbus python3-dbus.mainloop.pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtwebengine python3-pyqt5.qtwebkit --reinstall
+
+sudo -H pip3.6 install PyQt5==5.15.2 pyqtwebengine==5.15.2 pyqt5-tools pyqt5-plugins --upgrade --proxy=http://127.0.0.1:8118
+```
+
+
+---
+***
+# inxi
+```
+sudo apt install inxi
+inxi -Fxxxrz
+```
+
+
+---
+***
+# libdw-dev
+```
+sudo aptitude install libdw-dev
+     Downgrade the following packages:                                                 
+1)     libdw1 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]      
+2)     libelf-dev [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]  
+3)     libelf1 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]     
+4)     libelf1:i386 [0.176-1.1~18.04.sav0 (now) -> 0.170-0.4ubuntu0.1 (bionic-updates)]
+
+sudo apt-get install libunwind8-dev
+sudo apt --fix-broken install
+sudo update-initramfs -u -k all
+
+sudo apt-get build-dep linux
+
+The following NEW packages will be installed:
+  asciidoc asciidoc-base asciidoc-common dh-systemd docbook-dsssl
+  docbook-utils kernel-wedge libaudit-dev libcap-ng-dev libnewt-dev
+  libsgmls-perl makedumpfile opensp python-alabaster python-babel
+  python-babel-localedata python-docutils python-imagesize python-jinja2
+  python-markupsafe python-roman python-sphinx python-sphinx-rtd-theme sgmlspl
+  sphinx-common xmlto
+
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
+
+The following NEW packages will be installed:
+  dwarves libcap-dev
+
+$ apt list --installed | grep linux
+
+```
+
+
+---
+***
+# doxygen
+```
+sudo apt-get install doxygen doxygen-gui graphviz graphviz-doc
+```
+
+
+---
+***
+# /etc/udev/rules.d/
+10-local.rules
+```
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="andreas",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="andreas",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'basename %p > /sys/bus/usb/drivers/ftdi_sio/unbind'"
+```
+改进后
+```
+#Lattice
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="1134",ATTRS{idProduct}=="8001",MODE=="0660",GROUP=="plugdev",SYMLINK+="lattice-%n"
+#FTDI
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE=="0666",GROUP=="plugdev",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+SUBSYSTEM=="usb",ACTION=="add",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6014",MODE=="0666",GROUP=="plugdev",SYMLINK+="ftdi-%n"
+SUBSYSTEM=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6014",RUN+="/bin/sh -c 'rmmod ftdi_sio && rmmod usbserial'"
+```
+
+
+39-i4tools.rules
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1281", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1282", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1283", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="1227", TAG+="uaccess"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*|5ac/1901/*|5ac/8600/*", MODE=0666
+
+# Some user need to "reload rules", use this command:
+# sudo udevadm control --reload-rules && udevadm trigger
+```
+39-usbmuxd.rules
+```
+# usbmuxd (Apple Mobile Device Muxer listening on /var/run/usbmuxd)
+
+# systemd should receive all events relating to device
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", TAG+="systemd"
+
+# Initialize iOS devices into "deactivated" USB configuration state and activate usbmuxd
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", ACTION=="add", ENV{USBMUX_SUPPORTED}="1", ATTR{bConfigurationValue}="0", OWNER="usbmux", ENV{SYSTEMD_WANTS}="usbmuxd.service"
+
+# Make sure properties don't get lost when bind action is called
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", ACTION=="bind", ENV{USBMUX_SUPPORTED}="1", OWNER="usbmux", ENV{SYSTEMD_WANTS}="usbmuxd.service"
+
+# Exit usbmuxd when the last device is removed
+#SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="5ac/12[0-9a-f][0-9a-f]/*", ACTION=="remove", RUN+="/usr/sbin/usbmuxd -x"
+```
+49-stlinkv1.rules
+```
+# stm32 discovery boards, with onboard st/linkv1
+# ie, STM32VL.
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3744", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv1_%n"
+```
+49-stlinkv2-1.rules
+```
+# stm32 nucleo boards, with onboard st/linkv2-1
+# ie, STM32F0, STM32F4.
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv2-1_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3752", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv2-1_%n"
+
+```
+49-stlinkv2.rules
+```
+# stm32 discovery boards, with onboard st/linkv2
+# ie, STM32L, STM32F4.
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv2_%n"
+```
+49-stlinkv3.rules
+```
+# stlink-v3 boards (standalone and embedded) in usbloader mode and standard (debug) mode
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374d", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3loader_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374e", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374f", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3753", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3754", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3755", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3loader_%n"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3757", \
+    MODE="660", GROUP="plugdev", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1", \
+    SYMLINK+="stlinkv3_%n"
+```
+51-altera-usb-blaster.rules
+```
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6003", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
+```
+52-xilinx-digilent-usb.rules
+```
+###########################################################################
+#                                                                         #
+#  52-digilent-usb.rules -- UDEV rules for Digilent USB Devices           #
+#                                                                         #
+###########################################################################
+#  Author: MTA                                                            #
+#  Copyright 2010 Digilent Inc.                                           #
+###########################################################################
+#  File Description:                                                      #
+#                                                                         #
+#  This file contains the rules used by UDEV when creating entries for    #
+#  Digilent USB devices. In order for Digilent's shared libraries and     #
+#  applications to access these devices without root privalages it is     #
+#  necessary for UDEV to create entries for which all users have read     #
+#  and write permission.                                                  #
+#                                                                         #
+#  Usage:                                                                 #
+#                                                                         #
+#  Copy this file to "/etc/udev/rules.d/" and execute                     #
+#  "/sbin/udevcontrol reload_rules" as root. This only needs to be done   #
+#  immediately after installation. Each time you reboot your system the   #
+#  rules are automatically loaded by UDEV.                                #
+#                                                                         #
+###########################################################################
+#  Revision History:                                                      #
+#                                                                         #
+#  04/15/2010(MTA): created                                               #
+#  02/28/2011(MTA): modified to support FTDI based devices                #
+#  07/10/2012(MTA): modified to work with UDEV versions 098 or newer      #
+#  04/19/2013(MTA): modified mode assignment to use ":=" insetead of "="  #
+#       so that our permission settings can't be overwritten by other     #
+#       rules files                                                       #
+#  07/28/2014(MTA): changed default application path                      #
+#                                                                         #
+###########################################################################
+
+# Create "/dev" entries for Digilent device's with read and write
+# permission granted to all users.
+ATTR{idVendor}=="1443", MODE:="666"
+ACTION=="add", ATTR{idVendor}=="0403", ATTR{manufacturer}=="Digilent", MODE:="666"
+
+# The following rules (if present) cause UDEV to ignore all UEVENTS for
+# which the subsystem is "usb_endpoint" and the action is "add" or
+# "remove". These rules are necessary to work around what appears to be a
+# bug in the Kernel used by Red Hat Enterprise Linux 5/CentOS 5. The Kernel
+# sends UEVENTS to remove and then add entries for the endpoints of a USB
+# device in "/dev" each time a process releases an interface. This occurs
+# each time a data transaction occurs. When an FPGA is configured or flash
+# device is written a large number of transactions take place. If the
+# following lines are commented out then UDEV will be overloaded for a long
+# period of time while it tries to process the massive number of UEVENTS it
+# receives from the kernel. Please note that this work around only applies
+# to systems running RHEL5 or CentOS 5 and as a result the rules will only
+# be present on those systems.
+```
+52-xilinx-ftdi-usb.rules
+```
+###########################################################################
+#                                                                         #
+#  52-xilinx-ftdi-usb.rules -- UDEV rules for Xilinx USB Devices          #
+#                                                                         #
+###########################################################################
+#  Author: EST                                                            #
+#  Copyright 2016 Xilinx Inc.                                             #
+###########################################################################
+#  File Description:                                                      #
+#                                                                         #
+#  This file contains the rules used by UDEV when creating entries for    #
+#  Xilinx USB devices. In order for Xilinx's shared libraries and         #
+#  applications to access these devices without root privalages it is     #
+#  necessary for UDEV to create entries for which all users have read     #
+#  and write permission.                                                  #
+#                                                                         #
+#  Usage:                                                                 #
+#                                                                         #
+#  Copy this file to "/etc/udev/rules.d/" and execute                     #
+#  "/sbin/udevcontrol reload_rules" as root. This only needs to be done   #
+#  immediately after installation. Each time you reboot your system the   #
+#  rules are automatically loaded by UDEV.                                #
+#                                                                         #
+###########################################################################
+#  Revision History:                                                      #
+#                                                                         #
+#  10/18/2016(EST): created                                               #
+#                                                                         #
+###########################################################################
+# version 0001
+# Create "/dev" entries for Xilinx device's with read and write
+# permission granted to all users.
+ACTION=="add", ATTR{idVendor}=="0403", ATTR{manufacturer}=="Xilinx", MODE:="666"
+
+# The following rules (if present) cause UDEV to ignore all UEVENTS for
+# which the subsystem is "usb_endpoint" and the action is "add" or
+# "remove". These rules are necessary to work around what appears to be a
+# bug in the Kernel used by Red Hat Enterprise Linux 6/CentOS 5. The Kernel
+# sends UEVENTS to remove and then add entries for the endpoints of a USB
+# device in "/dev" each time a process releases an interface. This occurs
+# each time a data transaction occurs. When an FPGA is configured or flash
+# device is written a large number of transactions take place. If the
+# following lines are commented out then UDEV will be overloaded for a long
+# period of time while it tries to process the massive number of UEVENTS it
+# receives from the kernel. Please note that this work around only applies
+# to systems running RHEL6 or CentOS 5 and as a result the rules will only
+# be present on those systems.
+```
+52-xilinx-pcusb.rules
+```
+# version 0002
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0008", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0007", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0009", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="000d", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="000f", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0013", MODE="666"
+ATTR{idVendor}=="03fd", ATTR{idProduct}=="0015", MODE="666"
+```
+60-dreamsourcelab.rules
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2a0e", MODE="0666"
+```
+60-vboxdrv.rules
+```
+KERNEL=="vboxdrv", NAME="vboxdrv", OWNER="root", GROUP="vboxusers", MODE="0660"
+KERNEL=="vboxdrvu", NAME="vboxdrvu", OWNER="root", GROUP="root", MODE="0666"
+KERNEL=="vboxnetctl", NAME="vboxnetctl", OWNER="root", GROUP="vboxusers", MODE="0660"
+SUBSYSTEM=="usb_device", ACTION=="add", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh $major $minor $attr{bDeviceClass}"
+SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh $major $minor $attr{bDeviceClass}"
+SUBSYSTEM=="usb_device", ACTION=="remove", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh --remove $major $minor"
+SUBSYSTEM=="usb", ACTION=="remove", ENV{DEVTYPE}=="usb_device", RUN+="/usr/lib/virtualbox/VBoxCreateUSBNode.sh --remove $major $minor"
+```
+61-msp430uif.rules
+```
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0010",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0013",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0014",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0203",MODE="0666"
+ATTRS{idVendor}=="2047",ATTRS{idProduct}=="0204",MODE="0666"
+ATTRS{idVendor}=="0451",ATTRS{idProduct}=="f432",MODE="0666"
+```
+70-mm-no-ti-emulators.rules
+```
+ACTION!="add|change", GOTO="mm_usb_device_blacklist_end"
+SUBSYSTEM!="usb", GOTO="mm_usb_device_blacklist_end"
+ENV{DEVTYPE}!="usb_device",  GOTO="mm_usb_device_blacklist_end"
+
+# TI USB Emulators
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0010", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0013", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0014", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0203", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0204", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="0451", ATTRS{idProduct}=="F432", ENV{ID_MM_DEVICE_IGNORE}="1"
+
+LABEL="mm_usb_device_blacklist_end"
+```
+70-ttyusb.rules
+```
+KERNEL=="ttyUSB[0-9]*",MODE="0666"
+```
+71-ti-permissions.rules
+```
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="a6d0",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="a6d1",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="bcd9",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="bcda",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="00fd",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="1cbe",ATTRS{idProduct}=="00ff",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef1",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef2",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef3",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef4",MODE:="0666"
+SUBSYSTEM=="usb",ENV{DEVTYPE}=="usb_device",ATTRS{idVendor}=="0451",ATTRS{idProduct}=="c32a",MODE:="0666"
+ATTRS{idVendor}=="0451",ATTRS{idProduct}=="bef0",ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="0c55",ATTRS{idProduct}=="0220",ENV{ID_MM_DEVICE_IGNORE}="1"
+KERNEL=="ttyACM[0-9]*",MODE:="0666"
+
+```
+cat 95-tty0tty.rules
+```
+KERNEL=="tnt[0-7]", SUBSYSTEM=="tty", GROUP="uucp", MODE="0660"
+```
+99-jlink.rules
+```
+#
+# This file is going to be stored at /etc/udev/rules.d on installation of the J-Link package
+# It makes sure that non-superuser have access to the connected J-Links, so JLinkExe etc. can be executed as non-superuser and can work with J-Link
+#
+#
+# Matches are AND combined, meaning: a==b,c==d,do stuff
+# results in:                        if (a == b) && (c == d) -> do stuff
+#
+ACTION!="add", SUBSYSTEM!="usb_device", GOTO="jlink_rules_end"
+#
+# Give all users read and write access.
+# Note: NOT all combinations are supported by J-Link right now. Some are reserved for future use, but already added here
+#
+# ATTR{filename}
+#                  Match sysfs attribute values of the event device. Trailing
+#                  whitespace in the attribute values is ignored unless the specified
+#                  match value itself contains trailing whitespace.
+#
+# ATTRS{filename}
+#                  Search the devpath upwards for a device with matching sysfs
+#                  attribute values. If multiple ATTRS matches are specified, all of
+#                  them must match on the same device. Trailing whitespace in the
+#                  attribute values is ignored unless the specified match value itself
+#                  contains trailing whitespace.
+#
+# How to find out about udev attributes of device:
+# Connect J-Link to PC
+# Terminal: cat /var/log/syslog
+# Find path to where J-Link device has been "mounted"
+# sudo udevadm info --query=all --attribute-walk --path=<PathExtractedFromSyslog>
+# sudo udevadm info --attribute-walk /dev/bus/usb/<Bus>/<Device> (extract <Bus> and <Device> from "lsusb")
+# Reload udev rules after rules file change:
+#   sudo udevadm control --reload-rules
+#   sudo udevadm trigger
+#
+# [old format]
+# 0x0101 - J-Link (default)                 | Flasher STM8 | Flasher ARM | Flasher 5 PRO
+# 0x0102 - J-Link USBAddr = 1 (obsolete)
+# 0x0103 - J-Link USBAddr = 2 (obsolete)
+# 0x0104 - J-Link USBAddr = 3 (obsolete)
+# 0x0105 - CDC + J-Link
+# 0x0106 - CDC
+# 0x0107 - RNDIS  + J-Link
+# 0x0108 - J-Link + MSD
+#
+ATTR{idProduct}=="0101", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0102", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0103", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0104", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0105", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0107", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="0108", ATTR{idVendor}=="1366", MODE="666"
+#
+# Make sure that J-Links are not captured by modem manager service
+# as this service would try detect J-Link as a modem and send AT commands via the VCOM component which might not be liked by the target...
+#
+ATTR{idProduct}=="0101", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0102", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0103", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0104", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0105", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0107", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0108", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# J-Link Product-Id assignment:
+# 0x1000 +
+# Bit 0: MSD
+# Bit 1: RNDIS
+# Bit 2: CDC
+# Bit 3: HID
+# Bit 4: J-Link (BULK via SEGGER host driver)
+# Bit 5: J-Link (BULK via WinUSB driver. Needs to be enabled in J-Link config area)
+#
+# [new format]
+# 0x1001: MSD
+# 0x1002: RNDIS
+# 0x1003: RNDIS  + MSD
+# 0x1004: CDC
+# 0x1005: CDC    + MSD
+# 0x1006: RNDIS  + CDC
+# 0x1007: RNDIS  + CDC    + MSD
+# 0x1008: HID
+# 0x1009: MSD    + HID
+# 0x100a: RNDIS  + HID
+# 0x100b: RNDIS  + MSD    + HID
+# 0x100c: CDC    + HID
+# 0x100d: CDC    + MSD    + HID
+# 0x100e: RNDIS  + CDC    + HID
+# 0x100f: RNDIS  + CDC    + MSD + HID
+# 0x1010: J_LINK_SEGGER_DRV
+# 0x1011: J_LINK_SEGGER_DRV                             + MSD
+# 0x1012: J_LINK_SEGGER_DRV                  + RNDIS
+# 0x1013: J_LINK_SEGGER_DRV                  + RNDIS    + MSD
+# 0x1014: J_LINK_SEGGER_DRV          + CDC              
+# 0x1015: J_LINK_SEGGER_DRV          + CDC              + MSD
+# 0x1016: J_LINK_SEGGER_DRV          + CDC   + RNDIS
+# 0x1017: J_LINK_SEGGER_DRV          + CDC   + RNDIS    + MSD
+# 0x1018: J_LINK_SEGGER_DRV + HID
+# 0x1019: J_LINK_SEGGER_DRV + HID                       + MSD
+# 0x101a: J_LINK_SEGGER_DRV + HID            + RNDIS
+# 0x101b: J_LINK_SEGGER_DRV + HID            + RNDIS    + MSD
+# 0x101c: J_LINK_SEGGER_DRV + HID    + CDC
+# 0x101d: J_LINK_SEGGER_DRV + HID    + CDC              + MSD
+# 0x101e: J_LINK_SEGGER_DRV + HID    + CDC   + RNDIS
+# 0x101f: J_LINK_SEGGER_DRV + HID    + CDC   + RNDIS    + MSD
+# 0x1020: J_LINK_WINUSB_DRV 
+# 0x1021: J_LINK_WINUSB_DRV                             + MSD
+# 0x1022: J_LINK_WINUSB_DRV                  + RNDIS
+# 0x1023: J_LINK_WINUSB_DRV                  + RNDIS    + MSD
+# 0x1024: J_LINK_WINUSB_DRV          + CDC              
+# 0x1025: J_LINK_WINUSB_DRV          + CDC              + MSD
+# 0x1026: J_LINK_WINUSB_DRV          + CDC   + RNDIS
+# 0x1027: J_LINK_WINUSB_DRV          + CDC   + RNDIS    + MSD
+# 0x1028: J_LINK_WINUSB_DRV + HID
+# 0x1029: J_LINK_WINUSB_DRV + HID                       + MSD
+# 0x102a: J_LINK_WINUSB_DRV + HID            + RNDIS
+# 0x102b: J_LINK_WINUSB_DRV + HID            + RNDIS    + MSD
+# 0x102c: J_LINK_WINUSB_DRV + HID    + CDC
+# 0x102d: J_LINK_WINUSB_DRV + HID    + CDC              + MSD
+# 0x102e: J_LINK_WINUSB_DRV + HID    + CDC   + RNDIS
+# 0x102f: J_LINK_WINUSB_DRV + HID    + CDC   + RNDIS    + MSD
+# 0x103x: J_LINK_SEGGER_DRV + J_LINK_WINUSB_DRV does not make any sense, therefore skipped
+# 0x1050: J_LINK_SEGGER_DRV          + 2x CDC
+# 0x1051: J_LINK_SEGGER_DRV          + 2x CDC              + MSD
+# 0x1052: J_LINK_SEGGER_DRV          + 2x CDC   + RNDIS
+# 0x1053: J_LINK_SEGGER_DRV          + 2x CDC   + RNDIS    + MSD
+# 0x1054: J_LINK_SEGGER_DRV          + 3x CDC
+# 0x1055: J_LINK_SEGGER_DRV          + 3x CDC              + MSD
+# 0x1056: J_LINK_SEGGER_DRV          + 3x CDC   + RNDIS
+# 0x1057: J_LINK_SEGGER_DRV          + 3x CDC   + RNDIS    + MSD
+# 0x1058: J_LINK_SEGGER_DRV + HID    + 2x CDC
+# 0x1059: J_LINK_SEGGER_DRV + HID    + 2x CDC              + MSD
+# 0x105a: J_LINK_SEGGER_DRV + HID    + 2x CDC   + RNDIS
+# 0x105b: J_LINK_SEGGER_DRV + HID    + 2x CDC   + RNDIS    + MSD
+# 0x105c: J_LINK_SEGGER_DRV + HID    + 3x CDC
+# 0x105d: J_LINK_SEGGER_DRV + HID    + 3x CDC              + MSD
+# 0x105e: J_LINK_SEGGER_DRV + HID    + 3x CDC   + RNDIS
+# 0x105f: J_LINK_SEGGER_DRV + HID    + 3x CDC   + RNDIS    + MSD
+# 0x1060: J_LINK_WINUSB_DRV          + 2x CDC
+# 0x1061: J_LINK_WINUSB_DRV          + 2x CDC              + MSD
+# 0x1062: J_LINK_WINUSB_DRV          + 2x CDC   + RNDIS
+# 0x1063: J_LINK_WINUSB_DRV          + 2x CDC   + RNDIS    + MSD
+# 0x1064: J_LINK_WINUSB_DRV          + 3x CDC
+# 0x1065: J_LINK_WINUSB_DRV          + 3x CDC              + MSD
+# 0x1066: J_LINK_WINUSB_DRV          + 3x CDC   + RNDIS
+# 0x1067: J_LINK_WINUSB_DRV          + 3x CDC   + RNDIS    + MSD
+# 0x1068: J_LINK_WINUSB_DRV + HID    + 2x CDC
+# 0x1069: J_LINK_WINUSB_DRV + HID    + 2x CDC              + MSD
+# 0x106a: J_LINK_WINUSB_DRV + HID    + 2x CDC   + RNDIS
+# 0x106b: J_LINK_WINUSB_DRV + HID    + 2x CDC   + RNDIS    + MSD
+# 0x106c: J_LINK_WINUSB_DRV + HID    + 3x CDC
+# 0x106d: J_LINK_WINUSB_DRV + HID    + 3x CDC              + MSD
+# 0x106e: J_LINK_WINUSB_DRV + HID    + 3x CDC   + RNDIS
+# 0x106f: J_LINK_WINUSB_DRV + HID    + 3x CDC   + RNDIS    + MSD
+#
+ATTR{idProduct}=="1001", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1002", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1003", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1004", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1005", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1006", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1007", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1008", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1009", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="100f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1010", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1011", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1012", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1013", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1014", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1016", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1017", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1018", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1019", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="101f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1020", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1021", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1022", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1023", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1024", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1025", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1026", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1027", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1028", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1029", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="102f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1050", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1051", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1052", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1053", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1054", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1055", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1056", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1057", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1058", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1059", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="105f", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1060", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1061", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1062", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1063", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1064", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1065", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1066", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1067", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1068", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="1069", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106a", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106b", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106c", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106d", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", MODE="666"
+ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", MODE="666"
+#
+# Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0x1366 (SEGGER)
+#     PID 0x1008-100f, 0x1018-101f, 0x1028-102f, 0x1058-105f, 0x1068-106f (SEGGER J-Link)
+#     We cover all of them via idProduct=10* and idVendor=1366
+#
+#   VID 0xC251 (Keil)
+#     PID 0xF001: (LPC-Link-II CMSIS_DAP)
+#     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
+#     PID 0x2722: (Keil ULINK2 CMSIS-DAP)
+#   VID 0x0D28 (mbed)
+#     PID 0x0204: MBED CMSIS-DAP
+#
+KERNEL=="hidraw*", ATTRS{idProduct}=="10*",  ATTRS{idVendor}=="1366", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="0204", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="0204", ATTRS{idVendor}=="0d28", MODE="666"
+#
+# Make sure that J-Links are not captured by modem manager service
+# as this service would try detect J-Link as a modem and send AT commands via the VCOM component which might not be liked by the target...
+#
+ATTR{idProduct}=="1001", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1002", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1003", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1004", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1005", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1006", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1007", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1008", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1009", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="100f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1010", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1011", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1012", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1013", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1014", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1016", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1017", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1018", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1019", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="101f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1020", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1021", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1022", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1023", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1024", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1025", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1026", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1027", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1028", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1029", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="102f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1050", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1051", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1052", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1053", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1054", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1055", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1056", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1057", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1058", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1059", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="105f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1060", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1061", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1062", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1063", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1064", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1065", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1066", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1067", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1068", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="1069", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106a", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106b", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0xC251 (Keil)
+#     PID 0xF001: (LPC-Link-II CMSIS_DAP)
+#     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
+#     PID 0x2722: (Keil ULINK2 CMSIS-DAP)
+#   VID 0x0D28 (mbed)
+#     PID 0x0204: MBED CMSIS-DAP
+#
+ATTR{idProduct}=="f001", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f002", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="2722", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0204", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f001", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f002", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="2722", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0204", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# Make sure that VCOM ports of J-Links can be opened with user rights
+# We simply say that all devices from SEGGER which are in the "tty" domain are enumerated with normal user == R/W
+#
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1366", MODE="0666", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="c251", MODE="0666", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0d28", MODE="0666", GROUP="dialout"
+#
+# End of list
+#
+LABEL="jlink_rules_end"
+```
+99-Kingst.rules
+```
+# Kingst Virtual Instruments
+# This file should be installed to /etc/udev/rules.d so that you can access the hardware without being root
+#
+# type this at the command prompt: sudo cp 99-Kingst.rules /etc/udev/rules.d
+
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a1", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a2", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a3", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="01a4", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="02a1", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="02a2", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="02a3", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="03a1", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="03a2", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="77a1", ATTR{idProduct}=="03a3", MODE="0666"
+```
+99-SaleaeLogic.rules
+```
+# Saleae Logic Analyzer
+# This file should be installed to /etc/udev/rules.d so that you can access the Logic hardware without being root
+#
+# type this at the command prompt: sudo cp 99-SaleaeLogic.rules /etc/udev/rules.d
+
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0925", ATTR{idProduct}=="3881", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1001", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1003", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1004", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1005", MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="21a9", ATTR{idProduct}=="1006", MODE="0666"
+
+```
+reload rules
+```
+sudo udevadm control --reload-rules
+```
+
+---
+***
+# something
+```
+sudo apt-get install libftdi-dev fxload libc6-dev libusb-dev build-essential
+```
+
+---
+***
+# su权限文件怎么 通过管道修改
+```
+cat xxx | sudo tee xxxx
+echo xxx | sudo tee xxxx
+echo xxx | sudo tee -a xxxx
+```
+
+
+***
+# FT2232C
+```
+$ ls -l /dev/bus/usb/001/008
+crw-rw-rw-+ 1 root plugdev 189, 7 Jul 10 13:28 /dev/bus/usb/001/008
+```
+```
+$ getfacl /dev/bus/usb/001/008
+getfacl: Removing leading '/' from absolute path names
+# file: dev/bus/usb/001/008
+# owner: root
+# group: plugdev
+user::rw-
+user:andreas:rw-
+group::rw-
+mask::rw-
+other::rw-
+
+```
+```
+$ ls -l /dev/bus/usb/*/*
+crw-rw-r--  1 root root    189,   0 Jul 10 09:19 /dev/bus/usb/001/001
+crw-rw-r--  1 root root    189,   1 Jul 10 09:19 /dev/bus/usb/001/002
+crw-rw----+ 1 root plugdev 189,   2 Jul 10 09:19 /dev/bus/usb/001/003
+crw-rw-r--  1 root root    189,   3 Jul 10 09:19 /dev/bus/usb/001/004
+crw-rw-r--  1 root root    189,   4 Jul 10 09:19 /dev/bus/usb/001/005
+crw-rw-r--  1 root root    189,   6 Jul 10 09:19 /dev/bus/usb/001/007
+crw-rw-rw-+ 1 root plugdev 189,   7 Jul 10 13:28 /dev/bus/usb/001/008
+crw-rw-r--  1 root root    189,  10 Jul 10 13:04 /dev/bus/usb/001/011
+crw-rw-r--  1 root root    189,  12 Jul 10 13:09 /dev/bus/usb/001/013
+crw-rw-r--  1 root root    189, 128 Jul 10 09:19 /dev/bus/usb/002/001
+crw-rw-r--  1 root root    189, 129 Jul 10 09:19 /dev/bus/usb/002/002
+crw-rw-r--  1 root root    189, 130 Jul 10 09:19 /dev/bus/usb/002/003
+crw-rw-r--  1 root root    189, 131 Jul 10 09:19 /dev/bus/usb/002/004
+crw-rw-r--  1 root root    189, 132 Jul 10 09:23 /dev/bus/usb/002/005
+```
+
+***
+#
+```
+$ sudo apt install lightdm lightdm-gtk-greeter
+/var/log/apt/*.log
+
+实际上安装了lightdm-gtk-greeter会导致显示很不爽，丢失默认配置
+$ sudo apt remove gnome-themes-standard lightdm-gtk-greeter
+
+```
+
+
+
+***
+# anydesk
+安装deb文件
+附加安装 libgtkglext1
+添加服务
+/etc/systemd/system/multi-user.target.wants/anydesk.service → /etc/systemd/system/anydesk.service.
+usbstick地址码:
+`711 296 904`
+
+```
+sudo systemctl enable anydesk.service
+sudo systemctl start anydesk.service
+```
+设置 anydesk 无人值守
+```
+echo "password" | sudo anydesk --set-password
+sudo systemctl restart anydesk.service 
+```
 
 ***
 #
 ```
 ```
-
-
 ***
 #
 ```
 ```
-
-
 ***
 #
 ```
 ```
-
-
 ***
 #
 ```
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
 
 

@@ -50,15 +50,17 @@ our $CONFIG = {
   "editor"              => "leafpad",
   "force_icon_size"     => 0,
   "generic_fallback"    => 0,
-  "gtk_rc_filename"     => "$ENV{HOME}/.gtkrc-2.0",
+  "gtk_rc_filename"     => "$ENV{HOME}/.config/gtk-3.0/settings.ini",
   "gtk_version"         => 3,
   "icon_size"           => 48,
   "Linux::DesktopFiles" => {
                              desktop_files_paths     => [
                                                           "/usr/share/applications",
+                                                          "/usr/local/share/applications",
+                                                          "/usr/share/applications/kde4",
                                                           "$ENV{HOME}/.local/share/applications",
                                                         ],
-                             gtk_rc_filename         => "$ENV{HOME}/.gtkrc-2.0",
+                             gtk_rc_filename         => "$ENV{HOME}/.config/gtk-3.0/settings.ini",
                              icon_dirs_first         => undef,
                              icon_dirs_last          => undef,
                              icon_dirs_second        => undef,
@@ -75,5 +77,6 @@ our $CONFIG = {
   "locale_support"      => 1,
   "missing_icon"        => "gtk-missing-image",
   "terminal"            => "lxterminal",
+  "use_gtk3"            => 1,
   "VERSION"             => 0.91,
 }

@@ -8886,7 +8886,7 @@ exec lxterminal
 `gedit ~/.config/caja/accels`
 添加
 ```
-"<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
+(gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
 ```
 有效
 
@@ -14718,6 +14718,7 @@ yay -Rdd zoom
 yay -S boost boost-libs lib32-boost lib32-boost-libs
 ```
 
+
 ***
 # update20230210
 ```
@@ -14758,5 +14759,95 @@ warning: /etc/pacman.d/mirrorlist installed as /etc/pacman.d/mirrorlist.pacnew
 ==> WARNING: Possibly missing firmware for module: bfa
 
 ```
+
+
+***
+# 20230804
+```
+sudo pacman-key --keyserver hkp://keyserver.ubuntu.com:80 -r xxxxxxx
+yay -Syu
+harfbuzz-utils
+systemd-ukify
+python-pyudev
+cppzmq
+python-volume_key
+kio-admin
+pipewire-ffado
+pipewire-roc
+ccid
+podofo-0.9
+switcheroo-control
+perl-file-homedir
+wdiff
+qemu-user-static
+python-lsp-server
+fwupd
+system-config-printer
+rofi: for a modern dmenu replacement
+xss-lock
+i3lock
+perl-anyevent-i3
+doas
+smartmontools
+ostra-cg
+pacrunner
+pandoc-crossref
+languagetool
+grammalecte
+qt6-location
+qt6-serialbus
+python-js2py
+python-atomicwrites
+python-libarchive-c
+python-pygit2
+python-smbprotocol
+python-numba
+blas-openblas
+python-pytest-mock
+python-re-assert
+python-persistent
+python-zope-configuration
+python-zope-i18nmessageid
+python-zope-location
+python-zope-security
+msolve
+python-cvxpy
+python-pyscipopt
+languagetool
+neatvnc
+light-locker
+
+
+Optional dependencies for vtk:
+cgns
+openxr
+pdal
+verdict
+
+/usr/share/doc/jython/README.ArchLinux
+
+
+:: MariaDB was updated to a new feature release. To update the data run:
+   systemctl restart mariadb.service && mariadb-upgrade -u root -p
+
+If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+If you use GDM on Wayland, you might have to run systemctl enable --now nvidia-resume.service
+
+
+
+/etc/texmf/web2c/fmtutil.cnf saved as /etc/texmf/web2c/fmtutil.cnf.pacsave
+/etc/shells installed as /etc/shells.pacnew
+/etc/skel/.bashrc installed as /etc/skel/.bashrc.pacnew
+/etc/httpd/conf/httpd.conf installed as /etc/httpd/conf/httpd.conf.pacnew
+/etc/pacman.d/mirrorlist installed as /etc/pacman.d/mirrorlist.pacnew
+/etc/pacman.conf installed as /etc/pacman.conf.pacnew
+/etc/bluetooth/main.conf installed as /etc/bluetooth/main.conf.pacnew
+/etc/privoxy/config installed as /etc/privoxy/config.pacnew
+```
+
+
+
+
+
 
 
