@@ -2846,6 +2846,13 @@ sudo dpkg -i SunloginClient_11.0.1.44968_amd64.deb
 sudo systemctl enable runsunloginclient.service
 sudo systemctl start runsunloginclient.service
 ```
+`sudo gedit /usr/local/bin/sunloginclient`
+```
+#!/bin/bash
+/usr/local/sunlogin/bin/sunloginclient
+```
+`sudo chmod +x /usr/local/bin/sunloginclient`
+
 更换lightdm之后就可以了。
 
 ---
@@ -10611,6 +10618,77 @@ ForwardX11Trusted yes
 
 
 ---
+# 莫名错误
+```
+sudo apt update -y
+...
+E: Problem executing scripts APT::Update::Post-Invoke-Success 'if /usr/bin/test -w /var/lib/command-not-found/ -a -e /usr/lib/cnf-update-db; then /usr/lib/cnf-update-db > /dev/null; fi'
+E: Sub-process returned an error code
+```
+```
+sudo killall -KILL apt.systemd.daily
+sudo mv /etc/apt/apt.conf.d/50appstream /etc/apt/apt.conf.d/50appstream.disable
+sudo apt update -y  [still has error]
+sudo apt upgrade -y
+sudo mv /etc/apt/apt.conf.d/50appstream.disable /etc/apt/apt.conf.d/50appstream
+sudo apt update -y
+```
+```
+sudo apt-get clean
+sudo apt-get update
+
+```
+最后 重启大法好
+
+---
+# Install KVM on Linux
+<https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux>
+<https://help.ubuntu.com/community/KVM/Installation>
+```
+$ sudo apt-get install cpu-checker
+The following NEW packages will be installed:
+  cpu-checker msr-tools
+$ egrep -c '(vmx|svm)' /proc/cpuinfo
+$ kvm-ok
+INFO: /dev/kvm exists
+KVM acceleration can be used
+$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+Suggested packages:
+  libvirt-login-shell libvirt-daemon-driver-storage-gluster
+  libvirt-daemon-driver-storage-iscsi-direct libvirt-daemon-driver-storage-rbd
+  libvirt-daemon-driver-storage-zfs libvirt-daemon-driver-lxc
+  libvirt-daemon-driver-vbox libvirt-daemon-driver-xen numad auditd open-iscsi
+  pm-utils systemtap zfsutils vde2 trousers
+The following NEW packages will be installed:
+  bridge-utils dmeventd ipxe-qemu ipxe-qemu-256k-compat-efi-roms libaio1
+  libcacard0 libdaxctl1 libdevmapper-event1.02.1 libiscsi7 liblvm2cmd2.03
+  libndctl6 libnss-mymachines libpmem1 libpmemobj1 librbd1 libslirp0
+  libspice-server1 libtpms0 libusbredirparser1 libvirglrenderer1
+  libvirt-clients libvirt-daemon libvirt-daemon-config-network
+  libvirt-daemon-config-nwfilter libvirt-daemon-driver-qemu
+  libvirt-daemon-system libvirt-daemon-system-systemd libvirt0 lvm2 mdevctl
+  ovmf qemu-block-extra qemu-system-common qemu-system-data qemu-system-gui
+  qemu-system-x86 qemu-utils seabios swtpm swtpm-tools systemd-container
+  thin-provisioning-tools
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
 # 
 ```
 
@@ -10638,7 +10716,15 @@ ForwardX11Trusted yes
 ```
 
 
+---
+# 
+```
+
+```
 
 
+---
+# 
+```
 
-
+```
