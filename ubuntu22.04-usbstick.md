@@ -10675,17 +10675,45 @@ The following NEW packages will be installed:
 
 
 ---
-# 
+# genymotion
 ```
+sudo ./genymotion-3.5.0-linux_x64.bin -d /opt/
 
+Installing for all users.
+
+Installing to folder [/opt/genymotion]. Are you sure [y/n] ? y
+
+
+- Extracting files ..................................... OK (Extract into: [/opt/genymotion])
+- Installing launcher icon ............................. OK
+
+Installation done successfully.
+
+You can now use these tools from [/opt/genymotion]:
+ - genymotion
+ - genymotion-shell
+ - gmtool
+
+```
+```
+cd /usr/local/bin
+sudo gedit genymotion
+```
+```
+#!/bin/bash
+/opt/genymotion/genymotion
+```
+```
+sudo chmod +x genymotion
 ```
 
 
 ---
-# 
+# 安装 qt5serialport5
+```
+sudo apt-get install libqt5serialport5 libqt5serialport5-dev
 ```
 
-```
 
 
 ---
