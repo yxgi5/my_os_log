@@ -12419,6 +12419,86 @@ sudo systemctl restart anydesk.service
 ***
 #
 ```
+sudo apt-get update
+sudo apt autoremove
+sudo apt-get install software-properties-common
+sudo apt-get install uuid uuid-dev zlib1g-dev liblz-dev liblzo2-2 lzop git curl u-boot-tools mtd-utils android-sdk-libsparse-utils openjdk-8-jdk device-tree-compiler gdisk m4 make bc fakeroot unzip zip gawk busybox libstdc++6 lib32stdc++6 bison flex python libssl-dev cpio rsync
+
+
+sudo aptitude install liblzo2-dev
+     Downgrade the following packages:                         
+1)     liblzo2-2 [2.10-2~18.04.sav0 (now) -> 2.08-1.2 (bionic)]
+The following packages will be DOWNGRADED:
+  liblzo2-2 
+The following NEW packages will be installed:
+  liblzo2-dev 
+
+sudo apt-get install lz4
+Package 'lz4' has no installation candidate
+
+but liblz4-1 installed
+i A liblz4-1                                                                                          - Fast LZ compression algorithm library - runtime                                                            
+i A liblz4-1:i386                                                                                     - Fast LZ compression algorithm library - runtime   
+
+
+sudo aptitude install liblz4-tool
+      Remove the following packages:                                                          
+1)      libwireshark15 [3.6.2-2~18.04.sav0 (now)]                                             
+2)      libwiretap12 [3.6.2-2~18.04.sav0 (now)]                                               
+
+      Install the following packages:                                                         
+3)      libwireshark11 [2.6.10-1~ubuntu18.04.0 (bionic-updates)]                              
+4)      libwiretap8 [2.6.10-1~ubuntu18.04.0 (bionic-updates)]                                 
+5)      libwscodecs2 [2.6.10-1~ubuntu18.04.0 (bionic-updates)]                                
+6)      libwsutil9 [2.6.10-1~ubuntu18.04.0 (bionic-updates)]                                  
+
+      Downgrade the following packages:                                                       
+7)      liblz4-1 [1.9.3-2~18.04.sav0 (now) -> 0.0~r131-2ubuntu3.1 (bionic-updates)]           
+8)      liblz4-1:i386 [1.9.3-2~18.04.sav0 (now) -> 0.0~r131-2ubuntu3.1 (bionic-updates)]      
+9)      wireshark [3.6.2-2~18.04.sav0 (now) -> 2.6.10-1~ubuntu18.04.0 (bionic-updates)]       
+10)     wireshark-common [3.6.2-2~18.04.sav0 (now) -> 2.6.10-1~ubuntu18.04.0 (bionic-updates)]
+11)     wireshark-qt [3.6.2-2~18.04.sav0 (now) -> 2.6.10-1~ubuntu18.04.0 (bionic-updates)] 
+
+The following packages will be DOWNGRADED:
+  liblz4-1 liblz4-1:i386 wireshark wireshark-common wireshark-qt 
+The following NEW packages will be installed:
+  liblz4-tool libwireshark11{a} libwiretap8{a} libwscodecs2{a} libwsutil9{a} 
+The following packages will be REMOVED:
+  libbcg729-0{u} libwireshark15{a} libwiretap12{a} libwsutil13{u} 
+0 packages upgraded, 5 newly installed, 5 downgraded, 4 to remove and 35 not upgraded.
+
+
+
+sudo apt-get install openssh-server vim git fakeroot
+sudo apt-get install repo git ssh make gcc libssl-dev liblz4-tool expect g++ patchelf chrpath gawk texinfo chrpath diffstat binfmt-support qemu-user-static live-build bison flex fakeroot cmake gcc-multilib g++-multilib unzip device-tree-compiler python-pip libncurses5-dev
+
+The following additional packages will be installed:
+  g++-7-multilib lib32stdc++-7-dev libx32stdc++-7-dev python-kerberos tcl-expect
+Suggested packages:
+  lib32stdc++6-7-dbg libx32stdc++6-7-dbg win32-loader gnu-fdisk
+The following NEW packages will be installed:
+  expect g++-7-multilib g++-multilib lib32stdc++-7-dev libx32stdc++-7-dev live-build patchelf python-kerberos repo tcl-expect
+
+
+sudo apt-get install expect time build-essential kmod
+// sudo apt-get install python3.9
+sudo apt-get install net-tools
+
+
+sudo apt-get install libncurses*
+
+The following additional packages will be installed:
+  gnu-smalltalk gnu-smalltalk-common libtinfo5-dbg
+Suggested packages:
+  gnu-smalltalk-doc
+The following NEW packages will be installed:
+  gnu-smalltalk gnu-smalltalk-common libncurses-gst libncurses5-dbg libncursesada-doc libncursesada5 libncursesada5-dev libncursesw5-dbg libtinfo5-dbg
+
+
+sudo apt-get install repo git ssh make gcc libssl-dev liblz4-tool expect g++ patchelf chrpath gawk texinfo chrpath diffstat binfmt-support qemu-user-static live-build bison flex fakeroot cmake gcc-multilib g++-multilib unzip device-tree-compiler ncurses-dev
+
+
+sudo apt install gcc-aarch64-linux-gnu
 ```
 ***
 #
