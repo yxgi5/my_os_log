@@ -12500,9 +12500,34 @@ sudo apt-get install repo git ssh make gcc libssl-dev liblz4-tool expect g++ pat
 
 sudo apt install gcc-aarch64-linux-gnu
 ```
+
 ***
-#
+# mp4v2
 ```
+$ sudo apt-get build-dep mp4v2
+$ sudo apt-get install build-essential fakeroot subversion cvs dpkg-dev devscripts
+...
+Suggested packages:
+  mksh rcs
+The following NEW packages will be installed:
+  cvs
+...
+$ mkdir src; cd src
+$ apt-get source mp4v2
+$ cd mp4v2-2.0.0~dfsg0
+//patch -p1 < SomePackagePatch.patch
+//debchange -i
+//dpkg-source --commit
+// $ debuild -us -uc -i -I
+// $ dpkg-buildpackage -us -uc
+// $ sudo dpkg-buildpackage -b -uc -us
+$ dpkg-buildpackage -rfakeroot -b -uc -us
+
+
+解包
+$ dpkg-source -x mp4v2_2.0.0~dfsg0-6.dsc 
+$ cd mp4v2-2.0.0~dfsg0
+$ dpkg-buildpackage -rfakeroot -b -uc -us
 ```
 ***
 #
