@@ -227,6 +227,9 @@ PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ "
 
 # time zoom
 
+Current default time zone: 'Asia/Shanghai'
+Local time is now:      Tue Oct 10 12:44:23 CST 2023.
+Universal Time is now:  Tue Oct 10 04:44:23 UTC 2023.
 Run 'sudo dpkg-reconfigure tzdata' if you wish to change it
 
 # vim
