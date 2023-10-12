@@ -9786,7 +9786,7 @@ music-dl -k "周杰伦" -n 20
 
 # libopencv
 ```
-sudo apt-get install libopencv-core-dev libopencv-core4.5d
+sudo apt install libopencv-core-dev libopencv-core4.5d libopencv-calib3d-dev libopencv-calib3d4.5d
 sudo ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 ```
 
@@ -10720,8 +10720,14 @@ sudo apt-get install libqt5serialport5 libqt5serialport5-dev
 
 
 ---
-# 
+# 一些包
 ```
+sudo apt install qtcreator qtbase5-dev qt5-qmake cmake
+sudo apt install libwebp-dev libgdk-pixbuf2.0-dev libgtk-3-dev meson build-essential lximage-qt
+sudo apt install git libgtk2.0-dev libglib2.0-dev libgstreamer1.0-dev libjsoncpp-dev g++ make cmake
+sudo apt install g++-multilib  g++-11-multilib libgirepository1.0-dev libglib2.0-doc libxml2-utils
+sudo apt install libgraphite2-utils graphicsmagick dh-make enscript ffmpeg gimp gnuplot grads
+sudo apt install graphviz mplayer povray parcellite shutter libqt5serialport5 libqt5serialport5-dev
 
 ```
 
