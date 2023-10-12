@@ -9786,7 +9786,7 @@ music-dl -k "周杰伦" -n 20
 
 # libopencv
 ```
-sudo apt install libopencv-core-dev libopencv-core4.5d libopencv-calib3d-dev libopencv-calib3d4.5d
+sudo apt install libopencv-dev libopencv-core-dev libopencv-core4.5d libopencv-calib3d-dev libopencv-calib3d4.5d libopencv-dnn-dev libopencv-dnn4.5d
 sudo ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 ```
 
