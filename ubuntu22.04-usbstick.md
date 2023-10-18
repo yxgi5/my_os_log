@@ -2266,12 +2266,27 @@ $ lsattr -a
 
 ---
 
-# chrpath
+# chrpath / patchelf
 
 Tool to edit the rpath in ELF binaries
 
 ```
-$ sudo apt install chrpath
+$ sudo apt install chrpath patchelf
+$ sudo apt install autoconf automake libtool
+```
+```
+$ cd /opt/uex4/bin
+$ ldd ./uex
+$ readelf -d uex        (RUNPATH看看有没有"./")
+$ patchelf --print-needed uex
+//$ patchelf --remove-needed libpng12.so.0 uex
+//$ patchelf --add-needed libpng16.so uex
+//$ patchelf --replace-needed libpng12.so.0 libpng16.so uex
+//$ patchelf --set-rpath ./ uex
+//$ patchelf --print-rpath uex
+$ patchelf --set-rpath /opt/uex4/bin uex
+$ patchelf --print-rpath uex
+/opt/uex4/bin
 ```
 
 ---
@@ -4231,6 +4246,7 @@ to
 ```
 lxterminal
 ```
+~/.config/libfm/libfm.conf
 
 deb系的可以这配置terminal
 
@@ -7274,15 +7290,19 @@ sudo apt-get -c ~/apt_proxy_conf upgrade
 ```
 
 ---
-
 # pycharm
-
+<https://github.com/RisesunStudios/ide-eval-resetter>
+```
+plugins -> Manage Plugin Repositories -> add "https://plugins.zhile.io" -> search "IDE Eval Reset"
+```
+添加路径
+```
+/home/andy/.local/share/JetBrains/PyCharm2020.3/ide-eval-resetter
 ```
 
-```
 
 ---
-
+# 一些零件
 ```
 sudo apt install inxi libxml-dumper-perl fancontrol read-edid i2c-tools python3-smbus
 sudo apt install lxrandr
@@ -10717,17 +10737,244 @@ sudo apt-get install libqt5serialport5 libqt5serialport5-dev
 
 
 ---
-# 
+# faketime
 ```
+sudo apt install faketime
 
+The following NEW packages will be installed:
+  faketime libfaketim
 ```
 
 
 ---
-# 
+# 创建 一些 dmenu 启动器
+```
+cd /usr/local/bin
+sudo gedit uex
+```
+```
+#!/bin/bash
+rm ${HOME}/.idm/*.spl
+rm /tmp/*.spl
+rm ${HOME}/.idm/uex/*.spl
+cd /opt/uex/bin
+./uex
+```
+```
+sudo chmod +x uex
+```
+
+
+```
+cd /usr/local/bin
+sudo gedit uex4
+```
+```
+#!/bin/bash
+rm ${HOME}/.idm/*.spl
+rm /tmp/*.spl
+rm ${HOME}/.idm/uex/*.spl
+cd /opt/uex4/bin
+./uex
+```
+```
+sudo chmod +x uex4
+```
+
+
+```
+$ sudo gedit /usr/bin/bcompare
+```
+```
+rm "${HOME}/.config/bcompare/registry.dat"
+```
+
+
+```
+cd /usr/local/bin
+sudo gedit pycharm
+```
+```
+#!/bin/bash
+/opt/pycharm-professional/bin/pycharm.sh
+```
+```
+sudo chmod +x pycharm
+```
+
+
+```
+cd /usr/local/bin
+sudo gedit android-studio
+```
+```
+#!/bin/bash
+/opt/android-studio/bin/studio.sh
+```
+```
+sudo chmod +x android-studio
+```
+
+
+```
+cd /usr/local/bin
+sudo gedit baidunetdisk
+```
+```
+#!/bin/bash
+/opt/baidunetdisk/baidunetdisk  --no-sandbox %U
+```
+```
+sudo chmod +x baidunetdisk
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit genymotion
+```
+```
+#!/bin/bash
+/opt/genymotion/genymotion/genymotion
+```
+```
+sudo chmod +x genymotion
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit electronic-wechat
+```
+```
+#!/bin/bash
+/opt/electronic-wechat-linux-x64/electronic-wechat
+```
+```
+sudo chmod +x electronic-wechat
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit vivado
+```
+```
+#!/bin/bash
+/opt/Xilinx/Vivado/2020.1/bin/vivado
+```
+```
+sudo chmod +x vivado
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit vitis
+```
+```
+#!/bin/bash
+/opt/Xilinx/Vitis/2020.1/bin/vitis 
+```
+```
+sudo chmod +x vitis
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit eagle
+```
+```
+#!/bin/bash
+cd /opt/eagle-8.1.0/
+./eagle
+```
+```
+sudo chmod +x eagle
+```
+
+
+```
+cd /usr/local/bin
+sudo gedit allegro
+```
+```
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/allegro
+```
+```
+sudo chmod +x allegro
 ```
 
 ```
+$ sudo apt install libxmu-dev:i386
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libice-dev:i386 libsm-dev:i386 libxext-dev:i386 libxmu-headers libxmu6:i386 libxt-dev:i386 libxt6:i386
+Suggested packages:
+  libice-doc:i386 libsm-doc:i386 libxext-doc:i386 libxt-doc:i386
+The following NEW packages will be installed:
+  libice-dev:i386 libsm-dev:i386 libxext-dev:i386 libxmu-dev:i386 libxmu-headers libxmu6:i386 libxt-dev:i386 libxt6:i386
+```
+还是不能运行
+
+```
+cd /usr/local/bin
+sudo gedit concepthdl
+```
+```
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/concepthdl
+```
+```
+sudo chmod +x concepthdl
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit pad_designer
+```
+```
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/pad_designer
+```
+```
+sudo chmod +x pad_designer
+```
+
+
+
+```
+cd /usr/local/bin
+sudo gedit projmgr
+```
+```
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/projmgr
+```
+```
+sudo chmod +x projmgr
+```
+
+
 
 
 ---
