@@ -10991,9 +10991,16 @@ sudo apt install graphviz mplayer povray parcellite shutter libqt5serialport5 li
 
 
 ---
-# 
+# smartmontools
 ```
+sudo apt install smartmontools gddrescue
 
+Suggested packages:
+  gsmartcontrol smart-notifier ddrescueview
+  
+  
+sudo smartctl -a /dev/sdf2
+sudo ddrescue -f -v /dev/sdb /dev/sdc
 ```
 
 
