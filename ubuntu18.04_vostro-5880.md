@@ -12529,9 +12529,24 @@ $ dpkg-source -x mp4v2_2.0.0~dfsg0-6.dsc
 $ cd mp4v2-2.0.0~dfsg0
 $ dpkg-buildpackage -rfakeroot -b -uc -us
 ```
+
 ***
-#
+# 远程桌面
 ```
+sudo apt-get install rdesktop grdesktop
+
+Suggested packages:
+  pcscd
+The following NEW packages will be installed:
+  grdesktop libgssglue1 rdesktop
+
+
+rdesktop -a 16 -r sound:local -r clipboard:PRIMARYCLIPBOARD -r disk:sunray=/home/andreas -f 192.168.0.93 &
+
+
+realvnc:
+sudo apt install xserver-xorg-video-dummy
+sudo vncinitconfig -enable-system-xorg
 ```
 ***
 #

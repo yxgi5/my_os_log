@@ -10991,9 +10991,15 @@ sudo apt install graphviz mplayer povray parcellite shutter libqt5serialport5 li
 
 
 ---
-# 
+# realvnc
 ```
+sudo dpkg -i VNC-Server-xxx-Linux-x64.deb
+sudo systemctl start vncserver-x11-serviced.service
+#sudo systemctl enable vncserver-virtuald.service
+sudo systemctl enable vncserver-x11-serviced.service
 
+sudo apt install xserver-xorg-video-dummy
+sudo vncinitconfig -enable-system-xorg
 ```
 
 
