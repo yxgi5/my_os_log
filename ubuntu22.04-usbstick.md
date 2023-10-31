@@ -11004,6 +11004,20 @@ sudo vncinitconfig -enable-system-xorg
 
 
 ---
+# smartmontools
+```
+sudo apt install smartmontools gddrescue
+
+Suggested packages:
+  gsmartcontrol smart-notifier ddrescueview
+  
+  
+sudo smartctl -a /dev/sdf2
+sudo ddrescue -f -v /dev/sdb /dev/sdc
+```
+
+
+---
 # 
 ```
 
