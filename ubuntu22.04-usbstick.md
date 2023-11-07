@@ -11018,9 +11018,12 @@ sudo ddrescue -f -v /dev/sdb /dev/sdc
 
 
 ---
-# 
+# re-mount as rw
 ```
+$ sudo mount /dev/nvme0n1p3 -o rw,remount
 
+for embedded device
+# mount / -o rw,remount
 ```
 
 
