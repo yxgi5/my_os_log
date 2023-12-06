@@ -177,6 +177,12 @@ new doc里设置编码格式和换行格式
 # anydesk8060+sunlogin1510
 
 # git 3件套
+## git 图标修复
+```
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\
+
+Tortoise1xxxx~Tortoise9xxxx前面的空格给8个，然后任务管理器重启explorer
+```
 
 # uex（UEStudio）
 
@@ -416,3 +422,26 @@ Ext2Fsd-0.70b3w10-setup.exe
 # dsview
 
 # drawio
+
+# retext
+```
+pip install ReText  -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+# Typora
+cp node_inject.exe and license-gen.exe to installed folder and run cmd as admin
+```
+C:\Windows\System32>cd /d C:\Program Files\Typora
+
+C:\Program Files\Typora>.\node_inject.exe
+extracting node_modules.asar
+adding hook.js
+applying patch
+packing node_modules.asar
+done!
+
+C:\Program Files\Typora>.\license-gen.exe
+License for you: xxxxx-xxxxx-xxxxx-xxxxx
+```
+
+
