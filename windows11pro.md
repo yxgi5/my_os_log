@@ -99,7 +99,7 @@ winrar-x64-700b2.exe， zip/rar/7zip等默认打开修改为winrar
 7z2301-x64.exe
 
 # dism++系统优化
-
+存一份到c盘
 ```
 1空间回收
 2启动项管理稍后进行
@@ -443,5 +443,15 @@ done!
 C:\Program Files\Typora>.\license-gen.exe
 License for you: xxxxx-xxxxx-xxxxx-xxxxx
 ```
+
+
+# HEU_KMS
+```
+放了最新的到c盘，这下不怕丢失激活了哦
+可以用于升级windows版本，比如home->pro
+可以用于激活office
+```
+
+# 添加日语输入法
 
 
