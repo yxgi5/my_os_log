@@ -12548,9 +12548,13 @@ realvnc:
 sudo apt install xserver-xorg-video-dummy
 sudo vncinitconfig -enable-system-xorg
 ```
+
 ***
-#
+# 腾讯会议
 ```
+sudo dpkg -i TencentMeeting_0300000000_3.15.1.403_x86_64_default.publish.deb
+
+/opt/wemeet/wemeetapp.sh %u
 ```
 ***
 #
