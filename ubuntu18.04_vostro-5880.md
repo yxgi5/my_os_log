@@ -5445,6 +5445,15 @@ snap安装的不知道这样行不行
 mount | grep snapd
 ```
 
+
+* * *
+# music-dl
+```
+sudo -H pip3.8 install pymusic-dl
+music-dl -k "特别的爱给特别的你" -n 20
+```
+
+
 * * *
 # 安装feeluown及插件
 准备工作参考官方文档
@@ -5454,6 +5463,10 @@ sudo apt-get install python3-pyqt5
 sudo apt-get install python3-pyqt5.qtopengl
 sudo apt-get install python3-dbus
 sudo apt-get install python3-dbus.mainloop.pyqt5
+
+sudo apt-get install fcitx-frontend-qt5
+sudo apt-get install netcat
+sudo apt-get install mp3info
 ```
 3.6的也可以pip比较旧版本的(不建议)
 ```
@@ -5482,11 +5495,49 @@ pip3 -V
 ```
 //sudo -H pip3.8 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
 sudo -H pip3.8 install feeluown==3.8.3 fuo-local fuo-netease fuo-qqmusic fuo-kuwo --upgrade --proxy=http://127.0.0.1:8118
-sudo -H pip3.8 install feeluown==3.8.8 fuo-dl fuo-local fuo-netease fuo-ytmusic fuo-qqmusic fuo-kuwo fuo-xiami fuo-bilibili fuo-ytmusic --upgrade 
+sudo -H pip3.8 install feeluown==3.8.3 fuo-dl fuo-local fuo-netease fuo-ytmusic fuo-qqmusic fuo-kuwo fuo-xiami fuo-bilibili fuo-ytmusic --upgrade 
+sudo -H pip3.8 install feeluown==3.8.4 fuo-dl fuo-local fuo-netease fuo-ytmusic fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic --upgrade 
+sudo -H pip3.8 install feeluown==3.8.4 pyqt5-plugins PyQt5-stubs pyqt5-tools qt5-applications qt5-tools  fuo-dl fuo-local fuo-netease fuo-ytmusic fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic --upgrade  --proxy=http://127.0.0.1:8118
+
+bilibili插件安装似乎出错了，fuck it，不用这货
+
+3.8.3不支持所有插件
+
+fuo-dl                        0.3
+fuo-kuwo                      0.1.6
+fuo-local                     0.3
+fuo-netease                   0.9.2
+fuo-qqmusic                   0.5.1
+fuo-xiami                     0.2.4
+fuo-ytmusic                   0.1.1
+
+3.8.4 除了 xiami 都可以
+
+3.8.8 已知在本机环境 歌词 加载不了
 
 sudo cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so /usr/local/lib/python3.8/dist-packages/PyQt5/Qt5/plugins/platforminputcontexts
+
+ls /usr/local/lib/python3.8/dist-packages/PyQt5/Qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so
+
+应该要安装pyqt5-plugins这几个，不然输入法切不出来
 ```
 看来以后通过pip安装了pyqt就要把libfcitxplatforminputcontextplugin.so这个插件复制进来
+
+## 如果出错
+```
+sudo -H pip3 uninstall pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo PyQt5-sip PyQt5-Qt5 PyQtWebEngine-Qt5 mutagen packaging janus requests pydantic tomlkit qasync fuzzywuzzy marshmallow pycryptodome beautifulsoup4 typing-extensions
+
+sudo -H pip3.8 install feeluown==3.8.4 fuo-dl fuo-local fuo-netease fuo-ytmusic fuo-qqmusic fuo-kuwo fuo-xiami fuo-ytmusic pydantic==1.9.2 importlib-metadata==4.6.0 importlib-resources==5.2.2 --upgrade 
+
+pip3 show xxx
+
+pip3 list | grep feeluown
+
+pip3 list | grep fuo
+
+feeluown -d
+
+```
 
 再安装一个下载插件(如果fuo-dl不能pip安装)
 ```
@@ -5524,7 +5575,12 @@ nc localhost 23333  # 使用netcat连接Daemon
 # 输入 `fuo play fuo://netease/songs/470302665` 可以播放音乐
 ```
 
-##开启调试模式
+## 本地library
+可以把歌曲拖入，但是删除要去编辑
+```
+~/.FeelUOwn/collections/library.fuo
+```
+## 开启调试模式
 ```
 feeluown -d
 ```
