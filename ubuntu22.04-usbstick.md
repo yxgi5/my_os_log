@@ -9015,6 +9015,10 @@ nc localhost 23333  # 使用netcat连接Daemon
 # 输入 `fuo play fuo://netease/songs/470302665` 可以播放音乐
 ```
 
+##开启调试模式
+```
+feeluown -d
+```
 
 ## 配置文件
 <https://feeluown.readthedocs.io/en/stable/fuorc.html>

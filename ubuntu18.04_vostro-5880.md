@@ -5482,12 +5482,13 @@ pip3 -V
 ```
 //sudo -H pip3.8 install pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo -i https://mirrors.163.com/pypi/simple
 sudo -H pip3.8 install feeluown==3.8.3 fuo-local fuo-netease fuo-qqmusic fuo-kuwo --upgrade --proxy=http://127.0.0.1:8118
+sudo -H pip3.8 install feeluown==3.8.8 fuo-dl fuo-local fuo-netease fuo-ytmusic fuo-qqmusic fuo-kuwo fuo-xiami fuo-bilibili fuo-ytmusic --upgrade 
 
 sudo cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so /usr/local/lib/python3.8/dist-packages/PyQt5/Qt5/plugins/platforminputcontexts
 ```
 看来以后通过pip安装了pyqt就要把libfcitxplatforminputcontextplugin.so这个插件复制进来
 
-再安装一个下载插件
+再安装一个下载插件(如果fuo-dl不能pip安装)
 ```
 git clone git@github.com:feeluown/feeluown-download.git
 cd feeluown-download
@@ -5495,6 +5496,83 @@ sudo python3.8 setup.py build (实际上install就可以)
 sudo python3.8 setup.py install
 下载位置在~/.FeelUOwn/songs
 ```
+
+## 试安装是否成功
+```
+feeluown -h
+```
+
+## 生成桌面图标
+```
+feeluown-genicon
+```
+直接双击桌面 FeelUOwn 图标，这时启动 GUI/Daemon 混合模式
+
+##  Daemon 模式
+```
+feeluown -nw    # 使用 Daemon 模式启动 feeluown
+
+
+fuo status  # 查看播放器状态
+fuo search 周杰伦  # 搜索歌曲
+fuo play fuo://netease/songs/470302665
+fuo pause
+fuo resume
+
+nc localhost 23333  # 使用netcat连接Daemon
+# 输入 `status` 命令，可以查看播放器状态
+# 输入 `fuo play fuo://netease/songs/470302665` 可以播放音乐
+```
+
+##开启调试模式
+```
+feeluown -d
+```
+
+## 配置文件
+
+In `~/.fuorc`
+
+```
+import os
+
+
+# 自定义配置
+#config.THEME = 'dark'
+config.COLLECTIONS_DIR = '~/.FeelUOwn/songs'
+config.AUDIO_SELECT_POLICY = '>>>'
+
+
+# 一个小功能：切换歌曲时，发送系统通知
+def notify_song_changed(song):
+    if song is not None:
+        title = song.title_display
+        artists_name = song.artists_name_display
+        song_str = f'{title}-{artists_name}'
+        os.system(f'notify-send "{song_str}"')
+
+when('app.playlist.song_changed', notify_song_changed)
+
+# 让编辑器识别这是一个 Python 文件
+#
+# Local Variables:
+# mode: python
+# End:
+#
+# vim: ft=python
+
+# config.ytmusic.HTTP_PROXY='http://127.0.0.1:8118' # 报错了
+
+def load_plugin_rcfiles(plugin):
+    if plugin.name == 'fuo_local':
+        #config.fuo_local.MUSIC_FOLDERS = [os.path.expanduser('~') + '/Music']
+        config.fuo_local.MUSIC_FOLDERS = [os.path.expanduser('~') + '/Music', '/home/andreas/.FeelUOwn/songs']
+        config.fuo_local.MUSIC_FORMATS = ['mp3', 'ogg', 'wma', 'm4a', 'm4v', 'mp4', 'flac']
+
+when('app.plugin_mgr.about_to_enable', load_plugin_rcfiles, use_symbol=True, aioqueue=False)
+```
+
+
 
 * * *
 # music players
