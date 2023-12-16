@@ -4036,6 +4036,18 @@ $ sudo apt install parcellite
 ```
 
 ```
+$ parcellite
+Looking in '/etc/xdg/xdg-openbox/parcellite/parcelliterc'
+Looking in '/etc/xdg/parcellite/parcelliterc'
+Looking in '/etc/xdg/xdg-openbox/parcellite/parcelliterc'
+Looking in '/etc/xdg/parcellite/parcelliterc'
+parcelliteNo magic! Assume no history.
+Attempt to unlock mutex that was not locked
+Aborted (core dumped)
+```
+如果出问题，删除 $HOME/.local/share/parcellite 目录，就可以修复
+
+```
 The following additional packages will be installed:
   libayatana-appindicator1 libayatana-indicator7 libdbusmenu-gtk4
 ```
