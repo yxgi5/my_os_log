@@ -3735,6 +3735,7 @@ Suggested packages:
 # openbox
 
 ## Note, selecting 'suckless-tools' instead of 'dmenu'
+如果dmenu有问题可以删除~/.cache/dmenu_run
 
 ```
 $ sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm feh suckless-tools fonts-dejavu gnome-screenshot
