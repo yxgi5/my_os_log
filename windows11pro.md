@@ -342,6 +342,11 @@ DB.Browser.for.SQLite-3.10.1-win64.exe
 ```
 
 # cygwin && cygwin-x
+```
+7z安装之后用最新的7z.exe替换
+tree
+
+```
 
 # msys2
 

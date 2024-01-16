@@ -12691,16 +12691,28 @@ sudo dpkg -i TencentMeeting_0300000000_3.15.1.403_x86_64_default.publish.deb
 /opt/wemeet/wemeetapp.sh %u
 ```
 ***
-#
+# heif-convert
 ```
-```
-***
-#
-```
+sudo apt-get install libheif1 libheif-examples
+
 ```
 ***
 #
 ```
+sudo apt install flatpak gnome-software-plugin-flatpak
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+sudo flatpak install flathub fr.handbrake.ghb
+flatpak run fr.handbrake.ghb
+
+
+
+sudo apt install nasm
+```
+***
+#
+```
+ffmpeg -encoders -hide_banner | grep -i qsv
+ffmpeg -decoders -hide_banner | grep -i qsv
 ```
 ***
 #
