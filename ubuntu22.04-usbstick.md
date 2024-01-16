@@ -3735,6 +3735,7 @@ Suggested packages:
 # openbox
 
 ## Note, selecting 'suckless-tools' instead of 'dmenu'
+如果dmenu有问题可以删除~/.cache/dmenu_run
 
 ```
 $ sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm feh suckless-tools fonts-dejavu gnome-screenshot
@@ -4033,6 +4034,18 @@ Suggested packages:
 ```
 $ sudo apt install parcellite
 ```
+
+```
+$ parcellite
+Looking in '/etc/xdg/xdg-openbox/parcellite/parcelliterc'
+Looking in '/etc/xdg/parcellite/parcelliterc'
+Looking in '/etc/xdg/xdg-openbox/parcellite/parcelliterc'
+Looking in '/etc/xdg/parcellite/parcelliterc'
+parcelliteNo magic! Assume no history.
+Attempt to unlock mutex that was not locked
+Aborted (core dumped)
+```
+如果出问题，删除 $HOME/.local/share/parcellite 目录，就可以修复
 
 ```
 The following additional packages will be installed:
