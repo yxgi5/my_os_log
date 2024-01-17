@@ -12697,22 +12697,38 @@ sudo apt-get install libheif1 libheif-examples
 
 ```
 ***
-#
+# flatpak + handbrake
 ```
 sudo apt install flatpak gnome-software-plugin-flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-sudo flatpak install flathub fr.handbrake.ghb
+sudo flatpak install flathub fr.handbrake.ghb        or              flatpak --user install fr.handbrake.ghb         or      sudo flatpak install fr.handbrake.ghb
 flatpak run fr.handbrake.ghb
-
-
 
 sudo apt install nasm
 ```
-***
-#
+or
 ```
+flatpak --user install HandBrake-1.4.2-x86_64.flatpak
+flatpak --user install HandBrakeCLI-1.4.2-x86_64.flatpak
+Download the latest snapshot from the [development snapshot builds](https://github.com/HandBrake/HandBrake-snapshots)[^nightly-builds]
+flatpak --user install fr.handbrake.ghb-20210720182537-a01549c9c-master-x86_64.flatpak
+```
+
+***
+# native handbrake
+```
+sudo apt install handbrake handbrake-cli
+```
+
+
+***
+# ffmpeg
+```
+检查 intel 显卡加速
 ffmpeg -encoders -hide_banner | grep -i qsv
 ffmpeg -decoders -hide_banner | grep -i qsv
+
+ffmpeg -hide_banner -h encoder=h264_nvenc
 ```
 ***
 #
