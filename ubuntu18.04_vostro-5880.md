@@ -12733,7 +12733,84 @@ ffmpeg -hide_banner -h encoder=h264_nvenc
 ***
 #
 ```
+sudo apt-get update
+
+sudo apt-get install repo git-core gitk git-gui gcc-arm-linux-gnueabihf u-boot-tools device-tree-compiler \
+gcc-aarch64-linux-gnu mtools parted libudev-dev libusb-1.0-0-dev python-linaro-image-tools \
+linaro-image-tools gcc-arm-linux-gnueabihf libssl-dev liblz4-tool genext2fs lib32stdc++6 \
+gcc-aarch64-linux-gnu g+conf autotools-dev libsigsegv2 m4 intltool libdrm-dev curl sed make \
+binutils build-essential gcc g++ bash patch gzip bzip2 perl tar cpio python unzip rsync file bc wget \
+libncurses5 libqt4-dev libglib2.0-dev libgtk2.0-dev libglade2-dev cvs git mercurial rsync openssh-client \
+subversion asciidoc w3m dblatex graphviz python-matplotlib libssl-dev texinfo fakeroot \
+libparse-yapp-perl default-jre patchutils swig chrpath diffstat gawk time expect-dev
+
+sudo apt-get install repo git ssh make gcc libssl-dev liblz4-tool \
+expect g++ patchelf chrpath gawk texinfo chrpath diffstat binfmt-support \
+qemu-user-static live-build bison flex fakeroot cmake gcc-multilib g++-multilib \
+unzip \
+device-tree-compiler ncurses-dev
+
+
+
+初始化sdk
+
+mkdir rk3588_sdk
+cd rk3588_sdk
+repo init --no-clone-bundle --repo-url https://gitlab.com/firefly-linux/git-repo.git -u https://gitlab.com/firefly-linux/manifests.git -b master -m rk3588_linux_release.xml
+.repo/repo/repo sync -c --no-tags
+cd .repo/repo
+git pull
+.repo sync
+cd -
+.repo/repo/repo start firefly --all
+
+mkdir rk3399_sdk
+cd rk3399_sdk
+repo init --no-clone-bundle --repo-url https://gitlab.com/firefly-linux/git-repo.git -u https://gitlab.com/firefly-linux/manifests.git -b master -m rk3399_linux_release.xml
+.repo/repo/repo sync -c --no-tags
+cd .repo/repo
+git pull
+.repo sync
+cd -
+.repo/repo/repo start firefly --all
+
+
+同步sdk
+.repo/repo/repo sync -c --no-tags
 ```
+
+
+***
+# 电驴 BT种子 磁力链接 下载
+bt magnet 用 qbittorrent / Transmission/ deluge 还是挺好的
+```
+sudo apt-get install deluge deluge-common deluge-gtk deluge-torrent deluged deluge-console deluge-web deluge-webui
+sudo apt-get install mldonkey-gui
+sudo apt-get install amule amule-common amule-utils amule-utils-gui 
+sudo apt-get install bittorrent bittorrent-gui
+sudo apt-get install rtorrent qbittorrent
+```
+trackerslist
+```
+proxychains git clone git@github.com:ngosang/trackerslist.git
+```
+trackers_all.txt内容贴到种子的trackerslist
+
+实在不行才用utorrent的web版本
+```
+sudo apt install libssl-dev
+wget http://download.ap.bittorrent.com/track/beta/endpoint/utserver/os/linux-x64-ubuntu-13-04 -O utserver.tar.gz
+```
+
+测试链接
+```
+ed2k://|file|HAVD-707.avi|1016554984|E43EB71D6B47008C4B8CE50B7684A5A7|/
+magnet:?xt=urn:btih:C70298676C4A0D3E1ACDDAB4F15B6F7CB312E77D
+```
+amule 段错误无法运行，mlgui服务器都没连上（不知道添加啥服务器好了）。 电驴看来彻底废了。
+
+
+
 ***
 #
 ```
