@@ -6045,6 +6045,11 @@ opera://extensions
 ```
 sudo apt install smbclient nautilus-share samba samba-common smbclient system-config-samba winbind cifs-utils
 ```
+## 添加samba用户和密码
+```
+sudo smbpasswd -a andreas
+```
+## 修改配置文件
 sudo gedit /etc/samba/smb.conf
 ```
 [figkey]
@@ -6070,7 +6075,50 @@ sudo gedit /etc/samba/smb.conf
     read only = yes
     writeable = no
     browseable = yes
+
+[reference]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/参考资料
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+
+[exchange]
+    comment = Network Logon Service
+    path = /home/andreas/workdir/exchange
+    guest ok = yes
+    read only = no
+    writeable = yes
+    browseable = yes
+
+[tmp]
+	only user = yes
+	comment = Network Logon Service
+	valid users = andreas
+	browseable = yes
+	path = /opt/tmp2/
+
+[sss]
+	user = andreas,@andreas
+	revalidate = yes
+	path = /opt/tmp
+	only user = yes
+	read list = andreas,@andreas
+	valid users = andreas,@andreas
+
+[mov]
+	write list = andreas,@andreas
+	writeable = yes
+	read list = andreas,@andreas
+	valid users = andreas,@andreas
+	user = andreas,@andreas
+	path = /media/andreas/8a73bf94-e351-461c-a4fa-b1b25e587b32/mov
+	only user = yes
+	revalidate = yes
+
 ```
+## 重启服务
 ```
 sudo /etc/init.d/nmbd restart
 sudo /etc/init.d/smbd restart
@@ -8758,12 +8806,6 @@ NMON=ld nmon -s1
 ```
 
 * * *
-# 添加samba用户和密码
-```
-sudo smbpasswd -a andreas
-```
-
-* * *
 # exfat
 `$ sudo apt-get install exfat-utils`
 ```
@@ -9314,6 +9356,7 @@ zope.interface                5.5.0
 # 7zip 加密压缩
 ```
 7z a -r -pABC12345 -mhe=on  ../test.7z *
+7z a -r -p'ABC12345' -mhe=on  ../test.7z *
 ```
 ```
 a=添加files到archive
@@ -12810,7 +12853,24 @@ magnet:?xt=urn:btih:C70298676C4A0D3E1ACDDAB4F15B6F7CB312E77D
 amule 段错误无法运行，mlgui服务器都没连上（不知道添加啥服务器好了）。 电驴看来彻底废了。
 
 
+***
+# Device /dev/ttyUSB1 is locked
+```
+ls /run/lock/
+```
 
+***
+#
+```
+```
+***
+#
+```
+```
+***
+#
+```
+```
 ***
 #
 ```
