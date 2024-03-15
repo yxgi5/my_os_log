@@ -12860,13 +12860,35 @@ ls /run/lock/
 ```
 
 ***
-#
+# xfreerdp 远程 （没有成功）
 ```
+sudo apt install freerdp2-x11
 ```
+参数说明
+```
+/u: 登陆用户名
+/p: 登陆密码
+/sec:nla 验证
+/cert-ignore 不回首次连接时会提示用户 Do you trust the above certificate?
+/drive: 映射网络硬盘
+/v 远程目标ip地址和端口
+
+```
+
+```
+xfreerdp /u:administrator /p:**** /sec:nla /drive:x,/media /drive:y,/root /v:192.168.0.93
+xfreerdp /u:user_name /d:domain_name /a:32 /g:1920x1080 /x:0 /fonts /sec:nla /v:192.168.0.93
+xfreerdp /sec:nla /v:192.168.0.93:3389
+```
+
 ***
-#
+# 清理 cuda 10.2
 ```
+sudo apt purge cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-11-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2  cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2
+
+sudo apt purge cuda-cudart-cross-aarch64-10-2
 ```
+
 ***
 #
 ```
