@@ -6053,6 +6053,7 @@ sudo smbpasswd -a andreas
 sudo gedit /etc/samba/smb.conf
 ```
 [global]
+allow insecure wide links = yes
 unix extensions = no
 ...
 [exchange]
