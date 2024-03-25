@@ -6052,6 +6052,17 @@ sudo smbpasswd -a andreas
 ## 修改配置文件
 sudo gedit /etc/samba/smb.conf
 ```
+[global]
+unix extensions = no
+...
+[exchange]
+    comment = Network Logon Service
+    path = /home/andreas/workdir/exchange
+    guest ok = yes
+    read only = no
+    writeable = yes
+    browseable = yes
+
 [figkey]
     comment = Network Logon Service
     path = /home/andreas/workdir/figkey
@@ -6062,7 +6073,7 @@ sudo gedit /etc/samba/smb.conf
 
 [software]
     comment = Network Logon Service
-    path = /media/andreas/M4B/software
+    path = /media/andreas/M4A/software
     guest ok = yes
     read only = yes
     writeable = no
@@ -6070,7 +6081,7 @@ sudo gedit /etc/samba/smb.conf
 
 [boards]
     comment = Network Logon Service
-    path = /media/andreas/M4B/开发板资料
+    path = /media/andreas/M4A/开发板资料
     guest ok = yes
     read only = yes
     writeable = no
@@ -6084,25 +6095,27 @@ sudo gedit /etc/samba/smb.conf
     writeable = no
     browseable = yes
 
-[exchange]
+[rk3588]
     comment = Network Logon Service
-    path = /home/andreas/workdir/exchange
+    path = /opt/rk3588
     guest ok = yes
-    read only = no
-    writeable = yes
+    read only = yes
+    writeable = no
     browseable = yes
+    follow symlinks = yes
+    wide links = yes
 
 [tmp]
 	only user = yes
 	comment = Network Logon Service
 	valid users = andreas
 	browseable = yes
-	path = /opt/tmp2/
+	path = /opt/tmp
 
 [sss]
 	user = andreas,@andreas
 	revalidate = yes
-	path = /opt/tmp
+	path = /opt/porno
 	only user = yes
 	read list = andreas,@andreas
 	valid users = andreas,@andreas
@@ -6113,7 +6126,7 @@ sudo gedit /etc/samba/smb.conf
 	read list = andreas,@andreas
 	valid users = andreas,@andreas
 	user = andreas,@andreas
-	path = /media/andreas/8a73bf94-e351-461c-a4fa-b1b25e587b32/mov
+	path = /ext_drv/mov
 	only user = yes
 	revalidate = yes
 
@@ -12882,13 +12895,150 @@ xfreerdp /sec:nla /v:192.168.0.93:3389
 ```
 
 ***
-# 清理 cuda 10.2
+# 清理 cuda 
 ```
-sudo apt purge cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-11-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2  cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2
+sudo apt purge cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-11-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2 cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2
 
 sudo apt purge cuda-cudart-cross-aarch64-10-2
 ```
+实际上nvidia驱动版本可以高, cuda和cudnn要选合适的, 选保留10.2比较好
+```
+sudo aptitude install cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-11-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2 cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2 cuda-cudart-cross-aarch64-10-2
 
+sudo aptitude install libcudnn8=8.6.0.163-1+cuda10.2 libcudnn8-dev=8.6.0.163-1+cuda10.2 libcudnn8-samples=8.6.0.163-1+cuda10.2
+```
+
+
+```
+sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command-line-tools-11-4 cuda-compat-11-4 cuda-compiler-11-4 cuda-cub-11-4 cuda-cudart-dev-11-4 cuda-documentation-11-4 cuda-libraries-dev-11-4 cuda-nvcc-11-4 cuda-samples-11-4 cuda-toolkit-11-4 cuda-tools-11-4 cuda-nsight-compute-11-4 nsight-compute-2021.2.2
+     Remove the following packages:                      
+1)     cuda-nsight-compute-10-2 [10.2.89-1 (<NULL>, now)]
+2)     cuda-toolkit-10-2 [10.2.89-1 (<NULL>, now)]       
+3)     cuda-tools-10-2 [10.2.89-1 (<NULL>, now)]         
+4)     cuda-visual-tools-10-2 [10.2.89-1 (<NULL>, now)]  
+```
+先删了再安装就是,实际上也安装了一个nsight-compute-2023.1.1,之前的是nsight-compute-2021.2.2
+```
+sudo aptitude install nsight-compute-2021.2.2
+sudo aptitude remove nsight-compute-2023.1.1
+```
+
+
+
+
+
+
+***
+#gcc-aarch64-linux-gnu
+```
+sudo apt install gcc-aarch64-linux-gnu
+
+The following additional packages will be installed:
+  gcc-7-aarch64-linux-gnu
+Suggested packages:
+  gcc-7-doc gcc-7-locales libgcc1-dbg-arm64-cross libgomp1-dbg-arm64-cross
+  libitm1-dbg-arm64-cross libatomic1-dbg-arm64-cross libasan4-dbg-arm64-cross
+  liblsan0-dbg-arm64-cross libtsan0-dbg-arm64-cross libubsan0-dbg-arm64-cross
+  libcilkrts5-dbg-arm64-cross libmpx2-dbg-arm64-cross
+  libquadmath0-dbg-arm64-cross gdb-aarch64-linux-gnu gcc-doc
+The following packages will be REMOVED:
+  g++-multilib gcc-multilib
+The following NEW packages will be installed:
+  gcc-7-aarch64-linux-gnu gcc-aarch64-linux-gnu
+
+```
+
+***
+#
+```
+## 展示静态库的文件组成列表
+ar -t *.a
+## 展示静态库的符号列表,会将静态库的函数, 以文件为单位列出函数和结构体列表;
+nm *.a
+$nm libhello.so |grep printf U
+
+## ldd命令查看依赖于哪些库
+$ldd hello libc.so.6=>/lib/libc.so.6(0x400la000) /lib/ld-linux.so.2=>
+/lib/ld-linux.so.2 (0x40000000)
+
+## 查看静态库或动态库定义了哪些函数
+nm -g --defined-only xxxx.a
+nm -g --defined-only xxxx.so
+nm -n --defined-only xxxx.a
+nm -g -C --defined-only xxxx.so
+nm -D xxxx.so
+
+## 显示xxx.a 中的未定义符号，需要和其他对象文件进行链接.
+nm -u xxx.o
+
+## 在 ./ 目录下找出哪个库文件定义了close_socket函数. 
+nm -A ./* 2>/dev/null | grep "T close_socket"
+
+## 查看动态库有哪些符号，包括数据段、导出的函数和引用其他库的函数
+objdump -tT xxx.so
+objdump -x xxx.a
+
+## 查看动态库依赖项
+objdump -x xxx.so | grep "NEEDED" 
+
+## 查看动态符号表
+objdump -T xxx.so
+## 假如想知道 xxx.so 中是否导出了符号 yyy ，那么命令为 objdump -T xxx.so | grep "yyy" 。
+
+## 查看动态符号表
+objdump -t xxx.so
+## -T 和 -t 选项在于 -T 只能查看动态符号，如库导出的函数和引用其他库的函数，而 -t 可以查看所有的符号，包括数据段的符号。
+
+## 查看静态库定义的函数
+readelf -c xxx.a
+
+## 查看静态库定义的函数
+readelf -A xxx.so 
+
+## 由.o文件创建静态库
+gcc -c hello.c
+ar cr libmyhello.a hello.o
+
+gcc -c hello.c -o hello.o
+ar cqs libhello.a hello.o
+
+## 在程序中使用静态库
+gcc -o hello main.c -L. -lmyhello
+
+./hello
+
+Hello everyone!
+
+## 由.o文件创建动态库文件
+gcc -shared -fPCI -o libmyhello.so hello.o
+gcc -shared -Wl,-soname,libhello.so.1 -o libhello.so.1.0 hello.o
+
+## 在程序中使用动态库
+gcc -o hello main.c -L. -lmyhello
+
+./hello
+
+## 顺利找到动态库，有三种方法
+### 把库拷贝到缺省的库搜索路径/usr/lib和/lib目录下，如果在其它位置要加上-L参数
+### 在LD_LIBRARY_PATH环境变量中加上库所在路径
+$export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/ting/lib
+### 修改/etc/ld.so.conf文件，把库所在的路径加到文件末尾，并执行ldconfig刷新。这样，加入的目录下的所有库文件都可见
+
+## 当静态库和动态库同名时， gcc命令将优先使用动态库
+
+## 指示与静态库连接(如果系统中只有静态库当然就不需要"-WI，-Bstatic"这个参数了)
+$gcc testlib.o -o testlib -WI,-Bstatic -lhello
+## 指示与多个静态库连接
+$gcc testlib.o -o testlib -WI,-Bstatic -lhello -WI,-Bdynamic -lbye
+
+## 可以在库文件名后加上版本号为后缀
+libxxxx.so.major.minor 其中，xxxx是库的名字，major是主版本号，minor 是次版本号
+
+ln -s libhello.so.1.0 libhello.so.1
+ln -s libhello.so.1 libhello.so
+
+
+```
 ***
 #
 ```
@@ -12897,5 +13047,12 @@ sudo apt purge cuda-cudart-cross-aarch64-10-2
 #
 ```
 ```
-
+***
+#
+```
+```
+***
+#
+```
+```
 
