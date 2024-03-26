@@ -9461,6 +9461,13 @@ conda base环境引起了gitk的字体变化，还是sans但是无法显示全�
 `$ source ~/anaconda3/bin/activate <env_name>`
 <env_name>就是在~/anaconda3/envs内的目录名
 
+如果conda在环境变量里,也可以
+`conda activate`
+或者
+`conda activate <env_name>`
+退出环境
+`conda dectivate`
+
 
 生效环境变量
 ```
