@@ -12911,14 +12911,18 @@ sudo apt purge cuda-cudart-cross-aarch64-10-2
 ```
 实际上nvidia驱动版本可以高, cuda和cudnn要选合适的, 选保留10.2比较好
 ```
-sudo aptitude install cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-11-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2 cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2 cuda-cudart-cross-aarch64-10-2
+sudo aptitude install cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-10-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2 cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2 cuda-cudart-cross-aarch64-10-2
 
 sudo aptitude install libcudnn8=8.6.0.163-1+cuda10.2 libcudnn8-dev=8.6.0.163-1+cuda10.2 libcudnn8-samples=8.6.0.163-1+cuda10.2
 ```
+列出一个软件的所有仓库版本
+```
+sudo apt-cache madison libcudnn8
+```
 
 
 ```
-sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command-line-tools-11-4 cuda-compat-11-4 cuda-compiler-11-4 cuda-cub-11-4 cuda-cudart-dev-11-4 cuda-documentation-11-4 cuda-libraries-dev-11-4 cuda-nvcc-11-4 cuda-samples-11-4 cuda-toolkit-11-4 cuda-tools-11-4 cuda-nsight-compute-11-4 nsight-compute-2021.2.2
+sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command-line-tools-11-4 cuda-compat-11-4 cuda-compiler-11-4 cuda-cub-11-4 cuda-cudart-dev-11-4 cuda-documentation-11-4 cuda-libraries-dev-11-4 cuda-nvcc-11-4 cuda-samples-11-4 cuda-toolkit-11-4 cuda-tools-11-4 cuda-nsight-compute-11-4 nsight-compute-2021.2.2 
      Remove the following packages:                      
 1)     cuda-nsight-compute-10-2 [10.2.89-1 (<NULL>, now)]
 2)     cuda-toolkit-10-2 [10.2.89-1 (<NULL>, now)]       
@@ -12929,10 +12933,38 @@ sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command
 ```
 sudo aptitude install nsight-compute-2021.2.2
 sudo aptitude remove nsight-compute-2023.1.1
+
+
+cuda-toolkit-11-config-common
+sudo aptitude remove cuda-cudart-11-2
+sudo aptitude remove libcufft-11-2
+sudo aptitude install cuda-cudart-11-4 libcublas-11-4 libcublas-dev-11-4 libcufft-11-4 libcusolver-11-4 libcusparse-11-4
+ls -l /usr/local | grep cuda
+sudo update-alternatives --config cuda
+sudo aptitude install cuda=10.2.89-1 cuda-10-2 cuda-demo-suite-10-2 cuda-runtime-10-2
+ll /etc/alternatives/cuda*
+update-alternatives --list cuda
+update-alternatives --display cuda
+sudo update-alternatives --install "/usr/local/cuda" "cuda" "/usr/local/cuda-10.2" 100
+sudo update-alternatives --set cuda /usr/local/cuda-10.2
+sudo update-alternatives --config cuda
+ll /etc/alternatives/cuda*
+ll /usr/local | grep cuda
 ```
+如果用tenserflow 2.5.0~2.8.0~? 
+Could not load dynamic library 'libcublas.so.11'
+Could not load dynamic library 'libcublasLt.so.11'
+Could not load dynamic library 'libcusolver.so.11'
+Could not load dynamic library 'libcusparse.so.11'
+```
+sudo update-alternatives --set cuda /usr/local/cuda-11.4
+```
+alternatives指向11.4版本其实也不影响mx等
 
-
-
+如果需要nvcc(10.2)
+```
+sudo update-alternatives --set cuda /usr/local/cuda-10.2
+```
 
 
 
@@ -13048,8 +13080,94 @@ ln -s libhello.so.1 libhello.so
 
 ```
 ***
-#
+# trtexec tensorrt
+trtexec在libnvinfer-bin里面
 ```
+$ aptitude search tensorrt
+p   tensorrt                                                                                          - Meta package for TensorRT                                                                                  
+p   tensorrt-dev                                                                                      - Meta package for TensorRT development libraries                                                            
+p   tensorrt-libs                                                                                     - Meta package for TensorRT runtime libraries                                                                
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ apt-cache madison tensorrt
+  tensorrt | 8.6.1.6-1+cuda12.0 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.6.1.6-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.6.0.12-1+cuda12.0 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.6.0.12-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.3.1-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.3.1-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.2.2-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.2.2-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.1.7-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.1.7-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.3.1-1+cuda11.6 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.3.1-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.2.4-1+cuda11.6 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.2.4-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.1.5-1+cuda11.6 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.1.5-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ sudo aptitude install tensorrt=8.5.3.1-1+cuda10.2 tensorrt-dev=8.5.3.1-1+cuda10.2 tensorrt-libs=8.5.3.1-1+cuda10.2
+The following NEW packages will be installed:
+  tensorrt{b} tensorrt-dev{b} tensorrt-libs{b} 
+0 packages upgraded, 3 newly installed, 0 to remove and 41 not upgraded.
+Need to get 10.9 kB of archives. After unpacking 33.8 kB will be used.
+The following packages have unmet dependencies:
+ tensorrt-libs : Depends: libnvinfer8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                 Depends: libnvinfer-plugin8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                 Depends: libnvparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                 Depends: libnvonnxparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+ tensorrt-dev : Depends: libnvinfer-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                Depends: libnvinfer-plugin-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                Depends: libnvparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                Depends: libnvonnxparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+ tensorrt : Depends: libnvinfer8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-plugin8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvonnxparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-bin (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-plugin-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvonnxparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-samples (= 8.5.3-1+cuda10.2) but it is not going to be installed
+The following actions will resolve these dependencies:
+
+     Keep the following packages at their current version:
+1)     tensorrt [Not Installed]                           
+2)     tensorrt-dev [Not Installed]                       
+3)     tensorrt-libs [Not Installed]                      
+
+
+
+Accept this solution? [Y/n/q/?] n
+The following actions will resolve these dependencies:
+
+      Install the following packages:                    
+1)      libnvinfer-bin [8.5.3-1+cuda10.2 (<NULL>)]       
+2)      libnvinfer-dev [8.5.3-1+cuda10.2 (<NULL>)]       
+3)      libnvinfer-plugin-dev [8.5.3-1+cuda10.2 (<NULL>)]
+4)      libnvinfer-plugin8 [8.5.3-1+cuda10.2 (<NULL>)]   
+5)      libnvinfer-samples [8.5.3-1+cuda10.2 (<NULL>)]   
+6)      libnvinfer8 [8.5.3-1+cuda10.2 (<NULL>)]          
+7)      libnvonnxparsers-dev [8.5.3-1+cuda10.2 (<NULL>)] 
+8)      libnvonnxparsers8 [8.5.3-1+cuda10.2 (<NULL>)]    
+9)      libnvparsers-dev [8.5.3-1+cuda10.2 (<NULL>)]     
+10)     libnvparsers8 [8.5.3-1+cuda10.2 (<NULL>)]        
+
+
+
+Accept this solution? [Y/n/q/?] y
+The following NEW packages will be installed:
+  libnvinfer-bin{a} libnvinfer-dev{a} libnvinfer-plugin-dev{a} libnvinfer-plugin8{a} libnvinfer-samples{a} libnvinfer8{a} libnvonnxparsers-dev{a} libnvonnxparsers8{a} libnvparsers-dev{a} libnvparsers8{a} 
+  tensorrt tensorrt-dev tensorrt-libs 
+0 packages upgraded, 13 newly installed, 0 to remove and 41 not upgraded.
+
+
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ export PATH=$PATH:/usr/src/tensorrt/bin/
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ trtexec --help
+
 ```
 ***
 #
