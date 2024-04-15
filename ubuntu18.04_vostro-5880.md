@@ -3560,12 +3560,29 @@ $ newgrp docker
 $ docker run hello-world
 ```
 ## docker 源加速
-/etc/docker/daemon.json，加上如下的键值:
+`sudo gedit /etc/docker/daemon.json`, 加上如下的键值:
 ```
 {
   "registry-mirrors": ["https://registry.docker-cn.com"]
 }
 ```
+或者
+```
+{
+  "registry-mirrors": [
+        "https://ung2thfc.mirror.aliyuncs.com",
+        "https://registry.docker-cn.com",
+        "http://hub-mirror.c.163.com",
+        "https://docker.mirrors.ustc.edu.cn"
+    ]
+}
+```
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+docker info
+```
+
 ## 在dock安装ubuntu1604 [原来是为了在arch执行xsct, 不过看起来对ubunut多版本还是个很好的解决方案]
 ```
 $ docker pull ubuntu
@@ -7562,6 +7579,8 @@ Sun Oct  9 17:03:18 2022
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 
+
+nvidia-smi -l 5
 ```
 
 本身ubuntu的repo有 nvidia-cuda-toolkit 比较老旧
@@ -9598,6 +9617,8 @@ $ conda list
 ```
 $ conda remove -n some_pip_test --all
 ```
+
+
 重命名环境
 conda 其实没有重命名指令，实现重命名是通过 clone 完成的，分两步：
 
@@ -9606,14 +9627,25 @@ conda 其实没有重命名指令，实现重命名是通过 clone 完成的，�
 ②删除 old name 的环境
 
 如，将nlp重命名成tf2
+
+克隆出新环境
 ```
 conda create -n tf2 --clone nlp
+```
+到原环境生成pip和conda列表
+```
+pip freeze > requirements.txts
+conda list -e > requirements.txt                
 ```
 删除原环境
 ```
 conda remove -n nlp --all
 ```
-
+进入目标环境还原conda和pip列表
+```
+conda install --yes --file requirements.txt
+pip install -r requirements.txt
+```
 
 精确查找
 ```
@@ -13170,13 +13202,32 @@ $ trtexec --help
 
 ```
 ***
-#
+# 查看已经安装的deb包版本
+比如 tensorrt 的版本是啥, 有这些办法可以查找
 ```
+dpkg -s tensorrt | grep Version
+apt-show-versions -a tensorrt
+aptitude versions tensorrt
+apt list tensorrt
+apt list tensorrt -a
 ```
+
+
 ***
 #
 ```
 ```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
 ***
 #
 ```
