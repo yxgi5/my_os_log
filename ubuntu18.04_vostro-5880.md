@@ -13272,8 +13272,20 @@ The following packages will be upgraded:
 
 
 ***
-#
+# wine64 简单使用和 desktop 例子
 ```
+env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFIX="/home/andreas/.wine-x64" wine Caesium\ Image\ Compressor.exe
+```
+MAXSerDesEV-GMSL.desktop
+```
+[Desktop Entry]
+Name=MAXSerDesEV-GMSL
+Exec=env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFIX="/home/andreas/.wine-x64" wine C:\\\\users\\\\Public\\\\Desktop\\\\MAXSerDesEV-GMSL.lnk
+Type=Application
+StartupNotify=true
+Path=/home/andreas/.wine-x64/dosdevices/c:/Maxim Integrated/MAXSerDesEV-GMSL
+Icon=F365_GMSL.0
+StartupWMClass=gmsl.exe
 ```
 
 ***
