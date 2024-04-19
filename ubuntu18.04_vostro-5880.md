@@ -9613,6 +9613,20 @@ $ python --version
 ```
 $ conda list
 ```
+
+查看conda环境中tensorrt的版本和来源
+```
+pip list | grep tensorrt
+tensorrt                 8.6.1.post1
+tensorrt-bindings        8.6.1
+tensorrt-libs            8.6.1
+
+conda list | grep tensorrt
+tensorrt                  8.6.1.post1              pypi_0    pypi
+tensorrt-bindings         8.6.1                    pypi_0    pypi
+tensorrt-libs             8.6.1                    pypi_0    pypi
+```
+
 删除自定义env（谨慎操作）
 ```
 $ conda remove -n some_pip_test --all
@@ -9709,6 +9723,21 @@ $ conda upgrade <package_name>
 ```
 更新多个指定包，则包名以空格隔开，向后排列。如： `conda update pandas numpy matplotlib` 即更新pandas、numpy、matplotlib包
 
+
+## conda的虚拟环境添加到jupyter notebook
+以新建的虚拟环境为例
+```
+conda create -n myenv python=3.8
+conda activate myenv
+conda install numpy
+conda install ipykernel
+python -m ipykernel install --user --name=myenv # 这里名字可以和conda环境名不同
+jupyter notebook    # 一般 new 下面就可以新建一个用conda环境的 kernel 的 jupyter 文件了
+```
+卸载
+```
+删除 ~/.local/share/jupyter/kernels/ 下面的对应文件夹就可以
+```
 
 
 ## ActivePython配置管理
@@ -13214,9 +13243,33 @@ apt list tensorrt -a
 
 
 ***
-#
+# 更新 ffmpeg4
+实际上是希望能把 hevc_qsv 编码器用起来，但是目前环境看起来不行。更新到更高版本的系统apt仓库才有预编译好的deb包
 ```
+sudo add-apt-repository ppa:morphis/intel-media
+sudo apt-get install libva-dev intel-media-va-driver-non-free vainfo
+for i in buildconf hwaccels decoders filters encoders; do echo $i:; ffmpeg -hide_banner -${i} | egrep -i "qsv|vaapi|libmfx"; done
+sudo vainfo
+ffmpeg -hwaccel qsv -c:v hevc_qsv -i example.mp4 -b:v 2000k output.mp4
 ```
+记录一下更改，免得黑屏啥的
+```
+$ sudo apt-get install libva-dev intel-media-va-driver-non-free vainfo ffmpeg
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+vainfo is already the newest version (2.1.0+ds1-1).
+The following additional packages will be installed:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavresample4 libavutil56 libcodec2-0.7 libigdgmm9 libpostproc55 libswresample3 libswscale5 libva-drm2 libva-drm2:i386 libva-glx2 libva-wayland2
+  libva-x11-2 libva-x11-2:i386 libva2 libva2:i386
+The following NEW packages will be installed:
+  intel-media-va-driver-non-free libavcodec58 libavdevice58 libavfilter7 libavformat58 libavresample4 libavutil56 libcodec2-0.7 libigdgmm9 libpostproc55 libswresample3 libswscale5
+The following packages will be upgraded:
+  ffmpeg libva-dev libva-drm2 libva-drm2:i386 libva-glx2 libva-wayland2 libva-x11-2 libva-x11-2:i386 libva2 libva2:i386
+
+```
+编译的方式咱就不试验了
+
 
 ***
 #
