@@ -11045,8 +11045,68 @@ for embedded device
 
 
 ---
-# 
+# 安装 miniconda
 ```
+$ bash Miniconda3-latest-Linux-x86_64.sh 
+
+Welcome to Miniconda3 py312_24.1.2-0
+
+In order to continue the installation process, please review the license
+agreement.
+Please, press ENTER to continue
+>>> 
+...
+
+Do you accept the license terms? [yes|no]
+>>> yes         
+
+Miniconda3 will now be installed into this location:
+/home/andy/miniconda3
+
+  - Press ENTER to confirm the location
+  - Press CTRL-C to abort the installation
+  - Or specify a different location below
+
+[/home/andy/miniconda3] >>> 
+PREFIX=/home/andy/miniconda3
+Unpacking payload ...
+                                                                                                                                                                                                                   
+Installing base environment...
+
+
+Downloading and Extracting Packages:
+
+
+Downloading and Extracting Packages:
+
+Preparing transaction: done
+Executing transaction: done
+installation finished.
+Do you wish to update your shell profile to automatically initialize conda?
+This will activate conda on startup and change the command prompt when activated.
+If you'd prefer that conda's base environment not be activated on startup,
+   run the following command when conda is activated:
+
+conda config --set auto_activate_base false
+
+You can undo this by running `conda init --reverse $SHELL`? [yes|no]
+[no] >>> no 
+
+You have chosen to not have conda modify your shell scripts at all.
+To activate conda's base environment in your current shell session:
+
+eval "$(/home/andy/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)" 
+
+To install conda's shell functions for easier access, first activate, then:
+
+conda init
+
+Thank you for installing Miniconda3!
+
+andy@andy-usbstick:~/Downloads
+$ source ~/miniconda3/bin/activate
+(base) andy@andy-usbstick:~/Downloads
+$ 
 
 ```
 
