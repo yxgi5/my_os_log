@@ -11112,7 +11112,254 @@ $
 
 
 ---
-# 
+# ffmpeg hevc_qsv
+```
+$ sudo apt-get install libva-dev libmfx-dev intel-media-va-driver-non-free vainfo
+[sudo] password for andy:  
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  intel-media-va-driver-non-free:i386 libset-scalar-perl libva-glx2
+  libwayland-bin libwayland-dev
+Suggested packages:
+  libwayland-doc
+The following packages will be REMOVED:
+  intel-media-va-driver intel-media-va-driver:i386
+The following NEW packages will be installed:
+  intel-media-va-driver-non-free intel-media-va-driver-non-free:i386
+  libmfx-dev libset-scalar-perl libva-dev libva-glx2 libwayland-bin
+  libwayland-dev vainfo
+
+
+sudo apt install -o APT::Get::Fix-Missing=true libva-dev libmfx-dev intel-media-va-driver-non-free vainfo libmfx-gen-dev libmfx-gen1.2 libmfx-tools libva-x11-2
+
+sudo vainfo
+
+
+for i in buildconf hwaccels decoders filters encoders; do echo $i:; ffmpeg -hide_banner -${i} | egrep -i "qsv|vaapi|libmfx"; done
+
+ffmpeg -hwaccel qsv -i example.mp4 -c:v hevc_qsv -b:v 2000k output.mp4
 ```
 
 ```
+$ sudo vainfo
+[sudo] password for andy:  
+error: XDG_RUNTIME_DIR not set in the environment.
+libva info: VA-API version 1.14.0
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
+libva info: Found init function __vaDriverInit_1_14
+libva info: va_openDriver() returns 0
+vainfo: VA-API version: 1.14 (libva 2.12.0)
+vainfo: Driver version: Intel iHD driver for Intel(R) Gen Graphics - 22.3.1 ()
+vainfo: Supported profile and entrypoints
+      VAProfileNone                   :	VAEntrypointVideoProc
+      VAProfileNone                   :	VAEntrypointStats
+      VAProfileMPEG2Simple            :	VAEntrypointVLD
+      VAProfileMPEG2Simple            :	VAEntrypointEncSlice
+      VAProfileMPEG2Main              :	VAEntrypointVLD
+      VAProfileMPEG2Main              :	VAEntrypointEncSlice
+      VAProfileH264Main               :	VAEntrypointVLD
+      VAProfileH264Main               :	VAEntrypointEncSlice
+      VAProfileH264Main               :	VAEntrypointFEI
+      VAProfileH264Main               :	VAEntrypointEncSliceLP
+      VAProfileH264High               :	VAEntrypointVLD
+      VAProfileH264High               :	VAEntrypointEncSlice
+      VAProfileH264High               :	VAEntrypointFEI
+      VAProfileH264High               :	VAEntrypointEncSliceLP
+      VAProfileVC1Simple              :	VAEntrypointVLD
+      VAProfileVC1Main                :	VAEntrypointVLD
+      VAProfileVC1Advanced            :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointEncPicture
+      VAProfileH264ConstrainedBaseline:	VAEntrypointVLD
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSlice
+      VAProfileH264ConstrainedBaseline:	VAEntrypointFEI
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSliceLP
+      VAProfileHEVCMain               :	VAEntrypointVLD
+      VAProfileHEVCMain               :	VAEntrypointEncSlice
+      VAProfileHEVCMain               :	VAEntrypointFEI
+      VAProfileHEVCMain               :	VAEntrypointEncSliceLP
+      VAProfileHEVCMain10             :	VAEntrypointVLD
+      VAProfileHEVCMain10             :	VAEntrypointEncSlice
+      VAProfileHEVCMain10             :	VAEntrypointEncSliceLP
+      VAProfileVP9Profile0            :	VAEntrypointVLD
+      VAProfileVP9Profile0            :	VAEntrypointEncSliceLP
+      VAProfileVP9Profile1            :	VAEntrypointVLD
+      VAProfileVP9Profile1            :	VAEntrypointEncSliceLP
+      VAProfileVP9Profile2            :	VAEntrypointVLD
+      VAProfileVP9Profile2            :	VAEntrypointEncSliceLP
+      VAProfileVP9Profile3            :	VAEntrypointVLD
+      VAProfileVP9Profile3            :	VAEntrypointEncSliceLP
+      VAProfileHEVCMain12             :	VAEntrypointVLD
+      VAProfileHEVCMain12             :	VAEntrypointEncSlice
+      VAProfileHEVCMain422_10         :	VAEntrypointVLD
+      VAProfileHEVCMain422_10         :	VAEntrypointEncSlice
+      VAProfileHEVCMain422_12         :	VAEntrypointVLD
+      VAProfileHEVCMain422_12         :	VAEntrypointEncSlice
+      VAProfileHEVCMain444            :	VAEntrypointVLD
+      VAProfileHEVCMain444            :	VAEntrypointEncSliceLP
+      VAProfileHEVCMain444_10         :	VAEntrypointVLD
+      VAProfileHEVCMain444_10         :	VAEntrypointEncSliceLP
+      VAProfileHEVCMain444_12         :	VAEntrypointVLD
+      VAProfileHEVCSccMain            :	VAEntrypointVLD
+      VAProfileHEVCSccMain            :	VAEntrypointEncSliceLP
+      VAProfileHEVCSccMain10          :	VAEntrypointVLD
+      VAProfileHEVCSccMain10          :	VAEntrypointEncSliceLP
+      VAProfileHEVCSccMain444         :	VAEntrypointVLD
+      VAProfileHEVCSccMain444         :	VAEntrypointEncSliceLP
+      VAProfileAV1Profile0            :	VAEntrypointVLD
+      VAProfileHEVCSccMain444_10      :	VAEntrypointVLD
+      VAProfileHEVCSccMain444_10      :	VAEntrypointEncSliceLP
+
+```
+安装最新的 ffmpeg 6.1（libva: This version of libva doesn't support retrieving the device information from the driver. Please consider to upgrade libva to support VA-API 1.15.0）
+<https://launchpad.net/~ubuntuhandbook1/+archive/ubuntu/ffmpeg6>
+依赖关系无法解决
+
+/etc/apt/sources.lis
+```
+deb https://ppa.launchpadcontent.net/ubuntuhandbook1/ffmpeg6/ubuntu jammy main 
+deb-src https://ppa.launchpadcontent.net/ubuntuhandbook1/ffmpeg6/ubuntu jammy main 
+```
+
+
+
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys  4C1CBE14852541CB
+
+gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys  4C1CBE14852541CB
+sudo gpg --armor --export 4C1CBE14852541CB | sudo apt-key add -
+sudo gpg -a --export 4C1CBE14852541CB | sudo apt-key add -
+```
+always: gpg: keyserver receive failed: Server indicated a failure
+```
+wget https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa0062203196ca4482ddb859e4c1cbe14852541cb  或者浏览器下载pubkey为 armored-keys.asc
+sudo apt-key add armored-keys.asc
+```
+就可以解决 keyserver 无法连接问题
+
+对keyserver使用代理
+```
+--keyserver-option http-proxy=http://<account>:<password>@proxy server:port
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --keyserver-option http-proxy=http://x:y@proxy:port --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+```
+
+
+```
+$ sudo apt update
+$ sudo apt-get -c ~/apt_proxy_conf install ffmpeg
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libavcodec60 libavdevice60 libavfilter9 libavformat60 libavutil58 libcjson1 libdav1d6 libhwy1 libjxl0.7 liblcms2-2 liblcms2-2:i386 libpostproc57 librist4 libsvtav1enc1 libswresample4 libswscale7 libvidstab1.2 libvpl2
+Suggested packages:
+  ffmpeg-doc libcuda1 libnvcuvid1 libnvidia-encode1
+The following NEW packages will be installed:
+  libavcodec60 libavdevice60 libavfilter9 libavformat60 libavutil58 libcjson1 libdav1d6 libhwy1 libjxl0.7 libpostproc57 librist4 libsvtav1enc1 libswresample4 libswscale7 libvidstab1.2 libvpl2
+The following packages will be upgraded:
+  ffmpeg liblcms2-2 liblcms2-2:i386
+  
+  
+转hevc_qsv报错  
+libva: This version of libva doesn't support retrieving the device information from the driver. Please consider to upgrade libva to support VA-API 1.15.0
+实际上机器的 VA-API 是 1.14.0
+```
+依赖关系无法解决。也不想用源码编译, 算啦官方仓库的4就够用了
+
+恢复
+
+1.去掉source，然后sudo apt update
+```
+sudo apt-get -c ~/apt_proxy_conf update
+$ apt-cache madison ffmpeg
+    ffmpeg | 7:4.4.2-0ubuntu0.22.04.1 | http://mirrors.cqu.edu.cn/ubuntu jammy-updates/universe amd64 Packages
+    ffmpeg | 7:4.4.2-0ubuntu0.22.04.1 | http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages
+    ffmpeg | 7:4.4.1-3ubuntu5 | http://mirrors.cqu.edu.cn/ubuntu jammy/universe amd64 Packages
+andy@andy-usbstick:~/Downloads/qsv
+$ sudo apt-get install ffmpeg=7:4.4.2-0ubuntu0.22.04.1
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libavcodec60 libavdevice60 libavfilter9 libavformat60 libavutil58 libcjson1 libdav1d6 libhwy1 libjxl0.7 libpostproc57 librist4 libsvtav1enc1 libswresample4 libswscale7 libvidstab1.2 libvpl2
+Use 'sudo apt autoremove' to remove them.
+Suggested packages:
+  ffmpeg-doc
+The following packages will be DOWNGRADED:
+  ffmpeg
+  
+$ sudo apt autoremove
+```
+
+
+
+
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+---
+# 
+```
+```
+
+
+
+
+
+
+
