@@ -11213,6 +11213,9 @@ vainfo: Supported profile and entrypoints
       VAProfileHEVCSccMain444_10      :	VAEntrypointEncSliceLP
 
 ```
+
+<https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/>
+
 安装最新的 ffmpeg 6.1（libva: This version of libva doesn't support retrieving the device information from the driver. Please consider to upgrade libva to support VA-API 1.15.0）
 <https://launchpad.net/~ubuntuhandbook1/+archive/ubuntu/ffmpeg6>
 依赖关系无法解决
@@ -11267,6 +11270,9 @@ libva: This version of libva doesn't support retrieving the device information f
 实际上机器的 VA-API 是 1.14.0
 ```
 依赖关系无法解决。也不想用源码编译, 算啦官方仓库的4就够用了
+<https://qiita.com/yamakenjp/items/c1c91669b00ea149e3ad>
+<https://trac.ffmpeg.org/wiki/Hardware/QuickSync>
+<https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu>
 
 恢复
 
