@@ -11304,9 +11304,515 @@ $ sudo apt autoremove
 
 
 ---
-# 
+# docker安装ubuntu1804
+docker pull ubuntu:18.04
+```
+FROM ubuntu:18.04
+
+#MAINTAINER Andreas Zhang <yxgi5@163.com>
+
+RUN apt update && apt install -y \
+  wget \
+  build-essential \
+  libglib2.0-0 \
+  libsm6 \
+  libxi6 \
+  libxrender1 \
+  libxrandr2 \
+  libfreetype6 \
+  libfontconfig \
+  git
+
+# COPY install_config.txt /
+# ARG xxx
+# RUN xxx
+RUN apt update \
+    &&  apt -y upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt install -y build-essential default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && df -ih \
+    && mkdir -p /opt \
+    && df -ih \
+    && rm -rf /tmp/.X* \
+    && mkdir -p /home/andy/.vnc \
+    && useradd -ms /bin/bash andy \
+    && chown -R andy /home/andy
+USER andy
+WORKDIR /home/andy
+
+RUN adduser --disabled-password --gecos '' andy
+USER andy
+WORKDIR /home/andy
+# RUN echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> /home/andy/.profile
+
+#RUN mkdir /home/andy/.Xilinx
+#COPY Xilinx.lic /home/andy/.Xilinx/
+
+ENV DISPLAY :0
+ENV GEOMETRY 1920x1080
+
+#ENTRYPOINT ["/opt/entrypoint.sh"]
+
+```
+
+Dockerfile
+```
+FROM ubuntu:18.04
+
+MAINTAINER Andreas Zhang <yxgi5@163.com>
+
+RUN apt update && apt install -y \
+  wget \
+  build-essential \
+  libglib2.0-0 \
+  libsm6 \
+  libxi6 \
+  libxrender1 \
+  libxrandr2 \
+  libfreetype6 \
+  libfontconfig \
+  git
+  
+RUN DEBIAN_FRONTEND=noninteractive apt install -y build-essential default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo
+
+RUN apt clean
+
+
+#RUN useradd -ms /bin/bash andy
+#RUN chown -R andy /home/andy
+RUN adduser --disabled-password --gecos '' andy
+USER andy
+WORKDIR /home/andy
+RUN mkdir -p /home/andy/.vnc
+
+ENV DISPLAY :0
+ENV GEOMETRY 1920x1080
+#ENTRYPOINT ["/opt/entrypoint.sh"]
+
+```
+
+
+docker build -t  ubuntu1804:initial .
+docker rm ubuntu1804_install
+docker run -ti -p 5900:5900 --name ubuntu1804_install ubuntu1804:initial # Install with GUI on VNC
+docker commit ubuntu1804_install ubuntu1804:installed
+
+
+
+
+
+Dockerfile
+```
+FROM vivado:installed
+
+#RUN apt install -y build-essential libxrender-dev libxtst-dev vnc4server twm
+RUN rm -rf /tmp/.X*
+
+#RUN useradd -ms /bin/bash andy
+#USER andy
+#WORKDIR /home/andy
+
+RUN mkdir -p /home/andy/.vnc
+ADD files/xstartup /home/andy/.vnc/xstartup
+ADD files/entrypoint.sh /opt/entrypoint.sh
+
+```
+
+no password
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sudo systemctl stop docker.service 
+sudo systemctl start docker.service 
+docker container rm ubuntu1804_install
+docker image rm ubuntu1804:initial
+```
+FROM ubuntu:18.04
+
+MAINTAINER Andreas Zhang <yxgi5@163.com>
+
+RUN apt update && apt install -y \
+  wget \
+  build-essential \
+  libglib2.0-0 \
+  libsm6 \
+  libxi6 \
+  libxrender1 \
+  libxrandr2 \
+  libfreetype6 \
+  libfontconfig \
+  git
+  
+RUN DEBIAN_FRONTEND=noninteractive apt install -y build-essential default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo
+
+RUN apt clean
+```
+docker build -t  ubuntu1804:initial .
+docker run -ti --name ubuntu1804_install ubuntu1804:initial
+
+```
+# apt install -y lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
+# apt clean
+
+# dpkg-reconfigure tzdata 
+> choose 6 19
+# dpkg-reconfigure locales
+> choose en_US.UTF-8 UTF-8 158 3
+# dpkg-reconfigure dash
+> choose no
+```
+docker commit ubuntu1804_install ubuntu1804:base
+
+docker run -ti -p 5900:5900 --name ubuntu1804_install ubuntu1804:initial # Install with GUI on VNC
+
+docker commit ubuntu1804_install ubuntu1804:installed
+docker image tag ubuntu1804:installed ubuntu1804:base
+docker image rm ubuntu1804:installed
+docker container rename ubuntu1804_install ubuntu1804_base
+
+从镜像产生容器并运行一次
+docker run -ti --name ubuntu1804_base ubuntu1804:base
+
+运行容器
+docker start ubuntu1804_base
+进入容器
+docker exec -it ubuntu1804_base /bin/bash
+
+```
+# passwd
+# useradd -ms /bin/bash andy
+# chown -R andy /home/andy
+# passwd andy
+```
+docker commit ubuntu1804_base ubuntu1804:config
+docker container rename ubuntu1804_base ubuntu1804_config
+docker container stop ubuntu1804_config
+docker container rm ubuntu1804_config
+
+
+```
+FROM ubuntu1804:config
+
+USER andy
+WORKDIR /home/andy
+```
+docker build -t  ubuntu1804:config1 .
+docker run -ti --name ubuntu1804_config1 ubuntu1804:config1
+```
+$ vncserver -geometry 1920x1080 :0
+Password:123456
+
+$ rm ~/.vnc/*.log
+
+$ su
+# cat /etc/sudoers
+# usermod -aG adm andy
+# newgrp adm
+# exit
+$ exit
+```
+docker start ubuntu1804_config1
+docker exec -it ubuntu1804_config1 /bin/bash
+```
+$ su
+# cat /etc/group | grep sudo
+# usermod -aG sudo andy
+# newgrp sudo
+```
+docker stop ubuntu1804_config1
+docker start ubuntu1804_config1
+docker exec -it ubuntu1804_config1 /bin/bash
+```
+$ sudo cat /etc/sudoers
+```
+sudo ok
+
+docker commit ubuntu1804_config1 ubuntu1804:config2
+docker container rename ubuntu1804_config1 ubuntu1804_config2
+docker exec -it ubuntu1804_config2 /bin/bash
+```
+$ sudo apt install pcmanfm lxterminal leafpad
+$ rm -rf /tmp/.X*
+$ vncserver -geometry 1920x1080 :0
+
+ref:
+vncserver -kill :1
+vncserver :1 -geometry 1920x1080
+
+$ sudo apt install openssh-server
+$ su
+# service ssh start
+```
+这样其实就可以访问了的
+
+
+
+
+docker stop ubuntu1804_config2
+docker start ubuntu1804_config2
+docker exec -it ubuntu1804_config2 /bin/bash
+
+又需要手动开启sshd
+
+docker stop ubuntu1804_config2
+docker start ubuntu1804_config2
+docker exec -it ubuntu1804_config2 /bin/bash
+```
+$ rm -rf /tmp/.X*
+$ exit
+```
+docker stop ubuntu1804_config2
+docker commit ubuntu1804_config2 ubuntu1804:config3
+docker container rename ubuntu1804_config2 ubuntu1804_config3
+
+```
+FROM ubuntu1804:config3
+
+USER root
+#Allow Root login
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' \
+    /etc/ssh/sshd_config
+
+#SSH login fix
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional \
+    pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+#expose port 22
+EXPOSE 22
+#RUN service ssh start
+
+#Commands to be executed by default
+CMD ["/usr/sbin/sshd","-D"]
+#CMD service ssh start
+```
+
+docker build -t  ubuntu1804:config4 .
+docker container rm ubuntu1804_config3
+docker run -d -ti --name ubuntu1804_config4 ubuntu1804:config4   后台运行
+==
+docker run -ti --name ubuntu1804_config4 ubuntu1804:config4
+docker stop ubuntu1804_config2   另外终端窗口运行
+docker start ubuntu1804_config4
+
+then
+docker exec -it ubuntu1804_config4 /bin/bash
+
+
+
+docker container stop ubuntu1804_config4
+docker commit ubuntu1804_config4 ubuntu1804:config5
+
+
+
+```
+FROM ubuntu1804:config5
+
+USER andy
+
+```
+docker build -t  ubuntu1804:config6 .
+docker run -ti --name ubuntu1804_config6 ubuntu1804:config6
+
+
+
+
+
+
+```
+FROM ubuntu1804:config3
+
+USER root
+
+#Allow Root login
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' \
+    /etc/ssh/sshd_config
+
+#SSH login fix
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional \
+    pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+#expose port 22
+EXPOSE 22
+
+#RUN service ssh start
+USER andy
+```
+docker build -t  ubuntu1804:config4 .
+docker run -ti --name ubuntu1804_config4 ubuntu1804:config4
+//docker run -itd --privileged  --name ubuntu1804_config4 ubuntu1804:config4 /usr/sbin/init
+
+ref
+docker image pull  ubuntu:20.04
+docker container run -it -d --name test-ubuntu20-4 ubuntu:20.04
+docker attach test-ubuntu20-4
+docker container run -it -d --privileged --name webgis-server ubuntu:20.04 /sbin/init
+docker container run -it -d --privileged --name webgis-server ubuntu:20.04 /lib/systemd/systemd
+
+
+
+
+
+## openbox 风格桌面环境配置及一些必要设置
+```
+sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm obmenu feh dmenu fonts-dejavu
+sudo apt install lxappearance pcmanfm libfm-tools lxterminal leafpad
+sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev
+```
+### 安装配置 obmenu-generator
+
+```
+sudo apt install build-essential cpanminus git
+sudo cpan install YAML Gtk2 Pango Linux::DesktopFiles Data::Dump
+
+git clone git://github.com/trizen/obmenu-generator
+sudo cp obmenu-generator/obmenu-generator /usr/bin
+mkdir ~/.config/obmenu-generator/
+sudo cp -r obmenu-generator/schema.pl ~/.config/obmenu-generator/
+
+sudo cpanm Linux::DesktopFiles
+sudo cpanm Data::Dump
+
+sudo chmod 777 /usr/bin/obmenu-generator 
+
+obmenu-generator -i
 ```
 ```
+vncserver -kill :0
+vncserver :0 -geometry 1920x1080
+```
+
+配置好基本的
+docker container stop ubuntu1804_config4
+docker commit ubuntu1804_config4 ubuntu1804:config5
+docker container rm ubuntu1804_config4
+
+
+```
+FROM ubuntu1804:config5
+
+USER root
+ADD files/entrypoint.sh /opt/entrypoint.sh
+
+#ENV GEOMETRY 1024x768
+CMD ["/opt/entrypoint.sh"]
+
+USER andy
+```
+entrypoint.sh
+```
+#!/bin/bash
+
+echo a | sudo -S service ssh start
+
+rm -rf /tmp/.X*
+rm -rf /home/andy/.vnc/*.log
+rm -rf /home/andy/.vnc/*.pid
+vncserver -geometry 1920x1080 :0
+
+/bin/sh -c /bin/bash
+```
+
+docker build -t  ubuntu1804:config6 .
+docker run -ti --name ubuntu1804_config6 ubuntu1804:config6
+
+
+docker exec -it ubuntu1804_config6 /bin/bash
+
+//docker run -ti --name ubuntu1804_config6 ubuntu1804:config6  /bin/bash
+
+//docker run -ti --restart=always --name ubuntu1804_config6 ubuntu1804:config6
+
+
+docker container stop ubuntu1804_config6
+docker commit ubuntu1804_config6 ubuntu1804:config7
+docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir  --name ubuntu1804_config7 ubuntu1804:config7
+docker container start ubuntu1804_config7
+docker exec -it ubuntu1804_config7 /bin/bash
+
+
+```
+sudo apt install ca-certificates vim blt build-essential default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
+
+sudo apt install lib32asan4 lib32atomic1 lib32cilkrts5 lib32gcc-7-dev lib32gcc1 lib32gomp1 lib32itm1 lib32mpx2 lib32quadmath0 lib32stdc++6 lib32ubsan0 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32asan4 libx32atomic1 libx32cilkrts5 libx32gcc-7-dev libx32gcc1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 libx32ubsan0 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+
+sudo apt install gcc-7-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev tcl
+
+sudo apt install gcc-multilib libapr1 libapr1-dev libaprutil1 net-tools libc6-dev-i386 fonts-liberation graphviz libann0 libcdt5 libcgraph6 libgts-0.7-5 libgts-bin libgvc6 libgvpr2 liblab-gamut1 libpathplan4
+
+sudo apt install blt gcc-multilib texinfo libncurses5-dev libapr1 libapr1-dev libaprutil1 libsctp-dev uuid-dev lib32atomic1 lib32gomp1 lib32itm1 lib32quadmath0 lib32stdc++6 libasound2-dev libbison-dev libc6-dev-i386 libc6-dev-x32 libc6-i386 libc6-x32 libcaca-dev libfl-dev libfl2 libpulse-dev libslang2-dev libtext-unidecode-perl libtinfo-dev libx32atomic1 libx32gomp1 libx32itm1  libx32quadmath0 libx32stdc++6 python3-astroid python3-gitdb python3-isort python3-lazy-object-proxy python3-logilab-common python3-mccabe python3-smmap python3-tk python3-wrapt tk8.6-blt2.5
+
+sudo apt install libtinfo-dev libstdc++6:i386 libgtk2.0-0:i386 dpkg-dev:i386 libtinfo5 libncurses5 libgtk3-nocsd0
+
+sudo /opt/Xilinx/.xinstall/Vitis_2020.1/scripts/installAIeDepLibs.sh
+cd /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/install_drivers/
+sudo ./install_drivers
+```
+
+docker pull ubuntu:bionic-20210325
+docker run -ti --name ubuntu1804_test ubuntu:bionic-20210325
+docker container start ubuntu1804_test
+docker exec -it ubuntu1804_test /bin/bash
+docker container stop ubuntu1804_test
+docker commit ubuntu1804_test ubuntu:bionic-1
+docker container rm ubuntu1804_test
+docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir  --name ubuntu1804_test ubuntu:bionic-1
+
+
+docker pull ubuntu:16.04
+docker run -ti --name ubuntu1604_test ubuntu:16.04
+apt update
+apt install -y wget build-essential libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig git default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo
+adduser andy
+passwd
+docker container stop ubuntu1604_test
+docker commit ubuntu1604_test ubuntu:16.04-1
+docker container rm ubuntu1604_test
+docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir --name ubuntu1604_test ubuntu:16.04-1
+docker container start ubuntu1604_test
+docker exec -it ubuntu1604_test /bin/bash
+
+
+docker pull ubuntu:18.04
+docker run -ti --name ubuntu1804_test ubuntu:18.04
+```
+apt update
+apt install -y wget build-essential libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig git default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo
+apt install libtinfo-dev libtinfo5 libncurses5 libgtk3-nocsd0 rlwrap locales git make net-tools libncurses5-dev aptitude autoconf xterm libtool chrpath gnupg wget
+apt install lsb-release xvfb x11-utils dbus-x11 libtinfo5 tftpd zlib1g-dev libssl-dev flex bison libselinux1 diffstat socat  tar unzip texinfo zlib1g-dev gcc-multilib libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
+apt install fonts-liberation graphviz libann0 libapr1 libapr1-dev libaprutil1 libcdt5 libcgraph6 libgd3 libgts-0.7-5 libgts-bin libgvc6 libgvpr2 liblab-gamut1 libpathplan4 libsctp-dev libsctp1 uuid-dev
+apt install lsb ksh lsb-core
+dpkg-reconfigure dash      [no]
+adduser andy
+passwd
+```
+docker container stop ubuntu1804_test
+docker commit ubuntu1804_test ubuntu:18.04-1
+docker container rm ubuntu1804_test
+docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir --name ubuntu1804_test ubuntu:18.04-1
+docker container start ubuntu1804_test
+docker exec -it ubuntu1804_test /bin/bash
+
+
+
 
 ---
 # 
