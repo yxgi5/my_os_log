@@ -13392,6 +13392,8 @@ ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_ou
 ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i example.mp4 -c:v h264_vaapi output.mp4
 ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -i example.mp4 -c:v libx264 output.mp4
 
+ffmpeg -vaapi_device /dev/dri/renderD128 -i example.mp4 -vf 'format=nv12,hwupload' -c:v hevc_vaapi out1.mp4                 # try -vf 'format=nv12|vaapi,hwupload'
+
 增加 log 
 ffmpeg -hide_banner -loglevel trace -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i test.avi -c:v h264_vaapi out.mp4
 
@@ -13404,6 +13406,24 @@ ffmpeg -hide_banner -hwaccel vaapi -hwaccel_output_format vaapi -i example.mp4 -
 export LIBVA_DRIVER_NAME=iHD  # 去掉 strace 了
 ffmpeg -hide_banner -threads 0 -hwaccel vaapi -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi -profile:v main -b:v 1000k -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 -n output1.mp4
 ```
+
+
+```
+$ ffmpeg -hide_banner -hwaccels shows
+Hardware acceleration methods:
+vdpau
+vaapi
+drm
+
+$ ffmpeg -hide_banner -init_hw_device list
+Supported hardware device types:
+vdpau
+vaapi
+drm
+
+```
+<https://trac.ffmpeg.org/wiki/Hardware/VAAPI>
+<https://trac.ffmpeg.org/wiki/HWAccelIntro>
 
 ***
 # wine64 简单使用和 desktop文件 例子
