@@ -13270,9 +13270,163 @@ The following packages will be upgraded:
 ```
 编译的方式咱就不试验了
 
+## 其实是能用起来的
+
+ffmpeg版本信息如下
+```
+$ ffmpeg -version
+ffmpeg version 4.1.4-1build2~bionic1 Copyright (c) 2000-2019 the FFmpeg developers
+built with gcc 7 (Ubuntu 7.4.0-1ubuntu1~18.04.1)
+configuration: --prefix=/usr --extra-version='1build2~bionic1' --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-avresample --disable-filter=resample --enable-avisynth --enable-gnutls --enable-ladspa --disable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librsvg --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libssh --enable-libtheora --enable-libtwolame --disable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opengl --enable-sdl2 --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+libavutil      56. 22.100 / 56. 22.100
+libavcodec     58. 35.100 / 58. 35.100
+libavformat    58. 20.100 / 58. 20.100
+libavdevice    58.  5.100 / 58.  5.100
+libavfilter     7. 40.101 /  7. 40.101
+libavresample   4.  0.  0 /  4.  0.  0
+libswscale      5.  3.100 /  5.  3.100
+libswresample   3.  3.100 /  3.  3.100
+libpostproc    55.  3.100 / 55.  3.100
+
+```
+
+按前面的安装了intel-media-va-driver-non-free，一定要设置LIBVA_DRIVER_NAME， 还可以加strace查看
+```
+$ cat /proc/cpuinfo 
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 165
+model name	: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+...
+
+$ ls /dev/dri -l
+total 0
+drwxr-xr-x  2 root root       120 Apr  1 10:56 by-path
+crw-rw----+ 1 root video 226,   0 Apr  1 10:56 card0
+crw-rw----+ 1 root video 226,   1 Apr  1 10:56 card1
+crw-rw----+ 1 root video 226, 128 Apr  1 10:56 renderD128           # 这个就是intel核显
+crw-rw----+ 1 root video 226, 129 Apr  1 10:56 renderD129
+
+如果这里 当前用户不在 renderD128 用户组 `sudo usermod -a -G render $USER` 可以把用户添加到 render 组。这里是 video 组，其实不设置也可以用了。
+
+
+
+$ ls /usr/lib/x86_64-linux-gnu/dri | grep drv_video.so
+i965_drv_video.so
+iHD_drv_video.so                    # i7 10代 应该用这个
+nouveau_drv_video.so
+r600_drv_video.so
+radeonsi_drv_video.so
+
+$ vainfo
+libva info: VA-API version 1.5.0
+libva info: va_getDriverName() returns 0
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/nvidia_drv_video.so
+libva info: va_openDriver() returns -1
+vaInitialize failed with error code -1 (unknown libva error),exit
+
+
+$ export LIBVA_DRIVER_NAME=iHD LIBVA_TRACE=1
+
+$ vainfo        # 和 `vainfo --display x11` 输出一样
+libva info: Open new log file 1.102708.thd-0x0000669e for the thread 0x0000669e
+libva info: LIBVA_TRACE is on, save log into 1.102708.thd-0x0000669e
+libva info: VA-API version 1.5.0
+libva info: va_getDriverName() returns 0
+libva info: User requested driver 'iHD'
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
+libva info: Found init function __vaDriverInit_1_5
+libva info: va_openDriver() returns 0
+vainfo: VA-API version: 1.5 (libva 2.1.0)
+vainfo: Driver version: Intel iHD driver - 1.0.0
+vainfo: Supported profile and entrypoints
+      VAProfileNone                   :	VAEntrypointVideoProc
+      VAProfileNone                   :	VAEntrypointStats
+      VAProfileMPEG2Simple            :	VAEntrypointVLD
+      VAProfileMPEG2Simple            :	VAEntrypointEncSlice
+      VAProfileMPEG2Main              :	VAEntrypointVLD
+      VAProfileMPEG2Main              :	VAEntrypointEncSlice
+      VAProfileH264Main               :	VAEntrypointVLD
+      VAProfileH264Main               :	VAEntrypointEncSlice
+      VAProfileH264Main               :	VAEntrypointFEI
+      VAProfileH264Main               :	VAEntrypointEncSliceLP
+      VAProfileH264High               :	VAEntrypointVLD
+      VAProfileH264High               :	VAEntrypointEncSlice
+      VAProfileH264High               :	VAEntrypointFEI
+      VAProfileH264High               :	VAEntrypointEncSliceLP
+      VAProfileVC1Simple              :	VAEntrypointVLD
+      VAProfileVC1Main                :	VAEntrypointVLD
+      VAProfileVC1Advanced            :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointEncPicture
+      VAProfileH264ConstrainedBaseline:	VAEntrypointVLD
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSlice
+      VAProfileH264ConstrainedBaseline:	VAEntrypointFEI
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSliceLP
+      VAProfileVP8Version0_3          :	VAEntrypointVLD
+      VAProfileVP8Version0_3          :	VAEntrypointEncSlice
+      VAProfileHEVCMain               :	VAEntrypointVLD
+      VAProfileHEVCMain               :	VAEntrypointEncSlice
+      VAProfileHEVCMain               :	VAEntrypointFEI
+      VAProfileHEVCMain10             :	VAEntrypointVLD
+      VAProfileHEVCMain10             :	VAEntrypointEncSlice
+      VAProfileVP9Profile0            :	VAEntrypointVLD
+      VAProfileVP9Profile2            :	VAEntrypointVLD
+
+$ sudo vainfo           # 环境变量没有作用到 root
+error: XDG_RUNTIME_DIR not set in the environment.
+libva info: VA-API version 1.5.0
+libva info: va_getDriverName() returns 0
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/nvidia_drv_video.so
+libva info: va_openDriver() returns -1
+vaInitialize failed with error code -1 (unknown libva error),exit
+
+<https://ffmpeg-user.ffmpeg.narkive.com/XZk7pyBx/vaapi-impossible-to-convert-between-the-formats>
+
+ffmpeg -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -i example.mp4 -c:v h264_vaapi output.mp4
+会报错 Impossible to convert between the formats supported by the filter 'Parsed_null_0' and the filter 'auto_scaler_0'
+
+设置 `-hwaccel_output_format` 下面这些都可以用, 
+ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi output.mp4
+ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i example.mp4 -c:v h264_vaapi output.mp4
+ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -i example.mp4 -c:v libx264 output.mp4
+
+ffmpeg -vaapi_device /dev/dri/renderD128 -i example.mp4 -vf 'format=nv12,hwupload' -c:v hevc_vaapi out1.mp4                 # try -vf 'format=nv12|vaapi,hwupload'
+
+增加 log 
+ffmpeg -hide_banner -loglevel trace -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i test.avi -c:v h264_vaapi out.mp4
+
+
+不加设备名也是可以的
+
+ffmpeg -hide_banner -hwaccel vaapi -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi output1.mp4
+
+
+export LIBVA_DRIVER_NAME=iHD  # 去掉 strace 了
+ffmpeg -hide_banner -threads 0 -hwaccel vaapi -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi -profile:v main -b:v 1000k -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 -n output1.mp4
+```
+
+
+```
+$ ffmpeg -hide_banner -hwaccels shows
+Hardware acceleration methods:
+vdpau
+vaapi
+drm
+
+$ ffmpeg -hide_banner -init_hw_device list
+Supported hardware device types:
+vdpau
+vaapi
+drm
+
+```
+<https://trac.ffmpeg.org/wiki/Hardware/VAAPI>
+<https://trac.ffmpeg.org/wiki/HWAccelIntro>
 
 ***
-# wine64 简单使用和 desktop 例子
+# wine64 简单使用和 desktop文件 例子
 ```
 env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFIX="/home/andreas/.wine-x64" wine Caesium\ Image\ Compressor.exe
 ```
