@@ -11694,7 +11694,8 @@ sudo cpanm Data::Dump
 sudo chmod 777 /usr/bin/obmenu-generator 
 
 obmenu-generator -i
-
+```
+```
 vncserver -kill :0
 vncserver :0 -geometry 1920x1080
 ```
