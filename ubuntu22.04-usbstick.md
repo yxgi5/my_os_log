@@ -11304,9 +11304,13 @@ $ sudo apt autoremove
 
 
 ---
-# 
+# caesium-image-compressor
 ```
+sudo apt-get install cargo
+sudo apt-get install libxcb-xkb-dev libxkbcommon-dev libqt6svg6-dev libqt6svg6 libqt6svgwidgets6 qt6-l10n-tools qt6-tools-dev-tools qt6-base-dev qt6-tools-dev
 ```
+实际上用AppImage版本就好
+<https://github.com/larygwil/caesium-image-compressor>
 
 ---
 # 
