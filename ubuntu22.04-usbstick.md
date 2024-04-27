@@ -11298,8 +11298,22 @@ The following packages will be DOWNGRADED:
   
 $ sudo apt autoremove
 ```
+安装 mediainfo
+```
+$ sudo apt install mediainfo
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libmediainfo0v5 libmms0 libtinyxml2-9 libzen0v5
+Suggested packages:
+  mediainfo-gui
+The following NEW packages will be installed:
+  libmediainfo0v5 libmms0 libtinyxml2-9 libzen0v5 mediainfo
+0 upgraded, 5 newly installed, 0 to remove and 209 not upgraded.
 
-
+$ mediainfo example.mp4
+```
 
 
 
