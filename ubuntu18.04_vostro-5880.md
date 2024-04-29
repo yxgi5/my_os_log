@@ -12815,12 +12815,74 @@ sudo dpkg -i TencentMeeting_0300000000_3.15.1.403_x86_64_default.publish.deb
 
 /opt/wemeet/wemeetapp.sh %u
 ```
+
 ***
 # heif-convert
 ```
-sudo apt-get install libheif1 libheif-examples
+sudo apt-get install libheif1 libheif-examples libheif-dev
+heif-info
+heif-enc
+heif-convert
+```
+```
+heif-enc -q 50 example.png
+for file in *.heic; do heif-convert $file ${file/%.heic/.jpg}; done
+```
+
+尝试 eog 直接浏览，还不行
+
+<https://launchpad.net/~strukturag/+archive/ubuntu/libheif>
+<https://launchpad.net/~savoury1/+archive/ubuntu/graphics>
+<https://launchpad.net/ubuntu/+source/libheif>
+```
+sudo add-apt-repository ppa:savoury1/graphics
+sudo add-apt-repository ppa:strukturag/libheif
+
+# sudo apt-get install libheif1 libheif-examples libheif-dev heif-gdk-pixbuf heif-thumbnailer libheif-plugin-aomdec libheif-plugin-aomenc libheif-plugin-dav1d libheif-plugin-libde265 libheif-plugin-rav1e libheif-plugin-svtenc libheif-plugin-x265
+
+sudo apt-get install libheif1 libheif-examples libheif-dev heif-gdk-pixbuf heif-thumbnailer libheif-plugin-aomdec libheif-plugin-aomenc libheif-plugin-dav1d libheif-plugin-libde265 libheif-plugin-x265
+
+The following additional packages will be installed:
+  libaom-dev libaom3 libdav1d-dev libdav1d7 libde265-0 libde265-dev libsharpyuv-dev libsharpyuv0 libwebp-dev libwebp7 libwebpdecoder3 libwebpdemux2 libwebpmux3 libx265-199
+Suggested packages:
+  libheif-plugin-ffmpegdec libheif-plugin-jpegdec libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+The following NEW packages will be installed:
+  heif-gdk-pixbuf heif-thumbnailer libaom-dev libaom3 libdav1d-dev libdav1d7 libde265-dev libheif-plugin-aomdec libheif-plugin-aomenc libheif-plugin-dav1d libheif-plugin-libde265 libheif-plugin-x265
+  libsharpyuv-dev libsharpyuv0 libwebp7 libwebpdecoder3 libx265-199
+The following packages will be upgraded:
+  libde265-0 libheif-dev libheif-examples libheif1 libwebp-dev libwebpdemux2 libwebpmux3
+
+
+# sudo apt-get install libheif-plugin-ffmpegdec libheif-plugin-jpegdec libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+
+sudo apt-get install libheif-plugin-jpegdec libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+
+sudo apt-get install libavif-gdk-pixbuf
+
+The following NEW packages will be installed:
+  libabsl2206 libavif-gdk-pixbuf libavif16 libgav1-1 libyuv0
+
+$ sudo apt-get install eog-plugins
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  eog-plugin-disable-dark-theme eog-plugin-exif-display eog-plugin-export-to-folder eog-plugin-fit-to-width eog-plugin-fullscreen-background eog-plugin-hide-titlebar eog-plugin-map eog-plugin-maximize-windows
+  eog-plugin-picasa eog-plugin-python-console eog-plugin-send-by-mail eog-plugin-slideshow-shuffle eog-plugins-common libchamplain-0.12-0 libchamplain-gtk-0.12-0
+The following NEW packages will be installed:
+  eog-plugin-disable-dark-theme eog-plugin-exif-display eog-plugin-export-to-folder eog-plugin-fit-to-width eog-plugin-fullscreen-background eog-plugin-hide-titlebar eog-plugin-map eog-plugin-maximize-windows
+  eog-plugin-picasa eog-plugin-python-console eog-plugin-send-by-mail eog-plugin-slideshow-shuffle eog-plugins eog-plugins-common libchamplain-0.12-0 libchamplain-gtk-0.12-0
+0 upgraded, 16 newly installed, 0 to remove and 282 not upgraded.
+
+
+sudo apt install heif-gdk-pixbuf heif-thumbnailer gimagereader gpicview
+
 
 ```
+反正直接看不了。ffmepg也不支持，转换之后再用其他图片压缩
+
+
+
 ***
 # flatpak + handbrake
 ```
