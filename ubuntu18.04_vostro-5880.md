@@ -13505,6 +13505,594 @@ StartupWMClass=gmsl.exe
 ```
 
 ***
+# cargo
+```
+$ sudo apt install cargo
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libstd-rust-1.65 libstd-rust-dev rustc
+Suggested packages:
+  cargo-doc llvm-14 lld-14 clang-14
+The following NEW packages will be installed:
+  cargo libstd-rust-1.65 libstd-rust-dev rustc
+
+```
+
+***
+# gifski
+```
+sudo dpkg -i gifski_1.32.0-1_amd64.deb
+$ gifski --help
+https://gif.ski by Kornel Lesiński
+
+Usage: gifski [OPTIONS] --output <a.gif> <FILES>...
+
+Arguments:
+  <FILES>...
+          one video file supported by FFmpeg, or multiple PNG image files
+
+Options:
+  -o, --output <a.gif>
+          Destination file to write to; "-" means stdout
+
+  -r, --fps <num>
+          Frame rate of animation. If using PNG files as input, this means the speed, as all frames are kept. If video is used, it will be resampled to this constant rate by dropping and/or duplicating frames
+          
+          [default: 20]
+
+      --fast-forward <x>
+          Multiply speed of video by a factor
+          
+          [default: 1]
+
+      --fast
+          50% faster encoding, but 10% worse quality and larger file size
+
+      --extra
+          50% slower encoding, but 1% better quality
+
+  -Q, --quality <1-100>
+          Lower quality may give smaller file
+          
+          [default: 90]
+
+      --motion-quality <1-100>
+          Lower values reduce motion
+
+      --lossy-quality <1-100>
+          Lower values introduce noise and streaks
+
+  -W, --width <px>
+          Maximum width.
+          By default anims are limited to about 800x600
+
+  -H, --height <px>
+          Maximum height (stretches if the width is also set)
+
+      --no-sort
+          Use files exactly in the order given, rather than sorted
+
+  -q, --quiet
+          Do not display anything on standard output/console
+
+      --repeat <num>
+          Number of times the animation is repeated (-1 none, 0 forever or <value> repetitions
+
+      --fixed-color <RGBHEX>
+          Always include this color in the palette
+
+      --matte <RGBHEX>
+          Background color for semitransparent pixels
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+
+```
+***
+# gifsicle
+```
+sudo apt install gifsicle
+
+$ gifsicle --help
+'Gifsicle' manipulates GIF images. Its most common uses include combining
+single images into animations, adding transparency, optimizing animations for
+space, and printing information about GIFs.
+
+Usage: gifsicle [OPTION | FILE | FRAME]...
+
+Mode options: at most one, before any filenames.
+  -m, --merge                   Merge mode: combine inputs, write stdout.
+  -b, --batch                   Batch mode: modify inputs, write back to
+                                same filenames.
+  -e, --explode                 Explode mode: write N files for each input,
+                                one per frame, to 'input.frame-number'.
+  -E, --explode-by-name         Explode mode, but write 'input.name'.
+
+General options: Also --no-OPTION for info and verbose.
+  -I, --info                    Print info about input GIFs. Two -I's means
+                                normal output is not suppressed.
+      --color-info, --cinfo     --info plus colormap details.
+      --extension-info, --xinfo --info plus extension details.
+      --size-info, --sinfo      --info plus compression information.
+  -V, --verbose                 Prints progress information.
+  -h, --help                    Print this message and exit.
+      --version                 Print version number and exit.
+  -o, --output FILE             Write output to FILE.
+  -w, --no-warnings             Don't report warnings.
+      --no-ignore-errors        Quit on very erroneous input GIFs.
+      --conserve-memory         Conserve memory at the expense of speed.
+      --multifile               Support concatenated GIF files.
+
+Frame selections:               #num, #num1-num2, #num1-, #name
+
+Frame change options:
+  --delete FRAMES               Delete FRAMES from input.
+  --insert-before FRAME GIFS    Insert GIFS before FRAMES in input.
+  --append GIFS                 Append GIFS to input.
+  --replace FRAMES GIFS         Replace FRAMES with GIFS in input.
+  --done                        Done with frame changes.
+
+Image options: Also --no-OPTION and --same-OPTION.
+  -B, --background COL          Make COL the background color.
+      --crop X,Y+WxH, --crop X,Y-X2,Y2
+                                Crop the image.
+      --crop-transparency       Crop transparent borders off the image.
+      --flip-horizontal, --flip-vertical
+                                Flip the image.
+  -i, --interlace               Turn on interlacing.
+  -S, --logical-screen WxH      Set logical screen to WxH.
+  -p, --position X,Y            Set frame position to (X,Y).
+      --rotate-90, --rotate-180, --rotate-270, --no-rotate
+                                Rotate the image.
+  -t, --transparent COL         Make COL transparent.
+
+Extension options:
+      --app-extension N D       Add an app extension named N with data D.
+  -c, --comment TEXT            Add a comment before the next frame.
+      --extension N D           Add an extension number N with data D.
+  -n, --name TEXT               Set next frame's name.
+      --no-comments, --no-names, --no-extensions
+                                Remove comments (names, extensions) from input.
+Animation options: Also --no-OPTION and --same-OPTION.
+  -d, --delay TIME              Set frame delay to TIME (in 1/100sec).
+  -D, --disposal METHOD         Set frame disposal to METHOD.
+  -l, --loopcount[=N]           Set loop extension to N (default forever).
+  -O, --optimize[=LEVEL]        Optimize output GIFs.
+  -U, --unoptimize              Unoptimize input GIFs.
+  -j, --threads[=THREADS]       Use multiple threads to improve speed.
+
+Whole-GIF options: Also --no-OPTION.
+      --careful                 Write larger GIFs that avoid bugs in other
+                                programs.
+      --change-color COL1 COL2  Change COL1 to COL2 throughout.
+  -k, --colors N                Reduce the number of colors to N.
+      --color-method METHOD     Set method for choosing reduced colors.
+  -f, --dither                  Dither image after changing colormap.
+      --gamma G                 Set gamma for color reduction [2.2].
+      --resize WxH              Resize the output GIF to WxH.
+      --resize-width W          Resize to width W and proportional height.
+      --resize-height H         Resize to height H and proportional width.
+      --resize-fit WxH          Resize if necessary to fit within WxH.
+      --scale XFACTOR[xYFACTOR] Scale the output GIF by XFACTORxYFACTOR.
+      --resize-method METHOD    Set resizing method.
+      --resize-colors N         Resize can add new colors up to N.
+      --transform-colormap CMD  Transform each output colormap by shell CMD.
+      --use-colormap CMAP       Set output GIF's colormap to CMAP, which can
+                                be 'web', 'gray', 'bw', or a GIF file.
+
+```
+
+***
+# 安装 rustup, 更新 rustup
+先做个准备, 如果报 `~/.config/fish/conf.d/rustup.fish': No such file or directory` 可以这样处理
+```
+$ mkdir -p ~/.config/fish/conf.d/
+$ touch ~/.config/fish/conf.d/rustup.fish
+```
+运行安装脚本
+```
+curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+
+其实可以下载 rustup-init.sh 自己运行
+
+
+$ proxychains sh rustup-init.sh 
+ProxyChains-3.1 (http://proxychains.sf.net)
+info: downloading installer
+|DNS-request| static.rust-lang.org 
+|S-chain|-<>-127.0.0.1:10808-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| static.rust-lang.org is 151.101.110.137
+|S-chain|-<>-127.0.0.1:10808-<><>-151.101.110.137:443-<><>-OK
+warning: it looks like you have an existing installation of Rust at:
+warning: /usr/bin
+warning: It is recommended that rustup be the primary Rust installation.
+warning: Otherwise you may have confusion unless you are careful with your PATH
+warning: If you are sure that you want both rustup and your already installed Rust
+warning: then please reply `y' or `yes' or set RUSTUP_INIT_SKIP_PATH_CHECK to yes
+warning: or pass `-y' to ignore all ignorable checks.
+error: cannot install while Rust is installed
+
+Continue? (y/N) y
+
+
+Welcome to Rust!
+
+This will download and install the official compiler for the Rust
+programming language, and its package manager, Cargo.
+
+Rustup metadata and toolchains will be installed into the Rustup
+home directory, located at:
+
+  /home/andreas/.rustup
+
+This can be modified with the RUSTUP_HOME environment variable.
+
+The Cargo home directory is located at:
+
+  /home/andreas/.cargo
+
+This can be modified with the CARGO_HOME environment variable.
+
+The cargo, rustc, rustup and other commands will be added to
+Cargo's bin directory, located at:
+
+  /home/andreas/.cargo/bin
+
+This path will then be added to your PATH environment variable by
+modifying the profile files located at:
+
+  /home/andreas/.profile
+  /home/andreas/.bashrc
+  /home/andreas/.zshenv
+  /home/andreas/.config/fish/conf.d/rustup.fish
+
+You can uninstall at any time with rustup self uninstall and
+these changes will be reverted.
+
+Current installation options:
+
+
+   default host triple: x86_64-unknown-linux-gnu
+     default toolchain: stable (default)
+               profile: default
+  modify PATH variable: yes
+
+1) Proceed with standard installation (default - just press enter)
+2) Customize installation
+3) Cancel installation
+>1
+
+info: profile set to 'default'
+info: default host triple is x86_64-unknown-linux-gnu
+info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+|DNS-request| static.rust-lang.org 
+|S-chain|-<>-127.0.0.1:10808-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| static.rust-lang.org is 151.101.110.137
+|S-chain|-<>-127.0.0.1:10808-<><>-151.101.110.137:443-<><>-OK
+info: latest update on 2024-04-09, rust version 1.77.2 (25ef9e3d8 2024-04-09)
+info: downloading component 'cargo'
+info: downloading component 'clippy'
+info: downloading component 'rust-docs'
+info: downloading component 'rust-std'
+info: downloading component 'rustc'
+ 60.3 MiB /  60.3 MiB (100 %)  37.1 MiB/s in  2s ETA:  0s
+info: downloading component 'rustfmt'
+info: installing component 'cargo'
+info: installing component 'clippy'
+info: installing component 'rust-docs'
+ 14.9 MiB /  14.9 MiB (100 %)  13.5 MiB/s in  1s ETA:  0s
+info: installing component 'rust-std'
+ 24.3 MiB /  24.3 MiB (100 %)  17.2 MiB/s in  1s ETA:  0s
+info: installing component 'rustc'
+ 60.3 MiB /  60.3 MiB (100 %)  18.7 MiB/s in  3s ETA:  0s
+info: installing component 'rustfmt'
+info: default toolchain set to 'stable-x86_64-unknown-linux-gnu'
+
+  stable-x86_64-unknown-linux-gnu installed - rustc 1.77.2 (25ef9e3d8 2024-04-09)
+
+
+Rust is installed now. Great!
+
+To get started you may need to restart your current shell.
+This would reload your PATH environment variable to include
+Cargo's bin directory ($HOME/.cargo/bin).
+
+To configure your current shell, you need to source
+the corresponding env file under $HOME/.cargo.
+
+This is usually done by running one of the following (note the leading DOT):
+. "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+source "$HOME/.cargo/env.fish"  # For fish
+
+```
+重新打开 bash
+```
+$ rustc -V
+rustc 1.77.2 (25ef9e3d8 2024-04-09)
+$ rustup -V
+rustup 1.27.0 (bbb9276d2 2024-03-08)
+info: This is the version for the rustup toolchain manager, not the rustc compiler.
+info: The currently active `rustc` version is `rustc 1.77.2 (25ef9e3d8 2024-04-09)`
+```
+
+
+***
+# qt-6-2 失败
+<https://launchpad.net/~savoury1/+archive/ubuntu/qt-6-2>
+```
+sudo add-apt-repository ppa:savoury1/qt-6-2
+sudo apt update
+
+sudo aptitude install qt6-base-dev
+sudo aptitude install qt6ct
+不行
+
+sudo add-apt-repository --remove pa:savoury1/qt-6-2
+sudo apt update
+```
+
+***
+# ffmpeg4.4
+```
+sudo add-apt-repository ppa:savoury1/ffmpeg4
+sudo apt-get update
+
+$ sudo apt-get -c ~/apt_proxy_conf install ffmpeg
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libcodec2-0.7 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libsndio-dev libwayland-egl1-mesa:i386
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcdio-cdda2 libcdio-paranoia2 libcdio19 libcodec2-1.2 libgsm1 libgsm1:i386 libmysofa1 libpocketsphinx3 libpostproc55 librabbitmq4
+  libsdl2-2.0-0 libsdl2-2.0-0:i386 libsndio7 libsphinxbase3 libsrt1.5-gnutls libswresample3 libswscale5 libvidstab1.1 libvpx8 libx264-164 libzimg2
+Suggested packages:
+  libnvcuvid1 libnvidia-encode1 sndiod
+Recommended packages:
+  pocketsphinx-hmm-en-hub4wsj | pocketsphinx-hmm-zh-tdt | pocketsphinx-hmm-en-tidigits pocketsphinx-lm-en-hub4 | pocketsphinx-lm-zh-hans-gigatdt | pocketsphinx-lm-zh-hant-gigatdt
+The following packages will be REMOVED:
+  libavresample4 libsdl2-dev
+The following NEW packages will be installed:
+  libcdio19 libcodec2-1.2 libmysofa1 libpocketsphinx3 librabbitmq4 libsndio7 libsphinxbase3 libsrt1.5-gnutls libvidstab1.1 libvpx8 libx264-164 libzimg2
+The following packages will be upgraded:
+  ffmpeg libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcdio-cdda2 libcdio-paranoia2 libgsm1 libgsm1:i386 libpostproc55 libsdl2-2.0-0 libsdl2-2.0-0:i386 libswresample3 libswscale5
+15 upgraded, 12 newly installed, 2 to remove and 1182 not upgraded.
+
+
+sudo add-apt-repository --remove ppa:savoury1/ffmpeg4
+sudo apt-get update
+
+
+$ sudo apt-get remove ffmpeg
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcodec2-0.7 libcodec2-1.2 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libmysofa1 libpocketsphinx3 libpostproc55 librabbitmq4
+  libsndio-dev libsndio7 libsphinxbase3 libsrt1.5-gnutls libswresample3 libswscale5 libvidstab1.1 libvpx8 libwayland-egl1-mesa:i386 libx264-164 libzimg2
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  ffmpeg
+0 upgraded, 0 newly installed, 1 to remove and 1046 not upgraded.
+
+
+$ sudo apt autoremove
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be REMOVED:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcodec2-0.7 libcodec2-1.2 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libmysofa1 libpocketsphinx3 libpostproc55 librabbitmq4
+  libsndio-dev libsndio7 libsphinxbase3 libsrt1.5-gnutls libswresample3 libswscale5 libvidstab1.1 libvpx8 libwayland-egl1-mesa:i386 libx264-164 libzimg2
+0 upgraded, 0 newly installed, 25 to remove and 1045 not upgraded.
+
+
+
+
+$ sudo aptitude install ffmpeg=7:4.1.4-1build2~bionic1
+The following NEW packages will be installed:
+  ffmpeg{b} 
+0 packages upgraded, 1 newly installed, 0 to remove and 1045 not upgraded.
+Need to get 0 B/1,409 kB of archives. After unpacking 1,963 kB will be used.
+The following packages have unmet dependencies:
+ ffmpeg : Depends: libavcodec58 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavdevice58 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavfilter7 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavformat58 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavresample4 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavutil56 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libpostproc55 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libswresample3 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libswscale5 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+The following actions will resolve these dependencies:
+
+     Keep the following packages at their current version:
+1)     ffmpeg [Not Installed]                             
+
+
+
+Accept this solution? [Y/n/q/?] n
+The following actions will resolve these dependencies:
+
+      Install the following packages:                    
+1)      libavcodec58 [7:4.1.4-1build2~bionic1 (bionic)]  
+2)      libavdevice58 [7:4.1.4-1build2~bionic1 (bionic)] 
+3)      libavfilter7 [7:4.1.4-1build2~bionic1 (bionic)]  
+4)      libavformat58 [7:4.1.4-1build2~bionic1 (bionic)] 
+5)      libavresample4 [7:4.1.4-1build2~bionic1 (bionic)]
+6)      libavutil56 [7:4.1.4-1build2~bionic1 (bionic)]   
+7)      libcodec2-0.7 [0.7-1 (bionic)]                   
+8)      libpostproc55 [7:4.1.4-1build2~bionic1 (bionic)] 
+9)      libswresample3 [7:4.1.4-1build2~bionic1 (bionic)]
+10)     libswscale5 [7:4.1.4-1build2~bionic1 (bionic)]   
+
+
+
+Accept this solution? [Y/n/q/?] y
+The following NEW packages will be installed:
+  ffmpeg libavcodec58{a} libavdevice58{a} libavfilter7{a} libavformat58{a} libavresample4{a} libavutil56{a} libcodec2-0.7{a} libpostproc55{a} libswresample3{a} libswscale5{a} 
+0 packages upgraded, 11 newly installed, 0 to remove and 1045 not upgraded.
+
+
+
+libavresample4=7:4.1.4-1build2~bionic1
+
+libsdl2-dev=2.0.8+dfsg1-1ubuntu1.18.04.4
+
+The following actions will resolve these dependencies:
+
+     Install the following packages:                                                                       
+1)     libibus-1.0-dev [1.5.17-3ubuntu5.3 (bionic-updates)]                                                
+
+     Keep the following packages at their current version:                                                 
+2)     gir1.2-ibus-1.0 [1.5.17-3ubuntu5.3 (bionic-updates, now)]                                           
+3)     libibus-1.0-5 [1.5.17-3ubuntu5.3 (bionic-updates, now)]                                             
+
+     Downgrade the following packages:                                                                     
+4)     libsdl2-2.0-0 [2.30.2+dfsg-1~18.04.sav0 (now) -> 2.0.8+dfsg1-1ubuntu1.18.04.4 (bionic-updates)]     
+5)     libsdl2-2.0-0:i386 [2.30.2+dfsg-1~18.04.sav0 (now) -> 2.0.8+dfsg1-1ubuntu1.18.04.4 (bionic-updates)]
+
+
+记得关掉 security.debian.org 源
+
+sudo apt-get install libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcodec2-0.7 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libpocketsphinx3 libpostproc55 librabbitmq4 libsndio-dev libsphinxbase3 libswresample3 libswscale5 libwayland-egl1-mesa:i386
+
+
+sudo apt-get install ffmpeg libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcdio-cdda2 libcdio-paranoia2 libgsm1 libgsm1:i386 libpostproc55 libsdl2-2.0-0 libsdl2-2.0-0:i386 libswresample3 libswscale5
+
+
+libegl1 libegl1:i386 libegl-mesa0 libegl-mesa0:i386 libgbm1 libgbm1:i386 libwayland-egl1-mesa libwayland-egl1-mesa:i386 这几个玩意有兼容性问题
+
+$ sudo aptitude install libegl-mesa0=20.0.8-0ubuntu1~18.04.1
+      Install the following packages:                                                                       
+1)      libsensors4:i386 [1:3.4.0-4ubuntu0.1 (bionic-updates)]                                              
+
+      Downgrade the following packages:                                                                     
+2)      libgbm1 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]             
+3)      libgl1-mesa-dri [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]     
+4)      libgl1-mesa-dri:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]
+5)      libglapi-mesa [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]       
+6)      libglapi-mesa:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]  
+7)      libglx-mesa0 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]        
+8)      libglx-mesa0:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]   
+9)      libosmesa6 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]          
+10)     libosmesa6:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]     
+11)     libsensors4 [1:3.6.0-7~18.04.sav0 (now) -> 1:3.4.0-4ubuntu0.1 (bionic-updates)]          
+
+$ sudo aptitude install libegl-mesa0:i386=20.0.8-0ubuntu1~18.04.1
+The following NEW packages will be installed:
+  libegl-mesa0:i386 libgbm1:i386{a} libwayland-server0:i386{a} 
+
+$ sudo aptitude install libegl1=1.0.0-2ubuntu2.3
+      Remove the following packages:                                                                     
+1)      libegl-dev [1.3.4-1~18.04.sav0 (now)]                                                            
+2)      libgl-dev [1.3.4-1~18.04.sav0 (now)]                                                             
+3)      libgles-dev [1.3.4-1~18.04.sav0 (now)]                                                           
+4)      libglx-dev [1.3.4-1~18.04.sav0 (now)]                                                            
+5)      libopengl-dev [1.3.4-1~18.04.sav0 (now)]                                                         
+
+      Downgrade the following packages:                                                                  
+6)      libegl1-mesa-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)] 
+7)      libgl1 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                           
+8)      libgl1:i386 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                      
+9)      libgl1-mesa-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]  
+10)     libgles1 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                         
+11)     libgles2 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                         
+12)     libgles2-mesa-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]
+13)     libglvnd-core-dev [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                
+14)     libglvnd-dev [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                     
+15)     libglvnd0 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                        
+16)     libglvnd0:i386 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                   
+17)     libglx0 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                          
+18)     libglx0:i386 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                     
+19)     libopengl0 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                       
+20)     mesa-common-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)] 
+
+$ sudo aptitude install libegl1:i386=1.0.0-2ubuntu2.3
+$ sudo aptitude install libgbm1=20.0.8-0ubuntu1~18.04.1 libgbm1:i386=20.0.8-0ubuntu1~18.04.1
+$ sudo aptitude install libwayland-egl1-mesa=20.0.8-0ubuntu1~18.04.1 libwayland-egl1-mesa:i386=20.0.8-0ubuntu1~18.04.1
+
+
+
+
+```
+
+***
+# GLIBC 2.28
+```
+ldd --version
+
+ldd (Debian GLIBC 2.28-10+deb10u2) 2.28
+...
+
+# or
+strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_
+
+sudo su -c 'echo "deb http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list' root
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A 54404762BBB6E853
+
+sudo apt update
+
+//sudo apt install libc6 libc6-dev -y
+
+sudo apt-get -c ~/apt_proxy_conf install libc6 libc6-dev
+
+
+
+ldd --version
+
+# or
+strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_2.28
+
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
 #
 ```
 ```

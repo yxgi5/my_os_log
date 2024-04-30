@@ -11832,8 +11832,120 @@ docker exec -it ubuntu1804_test /bin/bash
 sudo apt-get install cargo
 sudo apt-get install libxcb-xkb-dev libxkbcommon-dev libqt6svg6-dev libqt6svg6 libqt6svgwidgets6 qt6-l10n-tools qt6-tools-dev-tools qt6-base-dev qt6-tools-dev
 ```
-实际上用AppImage版本就好
+实际上用AppImage版本就好, 需要 chmod +x
 <https://github.com/larygwil/caesium-image-compressor>
+
+
+官方仓库
+<https://github.com/Lymphatus/caesium-image-compressor>
+<https://github.com/Lymphatus/caesium-clt>
+<https://github.com/Lymphatus/libcaesium>
+
+
+
+libcaesium 编译需要修改 Cargo.toml 里的 webp 到 0.3.0
+
+caesium-image-compressor 编译其实也需要修改 Cargo.toml 里的 webp 到 0.3.0
+
+
+Caesium 1.7 用 wine 比较容易运行
+```
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine Caesium.exe
+```
+caesium-image-compressor-2.5.1-win/caesium-image-compressor-2.6.0-win 用 wine 很可能出错，vostro PC 的u1804 wine成功，laptop的u2204 wine 失败
+```
+env LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX="/home/andy/.wine" wine Caesium\ Image\ Compressor.exe
+```
+尝试修改wine环境组件也还不行
+```
+env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" WINEARCH=win64 winetricks -q comctl32ocx comdlg32ocx comctl32
+```
+
+
+
+## 编译库及 clt版本 需要安装 cargo
+```
+$ sudo apt-get install cargo
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libstd-rust-1.75 libstd-rust-dev rustc
+Suggested packages:
+  cargo-doc llvm-17 lld-17 clang-17
+The following NEW packages will be installed:
+  cargo libstd-rust-1.75 libstd-rust-dev rustc
+```
+
+## caesium-clt 的编译
+```
+cargo build --release
+```
+```
+caesiumclt --help
+ 0.19.1
+CaesiumCLT - Command Line Tools for image compression
+
+USAGE:
+    caesiumclt [FLAGS] [OPTIONS] --output <output> --quality <quality> [FILE]...
+
+FLAGS:
+    -d, --dry-run           do not compress files but just show output paths
+    -e, --exif              keeps EXIF info during compression
+    -h, --help              Prints help information
+    -S, --keep-structure    keep the folder structure, can be used only with -R
+    -Q, --quiet             suppress all output
+    -R, --recursive         if input is a folder, scan subfolders too
+    -V, --version           Prints version information
+        --zopfli            use zopfli when optimizing PNG files (it may take a very long time to complete)
+
+OPTIONS:
+        --height <height>          height of the output image, if width is not set will preserve aspect ratio [default:
+                                   0]
+    -o, --output <output>          output folder
+    -O, --overwrite <overwrite>    overwrite policy [default: all]
+    -q, --quality <quality>        sets output file quality between [0-100], 0 for optimization
+        --threads <threads>        specify the number of parallel jobs (max is the number of processors available)
+                                   [default: 0]
+        --verbose <verbose>        select how much output you want to see, 0 is equal to -Q, --quiet [default: 1]
+        --width <width>            width of the output image, if height is not set will preserve aspect ratio [default:
+                                   0]
+
+ARGS:
+    <FILE>...    Files to process
+```
+
+编译过程报错处理记录
+```
+-- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")			--> libxkbcommon-dev
+-- Could NOT find Qt6Svg (missing: Qt6Svg_DIR)				--> libqt6svg6-dev
+"/usr/lib/qt6/bin/lconvert"  does not exist				--> qt6-l10n-tools
+"/usr/lib/qt6/libexec/lprodump" does not exist				--> qt6-tools-dev-tools
+```
+
+```
+sudo apt install libxcb-xkb-dev libxkbcommon-dev libqt6svg6-dev libqt6svg6 libqt6svgwidgets6 qt6-l10n-tools qt6-tools-dev-tools qt6-base-dev qt6-tools-dev
+
+sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake
+```
+
+
+## caesium-image-compressor 的编译
+```
+cmake -B build -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
+cmake --build build --config Release --target caesium_image_compressor
+```
+```
+cmake -B build -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake -DCMAKE_VERBOSE_MAKEFILE=ON
+make VERBOSE=1
+```
+报错
+```
+/caesium-image-compressor/src/main.cpp:41:41: error: ‘class QStyleHints’ has no member named ‘colorScheme’
+   41 |         if (QApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark) {
+```
+qt版本必须大于6.5才行
+
 
 
 ---
