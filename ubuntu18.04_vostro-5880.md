@@ -14055,6 +14055,54 @@ strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_2.28
 ***
 #
 ```
+$ sudo apt install qemu qemu-kvm libvirt-daemon libvirt-clients bridge-utils virt-manager
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+bridge-utils is already the newest version (1.5-15ubuntu1).
+libvirt-clients is already the newest version (4.0.0-1ubuntu8.21).
+libvirt-clients set to manually installed.
+libvirt-daemon is already the newest version (4.0.0-1ubuntu8.21).
+libvirt-daemon set to manually installed.
+qemu-kvm is already the newest version (1:2.11+dfsg-1ubuntu7.42).
+The following additional packages will be installed:
+  gir1.2-gtk-vnc-2.0 gir1.2-libosinfo-1.0 gir1.2-libvirt-glib-1.0 gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 libgovirt-common libgovirt2 libgtk-vnc-2.0-0 libgvnc-1.0-0 libosinfo-1.0-0 libphodav-2.0-0
+  libphodav-2.0-common libspice-client-glib-2.0-8 libspice-client-gtk-3.0-5 libusbredirhost1 libvirt-glib-1.0-0 osinfo-db python-gi-cairo python-ipaddr qemu-slof qemu-system qemu-system-arm qemu-system-mips
+  qemu-system-misc qemu-system-ppc qemu-system-s390x qemu-system-sparc qemu-user spice-client-glib-usb-acl-helper virt-viewer virtinst
+Suggested packages:
+  libosinfo-l10n vde2 qemu-efi openbios-ppc openhackware openbios-sparc ssh-askpass python-guestfs
+The following NEW packages will be installed:
+  gir1.2-gtk-vnc-2.0 gir1.2-libosinfo-1.0 gir1.2-libvirt-glib-1.0 gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 libgovirt-common libgovirt2 libgtk-vnc-2.0-0 libgvnc-1.0-0 libosinfo-1.0-0 libphodav-2.0-0
+  libphodav-2.0-common libspice-client-glib-2.0-8 libspice-client-gtk-3.0-5 libusbredirhost1 libvirt-glib-1.0-0 osinfo-db python-gi-cairo python-ipaddr qemu qemu-slof qemu-system qemu-system-arm
+  qemu-system-mips qemu-system-misc qemu-system-ppc qemu-system-s390x qemu-system-sparc qemu-user spice-client-glib-usb-acl-helper virt-manager virt-viewer virtinst
+0 upgraded, 33 newly installed, 0 to remove and 68 not upgraded.
+
+
+sudo apt-get install qemu qemu-system qemu-system-arm
+sudo apt-get install qemu-kvm qemu virt-manager virt-viewer libvirt-daemon-system libvirt-clients bridge-utils
+
+qemu-img -V
+qemu-system-arm --version
+qemu-system-aarch64 --version
+qemu-system-x86_64 -version
+
+andreas@Vostro-5880:~
+$ qemu-img -V
+qemu-img version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+andreas@Vostro-5880:~
+$ qemu-system-arm --version
+QEMU emulator version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+andreas@Vostro-5880:~
+$ qemu-system-aarch64 --version
+QEMU emulator version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+andreas@Vostro-5880:~
+$ qemu-system-x86_64 -version
+QEMU emulator version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+
 ```
 
 ***
