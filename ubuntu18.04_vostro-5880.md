@@ -14106,9 +14106,34 @@ Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
 ```
 
 ***
-#
+# matlab2017
+运行 simulink 报错
+Can't reload '/opt/MATLAB/R2017b/bin/glnxa64/libmwdastudio.so'
 ```
+andreas@Vostro-5880:~/bin
+$ ls -l
+total 4
+lrwxrwxrwx  1 andreas andreas   33 Mar 31  2021 deploytool2017 -> /opt/MATLAB/R2017b/bin/deploytool
+lrwxrwxrwx  1 andreas andreas   45 Mar 31  2021 FoxitReader -> /opt/foxitsoftware/foxitreader/FoxitReader.sh
+lrwxrwxrwx  1 andreas andreas   29 Mar 31  2021 matlab2017 -> /opt/MATLAB/R2017b/bin/matlab
+lrwxrwxrwx  1 andreas andreas   29 Mar 31  2021 mbuild2017 -> /opt/MATLAB/R2017b/bin/mbuild
+lrwxrwxrwx  1 andreas andreas   26 Mar 31  2021 mcc2017 -> /opt/MATLAB/R2017b/bin/mcc
+lrwxrwxrwx  1 andreas andreas   26 Mar 31  2021 mex2017 -> /opt/MATLAB/R2017b/bin/mex
+
 ```
+据说是 libfreetype.so.6，移除试验可以运行 simulink
+```
+cd /opt/MATLAB/R2017b/bin/glnxa64
+mkdir -p /opt/MATLAB/R2017b/exclude
+mv libfreetype.* /opt/MATLAB/R2017b/exclude
+```
+然后重新打开 mablab2017，就好了
+
+ref
+<https://ww2.mathworks.cn/matlabcentral/answers/506092-can-t-reload-usr-local-matlab-r2018a-bin-glnxa64-libmwdastudio-so>
+
+
+实际上 socbuilder 在 2019 之后的版本才有。升级版本吧
 
 ***
 #
