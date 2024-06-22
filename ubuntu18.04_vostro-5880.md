@@ -3560,12 +3560,29 @@ $ newgrp docker
 $ docker run hello-world
 ```
 ## docker 源加速
-/etc/docker/daemon.json，加上如下的键值:
+`sudo gedit /etc/docker/daemon.json`, 加上如下的键值:
 ```
 {
   "registry-mirrors": ["https://registry.docker-cn.com"]
 }
 ```
+或者
+```
+{
+  "registry-mirrors": [
+        "https://ung2thfc.mirror.aliyuncs.com",
+        "https://registry.docker-cn.com",
+        "http://hub-mirror.c.163.com",
+        "https://docker.mirrors.ustc.edu.cn"
+    ]
+}
+```
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+docker info
+```
+
 ## 在dock安装ubuntu1604 [原来是为了在arch执行xsct, 不过看起来对ubunut多版本还是个很好的解决方案]
 ```
 $ docker pull ubuntu
@@ -7562,6 +7579,8 @@ Sun Oct  9 17:03:18 2022
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 
+
+nvidia-smi -l 5
 ```
 
 本身ubuntu的repo有 nvidia-cuda-toolkit 比较老旧
@@ -9594,10 +9613,26 @@ $ python --version
 ```
 $ conda list
 ```
+
+查看conda环境中tensorrt的版本和来源
+```
+pip list | grep tensorrt
+tensorrt                 8.6.1.post1
+tensorrt-bindings        8.6.1
+tensorrt-libs            8.6.1
+
+conda list | grep tensorrt
+tensorrt                  8.6.1.post1              pypi_0    pypi
+tensorrt-bindings         8.6.1                    pypi_0    pypi
+tensorrt-libs             8.6.1                    pypi_0    pypi
+```
+
 删除自定义env（谨慎操作）
 ```
 $ conda remove -n some_pip_test --all
 ```
+
+
 重命名环境
 conda 其实没有重命名指令，实现重命名是通过 clone 完成的，分两步：
 
@@ -9606,14 +9641,25 @@ conda 其实没有重命名指令，实现重命名是通过 clone 完成的，�
 ②删除 old name 的环境
 
 如，将nlp重命名成tf2
+
+克隆出新环境
 ```
 conda create -n tf2 --clone nlp
+```
+到原环境生成pip和conda列表
+```
+pip freeze > requirements.txts
+conda list -e > requirements.txt                
 ```
 删除原环境
 ```
 conda remove -n nlp --all
 ```
-
+进入目标环境还原conda和pip列表
+```
+conda install --yes --file requirements.txt
+pip install -r requirements.txt
+```
 
 精确查找
 ```
@@ -9677,6 +9723,21 @@ $ conda upgrade <package_name>
 ```
 更新多个指定包，则包名以空格隔开，向后排列。如： `conda update pandas numpy matplotlib` 即更新pandas、numpy、matplotlib包
 
+
+## conda的虚拟环境添加到jupyter notebook
+以新建的虚拟环境为例
+```
+conda create -n myenv python=3.8
+conda activate myenv
+conda install numpy
+conda install ipykernel
+python -m ipykernel install --user --name=myenv # 这里名字可以和conda环境名不同
+jupyter notebook    # 一般 new 下面就可以新建一个用conda环境的 kernel 的 jupyter 文件了
+```
+卸载
+```
+删除 ~/.local/share/jupyter/kernels/ 下面的对应文件夹就可以
+```
 
 
 ## ActivePython配置管理
@@ -12754,12 +12815,74 @@ sudo dpkg -i TencentMeeting_0300000000_3.15.1.403_x86_64_default.publish.deb
 
 /opt/wemeet/wemeetapp.sh %u
 ```
+
 ***
 # heif-convert
 ```
-sudo apt-get install libheif1 libheif-examples
+sudo apt-get install libheif1 libheif-examples libheif-dev
+heif-info
+heif-enc
+heif-convert
+```
+```
+heif-enc -q 50 example.png
+for file in *.heic; do heif-convert $file ${file/%.heic/.jpg}; done
+```
+
+尝试 eog 直接浏览，还不行
+
+<https://launchpad.net/~strukturag/+archive/ubuntu/libheif>
+<https://launchpad.net/~savoury1/+archive/ubuntu/graphics>
+<https://launchpad.net/ubuntu/+source/libheif>
+```
+sudo add-apt-repository ppa:savoury1/graphics
+sudo add-apt-repository ppa:strukturag/libheif
+
+# sudo apt-get install libheif1 libheif-examples libheif-dev heif-gdk-pixbuf heif-thumbnailer libheif-plugin-aomdec libheif-plugin-aomenc libheif-plugin-dav1d libheif-plugin-libde265 libheif-plugin-rav1e libheif-plugin-svtenc libheif-plugin-x265
+
+sudo apt-get install libheif1 libheif-examples libheif-dev heif-gdk-pixbuf heif-thumbnailer libheif-plugin-aomdec libheif-plugin-aomenc libheif-plugin-dav1d libheif-plugin-libde265 libheif-plugin-x265
+
+The following additional packages will be installed:
+  libaom-dev libaom3 libdav1d-dev libdav1d7 libde265-0 libde265-dev libsharpyuv-dev libsharpyuv0 libwebp-dev libwebp7 libwebpdecoder3 libwebpdemux2 libwebpmux3 libx265-199
+Suggested packages:
+  libheif-plugin-ffmpegdec libheif-plugin-jpegdec libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+The following NEW packages will be installed:
+  heif-gdk-pixbuf heif-thumbnailer libaom-dev libaom3 libdav1d-dev libdav1d7 libde265-dev libheif-plugin-aomdec libheif-plugin-aomenc libheif-plugin-dav1d libheif-plugin-libde265 libheif-plugin-x265
+  libsharpyuv-dev libsharpyuv0 libwebp7 libwebpdecoder3 libx265-199
+The following packages will be upgraded:
+  libde265-0 libheif-dev libheif-examples libheif1 libwebp-dev libwebpdemux2 libwebpmux3
+
+
+# sudo apt-get install libheif-plugin-ffmpegdec libheif-plugin-jpegdec libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+
+sudo apt-get install libheif-plugin-jpegdec libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+
+sudo apt-get install libavif-gdk-pixbuf
+
+The following NEW packages will be installed:
+  libabsl2206 libavif-gdk-pixbuf libavif16 libgav1-1 libyuv0
+
+$ sudo apt-get install eog-plugins
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  eog-plugin-disable-dark-theme eog-plugin-exif-display eog-plugin-export-to-folder eog-plugin-fit-to-width eog-plugin-fullscreen-background eog-plugin-hide-titlebar eog-plugin-map eog-plugin-maximize-windows
+  eog-plugin-picasa eog-plugin-python-console eog-plugin-send-by-mail eog-plugin-slideshow-shuffle eog-plugins-common libchamplain-0.12-0 libchamplain-gtk-0.12-0
+The following NEW packages will be installed:
+  eog-plugin-disable-dark-theme eog-plugin-exif-display eog-plugin-export-to-folder eog-plugin-fit-to-width eog-plugin-fullscreen-background eog-plugin-hide-titlebar eog-plugin-map eog-plugin-maximize-windows
+  eog-plugin-picasa eog-plugin-python-console eog-plugin-send-by-mail eog-plugin-slideshow-shuffle eog-plugins eog-plugins-common libchamplain-0.12-0 libchamplain-gtk-0.12-0
+0 upgraded, 16 newly installed, 0 to remove and 282 not upgraded.
+
+
+sudo apt install heif-gdk-pixbuf heif-thumbnailer gimagereader gpicview
+
 
 ```
+反正直接看不了。ffmepg也不支持，转换之后再用其他图片压缩
+
+
+
 ***
 # flatpak + handbrake
 ```
@@ -12911,14 +13034,18 @@ sudo apt purge cuda-cudart-cross-aarch64-10-2
 ```
 实际上nvidia驱动版本可以高, cuda和cudnn要选合适的, 选保留10.2比较好
 ```
-sudo aptitude install cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-11-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2 cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2 cuda-cudart-cross-aarch64-10-2
+sudo aptitude install cuda-tools-10-2 cuda-command-line-tools-10-2 cuda-compiler-10-2 cuda-cudart-10-2 cuda-cudart-dev-10-2 cuda-cufft-10-2 cuda-cufft-dev-10-2 cuda-cuobjdump-10-2 cuda-cupti-10-2 cuda-cupti-dev-10-2 cuda-curand-10-2 cuda-curand-dev-10-2 cuda-cusolver-10-2 cuda-cusolver-dev-10-2 cuda-cusparse-10-2 cuda-cusparse-dev-10-2 cuda-documentation-10-2 cuda-driver-dev-10-2 cuda-gdb-10-2 cuda-libraries-10-2 cuda-libraries-dev-10-2 cuda-license-10-2 cuda-memcheck-10-2 cuda-misc-headers-10-2  cuda-npp-10-2 cuda-npp-dev-10-2 cuda-nsight-10-2 cuda-nsight-compute-10-2 cuda-nsight-systems-10-2 cuda-nvcc-10-2 cuda-nvdisasm-10-2 cuda-nvgraph-10-2 cuda-nvgraph-dev-10-2 cuda-nvjpeg-10-2 cuda-nvjpeg-dev-10-2 cuda-nvml-dev-10-2 cuda-nvprof-10-2 cuda-nvprune-10-2 cuda-nvrtc-10-2 cuda-nvrtc-dev-10-2 cuda-nvtx-10-2 cuda-nvvp-10-2 cuda-samples-10-2 cuda-sanitizer-api-10-2 cuda-toolkit-10-2 cuda-tools-10-2 cuda-visual-tools-10-2 libvisionworks libvisionworks-sfm cuda-cudart-10-2 cuda-cudart-cross-aarch64-10-2
 
 sudo aptitude install libcudnn8=8.6.0.163-1+cuda10.2 libcudnn8-dev=8.6.0.163-1+cuda10.2 libcudnn8-samples=8.6.0.163-1+cuda10.2
 ```
+列出一个软件的所有仓库版本
+```
+sudo apt-cache madison libcudnn8
+```
 
 
 ```
-sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command-line-tools-11-4 cuda-compat-11-4 cuda-compiler-11-4 cuda-cub-11-4 cuda-cudart-dev-11-4 cuda-documentation-11-4 cuda-libraries-dev-11-4 cuda-nvcc-11-4 cuda-samples-11-4 cuda-toolkit-11-4 cuda-tools-11-4 cuda-nsight-compute-11-4 nsight-compute-2021.2.2
+sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command-line-tools-11-4 cuda-compat-11-4 cuda-compiler-11-4 cuda-cub-11-4 cuda-cudart-dev-11-4 cuda-documentation-11-4 cuda-libraries-dev-11-4 cuda-nvcc-11-4 cuda-samples-11-4 cuda-toolkit-11-4 cuda-tools-11-4 cuda-nsight-compute-11-4 nsight-compute-2021.2.2 
      Remove the following packages:                      
 1)     cuda-nsight-compute-10-2 [10.2.89-1 (<NULL>, now)]
 2)     cuda-toolkit-10-2 [10.2.89-1 (<NULL>, now)]       
@@ -12929,10 +13056,38 @@ sudo aptitude purge cuda cuda-11-4 cuda-runtime-11-4 cuda-cccl-11-4 cuda-command
 ```
 sudo aptitude install nsight-compute-2021.2.2
 sudo aptitude remove nsight-compute-2023.1.1
+
+
+cuda-toolkit-11-config-common
+sudo aptitude remove cuda-cudart-11-2
+sudo aptitude remove libcufft-11-2
+sudo aptitude install cuda-cudart-11-4 libcublas-11-4 libcublas-dev-11-4 libcufft-11-4 libcusolver-11-4 libcusparse-11-4
+ls -l /usr/local | grep cuda
+sudo update-alternatives --config cuda
+sudo aptitude install cuda=10.2.89-1 cuda-10-2 cuda-demo-suite-10-2 cuda-runtime-10-2
+ll /etc/alternatives/cuda*
+update-alternatives --list cuda
+update-alternatives --display cuda
+sudo update-alternatives --install "/usr/local/cuda" "cuda" "/usr/local/cuda-10.2" 100
+sudo update-alternatives --set cuda /usr/local/cuda-10.2
+sudo update-alternatives --config cuda
+ll /etc/alternatives/cuda*
+ll /usr/local | grep cuda
 ```
+如果用tenserflow 2.5.0~2.8.0~? 
+Could not load dynamic library 'libcublas.so.11'
+Could not load dynamic library 'libcublasLt.so.11'
+Could not load dynamic library 'libcusolver.so.11'
+Could not load dynamic library 'libcusparse.so.11'
+```
+sudo update-alternatives --set cuda /usr/local/cuda-11.4
+```
+alternatives指向11.4版本其实也不影响mx等
 
-
-
+如果需要nvcc(10.2)
+```
+sudo update-alternatives --set cuda /usr/local/cuda-10.2
+```
 
 
 
@@ -13048,17 +13203,973 @@ ln -s libhello.so.1 libhello.so
 
 ```
 ***
+# trtexec tensorrt
+trtexec在libnvinfer-bin里面
+```
+$ aptitude search tensorrt
+p   tensorrt                                                                                          - Meta package for TensorRT                                                                                  
+p   tensorrt-dev                                                                                      - Meta package for TensorRT development libraries                                                            
+p   tensorrt-libs                                                                                     - Meta package for TensorRT runtime libraries                                                                
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ apt-cache madison tensorrt
+  tensorrt | 8.6.1.6-1+cuda12.0 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.6.1.6-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.6.0.12-1+cuda12.0 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.6.0.12-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.3.1-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.3.1-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.2.2-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.2.2-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.1.7-1+cuda11.8 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.5.1.7-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.3.1-1+cuda11.6 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.3.1-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.2.4-1+cuda11.6 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.2.4-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.1.5-1+cuda11.6 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+  tensorrt | 8.4.1.5-1+cuda10.2 | https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64  Packages
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ sudo aptitude install tensorrt=8.5.3.1-1+cuda10.2 tensorrt-dev=8.5.3.1-1+cuda10.2 tensorrt-libs=8.5.3.1-1+cuda10.2
+The following NEW packages will be installed:
+  tensorrt{b} tensorrt-dev{b} tensorrt-libs{b} 
+0 packages upgraded, 3 newly installed, 0 to remove and 41 not upgraded.
+Need to get 10.9 kB of archives. After unpacking 33.8 kB will be used.
+The following packages have unmet dependencies:
+ tensorrt-libs : Depends: libnvinfer8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                 Depends: libnvinfer-plugin8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                 Depends: libnvparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                 Depends: libnvonnxparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+ tensorrt-dev : Depends: libnvinfer-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                Depends: libnvinfer-plugin-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                Depends: libnvparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+                Depends: libnvonnxparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+ tensorrt : Depends: libnvinfer8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-plugin8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvonnxparsers8 (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-bin (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-plugin-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvonnxparsers-dev (= 8.5.3-1+cuda10.2) but it is not going to be installed
+            Depends: libnvinfer-samples (= 8.5.3-1+cuda10.2) but it is not going to be installed
+The following actions will resolve these dependencies:
+
+     Keep the following packages at their current version:
+1)     tensorrt [Not Installed]                           
+2)     tensorrt-dev [Not Installed]                       
+3)     tensorrt-libs [Not Installed]                      
+
+
+
+Accept this solution? [Y/n/q/?] n
+The following actions will resolve these dependencies:
+
+      Install the following packages:                    
+1)      libnvinfer-bin [8.5.3-1+cuda10.2 (<NULL>)]       
+2)      libnvinfer-dev [8.5.3-1+cuda10.2 (<NULL>)]       
+3)      libnvinfer-plugin-dev [8.5.3-1+cuda10.2 (<NULL>)]
+4)      libnvinfer-plugin8 [8.5.3-1+cuda10.2 (<NULL>)]   
+5)      libnvinfer-samples [8.5.3-1+cuda10.2 (<NULL>)]   
+6)      libnvinfer8 [8.5.3-1+cuda10.2 (<NULL>)]          
+7)      libnvonnxparsers-dev [8.5.3-1+cuda10.2 (<NULL>)] 
+8)      libnvonnxparsers8 [8.5.3-1+cuda10.2 (<NULL>)]    
+9)      libnvparsers-dev [8.5.3-1+cuda10.2 (<NULL>)]     
+10)     libnvparsers8 [8.5.3-1+cuda10.2 (<NULL>)]        
+
+
+
+Accept this solution? [Y/n/q/?] y
+The following NEW packages will be installed:
+  libnvinfer-bin{a} libnvinfer-dev{a} libnvinfer-plugin-dev{a} libnvinfer-plugin8{a} libnvinfer-samples{a} libnvinfer8{a} libnvonnxparsers-dev{a} libnvonnxparsers8{a} libnvparsers-dev{a} libnvparsers8{a} 
+  tensorrt tensorrt-dev tensorrt-libs 
+0 packages upgraded, 13 newly installed, 0 to remove and 41 not upgraded.
+
+
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ export PATH=$PATH:/usr/src/tensorrt/bin/
+(lane-det) andreas@Vostro-5880:~/Downloads/TODO/TensorRT/samples/trtexec/build
+$ trtexec --help
+
+```
+***
+# 查看已经安装的deb包版本
+比如 tensorrt 的版本是啥, 有这些办法可以查找
+```
+dpkg -s tensorrt | grep Version
+apt-show-versions -a tensorrt
+aptitude versions tensorrt
+apt list tensorrt
+apt list tensorrt -a
+```
+
+
+***
+# 更新 ffmpeg4
+实际上是希望能把 hevc_qsv 编码器用起来，但是目前环境看起来不行。更新到更高版本的系统apt仓库才有预编译好的deb包
+```
+sudo add-apt-repository ppa:morphis/intel-media
+sudo apt-get install libva-dev intel-media-va-driver-non-free vainfo
+for i in buildconf hwaccels decoders filters encoders; do echo $i:; ffmpeg -hide_banner -${i} | egrep -i "qsv|vaapi|libmfx"; done
+sudo vainfo
+ffmpeg -hwaccel qsv -c:v hevc_qsv -i example.mp4 -b:v 2000k output.mp4
+```
+记录一下更改，免得黑屏啥的
+```
+$ sudo apt-get install libva-dev intel-media-va-driver-non-free vainfo ffmpeg
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+vainfo is already the newest version (2.1.0+ds1-1).
+The following additional packages will be installed:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavresample4 libavutil56 libcodec2-0.7 libigdgmm9 libpostproc55 libswresample3 libswscale5 libva-drm2 libva-drm2:i386 libva-glx2 libva-wayland2
+  libva-x11-2 libva-x11-2:i386 libva2 libva2:i386
+The following NEW packages will be installed:
+  intel-media-va-driver-non-free libavcodec58 libavdevice58 libavfilter7 libavformat58 libavresample4 libavutil56 libcodec2-0.7 libigdgmm9 libpostproc55 libswresample3 libswscale5
+The following packages will be upgraded:
+  ffmpeg libva-dev libva-drm2 libva-drm2:i386 libva-glx2 libva-wayland2 libva-x11-2 libva-x11-2:i386 libva2 libva2:i386
+
+```
+编译的方式咱就不试验了
+
+## 其实是能用起来的
+
+ffmpeg版本信息如下
+```
+$ ffmpeg -version
+ffmpeg version 4.1.4-1build2~bionic1 Copyright (c) 2000-2019 the FFmpeg developers
+built with gcc 7 (Ubuntu 7.4.0-1ubuntu1~18.04.1)
+configuration: --prefix=/usr --extra-version='1build2~bionic1' --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-avresample --disable-filter=resample --enable-avisynth --enable-gnutls --enable-ladspa --disable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librsvg --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libssh --enable-libtheora --enable-libtwolame --disable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opengl --enable-sdl2 --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+libavutil      56. 22.100 / 56. 22.100
+libavcodec     58. 35.100 / 58. 35.100
+libavformat    58. 20.100 / 58. 20.100
+libavdevice    58.  5.100 / 58.  5.100
+libavfilter     7. 40.101 /  7. 40.101
+libavresample   4.  0.  0 /  4.  0.  0
+libswscale      5.  3.100 /  5.  3.100
+libswresample   3.  3.100 /  3.  3.100
+libpostproc    55.  3.100 / 55.  3.100
+
+```
+
+按前面的安装了intel-media-va-driver-non-free，一定要设置LIBVA_DRIVER_NAME， 还可以加strace查看
+```
+$ cat /proc/cpuinfo 
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 165
+model name	: Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz
+...
+
+$ ls /dev/dri -l
+total 0
+drwxr-xr-x  2 root root       120 Apr  1 10:56 by-path
+crw-rw----+ 1 root video 226,   0 Apr  1 10:56 card0
+crw-rw----+ 1 root video 226,   1 Apr  1 10:56 card1
+crw-rw----+ 1 root video 226, 128 Apr  1 10:56 renderD128           # 这个就是intel核显
+crw-rw----+ 1 root video 226, 129 Apr  1 10:56 renderD129
+
+如果这里 当前用户不在 renderD128 用户组 `sudo usermod -a -G render $USER` 可以把用户添加到 render 组。这里是 video 组，其实不设置也可以用了。
+
+
+
+$ ls /usr/lib/x86_64-linux-gnu/dri | grep drv_video.so
+i965_drv_video.so
+iHD_drv_video.so                    # i7 10代 应该用这个
+nouveau_drv_video.so
+r600_drv_video.so
+radeonsi_drv_video.so
+
+$ vainfo
+libva info: VA-API version 1.5.0
+libva info: va_getDriverName() returns 0
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/nvidia_drv_video.so
+libva info: va_openDriver() returns -1
+vaInitialize failed with error code -1 (unknown libva error),exit
+
+
+$ export LIBVA_DRIVER_NAME=iHD LIBVA_TRACE=1
+
+$ vainfo        # 和 `vainfo --display x11` 输出一样
+libva info: Open new log file 1.102708.thd-0x0000669e for the thread 0x0000669e
+libva info: LIBVA_TRACE is on, save log into 1.102708.thd-0x0000669e
+libva info: VA-API version 1.5.0
+libva info: va_getDriverName() returns 0
+libva info: User requested driver 'iHD'
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
+libva info: Found init function __vaDriverInit_1_5
+libva info: va_openDriver() returns 0
+vainfo: VA-API version: 1.5 (libva 2.1.0)
+vainfo: Driver version: Intel iHD driver - 1.0.0
+vainfo: Supported profile and entrypoints
+      VAProfileNone                   :	VAEntrypointVideoProc
+      VAProfileNone                   :	VAEntrypointStats
+      VAProfileMPEG2Simple            :	VAEntrypointVLD
+      VAProfileMPEG2Simple            :	VAEntrypointEncSlice
+      VAProfileMPEG2Main              :	VAEntrypointVLD
+      VAProfileMPEG2Main              :	VAEntrypointEncSlice
+      VAProfileH264Main               :	VAEntrypointVLD
+      VAProfileH264Main               :	VAEntrypointEncSlice
+      VAProfileH264Main               :	VAEntrypointFEI
+      VAProfileH264Main               :	VAEntrypointEncSliceLP
+      VAProfileH264High               :	VAEntrypointVLD
+      VAProfileH264High               :	VAEntrypointEncSlice
+      VAProfileH264High               :	VAEntrypointFEI
+      VAProfileH264High               :	VAEntrypointEncSliceLP
+      VAProfileVC1Simple              :	VAEntrypointVLD
+      VAProfileVC1Main                :	VAEntrypointVLD
+      VAProfileVC1Advanced            :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointEncPicture
+      VAProfileH264ConstrainedBaseline:	VAEntrypointVLD
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSlice
+      VAProfileH264ConstrainedBaseline:	VAEntrypointFEI
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSliceLP
+      VAProfileVP8Version0_3          :	VAEntrypointVLD
+      VAProfileVP8Version0_3          :	VAEntrypointEncSlice
+      VAProfileHEVCMain               :	VAEntrypointVLD
+      VAProfileHEVCMain               :	VAEntrypointEncSlice
+      VAProfileHEVCMain               :	VAEntrypointFEI
+      VAProfileHEVCMain10             :	VAEntrypointVLD
+      VAProfileHEVCMain10             :	VAEntrypointEncSlice
+      VAProfileVP9Profile0            :	VAEntrypointVLD
+      VAProfileVP9Profile2            :	VAEntrypointVLD
+
+$ sudo vainfo           # 环境变量没有作用到 root
+error: XDG_RUNTIME_DIR not set in the environment.
+libva info: VA-API version 1.5.0
+libva info: va_getDriverName() returns 0
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/nvidia_drv_video.so
+libva info: va_openDriver() returns -1
+vaInitialize failed with error code -1 (unknown libva error),exit
+
+<https://ffmpeg-user.ffmpeg.narkive.com/XZk7pyBx/vaapi-impossible-to-convert-between-the-formats>
+
+ffmpeg -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -i example.mp4 -c:v h264_vaapi output.mp4
+会报错 Impossible to convert between the formats supported by the filter 'Parsed_null_0' and the filter 'auto_scaler_0'
+
+设置 `-hwaccel_output_format` 下面这些都可以用, 
+ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi output.mp4
+ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i example.mp4 -c:v h264_vaapi output.mp4
+ffmpeg -hide_banner -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -i example.mp4 -c:v libx264 output.mp4
+
+ffmpeg -vaapi_device /dev/dri/renderD128 -i example.mp4 -vf 'format=nv12,hwupload' -c:v hevc_vaapi out1.mp4                 # try -vf 'format=nv12|vaapi,hwupload'
+
+增加 log 
+ffmpeg -hide_banner -loglevel trace -hwaccel vaapi -vaapi_device /dev/dri/renderD128 -hwaccel_output_format vaapi -i test.avi -c:v h264_vaapi out.mp4
+
+
+不加设备名也是可以的
+
+ffmpeg -hide_banner -hwaccel vaapi -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi output1.mp4
+
+
+export LIBVA_DRIVER_NAME=iHD  # 去掉 strace 了
+ffmpeg -hide_banner -threads 0 -hwaccel vaapi -hwaccel_output_format vaapi -i example.mp4 -c:v hevc_vaapi -profile:v main -b:v 1000k -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 -n output1.mp4
+```
+
+
+```
+$ ffmpeg -hide_banner -hwaccels shows
+Hardware acceleration methods:
+vdpau
+vaapi
+drm
+
+$ ffmpeg -hide_banner -init_hw_device list
+Supported hardware device types:
+vdpau
+vaapi
+drm
+
+```
+<https://trac.ffmpeg.org/wiki/Hardware/VAAPI>
+<https://trac.ffmpeg.org/wiki/HWAccelIntro>
+
+***
+# wine64 简单使用和 desktop文件 例子
+```
+env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFIX="/home/andreas/.wine-x64" wine Caesium\ Image\ Compressor.exe
+```
+MAXSerDesEV-GMSL.desktop
+```
+[Desktop Entry]
+Name=MAXSerDesEV-GMSL
+Exec=env LC_ALL="zh_CN.UTF-8" LANG="zh_CN.UTF-8" WINEARCH=win64 WINEPREFIX="/home/andreas/.wine-x64" wine C:\\\\users\\\\Public\\\\Desktop\\\\MAXSerDesEV-GMSL.lnk
+Type=Application
+StartupNotify=true
+Path=/home/andreas/.wine-x64/dosdevices/c:/Maxim Integrated/MAXSerDesEV-GMSL
+Icon=F365_GMSL.0
+StartupWMClass=gmsl.exe
+```
+
+***
+# cargo
+```
+$ sudo apt install cargo
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libstd-rust-1.65 libstd-rust-dev rustc
+Suggested packages:
+  cargo-doc llvm-14 lld-14 clang-14
+The following NEW packages will be installed:
+  cargo libstd-rust-1.65 libstd-rust-dev rustc
+
+```
+
+***
+# gifski
+```
+sudo dpkg -i gifski_1.32.0-1_amd64.deb
+$ gifski --help
+https://gif.ski by Kornel Lesiński
+
+Usage: gifski [OPTIONS] --output <a.gif> <FILES>...
+
+Arguments:
+  <FILES>...
+          one video file supported by FFmpeg, or multiple PNG image files
+
+Options:
+  -o, --output <a.gif>
+          Destination file to write to; "-" means stdout
+
+  -r, --fps <num>
+          Frame rate of animation. If using PNG files as input, this means the speed, as all frames are kept. If video is used, it will be resampled to this constant rate by dropping and/or duplicating frames
+          
+          [default: 20]
+
+      --fast-forward <x>
+          Multiply speed of video by a factor
+          
+          [default: 1]
+
+      --fast
+          50% faster encoding, but 10% worse quality and larger file size
+
+      --extra
+          50% slower encoding, but 1% better quality
+
+  -Q, --quality <1-100>
+          Lower quality may give smaller file
+          
+          [default: 90]
+
+      --motion-quality <1-100>
+          Lower values reduce motion
+
+      --lossy-quality <1-100>
+          Lower values introduce noise and streaks
+
+  -W, --width <px>
+          Maximum width.
+          By default anims are limited to about 800x600
+
+  -H, --height <px>
+          Maximum height (stretches if the width is also set)
+
+      --no-sort
+          Use files exactly in the order given, rather than sorted
+
+  -q, --quiet
+          Do not display anything on standard output/console
+
+      --repeat <num>
+          Number of times the animation is repeated (-1 none, 0 forever or <value> repetitions
+
+      --fixed-color <RGBHEX>
+          Always include this color in the palette
+
+      --matte <RGBHEX>
+          Background color for semitransparent pixels
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+
+```
+***
+# gifsicle
+```
+sudo apt install gifsicle
+
+$ gifsicle --help
+'Gifsicle' manipulates GIF images. Its most common uses include combining
+single images into animations, adding transparency, optimizing animations for
+space, and printing information about GIFs.
+
+Usage: gifsicle [OPTION | FILE | FRAME]...
+
+Mode options: at most one, before any filenames.
+  -m, --merge                   Merge mode: combine inputs, write stdout.
+  -b, --batch                   Batch mode: modify inputs, write back to
+                                same filenames.
+  -e, --explode                 Explode mode: write N files for each input,
+                                one per frame, to 'input.frame-number'.
+  -E, --explode-by-name         Explode mode, but write 'input.name'.
+
+General options: Also --no-OPTION for info and verbose.
+  -I, --info                    Print info about input GIFs. Two -I's means
+                                normal output is not suppressed.
+      --color-info, --cinfo     --info plus colormap details.
+      --extension-info, --xinfo --info plus extension details.
+      --size-info, --sinfo      --info plus compression information.
+  -V, --verbose                 Prints progress information.
+  -h, --help                    Print this message and exit.
+      --version                 Print version number and exit.
+  -o, --output FILE             Write output to FILE.
+  -w, --no-warnings             Don't report warnings.
+      --no-ignore-errors        Quit on very erroneous input GIFs.
+      --conserve-memory         Conserve memory at the expense of speed.
+      --multifile               Support concatenated GIF files.
+
+Frame selections:               #num, #num1-num2, #num1-, #name
+
+Frame change options:
+  --delete FRAMES               Delete FRAMES from input.
+  --insert-before FRAME GIFS    Insert GIFS before FRAMES in input.
+  --append GIFS                 Append GIFS to input.
+  --replace FRAMES GIFS         Replace FRAMES with GIFS in input.
+  --done                        Done with frame changes.
+
+Image options: Also --no-OPTION and --same-OPTION.
+  -B, --background COL          Make COL the background color.
+      --crop X,Y+WxH, --crop X,Y-X2,Y2
+                                Crop the image.
+      --crop-transparency       Crop transparent borders off the image.
+      --flip-horizontal, --flip-vertical
+                                Flip the image.
+  -i, --interlace               Turn on interlacing.
+  -S, --logical-screen WxH      Set logical screen to WxH.
+  -p, --position X,Y            Set frame position to (X,Y).
+      --rotate-90, --rotate-180, --rotate-270, --no-rotate
+                                Rotate the image.
+  -t, --transparent COL         Make COL transparent.
+
+Extension options:
+      --app-extension N D       Add an app extension named N with data D.
+  -c, --comment TEXT            Add a comment before the next frame.
+      --extension N D           Add an extension number N with data D.
+  -n, --name TEXT               Set next frame's name.
+      --no-comments, --no-names, --no-extensions
+                                Remove comments (names, extensions) from input.
+Animation options: Also --no-OPTION and --same-OPTION.
+  -d, --delay TIME              Set frame delay to TIME (in 1/100sec).
+  -D, --disposal METHOD         Set frame disposal to METHOD.
+  -l, --loopcount[=N]           Set loop extension to N (default forever).
+  -O, --optimize[=LEVEL]        Optimize output GIFs.
+  -U, --unoptimize              Unoptimize input GIFs.
+  -j, --threads[=THREADS]       Use multiple threads to improve speed.
+
+Whole-GIF options: Also --no-OPTION.
+      --careful                 Write larger GIFs that avoid bugs in other
+                                programs.
+      --change-color COL1 COL2  Change COL1 to COL2 throughout.
+  -k, --colors N                Reduce the number of colors to N.
+      --color-method METHOD     Set method for choosing reduced colors.
+  -f, --dither                  Dither image after changing colormap.
+      --gamma G                 Set gamma for color reduction [2.2].
+      --resize WxH              Resize the output GIF to WxH.
+      --resize-width W          Resize to width W and proportional height.
+      --resize-height H         Resize to height H and proportional width.
+      --resize-fit WxH          Resize if necessary to fit within WxH.
+      --scale XFACTOR[xYFACTOR] Scale the output GIF by XFACTORxYFACTOR.
+      --resize-method METHOD    Set resizing method.
+      --resize-colors N         Resize can add new colors up to N.
+      --transform-colormap CMD  Transform each output colormap by shell CMD.
+      --use-colormap CMAP       Set output GIF's colormap to CMAP, which can
+                                be 'web', 'gray', 'bw', or a GIF file.
+
+```
+
+***
+# 安装 rustup, 更新 rustup
+先做个准备, 如果报 `~/.config/fish/conf.d/rustup.fish': No such file or directory` 可以这样处理
+```
+$ mkdir -p ~/.config/fish/conf.d/
+$ touch ~/.config/fish/conf.d/rustup.fish
+```
+运行安装脚本
+```
+curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+
+其实可以下载 rustup-init.sh 自己运行
+
+
+$ proxychains sh rustup-init.sh 
+ProxyChains-3.1 (http://proxychains.sf.net)
+info: downloading installer
+|DNS-request| static.rust-lang.org 
+|S-chain|-<>-127.0.0.1:10808-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| static.rust-lang.org is 151.101.110.137
+|S-chain|-<>-127.0.0.1:10808-<><>-151.101.110.137:443-<><>-OK
+warning: it looks like you have an existing installation of Rust at:
+warning: /usr/bin
+warning: It is recommended that rustup be the primary Rust installation.
+warning: Otherwise you may have confusion unless you are careful with your PATH
+warning: If you are sure that you want both rustup and your already installed Rust
+warning: then please reply `y' or `yes' or set RUSTUP_INIT_SKIP_PATH_CHECK to yes
+warning: or pass `-y' to ignore all ignorable checks.
+error: cannot install while Rust is installed
+
+Continue? (y/N) y
+
+
+Welcome to Rust!
+
+This will download and install the official compiler for the Rust
+programming language, and its package manager, Cargo.
+
+Rustup metadata and toolchains will be installed into the Rustup
+home directory, located at:
+
+  /home/andreas/.rustup
+
+This can be modified with the RUSTUP_HOME environment variable.
+
+The Cargo home directory is located at:
+
+  /home/andreas/.cargo
+
+This can be modified with the CARGO_HOME environment variable.
+
+The cargo, rustc, rustup and other commands will be added to
+Cargo's bin directory, located at:
+
+  /home/andreas/.cargo/bin
+
+This path will then be added to your PATH environment variable by
+modifying the profile files located at:
+
+  /home/andreas/.profile
+  /home/andreas/.bashrc
+  /home/andreas/.zshenv
+  /home/andreas/.config/fish/conf.d/rustup.fish
+
+You can uninstall at any time with rustup self uninstall and
+these changes will be reverted.
+
+Current installation options:
+
+
+   default host triple: x86_64-unknown-linux-gnu
+     default toolchain: stable (default)
+               profile: default
+  modify PATH variable: yes
+
+1) Proceed with standard installation (default - just press enter)
+2) Customize installation
+3) Cancel installation
+>1
+
+info: profile set to 'default'
+info: default host triple is x86_64-unknown-linux-gnu
+info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+|DNS-request| static.rust-lang.org 
+|S-chain|-<>-127.0.0.1:10808-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| static.rust-lang.org is 151.101.110.137
+|S-chain|-<>-127.0.0.1:10808-<><>-151.101.110.137:443-<><>-OK
+info: latest update on 2024-04-09, rust version 1.77.2 (25ef9e3d8 2024-04-09)
+info: downloading component 'cargo'
+info: downloading component 'clippy'
+info: downloading component 'rust-docs'
+info: downloading component 'rust-std'
+info: downloading component 'rustc'
+ 60.3 MiB /  60.3 MiB (100 %)  37.1 MiB/s in  2s ETA:  0s
+info: downloading component 'rustfmt'
+info: installing component 'cargo'
+info: installing component 'clippy'
+info: installing component 'rust-docs'
+ 14.9 MiB /  14.9 MiB (100 %)  13.5 MiB/s in  1s ETA:  0s
+info: installing component 'rust-std'
+ 24.3 MiB /  24.3 MiB (100 %)  17.2 MiB/s in  1s ETA:  0s
+info: installing component 'rustc'
+ 60.3 MiB /  60.3 MiB (100 %)  18.7 MiB/s in  3s ETA:  0s
+info: installing component 'rustfmt'
+info: default toolchain set to 'stable-x86_64-unknown-linux-gnu'
+
+  stable-x86_64-unknown-linux-gnu installed - rustc 1.77.2 (25ef9e3d8 2024-04-09)
+
+
+Rust is installed now. Great!
+
+To get started you may need to restart your current shell.
+This would reload your PATH environment variable to include
+Cargo's bin directory ($HOME/.cargo/bin).
+
+To configure your current shell, you need to source
+the corresponding env file under $HOME/.cargo.
+
+This is usually done by running one of the following (note the leading DOT):
+. "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+source "$HOME/.cargo/env.fish"  # For fish
+
+```
+重新打开 bash
+```
+$ rustc -V
+rustc 1.77.2 (25ef9e3d8 2024-04-09)
+$ rustup -V
+rustup 1.27.0 (bbb9276d2 2024-03-08)
+info: This is the version for the rustup toolchain manager, not the rustc compiler.
+info: The currently active `rustc` version is `rustc 1.77.2 (25ef9e3d8 2024-04-09)`
+```
+
+
+***
+# qt-6-2 失败
+<https://launchpad.net/~savoury1/+archive/ubuntu/qt-6-2>
+```
+sudo add-apt-repository ppa:savoury1/qt-6-2
+sudo apt update
+
+sudo aptitude install qt6-base-dev
+sudo aptitude install qt6ct
+不行
+
+sudo add-apt-repository --remove pa:savoury1/qt-6-2
+sudo apt update
+```
+
+***
+# ffmpeg4.4
+```
+sudo add-apt-repository ppa:savoury1/ffmpeg4
+sudo apt-get update
+
+$ sudo apt-get -c ~/apt_proxy_conf install ffmpeg
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libcodec2-0.7 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libsndio-dev libwayland-egl1-mesa:i386
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcdio-cdda2 libcdio-paranoia2 libcdio19 libcodec2-1.2 libgsm1 libgsm1:i386 libmysofa1 libpocketsphinx3 libpostproc55 librabbitmq4
+  libsdl2-2.0-0 libsdl2-2.0-0:i386 libsndio7 libsphinxbase3 libsrt1.5-gnutls libswresample3 libswscale5 libvidstab1.1 libvpx8 libx264-164 libzimg2
+Suggested packages:
+  libnvcuvid1 libnvidia-encode1 sndiod
+Recommended packages:
+  pocketsphinx-hmm-en-hub4wsj | pocketsphinx-hmm-zh-tdt | pocketsphinx-hmm-en-tidigits pocketsphinx-lm-en-hub4 | pocketsphinx-lm-zh-hans-gigatdt | pocketsphinx-lm-zh-hant-gigatdt
+The following packages will be REMOVED:
+  libavresample4 libsdl2-dev
+The following NEW packages will be installed:
+  libcdio19 libcodec2-1.2 libmysofa1 libpocketsphinx3 librabbitmq4 libsndio7 libsphinxbase3 libsrt1.5-gnutls libvidstab1.1 libvpx8 libx264-164 libzimg2
+The following packages will be upgraded:
+  ffmpeg libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcdio-cdda2 libcdio-paranoia2 libgsm1 libgsm1:i386 libpostproc55 libsdl2-2.0-0 libsdl2-2.0-0:i386 libswresample3 libswscale5
+15 upgraded, 12 newly installed, 2 to remove and 1182 not upgraded.
+
+
+sudo add-apt-repository --remove ppa:savoury1/ffmpeg4
+sudo apt-get update
+
+
+$ sudo apt-get remove ffmpeg
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcodec2-0.7 libcodec2-1.2 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libmysofa1 libpocketsphinx3 libpostproc55 librabbitmq4
+  libsndio-dev libsndio7 libsphinxbase3 libsrt1.5-gnutls libswresample3 libswscale5 libvidstab1.1 libvpx8 libwayland-egl1-mesa:i386 libx264-164 libzimg2
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  ffmpeg
+0 upgraded, 0 newly installed, 1 to remove and 1046 not upgraded.
+
+
+$ sudo apt autoremove
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be REMOVED:
+  libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcodec2-0.7 libcodec2-1.2 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libmysofa1 libpocketsphinx3 libpostproc55 librabbitmq4
+  libsndio-dev libsndio7 libsphinxbase3 libsrt1.5-gnutls libswresample3 libswscale5 libvidstab1.1 libvpx8 libwayland-egl1-mesa:i386 libx264-164 libzimg2
+0 upgraded, 0 newly installed, 25 to remove and 1045 not upgraded.
+
+
+
+
+$ sudo aptitude install ffmpeg=7:4.1.4-1build2~bionic1
+The following NEW packages will be installed:
+  ffmpeg{b} 
+0 packages upgraded, 1 newly installed, 0 to remove and 1045 not upgraded.
+Need to get 0 B/1,409 kB of archives. After unpacking 1,963 kB will be used.
+The following packages have unmet dependencies:
+ ffmpeg : Depends: libavcodec58 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavdevice58 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavfilter7 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavformat58 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavresample4 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libavutil56 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libpostproc55 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libswresample3 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+          Depends: libswscale5 (= 7:4.1.4-1build2~bionic1) but it is not going to be installed
+The following actions will resolve these dependencies:
+
+     Keep the following packages at their current version:
+1)     ffmpeg [Not Installed]                             
+
+
+
+Accept this solution? [Y/n/q/?] n
+The following actions will resolve these dependencies:
+
+      Install the following packages:                    
+1)      libavcodec58 [7:4.1.4-1build2~bionic1 (bionic)]  
+2)      libavdevice58 [7:4.1.4-1build2~bionic1 (bionic)] 
+3)      libavfilter7 [7:4.1.4-1build2~bionic1 (bionic)]  
+4)      libavformat58 [7:4.1.4-1build2~bionic1 (bionic)] 
+5)      libavresample4 [7:4.1.4-1build2~bionic1 (bionic)]
+6)      libavutil56 [7:4.1.4-1build2~bionic1 (bionic)]   
+7)      libcodec2-0.7 [0.7-1 (bionic)]                   
+8)      libpostproc55 [7:4.1.4-1build2~bionic1 (bionic)] 
+9)      libswresample3 [7:4.1.4-1build2~bionic1 (bionic)]
+10)     libswscale5 [7:4.1.4-1build2~bionic1 (bionic)]   
+
+
+
+Accept this solution? [Y/n/q/?] y
+The following NEW packages will be installed:
+  ffmpeg libavcodec58{a} libavdevice58{a} libavfilter7{a} libavformat58{a} libavresample4{a} libavutil56{a} libcodec2-0.7{a} libpostproc55{a} libswresample3{a} libswscale5{a} 
+0 packages upgraded, 11 newly installed, 0 to remove and 1045 not upgraded.
+
+
+
+libavresample4=7:4.1.4-1build2~bionic1
+
+libsdl2-dev=2.0.8+dfsg1-1ubuntu1.18.04.4
+
+The following actions will resolve these dependencies:
+
+     Install the following packages:                                                                       
+1)     libibus-1.0-dev [1.5.17-3ubuntu5.3 (bionic-updates)]                                                
+
+     Keep the following packages at their current version:                                                 
+2)     gir1.2-ibus-1.0 [1.5.17-3ubuntu5.3 (bionic-updates, now)]                                           
+3)     libibus-1.0-5 [1.5.17-3ubuntu5.3 (bionic-updates, now)]                                             
+
+     Downgrade the following packages:                                                                     
+4)     libsdl2-2.0-0 [2.30.2+dfsg-1~18.04.sav0 (now) -> 2.0.8+dfsg1-1ubuntu1.18.04.4 (bionic-updates)]     
+5)     libsdl2-2.0-0:i386 [2.30.2+dfsg-1~18.04.sav0 (now) -> 2.0.8+dfsg1-1ubuntu1.18.04.4 (bionic-updates)]
+
+
+记得关掉 security.debian.org 源
+
+sudo apt-get install libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcodec2-0.7 libegl-mesa0:i386 libegl1:i386 libibus-1.0-dev libpocketsphinx3 libpostproc55 librabbitmq4 libsndio-dev libsphinxbase3 libswresample3 libswscale5 libwayland-egl1-mesa:i386
+
+
+sudo apt-get install ffmpeg libavcodec58 libavdevice58 libavfilter7 libavformat58 libavutil56 libcdio-cdda2 libcdio-paranoia2 libgsm1 libgsm1:i386 libpostproc55 libsdl2-2.0-0 libsdl2-2.0-0:i386 libswresample3 libswscale5
+
+
+libegl1 libegl1:i386 libegl-mesa0 libegl-mesa0:i386 libgbm1 libgbm1:i386 libwayland-egl1-mesa libwayland-egl1-mesa:i386 这几个玩意有兼容性问题
+
+$ sudo aptitude install libegl-mesa0=20.0.8-0ubuntu1~18.04.1
+      Install the following packages:                                                                       
+1)      libsensors4:i386 [1:3.4.0-4ubuntu0.1 (bionic-updates)]                                              
+
+      Downgrade the following packages:                                                                     
+2)      libgbm1 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]             
+3)      libgl1-mesa-dri [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]     
+4)      libgl1-mesa-dri:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]
+5)      libglapi-mesa [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]       
+6)      libglapi-mesa:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]  
+7)      libglx-mesa0 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]        
+8)      libglx-mesa0:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]   
+9)      libosmesa6 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]          
+10)     libosmesa6:i386 [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]     
+11)     libsensors4 [1:3.6.0-7~18.04.sav0 (now) -> 1:3.4.0-4ubuntu0.1 (bionic-updates)]          
+
+$ sudo aptitude install libegl-mesa0:i386=20.0.8-0ubuntu1~18.04.1
+The following NEW packages will be installed:
+  libegl-mesa0:i386 libgbm1:i386{a} libwayland-server0:i386{a} 
+
+$ sudo aptitude install libegl1=1.0.0-2ubuntu2.3
+      Remove the following packages:                                                                     
+1)      libegl-dev [1.3.4-1~18.04.sav0 (now)]                                                            
+2)      libgl-dev [1.3.4-1~18.04.sav0 (now)]                                                             
+3)      libgles-dev [1.3.4-1~18.04.sav0 (now)]                                                           
+4)      libglx-dev [1.3.4-1~18.04.sav0 (now)]                                                            
+5)      libopengl-dev [1.3.4-1~18.04.sav0 (now)]                                                         
+
+      Downgrade the following packages:                                                                  
+6)      libegl1-mesa-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)] 
+7)      libgl1 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                           
+8)      libgl1:i386 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                      
+9)      libgl1-mesa-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]  
+10)     libgles1 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                         
+11)     libgles2 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                         
+12)     libgles2-mesa-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)]
+13)     libglvnd-core-dev [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                
+14)     libglvnd-dev [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                     
+15)     libglvnd0 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                        
+16)     libglvnd0:i386 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                   
+17)     libglx0 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                          
+18)     libglx0:i386 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                     
+19)     libopengl0 [1.3.4-1~18.04.sav0 (now) -> 1.0.0-2ubuntu2.3 (bionic-updates)]                       
+20)     mesa-common-dev [20.0.8-0ubuntu1~18.04.1sav1 (now) -> 20.0.8-0ubuntu1~18.04.1 (bionic-updates)] 
+
+$ sudo aptitude install libegl1:i386=1.0.0-2ubuntu2.3
+$ sudo aptitude install libgbm1=20.0.8-0ubuntu1~18.04.1 libgbm1:i386=20.0.8-0ubuntu1~18.04.1
+$ sudo aptitude install libwayland-egl1-mesa=20.0.8-0ubuntu1~18.04.1 libwayland-egl1-mesa:i386=20.0.8-0ubuntu1~18.04.1
+
+
+
+
+```
+
+***
+# GLIBC 2.28
+```
+ldd --version
+
+ldd (Debian GLIBC 2.28-10+deb10u2) 2.28
+...
+
+# or
+strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_
+
+sudo su -c 'echo "deb http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list' root
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A 54404762BBB6E853
+
+sudo apt update
+
+//sudo apt install libc6 libc6-dev -y
+
+sudo apt-get -c ~/apt_proxy_conf install libc6 libc6-dev
+
+
+
+ldd --version
+
+# or
+strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_2.28
+
+```
+
+***
 #
 ```
+$ sudo apt install qemu qemu-kvm libvirt-daemon libvirt-clients bridge-utils virt-manager
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+bridge-utils is already the newest version (1.5-15ubuntu1).
+libvirt-clients is already the newest version (4.0.0-1ubuntu8.21).
+libvirt-clients set to manually installed.
+libvirt-daemon is already the newest version (4.0.0-1ubuntu8.21).
+libvirt-daemon set to manually installed.
+qemu-kvm is already the newest version (1:2.11+dfsg-1ubuntu7.42).
+The following additional packages will be installed:
+  gir1.2-gtk-vnc-2.0 gir1.2-libosinfo-1.0 gir1.2-libvirt-glib-1.0 gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 libgovirt-common libgovirt2 libgtk-vnc-2.0-0 libgvnc-1.0-0 libosinfo-1.0-0 libphodav-2.0-0
+  libphodav-2.0-common libspice-client-glib-2.0-8 libspice-client-gtk-3.0-5 libusbredirhost1 libvirt-glib-1.0-0 osinfo-db python-gi-cairo python-ipaddr qemu-slof qemu-system qemu-system-arm qemu-system-mips
+  qemu-system-misc qemu-system-ppc qemu-system-s390x qemu-system-sparc qemu-user spice-client-glib-usb-acl-helper virt-viewer virtinst
+Suggested packages:
+  libosinfo-l10n vde2 qemu-efi openbios-ppc openhackware openbios-sparc ssh-askpass python-guestfs
+The following NEW packages will be installed:
+  gir1.2-gtk-vnc-2.0 gir1.2-libosinfo-1.0 gir1.2-libvirt-glib-1.0 gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 libgovirt-common libgovirt2 libgtk-vnc-2.0-0 libgvnc-1.0-0 libosinfo-1.0-0 libphodav-2.0-0
+  libphodav-2.0-common libspice-client-glib-2.0-8 libspice-client-gtk-3.0-5 libusbredirhost1 libvirt-glib-1.0-0 osinfo-db python-gi-cairo python-ipaddr qemu qemu-slof qemu-system qemu-system-arm
+  qemu-system-mips qemu-system-misc qemu-system-ppc qemu-system-s390x qemu-system-sparc qemu-user spice-client-glib-usb-acl-helper virt-manager virt-viewer virtinst
+0 upgraded, 33 newly installed, 0 to remove and 68 not upgraded.
+
+
+sudo apt-get install qemu qemu-system qemu-system-arm
+sudo apt-get install qemu-kvm qemu virt-manager virt-viewer libvirt-daemon-system libvirt-clients bridge-utils
+
+qemu-img -V
+qemu-system-arm --version
+qemu-system-aarch64 --version
+qemu-system-x86_64 -version
+
+andreas@Vostro-5880:~
+$ qemu-img -V
+qemu-img version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+andreas@Vostro-5880:~
+$ qemu-system-arm --version
+QEMU emulator version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+andreas@Vostro-5880:~
+$ qemu-system-aarch64 --version
+QEMU emulator version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+andreas@Vostro-5880:~
+$ qemu-system-x86_64 -version
+QEMU emulator version 2.11.1(Debian 1:2.11+dfsg-1ubuntu7.42)
+Copyright (c) 2003-2017 Fabrice Bellard and the QEMU Project developers
+
 ```
+
+***
+# matlab2017
+运行 simulink 报错
+Can't reload '/opt/MATLAB/R2017b/bin/glnxa64/libmwdastudio.so'
+```
+andreas@Vostro-5880:~/bin
+$ ls -l
+total 4
+lrwxrwxrwx  1 andreas andreas   33 Mar 31  2021 deploytool2017 -> /opt/MATLAB/R2017b/bin/deploytool
+lrwxrwxrwx  1 andreas andreas   45 Mar 31  2021 FoxitReader -> /opt/foxitsoftware/foxitreader/FoxitReader.sh
+lrwxrwxrwx  1 andreas andreas   29 Mar 31  2021 matlab2017 -> /opt/MATLAB/R2017b/bin/matlab
+lrwxrwxrwx  1 andreas andreas   29 Mar 31  2021 mbuild2017 -> /opt/MATLAB/R2017b/bin/mbuild
+lrwxrwxrwx  1 andreas andreas   26 Mar 31  2021 mcc2017 -> /opt/MATLAB/R2017b/bin/mcc
+lrwxrwxrwx  1 andreas andreas   26 Mar 31  2021 mex2017 -> /opt/MATLAB/R2017b/bin/mex
+
+```
+据说是 libfreetype.so.6，移除试验可以运行 simulink
+```
+cd /opt/MATLAB/R2017b/bin/glnxa64
+mkdir -p /opt/MATLAB/R2017b/exclude
+mv libfreetype.* /opt/MATLAB/R2017b/exclude
+```
+然后重新打开 mablab2017，就好了
+
+ref
+<https://ww2.mathworks.cn/matlabcentral/answers/506092-can-t-reload-usr-local-matlab-r2018a-bin-glnxa64-libmwdastudio-so>
+
+
+实际上 socbuilder 在 2019 之后的版本才有。升级版本吧
+
 ***
 #
 ```
 ```
+
 ***
 #
 ```
 ```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
+***
+#
+```
+```
+
 ***
 #
 ```
