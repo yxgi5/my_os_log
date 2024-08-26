@@ -3318,7 +3318,11 @@ The following additional packages will be installed:
 Suggested packages:
   gnome | kde-standard | xfce4 | wmaker
 ```
-
+查看当前的显示管理器
+```
+$ cat /etc/X11/default-display-manager
+/usr/sbin/lightdm
+```
 ```
 $ sudo dpkg-reconfigure gdm3
 $ sudo dpkg-reconfigure lightdm
