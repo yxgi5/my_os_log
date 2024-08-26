@@ -288,9 +288,9 @@ sudo gedit /etc/proxychains.conf
 # defaults set to "tor"
 #socks4 	127.0.0.1 9050
 # set to "v2ray"
-#socks5 	127.0.0.1 10808
+socks5 	127.0.0.1 10808
 # set to "SS"
-socks5 	127.0.0.1 1081
+#socks5 	127.0.0.1 1081
 ```
 
 #### 测试
@@ -3467,8 +3467,13 @@ words=get_title.split()
 a=" ".join(words[0:2])
 driver.execute_script('document.title = "%s"' % a)
 
-pyautogui.hotkey('ctrl','s')
-pyautogui.press('enter')
+pyautogui.hotkey('ctrl', 's')
+time.sleep(2)
+pyautogui.typewrite(a + '.html')
+pyautogui.hotkey('enter')
+
+#pyautogui.hotkey('ctrl','s')
+#pyautogui.press('enter')
 
 #save_me = ActionChains(driver).key_down(Keys.CONTROL)\
 #         .key_down('s').key_up(Keys.CONTROL).key_up('s')
@@ -14136,19 +14141,370 @@ ref
 实际上 socbuilder 在 2019 之后的版本才有。升级版本吧
 
 ***
-#
+# try to run openpilot on PC
 ```
+
+sudo apt install autoconf \
+    build-essential \
+    ca-certificates \
+    casync \
+    clang \
+    cmake \
+    make \
+    cppcheck \
+    libtool \
+    gcc-arm-none-eabi \
+    bzip2 \
+    liblzma-dev \
+    libarchive-dev \
+    libbz2-dev \
+    capnproto \
+    libcapnp-dev \
+    curl \
+    libcurl4-openssl-dev \
+    git \
+    git-lfs \
+    ffmpeg \
+    libavformat-dev \
+    libavcodec-dev \
+    libavdevice-dev \
+    libavutil-dev \
+    libavfilter-dev \
+    libeigen3-dev \
+    libffi-dev \
+    libglew-dev \
+    libgles2-mesa-dev \
+    libglfw3-dev \
+    libglib2.0-0 \
+    libncurses5-dev \
+    libncursesw5-dev \
+    libomp-dev \
+    libopencv-dev \
+    libpng16-16 \
+    libportaudio2 \
+    libssl-dev \
+    libsqlite3-dev \
+    libusb-1.0-0-dev \
+    libzmq3-dev \
+    libsystemd-dev \
+    locales \
+    opencl-headers \
+    ocl-icd-libopencl1 \
+    ocl-icd-opencl-dev \
+    clinfo \
+    portaudio19-dev \
+    qml-module-qtquick2 \
+    qtmultimedia5-dev \
+    qtlocation5-dev \
+    qtpositioning5-dev \
+    qttools5-dev-tools \
+    libqt5sql5-sqlite \
+    libqt5svg5-dev \
+    libqt5charts5-dev \
+    libqt5x11extras5-dev \
+    libreadline-dev \
+    libdw1 \
+    valgrind
+
+
+sudo apt install 
+binutils-arm-none-eabi
+gcc-arm-none-eabi libnewlib-arm-none-eabi libnewlib-dev libstdc++-arm-none-eabi-newlib
+libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavresample-dev libavutil-dev libpostproc-dev libswresample-dev libswscale-dev
+libglfw3
+libportaudiocpp0 libqt5charts5 libqt5location5 libqt5location5-plugins libvulkan-dev opencl-c-headers opencl-clhpp-headers
+capnproto casync clinfo cppcheck cppcheck-gui libcapnp-dev libeigen3-dev libglew-dev libglfw3-dev libqt5charts5-dev libsystemd-dev libzmq3-dev opencl-headers
+ocl-icd-opencl-dev qtlocation5-dev
+scons
+
+
+[ portaudio19-dev libjack-dev libjack0 ]
+
+
+
+cd openpilot
+proxychains ./update_requirements.sh
+configure: error: You must get working getaddrinfo() function or pass the "--disable-ipv6" option to configure.
+
+./update_requirements.sh
+
+
+
+
+
+
+POETRY_INSTALL_ARGS="--no-cache --no-root"
+
+if [ -n "$XX" ]; then
+  echo "WARNING: using xx dependency group, installing globally"
+  proxychains poetry config virtualenvs.create false --local
+  POETRY_INSTALL_ARGS="$POETRY_INSTALL_ARGS --with xx --sync"
+else
+  echo "PYTHONPATH=${PWD}" > .env
+  proxychains poetry self add poetry-dotenv-plugin@^0.1.0
+fi
+
+echo "pip packages install..."
+proxychains poetry install $POETRY_INSTALL_ARGS
+pyenv rehash
+
+[ -n "$XX" ] || [ -n "$POETRY_VIRTUALENVS_CREATE" ] && RUN="" || RUN="poetry run"
+
+if [ "$(uname)" != "Darwin" ]; then
+  echo "pre-commit hooks install..."
+  shopt -s nullglob
+  for f in .pre-commit-config.yaml */.pre-commit-config.yaml; do
+    if [ -e "$DIR/$(dirname $f)/.git" ]; then
+      $RUN pre-commit install -c "$f"
+    fi
+  done
+fi
+
+
+
+
+
+没有安装portaudio19-dev导致，但是wine这些都不能删啊
+
+  - Installing pyaudio (0.2.13): Failed
+
+  ChefBuildError
+
+  Backend subprocess exited when trying to invoke build_wheel
+  
+  running bdist_wheel
+  running build
+  running build_py
+  creating build
+  creating build/lib.linux-x86_64-cpython-311
+  creating build/lib.linux-x86_64-cpython-311/pyaudio
+  copying src/pyaudio/__init__.py -> build/lib.linux-x86_64-cpython-311/pyaudio
+  running build_ext
+  building 'pyaudio._portaudio' extension
+  creating build/temp.linux-x86_64-cpython-311
+  creating build/temp.linux-x86_64-cpython-311/src
+  creating build/temp.linux-x86_64-cpython-311/src/pyaudio
+  gcc -pthread -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -fPIC -I/usr/local/include -I/usr/include -I/tmp/tmplh9ybnwp/.venv/include -I/home/andreas/.pyenv/versions/3.11.4/include/python3.11 -c src/pyaudio/device_api.c -o build/temp.linux-x86_64-cpython-311/src/pyaudio/device_api.o
+  src/pyaudio/device_api.c:9:10: fatal error: portaudio.h: No such file or directory
+   #include "portaudio.h"
+            ^~~~~~~~~~~~~
+  compilation terminated.
+  error: command '/usr/bin/gcc' failed with exit code 1
+  
+
+  at ~/.pyenv/versions/3.11.4/lib/python3.11/site-packages/poetry/installation/chef.py:164 in _prepare
+      160│ 
+      161│                 error = ChefBuildError("\n\n".join(message_parts))
+      162│ 
+      163│             if error is not None:
+    → 164│                 raise error from None
+      165│ 
+      166│             return path
+      167│ 
+      168│     def _prepare_sdist(self, archive: Path, destination: Path | None = None) -> Path:
+
+
+```
+
+```
+删除
+rm -rf ~/.pyenv
+rm -rf ~/.cache/pypoetry
+rm ~/.pyenvrc
+修改 ~/.bashrc
 ```
 
 ***
-#
+# 在 Docker 中安装 RKNN-Toolkit2 环境
 ```
+cd Projects/rknn-toolkit2/rknn-toolkit2/docker/docker_file/ubuntu_xx_xx_cpxx
+docker build -f Dockerfile_ubuntu_xx_xx_for_cpxx -t rknn-toolkit2:x.x.x-cpxx .
 ```
 
 ***
-#
+# Xray and v2rayA
+vless协议的代理应该使用支持xtls/vless协议的客户端服务，v2ray-core在某些版本后已经不支持vless
+
+<https://xtls.github.io>
+
+<https://github.com/xtls/Xray-core/releases>
+
+<https://github.com/XTLS/Xray-install>
+
+PKGBUILD
 ```
+# Maintainer: m8D2 <omui (at) proton mail (dot) com>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
+# Contributor: Dct Mei <dctxmei@gmail.com>
+# Contributor: denglitsch <denglitsch@gmail.com>
+
+pkgname=xray
+pkgver=1.8.23
+pkgrel=1
+pkgdesc="A set of network tools that helps you to build your own computer network (git version)."
+arch=(x86_64)
+url="https://github.com/xtls/Xray-core"
+license=(MIT)
+makedepends=()
+source=(Xray-linux-64.zip
+        xray.service
+        xray@.service
+        config.json)
+sha512sums=('SKIP'
+        'SKIP'
+        'SKIP'
+        'SKIP')
+
+package() {
+  cd $srcdir/
+  install -Dm644 xray.service "$pkgdir"/etc/systemd/system/xray.service
+  install -Dm644 xray@.service "$pkgdir"/etc/systemd/system/xray@.service
+  install -Dm644 *.dat -t "$pkgdir"/usr/share/xray/
+  install -Dm644 *.json -t "$pkgdir"/etc/xray/
+  install -Dm755 xray -t "$pkgdir"/usr/bin/xray/
+}
+
 ```
+
+xray.service
+```
+[Unit]
+Description=XRay Service
+Documentation=https://xtls.github.io
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/xray/xray run -config /etc/xray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+
+xray@.service
+```
+[Unit]
+Description=XRay Client
+Documentation=https://xtls.github.io
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/xray/xray run -config /etc/xray/%i.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+config.json
+```
+{
+  "inbounds": [
+    {
+      "port": 1080, // SOCKS 代理端口，在浏览器中需配置代理并指向这个端口
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "server", // 服务器地址，请修改为你自己的服务器 ip 或域名
+            "port": 10086, // 服务器端口
+            "users": [
+              {
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811"  // 记得替换这个字段，使用 `xray uuid` 或 `uuidgen` 生成
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private","geoip:cn"], // 绕过局域网和国内IP段
+        "outboundTag": "direct"
+      }
+    ]
+  }
+}
+```
+
+`makedeb`生成`xray_1.8.23-1_amd64.deb`安装
+```
+sudo systemctl enable xray.service
+sudo systemctl restart xray.service
+```
+配置文件具体修改config.json。我这里本地端口定义为10809，浏览器socket5端口也跟着改。
+
+
+
+v2rayA其实就是给xray或者v2ray再套一个web前端。
+
+<https://v2raya.org>
+
+<https://github.com/v2rayA/v2rayA/releases>
+
+如果有必要可以关闭v2ray或xray服务
+```
+sudo systemctl disable v2ray --now ### Xray 需要替换服务为 xray
+```
+
+修改一下官方提供的deb并安装
+
+web前端是
+
+<http://localhost:2017>
+
+
+sudo gedit /etc/v2raya/v2raya
+修改
+```
+V2RAYA_V2RAY_BIN=/usr/bin/xray/xray
+
+V2RAYA_V2RAY_ASSETSDIR=/usr/share/xray/
+```
+
+查看log
+```
+sudo cat /var/log/v2raya/v2raya.log
+```
+
+要有
+```
+... V2Ray binary is /usr/bin/xray/xray
+... V2Ray asset directory is /usr/share/xray/
+```
+
+然后在<http://localhost:2017>填入订阅和启动服务
+
+浏览器socket5端口是20170
+
+
+
 
 ***
 #

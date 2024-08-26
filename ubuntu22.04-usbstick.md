@@ -7213,6 +7213,16 @@ The following NEW packages will be installed:
 
 # 安装docker
 
+速度更快的办法，用国内源 
+```
+curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
+  jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+
+
 see
 [https://docs.docker.com/engine/install/linux-postinstall/](https://docs.docker.com/engine/install/linux-postinstall/)
 
@@ -11949,8 +11959,113 @@ qt版本必须大于6.5才行
 
 
 ---
-# 
+# try to run openpilot on PC
 ```
+sudo apt install autoconf \
+    build-essential \
+    ca-certificates \
+    casync \
+    clang \
+    cmake \
+    make \
+    cppcheck \
+    libtool \
+    gcc-arm-none-eabi \
+    bzip2 \
+    liblzma-dev \
+    libarchive-dev \
+    libbz2-dev \
+    capnproto \
+    libcapnp-dev \
+    curl \
+    libcurl4-openssl-dev \
+    git \
+    git-lfs \
+    ffmpeg \
+    libavformat-dev \
+    libavcodec-dev \
+    libavdevice-dev \
+    libavutil-dev \
+    libavfilter-dev \
+    libeigen3-dev \
+    libffi-dev \
+    libglew-dev \
+    libgles2-mesa-dev \
+    libglfw3-dev \
+    libglib2.0-0 \
+    libncurses5-dev \
+    libncursesw5-dev \
+    libomp-dev \
+    libopencv-dev \
+    libpng16-16 \
+    libportaudio2 \
+    libssl-dev \
+    libsqlite3-dev \
+    libusb-1.0-0-dev \
+    libzmq3-dev \
+    libsystemd-dev \
+    locales \
+    opencl-headers \
+    ocl-icd-libopencl1 \
+    ocl-icd-opencl-dev \
+    clinfo \
+    portaudio19-dev \
+    qml-module-qtquick2 \
+    qtmultimedia5-dev \
+    qtlocation5-dev \
+    qtpositioning5-dev \
+    qttools5-dev-tools \
+    libqt5sql5-sqlite \
+    libqt5svg5-dev \
+    libqt5charts5-dev \
+    libqt5x11extras5-dev \
+    libreadline-dev \
+    libdw1 \
+    valgrind
+
+The following additional packages will be installed:
+  binutils-arm-none-eabi cmake-data cmake-qt-gui comerr-dev krb5-multidev libbsd-dev libcapnp-0.8.0 libgssrpc4 libkadm5clnt-mit12 libkadm5srv-mit12 libkdb5-10 libkrb5-dev libmd-dev libnewlib-arm-none-eabi
+  libnewlib-dev libnorm-dev libnss-mymachines libnss-systemd libomp-14-dev libomp5-14 libpam-systemd libpgm-dev libportaudiocpp0 libpostproc-dev libqt5charts5 libqt5location5 libqt5location5-plugin-mapboxgl
+  libqt5location5-plugins libsodium-dev libssl3 libssl3:i386 libstdc++-arm-none-eabi-dev libstdc++-arm-none-eabi-newlib libsystemd0 libsystemd0:i386 libtinyxml2-9 opencl-c-headers opencl-clhpp-headers systemd
+  systemd-container systemd-oomd systemd-sysv systemd-timesyncd
+Suggested packages:
+  cmake-doc cmake-format cppcheck-gui krb5-doc libcurl4-doc libidn11-dev libldap2-dev librtmp-dev libssh2-1-dev libeigen3-doc libmpfrc++-dev krb5-user libnewlib-doc libnorm-doc libomp-14-doc libssl-doc
+  opencl-clhpp-headers-doc portaudio19-doc libtss2-rc0 valgrind-dbg valgrind-mpi kcachegrind alleyoop valkyrie
+The following NEW packages will be installed:
+  binutils-arm-none-eabi capnproto casync comerr-dev cppcheck gcc-arm-none-eabi krb5-multidev libavdevice-dev libavfilter-dev libbsd-dev libcapnp-0.8.0 libcapnp-dev libcurl4-openssl-dev libeigen3-dev
+  libgles2-mesa-dev libgssrpc4 libkadm5clnt-mit12 libkadm5srv-mit12 libkdb5-10 libkrb5-dev libmd-dev libncursesw5-dev libnewlib-arm-none-eabi libnewlib-dev libnorm-dev libomp-14-dev libomp-dev libomp5-14
+  libpgm-dev libportaudiocpp0 libpostproc-dev libqt5charts5 libqt5charts5-dev libqt5location5 libqt5location5-plugin-mapboxgl libqt5location5-plugins libsodium-dev libstdc++-arm-none-eabi-dev
+  libstdc++-arm-none-eabi-newlib libsystemd-dev libtinyxml2-9 libzmq3-dev ocl-icd-opencl-dev opencl-c-headers opencl-clhpp-headers opencl-headers portaudio19-dev qtlocation5-dev valgrind
+The following packages will be upgraded:
+  cmake cmake-data cmake-qt-gui libnss-mymachines libnss-systemd libpam-systemd libssl-dev libssl3 libssl3:i386 libsystemd0 libsystemd0:i386 systemd systemd-container systemd-oomd systemd-sysv
+  systemd-timesyncd
+
+
+
+sudo apt install g++-12 \
+    qtbase5-dev \
+    qtchooser \
+    qt5-qmake \
+    qtbase5-dev-tools \
+    python3-dev
+
+The following additional packages will be installed:
+  libstdc++-12-dev
+Suggested packages:
+  g++-12-multilib gcc-12-doc libstdc++-12-doc
+The following NEW packages will be installed:
+  g++-12 libstdc++-12-dev
+
+
+
+binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libnewlib-dev libstdc++-arm-none-eabi-newlib libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libpostproc-dev libswresample-dev libswscale-dev libglfw3 libportaudiocpp0 libqt5charts5 libqt5location5 libqt5location5-plugins libvulkan-dev opencl-c-headers opencl-clhpp-headers capnproto casync clinfo cppcheck cppcheck-gui libcapnp-dev libeigen3-dev libglew-dev libglfw3-dev libqt5charts5-dev libsystemd-dev libzmq3-dev opencl-headers ocl-icd-opencl-dev qtlocation5-dev scons
+
+
+
+
+Updating symlinks in /usr/lib/ccache   ??
+
+
 ```
 
 ---
