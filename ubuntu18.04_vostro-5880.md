@@ -3119,6 +3119,8 @@ DisplaysPerHost=10
 /etc/ssh/ssh_config
 ForwardX11 yes
 ForwardX11Trusted yes
+/etc/ssh/sshd_config
+PermitRootLogin yes
 # systemctl restart sshd
 ```
 
@@ -6159,7 +6161,11 @@ unix extensions = no
 sudo /etc/init.d/nmbd restart
 sudo /etc/init.d/smbd restart
 ```
-
+==
+```
+sudo service smbd restart
+sudo service nmbd restart
+```
 
 * * *
 # 设置默认浏览器
@@ -14468,6 +14474,11 @@ v2rayA其实就是给xray或者v2ray再套一个web前端。
 
 <https://github.com/v2rayA/v2rayA/releases>
 
+```
+sudo systemctl enable v2raya.service
+sudo systemctl restart v2raya.service
+```
+
 如果有必要可以关闭v2ray或xray服务
 ```
 sudo systemctl disable v2ray --now ### Xray 需要替换服务为 xray
@@ -14501,14 +14512,18 @@ sudo cat /var/log/v2raya/v2raya.log
 
 然后在<http://localhost:2017>填入订阅和启动服务
 
+[andreas .]
+
 浏览器socket5端口是20170
 
 
 
 
 ***
-#
+# apt-offline
 ```
+sudo apt-get update
+sudo apt-get install apt-offline
 ```
 
 ***
