@@ -775,6 +775,27 @@ sudo aptitude install xserver-xorg-input-all xserver-xorg-input-libinput xserver
 
 * * *
 # 安装 drawio
+修改/usr/share/applications/drawio.desktop
+```
+[Desktop Entry]
+Name=draw.io
+Exec=/opt/draw.io/drawio %f
+Terminal=false
+Type=Application
+Icon=drawio
+StartupWMClass=draw.io
+Comment=diagrams.net desktop
+MimeType=application/vnd.jgraph.mxfile;application/vnd.visio;
+Categories=Graphics;
+```
+并且mimeapp有
+```
+application/vnd.jgraph.mxfile=drawio.desktop;
+```
+就可以双击打开drawio文件
+
+这里修改了desktop文件的占位符
+
 * * *
 # 安装  matlab 2017
 
@@ -14527,18 +14548,50 @@ sudo apt-get install apt-offline
 ```
 
 ***
-#
+# pip加速
+
+## 临时使用方法
 ```
+pip install selenium -i https://mirrors.163.com/pypi/simple
+pip install selenium -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+```
+
+## 永久设置 pip 源
+```
+mkdir ~/.pip
+tee ~/.pip/pip.conf <<-'EOF'
+[global]
+timeout=600
+index-url=https://mirrors.aliyun.com/pypi/simple/
+trusted-host=mirrors.aliyun.com
+EOF
+```
+如果使用的是 windows 系统，同样在用户的家目录下创建 .pip 文件夹，并写入 pip.conf 配置文件。具体路径为 C:\Users\{你的系统⽤户名}\.pip\pip.conf
+
+## 通过命令行配置 pip 源
+如果你不想编写配置文件，可以使用一条命令配置 pip 源，会自动生成以上目录及文件 升级 pip 到最新的版本后进行配置
+```
+# 升级 pip
+pip install -i https://mirrors.aliyun.com/pypi/simple/ pip -U
+# ⽣成 pip 配置⽂件
+pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+```
+
+
+***
+# autocad有关 2d cad
+```
+除了wine一个autocad-2004，还可以使用ARES(graebert-gmbh)/DraftSight(dassault-systemes)等
+
+librecad太不好使
+
+顺便提 freecad 是挺好的一个 3d cad 工具
 ```
 
 ***
-#
-```
+# 
 ```
 
-***
-#
-```
 ```
 
 ***
