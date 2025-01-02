@@ -14589,10 +14589,229 @@ librecad太不好使
 ```
 
 ***
-# 
+# generate a barcode
 ```
+sudo apt install barcode
+echo "Your Data" | barcode -E png > barcode.png
+```
+or
+```
+pip install python-barcode
+```
+Here is a sample Python code to generate a barcode
+```
+import barcode
+from barcode.writer import ImageWriter
+ 
+code = barcode.get('ean13', '123456789102', writer=ImageWriter())
+code.save('my_barcode')
+```
+zint在22.04版本起才官方带zint和zint-qt，更早版本可以自己编译出deb包
+```
+sudo apt-get install zint
+zint -o barcode13.png -b 13 -d "123456789012"
+zint -o barcode8.png -b 8 -d "12345678"
+```
+## 编译zint出deb
+
+### 处理 gl.h 缺失的问题
 
 ```
+/usr/include/x86_64-linux-gnu/qt5/QtGui/qopengl.h:139:13: fatal error: GL/gl.h: No such file or directory
+```
+```
+$ locate GL/gl.h
+
+/opt/Xilinx/Vivado/2017.4/msys/include/GL/gl.h
+/opt/Xilinx/Vivado/2017.4/msys32/mingw32/i686-w64-mingw32/include/GL/gl.h
+/opt/Xilinx/Vivado/2018.3/msys64/mingw64/x86_64-w64-mingw32/include/GL/gl.h
+/opt/nvidia/nvidia_sdk/JetPack_4.5.1_Linux_JETSON_AGX_XAVIER/Linux_for_Tegra/rootfs/usr/include/GL/gl.h
+/opt/nvidia/nvidia_sdk/JetPack_4.5.1_Linux_JETSON_AGX_XAVIER/Linux_for_Tegra/rootfs/usr/src/nvidia/graphics_demos/include/GL/gl.h
+/usr/i686-w64-mingw32/include/GL/gl.h
+/usr/share/mingw-w64/include/GL/gl.h
+/usr/x86_64-w64-mingw32/include/GL/gl.h
+
+$ ls /usr/include/GL/gl.h
+ls: cannot access '/usr/include/GL/gl.h': No such file or directory
+
+$ qmake -query
+QT_SYSROOT:
+QT_INSTALL_PREFIX:/usr
+QT_INSTALL_ARCHDATA:/usr/lib/x86_64-linux-gnu/qt5
+QT_INSTALL_DATA:/usr/share/qt5
+QT_INSTALL_DOCS:/usr/share/qt5/doc
+QT_INSTALL_HEADERS:/usr/include/x86_64-linux-gnu/qt5
+QT_INSTALL_LIBS:/usr/lib/x86_64-linux-gnu
+QT_INSTALL_LIBEXECS:/usr/lib/x86_64-linux-gnu/qt5/libexec
+QT_INSTALL_BINS:/usr/lib/qt5/bin
+QT_INSTALL_TESTS:/usr/tests
+QT_INSTALL_PLUGINS:/usr/lib/x86_64-linux-gnu/qt5/plugins
+QT_INSTALL_IMPORTS:/usr/lib/x86_64-linux-gnu/qt5/imports
+QT_INSTALL_QML:/usr/lib/x86_64-linux-gnu/qt5/qml
+QT_INSTALL_TRANSLATIONS:/usr/share/qt5/translations
+QT_INSTALL_CONFIGURATION:/etc/xdg
+QT_INSTALL_EXAMPLES:/usr/lib/x86_64-linux-gnu/qt5/examples
+QT_INSTALL_DEMOS:/usr/lib/x86_64-linux-gnu/qt5/examples
+QT_HOST_PREFIX:/usr
+QT_HOST_DATA:/usr/lib/x86_64-linux-gnu/qt5
+QT_HOST_BINS:/usr/lib/qt5/bin
+QT_HOST_LIBS:/usr/lib/x86_64-linux-gnu
+QMAKE_SPEC:linux-g++
+QMAKE_XSPEC:linux-g++
+QMAKE_VERSION:3.1
+QT_VERSION:5.9.5
+
+```
+
+
+how to solve this errr. I already have libgl1-mesa-dev and libglu1-mesa-dev installed
+
+```
+dpkg -L libgl1-mesa-dev | grep gl.h
+sudo apt remove --purge qt5-default qtcreator
+sudo apt install qt5-default qtcreator libgl1-mesa-dev libglu1-mesa-dev mesa-common-dev
+sudo apt-get install --reinstall libgl1-mesa-dev libglu1-mesa-dev mesa-common-dev freeglut3-dev
+```
+到这里就ok了
+```
+dpkg -S /usr/include/GL/gl.h 
+mesa-common-dev:amd64: /usr/include/GL/gl.h
+```
+
+
+### 获取 debian 修改版本的 zint 源码
+
+ppa 里<https://launchpad.net/ubuntu/+source/zint>查找选取比较早的版本为 2.10.0
+
+从<https://launchpad.net/ubuntu/+source/zint/2.10.0-1>下载
+```
+zint_2.10.0-1.dsc
+zint_2.10.0.orig.tar.xz
+zint_2.10.0-1.debian.tar.xz
+```
+
+修改zint_2.10.0-1.dsc
+```
+Format: 3.0 (quilt)
+Source: zint
+Binary: zint, zint-qt, libzint2.10, libzint-dev
+Architecture: any
+Version: 2.10.0-1
+Maintainer: Dmitry Smirnov <onlyjob@debian.org>
+Uploaders: Jakob Haufe <sur5r@debian.org>
+Homepage: https://sourceforge.net/projects/zint/
+Standards-Version: 4.6.0
+Vcs-Browser: https://salsa.debian.org/debian/zint
+Vcs-Git: https://salsa.debian.org/debian/zint.git
+Build-Depends: debhelper-compat (= 12), cmake, libpng-dev, qtbase5-dev, qttools5-dev
+Package-List:
+ libzint-dev deb libdevel optional arch=any
+ libzint2.10 deb libs optional arch=any
+ zint deb graphics optional arch=any
+ zint-qt deb graphics optional arch=any
+Files:
+ e14cff4416bc445b06ea2de2c340f8bd 1685384 zint_2.10.0.orig.tar.xz
+ 422c3d8ab5e1bb6170b95fdfa2af2aea 8656 zint_2.10.0-1.debian.tar.xz
+```
+后面的 Files 里面数据来源为
+
+`md5sum zint_2.10.0-1.debian.tar.xz` and `du -sb zint_2.10.0-1.debian.tar.xz`
+
+
+解包
+```
+$ dpkg-source -x zint_2.10.0-1.dsc
+```
+碰到libpng12.so.0库依赖问题，这里不应该安装`libpng12-0_1.2.54-1ubuntu1_amd64.deb`和`libpng12-dev_1.2.54-1ubuntu1_amd64.deb`
+```
+dpkg-shlibdeps: error: cannot find library libpng12.so.0 needed by debian/libzint2.10/usr/lib/libzint.so.2.10.0.0 (ELF format: 'elf64-x86-64' abi: '0201003e00000000'; RPATH: '')
+dpkg-shlibdeps: error: cannot continue due to the error above
+Note: libraries are not searched in other binary packages that do not have any shlibs or symbols file.
+To help dpkg-shlibdeps find private libraries, you might need to use -l.
+dh_shlibdeps: error: dpkg-shlibdeps -Tdebian/libzint2.10.substvars debian/libzint2.10/usr/lib/libzint.so.2.10.0.0 returned exit code 2
+dh_shlibdeps: error: Aborting due to earlier error
+```
+
+how to change lib depend on libpng.so instead of libpng12.so.0
+```
+andreas@Vostro-5880:~/Downloads/build_zint/test
+$ echo $LD_LIBRARY_PATH
+
+andreas@Vostro-5880:~/Downloads/build_zint/test
+$ cmake .
+-- The C compiler identification is GNU 7.5.0
+-- The CXX compiler identification is GNU 7.5.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found libpng: /opt/modelsim/modeltech/linux_x86_64/libpng.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/andreas/Downloads/build_zint/test
+andreas@Vostro-5880:~/Downloads/build_zint/test
+
+libpng.so路径还不是我希望的
+
+
+unset LD_LIBRARY_PATH
+
+ldconfig -p | grep libpng
+
+export LIBPNG_LIBRARY=/usr/lib/x86_64-linux-gnu/libpng.so
+export LIBPNG_INCLUDE_DIR=/usr/include/
+cmake ..
+```
+
+都不行，但是root登录是对的。那么PATH也应最小化
+```
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+这样libpng路径就对了，指向`/usr/lib/x86_64-linux-gnu/libpng.so`
+
+
+```
+dpkg-source -x zint_2.10.0-1.dsc
+cd zint-2.10.0/
+dpkg-buildpackage -rfakeroot -uc -us -b | tee ../log.txt
+
+sudo dpkg -i libzint2.10_2.10.0-1_amd64.deb
+sudo dpkg -i libzint-dev_2.10.0-1_amd64.deb
+sudo dpkg -i zint_2.10.0-1_amd64.deb
+sudo dpkg -i zint-qt_2.10.0-1_amd64.deb
+```
+就可以了
+
+
+
+
+
+## Scanning Barcodes
+```
+sudo apt-get install zbar-tools
+zbarimg barcode_image.png
+
+
+zint -o barcode8.png -b 8 -d "12345678" --scale=2           # The --scale option increases the barcode's size.
+$ zbarimg  barcode8.png 
+CODE-39:12345678
+scanned 1 barcode symbols from 1 images in 0.12 seconds
+
+zint -o barcode8.png -b 8 -d "12345678" --fg=000000 --bg=FFFFFF
+zbarimg --verbose barcode8.png
+
+zint -o barcode8.png -b 8 -d "12345678" --scale=2 --fg=000000 --bg=FFFFFF
+
+
+```
+
 
 ***
 #
