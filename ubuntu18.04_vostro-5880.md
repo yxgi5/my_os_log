@@ -14814,6 +14814,31 @@ zint -o barcode8.png -b 8 -d "12345678" --scale=2 --fg=000000 --bg=FFFFFF
 
 
 ***
+# alist更新
+只想要下载pikpak的存储内容，替换即可，但是数据库格式不兼容了。一定要在目录里样运行才能修改了密码
+
+## 先停止服务
+```
+# systemctl stop alist.service 
+andreas@Vostro-5880:/opt/alist
+# systemctl start alist.service 
+```
+
+## Randomly generate a password
+```
+# ./alist admin random
+```
+
+## Manually set a password, `NEW_PASSWORD` refers to the password you need to set
+```
+# ./alist admin set NEW_PASSWORD
+```
+
+<https://alist.nn.ci/guide/install/manual.html#how-to-update>
+
+<https://github.com/AlistGo/alist/releases>
+
+***
 #
 ```
 ```
