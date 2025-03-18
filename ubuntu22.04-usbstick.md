@@ -12073,8 +12073,27 @@ Updating symlinks in /usr/lib/ccache   ??
 ```
 
 ---
-# 
+# barcode and zint
 ```
+sudo apt install barcode
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  barcode
+0 upgraded, 1 newly installed, 0 to remove and 493 not upgraded.
+
+sudo apt-get install zint zint-qt
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libzint2.10
+The following NEW packages will be installed:
+  libzint2.10 zint zint-qt
+0 upgraded, 3 newly installed, 0 to remove and 493 not upgraded.
+Need to get 699 kB of archives.
+After this operation, 1,683 kB of additional disk space will be used.
 ```
 
 ---
