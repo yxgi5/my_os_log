@@ -1,9 +1,11 @@
-***
+---
+
 # set gnome online acount and livepath
 
 `/usr/libexec/gnome-initial-setup --existing-user`
 
-***
+---
+
 # 存档系统和还原
 
 如果有EFI分区，也要备份，并记录uuid。可以在gparted里清除esp和boot标志，自动挂载备份。
@@ -703,6 +705,49 @@ $ systemd-analyze blame
 
 https://github.com/jgraph/drawio-desktop/releases/
 
+```
+$ sudo dpkg -i drawio-amd64-27.0.2.deb
+(Reading database ... 762879 files and directories currently installed.)
+Preparing to unpack drawio-amd64-27.0.2.deb ...
+Unpacking draw.io (27.0.2) over (21.2.8) ...
+Setting up draw.io (27.0.2) ...
+update-alternatives is /usr/bin/update-alternatives
+Skipping the installation of the AppArmor profile as this version of AppArmor does not seem to support the bundled profile
+Processing triggers for shared-mime-info (2.1-2) ...
+Processing triggers for mate-menus (1.26.0-2ubuntu2) ...
+Processing triggers for bamfdaemon (0.5.6+22.04.20220217-0ubuntu1) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for mailcap (3.70+nmu1ubuntu1) ...
+Processing triggers for gnome-menus (3.36.0-1ubuntu3) ...
+Processing triggers for desktop-file-utils (0.26-1ubuntu3) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+```
+
+修改/usr/share/applications/drawio.desktop
+
+```
+[Desktop Entry]
+Name=draw.io
+Exec=/opt/draw.io/drawio %f
+Terminal=false
+Type=Application
+Icon=drawio
+StartupWMClass=draw.io
+Comment=diagrams.net desktop
+MimeType=application/vnd.jgraph.mxfile;application/vnd.visio;
+Categories=Graphics;
+```
+
+并且mimeapp有
+
+```
+application/vnd.jgraph.mxfile=drawio.desktop;
+```
+
+就可以双击打开drawio文件
+
+这里修改了desktop文件的占位符
+
 ---
 
 # vscode
@@ -1060,7 +1105,9 @@ usbstick地址码:
 sudo systemctl enable anydesk.service
 sudo systemctl start anydesk.service
 ```
+
 设置 anydesk 无人值守
+
 ```
 echo "password" | sudo anydesk --set-password
 sudo systemctl restart anydesk.service 
@@ -2224,6 +2271,7 @@ vscode安装插件 `Git Graph`
 ```
 $ sudo apt install p7zip p7zip-full p7zip-rar
 $ sudo apt install rar p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar
+$ sudo apt install 7zip rar unrar zip unzip p7zip p7zip-full unace unrar
 ```
 
 ```
@@ -2277,6 +2325,7 @@ Tool to edit the rpath in ELF binaries
 $ sudo apt install chrpath patchelf
 $ sudo apt install autoconf automake libtool
 ```
+
 ```
 $ cd /opt/uex4/bin
 $ ldd ./uex
@@ -2348,7 +2397,9 @@ sudo gedit /etc/privoxy/config
 listen-address  127.0.0.1:8118
 ...
 #forward-socks5 / 127.0.0.1:1081 .
-forward-socks5 / 127.0.0.1:10808 .
+#forward-socks5 / 127.0.0.1:10808 .
+#forward-socks5 / 127.0.0.1:10809 .
+forward-socks5 / 127.0.0.1:20170 .
 ...
 ```
 
@@ -2475,7 +2526,11 @@ sudo gedit /etc/proxychains4.conf  （proxychains4）
 # set to "SS"
 #socks5 	127.0.0.1 1081
 # set to "v2ray"
-socks5 	127.0.0.1 10808
+#socks5 	127.0.0.1 10808
+# set to "xray"
+#socks5 	127.0.0.1 10809
+# set to "v2rayA"
+socks5 	127.0.0.1 20170
 ```
 
 ## 测试
@@ -2502,7 +2557,12 @@ proxychains git clone https://github.com/xxx/xxx.git
 git config --global http.proxy 'socks5://127.0.0.1:10808'
 git config --global https.proxy 'socks5://127.0.0.1:10808'
 ```
-
+```
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+git config --global http.proxy 'socks5://127.0.0.1:20170'
+git config --global https.proxy 'socks5://127.0.0.1:20170'
+```
 查询是否启用代理
 
 ```
@@ -2751,6 +2811,8 @@ $ gsettings get org.cinnamon.desktop.default-applications.terminal exec
 'gnome-terminal'
 
 $ gsettings set org.cinnamon.desktop.default-applications.terminal exec gnome-terminal
+$ gsettings set org.cinnamon.desktop.default-applications.terminal exec mate-terminal
+
 
 $ gsettings get org.gnome.desktop.default-applications.terminal exec
 'x-terminal-emulator'
@@ -2824,13 +2886,13 @@ Suggested packages:
 
 ```
 $ sudo aptitude search multiarch
-p   binutils-multiarch                                                 - Binary utilities that support multi-arch targets                         
-p   binutils-multiarch:i386                                            - Binary utilities that support multi-arch targets                         
-p   binutils-multiarch-dbg                                             - Binary utilities that support multi-arch targets (debug symbols)         
-p   binutils-multiarch-dbg:i386                                        - Binary utilities that support multi-arch targets (debug symbols)         
+p   binutils-multiarch                                                 - Binary utilities that support multi-arch targets                       
+p   binutils-multiarch:i386                                            - Binary utilities that support multi-arch targets                       
+p   binutils-multiarch-dbg                                             - Binary utilities that support multi-arch targets (debug symbols)       
+p   binutils-multiarch-dbg:i386                                        - Binary utilities that support multi-arch targets (debug symbols)       
 p   binutils-multiarch-dev                                             - GNU binary utilities that support multi-arch targets (BFD development files) 
 p   binutils-multiarch-dev:i386                                        - GNU binary utilities that support multi-arch targets (BFD development files) 
-p   gdb-multiarch                                                      - GNU Debugger (with support for multiple architectures)                   
+p   gdb-multiarch                                                      - GNU Debugger (with support for multiple architectures)                 
 p   gdb-multiarch:i386                                                 - GNU Debugger (with support for multiple architectures)  
 ```
 
@@ -2859,16 +2921,21 @@ Suggested packages:
 sudo dpkg -i SunloginClient_11.0.1.44968_amd64.deb
 /etc/systemd/system/multi-user.target.wants/runsunloginclient.service → /etc/systemd/system/runsunloginclient.service
 ```
+
 /usr/local/sunlogin/bin/sunloginclient  获取当前ID，PC端可以登录绑定ID  (fastcode=k121784872)
+
 ```
 sudo systemctl enable runsunloginclient.service
 sudo systemctl start runsunloginclient.service
 ```
+
 `sudo gedit /usr/local/bin/sunloginclient`
+
 ```
 #!/bin/bash
 /usr/local/sunlogin/bin/sunloginclient
 ```
+
 `sudo chmod +x /usr/local/bin/sunloginclient`
 
 更换lightdm之后就可以了。
@@ -3318,11 +3385,14 @@ The following additional packages will be installed:
 Suggested packages:
   gnome | kde-standard | xfce4 | wmaker
 ```
+
 查看当前的显示管理器
+
 ```
 $ cat /etc/X11/default-display-manager
 /usr/sbin/lightdm
 ```
+
 ```
 $ sudo dpkg-reconfigure gdm3
 $ sudo dpkg-reconfigure lightdm
@@ -3352,16 +3422,21 @@ sudo systemctl enable lightdm.service
 sudo systemctl start lightdm.service
 sudo systemctl stop gdm.service
 ```
+
 备份系统已安装软件的清单，采用如下命令 （dpkg命令后的参数前是两个减号“-”）：
+
 ```
 sudo dpkg --get-selections > ~/Desktop/package.selections
 ```
+
 恢复安装软件，升级系统。先将以前备份的package.selections文件拷贝到桌面，后采用如下命令：
+
 ```
 sudo dpkg --set-selections < ~/Desktop/package.selections && apt-get dselect-upgrade
 ```
 
 下面也是一种备份安装列表方式
+
 ```
 dpkg -l | grep ^ii | awk '{print $2}' > installed
 # another server
@@ -3739,6 +3814,7 @@ Suggested packages:
 # openbox
 
 ## Note, selecting 'suckless-tools' instead of 'dmenu'
+
 如果dmenu有问题可以删除~/.cache/dmenu_run
 
 ```
@@ -4049,6 +4125,7 @@ parcelliteNo magic! Assume no history.
 Attempt to unlock mutex that was not locked
 Aborted (core dumped)
 ```
+
 如果出问题，删除 $HOME/.local/share/parcellite 目录，就可以修复
 
 ```
@@ -4266,6 +4343,7 @@ to
 ```
 lxterminal
 ```
+
 ~/.config/libfm/libfm.conf
 
 deb系的可以这配置terminal
@@ -7217,15 +7295,14 @@ The following NEW packages will be installed:
 
 # 安装docker
 
-速度更快的办法，用国内源 
+速度更快的办法，用国内源
+
 ```
 curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
   jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
-
-
 
 see
 [https://docs.docker.com/engine/install/linux-postinstall/](https://docs.docker.com/engine/install/linux-postinstall/)
@@ -7320,19 +7397,25 @@ sudo apt-get -c ~/apt_proxy_conf upgrade
 ```
 
 ---
+
 # pycharm
-<https://github.com/RisesunStudios/ide-eval-resetter>
+
+[https://github.com/RisesunStudios/ide-eval-resetter](https://github.com/RisesunStudios/ide-eval-resetter)
+
 ```
 plugins -> Manage Plugin Repositories -> add "https://plugins.zhile.io" -> search "IDE Eval Reset"
 ```
+
 添加路径
+
 ```
 /home/andy/.local/share/JetBrains/PyCharm2020.3/ide-eval-resetter
 ```
 
-
 ---
+
 # 一些零件
+
 ```
 sudo apt install inxi libxml-dumper-perl fancontrol read-edid i2c-tools python3-smbus
 sudo apt install lxrandr
@@ -7391,6 +7474,7 @@ sudo dpkg -i qqmusic_1.1.5_amd64.deb
 # 安装 nutstore
 
 可以直接在官网下载
+
 ```
 wget https://pkg-cdn.jianguoyun.com/static/exe/installer/ubuntu/nautilus_nutstore_amd64.deb
 ```
@@ -7495,7 +7579,9 @@ $ sudo apt-get install python3-gi python3-caja python3-nautilus python-nemo pypy
 ```
 
 ## 安装 nutstore 之后 markdown 有关的 mime 修复
+
 要修改
+
 ```
 ~/.local/share/applications/defaults.list  # 去掉 application/x-md=nutstore-lightapp.desktop
 ~/.local/share/applications/mimeinfo.cache # 去掉 application/x-md=nutstore-lightapp.desktop;text/markdown=nutstore-lightapp.desktop;text/x-markdown=nutstore-lightapp.desktop;
@@ -7507,9 +7593,11 @@ mv ~/.local/share/icons/hicolor/scalable/mimetypes/application-x-md.svg ~/.local
 
 update-mime-database ~/.local/share/mime
 ```
+
 这样 markdown 文件就在 pcmanfm 里面显示为 Markdown document, 顺带的 pdf thumbnails (见evince)也正常了
 
 ## 重置所有坚果云设置(ref)
+
 ```
 rm ~/.config/autostart/nutstore-daemon.desktop
 rm ~/.local/share/applications/nutstore-menu.desktop
@@ -7518,8 +7606,8 @@ gtk-update-icon-cache --ignore-theme-index "~/.local/share/icons/hicolor" > /dev
 rm -r ~/.nutstore/dist
 ```
 
-
 ---
+
 # vbox
 
 ```
@@ -7631,7 +7719,7 @@ $ sudo apt install pyqt5-examples pyqt5-dev-tools python3-pyqt5.qtmultimedia pyt
 
 ---
 
-# 最新snap状态、
+# 最新snap状态
 
 ```
 $ snap list 
@@ -7788,7 +7876,7 @@ Edit > Preferences > Toolbar > Open in terminal (不是很好)
 
 ## Nemo F4 打开 terminal
 
-默认 终端 terminal 修改见前面
+默认 终端 terminal 修改见前面 `修改 默认 终端`
 
 ```
 mkdir -p ~/.gnome2/accels
@@ -7799,6 +7887,7 @@ gedit ~/.gnome2/accels/nemo
 ```
 (gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
 ```
+
 ```
 nemo -q
 
@@ -7870,44 +7959,52 @@ $ gsettings get org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy
 $ gsettings list-recursively | grep --ignore-case nautilus
 ```
 
-
 添加 `~/.config/nautilus/accels`， 无效，据说Ubuntu 14.04 and up可用
+
 ```
 (gtk_accel_path "<Actions>/DirViewActions/OpenInTerminal" "F4")
 ```
-添加`~/.config/nautilus/accels`，也无效，据说Ubuntu 15.10 and 16.04可用
+
+添加 `~/.config/nautilus/accels`，也无效，据说Ubuntu 15.10 and 16.04可用
+
 ```
 (gtk_accel_path "<Actions>/ExtensionsMenuGroup/TerminalNautilus:OpenFolderLocal" "F4")
 ```
-早期的版本要`sudo apt-get install dconf-tools nautilus-open-terminal`
 
+早期的版本要 `sudo apt-get install dconf-tools nautilus-open-terminal`
 
 下面方法适用 Ubuntu 18.10 GNOME Shell 3.30.1 以上
 
 Since version 3.15.4 Nautilus doesn't load the accel file anymore [(Souece)](https://gitlab.gnome.org/GNOME/nautilus/blob/master/NEWS#L422)
 
-Fortunatelly there's a better aproach in order to get what you want. Long explanation/useful resources can be found [here](https://help.ubuntu.com/community/NautilusScriptsHowto) and also [here](https://askubuntu.com/questions/680016/keyboard-shortcut-for-open-terminal-nautilus-3-16/696901#696901). 
+Fortunatelly there's a better aproach in order to get what you want. Long explanation/useful resources can be found [here](https://help.ubuntu.com/community/NautilusScriptsHowto) and also [here](https://askubuntu.com/questions/680016/keyboard-shortcut-for-open-terminal-nautilus-3-16/696901#696901).
 [参考1](https://github.com/echo-devim/nautilusaccelsmanager)
 [参考2](https://gist.github.com/dreua/2e399ffcfb42c4b6932de73a5ad5f268#file-nautilus_terminal_shortcut-md)
 
 In short:
 
 1. Create a script called `Terminal` (yes, without a extension) inside the folder `~/.local/share/nautilus/scripts` with the following content:
+
 ```
 #!/bin/sh
 gnome-terminal
 ```
+
 ```
 touch ~/.local/share/nautilus/scripts/Terminal
 chmod +x ~/.local/share/nautilus/scripts/Terminal
 gedit ~/.local/share/nautilus/scripts/Terminal
 ```
+
 2. Make it executable, then close any Nautilus instance:
+
 ```
 $ chmod +x Terminal
 $ nautilus -q
 ```
+
 3. Create (or edit) the `~/.config/nautilus/scripts-accels` file adding these lines:
+
 ```
 F4 Terminal
 ; Commented lines must have a space after the semicolon
@@ -7916,17 +8013,21 @@ F4 Terminal
 ; <Alt>F12 Terminal
 ; <Shift>F12 Terminal
 ```
+
 4. Test it! Open Nautilus, right click, and choose Scripts > Terminal. Or, use the keyboard shortcut that you've just configured :)
 
 改进的脚本，没有再实验下去，前面的已经达到我的目的
 
 Changed `~/.local/share/nautilus/scripts/Terminal` script to:
+
 ```
 #! /bin/sh
 export F=$@
 gnome-terminal
 ```
+
 And added to `~/.bashrc`:
+
 ```
 if [ -n "$F" ]; then 
 	# F is set (i.e. this was called from Nautilus and my special script)
@@ -7937,6 +8038,7 @@ fi
 Another Change for spaces and multiple arguments:
 
 Script:
+
 ```
 #!/bin/sh
 # Sadly it's not possible to properly "export" an array,
@@ -7949,7 +8051,9 @@ function join_by { local IFS="$1"; shift; echo "$*"; }
 export F=$(join_by $'\n' "$@")
 gnome-terminal
 ```
+
 .bashrc:
+
 ```
 if [ -n "$F" ]; then 
 	# F is set (i.e. this was called from Nautilus and my special script)
@@ -7971,7 +8075,7 @@ if [ -n "$F" ]; then
 		export F="" # can not export arrays :/
 		set -- "${y[@]}"
 		echo "\$@ consists of ${#y[@]} entries:"
-		
+	
 		for i in "$@"; do
 			echo " - " $i
 		done
@@ -7980,9 +8084,10 @@ if [ -n "$F" ]; then
 fi
 ```
 
-
 ---
+
 # mate-desktop
+
 ```
 $ sudo apt update
 $ sudo apt install mate-session-manager gdm3
@@ -7994,8 +8099,11 @@ graphical.target
 ```
 
 ---
+
 # cinnamon
+
 Installing Cinnamon Desktop on Ubuntu 20.04 and Above
+
 ```
 //sudo add-apt-repository universe # 默认就应该有
 //sudo apt update
@@ -8004,13 +8112,16 @@ sudo tasksel install cinnamon-desktop
 sudo reboot
 screenfetch
 ```
+
 如果要删除
+
 ```
 sudo apt purge cinnamon-desktop-environment
 sudo apt autoremove
 ```
 
 ref:
+
 ```
 sudo add-apt-repository ppa:linuxmint-daily-build-team/daily-builds
 sudo apt update
@@ -8021,21 +8132,27 @@ sudo add-apt-repository -r ppa:linuxmint-daily-build-team/daily-builds
 ```
 
 ---
+
 # add “open in terminal” to the right-click mouse menu for caja
 
 Installing caja-open-terminal via :
+
 ```
 sudo apt-get install caja-open-terminal caja-actions caja-actions-common
 ```
+
 change `mate-terminal` to `lxterminal`：
-<https://github.com/mate-desktop/caja-extensions/issues/31>
+[https://github.com/mate-desktop/caja-extensions/issues/31](https://github.com/mate-desktop/caja-extensions/issues/31)
 
 ## 可以配置F4快捷键打开terminal
+
 方法1
 在 `gedit ~/.config/caja/accels` 添加
+
 ```
 (gtk_accel_path "<Actions>/ExtensionsMenuGroup/CajaOpenTerminal::open_terminal" "F4")
 ```
+
 ```
 $ gsettings get org.mate.caja-open-terminal desktop-opens-home-dir
 false
@@ -8049,12 +8166,15 @@ $ gsettings get org.mate.applications-terminal exec-arg
 ```
 
 方法2
+
 ```
 touch ~/.config/caja/scripts/open-terminal-here
 chmod +x ~/.config/caja/scripts/open-terminal-here
 gedit ~/.config/caja/scripts/open-terminal-here
 ```
+
 内容
+
 ```
 #!/bin/sh
 #
@@ -8076,16 +8196,19 @@ exec lxterminal
 ```
 
 在 `gedit ~/.config/caja/accels` 添加
+
 ```
 (gtk_accel_path "<Actions>/ScriptsGroup/script_file:\\s\\s\\shome\\sandy\\s.config\\scaja\\sscripts\\sopen-terminal-here" "F4")
 ```
 
 After type in terminal
+
 ```
 caja -q
 ```
 
 ref：
+
 ```
 Is there a way to configure the Caja open-in-terminal extension to open the user's preferred terminal rather than mate-terminal?
 Not specifically for CAJA, but it honors the general setting that you can change:
@@ -8107,9 +8230,10 @@ You could either find our how to change Xfce’s default terminal (exo-open is X
 mate-terminal --working-directory=%f
 ```
 
-
 ---
+
 # gtk-update-icon-cache
+
 ```
 //sudo touch /usr/share/icons/hicolor ~/.local/share/icons/hicolor
 //sudo gtk-update-icon-cache
@@ -8118,9 +8242,10 @@ mate-terminal --working-directory=%f
 mv ~/.local/share/icons/hicolor/icon-theme.cache ~/.local/share/icons/hicolor/icon-theme.cache.bk
 ```
 
-
 ---
+
 # Cinnamon menu ("start") bar
+
 ```
 $ gsettings get org.cinnamon favorite-apps
 ['opera.desktop', 'cinnamon-settings.desktop', 'pidgin.desktop', 'org.gnome.Terminal.desktop', 'nemo.desktop']
@@ -8134,28 +8259,39 @@ $ dconf read /org/cinnamon/favorite-apps
 man dconf
 The database is typically located in $XDG_CONFIG_HOME/dconf (i.e., ~/.config/dconf by default)，The files in /etc/dconf are for affecting settings system-wide though
 ```
+
 It's ok to save all donf settings like this :
+
 ```
 dconf dump / > dconf-settings.ini
 ```
+
 But you have to restore them like that ! :
+
 ```
 dconf load / < dconf-settings.ini
 ```
+
 or
+
 ```
 cat dconf-settings.ini | dconf load /
 ```
+
 find files last modified less than 5 minutes
+
 ```
 find ~/.[!.]* -mmin -5
 ```
 
 ---
+
 # Customize keyboard shortcuts in Cinnamon Desktop Environment
+
 [How to add custom keybindings with gsettings](https://community.linuxmint.com/tutorial/view/1171)
 
-<https://wiki.archlinux.org/title/cinnamon>
+[https://wiki.archlinux.org/title/cinnamon](https://wiki.archlinux.org/title/cinnamon)
+
 ```
 备份
 $ dconf dump /org/cinnamon/desktop/keybindings/ > dconf-settings.conf
@@ -8173,10 +8309,12 @@ $ cinnamon-settings keyboard
 start menu ==> keyboard ==> shortcuts ==> Launchers ==> Launch terminal ==> Keyboard bindings, 输入按键组合就更新了。
 ```
 
-
 ---
+
 # 提取已安装的软件并重新打包
+
 ##方法1，手动重打包
+
 ```
 /var/lib/dpkg/info  # 旧版本在/usr/lib/dpkg-db/info
 这个目录里面保留了安装包的"conffiles", “md5sums”, “postinst”, "prerm"四个文件，以及一个list文件
@@ -8199,56 +8337,74 @@ Use folowing steps to repackage dep package:
 3. After completed to make changes to the package, repack the deb
 # dpkg-deb -b <dir> <new-package.deb>
 ```
+
 ##方法2，用 dpkg-repack
+
 ```
 sudo apt install dpkg-repack
 fakeroot -u dpkg-repack xed
 ```
+
 这样xed仅control相比原始deb添加了一个dpkg-repack说明而已
+
 ```
 sudo dpkg -i <package-name>
 # install the dependencies
 sudo apt-get -f install
 ```
+
 We can print the dependencies on the main server running the original software
+
 ```
 apt-cache depends Package_name |awk '{print $2}'
 ```
+
 You can create a script to automate the dependency installation :
 
 ```
 package=package
 dpkg-repack $(apt-cache depends --false-suggests $package |awk '{print $2}') $package
 ```
+
 However, dpkg-repack utility will not copy your custom settings. dpkg-repack is helpful to get the original deb file we used on our main server. That is helpful in a certain scenario where an exact copy of the settings is not desired.
 
 ## 方法3，用 apt-clone
+
 apt-clone is another utility which copies all the settings and create a debian installation file :
+
 ```
 sudo apt-get install apt-clone
 ```
+
 打包
+
 ```
 //apt-clone clone xed --with-dpkg-repack
 apt-clone clone xed
 ```
+
 恢复
+
 ```
 sudo apt-get install apt-clone
 sudo apt-clone restore xed.apt-clone.tar.gz
 ```
 
-
 ---
+
 # Change the number of the partition from sdx1 to sdx2
+
 保存分区表 backup the disk partition table
+
 ```
 # sfdisk --dump /dev/sdx > sdx.bkp
 # cp sdx.bkp sdx.new 
 ```
+
 编辑分区表
 
 from
+
 ```
 # partition table of /dev/sdx
 unit: sectors
@@ -8258,7 +8414,9 @@ unit: sectors
 /dev/sdx3 : start=   206848, size=   819200, Id= b
 /dev/sdx4 : start=        0, size=        0, Id= 0
 ```
+
 to
+
 ```
 # partition table of /dev/sdx
 unit: sectors
@@ -8268,19 +8426,25 @@ unit: sectors
 /dev/sdx3 : start=  1026048, size=975747120, Id=83
 /dev/sdx4 : start=        0, size=        0, Id= 0
 ```
+
 throw it back to the disk partition table (carefull)
+
 ```
 # sfdisk /dev/sdx < sdx.new
 ```
+
 If the last command does not work, change it for
+
 ```
 # sfdisk --no-reread --force /dev/sdx < sdx.new
 ```
 
-
 ---
+
 # ltspice-mod(不如直接wine的)
+
 PKGBUILD
+
 ```
 # Maintainer: Jan-Henrik Bruhn <aur@jhbruhn.de>
 
@@ -8321,7 +8485,9 @@ package()
     install -Dm755 "$srcdir/$pkgname-help.sh" "$pkgdir/usr/bin/$pkgname-help"
 }
 ```
+
 ltspice.sh
+
 ```
 #!/bin/sh
 if [ ! -d "$HOME"/.wine ] ; then
@@ -8331,19 +8497,22 @@ fi
 export WINEPREFIX=$HOME/.wine
 wine /usr/share/ltspice/XVIIx64.exe -ini "$HOME"/.wine/LTspiceXVII.ini "$@"
 ```
+
 ltspice-help.sh
+
 ```
 #!/bin/sh
 export WINEPREFIX=$HOME/.wine
 wine hh /usr/share/doc/ltspice/ltspice.chm "$@"
 ```
 
-
 ---
-# ubuntukylin 有一些有趣的deb包
-<https://archive.ubuntukylin.com/ubuntukylin/pool/partner/>
 
-<http://mirrors.163.com/ubuntukylin/pool/partner/>
+# ubuntukylin 有一些有趣的deb包
+
+[https://archive.ubuntukylin.com/ubuntukylin/pool/partner/](https://archive.ubuntukylin.com/ubuntukylin/pool/partner/)
+
+[http://mirrors.163.com/ubuntukylin/pool/partner/](http://mirrors.163.com/ubuntukylin/pool/partner/)
 可以下载dingtalk，xunlei，weixin什么的deb包
 
 ```
@@ -8357,7 +8526,9 @@ sudo add-apt-repository ppa:ubuntukylin-members/ubuntukylin
 sudo apt update
 sudo add-apt-repository -r ppa:ubuntukylin-members/ubuntukylin
 ```
+
 or for 22.04
+
 ```
 wget https://archive.ubuntukylin.com/ubuntukylin/pool/main/k/kylin-software-keyring/kylin-software-keyring_2022.03.30_all.deb
 sudo dpkg -i kylin-software-keyring_2022.03.30_all.deb
@@ -8420,16 +8591,20 @@ Suggested packages:
 
 ```
 
-
 ```
 sudo apt-get install kylin-kwre-wechat # (not work) 不如直接wine或者crossover安装个呢
 ```
+
 ---
+
 # ynote youdao-dict
+
 ```
 ynote youdao-dict 
 ```
+
 都大量报错，设置环境变量也不成，python版本问题吧，懒得处理了。目前环境只有3.10版本
+
 ```
 $ youdao-dict
 ...
@@ -8445,7 +8620,9 @@ Traceback (most recent call last):
     self.setX(x)
 TypeError: setX(self, int): argument 1 has unexpected type 'float'
 ```
+
 patch
+
 ```
 --- a/src/app/plugins/youdao/window.py	2022-01-24 00:21:08.317867190 +0800
 +++ b/src/app/plugins/youdao/window.py	2022-01-24 00:22:33.509467326 +0800
@@ -8470,31 +8647,38 @@ patch
 +        self.move(int(x), int(y))
          self.show()
 ```
+
 ```
 sudo gedit /usr/share/youdao-dict/dae/window.py
 sudo gedit /usr/share/youdao-dict/app/plugins/youdao/window.py
 ```
+
 就好了
 
-
 ynote报错
+
 ```
 gpu_data_manager_impl_private.cc(445)] GPU process isn't usable. Goodbye.
 ```
+
 运行时候加--no-sandbox就ok了
+
 ```
 ynote-desktop --no-sandbox
 ```
 
 ---
+
 # uget
+
 ```
 sudo apt install uget
 ```
 
-
 ---
+
 # vlc
+
 ```
 sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization
 
@@ -8505,12 +8689,14 @@ Suggested packages:
   vlc-plugin-fluidsynth vlc-plugin-jack vlc-plugin-svg libdvdcss2
 ```
 
-
 ---
+
 # qqmusic启动失败
+
 ```
 [76516:0620/164308.168641:FATAL:gpu_data_manager_impl_private.cc(1034)] The display compositor is frequently crashing. Goodbye.
 ```
+
 Electron 在新的GPU驱动上使用有这个问题，启动时加上 --no-sandbox 参数就好了
 
 ```
@@ -8518,9 +8704,10 @@ qqmusic --no-sandbox
 
 ```
 
-
 ---
+
 # crossover
+
 ```
 sh -c "apt-get update --allow-releaseinfo-change-Suite; echo -n Waiting for the dpkg lock; while fuser /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/run/unattended-upgrades.lock >/dev/null 2>&1; do echo -n .; sleep 1; done; DEBIAN_FRONTEND=noninteractive; export DEBIAN_FRONTEND; apt-get install -y gstreamer1.0-plugins-good:i386 gstreamer1.0-plugins-ugly:i386 libnss-mdns:i386 libvulkan1:i386"
 
@@ -8541,7 +8728,9 @@ Suggested packages:
 ```
 
 ---
+
 # playonlinux(弃用)
+
 ```
 $ sudo apt-get install playonlinux 
 The following additional packages will be installed:
@@ -8553,13 +8742,15 @@ $ sudo apt-get purge playonlinux
 $ sudo apt autoremove
 ```
 
-
 ---
+
 # iptux 降级
+
 ```
 sudo apt-get install git libgtk2.0-dev libglib2.0-dev libgstreamer1.0-dev libjsoncpp-dev g++ make cmake
 用0.7.6版本编译
 ```
+
 ```
 $ sudo make install
 [ 64%] Built target iptux
@@ -8645,7 +8836,9 @@ Install the project...
 ```
 
 ## PKGBUILD
-<https://wiki.archlinux.org/title/CMake_package_guidelines>
+
+[https://wiki.archlinux.org/title/CMake_package_guidelines](https://wiki.archlinux.org/title/CMake_package_guidelines)
+
 ```
 # Maintainer: andreas <yxgi5@163.com>
 
@@ -8694,10 +8887,12 @@ package()
 
 ```
 
-
 ---
+
 # netease-cloud-music
-<https://blog.csdn.net/leibris/article/details/124895824>
+
+[https://blog.csdn.net/leibris/article/details/124895824](https://blog.csdn.net/leibris/article/details/124895824)
+
 ```
 $ sudo dpkg -i netease-cloud-music_1.2.1_amd64_ubuntu_20190428.deb
 
@@ -8707,6 +8902,7 @@ $ netease-cloud-music
 
 
 ```
+
 ```
 sudo apt install libssl-dev \
     libxdo-dev libxtst-dev libx11-dev \
@@ -8719,6 +8915,7 @@ sudo apt install libqt5webchannel5
 sudo cp /opt/netease/netease-cloud-music/netease-cloud-music.bash /opt/netease/netease-cloud-music/netease-cloud-music.bash.bk
 sudo gedit /opt/netease/netease-cloud-music/netease-cloud-music.bash
 ```
+
 ```
 #!/bin/sh
 HERE="$(dirname "$(readlink -f "${0}")")"
@@ -8728,14 +8925,15 @@ export QT_QPA_PLATFORM_PLUGIN_PATH="${HERE}"/plugins/platforms
 cd /lib/x86_64-linux-gnu/
 exec "${HERE}"/netease-cloud-music $@
 ```
+
 好了
 
-
-
 ---
+
 # winetricks更新、加速
 
 ## winetricks要尽量更新
+
 ```
 su
 export https_proxy="127.0.0.1:8118"
@@ -8745,7 +8943,9 @@ winetricks --self-update
 实际上会备份并
 sudo chmod -x /usr/bin/winetricks.bak
 ```
+
 最好安装winbind
+
 ```
 $ sudo apt install winbind 
 Suggested packages:
@@ -8757,6 +8957,7 @@ The following NEW packages will be installed:
 ## winetricks安装组建
 
 实际上维护x64的arch就够了
+
 ```
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
@@ -8807,7 +9008,9 @@ env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x8
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q comctl32
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win32 WINEPREFIX=$HOME/.wine_x86 winetricks -q comctl32ocx
 ```
+
 tips
+
 ```
 ~/.cache/winetricks/
 wine winecfg -v win7
@@ -8827,6 +9030,7 @@ wineserver -k
 ```
 
 ## ie8
+
 ```
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine winecfg -v win7
 env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine winetricks -q -f ie8
@@ -8840,6 +9044,7 @@ env LC_ALL=zh_CN.UTF-8 LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX=$HOME/.wine wi
 ```
 
 ## created .desktop files
+
 ```
 scans your Wine drive for windows .lnk files
 creates a Linux .desktop file for each .lnk file
@@ -8847,15 +9052,19 @@ creates a folder $HOME/.local/share/applications/wine
 places all of the newly created .desktop files in there
 
 ```
+
 ```
 find $HOME/.wine -name '*.lnk' -type f -exec bash -c 'wine winemenubuilder "$0"' {} \;
 ```
 
-
 ---
+
 # 安装feeluown及插件
+
 ## 准备工作参考官方文档
-<https://feeluown.readthedocs.io/en/latest/quickstart.html#id2>
+
+[https://feeluown.readthedocs.io/en/latest/quickstart.html#id2](https://feeluown.readthedocs.io/en/latest/quickstart.html#id2)
+
 ```
 # 安装 Python 3 和 pip3（大部分系统已经安装好了）
 sudo apt-get install python3 python3-pip
@@ -8883,6 +9092,7 @@ sudo apt-get install netcat
 ```
 
 ## 安装feeluown及插件(3.8.8)
+
 ```
 export https_proxy="127.0.0.1:8118"
 export http_proxy="127.0.0.1:8118"
@@ -8983,6 +9193,7 @@ sudo -H pip3 install feeluown==3.8.10 fuo-netease fuo-qqmusic fuo-kuwo fuo-xiami
 ```
 
 ## 再安装一个下载插件(这个屌软件最有价值的就这个了，按理说和3.8.1配合最好)
+
 ```
 git clone git@github.com:feeluown/feeluown-download.git
 cd feeluown-download
@@ -8996,7 +9207,9 @@ sudo python3.8 setup.py install
 pip3 install 'feeluown>=3.0[battery]' --upgrade --user
 pip3 install pyopengl
 ```
+
 ## 如果出错
+
 ```
 sudo -H pip3 uninstall pyopengl pyqt5 pyqtwebengine feeluown fuo-local fuo-netease fuo-qqmusic fuo-kuwo PyQt5-sip PyQt5-Qt5 PyQtWebEngine-Qt5 mutagen packaging janus requests pydantic tomlkit qasync fuzzywuzzy marshmallow pycryptodome beautifulsoup4 typing-extensions
 
@@ -9016,17 +9229,21 @@ feeluown -d
 ```
 
 ## 试安装是否成功
+
 ```
 feeluown -h
 ```
 
 ## 生成桌面图标
+
 ```
 feeluown-genicon
 ```
+
 直接双击桌面 FeelUOwn 图标，这时启动 GUI/Daemon 混合模式
 
-##  Daemon 模式
+## Daemon 模式
+
 ```
 feeluown -nw    # 使用 Daemon 模式启动 feeluown
 
@@ -9043,14 +9260,17 @@ nc localhost 23333  # 使用netcat连接Daemon
 ```
 
 ##开启调试模式
+
 ```
 feeluown -d
 ```
 
 ## 配置文件
-<https://feeluown.readthedocs.io/en/stable/fuorc.html>
+
+[https://feeluown.readthedocs.io/en/stable/fuorc.html](https://feeluown.readthedocs.io/en/stable/fuorc.html)
 
 In `~/.fuorc`
+
 ```
 import os
 
@@ -9092,9 +9312,10 @@ when('app.plugin_mgr.about_to_enable', load_plugin_rcfiles, use_symbol=True, aio
 
 ```
 
+## pip3 conf
 
-## pip3 conf 
 配置文件可用位置
+
 ```
 $ sudo pip3 config -v list
 For variant 'global', will try loading '/etc/xdg/pip/pip.conf'
@@ -9110,6 +9331,7 @@ For variant 'site', will try loading '/usr/pip.conf'
 timeout = 6000
   index-url = http://pypi.douban.com/simple
 ```
+
 ```
 [global]
 timeout = 600
@@ -9118,12 +9340,14 @@ index-url = http://pypi.v2ex.com/simple
 use-mirrors = true
 mirrors = https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
+
 临时的就加上参数
 `-i https://pypi.tuna.tsinghua.edu.cn/simple/`
 例如
 `pip install --upgrade tensorflow -i http://pypi.douban.com/simple --trusted-host pypi.douban.com`
 
 其他国内镜像还有
+
 ```
 http://pypi.hustunique.com/
 http://pypi.sdutlinux.org/
@@ -9141,6 +9365,7 @@ proxy     = http://XXXX.com:port
 [install]
 trusted-host=pypi.tuna.tsinghua.edu.cn
 ```
+
 ```
 直接在pip时设置代理也是可以的：
 
@@ -9148,6 +9373,7 @@ pip install -r requirements.txt --proxy=代理服务器IP:端口号
 ```
 
 ## pip tips
+
 ```
 python3 -m pip install --upgrade pip
 /root/.cache/pip/wheels
@@ -9157,16 +9383,19 @@ sudo apt install python3-pyqt5 python3-pyqt5.qtopengl python3-pyqt5.qtsvg python
 
 ```
 
-
 ---
+
 # music players
+
 ```
 sudo apt install audacious audacious-dev audacious-plugins audacious-plugins-data osdlyrics rhythmbox rhythmbox-plugins rhythmbox-dev 
 sudo apt install pkg-config libtag1-dev libicu-dev libcue-dev libtag1-dev libavutil-dev libavcodec-dev libavformat-dev libdtkcore-dev qt5-qmake libqt5svg5-dev qttools5-dev-tools qtmultimedia5-dev libkf5codecs-dev libdtkwidget-dev
 ```
 
 ---
+
 # python2（尽量用虚拟环境）
+
 ```
 $ sudo apt-get install python-is-python3
 $ sudo apt-get install python2 python2-dev  python2-setuptools-whl python2-pip-whl python2-minimal   # 不要安装python-pip， 不然要补sudo apt-get install python3-pip python3-virtualenv virtualenv 
@@ -9182,8 +9411,8 @@ The following NEW packages will be installed:
 
 ## virtualenv
 
+因为冲突不安装python-pip，那么没有pip2怎么办呢？ 可以用 `virtualenv`
 
-因为冲突不安装python-pip，那么没有pip2怎么办呢？ 可以用`virtualenv`
 ```
 $ sudo python2 -m pip install --upgrade pip
 /usr/bin/python2: No module named pip
@@ -9207,9 +9436,9 @@ $ sudo apt install virtualenv
 $ virtualenv -p /usr/bin/python2 --system-site-packages ~/python2_env # (Or wherever you want your environment to live)
 ```
 
-
 如果只想使用本地安装的软件包(例如，使用pip安装的软件包，而不是使用pacman安装的软件包)，则在创建环境时请删除--system-site-packages选项
-`~/.bash_profile`或`~/.profile`(或任何您喜欢的shell配置文件)中，进行如下设置：
+`~/.bash_profile`或 `~/.profile`(或任何您喜欢的shell配置文件)中，进行如下设置：
+
 ```
 source ~/python2_env/bin/activate
 ```
@@ -9246,23 +9475,25 @@ $ python -m pip install easy_install
 ```
 
 tips
+
 ```
 python -m ensurepip
 easy_install pip
 python -m pip install --upgrade pip
 ```
 
-
 关闭虚拟环境：
+
 ```
 (python2_env):
 $ deactivate
 ```
 
-
 ---
+
 # 安装 anaconda
-<https://docs.anaconda.com/anaconda/install/linux/>
+
+[https://docs.anaconda.com/anaconda/install/linux/](https://docs.anaconda.com/anaconda/install/linux/)
 
 ```
 $ wget https://repo.anaconda.com/archive/Anaconda3-2023.03-1-Linux-x86_64.sh
@@ -9279,11 +9510,15 @@ $ conda init
 ~/.bashrc
 ~/.condarc
 ```
+
 迁移过来的要找修改的
+
 ```
 find . -type f -name "*" | xargs grep -i "andreas"
 ```
+
 实际上在.bashrc添加了
+
 ```
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -9302,6 +9537,7 @@ unset __conda_setup
 ```
 
 ~/.condarc
+
 ```
 channels:
   - defaults
@@ -9309,6 +9545,7 @@ auto_activate_base: false
 ```
 
 在~/anaconda3/condabin/conda里面第一行是
+
 ```
 #!/home/andreas/anaconda3/bin/python
 ```
@@ -9321,8 +9558,8 @@ conda base环境引起了gitk的字体变化，还是sans但是无法显示全�
 `$ source ~/anaconda3/bin/activate <env_name>`
 <env_name>就是在~/anaconda3/envs内的目录名
 
-
 生效环境变量
+
 ```
 re-open terminal 或者source ~/.bashrc
 $ conda --version
@@ -9334,10 +9571,13 @@ $ conda info
 ```
 
 To use conda with fish shel
+
 ```
 $ conda init fish
 ```
+
 ~/.config/fish/config.fish
+
 ```
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -9348,11 +9588,13 @@ end
 ```
 
 using the GUI (.pkg) installer
+
 ```
 $ anaconda-navigator
 ```
 
 update pkg or all pkg
+
 ```
 $ conda update conda anaconda-navigator
 $ conda update --update-all
@@ -9364,12 +9606,14 @@ $ conda upgrade --all
 ```
 
 uninstall
+
 ```
 rm -rf ~/.condarc ~/.conda ~/.continuum ~/anaconda3
 修改~/.bashrc
 ```
 
 查看之前安装的镜像
+
 ```
 $ conda config --show channels
 默认是
@@ -9378,16 +9622,19 @@ channels:
 ```
 
 删除所有的镜像源，恢复到默认
+
 ```
 $ conda config --remove-key channels 
 ```
 
 删除指定的镜像源
+
 ```
 $ conda config --remove channels [urls]
 ```
 
 配置国内镜像源[网速可以的话不设置也行]
+
 ```
 $ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 $ conda config --set show_channel_urls yes
@@ -9396,7 +9643,9 @@ channels:
 - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 - defaults
 ```
+
 可以修改~/.condarc
+
 ```
 channels:
   - defaults
@@ -9414,45 +9663,61 @@ custom_channels:
   pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
   simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 ```
+
 然后运⾏ conda clean -i 清除索引缓存，保证⽤的是镜像站提供的索引。
 //然后运⾏ `conda create -n myenv numpy`
 
-
 创建运行环境
+
 ```
 $ conda create -y -n some_pip_test python=3.7 imagesize=1.0
 $ conda create --name snakes python=3.9
 ```
+
 active运行环境
+
 ```
 $ conda activate some_pip_test
 $ conda activate snakes // conda 4.6之前的版本是 $ source activate snakes
 ```
+
 确认当前env环境
+
 ```
 $ conda info --envs
 $ conda-env list
 ```
+
 deactive当前运行环境
+
 ```
 $ conda deactivate  // conda 4.6之前的版本是 $ source deactivate
 ```
-active运行环境后用升级模块 先`conda activate <some_pip_env>`哦
+
+active运行环境后用升级模块 先 `conda activate <some_pip_env>`哦
+
 ```
 $ pip install -U imagesize
 ```
+
 确认当前环境python版本
+
 ```
 $ python --version
 ```
+
 查询当前环境已经安装的包
+
 ```
 $ conda list
 ```
+
 删除自定义env（谨慎操作）
+
 ```
 $ conda remove -n some_pip_test --all
 ```
+
 重命名环境
 conda 其实没有重命名指令，实现重命名是通过 clone 完成的，分两步：
 
@@ -9461,41 +9726,54 @@ conda 其实没有重命名指令，实现重命名是通过 clone 完成的，�
 ②删除 old name 的环境
 
 如，将nlp重命名成tf2
+
 ```
 conda create -n tf2 --clone nlp
 ```
+
 删除原环境
+
 ```
 conda remove -n nlp --all
 ```
 
-
 精确查找
+
 ```
 $ conda search --full-name <package_full_name>
 ```
+
 模糊查找
+
 ```
 $ conda search <text>
 ```
+
 在指定环境中安装包
+
 ```
 $ conda install --name <env_name> <package_name>
 $ conda install --name python3 pandas
 ```
+
 在当前环境中安装包
+
 ```
 $ conda install <package_name>
 ```
+
 使用pip安装包
 
 是否需要启用？
+
 ```
 $ conda config --set pip_interop_enabled True
 ```
+
 ```
 $ pip install <package_name>
 ```
+
 ```
 1. pip只是包管理器，无法对环境进行管理。因此如果想在指定环境中使用pip进行安装包，则需
 要先切换到指定环境中，再使用pip命令安装包。
@@ -9503,21 +9781,26 @@ $ pip install <package_name>
 3. pip可以安装一些conda无法安装的包；conda也可以安装一些pip无法安装的包。因此当使用
 一种命令无法安装包时，可以尝试用另一种命令。
 ```
+
 当使用 conda install 无法进行安装时，可以考虑从Anaconda.org中获取安装包的命令，并进行安装
 
-<https://anaconda.org>
+[https://anaconda.org](https://anaconda.org)
 
 卸载指定环境中的包
+
 ```
 $ conda remove --name <env_name> <package_name>
 $ conda remove --name python3 pandas
 ```
+
 卸载当前环境中的包
+
 ```
 $ conda remove <package_name>
 ```
 
 更新所有包(在安装Anaconda之后执行上述命令更新Anaconda中的所有包至最新版本，便于使用)
+
 ```
 $ conda update --all
 或
@@ -9525,25 +9808,29 @@ $ conda upgrade --all
 ```
 
 更新指定包
+
 ```
 $ conda update <package_name>
 或
 $ conda upgrade <package_name>
 ```
+
 更新多个指定包，则包名以空格隔开，向后排列。如： `conda update pandas numpy matplotlib` 即更新pandas、numpy、matplotlib包
 
-
-
 ## Active Python配置管理
-<https://platform.activestate.com/yxgi5>
 
-* * *
+[https://platform.activestate.com/yxgi5](https://platform.activestate.com/yxgi5)
+
+---
+
 # pip down
-比如 <https://pypi.org/project/mxnet-cu102>，在 download files 就可以获得直接下载链接和hash
 
-`/home/andreas/.cache/pip` 内有缓存文件，但是文件名是校验码，路径是文件名前5个字符,类似位置win在`C:\Users\Administrator\AppData\Local\pip\cache\`
+比如 [https://pypi.org/project/mxnet-cu102](https://pypi.org/project/mxnet-cu102)，在 download files 就可以获得直接下载链接和hash
+
+`/home/andreas/.cache/pip` 内有缓存文件，但是文件名是校验码，路径是文件名前5个字符,类似位置win在 `C:\Users\Administrator\AppData\Local\pip\cache\`
 
 离线下载，比如 packages 是目标目录
+
 ```
 python -m pip download --only-binary :all: --dest . --no-cache <package_name>
 
@@ -9566,25 +9853,31 @@ tornado==6.0 \
 ```
 
 将下载的包的名字输出到requirements.txt中
+
 ```
 ls open3d_dabao >requirements.txt
 ```
+
 离线安装，比如本地目录packages内有需要的wheels
+
 ```
 pip install --no-index --find-links=packages -r requirements.txt
 pip install packages/PyMySQL-0.9.3-py2.py3-none-any.whl
 pip install --no-index --find-links=open3d_dabao -r requirements.txt
 sudo pip3 install -r /xxxx/xxxx/requirement.txt --no-index --find-links /xxxx/xxxxx/xxxxx/（存放下载好的包的⽬录）
 ```
+
 在线安装多包
+
 ```
 pip install -r requirements.txt
 pip install pymysql xxxxx
 ```
 
-
 ---
+
 # octave
+
 ```
 $ sudo apt install octave
 
@@ -9599,10 +9892,12 @@ The following NEW packages will be installed:
 
 ```
 
-***
+---
+
 # git-lfs
 
 git clone xxx 之后出现
+
 ```
 Cloning into 'Hi06701A'...
 remote: Enumerating objects: 46882, done.
@@ -9615,34 +9910,43 @@ warning: Clone succeeded, but checkout failed.
 You can inspect what was checked out with 'git status'
 and retry with 'git restore --source=HEAD :/'
 ```
+
 ```
 git config --system core.longpaths true
 git restore --source=HEAD :/
 ```
+
 提示找不到 git-lfs
+
 ```
 sudo apt install git-lfs
 cd [clone-dir]
 git lfs install
 ```
+
 ```
 $ git lfs install
 Updated git hooks.
 Git LFS initialized.
 ```
+
 ```
 $ echo $(git --exec-path)
 /usr/lib/git-core
 ```
 
 下面命令奇慢无比
+
 ```
 git restore --source=HEAD :/
 ```
+
 ```
 git reset --hard
 ```
+
 If you intentionally removed git-lfs, and don't want to install it back as other answers suggest, your way out is:
+
 ```
 git config --global --remove-section filter.lfs
 ```
@@ -9650,16 +9954,21 @@ git config --global --remove-section filter.lfs
 ## git-lfs tips
 
 1. Download and install the Git command line extension. Once downloaded and installed, set up Git LFS for your user account by running:
+
 ```
 git lfs install
 ```
+
 You only need to run this once per user account.
 
 2. In each Git repository where you want to use Git LFS, select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
+
 ```
 git lfs track "*.psd"
 ```
+
 跟踪文件夹中的所有文件
+
 ```
 忽略文件夹中的所有文件(包含文件夹)
 // git lfs track "Pods/TXLiteAVSDK_Professional/**"
@@ -9667,52 +9976,70 @@ git lfs track "dir/**"
 忽略文件夹中的文件(不包含文件夹)
 git lfs track "dir/*"
 ```
+
 执行完上面的命令后，会生成一个.gitattributes文件，要将其上传到远程gitee仓库
 
 Now make sure .gitattributes is tracked:
+
 ```
 git add .gitattributes
 git commit -m '提交 .gitattributes 文件'
 git push origin master（如果提交不了，后面可以加一个-f）
 ```
+
 配置提交后就可正常上传文件
+
 ```
 git add -A   提交所有 或指定当前大文件提交
 git commit -m "大文件"
 git push origin master -f
 ```
+
 上传报错Message: LFS only supported repository in paid enterprise.: exit status 128, 解决方法：
+
 ```
 rm .git/hooks/pre-push
 git push -u origin "master"
 ```
+
 报错message：WARNING: Authentication error: Authentication required: LFS only supported repository in paid enterprise.解决办法
+
 ```
 git config lfs.https://gitee.com/{your_gitee}/{your_repo}.git/info/lfs.locksverify false
 ```
+
 报错信息：Remote “origin” does not support the LFS locking API. Consider disabling it with:…
+
 ```
 git lfs push origin master --all
 ```
+
 ## git 回退
+
 1. 查看提交记录获取commit_id
+
 ```
 git log
 ```
+
 2. 回退命令
+
 ```
 git reset --hard HEAD^` 回退到上个版本
 git reset --hard HEAD~3` 回退到前3次提交之前，以此类推，回退到n次提交之前
 git reset --hard commit_id` 退到/进到 指定[commit]的sha码
 ```
+
 3. 强推到远程仓库
+
 ```
 git push origin HEAD --force
 ```
 
-
 ---
+
 # webp 图片转换
+
 ```
 sudo apt-get install webp
 
@@ -9722,9 +10049,11 @@ cwebp -q [图像质量] [JPEG/PNG文件名] -o [WebP文件名]
 使用如下命令或将 WEBP 图片转换成 PNG
 dwebp [WebP文件名] -o [PNG文件名]
 ```
+
 ```
 sudo apt install libwebp-dev libgdk-pixbuf2.0-dev libgtk-3-dev meson build-essential lximage-qt
 ```
+
 ```
 # Maintainer: Andeas Zhang
 _name="webp-pixbuf-loader"
@@ -9758,14 +10087,17 @@ package() {
 	DESTDIR="${pkgdir}" ninja -C build install
 }
 ```
+
 比较好的的办法
+
 ```
 lximage-qt 或 Gwenview Qview gThumb LibreOffice 打开并另存
 ```
 
-
 ---
+
 # mplayer
+
 ```
 $ sudo apt install kmplayer mplayer mplayer-gui mplayer-skins vdr-plugin-mplayer # vdr-plugin-mplayer应该用不着
 Reading package lists... Done
@@ -9795,6 +10127,7 @@ The following NEW packages will be installed:
 
 By default VDR is configured to use /var/lib/video to store recordings. You can either create this directory now, or change this behavior later by modifying the config file /etc/vdr/conf.d/00-vdr.conf. 
 ```
+
 ```
 sudo apt purge kmplayer vdr-plugin-mplayer
 The following packages will be REMOVED:
@@ -9815,36 +10148,48 @@ gmplayer
 ```
 
 ---
+
 # gstreamer
+
 ```
 sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 ```
-<https://gstreamer.freedesktop.org/documentation/tutorials/index.html>
 
-<https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html>
+[https://gstreamer.freedesktop.org/documentation/tutorials/index.html](https://gstreamer.freedesktop.org/documentation/tutorials/index.html)
 
-<https://gstreamer.freedesktop.org/documentation/installing/on-linux.html>
+[https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html](https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html)
+
+[https://gstreamer.freedesktop.org/documentation/installing/on-linux.html](https://gstreamer.freedesktop.org/documentation/installing/on-linux.html)
 
 ---
+
 # music-dl
-<https://github.com/0xHJK/music-dl>
+
+[https://github.com/0xHJK/music-dl](https://github.com/0xHJK/music-dl)
+
 ```
 virtualenv -p /usr/bin/python3 --system-site-packages ~/python3_env
 source ~/python3_env/bin/activate
 pip3 install pymusic-dl
 music-dl -k "周杰伦" -n 20
 ```
+or
+```
+sudo -H pip3 install pymusic-dl
+```
 
 # libopencv
+
 ```
 sudo apt install libopencv-dev libopencv-core-dev
 sudo apt install libopencv-core4.5d libopencv-calib3d-dev libopencv-calib3d4.5d libopencv-dnn-dev libopencv-dnn4.5d
 sudo ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 ```
 
-
 ---
+
 # libx264 libx265
+
 ```
 sudo apt install libx264-163 libx264-dev x264 libx265-199 libx265-dev x265
 
@@ -9857,16 +10202,19 @@ The following NEW packages will be installed:
 
 ```
 
-
 ---
+
 # csh tcsh
+
 ```
 sudo apt install csh
 sudo apt install tcsh
 ```
 
 ---
+
 # kernel build-dep
+
 ```
 $ sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
 
@@ -9889,33 +10237,35 @@ $ sudo apt update
 //$ sudo apt remove linux-image-$(uname -r) linux-headers-$(uname -r)
 $ cat /proc/version_signature
 ```
-<https://stackoverflow.com/questions/75695258/how-to-fix-broken-packages-of-linux-unsigned-image>
 
-<https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel>
+[https://stackoverflow.com/questions/75695258/how-to-fix-broken-packages-of-linux-unsigned-image](https://stackoverflow.com/questions/75695258/how-to-fix-broken-packages-of-linux-unsigned-image)
 
-<https://help.ubuntu.com/community/UpdatingADeb>
+[https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel](https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel)
 
-<https://git.launchpad.net/ubuntu/+source/linux-hwe-5.19>
+[https://help.ubuntu.com/community/UpdatingADeb](https://help.ubuntu.com/community/UpdatingADeb)
 
-<https://launchpad.net/~ubuntu-kernel>
+[https://git.launchpad.net/ubuntu/+source/linux-hwe-5.19](https://git.launchpad.net/ubuntu/+source/linux-hwe-5.19)
 
-<https://code.launchpad.net/~ubuntu-kernel/+git>
+[https://launchpad.net/~ubuntu-kernel](https://launchpad.net/~ubuntu-kernel)
 
-<https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy>
+[https://code.launchpad.net/~ubuntu-kernel/+git](https://code.launchpad.net/~ubuntu-kernel/+git)
 
-<https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy>
+[https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy](https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy)
 
-<https://wiki.ubuntu.com/Kernel>
+[https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy](https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy)
 
-<http://kernel.ubuntu.com/git>
+[https://wiki.ubuntu.com/Kernel](https://wiki.ubuntu.com/Kernel)
 
-<https://launchpad.net/~ubuntu-kernel-team>
+[http://kernel.ubuntu.com/git](http://kernel.ubuntu.com/git)
 
-<https://git.launchpad.net/ubuntu/+source/linux>
+[https://launchpad.net/~ubuntu-kernel-team](https://launchpad.net/~ubuntu-kernel-team)
 
+[https://git.launchpad.net/ubuntu/+source/linux](https://git.launchpad.net/ubuntu/+source/linux)
 
 ---
+
 # Build Deb Packages From Source
+
 ```
 sudo apt install dpkg-dev build-essential fakeroot devscripts
 
@@ -9973,15 +10323,18 @@ dpkg-buildpackage -rfakeroot -b -uc -us
 ```
 
 ---
+
 # scheme2c
+
 ```
 sudo apt install scheme2c libsigsegv-dev
 
 ```
 
-
 ---
+
 # lscc diamond
+
 ```
 sudo apt install libxft-dev:i386
 
@@ -9996,6 +10349,7 @@ The following NEW packages will be installed:
 ```
 
 /etc/udev/rules.d/10-lattice.rules
+
 ```
 #lattice
 SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="1134", ATTRS{idProduct}=="8001", MODE="0666", GROUP="plugdev", SYMLINK+="lattice-%n"
@@ -10017,17 +10371,20 @@ ls -l /dev/bus/usb/003/005
 ls -l /dev/bus/usb/*/*
 getfacl /dev/bus/usb/003/005
 ```
+
 reload udev rules
+
 ```
 sudo skill -HUP udevd
 
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
+
 then，Plug in the USB cable.
 
-
 if unbind, no need rommod
+
 ```
 $ lsmod | grep ftdi_sio
 ftdi_sio               65536  0
@@ -10035,9 +10392,11 @@ usbserial              57344  1 ftdi_sio
 ```
 
 ---
+
 # backup kylin， 安装ukylin之后，release信息会被修改，这样恢复
 
 $ cat /usr/lib/os-release.bk
+
 ```
 PRETTY_NAME="Ubuntu 22.04.1 LTS"
 NAME="Ubuntu Kylin"
@@ -10052,7 +10411,9 @@ BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
 PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
 UBUNTU_CODENAME=jammy
 ```
-$ sudo cat /etc/lsb-release.bk 
+
+$ sudo cat /etc/lsb-release.bk
+
 ```
 DISTRIB_ID=Kylin
 DISTRIB_RELEASE=V10
@@ -10064,6 +10425,7 @@ DISTRIB_VERSION_MODE=normal
 ```
 
 $ cat /usr/lib/os-release
+
 ```
 PRETTY_NAME="Ubuntu 22.04.1 LTS"
 NAME="Ubuntu"
@@ -10080,6 +10442,7 @@ UBUNTU_CODENAME=jammy
 ```
 
 $ sudo cat /etc/lsb-release
+
 ```
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=22.04
@@ -10087,11 +10450,12 @@ DISTRIB_CODENAME=jammy
 DISTRIB_DESCRIPTION="Ubuntu 22.04.1 LTS"
 ```
 
-
 ---
+
 # 51-altera-usb-blaster.rules
 
 /etc/udev/rules.d/51-altera-usb-blaster.rules
+
 ```
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6001", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6002", MODE="0666"
@@ -10100,12 +10464,14 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6010", MODE="0666"
 SUBSYSTEM=="usb", ATTR{idVendor}=="09fb", ATTR{idProduct}=="6810", MODE="0666"
 ```
 
-
 ---
+
 # lightdm
+
 想设置背景 /usr/share/backgrounds/warty-final-ubuntu.png
 
 sudo gedit /etc/lightdm/lightdm.conf
+
 ```
 [SeatDefaults]
 # user-session=ubuntu
@@ -10114,6 +10480,7 @@ greeter-show-manual-login=true
 ```
 
 sudo gedit /etc/lightdm/lightdm-gtk-greeter.conf
+
 ```
 [greeter]
 ackground=/usr/share/backgrounds/warty-final-ubuntu.png
@@ -10125,9 +10492,11 @@ show-language-selector=true
 ```
 lightdm --test-mode
 ```
+
 ok, user-background必须设置false才换成功背景图
 
 /etc/lightdm/lightdm-gtk-greeter.conf
+
 ```
 # LightDM GTK+ Configuration
 # Available configuration options listed below.
@@ -10198,8 +10567,8 @@ activate-numlock=true
 show-language-selector=true
 ```
 
-
 sudo gedit lightdm.conf.d/91-arctica-greeter-mate.conf 存档
+
 ```
 [SeatDefaults]
 
@@ -10208,6 +10577,7 @@ greeter-show-manual-login=false
 ```
 
 more /etc/lightdm/lightdm.conf 存档
+
 ```
 #
 # General configuration
@@ -10380,15 +10750,18 @@ greeter-show-manual-login=true
 ```
 
 ---
+
 # steam
 
 steam的最大意义在于提供各种库，基本上需要的库都可以在这找到
 
-Download deb from <https://store.steampowered.com/about/>
+Download deb from [https://store.steampowered.com/about/](https://store.steampowered.com/about/)
+
 ```
 $ sudo dpkg -i steam_latest.deb
 $ steam
 ```
+
 ```
 The packages cache seems to be out of date
 
@@ -10429,6 +10802,7 @@ So what I needed to do is install another polkit agent and make sure it is runni
 ```
 
 ubuntu DE 正常显示
+
 ```
 The packages cache seems to be out of date
 
@@ -10483,6 +10857,7 @@ After this operation, 37.5 MB of additional disk space will be used.
 Do you want to continue? [Y/n] y
 
 ```
+
 ```
 这两个下载慢
 Get:1 https://repo.steampowered.com/steam stable/steam amd64 steam-libs-amd64 amd64 1:1.0.0.78 [14.2 kB]
@@ -10493,7 +10868,9 @@ Get:2 https://repo.steampowered.com/steam stable/steam i386 steam-libs-i386 i386
 ```
 $ sudo apt  -c ~/apt_proxy_conf install libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 steam-libs-amd64:amd64 steam-libs-i386:i386
 ```
+
 已经安装的app可以跳过steam来调用
+
 ```
 比较旧版本steam的app在 ~/.steam/steam/steamapps
 最新版本steam的app在 ~/.local/share/Steam/steamapps/common
@@ -10501,7 +10878,9 @@ $ sudo apt  -c ~/apt_proxy_conf install libc6:amd64 libc6:i386 libegl1:amd64 lib
 运行
 $ ./Universe\ Sandbox.x86_6
 ```
+
 集成显卡显存过小
+
 ```
 lspci 找到vga什么的
 lspci | grep -i VGA
@@ -10519,10 +10898,13 @@ nvidia-smi
 ```
 
 ---
+
 # 修改软链接 change what a symlink points to after it is created
+
 ```
 ln -sfn source_file_or_directory_name softlink_name
 ```
+
 ```
 ln -s /media/files/tb-prod/files files
 The -s option means to make a symbolic link. To update a link, either delete the link and create it as above, or use the -f option to ln as well. If you are linking to a folder, you should include the -n option:
@@ -10532,7 +10914,9 @@ This will replace the link with a new one pointing at /a/new/path.
 
 The -n option is necessary when linking to a different target folder to avoid creating a sub-folder inside that symbolic link and instead replace the symbolic link completely.
 ```
+
 下面比较有没有-n选项的情况，特别是在 symlink 初始指向folder的情况
+
 ```
 mkdir test test1
 ln -s test ttt
@@ -10593,28 +10977,34 @@ ll ttt  == ls -l ttt 查看现在软链接指向哪里
 
 ```
 
-
 ---
+
 # lightdm for sunlogin
 
 实际上安装了lightdm-gtk-greeter会导致显示很不爽，丢失默认配置
+
 ```
 $ sudo apt remove gnome-themes-standard lightdm-gtk-greeter
 ```
 
 /etc/lightdm/lightdm.conf
+
 ```
 [SeatDefaults]
 greeter-setup-script=xhost +
 ```
+
 备份(/INSTALL/lightdm/)后删掉
+
 ```
 sudo rm /etc/lightdm/lightdm.conf.d/91-arctica-greeter-mate.conf
 sudo rm /etc/lightdm/lightdm-gtk-greeter.conf
 ```
+
 ## gdm3登陆器有关设置[未验证]
 
 /etc/gdm3/Init/Default添加一行 xhost + 到头部
+
 ```
 #!/bin/sh
 # Stolen from the debian kdm setup, aren't I sneaky
@@ -10629,6 +11019,7 @@ xhost +
 ```
 
 /etc/gdm3/custom.conf
+
 ```
 # GDM configuration storage
 #
@@ -10664,6 +11055,7 @@ DisplaysPerHost=10
 ```
 
 ## 配置 ssh
+
 ```
 /etc/ssh/ssh_config
 ForwardX11 yes
@@ -10671,15 +11063,17 @@ ForwardX11Trusted yes
 # systemctl restart sshd
 ```
 
-
 ---
+
 # 莫名错误
+
 ```
 sudo apt update -y
 ...
 E: Problem executing scripts APT::Update::Post-Invoke-Success 'if /usr/bin/test -w /var/lib/command-not-found/ -a -e /usr/lib/cnf-update-db; then /usr/lib/cnf-update-db > /dev/null; fi'
 E: Sub-process returned an error code
 ```
+
 ```
 sudo killall -KILL apt.systemd.daily
 sudo mv /etc/apt/apt.conf.d/50appstream /etc/apt/apt.conf.d/50appstream.disable
@@ -10688,17 +11082,22 @@ sudo apt upgrade -y
 sudo mv /etc/apt/apt.conf.d/50appstream.disable /etc/apt/apt.conf.d/50appstream
 sudo apt update -y
 ```
+
 ```
 sudo apt-get clean
 sudo apt-get update
 
 ```
+
 最后 重启大法好
 
 ---
+
 # Install KVM on Linux
-<https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux>
-<https://help.ubuntu.com/community/KVM/Installation>
+
+[https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux](https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux)
+[https://help.ubuntu.com/community/KVM/Installation](https://help.ubuntu.com/community/KVM/Installation)
+
 ```
 $ sudo apt-get install cpu-checker
 The following NEW packages will be installed:
@@ -10728,9 +11127,10 @@ The following NEW packages will be installed:
 
 ```
 
-
 ---
+
 # genymotion
+
 ```
 sudo ./genymotion-3.5.0-linux_x64.bin -d /opt/
 
@@ -10750,29 +11150,33 @@ You can now use these tools from [/opt/genymotion]:
  - gmtool
 
 ```
+
 ```
 cd /usr/local/bin
 sudo gedit genymotion
 ```
+
 ```
 #!/bin/bash
 /opt/genymotion/genymotion
 ```
+
 ```
 sudo chmod +x genymotion
 ```
 
-
 ---
+
 # 安装 qt5serialport5
+
 ```
 sudo apt-get install libqt5serialport5 libqt5serialport5-dev
 ```
 
-
-
 ---
+
 # faketime
+
 ```
 sudo apt install faketime
 
@@ -10780,13 +11184,15 @@ The following NEW packages will be installed:
   faketime libfaketim
 ```
 
-
 ---
+
 # 创建 一些 dmenu 启动器
+
 ```
 cd /usr/local/bin
 sudo gedit uex
 ```
+
 ```
 #!/bin/bash
 rm ${HOME}/.idm/*.spl
@@ -10795,15 +11201,16 @@ rm ${HOME}/.idm/uex/*.spl
 cd /opt/uex/bin
 ./uex
 ```
+
 ```
 sudo chmod +x uex
 ```
-
 
 ```
 cd /usr/local/bin
 sudo gedit uex4
 ```
+
 ```
 #!/bin/bash
 rm ${HOME}/.idm/*.spl
@@ -10812,139 +11219,144 @@ rm ${HOME}/.idm/uex/*.spl
 cd /opt/uex4/bin
 ./uex
 ```
+
 ```
 sudo chmod +x uex4
 ```
 
-
 ```
 $ sudo gedit /usr/bin/bcompare
 ```
+
 ```
 rm "${HOME}/.config/bcompare/registry.dat"
 ```
-
 
 ```
 cd /usr/local/bin
 sudo gedit pycharm
 ```
+
 ```
 #!/bin/bash
 /opt/pycharm-professional/bin/pycharm.sh
 ```
+
 ```
 sudo chmod +x pycharm
 ```
-
 
 ```
 cd /usr/local/bin
 sudo gedit android-studio
 ```
+
 ```
 #!/bin/bash
 /opt/android-studio/bin/studio.sh
 ```
+
 ```
 sudo chmod +x android-studio
 ```
-
 
 ```
 cd /usr/local/bin
 sudo gedit baidunetdisk
 ```
+
 ```
 #!/bin/bash
 /opt/baidunetdisk/baidunetdisk  --no-sandbox %U
 ```
+
 ```
 sudo chmod +x baidunetdisk
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit genymotion
 ```
+
 ```
 #!/bin/bash
 /opt/genymotion/genymotion/genymotion
 ```
+
 ```
 sudo chmod +x genymotion
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit electronic-wechat
 ```
+
 ```
 #!/bin/bash
 /opt/electronic-wechat-linux-x64/electronic-wechat
 ```
+
 ```
 sudo chmod +x electronic-wechat
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit vivado
 ```
+
 ```
 #!/bin/bash
 /opt/Xilinx/Vivado/2020.1/bin/vivado
 ```
+
 ```
 sudo chmod +x vivado
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit vitis
 ```
+
 ```
 #!/bin/bash
 /opt/Xilinx/Vitis/2020.1/bin/vitis 
 ```
+
 ```
 sudo chmod +x vitis
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit eagle
 ```
+
 ```
 #!/bin/bash
 cd /opt/eagle-8.1.0/
 ./eagle
 ```
+
 ```
 sudo chmod +x eagle
 ```
-
 
 ```
 cd /usr/local/bin
 sudo gedit allegro
 ```
+
 ```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/pcb/bin/allegro
 ```
+
 ```
 sudo chmod +x allegro
 ```
@@ -10961,56 +11373,59 @@ Suggested packages:
 The following NEW packages will be installed:
   libice-dev:i386 libsm-dev:i386 libxext-dev:i386 libxmu-dev:i386 libxmu-headers libxmu6:i386 libxt-dev:i386 libxt6:i386
 ```
+
 还是不能运行
 
 ```
 cd /usr/local/bin
 sudo gedit concepthdl
 ```
+
 ```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/bin/concepthdl
 ```
+
 ```
 sudo chmod +x concepthdl
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit pad_designer
 ```
+
 ```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/pcb/bin/pad_designer
 ```
+
 ```
 sudo chmod +x pad_designer
 ```
-
-
 
 ```
 cd /usr/local/bin
 sudo gedit projmgr
 ```
+
 ```
 #!/bin/bash
 cd /opt/cadence/allegro_166_patch/
 source spb166
 /opt/cadence/SPB166/tools/bin/projmgr
 ```
+
 ```
 sudo chmod +x projmgr
 ```
 
-
 # 一些包
+
 ```
 sudo apt install qtcreator qtbase5-dev qt5-qmake cmake
 sudo apt install libwebp-dev libgdk-pixbuf2.0-dev libgtk-3-dev meson build-essential lximage-qt
@@ -11020,9 +11435,10 @@ sudo apt install libgraphite2-utils graphicsmagick dh-make enscript ffmpeg gimp 
 sudo apt install graphviz mplayer povray parcellite shutter libqt5serialport5 libqt5serialport5-dev
 ```
 
-
 ---
+
 # realvnc
+
 ```
 sudo dpkg -i VNC-Server-xxx-Linux-x64.deb
 sudo systemctl start vncserver-x11-serviced.service
@@ -11033,9 +11449,10 @@ sudo apt install xserver-xorg-video-dummy
 sudo vncinitconfig -enable-system-xorg
 ```
 
-
 ---
+
 # smartmontools
+
 ```
 sudo apt install smartmontools gddrescue
 
@@ -11047,9 +11464,10 @@ sudo smartctl -a /dev/sdf2
 sudo ddrescue -f -v /dev/sdb /dev/sdc
 ```
 
-
 ---
+
 # re-mount as rw
+
 ```
 $ sudo mount /dev/nvme0n1p3 -o rw,remount
 
@@ -11057,9 +11475,10 @@ for embedded device
 # mount / -o rw,remount
 ```
 
-
 ---
+
 # 安装 miniconda
+
 ```
 $ bash Miniconda3-latest-Linux-x86_64.sh 
 
@@ -11072,7 +11491,7 @@ Please, press ENTER to continue
 ...
 
 Do you accept the license terms? [yes|no]
->>> yes         
+>>> yes       
 
 Miniconda3 will now be installed into this location:
 /home/andy/miniconda3
@@ -11084,7 +11503,7 @@ Miniconda3 will now be installed into this location:
 [/home/andy/miniconda3] >>> 
 PREFIX=/home/andy/miniconda3
 Unpacking payload ...
-                                                                                                                                                                                                                   
+                                                                                                                                                                                                                 
 Installing base environment...
 
 
@@ -11124,9 +11543,10 @@ $
 
 ```
 
-
 ---
+
 # ffmpeg hevc_qsv
+
 ```
 $ sudo apt-get install libva-dev libmfx-dev intel-media-va-driver-non-free vainfo
 [sudo] password for andy:  
@@ -11228,19 +11648,18 @@ vainfo: Supported profile and entrypoints
 
 ```
 
-<https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/>
+[https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/](https://ubuntuhandbook.org/index.php/2024/04/ffmpeg-7-0-ppa-ubuntu/)
 
 安装最新的 ffmpeg 6.1（libva: This version of libva doesn't support retrieving the device information from the driver. Please consider to upgrade libva to support VA-API 1.15.0）
-<https://launchpad.net/~ubuntuhandbook1/+archive/ubuntu/ffmpeg6>
+[https://launchpad.net/~ubuntuhandbook1/+archive/ubuntu/ffmpeg6](https://launchpad.net/~ubuntuhandbook1/+archive/ubuntu/ffmpeg6)
 依赖关系无法解决
 
 /etc/apt/sources.lis
+
 ```
 deb https://ppa.launchpadcontent.net/ubuntuhandbook1/ffmpeg6/ubuntu jammy main 
 deb-src https://ppa.launchpadcontent.net/ubuntuhandbook1/ffmpeg6/ubuntu jammy main 
 ```
-
-
 
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys  4C1CBE14852541CB
@@ -11249,19 +11668,22 @@ gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys  4C1CBE14852541CB
 sudo gpg --armor --export 4C1CBE14852541CB | sudo apt-key add -
 sudo gpg -a --export 4C1CBE14852541CB | sudo apt-key add -
 ```
+
 always: gpg: keyserver receive failed: Server indicated a failure
+
 ```
 wget https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa0062203196ca4482ddb859e4c1cbe14852541cb  或者浏览器下载pubkey为 armored-keys.asc
 sudo apt-key add armored-keys.asc
 ```
+
 就可以解决 keyserver 无法连接问题
 
 对keyserver使用代理
+
 ```
 --keyserver-option http-proxy=http://<account>:<password>@proxy server:port
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --keyserver-option http-proxy=http://x:y@proxy:port --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 ```
-
 
 ```
 $ sudo apt update
@@ -11283,14 +11705,16 @@ The following packages will be upgraded:
 libva: This version of libva doesn't support retrieving the device information from the driver. Please consider to upgrade libva to support VA-API 1.15.0
 实际上机器的 VA-API 是 1.14.0
 ```
+
 依赖关系无法解决。也不想用源码编译, 算啦官方仓库的4就够用了
-<https://qiita.com/yamakenjp/items/c1c91669b00ea149e3ad>
-<https://trac.ffmpeg.org/wiki/Hardware/QuickSync>
-<https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu>
+[https://qiita.com/yamakenjp/items/c1c91669b00ea149e3ad](https://qiita.com/yamakenjp/items/c1c91669b00ea149e3ad)
+[https://trac.ffmpeg.org/wiki/Hardware/QuickSync](https://trac.ffmpeg.org/wiki/Hardware/QuickSync)
+[https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu](https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu)
 
 恢复
 
 1.去掉source，然后sudo apt update
+
 ```
 sudo apt-get -c ~/apt_proxy_conf update
 $ apt-cache madison ffmpeg
@@ -11312,7 +11736,9 @@ The following packages will be DOWNGRADED:
   
 $ sudo apt autoremove
 ```
+
 安装 mediainfo
+
 ```
 $ sudo apt install mediainfo
 Reading package lists... Done
@@ -11329,11 +11755,12 @@ The following NEW packages will be installed:
 $ mediainfo example.mp4
 ```
 
-
-
 ---
-# docker安装ubuntu1804
+
+# docker安装ubuntu1804 (abort)
+
 docker pull ubuntu:18.04
+
 ```
 FROM ubuntu:18.04
 
@@ -11385,6 +11812,7 @@ ENV GEOMETRY 1920x1080
 ```
 
 Dockerfile
+
 ```
 FROM ubuntu:18.04
 
@@ -11420,17 +11848,15 @@ ENV GEOMETRY 1920x1080
 
 ```
 
-
+```
 docker build -t  ubuntu1804:initial .
 docker rm ubuntu1804_install
 docker run -ti -p 5900:5900 --name ubuntu1804_install ubuntu1804:initial # Install with GUI on VNC
 docker commit ubuntu1804_install ubuntu1804:installed
-
-
-
-
+```
 
 Dockerfile
+
 ```
 FROM vivado:installed
 
@@ -11449,30 +11875,14 @@ ADD files/entrypoint.sh /opt/entrypoint.sh
 
 no password
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 sudo systemctl stop docker.service 
 sudo systemctl start docker.service 
 docker container rm ubuntu1804_install
 docker image rm ubuntu1804:initial
+```
+
 ```
 FROM ubuntu:18.04
 
@@ -11494,8 +11904,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y build-essential default-jre xo
 
 RUN apt clean
 ```
+
+```
 docker build -t  ubuntu1804:initial .
 docker run -ti --name ubuntu1804_install ubuntu1804:initial
+```
 
 ```
 # apt install -y lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
@@ -11508,22 +11921,38 @@ docker run -ti --name ubuntu1804_install ubuntu1804:initial
 # dpkg-reconfigure dash
 > choose no
 ```
+
+```
 docker commit ubuntu1804_install ubuntu1804:base
 
 docker run -ti -p 5900:5900 --name ubuntu1804_install ubuntu1804:initial # Install with GUI on VNC
 
 docker commit ubuntu1804_install ubuntu1804:installed
+
 docker image tag ubuntu1804:installed ubuntu1804:base
+
 docker image rm ubuntu1804:installed
+
 docker container rename ubuntu1804_install ubuntu1804_base
+```
 
 从镜像产生容器并运行一次
+
+```
 docker run -ti --name ubuntu1804_base ubuntu1804:base
+```
 
 运行容器
+
+```
 docker start ubuntu1804_base
+```
+
 进入容器
+
+```
 docker exec -it ubuntu1804_base /bin/bash
+```
 
 ```
 # passwd
@@ -11531,11 +11960,13 @@ docker exec -it ubuntu1804_base /bin/bash
 # chown -R andy /home/andy
 # passwd andy
 ```
+
+```
 docker commit ubuntu1804_base ubuntu1804:config
 docker container rename ubuntu1804_base ubuntu1804_config
 docker container stop ubuntu1804_config
 docker container rm ubuntu1804_config
-
+```
 
 ```
 FROM ubuntu1804:config
@@ -11543,8 +11974,12 @@ FROM ubuntu1804:config
 USER andy
 WORKDIR /home/andy
 ```
+
+```
 docker build -t  ubuntu1804:config1 .
 docker run -ti --name ubuntu1804_config1 ubuntu1804:config1
+```
+
 ```
 $ vncserver -geometry 1920x1080 :0
 Password:123456
@@ -11558,25 +11993,37 @@ $ su
 # exit
 $ exit
 ```
+
+```
 docker start ubuntu1804_config1
 docker exec -it ubuntu1804_config1 /bin/bash
+```
+
 ```
 $ su
 # cat /etc/group | grep sudo
 # usermod -aG sudo andy
 # newgrp sudo
 ```
+
+```
 docker stop ubuntu1804_config1
 docker start ubuntu1804_config1
 docker exec -it ubuntu1804_config1 /bin/bash
 ```
+
+```
 $ sudo cat /etc/sudoers
 ```
+
 sudo ok
 
+```
 docker commit ubuntu1804_config1 ubuntu1804:config2
 docker container rename ubuntu1804_config1 ubuntu1804_config2
 docker exec -it ubuntu1804_config2 /bin/bash
+```
+
 ```
 $ sudo apt install pcmanfm lxterminal leafpad
 $ rm -rf /tmp/.X*
@@ -11590,27 +12037,33 @@ $ sudo apt install openssh-server
 $ su
 # service ssh start
 ```
+
 这样其实就可以访问了的
 
-
-
-
+```
 docker stop ubuntu1804_config2
 docker start ubuntu1804_config2
 docker exec -it ubuntu1804_config2 /bin/bash
+```
 
 又需要手动开启sshd
 
+```
 docker stop ubuntu1804_config2
 docker start ubuntu1804_config2
 docker exec -it ubuntu1804_config2 /bin/bash
+```
+
 ```
 $ rm -rf /tmp/.X*
 $ exit
 ```
+
+```
 docker stop ubuntu1804_config2
 docker commit ubuntu1804_config2 ubuntu1804:config3
 docker container rename ubuntu1804_config2 ubuntu1804_config3
+```
 
 ```
 FROM ubuntu1804:config3
@@ -11633,6 +12086,7 @@ CMD ["/usr/sbin/sshd","-D"]
 #CMD service ssh start
 ```
 
+```
 docker build -t  ubuntu1804:config4 .
 docker container rm ubuntu1804_config3
 docker run -d -ti --name ubuntu1804_config4 ubuntu1804:config4   后台运行
@@ -11640,16 +12094,18 @@ docker run -d -ti --name ubuntu1804_config4 ubuntu1804:config4   后台运行
 docker run -ti --name ubuntu1804_config4 ubuntu1804:config4
 docker stop ubuntu1804_config2   另外终端窗口运行
 docker start ubuntu1804_config4
+```
 
 then
+
+```
 docker exec -it ubuntu1804_config4 /bin/bash
+```
 
-
-
+```
 docker container stop ubuntu1804_config4
 docker commit ubuntu1804_config4 ubuntu1804:config5
-
-
+```
 
 ```
 FROM ubuntu1804:config5
@@ -11657,13 +12113,11 @@ FROM ubuntu1804:config5
 USER andy
 
 ```
+
+```
 docker build -t  ubuntu1804:config6 .
 docker run -ti --name ubuntu1804_config6 ubuntu1804:config6
-
-
-
-
-
+```
 
 ```
 FROM ubuntu1804:config3
@@ -11684,27 +12138,31 @@ EXPOSE 22
 #RUN service ssh start
 USER andy
 ```
+
+```
 docker build -t  ubuntu1804:config4 .
 docker run -ti --name ubuntu1804_config4 ubuntu1804:config4
 //docker run -itd --privileged  --name ubuntu1804_config4 ubuntu1804:config4 /usr/sbin/init
+```
 
 ref
+
+```
 docker image pull  ubuntu:20.04
 docker container run -it -d --name test-ubuntu20-4 ubuntu:20.04
 docker attach test-ubuntu20-4
 docker container run -it -d --privileged --name webgis-server ubuntu:20.04 /sbin/init
 docker container run -it -d --privileged --name webgis-server ubuntu:20.04 /lib/systemd/systemd
-
-
-
-
+```
 
 ## openbox 风格桌面环境配置及一些必要设置
+
 ```
 sudo apt install xinit openbox menu libxml2-dev tint2 openbox-menu openbox-gnome-session pkg-config menu-l10n lxdm obmenu feh dmenu fonts-dejavu
 sudo apt install lxappearance pcmanfm libfm-tools lxterminal leafpad
 sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev
 ```
+
 ### 安装配置 obmenu-generator
 
 ```
@@ -11723,16 +12181,19 @@ sudo chmod 777 /usr/bin/obmenu-generator
 
 obmenu-generator -i
 ```
+
 ```
 vncserver -kill :0
 vncserver :0 -geometry 1920x1080
 ```
 
 配置好基本的
+
+```
 docker container stop ubuntu1804_config4
 docker commit ubuntu1804_config4 ubuntu1804:config5
 docker container rm ubuntu1804_config4
-
+```
 
 ```
 FROM ubuntu1804:config5
@@ -11745,7 +12206,9 @@ CMD ["/opt/entrypoint.sh"]
 
 USER andy
 ```
+
 entrypoint.sh
+
 ```
 #!/bin/bash
 
@@ -11759,6 +12222,7 @@ vncserver -geometry 1920x1080 :0
 /bin/sh -c /bin/bash
 ```
 
+```
 docker build -t  ubuntu1804:config6 .
 docker run -ti --name ubuntu1804_config6 ubuntu1804:config6
 
@@ -11775,7 +12239,7 @@ docker commit ubuntu1804_config6 ubuntu1804:config7
 docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir  --name ubuntu1804_config7 ubuntu1804:config7
 docker container start ubuntu1804_config7
 docker exec -it ubuntu1804_config7 /bin/bash
-
+```
 
 ```
 sudo apt install ca-certificates vim blt build-essential default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo lsb-release xvfb x11-utils dbus-x11 rlwrap locales libtinfo5 aptitude git make net-tools libncurses5-dev tftpd zlib1g-dev libssl-dev flex bison libselinux1 gnupg wget diffstat chrpath socat xterm autoconf libtool tar unzip texinfo zlib1g-dev gcc-multilib build-essential libsdl1.2-dev libglib2.0-dev screen pax gzip libboost-dev libboost-tools-dev libboost-timer-dev libcoinutils-dev libboost-all-dev libgtk-3-dev gtk3-nocsd libgtk2.0
@@ -11795,6 +12259,7 @@ cd /opt/Xilinx/Vivado/2020.1/data/xicom/cable_drivers/lin64/install_script/insta
 sudo ./install_drivers
 ```
 
+```
 docker pull ubuntu:bionic-20210325
 docker run -ti --name ubuntu1804_test ubuntu:bionic-20210325
 docker container start ubuntu1804_test
@@ -11803,8 +12268,9 @@ docker container stop ubuntu1804_test
 docker commit ubuntu1804_test ubuntu:bionic-1
 docker container rm ubuntu1804_test
 docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir  --name ubuntu1804_test ubuntu:bionic-1
+```
 
-
+```
 docker pull ubuntu:16.04
 docker run -ti --name ubuntu1604_test ubuntu:16.04
 apt update
@@ -11822,6 +12288,8 @@ docker exec -it ubuntu1604_test /bin/bash
 docker pull ubuntu:18.04
 docker run -ti --name ubuntu1804_test ubuntu:18.04
 ```
+
+```
 apt update
 apt install -y wget build-essential libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig git default-jre xorg libxrender-dev libxtst-dev vnc4server twm wget pv vim sudo
 apt install libtinfo-dev libtinfo5 libncurses5 libgtk3-nocsd0 rlwrap locales git make net-tools libncurses5-dev aptitude autoconf xterm libtool chrpath gnupg wget
@@ -11832,52 +12300,57 @@ dpkg-reconfigure dash      [no]
 adduser andy
 passwd
 ```
+
+```
 docker container stop ubuntu1804_test
 docker commit ubuntu1804_test ubuntu:18.04-1
 docker container rm ubuntu1804_test
 docker run -ti -v /opt/:/opt/ -v /home/andy/workdir:/home/andy/workdir --name ubuntu1804_test ubuntu:18.04-1
 docker container start ubuntu1804_test
 docker exec -it ubuntu1804_test /bin/bash
-
+```
 
 ---
+
 # caesium-image-compressor
+
 ```
 sudo apt-get install cargo
 sudo apt-get install libxcb-xkb-dev libxkbcommon-dev libqt6svg6-dev libqt6svg6 libqt6svgwidgets6 qt6-l10n-tools qt6-tools-dev-tools qt6-base-dev qt6-tools-dev
 ```
-实际上用AppImage版本就好, 需要 chmod +x
-<https://github.com/larygwil/caesium-image-compressor>
 
+实际上用AppImage版本就好, 需要 chmod +x
+[https://github.com/larygwil/caesium-image-compressor](https://github.com/larygwil/caesium-image-compressor)
 
 官方仓库
-<https://github.com/Lymphatus/caesium-image-compressor>
-<https://github.com/Lymphatus/caesium-clt>
-<https://github.com/Lymphatus/libcaesium>
-
-
+[https://github.com/Lymphatus/caesium-image-compressor](https://github.com/Lymphatus/caesium-image-compressor)
+[https://github.com/Lymphatus/caesium-clt](https://github.com/Lymphatus/caesium-clt)
+[https://github.com/Lymphatus/libcaesium](https://github.com/Lymphatus/libcaesium)
 
 libcaesium 编译需要修改 Cargo.toml 里的 webp 到 0.3.0
 
 caesium-image-compressor 编译其实也需要修改 Cargo.toml 里的 webp 到 0.3.0
 
-
 Caesium 1.7 用 wine 比较容易运行
+
 ```
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" wine Caesium.exe
 ```
+
 caesium-image-compressor-2.5.1-win/caesium-image-compressor-2.6.0-win 用 wine 很可能出错，vostro PC 的u1804 wine成功，laptop的u2204 wine 失败
+
 ```
 env LANG=zh_CN.UTF-8 WINEARCH=win64 WINEPREFIX="/home/andy/.wine" wine Caesium\ Image\ Compressor.exe
 ```
+
 尝试修改wine环境组件也还不行
+
 ```
 env LANG=zh_CN.UTF-8 WINEPREFIX="/home/andy/.wine" WINEARCH=win64 winetricks -q comctl32ocx comdlg32ocx comctl32
 ```
 
-
-
 ## 编译库及 clt版本 需要安装 cargo
+
 ```
 $ sudo apt-get install cargo
 Reading package lists... Done
@@ -11892,9 +12365,11 @@ The following NEW packages will be installed:
 ```
 
 ## caesium-clt 的编译
+
 ```
 cargo build --release
 ```
+
 ```
 caesiumclt --help
  0.19.1
@@ -11930,6 +12405,7 @@ ARGS:
 ```
 
 编译过程报错处理记录
+
 ```
 -- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")			--> libxkbcommon-dev
 -- Could NOT find Qt6Svg (missing: Qt6Svg_DIR)				--> libqt6svg6-dev
@@ -11943,27 +12419,31 @@ sudo apt install libxcb-xkb-dev libxkbcommon-dev libqt6svg6-dev libqt6svg6 libqt
 sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake
 ```
 
-
 ## caesium-image-compressor 的编译
+
 ```
 cmake -B build -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
 cmake --build build --config Release --target caesium_image_compressor
 ```
+
 ```
 cmake -B build -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake -DCMAKE_VERBOSE_MAKEFILE=ON
 make VERBOSE=1
 ```
+
 报错
+
 ```
 /caesium-image-compressor/src/main.cpp:41:41: error: ‘class QStyleHints’ has no member named ‘colorScheme’
    41 |         if (QApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark) {
 ```
+
 qt版本必须大于6.5才行
 
-
-
 ---
-# try to run openpilot on PC
+
+# try to run openpilot on PC (abort)
+
 ```
 sudo apt install autoconf \
     build-essential \
@@ -12062,7 +12542,7 @@ The following NEW packages will be installed:
 
 
 
-binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libnewlib-dev libstdc++-arm-none-eabi-newlib libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libpostproc-dev libswresample-dev libswscale-dev libglfw3 libportaudiocpp0 libqt5charts5 libqt5location5 libqt5location5-plugins libvulkan-dev opencl-c-headers opencl-clhpp-headers capnproto casync clinfo cppcheck cppcheck-gui libcapnp-dev libeigen3-dev libglew-dev libglfw3-dev libqt5charts5-dev libsystemd-dev libzmq3-dev opencl-headers ocl-icd-opencl-dev qtlocation5-dev scons
+sudo apt install binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libnewlib-dev libstdc++-arm-none-eabi-newlib libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libpostproc-dev libswresample-dev libswscale-dev libglfw3 libportaudiocpp0 libqt5charts5 libqt5location5 libqt5location5-plugins libvulkan-dev opencl-c-headers opencl-clhpp-headers capnproto casync clinfo cppcheck cppcheck-gui libcapnp-dev libeigen3-dev libglew-dev libglfw3-dev libqt5charts5-dev libsystemd-dev libzmq3-dev opencl-headers ocl-icd-opencl-dev qtlocation5-dev scons
 
 
 
@@ -12073,6 +12553,7 @@ Updating symlinks in /usr/lib/ccache   ??
 ```
 
 ---
+
 # barcode and zint
 ```
 sudo apt install barcode
@@ -12097,53 +12578,1200 @@ After this operation, 1,683 kB of additional disk space will be used.
 ```
 
 ---
-# 
+
+# 更新安装 v2ray
+
 ```
+$ sudo systemctl stop v2ray.service
+
+$ sudo systemctl disable v2ray.service
+
+$ sudo rm /etc/v2ray/ -rf
+
+$ sudo rm /usr/bin/v2ray/ -rf
+
+$ sudo rm /var/log/v2ray/ -r
+```
+
+```
+$ sudo dpkg -i v2ray_5.16.1-1_amd64.deb 
+[sudo] password for andy: 
+Selecting previously unselected package v2ray.
+(Reading database ... 760353 files and directories currently installed.)
+Preparing to unpack v2ray_5.16.1-1_amd64.deb ...
+Unpacking v2ray (5.16.1-1) ...
+Setting up v2ray (5.16.1-1) ...
+```
+
+## 使能服务 （如果需要才使能。后面有v2rayN 不使能就是）
+```
+$ sudo systemctl enable v2ray.service
+Created symlink /etc/systemd/system/multi-user.target.wants/v2ray.service → /etc/systemd/system/v2ray.service.
+```
+
+## 更改配置文件
+
+```
+sudo gedit /etc/v2ray/config.json
+sudo systemctl restart v2ray.service
+```
+
+---
+
+# 安装 v2rayN
+
+```
+$ sudo dpkg -i v2rayN-linux-64.deb 
+[sudo] password for andy: 
+Selecting previously unselected package v2rayn.
+(Reading database ... 760364 files and directories currently installed.)
+Preparing to unpack v2rayN-linux-64.deb ...
+Unpacking v2rayn (7.12.1) ...
+Setting up v2rayn (7.12.1) ...
+```
+
+## 设置开机自启动（暂时不用）
+
+```
+sudo cp /usr/share/applications/v2rayN.desktop /etc/xdg/autostart/
+```
+
+## 俺的几个订阅和更新间隔
+
+```
+jgjs
+https://jgjs-connect.com/api/v1/client/subscribe?token=99e80e349b3e105245ae76f956f0a7ed
+1440
+
+okgg
+https://rss.okti.xyz/link/WCjq3wFyvk4DaoOZ?mu=2
+1440
+
+ssrsub
+https://raw.githubusercontent.com/ssrsub/ssr/master/V2Ray
+
+cloudflare
+https://throbbing-scene-de78.denglitsch.workers.dev/202619.5
+1440
+
+CF
+https://0430.denglitsch.dpdns.org/sub/normal/c29cba3b-6bb1-432b-9dc1-442d1c45d8b6#%F0%9F%92%A6%20BPB%20Normal
+1440
+```
+
+## 配置文件默认位置在
+
+```
+/home/andy/.local/share/v2rayN
+```
+
+---
+
+# 安装 ptree
+
+```
+sudo apt install adacontrol
+```
+
+```
+
+```
+
+---
+
+# Xray and v2rayA
+
+vless协议的代理应该使用支持xtls/vless协议的客户端服务，v2ray-core在某些版本后已经不支持vless
+
+<https://xtls.github.io>
+
+<https://github.com/xtls/Xray-core/releases>
+
+<https://github.com/XTLS/Xray-install>
+
+PKGBUILD
+```
+# Maintainer: m8D2 <omui (at) proton mail (dot) com>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
+# Contributor: Dct Mei <dctxmei@gmail.com>
+# Contributor: denglitsch <denglitsch@gmail.com>
+
+pkgname=xray
+pkgver=1.8.23
+pkgrel=1
+pkgdesc="A set of network tools that helps you to build your own computer network (git version)."
+arch=(x86_64)
+url="https://github.com/xtls/Xray-core"
+license=(MIT)
+makedepends=()
+source=(Xray-linux-64.zip
+        xray.service
+        xray@.service
+        config.json)
+sha512sums=('SKIP'
+        'SKIP'
+        'SKIP'
+        'SKIP')
+
+package() {
+  cd $srcdir/
+  install -Dm644 xray.service "$pkgdir"/etc/systemd/system/xray.service
+  install -Dm644 xray@.service "$pkgdir"/etc/systemd/system/xray@.service
+  install -Dm644 *.dat -t "$pkgdir"/usr/share/xray/
+  install -Dm644 *.json -t "$pkgdir"/etc/xray/
+  install -Dm755 xray -t "$pkgdir"/usr/bin/xray/
+}
+
+```
+
+xray.service
+```
+[Unit]
+Description=XRay Service
+Documentation=https://xtls.github.io
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/xray/xray run -config /etc/xray/config.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+
+xray@.service
+```
+[Unit]
+Description=XRay Client
+Documentation=https://xtls.github.io
+After=network.target nss-lookup.target
+
+[Service]
+User=nobody
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ExecStart=/usr/bin/xray/xray run -config /etc/xray/%i.json
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+config.json
+```
+{
+  "inbounds": [
+    {
+      "port": 1080, // SOCKS 代理端口，在浏览器中需配置代理并指向这个端口
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "server", // 服务器地址，请修改为你自己的服务器 ip 或域名
+            "port": 10086, // 服务器端口
+            "users": [
+              {
+                "id": "b831381d-6324-4d53-ad4f-8cda48b30811"  // 记得替换这个字段，使用 `xray uuid` 或 `uuidgen` 生成
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private","geoip:cn"], // 绕过局域网和国内IP段
+        "outboundTag": "direct"
+      }
+    ]
+  }
+}
+```
+
+`makedeb`生成`xray_1.8.23-1_amd64.deb`安装
+```
+sudo systemctl enable xray.service
+sudo systemctl restart xray.service
+```
+配置文件具体修改config.json。我这里本地端口定义为10809，浏览器socket5端口也跟着改。
+
+
+
+v2rayA其实就是给xray或者v2ray再套一个web前端。
+
+<https://v2raya.org>
+
+<https://github.com/v2rayA/v2rayA/releases>
+
+```
+sudo systemctl enable v2raya.service
+sudo systemctl restart v2raya.service
+```
+
+如果有必要可以关闭v2ray或xray服务
+```
+sudo systemctl disable v2ray --now ### Xray 需要替换服务为 xray
+```
+
+修改一下官方提供的deb并安装
+
+web前端是
+
+<http://localhost:2017>
+
+
+sudo gedit /etc/v2raya/v2raya
+修改
+```
+V2RAYA_V2RAY_BIN=/usr/bin/xray/xray
+
+V2RAYA_V2RAY_ASSETSDIR=/usr/share/xray/
+```
+
+查看log
+```
+sudo cat /var/log/v2raya/v2raya.log
+```
+
+要有
+```
+... V2Ray binary is /usr/bin/xray/xray
+... V2Ray asset directory is /usr/share/xray/
+```
+
+然后在<http://localhost:2017>填入订阅和启动服务 （如果需要挂梯子更新的订阅，在页面的 Settings->Transparent Proxy/System Prox 选第一个on，就可以更新这样的订阅）
+
+[andreas .]
+
+浏览器socket5端口是20170
+
+---
+# openssh-server
+```
+$ sudo apt install openssh-server
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  openssh-client openssh-sftp-server
+Suggested packages:
+  keychain libpam-ssh monkeysphere ssh-askpass molly-guard
+The following packages will be upgraded:
+  openssh-client openssh-server openssh-sftp-server
+
+```
+
+---
+# 更新设置 fcitx 环境变量
+
+`~/.xprofile`中加入
+
+```
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export QT4_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+```
+
+在`/etc/security/pam_env.conf`，早期版本可以在`~/.pam_environment`中，添加
+```
+GTK_IM_MODULE DEFAULT=fcitx
+QT_IM_MODULE DEFAULT=fcitx
+QT4_IM_MODULE DEFAULT=fcitx
+XMODIFIERS DEFAULT=@im=fcitx
+SDL_IM_MODULE DEFAULT=fcitx
+```
+
+在`/etc/environment`格式如下
+
+```
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+QT4_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+SDL_IM_MODULE=fcitx
+```
+
+---
+# edge 浏览器
+```
+sudo dpkg -i microsoft-edge-stable_136.0.3240.64-1_amd64.deb
+tar --acls --xattrs -Jxvpf home-microsoft-edge.tar.xz
+
+```
+
+---
+# 最新 snap 状态
+```
+$ snap list 
+Name                       Version           Rev    Tracking         Publisher      Notes
+bare                       1.0               5      latest/stable    canonical✓     base
+chromium                   136.0.7103.92     3125   latest/stable    canonical✓     -
+core20                     20250407          2571   latest/stable    canonical✓     base
+core22                     20250408          1963   latest/stable    canonical✓     base
+cups                       2.4.12-2          1100   latest/stable    openprinting✓  -
+firefox                    138.0.4-1         6198   latest/stable/…  mozilla✓       -
+gnome-3-38-2004            0+git.efb213a     143    latest/stable/…  canonical✓     -
+gnome-42-2204              0+git.38ea591     202    latest/stable    canonical✓     -
+gtk-common-themes          0.1-81-g442e511   1535   latest/stable/…  canonical✓     -
+snap-store                 41.3-72-g80e7130  1216   latest/stable/…  canonical✓     -
+snapd                      2.68.4            24505  latest/stable    canonical✓     snapd
+snapd-desktop-integration  0.9               253    latest/stable/…  canonical✓     -
+
+```
+
+---
+# 更新 opera
+```
+$ sudo dpkg -i opera-stable_119.0.5497.29_amd64.deb 
+
+Unpacking opera-stable (119.0.5497.29) over (103.0.4928.26) 
+```
+
+---
+# 更新 google-chrome
+```
+ sudo dpkg -i google-chrome-stable_136.0.7103.92-1_amd64.deb 
+
+Unpacking google-chrome-stable (136.0.7103.92-1) over (118.0.5993.70-1)
+```
+
+
+
+
+---
+# 安装 flatpak
+```
+$ sudo apt install flatpak
+
+Suggested packages:
+  malcontent-gui
+The following NEW packages will be installed:
+  flatpak libappstream-glib8 libostree-1-1
+
+```
+
+---
+# 安装 dpkg-dev
+
+```
+sudo apt install dpkg-dev
+
+Suggested packages:
+  debian-keyring bzr
+The following packages will be upgraded:
+  dpkg-dev libdpkg-perl
+
+```
+
+---
+# 安装 build-essential 等
+
+```
+sudo apt-get install build-essential checkinstall intltool libgtk2.0-dev
+
+sudo apt install build-essential devscripts equivs git meson
+
+build-essential is already the newest version (12.9ubuntu3).
+meson is already the newest version (0.61.2-1).
+git is already the newest version (1:2.34.1-1ubuntu1.12).
+
+The following additional packages will be installed:
+  dput libarray-intspan-perl libcontextual-return-perl libdistro-info-perl libfile-chdir-perl libfile-dirlist-perl libfile-homedir-perl libfile-touch-perl libgit-wrapper-perl libgitlab-api-v4-perl libhash-fieldhash-perl libhttp-tiny-multipart-perl libio-prompter-perl
+  libipc-run-perl liblog-any-adapter-screen-perl liblog-any-perl libmoox-struct-perl libobject-id-perl libpath-iterator-rule-perl libpod-constants-perl libpod-parser-perl libre-engine-re2-perl libregexp-pattern-license-perl libregexp-pattern-perl libset-intspan-perl
+  libstring-copyright-perl libstring-escape-perl libwant-perl licensecheck python3-magic python3-unidiff wdiff
+Suggested packages:
+  adequate autopkgtest bls-standalone check-all-the-things cvs-buildpackage diffoscope disorderfs dose-extra duck elpa-devscripts how-can-i-help libdbd-pg-perl libnet-smtps-perl libterm-size-perl libyaml-syck-perl mmdebstrap mozilla-devscripts mutt piuparts postgresql-client
+  pristine-lfs ratt reprotest svn-buildpackage w3m debian-keyring libsoap-lite-perl pristine-tar mini-dinstall libossp-uuid-perl wdiff-doc
+The following NEW packages will be installed:
+  devscripts dput equivs libarray-intspan-perl libcontextual-return-perl libdistro-info-perl libfile-chdir-perl libfile-dirlist-perl libfile-homedir-perl libfile-touch-perl libgit-wrapper-perl libgitlab-api-v4-perl libhash-fieldhash-perl libhttp-tiny-multipart-perl
+  libio-prompter-perl libipc-run-perl liblog-any-adapter-screen-perl liblog-any-perl libmoox-struct-perl libobject-id-perl libpath-iterator-rule-perl libpod-constants-perl libpod-parser-perl libre-engine-re2-perl libregexp-pattern-license-perl libregexp-pattern-perl
+  libset-intspan-perl libstring-copyright-perl libstring-escape-perl libwant-perl licensecheck python3-magic python3-unidiff wdiff
+
+```
+
+---
+# 安装 apt-rdepends
+
+```
+sudo apt install apt-rdepends
+```
+
+---
+# libvlc
+```
+sudo apt install libvlc-dev libvlccore-dev
+
+```
+
+---
+# 安装 xviewer 等
+
+```
+$ echo 'deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport' | sudo tee /etc/apt/sources.list.d/linuxmint.list
+deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport
+
+$ sudo apt update
+
+$ sudo apt install xviewer xviewer-plugins
+
+The following additional packages will be installed:
+  gir1.2-xviewer-3.0 webp-pixbuf-loader
+Suggested packages:
+  postr
+The following packages will be REMOVED:
+  webp-pixbuf-loader-git
+The following NEW packages will be installed:
+  gir1.2-xviewer-3.0 webp-pixbuf-loader xviewer xviewer-plugins
+
+$ sudo apt clean
+
+$ sudo sed -i "s/.*/#&/" /etc/apt/sources.list.d/linuxmint.list
+
+$ cat /etc/apt/sources.list.d/linuxmint.list
+#deb https://mirrors.ustc.edu.cn/linuxmint vanessa main upstream import backport
+
+
+$ sudo apt update
+```
+
+---
+#  mingw-w64
+
+```
+sudo apt-get install ccache g++-mingw-w64 gcc-multilib meson nasm ninja-build pkg-config
+
+Suggested packages:
+  gcc-10-locales
+The following NEW packages will be installed:
+  binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 g++-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-i686-posix g++-mingw-w64-i686-win32 g++-mingw-w64-x86-64 g++-mingw-w64-x86-64-posix g++-mingw-w64-x86-64-win32 gcc-mingw-w64-base gcc-mingw-w64-i686-posix
+  gcc-mingw-w64-i686-posix-runtime gcc-mingw-w64-i686-win32 gcc-mingw-w64-i686-win32-runtime gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix-runtime gcc-mingw-w64-x86-64-win32 gcc-mingw-w64-x86-64-win32-runtime mingw-w64-common mingw-w64-i686-dev mingw-w64-x86-64-dev nas
+```
+
+---
+# libqt6multimedia6
+
+```
+sudo apt install libqt6multimedia6
+```
+
+---
+# dpkg: error: dpkg frontend lock is locked by another process
+
+```
+$ sudo rm /var/lib/dpkg/lock-frontend
+$ sudo rm /var/lib/dpkg/lock
+$ sudo dpkg --configure -a
+```
+
+---
+# snipaste
+
+```
+sudo dokg -i snipaste_2.10.6-1_amd64.deb
+```
+
+aur-snipastet 通过 makedeb 似乎strip了lib目录的库文件，导致不能运行。手动解压修改再打包deb
+
+
+
+---
+# caesium-image-compressor
+
+```
+./Caesium_Image_Compressor-x86_64_v2.6.0_ubu20_qt66.AppImage --appimage-extract
+
+然后修改，简单出个control（参考aur-snipaste），就可以打包了。
+```
+
+那什么linuxdeploy-plugin-qt-hook.sh没运行也没有发现有啥影响，就不管了。
+
+---
+# dash-to-dock click
+
+```
+$ gsettings get org.gnome.shell.extensions.dash-to-dock click-action
+'focus-or-appspread'
+
+$ gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+```
+
+
+---
+# 补一些包
+
+```
+sudo apt install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev
+sudo apt install vulkan-tools
+echo  $(( $(ps aux|grep steam|awk {'print $6;'}|paste -sd+ | bc) /1024 )) MB
+glxinfo -B
+vulkaninfo --summary
+```
+
+---
+# 旋转副屏
+
+```
+xrandr --current
+
+xrandr --output HDMI-0 --auto --rotate inverted --verbose
+
+xrandr --output HDMI-0 --rotate inverted
+xrandr --output HDMI-0 --rotate inverted --scale 0.5x0.5
+
+xrandr --output HDMI-0 --rotate inverted --scale 1x1
+
+xrandr --output HDMI-0 --rotate inverted --scale 0.66x0.66
+```
+
+ref
+```
+
+xrandr -o normal
+xrandr -o left
+xrandr -o right
+xrandr -o inverted
+
+xrandr --output eDP-1 --mode 1920x1080
+
+xrandr --output eDP-1 --mode 1920x1080 --rate 60.00
+
+xrandr --output DisplayPort-0 --mode 1920x1080 --rate 144.00 --output eDP-1 --mode 1920x1080 --rate 60.00
+xrandr --output DisplayPort-0 --primary --mode 1920x1080 --rate 144.00 --output eDP-1 --mode 1920x1080 --rate 60.00 --right-of DisplayPort-0
+
+xrandr \
+--output "DP-4" --primary --pos "0x0" --scale 0.5x0.5 \
+--output "DP-2" --pos "3840x0" \
+--output eDP-1-1 --off
+
+xrandr --output eDP-1 --scale 1.25x1.25
+xrandr --output eDP-1 --scale 1.25x1.25 --panning 3840x2400 ？
+```
+
+
+---
+# cadence
+```
+strings /opt/cadence/SPB172/tools.lnx86/lib/64bit/libstdc++.so.6.0.19 | grep CXXABI_1
+
+nm -gD /lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so.0 | grep g_task_set_static_name
+
+readelf -a  /usr/lib/x86_64-linux-gnu/libX11.so.6 | grep _XGetRequest
+```
+
+```
+/opt/cadence/SPB172/tools/bin/allegro.exe: /opt/cadence/SPB172/tools.lnx86/lib/64bit/libstdc++.so.6: version `CXXABI_1.3.9' not found (required by /usr/lib/x86_64-linux-gnu/libGLU.so.1)
+
+strings /opt/cadence/SPB172/tools.lnx86/lib/64bit/libstdc++.so.6.0.19 | grep CXXABI_1
+
+cd /opt/cadence/SPB172/tools.lnx86/lib/64bit
+cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30 .
+rm libstdc++.so.6 libstdc++.so
+ln -s libstdc++.so.6.0.30 libstdc++.so.6
+ln -s libstdc++.so.6.0.30 libstdc++.so
+
+
+/opt/cadence/SPB172/tools/bin/allegro.exe: symbol lookup error: /usr/lib/x86_64-linux-gnu/libXext.so.6: undefined symbol: _XGetRequest
+cp /home/andy/.local/share/Steam/ubuntu12_32/steam-runtime/usr/lib/x86_64-linux-gnu/libGLU.so.1.3.08004 libGLU.so.1
+cd /opt/cadence/SPB172/tools.lnx86/mainwin540/mw/lib-amd64_linux/X11/
+cp /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0 .
+ln -s libX11.so.6.4.0 libX11.so.6
+ln -s libX11.so.6.4.0 libX11.so
+
+/opt/cadence/SPB172/tools/bin/allegro.exe: symbol lookup error: /opt/cadence/SPB172/tools.lnx86/mainwin540/mw/lib-amd64_linux/X11/libX11.so.6: undefined symbol: xcb_wait_for_reply64
+
+$ nm -gD /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0 | grep xcb_wait_for_reply64
+000000000000de60 T xcb_wait_for_reply64
+andy@andy-usbstick:/opt/cadence/SPB172/tools.lnx86/mainwin540/mw/lib-amd64_linux/X11
+$ cp /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0 .
+```
+
+```
+andy@andy-usbstick:/opt/cadence/allegro_166_patch
+$ cat allegro
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/allegro
+
+$ cat concepthdl 
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/concepthdl
+
+$ cat pad_designer
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/pcb/bin/pad_designer
+
+$ cat projmgr 
+#!/bin/bash
+cd /opt/cadence/allegro_166_patch/
+source spb166
+/opt/cadence/SPB166/tools/bin/projmgr
+
+
+$ sudo ln -s /opt/cadence/allegro_166_patch/allegro /usr/local/bin/allegro
+
+$ sudo ln -s /opt/cadence/allegro_166_patch/concepthdl /usr/local/bin/concepthdl
+
+$ sudo ln -s /opt/cadence/allegro_166_patch/pad_designer /usr/local/bin/pad_designer
+
+$ sudo ln -s /opt/cadence/allegro_166_patch/projmgr /usr/local/bin/projmgr
+
+
+andy@andy-usbstick:/opt/cadence/allegro_172_patch
+$ cat allegro 
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/allegro
+
+$ cat concepthdl 
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/concepthdl
+
+$ cat padstack_editor
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/padstack_editor
+
+$ cat projmgr 
+#!/bin/bash
+cd /opt/cadence/allegro_172_patch/
+source spb172
+/opt/cadence/SPB172/tools/bin/projm
+
 ```
 
 ---
 # 
 ```
+wget -qO - https://typoraio.cn/linux/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/typora.asc
+sudo add-apt-repository 'deb https://typora.io/linux ./'
+sudo apt-get -c ~/apt_proxy_conf update
+sudo apt-get -c ~/apt_proxy_conf install typora
+然后关闭源就行
+```
+
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1
+
+mQENBFfnQVEBCADPtPh703CFkr0xRRZpVoD04jSYn7Kg6DssR+2ItivGup9bu5B9
+lKEzIeg1Cjxt5DJwZ1e4ZDMdMX1CjtkIjErvSQ21pjgIWFmj3klh1TblwfxQTupQ
+ARhhAOdxpLmTz3a20HW7/IMo/0RSZAS1eFkiCEekUY3aqI483UsQUCQ/HYr1QU/f
+YBLEnlfdS+1L6SzKkop+cwga6Py/r1kQzibvHns8dwY9qvzBiyn41LAc1ytAhTZA
+UTwYcOvEGcIscEHesy3DsLE1CtHLjPerm21EdAszxWxpQQzi2BhZ9BwzhHMO4KRS
+lfyJCvFTKZ0LEMljlPOIWze7o4uBaDBWBFdFABEBAAG0G0FibmVyIExlZSA8YWJu
+ZXJAdHlwb3JhLmlvPokBOAQTAQIAIgUCV+dBUQIbAwYLCQgHAwIGFQgCCQoLBBYC
+AwECHgECF4AACgkQujALd1Wvz657DwgAtqLc29tRAqNEa28npGHvRiXZcksPJ7cm
+9na7nefi1OSgYESCSLOb2JNrtmCc6krCkRKPPQnwSa5jydZ2azZDrvYdRKB8yBnQ
+PiKMaUX5RdfM4wNDGhBGFlHFBhDKPurOnUml0EqEca6RNmNZR9ach8wFmVMVLkVT
+1oiU/KkBWdn11MXZOAVrV2N5smNj1lpe3jJh/sFLTHAcgPRmHjKgsy0e8Rhcz2CS
+O3IX27C7ddFvW6jxE3seDM5e2O9+ji/a51BmTkUVVYH5AzmJVig9H0Bj1zo4t8qV
+WhaVREr49CSHJ3gT/yv96qPJsMoCUPSO4q2iRHLW6wYl0upfCskExg==
+=yAo+
+-----END PGP PUBLIC KEY BLOCK-----
+```
+
+/etc/apt/sources.list.d/archive_uri-https_typora_io_linux-jammy.list
+```
+#deb https://typora.io/linux ./
+# deb-src https://typora.io/linux ./
+```
+
+---
+# apt upgrade
+```
+The following NEW packages will be installed:
+  cuda-cccl-12-9 cuda-crt-12-9 cuda-cudart-12-9 cuda-cudart-dev-12-9 cuda-driver-dev-12-9 cuda-nvcc-12-9 cuda-nvvm-12-9 cuda-toolkit-12-9-config-common libnvinfer-headers-python-plugin-dev libnvinfer-win-builder-resource10 libxkbregistry0:i386 ubuntu-pro-client
+  ubuntu-pro-client-l10n
+The following packages have been kept back:
+  cuda cuda-drivers cudnn cudnn9 cudnn9-cuda-12 libcudnn9-cuda-12 libcudnn9-dev-cuda-12 libcudnn9-static-cuda-12
+The following packages will be upgraded:
+  alsa-ucm-conf apport apport-gtk apt apt-utils bcompare code comerr-dev containerd.io coreutils cuda-keyring cuda-toolkit-12-config-common cuda-toolkit-config-common debootstrap distro-info distro-info-data dmeventd dmidecode dmsetup dns-root-data docker-buildx-plugin
+  docker-ce docker-ce-cli docker-ce-rootless-extras docker-compose-plugin dpkg e2fsprogs evince evince-common firmware-sof-signed fonts-noto-color-emoji gdm3 gir1.2-evince-3.0 gir1.2-gdm-1.0 gir1.2-mutter-10 gir1.2-nautilus-3.0 gir1.2-nm-1.0 gir1.2-packagekitglib-1.0 gjs
+  gnome-control-center gnome-control-center-data gnome-control-center-faces gnome-remote-desktop gnome-shell gnome-shell-common gnome-shell-extension-prefs gnome-shell-extension-ubuntu-dock google-chrome-stable graphviz grub-efi-amd64-bin grub-efi-amd64-signed
+  gstreamer1.0-packagekit hexchat hexchat-common hexchat-lua hexchat-perl hexchat-plugins hexchat-python3 ifupdown iptables irqbalance kpartx kpartx-boot kylin-software-center language-pack-en language-pack-en-base language-pack-gnome-en language-pack-gnome-en-base
+  language-pack-zh-hans language-pack-zh-hans-base libapt-pkg6.0 libcdt5 libcgraph6 libcom-err2 libcom-err2:i386 libcryptsetup12 libcudnn9-samples libdevmapper-event1.02.1 libdevmapper1.02.1 libegl-mesa0 libegl-mesa0:i386 libegl1-mesa-dev libevdocument3-4 libevince-dev
+  libevview3-3 libext2fs2 libfprint-2-2 libgbm-dev libgbm1 libgbm1:i386 libgdm1 libgjs0g libgl1-mesa-dev libgl1-mesa-dri libgl1-mesa-dri:i386 libglapi-mesa libglapi-mesa:i386 libglx-mesa0 libglx-mesa0:i386 libgpgme11 libgpgmepp6 libgvc6 libgvpr2 libip4tc2 libip6tc2
+  liblab-gamut1 libldap-2.5-0 libldap-2.5-0:i386 libldap-common liblvm2cmd2.03 libmalcontent-0-0 libmbim-glib4 libmbim-proxy libmm-glib0 libmutter-10-0 libnautilus-extension-dev libnautilus-extension1a libnccl-dev libnccl2 libnm0 libnm0:i386 libnvidia-container-tools
+  libnvidia-container1 libnvinfer-bin libnvinfer-dev libnvinfer-dispatch-dev libnvinfer-dispatch10 libnvinfer-headers-dev libnvinfer-headers-plugin-dev libnvinfer-lean-dev libnvinfer-lean10 libnvinfer-plugin-dev libnvinfer-plugin10 libnvinfer-samples
+  libnvinfer-vc-plugin-dev libnvinfer-vc-plugin10 libnvinfer10 libnvonnxparsers-dev libnvonnxparsers10 libosmesa6 libosmesa6:i386 libpackagekit-glib2-18 libpam-modules libpam-modules-bin libpam-runtime libpam-sss libpam0g libpathplan4 libpcap0.8 libpcap0.8:i386
+  libpulse-dev libpulse-mainloop-glib0 libpulse0 libpulse0:i386 libpulsedsp libseccomp2 libsmbclient libsnmp-base libsnmp40 libsnmp40:i386 libss2 libudev-dev libudev1 libudev1:i386 libvirt-clients libvirt-daemon libvirt-daemon-config-network libvirt-daemon-config-nwfilter
+  libvirt-daemon-driver-qemu libvirt-daemon-system libvirt-daemon-system-systemd libvirt0 libwbclient0 libxatracker2 libxmmsclient-glib1 libxmmsclient6 libxnvctrl0 libxtables12 lintian linux-base logsave lvm2 makedumpfile mesa-common-dev mesa-va-drivers
+  mesa-va-drivers:i386 mesa-vdpau-drivers mesa-vulkan-drivers mesa-vulkan-drivers:i386 microsoft-edge-stable modemmanager mutter-common nautilus nautilus-data network-manager network-manager-config-connectivity-ubuntu network-manager-dev nvidia-container-toolkit
+  nvidia-container-toolkit-base nvidia-settings openvpn opera-stable packagekit packagekit-tools pci.ids pulseaudio pulseaudio-equalizer pulseaudio-module-bluetooth pulseaudio-module-gsettings pulseaudio-module-jack pulseaudio-module-lirc pulseaudio-module-raop
+  pulseaudio-module-zeroconf pulseaudio-utils python-apt-common python3-apport python3-apt python3-distro-info python3-distupgrade python3-examples python3-gpg python3-libnvinfer python3-libnvinfer-dev python3-libnvinfer-dispatch python3-libnvinfer-lean python3-paramiko
+  python3-problem-report python3-samba python3-software-properties python3-update-manager qemu-block-extra qemu-system-common qemu-system-data qemu-system-gui qemu-system-x86 qemu-utils samba samba-common samba-common-bin samba-dsdb-modules samba-libs samba-vfs-modules
+  shim-signed smartmontools smbclient snapd software-properties-common software-properties-gtk steam-launcher steam-libs-amd64 steam-libs-i386:i386 swtpm swtpm-tools systemd-hwe-hwdb tcpdump tensorrt tensorrt-dev tensorrt-libs timeshift tracker-extract tracker-miner-fs
+  transmission transmission-common transmission-gtk u-boot-tools ubuntu-advantage-tools ubuntu-desktop ubuntu-desktop-minimal ubuntu-minimal ubuntu-release-upgrader-core ubuntu-release-upgrader-gtk ubuntu-standard udev update-manager update-manager-core update-notifier
+  update-notifier-common winbind wine-stable wine-stable-amd64 wine-stable-i386:i386 winehq-stable wps-office xdg-desktop-portal xdg-desktop-portal-gnome xfsprogs xmms2-core xmms2-plugin-alsa xmms2-plugin-id3v2 xmms2-plugin-mad xmms2-plugin-vorbis xserver-common
+  xserver-xephyr xserver-xorg-core xserver-xorg-legacy xvfb xwayland
+297 upgraded, 13 newly installed, 0 to remove and 8 not upgraded.
+
+```
+
+---
+# ubuntu pro
+```
+proxychains sudo pro detach
+sudo apt-get install ubuntu-advantage-tools
+sudo pro attach C14BJEY3HVZynprw7fALhMFvRVU9jQ
+pro status --all
+apt list --upgradable
+```
+
+```
+$ sudo pro attach C14BJEY3HVZynprw7fALhMFvRVU9jQ
+Enabling Ubuntu Pro: ESM Apps
+Ubuntu Pro: ESM Apps enabled
+Enabling Ubuntu Pro: ESM Infra
+Ubuntu Pro: ESM Infra enabled
+Enabling Livepatch
+Livepatch enabled
+This machine is now attached to 'Ubuntu Pro - free personal subscription'
+
+SERVICE          ENTITLED  STATUS       DESCRIPTION
+anbox-cloud      yes       disabled     Scalable Android in the cloud
+esm-apps         yes       enabled      Expanded Security Maintenance for Applications
+esm-infra        yes       enabled      Expanded Security Maintenance for Infrastructure
+fips-preview     yes       disabled     Preview of FIPS crypto packages undergoing certification with NIST
+fips-updates     yes       disabled     FIPS compliant crypto packages with stable security updates
+livepatch        yes       enabled      Canonical Livepatch service
+realtime-kernel* yes       disabled     Ubuntu kernel with PREEMPT_RT patches integrated
+usg              yes       disabled     Security compliance and audit tools
+
+ * Service has variants
+
+NOTICES
+Operation in progress: pro attach
+
+For a list of all Ubuntu Pro services and variants, run 'pro status --all'
+Enable services with: pro enable <service>
+
+     Account: denglitsch@gmail.com
+Subscription: Ubuntu Pro - free personal subscription
+
+
+The following packages have been kept back:
+  cuda cuda-drivers cudnn cudnn9 cudnn9-cuda-12 libcudnn9-cuda-12 libcudnn9-dev-cuda-12 libcudnn9-static-cuda-12 libnvinfer-bin libnvinfer-dev libnvinfer-dispatch-dev libnvinfer-dispatch10 libnvinfer-headers-dev libnvinfer-headers-plugin-dev libnvinfer-lean-dev
+  libnvinfer-lean10 libnvinfer-plugin-dev libnvinfer-plugin10 libnvinfer-samples libnvinfer-vc-plugin-dev libnvinfer-vc-plugin10 libnvinfer10 libnvonnxparsers-dev libnvonnxparsers10 python3-libnvinfer python3-libnvinfer-dev python3-libnvinfer-dispatch
+  python3-libnvinfer-lean tensorrt tensorrt-dev tensorrt-libs wine-stable wine-stable-amd64 wine-stable-i386:i386 winehq-stable
+The following packages will be upgraded:
+  7zip ffmpeg fish fish-common git-lfs graphviz gsasl-common imagemagick imagemagick-6-common imagemagick-6.q16 libavcodec-dev libavcodec-extra libavcodec-extra58 libavdevice-dev libavdevice58 libavfilter-dev libavfilter7 libavformat-dev libavformat58 libavutil-dev
+  libavutil56 libcdt5 libcgraph6 libde265-0 libexo-2-0 libexo-common libgpac11 libgraphicsmagick++-q16-12 libgraphicsmagick-q16-3 libgsasl7 libgsl27 libgslcblas0 libgvc6 libgvpr2 libheif1 libimage-magick-perl libimage-magick-q16-perl libjs-jquery-ui liblab-gamut1
+  liblua5.4-0 libmagick++-6.q16-8 libmagickcore-6.q16-6 libmagickcore-6.q16-6-extra libmagickwand-6.q16-6 libnode72 libopencv-calib3d-dev libopencv-calib3d4.5d libopencv-contrib-dev libopencv-contrib4.5d libopencv-core-dev libopencv-core4.5d libopencv-dev libopencv-dnn-dev
+  libopencv-dnn4.5d libopencv-features2d-dev libopencv-features2d4.5d libopencv-flann-dev libopencv-flann4.5d libopencv-highgui-dev libopencv-highgui4.5d libopencv-imgcodecs-dev libopencv-imgcodecs4.5d libopencv-imgproc-dev libopencv-imgproc4.5d libopencv-ml-dev
+  libopencv-ml4.5d libopencv-objdetect-dev libopencv-objdetect4.5d libopencv-photo-dev libopencv-photo4.5d libopencv-shape-dev libopencv-shape4.5d libopencv-stitching-dev libopencv-stitching4.5d libopencv-superres-dev libopencv-superres4.5d libopencv-video-dev
+  libopencv-video4.5d libopencv-videoio-dev libopencv-videoio4.5d libopencv-videostab-dev libopencv-videostab4.5d libopencv-viz-dev libopencv-viz4.5d libopencv4.5-java libopencv4.5d-jni libopenexr-dev libopenexr25 libopusfile0 libpathplan4 libpmix-dev libpmix2
+  libpostproc-dev libpostproc55 libpython2.7 libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib libswresample-dev libswresample3 libswscale-dev libswscale5 liburiparser1 libvlc-bin libvlc-dev libvlc5 libvlccore-dev libvlccore9 libzbar0 libzvbi-common libzvbi0 nodejs
+  nodejs-doc obfs4proxy opencv-data patchelf python2-setuptools-whl python2.7 python2.7-dev python2.7-minimal python3-update-manager python3-virtualenv python3-zbar update-manager update-manager-core virtualenv vlc vlc-bin vlc-data vlc-l10n vlc-plugin-access-extra
+  vlc-plugin-base vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-output vlc-plugin-video-splitter vlc-plugin-visualization zbar-tools
+140 upgraded, 0 newly installed, 0 to remove and 35 not upgraded.
+
+
+$ sudo apt autoremove
+The following packages will be REMOVED:
+  libtbb2
+
+```
+
+---
+# 删除多余的 iptux
+```
+sudo rm /usr/local/share/iptux -rf
+sudo rm /usr/local/bin/iptux
+sudo rm /usr/local/share/locale/de/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/en_GB/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/es/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/fr/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/gl/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/it/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/lb/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/pl/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/pt_BR/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/ru/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/zh_CN/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/locale/zh_TW/LC_MESSAGES/iptux.mo
+sudo rm /usr/local/share/applications/iptux.desktop
+sudo rm /usr/local/share/icons/hicolor/32x32/apps/iptux-i.png
+sudo rm /usr/local/share/icons/hicolor/32x32/apps/iptux.png
+sudo rm /usr/local/share/icons/hicolor/48x48/apps/iptux-i.png
+sudo rm /usr/local/share/icons/hicolor/48x48/apps/iptux.png
+sudo rm /usr/local/share/icons/hicolor/22x22/apps/iptux-i.png
+sudo rm /usr/local/share/icons/hicolor/22x22/apps/iptux.png
+sudo rm /usr/local/share/icons/hicolor/24x24/apps/iptux-i.png
+sudo rm /usr/local/share/icons/hicolor/24x24/apps/iptux.png
+sudo rm /usr/local/share/icons/hicolor/16x16/apps/iptux-i.png
+sudo rm /usr/local/share/icons/hicolor/16x16/apps/iptux.png
+sudo rm /usr/local/share/icons/hicolor/64x64/apps/iptux-i.png
+sudo rm /usr/local/share/icons/hicolor/64x64/apps/iptux.png
+```
+
+---
+# fstab
+
+/etc/fstab
+```
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda2 during installation
+UUID=a6154c06-920c-46ee-bd82-214e7707ea4f /               ext4    rw,relatime,data=ordered       0       1
+# /opt was on /dev/nvme1n1p1 during curtin installation
+UUID=2e44b05b-3c28-49be-9fe9-7878471ff37a /opt            ext4    rw,relatime,data=ordered       0       1
+# /boot/efi was on /dev/nvme0n1p1 during installation
+UUID=E80C-3410  /boot/efi       vfat    umask=0077      0       1
+
+
+```
+
+```
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+#Entry for /dev/nvme0n1p2 :
+UUID=eb6dc6eb-5f94-4835-a1d3-1a1cf9b68f63	/	ext4	errors=remount-ro	0	1
+#Entry for /dev/nvme0n1p1 :
+UUID=C426-D69F	/boot/efi	vfat	umask=0077	0	1
+#Entry for /dev/sdb1 :
+#UUID=08C21CD0C21CC3BA	/media/andreas/M4A	ntfs-3g	defaults,nodev,nosuid,locale=en_US.UTF-8	0	0
+#Entry for /dev/sda1 :
+UUID=1b435a2c-8d80-426b-84e5-8605ddfe58b4	/opt	ext4	defaults	0	2
+UUID=8a73bf94-e351-461c-a4fa-b1b25e587b32   /ext_drv   ext4    defaults	    0	2
+/swapfile	none	swap	sw	0	0
+
+```
+
+```
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/nvme0n1p2 during curtin installation
+/dev/disk/by-uuid/a6154c06-920c-46ee-bd82-214e7707ea4f / ext4 defaults 0 1
+# /boot/efi was on /dev/nvme0n1p1 during curtin installation
+/dev/disk/by-uuid/E80C-3410 /boot/efi vfat defaults 0 1
+# /opt was on /dev/nvme1n1p1 during curtin installation
+/dev/disk/by-uuid/2e44b05b-3c28-49be-9fe9-7878471ff37a /opt ext4 defaults 0 1
+/swap.img	none	swap	sw	0	0
+```
+
+
+```
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda2 during installation
+UUID=a6154c06-920c-46ee-bd82-214e7707ea4f /               ext4    errors=remount-ro      0       1
+# /opt was on /dev/nvme1n1p1 during curtin installation
+UUID=2e44b05b-3c28-49be-9fe9-7878471ff37a /opt            ext4    defaults       0       2
+# /boot/efi was on /dev/nvme0n1p1 during installation
+UUID=E80C-3410  /boot/efi       vfat    umask=0077      0       0
+```
+
+
+---
+# 挂载在 /opt 的分区 不能使用 trash-can
+
+实际上 trash 命令是可以用的，但是 del 按键和各桌面都不支持这个分区使用 trashcan
+
+<https://bugzilla.xfce.org/show_bug.cgi?id=15922>
+
+<https://github.com/GNOME/glib/blob/main/gio/gunixmounts.c#L292> 
+```
+  const char *ignore_mountpoints[] = {
+    /* Includes all FHS 2.3 toplevel dirs and other specialized
+     * directories that we want to hide from the user.
+     */
+    "/",              /* we already have "Filesystem root" in Nautilus */ 
+    "/bin",
+    "/boot",
+    "/compat/linux/proc",
+    "/compat/linux/sys",
+    "/dev",
+    "/etc",
+    "/home",
+    "/lib",
+    "/lib64",
+    "/libexec",
+    "/live/cow",
+    "/live/image",
+    "/media",
+    "/mnt",
+    "/opt",
+    "/rescue",
+    "/root",
+    "/sbin",
+    "/srv",
+    "/tmp",
+    "/usr",
+    "/usr/X11R6",
+    "/usr/local",
+    "/usr/obj",
+    "/usr/ports",
+    "/usr/src",
+    "/usr/xobj",
+    "/var",
+    "/var/crash",
+    "/var/local",
+    GLIB_LOCALSTATEDIR,
+    "/var/log",
+    "/var/log/audit", /* https://bugzilla.redhat.com/show_bug.cgi?id=333041 */
+    "/var/mail",
+    "/var/run",
+    GLIB_RUNSTATEDIR,
+    "/var/tmp",       /* https://bugzilla.redhat.com/show_bug.cgi?id=335241 */
+    "/proc",
+    "/sbin",
+    "/net",
+    "/sys",
+    NULL
+  };
+```
+看见没有这些就是 internal mount 节点，挂在这些位置，trashcan都不可用
+
+g_unix_is_mount_path_system_internal(), they call to see if it's "system internal":
+
+看来仓库的二进制文件是不再支持在/opt或者/dev/shm这样的位置创建trash can了
+
+<https://gitlab.gnome.org/GNOME/glib/-/commit/d1eaf72c001279aa15a2135a0749ef864c8edb42>
+```
+      if (mount == NULL || g_unix_mount_is_system_internal (mount))
+        {
+          g_set_error (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED,
+                       _("Trashing on system internal mounts is not supported"));
+
+          g_clear_pointer (&mount, g_unix_mount_free);
+          g_free (topdir);
+
+          return FALSE;
+        }
+
+```
+一个办法是修改glib
+
+```
+sudo apt-get install dh-exec dh-apache2
+The following NEW packages will be installed:
+  apache2-dev dh-exec libaprutil1-dev libldap-dev libldap2-dev
+
+sudo apt-get install dh-sequence-python3 dh-sequence-gnome gtk-doc-tools
+Suggested packages:
+  flit python3-build python3-tomli python3-installer docbook-defguide psgml
+  dblatex
+The following NEW packages will be installed:
+  cowbuilder cowdancer dh-python dh-translations docbook docbook-to-man
+  eatmydata git-buildpackage gnome-pkg-tools gtk-doc-tools libeatmydata1
+  libsys-cpuaffinity-perl libxdelta2 pbuilder pbzip2 pixz pristine-tar scour
+  xdelta xdelta3
+
+
+apt-get source glib2.0
+cd glib2.0-2.72.4
+# 注释掉 /opt
+sudo dpkg-buildpackage -rfakeroot -b
+# 编译失败
+```
+行了，之前用 arch 的时候就发现了，u1804的二进制包确认是可以的，尝试直接安装依赖关系复杂也放弃。
+
+
+挂载选项比如 `defaults,x-gvfs-show` `defaults,user_xattr,acl` 都是不行的
+
+
+再一个办法是 /opt 软链接 到 某个 mount 节点
+
+```
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda2 during installation
+UUID=a6154c06-920c-46ee-bd82-214e7707ea4f /               ext4    errors=remount-ro      0       1
+# /opt was on /dev/nvme1n1p1 during curtin installation
+UUID=2e44b05b-3c28-49be-9fe9-7878471ff37a /opt-shadow            ext4    defaults       0       1
+# /boot/efi was on /dev/nvme0n1p1 during installation
+UUID=E80C-3410  /boot/efi       vfat    umask=0077      0       0
+```
+
+```
+sudo chown $USER:$USER /opt/
+chmod 755 /opt/
+mv /opt/ 
+
+//cp -Ra ###
+
+在livecd重命名opt为opt-shadow  
+sudo mv opt opt-shadow
+sudo ln -s opt-shadow opt
+
+```
+
+
+---
+# mint21 更新
+```
+sudo aptitude install libpipewire-0.3-0t64   （choose remove）
+sudo apt-get install libnsl-dev libnsl-dev:i386 libtirpc-dev libtirpc-dev:i386
+```
+
+
+---
+# unzip cp936
+/etc/environment 添加
+```
+alias unzip='unzip -O cp936'
+```
+
+---
+# trash-cli
+```
+sudo apt install trash-cli
+```
+
+
+---
+# 恢复 wine 版本
+```
+sudo apt install libgl-dev libgl1-mesa-dev
+sudo apt-get install --install-recommends --fix-missing --reinstall winehq-stable=8.0.2~jammy-1 wine-stable=8.0.2~jammy-1 wine-stable-amd64=8.0.2~jammy-1 wine-stable-i386=8.0.2~jammy-1
+sudo apt-mark hold wine*
 ```
 
 ---
 # 
 ```
+
+
 ```
 
 ---
 # 
 ```
+
 ```
+
 
 ---
 # 
 ```
+
 ```
+
 
 ---
 # 
 ```
+
 ```
+
 
 ---
 # 
 ```
+
 ```
+
 
 ---
 # 
 ```
+
 ```
+
 
 ---
 # 
 ```
+
 ```
 
 
+---
+# 
+```
+
+```
 
 
+---
+# 
+```
 
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
 
 

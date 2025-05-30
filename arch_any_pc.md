@@ -6652,8 +6652,9 @@ sudo chmod +x /usr/bin/gvfs-trash
 直接用`gio trash`删除就好了，如果Trashing on system internal mounts is not supported
 
 根据
-<https://bugzilla.xfce.org/show_bug.cgi?id=15922
-https://gitlab.gnome.org/GNOME/glib/blob/master/gio/gunixmounts.c#L223>
+<https://bugzilla.xfce.org/show_bug.cgi?id=15922>
+
+<https://gitlab.gnome.org/GNOME/glib/blob/master/gio/gunixmounts.c#L223>
 
 g_unix_is_mount_path_system_internal(), they call to see if it's "system internal":
 

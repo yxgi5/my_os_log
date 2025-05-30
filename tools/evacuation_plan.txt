@@ -2,13 +2,13 @@
 
 1. 私钥的删除
 
-2. 浏览器配置和信息的删除, 特别是各网站密码
+2. opera、chrome、firefix等浏览器配置和信息的删除, 特别是各网站密码, thunderbird存档
 
 3. thumbnail信息的删除
 
 4. tmp目录和文件删除
 
-5. workdir目录的删除
+5. workdir目录的清理
 
 6. 所有的 bash_history
 
