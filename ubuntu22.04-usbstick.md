@@ -13708,9 +13708,9 @@ sudo apt remove cuda-cccl-12-9 cuda-crt-12-9 cuda-cudart-12-9 cuda-cudart-dev-12
 
 
 ---
-# 
+# git 忽略文件权限差异
 ```
-
+git config core.filemode false
 ```
 
 
