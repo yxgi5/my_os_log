@@ -13093,6 +13093,7 @@ $ sudo dpkg --configure -a
 
 ```
 sudo dokg -i snipaste_2.10.6-1_amd64.deb
+sudo cp /usr/share/applications/Snipaste.desktop /etc/xdg/autostart/
 ```
 
 aur-snipastet 通过 makedeb 似乎strip了lib目录的库文件，导致不能运行。手动解压修改再打包deb
@@ -13685,16 +13686,24 @@ sudo apt-mark hold wine*
 ```
 
 ---
-# 
+# vbox update
 ```
+sudo apt install linux-headers-$(uname -r) build-essential dkms
+sudo apt-get build-dep linux linux-image-unsigned-$(uname -r)
+sudo apt-get install gcc-12 --install-recommends --fix-missing
+sudo apt-get install linux-image-generic linux-headers-generic
 
+sudo /sbin/vboxconfig
+cat /var/log/vbox-setup.log
 
 ```
+实际上6.8以上的kernel，用7.1版本的vbox才行
 
 ---
-# 
+# apt-mark hold 
 ```
-
+sudo apt-mark hold cuda cuda-drivers cudnn cudnn9 cudnn9-cuda-12 libcudnn9-cuda-12 libcudnn9-dev-cuda-12 libcudnn9-static-cuda-12 wine-stable wine-stable-amd64 wine-stable-i386:i386 winehq-stable
+sudo apt remove cuda-cccl-12-9 cuda-crt-12-9 cuda-cudart-12-9 cuda-cudart-dev-12-9 cuda-driver-dev-12-9 cuda-nvcc-12-9 cuda-nvvm-12-9 cuda-toolkit-12-9-config-common
 ```
 
 
