@@ -13724,9 +13724,16 @@ sudo apt-get install dpkg-repack
 
 
 ---
-# 
-```
+# gcc 采用  gcc-12
 
+Ubuntu22.04でAutoinstall of module nvidia/~ が失敗するときの対処法
+
+<https://qiita.com/N622/items/3a0269a4c2d142dd029e>
+
+```
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 50 --slave /usr/bin/g++ g++ /usr/bin/g++-11
+sudo update-alternatives --config gcc
 ```
 
 
