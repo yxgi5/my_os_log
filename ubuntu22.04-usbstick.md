@@ -13406,6 +13406,8 @@ $ sudo apt autoremove
 The following packages will be REMOVED:
   libtbb2
 
+
+sudo apt-get install ubuntu-advantage-tools
 ```
 
 ---
@@ -13715,9 +13717,9 @@ git config core.filemode false
 
 
 ---
-# 
+# dpkg-repack
 ```
-
+sudo apt-get install dpkg-repack
 ```
 
 
