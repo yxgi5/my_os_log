@@ -13740,49 +13740,138 @@ sudo update-alternatives --config gcc
 ---
 # 
 ```
+$ dkms status
+bcmwl/6.30.223.271+bdcom, 5.15.0-141-generic, x86_64: installed
+bcmwl/6.30.223.271+bdcom, 6.8.0-59-generic, x86_64: installed
+bcmwl/6.30.223.271+bdcom, 6.8.0-60-generic, x86_64: installed
+nvidia/555.42.06, 5.15.0-141-generic, x86_64: installed
+nvidia/555.42.06, 6.8.0-59-generic, x86_64: installed
+nvidia/555.42.06, 6.8.0-60-generic, x86_64: installed
+tty0tty/1.2.r46.g81f8aa2: added
+
+
+$ sudo dkms remove tty0tty/1.2.r46.g81f8aa2 --all
+$ sudo dkms remove -m tty0tty -v 1.2.r46.g81f8aa2 --all
+
+$ dkms status
+bcmwl/6.30.223.271+bdcom, 5.15.0-141-generic, x86_64: installed
+bcmwl/6.30.223.271+bdcom, 6.8.0-59-generic, x86_64: installed
+bcmwl/6.30.223.271+bdcom, 6.8.0-60-generic, x86_64: installed
+nvidia/555.42.06, 5.15.0-141-generic, x86_64: installed
+nvidia/555.42.06, 6.8.0-59-generic, x86_64: installed
+nvidia/555.42.06, 6.8.0-60-generic, x86_64: installed
+
+
+sudo dpkg --configure -a
+```
+
+
+---
+# tty0tty 更新 及 内核与 dkms 整理
+```
+sudo apt remove linux-tools-6.8.0-59-generic linux-modules-extra-6.8.0-59-generic linux-modules-6.8.0-59-generic linux-image-6.8.0-59-generic linux-hwe-6.8-tools-6.8.0-59 linux-hwe-6.8-headers-6.8.0-59 linux-headers-6.8.0-59-generic
+
+sudo apt remove linux-hwe-6.5-headers-6.5.0-44 linux-headers-6.5.0-44-generic linux-hwe-6.2-headers-6.2.0-37 linux-headers-6.2.0-37-generic linux-hwe-5.19-headers-5.19.0-50 linux-headers-5.19.0-50-generic linux-modules-extra-6.2.0-37-generic linux-modules-6.2.0-37-generic linux-image-6.2.0-37-generic
+
+sudo apt remove linux-modules-extra-6.5.0-44-generic linux-modules-6.5.0-44-generic linux-image-6.5.0-44-generic linux-headers-generic linux-image-generic
+
+sudo dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
+
+$ dpkg --list | grep linux-image
+ii  linux-image-5.19.0-50-generic                               5.19.0-50.50                                amd64        Signed kernel image generic
+ii  linux-image-6.8.0-60-generic                                6.8.0-60.63~22.04.1                         amd64        Signed kernel image generic
+ii  linux-image-generic-hwe-22.04                               6.8.0-60.63~22.04.1                         amd64        Generic Linux kernel image
+
+$ dpkg --list | grep linux-headers
+ii  linux-headers-5.15.0-141                                    5.15.0-141.151                              all          Header files related to Linux kernel version 5.15.0
+ii  linux-headers-5.15.0-141-generic                            5.15.0-141.151                              amd64        Linux kernel headers for version 5.15.0 on 64 bit x86 SMP
+ii  linux-headers-6.8.0-60-generic                              6.8.0-60.63~22.04.1                         amd64        Linux kernel headers for version 6.8.0 on 64 bit x86 SMP
+ii  linux-headers-generic-hwe-22.04                             6.8.0-60.63~22.04.1                         amd64        Generic Linux kernel headers
+
+
+sudo dkms remove tty0tty/1.d144ffc --all
+
+sudo dkms remove -m nvidia -v 555.42.06 -k 6.5.0-44-generic
+
+$ dkms status
+bcmwl/6.30.223.271+bdcom, 5.15.0-141-generic, x86_64: installed
+bcmwl/6.30.223.271+bdcom, 6.8.0-60-generic, x86_64: installed
+nvidia/555.42.06, 5.15.0-141-generic, x86_64: installed
+nvidia/555.42.06, 6.8.0-60-generic, x86_64: installe
+
+sudo dkms install -m tty0tty -v 1.d144ffc
+sudo /usr/lib/dkms/common.postinst tty0tty 1.d144ffc
+
+bcmwl/6.30.223.271+bdcom, 5.15.0-141-generic, x86_64: installed
+bcmwl/6.30.223.271+bdcom, 6.8.0-60-generic, x86_64: installed
+nvidia/555.42.06, 5.15.0-141-generic, x86_64: installed
+nvidia/555.42.06, 6.8.0-60-generic, x86_64: installed
+tty0tty/1.d144ffc, 5.15.0-141-generic, x86_64: installed
+tty0tty/1.d144ffc, 6.8.0-60-generic, x86_64: installed
+
 
 ```
 
 
 ---
-# 
+# vbox 虚拟机 share folder
+
+VirtualBox Guest Additions 需要安装 gcc make
+```
+/sbin/rcvboxadd quicksetup <version>
+
+/sbin/rcvboxadd quicksetup all
 ```
 
+fstab添加
 ```
-
-
----
-# 
-```
-
-```
-
-
----
-# 
-```
-
+share /mnt/share vboxsf rw,gid=100,uid=1000,auto 0 0
 ```
 
 
 ---
-# 
+# wine regedit 导出全部 regustry
+
+```
+regedit /E all.reg
+```
+这样来比较差异会更方便
+
+---
+# 关于 winehq 的 apt list cache
+```
+ls /var/lib/apt/lists/ | grep -i release
+grep -v ^# /etc/apt/sources.list
 ```
 
+```
+andy@andy-VirtualBox:~/Desktop$ ls /var/lib/apt/lists/ | grep wine
+dl.winehq.org_wine-builds_ubuntu_dists_jammy_InRelease
+dl.winehq.org_wine-builds_ubuntu_dists_jammy_main_binary-all_Packages
+dl.winehq.org_wine-builds_ubuntu_dists_jammy_main_binary-amd64_Packages
+dl.winehq.org_wine-builds_ubuntu_dists_jammy_main_binary-i386_Package
+```
+依次对应
+```
+https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/InRelease
+https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-all/Packages
+https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/Packages
+https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/Packages
+```
+如果网络不行，可以用直接复制的办法弄进去
+
+---
+# nvtop 监控nvidia显卡状态
+```
+sudo apt install nvtop
 ```
 
 
 ---
-# 
+# intel-gpu-top 监控intel显卡状态
 ```
-
-```
-
-
----
-# 
-```
-
+sudo apt install intel-gpu-tools
+sudo apt install glmark2
 ```
 
 
