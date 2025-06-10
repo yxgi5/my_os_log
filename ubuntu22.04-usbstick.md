@@ -20,18 +20,35 @@ blkid
 
 ## 备份还原系统分区例子（ACL权限要添加）
 
+备份文件套嵌文件夹的情况处理
+
+例如root压缩包的top目录是/media
 ```
 su
 tar xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --strip-components 3 --acls
 
 因为压缩包里面的多余3层目录，所以加 --strip-components 3
 tar cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad --acls
+```
 
+例如efi压缩包的top目录是/BF74-2B72
+```
+tar xvpf BF74-2B72.tar -C /media/andreas/BF74-2B72 --strip-components 1
+```
 
-如果要解决这个问题
-tar --acls -cvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad .
-再用这个命令解压
-tar --acls -xvpf e93f7f27-d29a-4a58-bbec-243395df32ad.tar -C /media/andreas/e93f7f27-d29a-4a58-bbec-243395df32ad
+## 避免压缩文件套嵌文件夹
+
+用这个命令备份
+```
+sudo su
+tar --acls --xattrs -cvpf a6154c06-920c-46ee-bd82-214e7707ea4f.tar -C /media/mint/a6154c06-920c-46ee-bd82-214e7707ea4f .
+sync
+```
+用这个命令解压
+```
+sudo su
+tar --acls --xattrs -xvpf a6154c06-920c-46ee-bd82-214e7707ea4f.tar -C /media/andy/a6154c06-920c-46ee-bd82-214e7707ea4f
+sync
 ```
 
 ---
