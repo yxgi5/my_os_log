@@ -1,4 +1,4 @@
-# 初始阶段避免网络注册
+# 初始阶段避免网络注册 （pe安装镜像可能会有这个问题）
 
 shift+f10 （call cmd）and focus to cmd, input
 
@@ -8,7 +8,7 @@ OOBE\BYPASSNRO
 
 press enter, pc will reboot immediatly
 
-# add administrator user
+# add administrator user (可选)
 
 ```
 net user administrator /active:yes
@@ -28,7 +28,7 @@ net user administrator /active:yes
 
 then reboot
 
-# 关闭 windows-re(其实保留也挺好的呀)
+# 关闭 windows-re (这里仅记录方法，其实保留此功能也挺好)
 
 ```
 reagentc /info
@@ -58,11 +58,17 @@ reagentc /info
 
 指定查找文件夹等待完成，期间会闪黑屏，加载完成后然后reboot
 
+另外，驱动精灵和Dism++都可以备份和恢复驱动
+
 # 激活
 
-联网，然后管理员权限运行 HEU_KMS_Activator_41.2.0.exe
+（如果需要激活）
+
+最好在安装office之后。联网，然后管理员权限运行 HEU_KMS_Activator_41.2.0.exe
 
 # 添加桌面显示项目
+
+（dism++里也可设置）
 
 ```
 右键-->个性化->主题->桌面图标设置
@@ -76,16 +82,36 @@ reagentc /info
 时间和语言->语言和区域->微软拼音输入法->常规->选择输入法默认模式->英语
 ```
 
-# ms账户（ms store，one drive）
+# ms账户
 
+（ms store，one drive）（最好在安装office之后再登录）
+
+```
 denglitsch@gmail.com
 Mm
-OneDrive文件夹位置 C:\Users\andy\OneDrive 总共5G空间
-暂时不要备份桌面
+```
+
+OneDrive文件夹位置 C:\Users\andy\OneDrive 总共5G空间。暂时不要备份桌面
 
 # Nvidia控制面板
 
 ms store 会提示下载的，允许即可
+
+# 关闭防火墙、实时防护
+
+# 关闭 windows defender
+
+```
+设置-->隐私和安全性->windows安全中心->病毒和威胁防护->"病毒和威胁防护"设置->管理设置->能关的全关
+```
+
+# AppxBundles
+
+```
+Microsoft.HEVCVideoExtensions_2.1.45.0_neutral_~_8wekyb3d8bbwe.AppxBundle
+Microsoft.AV1VideoExtension_1.1.62361.0_neutral_~_8wekyb3d8bbwe.AppxBundle
+62082Surprise.Typedown_1.2.18.0_neutral_~_z2vtqf26m12ta.Msixbundle
+```
 
 # 同步时间
 
@@ -96,14 +122,34 @@ ms store 会提示下载的，允许即可
 # winrar and 7zip
 
 winrar-x64-700b2.exe， zip/rar/7zip等默认打开修改为winrar
+
 7z2301-x64.exe
 
-# dism++系统优化
-存一份到c盘
+# 关闭快速访问和清理收藏夹
+
+在home目录全选，从快速访问删除
+
 ```
-1空间回收
-2启动项管理稍后进行
-3系统优化
+explorer - 选项 - 隐私 - 清除
+```
+
+# theme
+
+采用暗色
+
+```
+个性化 - 颜色 - 深色
+```
+
+# dism++系统优化
+
+1 空间回收 在pe中进行
+
+2 启动项管理稍后进行 安装了第一批工具之后
+
+3 系统优化
+
+```
 隐藏任务栏搜索框
 任务栏占满时合并
 隐藏任务栏人脉
@@ -119,6 +165,7 @@ winrar-x64-700b2.exe， zip/rar/7zip等默认打开修改为winrar
 禁用win11加入的新右键菜单
 桌面图标除库外都设置为显示
 禁用使用windows defender扫描菜单
+微软拼音默认英文
 开启模糊音
 记事本启用自动换行
 记事本始终显示状态栏
@@ -128,160 +175,283 @@ winrar-x64-700b2.exe， zip/rar/7zip等默认打开修改为winrar
 VHD启动时不最大
 ```
 
+# windows功能
+
+```
+dotnet35
+smb
+telnet client
+tftp client
+```
+
+# 任务栏
+
+任务栏关闭copilot、小组件。对齐方式靠左
+
+# OneNote
+
+ms store安装 or Office_Tool_Plus安装
+
+# ms office 365
+
+安装要关闭自带的365那个安装管理器，用安装程序自带的，不行就多重启几次，总能把4大件安装上去。
+
+各种激活永久续期都来TM几遍，就好了。
+
+# typedown
+
+(abort)
+
+ms store安装
+
 # notepad++
 
 ```
 npp.8.4.9.Installer.x64.exe
+```
+
 language里设置tab替换
+
 new doc里设置编码格式和换行格式
-```
 
-```
-英文显示吧
+# everything
+
+英文显示
+
 集成到右键菜单
+
+*********************************
+
+step0
+
+*********************************
+
+# 剪贴板设置
+
+ctrl+v
+
+# 远程桌面 - 开启
+
+# 硬盘节能选项
+
+```
+控制面板 - 硬件和声音 - 电源选项 - 更改计划设置 - 更改高级电源设置 - 接通电源 - 从不
+
+控制面板 - 硬件和声音 - 电源选项 - 选择关闭笔记本机盖的功能 - 关盖子时 接通电源 - 不采取任何动作
 ```
 
+# hashmyfiles
+
+# 驱动精灵
+
+标准版dgsetup_home_bznr.exe
+
+# xmind
+
+ms store安装 or 安装包 or 绿色版
 
 # Snipaste
 
-```
-设置开机启动
-```
+设置开机启动，以后看看有没有破解版本吧，免费版本也足够使用
 
 # FSCapture
 
+没有必要，弄个绿色的备用就好
+
 # bcompare
-
-# foxitreader
-
-```
-+pdfcrackerpro+MasterPDFEditor.3.5.80+dotnet35（windows功能）
-```
-
-# wps
-
-# xmind（ms store安装 ）
-
-# OneNote（ms store安装 ）
-
-# vscode（ms store安装 ）
-
-# 网易有道翻译（ms store安装 ）
-
-# qqmusic/网易云音乐（ms store安装 ）
-
-# opera（ms store安装）
-
-# typedown（ms store安装）
-
-# anydesk8060+sunlogin1510
-
-# git 3件套
-## git 图标修复
-```
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\
-
-Tortoise1xxxx~Tortoise9xxxx前面的空格给8个，然后任务管理器重启explorer
-```
-
-# uex（UEStudio）
-
-# si4
-
-# 几个常用玩意
-
-```
-迅雷+迅雷影音
-百度云盘
-微信
-QQ
-腾讯会议
-钉钉
-haroopad
-```
-
-# 关闭windows defender
-
-```
-设置-->隐私和安全性->windows安全中心->病毒和威胁防护->"病毒和威胁防护"设置->管理设置->能关的全关
-```
-
-# ms office 365
-
-```
-安装要关闭自带的365那个安装管理器，用安装程序自带的，不行就多重启几次，总能把4大件安装上去。
-各种激活永久续期都来TM几遍，就好了，文件关联还是用wps（主打用wps），msoffice只是备用。
-```
-
-# acrobat 9
 
 # whereisit
 
 # acdsee5
 
-# ActiveTcl
+# acrobat 9
 
-8641
+# foxitreader (optional)
 
-# caxa2013
+不要安装foxiteditor和3.0的阅读器了
 
-# AutoCAD_2009_Lite_Test
+# pdfcrackerpro
 
-# 任务栏设置
+# MasterPDFEditor.3.5.80(optional)
 
-```
-关闭搜索
-关闭copilot
-关闭任务视图
-关闭小组件
-对齐方式 靠左
-在系统托盘显示秒
-合并方式 已满时
-```
++dotnet35（windows功能）
 
-# 回收站固定到快速访问
+# wps（abort）
 
-# real vnc server/viewer
+# thunder
 
-# v2rayN-Core
+# vscode
 
-# docker desktop
+# haroopad (optional)
 
-# 驱动精灵，更新驱动和vc库
+# vlc player + smplayer
 
-# netframework3.5（安装没啥反应）
+# 网易有道翻译
 
-# vcredist 2012/2013/2015-2022
+# 百度云盘
 
-# vbox7
+# kuark网盘 (optional)(关闭开机启动)
 
-# Windows 功能
+# pikpak
+
+# 阿里云盘(optional)
+
+aDrive-3.17.0.729.exe
+
+# qqmusic/网易云音乐
 
 ```
-打开tftp客户端等玩意
+QQMusic_Setup_2141.exe
+NeteaseCloudMusic_Music_official_3.1.8.203715_64.exe
 ```
 
-# idm
+# feeluown
+
+# opera
+
+<https://download.operachina.com/ftp/pub/opera/desktop/118.0.5461.60/win/Opera_118.0.5461.60_Setup.exe>
+
+管理员权限安装 Opera_118.0.5461.60_Setup.exe
+
+# firefox
 
 ```
-idman641.exe
-IDM-6.4x-Crack-v18.1-Ali.Dbg
+Firefox Setup 99.0b8.exe
 ```
 
-# svn+TortoiseSVN
+# anydesk
+
+```
+AnyDesk-9.5.1.0.exe
+```
+
+# sunlogin
+
+```
+SunloginClient_15.8.3.19819_x64.exe
+```
+
+# git 3件套
+
+```
+Git-2.43.0-64-bit.exe
+TortoiseGit-2.15.0.0-64bit.msi
+GitHubDesktopSetup-x64.exe
+```
+
+# uex（UEStudio）
+
+```
+UEStudio_12.00.0.1002_SC_zol.com.exe
+```
+
+# 迅雷影音
+
+```
+XMPSetup7.0.3.92xmpgw.exe
+```
+
+# 微信
+
+```
+WeChatWin.exe
+```
+
+# QQ
+
+```
+QQ_9.9.19_250429_x64_01.exe
+```
+
+# 腾讯会议 (optional)
+
+```
+TencentMeeting_0300000000_3.33.3.413_x86_64.publish.officialwebsite.exe
+```
+
+# 钉钉(abort)
+
+# si4
+
+```
+sourceinsight40120-setup.exe
+```
+
+# Wireshark
+
+```
+Wireshark-4.4.3-x64.exe
+```
+
+# svn+TortoiseSVN (abort)
 
 1.9.4
 
-# cvs
+# cvs  (abort)
 
 ```
 cvsnt-server-2.5.05.3489.msi
 TortoiseCVS-1.12.5.exe
 ```
 
+# ActiveTcl
+
+```
+ActiveTcl-8.6.13.0000-MSWin32-x64-559160e0.msi
+```
+
+# AirDisk
+
+```
+AirDiskHDD.1.7.44.msi
+```
+
+# drawio
+
+```
+draw.io-26.2.15-windows-installer.exe
+```
+
+# docker desktop (optional)
+
+```
+Docker Desktop Installer_v4.40.0.0.exe
+```
+
+# v2rayN-Core
+
+```
+windowsdesktop-runtime-6.0.26-win-x64.exe (optional)
+windowsdesktop-runtime-8.0.3-win-x64.exe
+```
+
+# sqlitebrowser
+
+```
+DB.Browser.for.SQLite-3.10.1-win64.exe
+```
+
+# real vnc server/viewer
+
+```
+VNC-Viewer-6.22.826-Windows.exe
+VNC-Server-6.11.0-Windows-64bit.msi
+```
+
+# CCleaner
+
+# vbox
+
+```
+VirtualBox-7.1.8-168469-Win.exe
+Oracle_VirtualBox_Extension_Pack-7.1.8.vbox-extpack
+```
+
 # python
 
-python-3.8.5-amd64.exe
+```
+python-3.8.10-amd64.exe
+```
 
 ```
 pip install PyQt5 pyqt5-tools importlib-metadata jedi libscrc pluggy pyflakes PySide6 python-jsonrpc-server python-language-server typing-extensions Pyinstaller
@@ -295,92 +465,28 @@ in cmd
 ```
 jupyter notebook --generate-config
 Writing default config to: C:\Users\andy\.jupyter\jupyter_notebook_config.py
+```
+
 先建立D:\pycode\jupyterCode文件夹
+
 修改c.ServerApp.root_dir = 'D:\pycode\jupyterCode'
+
+```
 jupyter notebook
 ```
 
 在浏览器中就可以用jupyter了
 
-# Anaconda3
-
-```
-Anaconda3-2022.10-Windows-x86_64.exe
-conda update -n base -c defaults conda
-conda update conda
-conda update anaconda
-conda update spyder
-conda update anaconda-navigator
-conda update --all
-conda update -h
-conda search --full-name <package_full_name>
-conda search <text>
-
-conda create --name snakes python=3.9	=> `conda remove -n snakes --all`
-`conda env list` == `conda info --envs` == `conda info -e`
-conda list
-python --version
-
-
-conda install <package_name>
-conda install --name <env_name> <package_name>
-conda install --name snakes pandas
-当使用 conda install 无法进行安装时，可以考虑从Anaconda.org中获取安装包的命令，并进行安装
-https://anaconda.org
-
-使用pip安装包
-conda config --set pip_interop_enabled True
-pip install <package_name>
-```
-
-# pycharm
-
-# sqlitebrowser
-
-```
-DB.Browser.for.SQLite-3.10.1-win64.exe
-```
-
-# cygwin && cygwin-x
-```
-7z安装之后用最新的7z.exe替换
-tree
-
-```
-
-# msys2
-
-# mingw64 &&  mingw32
-
-```
-482v3
-```
-
 # cmake
 
-# vim && cfg
-
 ```
-从存档提取ctags等
+cmake-4.0.1-windows-x86_64.msi
 ```
 
-# activeTCL
-
-# genymotion
-
-```
-genymotion-3.5.0
-SetupVSPE_Full_1.0.5.443
-```
+# meld
 
 ```
 Meld-3.22.0-mingw.msi
-```
-
-# MAXSerDesEV
-
-```
-MAXSerDesEV-GMSL_V0_6_3_3_Install.exe
 ```
 
 # MobaXterm
@@ -391,21 +497,220 @@ MobaXterm_Installer_v23.5
 python .\MobaXterm-Keygen.py "DoubleSine" 23.5
 ```
 
-# 阿里云盘
-
-```
-aDrive-3.17.0.729.exe
-```
-
 # balenaEtcher
 
 ```
-balenaEtcher-Setup-1.14.3.exe
+balenaEtcher-2.1.0.Setup.exe
 ```
 
 # putty
 
+# Linux_Reader
+
+```
+Linux_Reader.exe
+Ext2Fsd-0.70b3w10-setup.exe
+```
+
+# 内网通
+
+```
+内通-色无广告修改版2194.exe
+```
+
 # 微云
+
+```
+WeiyunApp-Setup-X64-5.2.1498.exe
+```
+
+# ffmpeg
+
+```
+ffmpeg-2025-05-01-git-707c04fe06-full_build.7z
+```
+
+#任务栏设置
+
+```
+关闭搜索
+关闭copilot
+关闭任务视图
+关闭小组件
+对齐方式 靠左
+在系统托盘显示秒
+合并方式 已满时
+```
+
+# 回收站固定到快速访问 (abort)
+
+# 驱动精灵，更新驱动和vc库 (abort)
+
+# vcredist
+
+2012/2013/2015-2022
+
+# caesium-image-compressor
+
+```
+caesium-image-compressor-2.5.1-win-setup.exe
+caesium-image-compressor-2.8.4-win-setup.exe
+```
+
+# pycharm
+
+```
+pycharm-professional-2023.2.5.exe
+```
+
+# dism++
+
+# edge
+
+```
+登录同步几个扩展 
+DownThemAll!
+Proxy SwitchyOmega MV3
+TG Downloader
+Web for Telegram
+篡改猴
+panlian
+video downloader plus
+cookie-editor
+AdBlock
+sider
+monica
+```
+
+导入switchomega的备份
+
+添加油猴脚本
+
+# chrome
+
+```
+ChromeStandaloneSetup64.exe
+```
+
+# copilot
+
+看上去怎么都没反应，edge的插件倒是很好用
+
+# setacl studio
+
+# Anaconda3
+
+```
+Anaconda3-2024.10-1-Windows-x86_64.exe
+```
+
+安装为just me
+
+```
+C:\Users\andy\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
+```
+
+把快捷方式复制到
+
+```
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\
+```
+
+```
+conda update -n base -c defaults conda
+conda update conda
+conda update anaconda
+conda update spyder
+conda update anaconda-navigator
+conda update --all
+conda update -h
+conda search --full-name <package_full_name>
+conda search <text>
+```
+
+```
+conda create --name snakes python=3.9    => `conda remove -n snakes --all`
+`conda env list` == `conda info --envs` == `conda info -e`
+conda list
+python --version
+```
+
+```
+conda install <package_name>
+conda install --name <env_name> <package_name>
+conda install --name snakes pandas
+```
+
+当使用 conda install 无法进行安装时，可以考虑从Anaconda.org中获取安装包的命令，并进行安装
+
+<https://anaconda.org>
+
+使用pip安装包
+
+```
+conda config --set pip_interop_enabled True
+pip install <package_name>
+```
+
+# cygwin && cygwin-x
+
+# msys2 && MinGW
+
+# mingw64 &&  mingw32
+
+# vim && cfg
+
+从存档提取ctags等
+
+# 修复git图标
+
+```
+计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers
+```
+
+# vcxsrv
+
+```
+vcxsrv-64.1.20.14.0.installer.exe
+```
+
+runx 给 cygwin
+
+
+
+# Steram
+
+```
+
+```
+
+
+
+************
+
+# AutoCAD_2009_Lite_Test
+
+# caxa2013
+
+# idm(abort)
+
+```
+idman641.exe
+IDM-6.4x-Crack-v18.1-Ali.Dbg
+```
+
+# genymotion
+
+```
+genymotion-3.5.0
+SetupVSPE_Full_1.0.5.443
+```
+
+# MAXSerDesEV
+
+```
+MAXSerDesEV-GMSL_V0_6_3_3_Install.exe
+```
 
 # USB2XXX
 
@@ -415,55 +720,8 @@ USB2XXX_Software_Setup_v1.1.6.exe
 
 # Nutstore
 
-# Linux_Reader
-
-```
-Linux_Reader.exe
-Ext2Fsd-0.70b3w10-setup.exe
-```
-
-# feeluown
-
 # dsview
 
-# drawio
+# nvidia
 
-# retext
-```
-pip install ReText  -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
-# Typora
-cp node_inject.exe and license-gen.exe to installed folder and run cmd as admin
-```
-C:\Windows\System32>cd /d C:\Program Files\Typora
-
-C:\Program Files\Typora>.\node_inject.exe
-extracting node_modules.asar
-adding hook.js
-applying patch
-packing node_modules.asar
-done!
-
-C:\Program Files\Typora>.\license-gen.exe
-License for you: xxxxx-xxxxx-xxxxx-xxxxx
-```
-
-
-# HEU_KMS
-```
-放了最新的到c盘，这下不怕丢失激活了哦
-可以用于升级windows版本，比如home->pro
-可以用于激活office
-```
-
-# 添加日语输入法
-```
-语言和区域->首选语言->添加->日语->语言选项->
-下载基本输入法+手写+基本语言识别
-已安装的键盘->添加键盘->微软输入法
-```
-
-# 夸克网盘
-
-
+nvidia-smi.exe
