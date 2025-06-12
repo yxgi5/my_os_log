@@ -13893,9 +13893,437 @@ sudo apt install glmark2
 
 
 ---
-# 
+# neofetch 和 screenfetch
+```
+sudo apt install neofetch
+
+Suggested packages:
+  figlet cmigemo dict dict-wn dictd w3m-el
+The following NEW packages will be installed:
+  caca-utils chafa jp2a libchafa0 libsixel-bin neofetch toilet toilet-fonts
+  w3m w3m-img
+
+neofetch --ascii_colors 6 7 --colors 2 2 2 2
+neofetch os kernel cpu memory
+
+screenfetch
 ```
 
+---
+# waybar
 ```
+sudo apt install waybar
+
+Suggested packages:
+  sway
+The following NEW packages will be installed:
+  libfmt8 libmpdclient2 libspdlog1 waybar
+```
+
+---
+# fortune
+```
+sudo apt install fortunes fortunes-zh
+
+The following NEW packages will be installed:
+  fortune-mod fortunes-zh librecode0 fortunes fortunes-min
+
+
+fortune
+fortune-zh
+```
+
+---
+# 分解因数
+```
+$ factor 796
+796: 2 2 199
+
+for i in {1..12}; do for j in $(seq 1 $i); do echo -ne $i x $j=$((i*j))\\t;done; echo;done
+```
+
+---
+# cowsay xcowsay
+```
+sudo apt install cowsay xcowsay
+
+Suggested packages:
+  filters cowsay-off
+The following NEW packages will be installed:
+  cowsay xcowsay
+
+cowsay "fuck you"
+ __________
+< fuck you >
+ ----------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+
+
+-l：（小写字母 L）查看可选动物；
+-f <动物>：指定动物，可由 -l 参数查看
+-e：指定眼睛处字符串，限 2 个字符。默认是“oo”。
+
+cowsay -f duck "我是一只小鸭子"
+
+
+fortune | cowsay
+fortune | wc --chars
+fortune | wc --words
+
+for i in {1..5};do echo `fortune` | cowsay; done
+for i in {1..5};do echo `fortune` | cowsay | lolcat; done
+
+
+cowthink现在不在仓库里了额
+```
+
+
+---
+# cmatrix
+```
+sudo apt install cmatrix
+
+Suggested packages:
+  cmatrix-xfont
+The following NEW packages will be installed:
+  cmatrix
+
+
+
+cmatrix 
+按 q 退出
+
+cmatrix -C yellow
+```
+
+---
+# sl aafire
+```
+sudo apt install libaa-bin sl
+
+$ apt-get moo
+                 (__) 
+                 (oo) 
+           /------\/ 
+          / |    ||   
+         *  /\---/\ 
+            ~~   ~~   
+..."Have you mooed today?"...
+
+aafire
+aatest
+aafire -driver curses
+aafire -driver stdout -width 80 # match width of your terminal
+cacafire
+
+sl -a -e
+
+sl -l -e
+
+sl -F -e
+
+$ yes Buffalo Bills
+
+
+yes | [somescript need input yes/no]
+yes no | [somescript need input yes/no]
+
+
+```
+
+---
+# lolcat + banner + toilet + figlet + espeak
+```
+sudo apt  install lolcat sysvbanner
+lolcat -h
+
+figlet haha
+
+figlet "what's that" | lolcat
+
+banner Hello World
+
+sudo apt install espeak
+
+espeak "Linux is the best operating system."
+
+sudo apt install oneko
+
+oneko
+按 ctrl+c 结束
+
+sudo apt install boxes
+$ echo "hello" | boxes
+/*********/
+/* hello */
+/*********/
+
+$ echo "hello" | boxes -d dog
+
+sudo apt install pv
+$ echo "you can learn DevOps by doing" | pv -qL 10
+
+sudo apt install bastet 其实就是俄罗斯方块
+sudo apt install ninvaders  使用箭头键移动宇宙飞船，使用空格键向外星人射击
+很多这样的命令行小游戏
+命令	        含义
+pacman4console	吃豆人
+nsnake	        贪吃蛇
+greed	        赢者通吃
+bsdgames	空中塔台控制
+bsdgames	双陆棋
+moonbuggy	月球车
+2048	        命令行版2048
+
+
+sudo apt install bb
+bb
+
+sudo apt install toilet
+toilet hello world
+toilet -f mono12 -F metal hello
+while true; do echo "$(date '+%D %T' | toilet -f term -F border --gay)"; sleep 1; done
+while true; do clear; echo "$(date '+%D %T' | toilet -f term -F border --gay)"; sleep 1; done
+```
+
+---
+# type
+```
+type ls
+type cd
+
+$ type ls
+ls is aliased to `ls --color=auto'
+
+$ type cd
+cd is a shell builtin
+```
+
+---
+# link unlink
+```
+lins -s 是软链接 可以 unlink
+
+link -i 是硬链接
+结合 ls -i1
+```
+
+---
+# rev
+```
+$ rev
+输入
+hello world
+
+输出
+dlrow olleh
+
+```
+---
+# pi
+```
+sudo apt install pi
+
+pi 20
+3.1415926535897932384
+```
+---
+# cal
+```
+$ cal
+     June 2025        
+Su Mo Tu We Th Fr Sa  
+ 1  2  3  4  5  6  7  
+ 8  9 10 11 12 13 14  
+15 16 17 18 19 20 21  
+22 23 24 25 26 27 28  
+29 30  
+```
+---
+# asciiview 字符画
+```
+sudo apt install aview imagemagick
+asciiview [xxx.jpg]
+```
+
+---
+# tldr
+```
+sudo apt install tldr
+tldr ls
+```
+---
+# 在Ubuntu终端（通常基于Bash shell），你可以使用以下几种方法来移动光标
+```
+
+使用方向键：
+
+右箭头 (→)：将光标向右移动一个字符。
+
+左箭头 (←)：将光标向左移动一个字符。
+
+上箭头 (↑)：在命令历史中向上移动，浏览之前输入的命令。
+
+下箭头 (↓)：在命令历史中向下移动，浏览之后输入的命令。
+
+使用快捷键：
+
+Ctrl + A：将光标移动到当前行开头。
+
+Ctrl + E：将光标移动到当前行末尾。
+
+Ctrl + F：将光标向前移动一个字符（相当于右箭头）。
+
+Ctrl + B：将光标向后移动一个字符（相当于左箭头）。
+
+使用shift + 方向键：
+
+Shift + 右箭头：选中从当前光标位置到右边的文本。
+
+Shift + 左箭头：选中从当前光标位置到左边的文本。
+
+使用Alt + 数字：
+
+Alt + F：向前移动一个单词。
+
+Alt + B：向后移动一个单词。
+
+使用Ctrl + L：
+
+Ctrl + L：清屏并重新定位到命令行（类似于clear命令）。
+
+使用鼠标：
+
+在大多数终端模拟器中，你也可以使用鼠标点击来移动光标。按住鼠标左键并拖动来选择文本，或者点击来定位光标。
+
+使用Esc键：
+
+在Bash中，按Esc键后，你可以使用以下组合键来移动光标：
+
+Esc + F：向前移动一个单词。
+
+Esc + B：向后移动一个单词。
+
+其他一些组合，如Esc + a（回到行首）、Esc + e（移动到行尾）等，依赖于你的终端配置和Bash版本。
+
+使用命令：
+
+如果你想要通过命令来控制光标位置（例如，在脚本中），可以使用echo -e结合ANSI转义序列来实现。例如，将光标移动到第10行第5列可以使用：
+
+echo -e "\033[10;5H"
+
+这里的\033[实际上是ESC字符，后面跟着行号和列号，最后是H表示Home位置（即左上角）。
+
+```
+
+---
+# free 等
+```
+$ uptime 
+ 00:24:53 up  1:35,  1 user,  load average: 0.84, 0.87, 1.04
+
+$ free -g
+               total        used        free      shared  buff/cache   available
+Mem:              62           6          43           1          13          54
+Swap:              0           0           0
+
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            62Gi       7.4Gi        41Gi       1.6Gi        13Gi        52Gi
+Swap:             0B          0B          0B
+
+$ cat /proc/cpuinfo | grep "model name"
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+model name	: 13th Gen Intel(R) Core(TM) i9-13900HX
+
+$ cat /etc/*rele*
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Ubuntu 22.04.1 LTS"
+DISTRIB_ID=Kylin
+DISTRIB_RELEASE=V10
+DISTRIB_CODENAME=kylin
+DISTRIB_DESCRIPTION="Kylin V10 SP1"
+DISTRIB_KYLIN_RELEASE=V10
+DISTRIB_VERSION_TYPE=enterprise
+DISTRIB_VERSION_MODE=normal
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Ubuntu 22.04.1 LTS"
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Ubuntu 22.04.2 LTS"
+PRETTY_NAME="Ubuntu 22.04.1 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.1 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+$ uname -a
+Linux andy-kuangshi16 6.8.0-60-generic #63~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Apr 22 19:00:15 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+```
+---
+# compiz (abort)
+```
+sudo apt install compiz compizconfig-settings-manager compiz-plugins
+sudo apt install compiz compiz-gnome compiz-plugins compizconfig-settings-manager compiz-plugins-extra emerald emerald-themes fusion-icon
+```
+---
+# 
+```
+```
+---
+# 
+```
+```
+---
+# 
+```
+```
+
 
 
