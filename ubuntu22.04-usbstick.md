@@ -2562,7 +2562,7 @@ PROXYCHAINS_SOCKS5=10808 proxychains4 -f /etc/proxychains.conf curl www.google.c
 proxychains curl www.google.com
 ```
 
-## git加速 加速githubgi
+## git加速 加速github
 
 ```
 proxychains git clone https://github.com/xxx/xxx.git
@@ -13750,6 +13750,7 @@ Ubuntu22.04でAutoinstall of module nvidia/~ が失敗するときの対処法
 ```
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 50 --slave /usr/bin/g++ g++ /usr/bin/g++-11
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 --slave /usr/bin/g++ g++ /usr/bin/g++-10
 sudo update-alternatives --config gcc
 ```
 
@@ -14151,7 +14152,7 @@ asciiview [xxx.jpg]
 ```
 
 ---
-# tldr
+# tldr (abort)
 ```
 sudo apt install tldr
 tldr ls
@@ -14306,24 +14307,703 @@ UBUNTU_CODENAME=jammy
 $ uname -a
 Linux andy-kuangshi16 6.8.0-60-generic #63~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Apr 22 19:00:15 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
 ```
+
 ---
 # compiz (abort)
 ```
 sudo apt install compiz compizconfig-settings-manager compiz-plugins
 sudo apt install compiz compiz-gnome compiz-plugins compizconfig-settings-manager compiz-plugins-extra emerald emerald-themes fusion-icon
 ```
+
 ---
 # 
 ```
+sudo aptitude purge libcusolver-dev-12-5 libcurand-12-5 cuda-toolkit-12-5-config-common libnvidia-common-555 libnvidia-fbc1-555 libnvidia-fbc1-555:i386 cuda-cudart-dev-12-5 nsight-systems-2023.4.4 libnvidia-gl-555 libnvidia-gl-555:i386 cuda-opencl-dev-12-5 cuda-gdb-12-5 libnvidia-extra-555 nvidia-compute-utils-555 nvidia-dkms-555 cuda-opencl-12-5 nvidia-driver-555 libnvjpeg-dev-12-5 libcufile-12-5 libnvidia-encode-555 libnvidia-encode-555:i386 cuda-libraries-12-5 cuda-nsight-compute-12-5 libnvjitlink-dev-12-5 cuda-nsight-12-5 cuda-tools-12-5 nvidia-utils-555 cuda-cuobjdump-12-5 xserver-xorg-video-nvidia-555 cuda-libraries-dev-12-5 cuda-toolkit-12-5 libnvfatbin-12-5 cuda-toolkit-config-common cuda-driver-dev-12-5 cuda-nsight-systems-12-5 cuda-drivers cuda-nvrtc-12-5 cuda-command-line-tools-12-5 cuda-nvdisasm-12-5 libcurand-dev-12-5 libnvidia-decode-555 libnvidia-decode-555:i386 libnvjpeg-12-5 cuda-sanitizer-12-5 nsight-compute-2024.1.0 cuda-documentation-12-5 nvidia-kernel-common-555 libcublas-dev-12-5 cuda-cuxxfilt-12-5 cuda-cccl-12-5 cuda-cupti-12-5 libcusparse-dev-12-5 nvidia-firmware-555-555.42.06 libnpp-12-5 cuda-visual-tools-12-5 libnvjitlink-12-5 cuda-drivers-555 libcusolver-12-5 libcufile-dev-12-5 libcufft-12-5 cuda-12-5 cuda-nvprune-12-5 cuda-runtime-12-5 cuda-nvvm-12-5 libcublas-12-5 cuda-cudart-12-5 cuda-nvrtc-dev-12-5 libnvidia-cfg1-555 cuda-nvprof-12-5 libcufft-dev-12-5 cuda-demo-suite-12-5 cuda nvidia-kernel-source-555 libnpp-dev-12-5 libcusparse-12-5 cuda-profiler-api-12-5 libnvidia-compute-555 libnvidia-compute-555:i386 gds-tools-12-5 libnvfatbin-dev-12-5 cuda-nvvp-12-5 cuda-crt-12-5 cuda-nvtx-12-5 cuda-nvcc-12-5 cuda-cupti-dev-12-5 cuda-compiler-12-5 cuda-toolkit-12-config-common cuda-nvml-dev-12-5
+
+
+
+$ sudo aptitude purge cuda
+The following packages will be REMOVED:  
+  cuda{p} cuda-12-5{u} cuda-command-line-tools-12-5{u} cuda-compiler-12-5{u} cuda-cuobjdump-12-5{u} cuda-cupti-12-5{u} cuda-cupti-dev-12-5{u} cuda-cuxxfilt-12-5{u} 
+  cuda-demo-suite-12-5{u} cuda-documentation-12-5{u} cuda-drivers{u} cuda-drivers-555{u} cuda-gdb-12-5{u} cuda-libraries-12-5{u} cuda-libraries-dev-12-5{u} cuda-nsight-12-5{u} 
+  cuda-nsight-compute-12-5{u} cuda-nsight-systems-12-5{u} cuda-nvdisasm-12-5{u} cuda-nvml-dev-12-5{u} cuda-nvprof-12-5{u} cuda-nvprune-12-5{u} cuda-nvrtc-12-5{u} 
+  cuda-nvrtc-dev-12-5{u} cuda-nvtx-12-5{u} cuda-nvvp-12-5{u} cuda-opencl-12-5{u} cuda-opencl-dev-12-5{u} cuda-profiler-api-12-5{u} cuda-runtime-12-5{u} cuda-sanitizer-12-5{u} 
+  cuda-toolkit-12-5{u} cuda-tools-12-5{u} cuda-visual-tools-12-5{u} gds-tools-12-5{u} libcublas-12-5{u} libcublas-dev-12-5{u} libcufft-12-5{u} libcufft-dev-12-5{u} libcufile-12-5{u} 
+  libcufile-dev-12-5{u} libcurand-12-5{u} libcurand-dev-12-5{u} libcusolver-12-5{u} libcusolver-dev-12-5{u} libcusparse-12-5{u} libcusparse-dev-12-5{u} libnpp-12-5{u} 
+  libnpp-dev-12-5{u} libnvfatbin-12-5{u} libnvfatbin-dev-12-5{u} libnvidia-cfg1-555{u} libnvidia-common-555{u} libnvidia-decode-555{u} libnvidia-decode-555:i386{u} 
+  libnvidia-encode-555{u} libnvidia-encode-555:i386{u} libnvidia-extra-555{u} libnvidia-fbc1-555{u} libnvidia-fbc1-555:i386{u} libnvidia-gl-555{u} libnvidia-gl-555:i386{u} 
+  libnvjitlink-12-5{u} libnvjitlink-dev-12-5{u} libnvjpeg-12-5{u} libnvjpeg-dev-12-5{u} nsight-compute-2024.2.1{u} nsight-systems-2024.2.3{u} nvidia-compute-utils-555{u} 
+  nvidia-dkms-555{u} nvidia-driver-555{u} nvidia-firmware-555-555.42.06{u} nvidia-kernel-common-555{u} nvidia-kernel-source-555{u} nvidia-prime{u} nvidia-settings{u} 
+  nvidia-utils-555{u} screen-resolution-extra{u} xserver-xorg-video-nvidia-555{u} 
+
+  cuda-toolkit-12-5-config-common{p} cuda-visual-tools-12-5{p} libcufile-12-5{p} libnvidia-compute-555{p} libnvidia-compute-555:i386{p} nvidia-compute-utils-555{p} nvidia-dkms-555{p} 
+  nvidia-kernel-common-555{p} 
+
+
+
+cuda-cudart-12-5
+1)     cuda-cccl-12-5 [12.5.39-1 (<NULL>, now)]                 
+2)     cuda-cudart-12-5 [12.5.82-1 (<NULL>, now)]               
+3)     cuda-cudart-dev-12-5 [12.5.82-1 (<NULL>, now)]           
+4)     cuda-driver-dev-12-5 [12.5.82-1 (<NULL>, now)]           
+5)     cuda-toolkit-12-5-config-common [12.5.82-1 (<NULL>, now)]
+6)     cuda-toolkit-12-config-common [12.9.79-1 (<NULL>, now)]  
+7)     cuda-toolkit-config-common [12.9.79-1 (<NULL>, now)]    
+
+
+cudnn{p} cudnn9{u} cudnn9-cuda-12{u} cudnn9-cuda-12-5{u} libcudnn9-cuda-12{u} libcudnn9-dev-cuda-12{u} libcudnn9-samples{u} libcudnn9-static-cuda-12{u}
+
+cudnn9 libcudnn9-samples cudnn cudnn9-cuda-12 cudnn9-cuda-12-5 libcudnn9-cuda-12 libcudnn9-dev-cuda-12 libcudnn9-static-cuda-12
+
+
+$ apt-mark showhold
+cuda-cccl-12-5
+cuda-crt-12-5
+cuda-cudart-12-5
+cuda-cudart-dev-12-5
+cuda-driver-dev-12-5
+cuda-keyring
+cuda-nvcc-12-5
+cuda-nvvm-12-5
+cuda-toolkit-11-7-config-common
+cuda-toolkit-11-8-config-common
+cuda-toolkit-11-config-common
+cuda-toolkit-12-0-config-common
+cuda-toolkit-12-1-config-common
+cuda-toolkit-12-2-config-common
+cuda-toolkit-12-3-config-common
+cuda-toolkit-12-4-config-common
+cuda-toolkit-12-5-config-common
+cuda-toolkit-12-6-config-common
+cuda-toolkit-12-8-config-common
+cuda-toolkit-12-9-config-common
+
+
+sudo aptitude purge cuda-cudart-dev-12-5
+     Remove the following packages:                            
+1)     cuda-crt-12-5 [12.5.82-1 (<NULL>, now)]                 
+2)     cuda-nvcc-12-5 [12.5.82-1 (<NULL>, now)]                
+3)     libnvinfer-samples [10.11.0.33-1+cuda12.9 (<NULL>, now)]
+4)     tensorrt [10.11.0.33-1+cuda12.9 (<NULL>, now)] 
+
+The following packages will be REMOVED:
+  cuda-cccl-12-5{u} cuda-crt-12-5{a} cuda-cudart-12-5{u} cuda-cudart-dev-12-5{p} cuda-driver-dev-12-5{u} cuda-nvcc-12-5{a} cuda-nvvm-12-5{u} cuda-toolkit-12-5-config-common{u} 
+  cuda-toolkit-12-config-common{u} cuda-toolkit-config-common{u} libnvinfer-bin{u} libnvinfer-samples{a} python3-libnvinfer{u} python3-libnvinfer-dev{u} 
+  python3-libnvinfer-dispatch{u} python3-libnvinfer-lean{u} tensorrt{a} 
+  
+  
+
+sudo aptitude purge cuda-toolkit-config-common cuda-toolkit-12-config-common cuda-toolkit-12-9-config-common
+aptitude search cuda | grep -e ^i
+aptitude search cudnn | grep -e ^i
+aptitude search nvidia-driver | grep -e ^i
+aptitude search nvidia-utils | grep -e ^i
+aptitude search nsight | grep -e ^i
+aptitude search nvidia | grep -e ^i
+aptitude search libnvidia | grep -e ^i
+aptitude search libcudnn | grep -e ^i
 ```
+
+cuda-12-9
+
+```
+
+sudo ubuntu-drivers devices
+sudo ubuntu-drivers list
+sudo ubuntu-drivers list --gpgpu
+sudo ubuntu-drivers install
+//sudo ubuntu-drivers install --gpgpu
+
+The following NEW packages will be installed:
+  libnvidia-cfg1-575 libnvidia-common-575 libnvidia-compute-575 libnvidia-compute-575:i386 libnvidia-decode-575 libnvidia-decode-575:i386 libnvidia-encode-575 libnvidia-encode-575:i386
+  libnvidia-extra-575 libnvidia-fbc1-575 libnvidia-fbc1-575:i386 libnvidia-gl-575 libnvidia-gl-575:i386 libnvidia-gpucomp-575 libnvidia-gpucomp-575:i386 nvidia-compute-utils-575
+  nvidia-dkms-575 nvidia-driver-575 nvidia-firmware-575 nvidia-kernel-common-575 nvidia-kernel-source-575 nvidia-modprobe nvidia-persistenced nvidia-settings nvidia-utils-575
+  screen-resolution-extra xserver-xorg-video-nvidia-575
+The following packages will be upgraded:
+  libxnvctrl0
+
+
+安装cuda
+
+sudo apt install cuda --install-recommends --fix-missing
+
+The following packages will be REMOVED:
+  nvidia-dkms-575 nvidia-driver-575 nvidia-kernel-source-575
+The following NEW packages will be installed:
+  cuda cuda-12-9 cuda-cccl-12-9 cuda-command-line-tools-12-9 cuda-compiler-12-9 cuda-crt-12-9 cuda-cudart-12-9 cuda-cudart-dev-12-9 cuda-cuobjdump-12-9 cuda-cupti-12-9
+  cuda-cupti-dev-12-9 cuda-cuxxfilt-12-9 cuda-demo-suite-12-9 cuda-documentation-12-9 cuda-driver-dev-12-9 cuda-gdb-12-9 cuda-libraries-12-9 cuda-libraries-dev-12-9 cuda-nsight-12-9
+  cuda-nsight-compute-12-9 cuda-nsight-systems-12-9 cuda-nvcc-12-9 cuda-nvdisasm-12-9 cuda-nvml-dev-12-9 cuda-nvprof-12-9 cuda-nvprune-12-9 cuda-nvrtc-12-9 cuda-nvrtc-dev-12-9
+  cuda-nvtx-12-9 cuda-nvvm-12-9 cuda-nvvp-12-9 cuda-opencl-12-9 cuda-profiler-api-12-9 cuda-runtime-12-9 cuda-sandbox-dev-12-9 cuda-sanitizer-12-9 cuda-toolkit-12-9
+  cuda-toolkit-12-9-config-common cuda-toolkit-12-config-common cuda-toolkit-config-common cuda-tools-12-9 cuda-visual-tools-12-9 gds-tools-12-9 libcublas-12-9 libcublas-dev-12-9
+  libcufft-12-9 libcufft-dev-12-9 libcufile-12-9 libcufile-dev-12-9 libcurand-12-9 libcurand-dev-12-9 libcusolver-12-9 libcusolver-dev-12-9 libcusparse-12-9 libcusparse-dev-12-9
+  libnpp-12-9 libnpp-dev-12-9 libnvfatbin-12-9 libnvfatbin-dev-12-9 libnvjitlink-12-9 libnvjitlink-dev-12-9 libnvjpeg-12-9 libnvjpeg-dev-12-9 nsight-compute-2025.2.1
+  nsight-systems-2025.1.3 nvidia-dkms-575-open nvidia-driver-575-open nvidia-kernel-source-575-open nvidia-open
+
+
+看起来 cuda 要求的 driver 应该用 open 版本
+
+sudo ubuntu-drivers install nvidia-driver-575-open
+sudo apt install nvidia-open
+//sudo apt install cuda-drivers
+sudo apt install cuda-toolkit --install-recommends --fix-missing     [安装某版本cuda库用这个命令，不会要求 driver 用 open 版本]
+sudo apt install nvidia-gds
+
+
+安装 cudnn
+
+sudo apt install cudnn --install-recommends --fix-missing
+
+The following NEW packages will be installed:
+  cudnn cudnn9 cudnn9-cuda-12 cudnn9-cuda-12-9 libcudnn9-cuda-12 libcudnn9-dev-cuda-12 libcudnn9-headers-cuda-12 libcudnn9-samples libcudnn9-static-cuda-12
+
+
+sudo apt install tensorrt tensorrt-dev tensorrt-libs libnvinfer-samples
+
+The following NEW packages will be installed:
+  libnvinfer-bin libnvinfer-samples python3-libnvinfer python3-libnvinfer-dev python3-libnvinfer-dispatch python3-libnvinfer-lean tensorrt
+
+
+其他再确认一遍
+sudo apt install cuda-toolkit-config-common cuda-toolkit-12-config-common cuda-toolkit-12-9-config-common
+
+sudo apt install libcusolver-dev-12-9 libcurand-12-9 cuda-toolkit-12-9-config-common libnvidia-common-575 libnvidia-fbc1-575 libnvidia-fbc1-575:i386 cuda-cudart-dev-12-9 libnvidia-gl-575 libnvidia-gl-575:i386 cuda-opencl-dev-12-9 cuda-gdb-12-9 libnvidia-extra-575 nvidia-compute-utils-575 cuda-opencl-12-9 libnvjpeg-dev-12-9 libcufile-12-9 libnvidia-encode-575 libnvidia-encode-575:i386 cuda-libraries-12-9 cuda-nsight-compute-12-9 libnvjitlink-dev-12-9 cuda-nsight-12-9 cuda-tools-12-9 nvidia-utils-575 cuda-cuobjdump-12-9 xserver-xorg-video-nvidia-575 cuda-libraries-dev-12-9 cuda-toolkit-12-9 libnvfatbin-12-9 cuda-toolkit-config-common cuda-driver-dev-12-9 cuda-nsight-systems-12-9 cuda-nvrtc-12-9 cuda-command-line-tools-12-9 cuda-nvdisasm-12-9 libcurand-dev-12-9 libnvidia-decode-575 libnvidia-decode-575:i386 libnvjpeg-12-9 cuda-sanitizer-12-9 cuda-documentation-12-9 nvidia-kernel-common-575 libcublas-dev-12-9 cuda-cuxxfilt-12-9 cuda-cccl-12-9 cuda-cupti-12-9 libcusparse-dev-12-9 nvidia-firmware-575 libnpp-12-9 cuda-visual-tools-12-9 libnvjitlink-12-9 cuda-drivers-575 libcusolver-12-9 libcufile-dev-12-9 libcufft-12-9 cuda-12-9 cuda-nvprune-12-9 cuda-runtime-12-9 cuda-nvvm-12-9 libcublas-12-9 cuda-cudart-12-9 cuda-nvrtc-dev-12-9 libnvidia-cfg1-575 cuda-nvprof-12-9 libcufft-dev-12-9 cuda-demo-suite-12-9 libnpp-dev-12-9 libcusparse-12-9 cuda-profiler-api-12-9 libnvidia-compute-575 libnvidia-compute-575:i386 gds-tools-12-9 libnvfatbin-dev-12-9 cuda-nvvp-12-9 cuda-crt-12-9 cuda-nvtx-12-9 cuda-nvcc-12-9 cuda-cupti-dev-12-9 cuda-compiler-12-9 cuda-toolkit-12-config-common cuda-nvml-dev-12-9
+
+The following NEW packages will be installed:
+  cuda-drivers-575 cuda-opencl-dev-12-9
+
+
+cuda-12-9 比 cuda-toolkit-12-9 多的是
+
+cuda
+cuda-12-9
+cuda-sandbox-dev-12-9
+cuda-toolkit-12-9-config-common
+cuda-toolkit-config-common
+nvidia-dkms-575-open
+nvidia-driver-575-open
+nvidia-kernel-source-575-open
+nvidia-open
+
+```
+
+<https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu-installation>
+
+<https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/index.html>
+
+<https://docs.nvidia.com/deeplearning/cudnn/installation/latest/linux.html>
+
+
+
+cuda-toolkit-12-8 (abort)
+```
+sudo apt install cuda-toolkit-12-8 --install-recommends --fix-missing
+
+The following NEW packages will be installed:
+  cuda-cccl-12-8 cuda-command-line-tools-12-8 cuda-compiler-12-8 cuda-crt-12-8 cuda-cudart-12-8 cuda-cudart-dev-12-8 cuda-cuobjdump-12-8 cuda-cupti-12-8 cuda-cupti-dev-12-8
+  cuda-cuxxfilt-12-8 cuda-documentation-12-8 cuda-driver-dev-12-8 cuda-gdb-12-8 cuda-libraries-12-8 cuda-libraries-dev-12-8 cuda-nsight-12-8 cuda-nsight-compute-12-8
+  cuda-nsight-systems-12-8 cuda-nvcc-12-8 cuda-nvdisasm-12-8 cuda-nvml-dev-12-8 cuda-nvprof-12-8 cuda-nvprune-12-8 cuda-nvrtc-12-8 cuda-nvrtc-dev-12-8 cuda-nvtx-12-8 cuda-nvvm-12-8
+  cuda-nvvp-12-8 cuda-opencl-12-8 cuda-opencl-dev-12-8 cuda-profiler-api-12-8 cuda-sanitizer-12-8 cuda-toolkit-12-8 cuda-toolkit-12-8-config-common cuda-tools-12-8
+  cuda-visual-tools-12-8 gds-tools-12-8 libcublas-12-8 libcublas-dev-12-8 libcufft-12-8 libcufft-dev-12-8 libcufile-12-8 libcufile-dev-12-8 libcurand-12-8 libcurand-dev-12-8
+  libcusolver-12-8 libcusolver-dev-12-8 libcusparse-12-8 libcusparse-dev-12-8 libnpp-12-8 libnpp-dev-12-8 libnvfatbin-12-8 libnvfatbin-dev-12-8 libnvjitlink-12-8 libnvjitlink-dev-12-8
+  libnvjpeg-12-8 libnvjpeg-dev-12-8 nsight-compute-2025.1.1 nsight-systems-2024.6.2
+
+
+sudo apt install cuda-sandbox-dev-12-8 cuda-toolkit-12-8-config-common
+
+```
+
 ---
 # 
 ```
+$ nvidia-smi 
+Thu Jun 12 15:38:35 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 575.57.08              Driver Version: 575.57.08      CUDA Version: 12.9     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4080 ...    On  |   00000000:01:00.0 Off |                  N/A |
+| N/A   49C    P8              2W /  150W |      18MiB /  12282MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            2521      G   /usr/lib/xorg/Xorg                        4MiB |
++-----------------------------------------------------------------------------------------+
+
+$ nvcc --version
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:21:03_PDT_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+
+
+
+conda create --name d2l python=3.9 -y
+conda activate d2l
+pip install d2l==1.0.3 -i https://pypi.tuna.tsinghua.edu.cn/simple
+conda deactivate
+
+
+conda create -n d2l-tc --clone d2l
+conda activate d2l-tc
+
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+
+>>> import torch
+>>> torch.cuda.get_device_capability(0)
+(8, 9)
+>>> print(torch.cuda.is_available())
+True
+
+
+conda deactivate
+conda create -n d2l-pd --clone d2l
+conda activate d2l-pd
+python -m pip install paddlepaddle-gpu==2.6.1.post120 -f https://www.paddlepaddle.org.cn/whl/linux/mkl/avx/stable.html
+
+
+
 ```
+---
+# 更新 cuda 库
+```
+sudo apt install nvidia-dkms-575 nvidia-driver-575 nvidia-kernel-source-575
+sudo apt remove cuda cuda-12-9
+sudo apt install cuda-toolkit-12-8-config-common
+
+sudo apt remove cuda-sandbox-dev-12-8
+sudo apt install cuda-toolkit-12-8 --install-recommends --fix-missing
+//sudo apt-get -o Dpkg::Options::=--force-overwrite install cuda-toolkit-12-8 --install-recommends --fix-missing
+
+
+sudo apt purge cuda-sandbox-dev-12-9 cuda-toolkit-12-9-config-common 
+sudo apt purge cuda cuda-12-9 cuda-cccl-12-9 cuda-command-line-tools-12-9 cuda-compiler-12-9 cuda-crt-12-9 cuda-cudart-12-9 cuda-cudart-dev-12-9 cuda-cuobjdump-12-9 cuda-cupti-12-9  cuda-cupti-dev-12-9 cuda-cuxxfilt-12-9 cuda-demo-suite-12-9 cuda-documentation-12-9 cuda-driver-dev-12-9 cuda-gdb-12-9 cuda-libraries-12-9 cuda-libraries-dev-12-9 cuda-nsight-12-9  cuda-nsight-compute-12-9 cuda-nsight-systems-12-9 cuda-nvcc-12-9 cuda-nvdisasm-12-9 cuda-nvml-dev-12-9 cuda-nvprof-12-9 cuda-nvprune-12-9 cuda-nvrtc-12-9 cuda-nvrtc-dev-12-9  cuda-nvtx-12-9 cuda-nvvm-12-9 cuda-nvvp-12-9 cuda-opencl-12-9 cuda-profiler-api-12-9 cuda-runtime-12-9 cuda-sandbox-dev-12-9 cuda-sanitizer-12-9 cuda-toolkit-12-9  cuda-toolkit-12-9-config-common cuda-toolkit-12-config-common cuda-toolkit-config-common cuda-tools-12-9 cuda-visual-tools-12-9 gds-tools-12-9 libcublas-12-9 libcublas-dev-12-9  libcufft-12-9 libcufft-dev-12-9 libcufile-12-9 libcufile-dev-12-9 libcurand-12-9 libcurand-dev-12-9 libcusolver-12-9 libcusolver-dev-12-9 libcusparse-12-9 libcusparse-dev-12-9  libnpp-12-9 libnpp-dev-12-9 libnvfatbin-12-9 libnvfatbin-dev-12-9 libnvjitlink-12-9 libnvjitlink-dev-12-9 libnvjpeg-12-9 libnvjpeg-dev-12-9 nsight-compute-2025.2.1 nsight-systems-2025.1.3 nvidia-dkms-575-open nvidia-driver-575-open nvidia-kernel-source-575-open nvidia-open
+
+sudo apt install libnvidia-cfg1-575 libnvidia-common-575 libnvidia-compute-575 libnvidia-compute-575:i386 libnvidia-decode-575 libnvidia-decode-575:i386 libnvidia-encode-575 libnvidia-encode-575:i386 libnvidia-extra-575 libnvidia-fbc1-575 libnvidia-fbc1-575:i386 libnvidia-gl-575 libnvidia-gl-575:i386 libnvidia-gpucomp-575 libnvidia-gpucomp-575:i386 nvidia-compute-utils-575 nvidia-dkms-575 nvidia-driver-575 nvidia-firmware-575 nvidia-kernel-common-575 nvidia-kernel-source-575 nvidia-modprobe nvidia-persistenced nvidia-settings nvidia-utils-575 screen-resolution-extra xserver-xorg-video-nvidia-575 libxnvctr cuda-drivers-575
+
+sudo apt autoremove
+sudo apt install cuda-toolkit-12-8 --install-recommends --fix-missing
+sudo apt install nvidia-gds-12-8 --install-recommends --fix-missing
+sudo apt install tensorrt tensorrt-dev tensorrt-libs libnvinfer-samples
+sudo apt-get install libcudnn8 libcudnn8-dev libcudnn8-samples
+
+sudo apt list -a libcudnn8-dev
+
+
+sudo aptitude install cudnn9-cuda-12-8
+     Install the following packages:                                       
+1)     libcudnn9-dev-cuda-12 [9.8.0.87-1 (<NULL>)]                         
+2)     libcudnn9-static-cuda-12 [9.8.0.87-1 (<NULL>)]                      
+
+     Downgrade the following packages:                                     
+3)     libcudnn9-cuda-12 [9.10.2.21-1 (<NULL>, now) -> 9.8.0.87-1 (<NULL>)]
+
+
+
+Accept this solution? [Y/n/q/?] y
+The following packages will be DOWNGRADED:
+  libcudnn9-cuda-12 
+The following NEW packages will be installed:
+  cudnn9-cuda-12-8 libcudnn9-dev-cuda-12{a} libcudnn9-static-cuda-12{a} 
+
+sudo apt install libcudnn9-samples=9.8.0.87-1
+
+libcudnn9-headers-cuda-12 是 9.10.2.21-1 需要的，9.8.0.87-1 没有
+
+
+$ sudo apt install cuda-toolkit-11-8 --install-recommends --fix-missing
+
+The following NEW packages will be installed:
+  cuda-cccl-11-8 cuda-command-line-tools-11-8 cuda-compiler-11-8 cuda-cudart-11-8 cuda-cudart-dev-11-8 cuda-cuobjdump-11-8 cuda-cupti-11-8 cuda-cupti-dev-11-8 cuda-cuxxfilt-11-8
+  cuda-documentation-11-8 cuda-driver-dev-11-8 cuda-gdb-11-8 cuda-libraries-11-8 cuda-libraries-dev-11-8 cuda-memcheck-11-8 cuda-nsight-11-8 cuda-nsight-compute-11-8
+  cuda-nsight-systems-11-8 cuda-nvcc-11-8 cuda-nvdisasm-11-8 cuda-nvml-dev-11-8 cuda-nvprof-11-8 cuda-nvprune-11-8 cuda-nvrtc-11-8 cuda-nvrtc-dev-11-8 cuda-nvtx-11-8 cuda-nvvp-11-8
+  cuda-profiler-api-11-8 cuda-sanitizer-11-8 cuda-toolkit-11-8 cuda-toolkit-11-8-config-common cuda-toolkit-11-config-common cuda-tools-11-8 cuda-visual-tools-11-8 gds-tools-11-8
+  libcublas-11-8 libcublas-dev-11-8 libcufft-11-8 libcufft-dev-11-8 libcufile-11-8 libcufile-dev-11-8 libcurand-11-8 libcurand-dev-11-8 libcusolver-11-8 libcusolver-dev-11-8
+  libcusparse-11-8 libcusparse-dev-11-8 libnpp-11-8 libnpp-dev-11-8 libnvjpeg-11-8 libnvjpeg-dev-11-8 nsight-compute-2022.3.0 nsight-systems-2022.4.2
+
+
+sudo apt install cuda-toolkit-12-9
+
+The following NEW packages will be installed:
+  cuda-cccl-12-9 cuda-command-line-tools-12-9 cuda-compiler-12-9 cuda-crt-12-9 cuda-cudart-12-9 cuda-cudart-dev-12-9 cuda-cuobjdump-12-9 cuda-cupti-12-9 cuda-cupti-dev-12-9
+  cuda-cuxxfilt-12-9 cuda-documentation-12-9 cuda-driver-dev-12-9 cuda-gdb-12-9 cuda-libraries-12-9 cuda-libraries-dev-12-9 cuda-nsight-12-9 cuda-nsight-compute-12-9
+  cuda-nsight-systems-12-9 cuda-nvcc-12-9 cuda-nvdisasm-12-9 cuda-nvml-dev-12-9 cuda-nvprof-12-9 cuda-nvprune-12-9 cuda-nvrtc-12-9 cuda-nvrtc-dev-12-9 cuda-nvtx-12-9 cuda-nvvm-12-9
+  cuda-nvvp-12-9 cuda-opencl-12-9 cuda-profiler-api-12-9 cuda-sandbox-dev-12-9 cuda-sanitizer-12-9 cuda-toolkit-12-9 cuda-toolkit-12-9-config-common cuda-tools-12-9
+  cuda-visual-tools-12-9 gds-tools-12-9 libcublas-12-9 libcublas-dev-12-9 libcufft-12-9 libcufft-dev-12-9 libcufile-12-9 libcufile-dev-12-9 libcurand-12-9 libcurand-dev-12-9
+  libcusolver-12-9 libcusolver-dev-12-9 libcusparse-12-9 libcusparse-dev-12-9 libnpp-12-9 libnpp-dev-12-9 libnvfatbin-12-9 libnvfatbin-dev-12-9 libnvjitlink-12-9 libnvjitlink-dev-12-9
+  libnvjpeg-12-9 libnvjpeg-dev-12-9 nsight-compute-2025.2.1 nsight-systems-2025.1.3
+
+
+sudo apt-mark hold libcudnn8-samples libcudnn9-samples libcudnn8 libcudnn8-dev
+
+```
+<https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2204/x86_64/>
+
+
+
+```
+sudo update-alternatives --config libcudnn
+sudo update-alternatives --config nsys
+sudo update-alternatives --config nsys-ui
+sudo update-alternatives --config cuda
+sudo update-alternatives --config cufile.json
+```
+
+---
+# gcc-9
+```
+sudo apt install gcc-9 g++-9
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 50 --slave /usr/bin/g++ g++ /usr/bin/g++-11
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 --slave /usr/bin/g++ g++ /usr/bin/g++-10
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 30 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+sudo update-alternatives --config gcc
+
+```
+
+
+---
+# libfreeimage
+```
+sudo apt-get install libfreeimage3 libfreeimage-dev
+
+mkdir cudnn_test
+cd cudnn_test
+cp -r /usr/src/cudnn_samples_v8/ .
+cd cudnn_samples_v8
+
+Makefile 添加 CCFLAGS     += -fpermissive 
+
+make
+./mnistCUDNN
+
+libfreeimage也可以用gcc-9编译(11以下),否则 "ISO C++17 does not allow dynamic exception specifications 解决"
+```
+
+---
+# caffe
+
+<https://pytutorial.com/install-caffe-for-python-step-by-step-guide/>
+
+<https://pytutorial.com/install-python-package-in-docker/>
+
+```
+sudo apt install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
+
+Suggested packages:
+  libhdf5-doc leveldb-doc protobuf-mode-el
+The following NEW packages will be installed:
+  hdf5-helpers libaec-dev libhdf5-cpp-103-1 libhdf5-dev libhdf5-fortran-102 libhdf5-hl-cpp-100 libhdf5-hl-fortran-100 libleveldb-dev libleveldb1d libprotobuf-dev libprotoc23
+  libsnappy-dev protobuf-compiler
+
+sudo apt-get install -y --no-install-recommends libboost-all-dev
+
+sudo apt install libatlas-base-dev libgflags-dev libgoogle-glog-dev liblmdb-dev
+
+Suggested packages:
+  libatlas-doc liblapack-doc
+The following NEW packages will be installed:
+  libatlas-base-dev libatlas3-base libgflags-dev libgoogle-glog-dev liblmdb-dev lmdb-doc
+
+
+git clone git@github.com:BVLC/caffe.git
+cd caffe
+
+conda create -n d2l-cf --clone d2l
+conda activate d2l-cf
+pip install -r python/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple    (failed)
+mkdir build
+cd build
+cmake ..
+make all
+make install
+make pycaffe
+export PYTHONPATH=/path/to/caffe/python:$PYTHONPATH
+
+import caffe
+print(caffe.__version__)
+
+
+
+conda deactivate
+conda remove -n d2l-cf --all
+```
+
+---
+# tensorflow docker (仅记录)
+<https://www.tensorflow.org/install>
+```
+docker pull tensorflow/tensorflow:latest  # Download latest stable image
+docker run -it -p 8888:8888 tensorflow/tensorflow:latest-jupyter  # Start Jupyter server 
+```
+
+---
+# kvm virt-manager
+```
+sudo apt install qemu qemu-kvm libvirt-daemon libvirt-clients bridge-utils virt-manager
+
+Suggested packages:
+  libosinfo-l10n python3-guestfs ssh-askpass python3-argcomplete xorriso-tcltk jigit cdck
+The following NEW packages will be installed:
+  gir1.2-gtk-vnc-2.0 gir1.2-libosinfo-1.0 gir1.2-libvirt-glib-1.0 gir1.2-spiceclientglib-2.0 gir1.2-spiceclientgtk-3.0 libgovirt-common libgovirt2 libgtk-vnc-2.0-0 libgvnc-1.0-0
+  libisoburn1 libosinfo-1.0-0 libphodav-2.0-0 libphodav-2.0-common libspice-client-glib-2.0-8 libspice-client-gtk-3.0-5 libusbredirhost1 libvirt-glib-1.0-0 libvirt-glib-1.0-data
+  osinfo-db python3-libvirt python3-libxml2 qemu spice-client-glib-usb-acl-helper virt-manager virt-viewer virtinst xorriso
+
+sudo apt-get install qemu qemu-system qemu-system-arm
+
+Suggested packages:
+  vde2
+The following NEW packages will be installed:
+  qemu-efi-aarch64 qemu-efi-arm qemu-system qemu-system-arm qemu-system-mips qemu-system-misc qemu-system-ppc qemu-system-s390x qemu-system-sparc
+
+sudo apt-get install qemu-kvm qemu virt-manager virt-viewer libvirt-daemon-system libvirt-clients bridge-utils
+sudo apt install libvulkan1 mesa-vulkan-drivers
+
+sudo apt install qemu-kvm libvirt-dev bridge-utils
+
+The following NEW packages will be installed:
+  libvirt-dev libxen-dev libxencall1 libxendevicemodel1 libxenevtchn1 libxenforeignmemory1 libxengnttab1 libxenhypfs1 libxenmisc4.16 libxenstore4 libxentoolcore1 libxentoollog1
+
+
+
+qemu-img -V
+qemu-system-arm --version
+qemu-system-aarch64 --version
+qemu-system-x86_64 -version
+
+sudo apt install qemu-kvm
+ls -al /dev/kvm
+grep kvm /etc/group
+sudo adduser $USER kvm
+grep kvm /etc/group
+sudo kvm-ok
+
+virt-manager
+```
+
+Virt-manager: "The emulator may not have search permissions for the path"
+```
+sudo groupadd libvirtd
+sudo usermod -a -G libvirtd $USER
+sudo gedit /etc/libvirt/libvirtd.conf 添加
+unix_sock_group = "libvirt"
+```
+```
+sudo usermod -a -G libvirt $(whoami)
+
+sudo gedit /etc/libvirt/qemu.conf
+添加
+user = "andy"
+group = "andy"
+```
+
+```
+sudo gedit /etc/polkit-1/localauthority/50-local.d/50-org.libvirtd-group-access.pkla 添加
+[libvirtd group Management Access]
+Identity=unix-group:libvirtd
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
+```
+```
+sudo systemctl restart libvirtd.service
+
+virsh list
+virsh start archlinux
+
+ctrl+alt释放鼠标
+```
+```
+sudo apt install vagrant
+
+Suggested packages:
+  augeas-doc duperemove augeas-tools libguestfs-gfs2 libguestfs-jfs libguestfs-nilfs libguestfs-rescue libguestfs-rsync libguestfs-zfs dracut-core ruby-activesupport autopsy mac-robber
+  virtualbox
+Recommended packages:
+  linux-image-amd64
+The following NEW packages will be installed:
+  augeas-lenses btrfs-progs cryptsetup-bin db-util db5.3-util exfatprogs extlinux f2fs-tools finalrd guestfish guestfs-tools guestmount hfsplus ldmtool libafflib0v5 libaugeas0 libbfio1
+  libconfig9 libdate-manip-perl libewf2 libguestfs-hfsplus libguestfs-perl libguestfs-reiserfs libguestfs-tools libguestfs-xfs libguestfs0 libhfsp0 libhivex0 libintl-perl
+  libintl-xs-perl libldm-1.0-0 libsys-virt-perl libtsk19 libvhdi1 libvmdk1 libwin-hivex-perl libxml-xpath-perl libyara8 lsscsi mdadm racc ruby-bcrypt-pbkdf ruby-builder
+  ruby-childprocess ruby-concurrent ruby-ed25519 ruby-erubi ruby-excon ruby-ffi ruby-fog-core ruby-fog-json ruby-fog-libvirt ruby-fog-xml ruby-formatador ruby-i18n ruby-libvirt
+  ruby-listen ruby-log4r ruby-mime-types ruby-mime-types-data ruby-mini-portile2 ruby-multi-json ruby-net-scp ruby-net-sftp ruby-net-ssh ruby-nokogiri ruby-oj ruby-pkg-config
+  ruby-rb-inotify ruby-vagrant-cloud ruby-zip scrub sleuthkit supermin syslinux syslinux-common vagrant vagrant-libvirt virt-p2v zerofree
+
+```
+---
+# ssh-askpass-gnome
+```
+sudo apt-get install ssh-askpass-gnome --no-install-recommends
+```
+
 ---
 # 
 ```
+inxi -Frxzc0
+
+ls -alR | grep ^l
 ```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+---
+# 
+```
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
