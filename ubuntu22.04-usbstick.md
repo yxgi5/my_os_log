@@ -14880,6 +14880,14 @@ icacls E:\project\edid-generator /grant USERNAME:F /t       这句没测过
 ```
 
 ---
+# gcc
+```
+sudo apt install gcc-arm-none-eabi gcc-avr avr-libc libnewlib-doc avrdude avrdude-doc avr-libc libnewlib-dev binutils-avr openocd
+sudo apt install gdb-arm-none-eabi gdb-avr gdb gdb-mingw-w64 gdbserver gdb-doc gcc-mingw-w64 gcc-msp430 gcc-multilib gdb-msp430 msp430-libc msp430mcu
+sudo apt install binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libnewlib-dev libstdc++-arm-none-eabi-newlib libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libpostproc-dev libswresample-dev libswscale-dev libglfw3 libportaudiocpp0 libqt5charts5 libqt5location5 libqt5location5-plugins libvulkan-dev opencl-c-headers opencl-clhpp-headers capnproto casync clinfo cppcheck cppcheck-gui libcapnp-dev libeigen3-dev libglew-dev libglfw3-dev libqt5charts5-dev libsystemd-dev libzmq3-dev opencl-headers ocl-icd-opencl-dev qtlocation5-dev scons
+```
+
+---
 # 
 ```
 
