@@ -14855,9 +14855,28 @@ ls -alR | grep ^l
 ```
 
 ---
-# 
+# git fatal - detected dubious ownership in repository at xxx
 ```
 
+方法一
+```
+git config --global --add safe.directory edid-generator
+```
+
+方法二
+cygwin
+```
+sudo chown andy:None -R edid-generator/                     这句似乎就够了，后面几个处理特殊情况
+sudo chmod 770 edid-generator/
+getfacl edid-generator/
+sudo setfacl -m u:andy:rwx edid-generator/
+```
+cmd
+```
+# 示例代码：更改Windows文件夹所有权
+takeown /f E:\project\edid-generator /r /d y                这句似乎就够了
+icacls E:\project\edid-generator /grant USERNAME:F /t       这句没测过
+```
 ```
 
 ---
