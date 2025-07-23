@@ -8155,7 +8155,7 @@ sudo add-apt-repository -r ppa:linuxmint-daily-build-team/daily-builds
 Installing caja-open-terminal via :
 
 ```
-sudo apt-get install caja-open-terminal caja-actions caja-actions-common
+sudo apt-get install caja caja-open-terminal caja-actions caja-actions-common
 ```
 
 change `mate-terminal` to `lxterminal`：
@@ -14888,15 +14888,9 @@ sudo apt install binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eab
 ```
 
 ---
-# 
+# btop
 ```
-
-```
-
----
-# 
-```
-
+sudo apt install btop
 ```
 
 ---
@@ -15013,6 +15007,11 @@ sudo apt install binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eab
 
 ```
 
+---
+# 
+```
+
+```
 
 
 
