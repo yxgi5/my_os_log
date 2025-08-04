@@ -14657,10 +14657,17 @@ sudo update-alternatives --config cuda
 sudo update-alternatives --config cufile.json
 ```
 
+```
+sudo apt-get install tensorrt tensorrt-dev tensorrt-libs libnvinfer-samples
+```
+
 ---
 # gcc-9
 ```
-sudo apt install gcc-9 g++-9
+sudo apt install gcc-9 g++-9 g++-9-multilib
+sudo apt install gcc-10 g++-10 g++-10-multilib
+sudo apt install gcc-11 g++-11 g++-11-multilib
+sudo apt install gcc-12 g++-12 g++-12-multilib
 
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 50 --slave /usr/bin/g++ g++ /usr/bin/g++-11
@@ -14894,39 +14901,116 @@ sudo apt install btop
 ```
 
 ---
-# 
+# arrow
+```
+sudo -H pip3 install python-dateutil types-python-dateutil arrow
+
+删掉.local/lib/下的有关文件
 ```
 
+```
+from arrow import now
+
+formatted_date = now().format('YYYY-MM-DD HH:mm:ss')
+```
+
+---
+# kicad
+```
+sudo apt install kicad kicad-packages3d
+```
+
+---
+# science-electronics (abort)
+```
+sudo apt install science-electronics
+
+The following additional packages will be installed:
+  antennavis antlr3 arachne-pnr arachne-pnr-chipdb arduino arduino-builder arduino-core-avr arduino-ctags avarice avra avrp berkeley-abc bladerf bossa bossa-cli bwidget castxml catch2 covered dfcgen-gtk drawtiming dxf2gcode electric electronics-all electronics-analog
+  electronics-asic-dev electronics-cad-gui electronics-digital electronics-doc electronics-dsp-dev electronics-fpga-dev electronics-gadgets electronics-measurements electronics-microcontrollers electronics-pcb electronics-radio-dev electronics-simulation electronics-tasks emu8051
+  extra-xdg-menus flashrom flexloader fonts-lyx fpga-icestorm fpga-icestorm-chipdb fpgatools fritzing fritzing-data fritzing-parts gerbv ghdl ghdl-common ghdl-mcode gnucap gnucap-common gnucap-default-plugins0 gnuradio gnuradio-dev gnusim8085 gpsim gputils gputils-common
+  gputils-doc graywolf gtkwave guile-3.0 h5utils hdf5-tools irsim itcl3 iverilog java-wrappers jython kicad-doc-de kicad-doc-en kicad-doc-es kicad-doc-fr kicad-doc-it kicad-doc-ru lepton-eda libactivation-java libad9361-0 libairspy0 libantlr-java libantlr3-runtime-java
+  libasm-java libastylej-jni libatinject-jsr330-api-java libbatik-java libbcpg-java libbcprov-java libbladerf2 libbsh-java libbtbb1 libclang-cpp11 libcomedi0 libcommons-cli-java libcommons-codec-java libcommons-compress-java libcommons-exec-java libcommons-io-java
+  libcommons-lang3-java libcommons-net-java libcppunit-1.15-0 libcppunit-dev libcsxcad0 libctl7 libfmt-dev libfparser4 libfpga0 libfungw1 libgdsii0 libgmp-dev libgmpxx4ldbl libgnucap0 libgnuradio-analog3.10.1 libgnuradio-audio3.10.1 libgnuradio-blocks3.10.1
+  libgnuradio-channels3.10.1 libgnuradio-digital3.10.1 libgnuradio-dtv3.10.1 libgnuradio-fec3.10.1 libgnuradio-fft3.10.1 libgnuradio-filter3.10.1 libgnuradio-iio3.10.1 libgnuradio-network3.10.1 libgnuradio-pdu3.10.1 libgnuradio-pmt3.10.1 libgnuradio-qtgui3.10.1
+  libgnuradio-runtime3.10.1 libgnuradio-soapy3.10.1 libgnuradio-trellis3.10.1 libgnuradio-uhd3.10.1 libgnuradio-video-sdl3.10.1 libgnuradio-vocoder3.10.1 libgnuradio-wavelet3.10.1 libgnuradio-zeromq3.10.1 libgoogle-gson-java libgsm1-dev libgtkdatabox1 libgtkextra-3.0
+  libguava-java libgumbo1 libhackrf0 libhamlib4 libharminv3 libhawtjni-runtime-java libhdf4-0 libhttpclient-java libhttpcore-java libicu4j-java libiio0 libjackson2-annotations-java libjackson2-core-java libjackson2-databind-java libjansi-java libjansi-native-java libjava3d-java
+  libjava3d-jni libjaxb-api-java libjaxp1.3-java libjctools-java libjffi-java libjffi-jni libjline2-java libjmdns-java libjna-java libjna-jni libjna-platform-java libjnr-constants-java libjnr-ffi-java libjnr-netdb-java libjnr-posix-java libjnr-x86asm-java libjsch-java
+  libjsr305-java libjssc-java libjudydebian1 libjzlib-java liblbfgsb0 liblightcouch-java liblimesuite20.10-1 liblistserialsj-dev liblistserialsj1 libllvm11 libllvm13 liblog4j2-java libmeep23 libmirisdr0 libmongodb-java libnetcdf-c++4 libnetty-java libnf2ff0 libopenems0
+  libosmosdr0 libpyside2-py3-5.15 libqcsxcad0 libqwt-qt5-6 librnd3 librnd3-cloud librnd3-hid-gtk2-gdk librnd3-hid-gtk2-gl librnd3-lib-gl librnd3-lib-gtk librnd3-lib-gui librsyntaxtextarea-java librtaudio6 librte-eal22 librte-ethdev22 librte-hash22 librte-kvargs22 librte-mbuf22
+  librte-mempool22 librte-meter22 librte-net22 librte-rcu22 librte-ring22 librte-telemetry22 librtlsdr0 librxtx-java libsemver-java libserialport0 libservlet-api-java libshiboken2-py3-5.15 libsigrok4 libsigrokcxx4 libsigrokdecode4 libslf4j-java libsoapysdr0.8 libspdlog-dev
+  libstringtemplate-java libstringtemplate4-java libstroke0 libsystemc libsystemc-dev libtecla1 libthrift-0.16.0 libthrift-dev libtk-img libubertooth1 libuhd4.1.0 libvecmath-java libvolk2-bin libvolk2-dev libvolk2.5 libvtk7.1p libvtk7.1p-qt libxalan2-java libxerces2-java
+  libxml-commons-external-java libxml-commons-resolver1.1-java libxmlgraphics-commons-java libxsimd-dev libycadgraywolf1 limesuite-udev llvm-11 llvm-11-dev llvm-11-linker-tools llvm-11-runtime llvm-11-tools lpc21isp lpctools m16c-flash magic mcu8051ide meep microhope mspdebug
+  myhdl-cosimulation nec2c netgen-lvs ngspice numba-doc octave-openems openems opensta oregano pcb pcb-common pcb-gtk pcb-rnd pcb-rnd-auto pcb-rnd-cloud pcb-rnd-core pcb-rnd-doc pcb-rnd-export pcb-rnd-export-extra pcb-rnd-export-sim pcb-rnd-extra pcb-rnd-import-net
+  pcb-rnd-io-alien pcb-rnd-io-standard pcb-rnd-lib-gui pcb-rnd-lib-io pulseview pybind11-dev python-matplotlib-data python-odf-doc python-odf-tools python-tables-data python3-appdirs python3-beniget python3-bottleneck python3-click-plugins python3-cycler python3-decorator
+  python3-defusedxml python3-et-xmlfile python3-fonttools python3-fs python3-gast python3-iniconfig python3-jdcal python3-kiwisolver python3-llvmlite python3-lz4 python3-matplotlib python3-mpmath python3-myhdl python3-networkx python3-numba python3-numexpr python3-odf
+  python3-openpyxl python3-pandas python3-pandas-lib python3-pil.imagetk python3-pluggy python3-ply python3-py python3-pygccxml python3-pymeasure python3-pyqt5.qwt python3-pyqtgraph python3-pyside2.qtcore python3-pyside2.qtgui python3-pyside2.qtwidgets python3-pytest
+  python3-pythran python3-pyvisa python3-pyvisa-py python3-scipy python3-serial python3-sympy python3-tables python3-tables-lib python3-thrift python3-ufolib2 python3-unicodedata2 python3-usb python3-xlwt python3-zmq qelectrotech qelectrotech-data qelectrotech-examples qflow
+  qflow-tech-osu018 qflow-tech-osu035 qflow-tech-osu050 qrouter sdcc sdcc-doc sdcc-libraries sdcc-ucsim sigrok sigrok-cli sigrok-firmware-fx2lafw simulide simulpic soapyosmo-common0.8 soapysdr-tools soapysdr0.8-module-airspy soapysdr0.8-module-all soapysdr0.8-module-audio
+  soapysdr0.8-module-bladerf soapysdr0.8-module-hackrf soapysdr0.8-module-lms7 soapysdr0.8-module-mirisdr soapysdr0.8-module-osmosdr soapysdr0.8-module-redpitaya soapysdr0.8-module-remote soapysdr0.8-module-rfspace soapysdr0.8-module-rtlsdr soapysdr0.8-module-uhd tcl-signal
+  tcllib tdom teensy-loader-cli tkcon tkgate tkgate-data tkgate-doc tklib transcalc ubertooth ubertooth-firmware uisp unicode-data verilator visolate xnec2c xoscope yagiuda yosys
+Suggested packages:
+  nextpnr avrprog gwave python3-gnucap qucs alliance coriolis gdsiiconvert klayout libgdsii-dev python3-gdsii python3-gdspy klogic kicad-doc-pt nextpnr-ice40 cl-cluck libjaylink-dev nitpic linsmith xsmc-calc easyspice freehdl gplcver nextpnr-ice40 | nextpnr-ice40-qt gr-fosphor
+  gr-osmosdr gqrx-sdr rtl-sdr uhd-host libqwt-qt5-dev gpsim-led gpsim-logic gpsim-lcd gpsim-doc guile-3.0-doc itcl3-doc jython-doc libmariadb-java libpostgresql-jdbc-java libatinject-jsr330-api-java-doc librhino-java libbcpg-java-doc libbcprov-java-doc bladerf-firmware
+  bladerf-fpga libxz-java libcommons-io-java-doc libcommons-lang3-java-doc libcommons-net-java-doc libcppunit-doc libfmt-doc gmp-doc libgmp10-doc libmpfr-dev libgoogle-gson-java-doc libhdf4-doc libhdf4-dev hdf4-tools libjackson2-annotations-java-doc libjava3d-java-doc
+  libjna-java-doc libjnr-ffi-java-doc libjnr-netdb-java-doc libjnr-posix-java-doc libjsr305-java-doc libcommons-csv-java libconversant-disruptor-java libdisruptor-java libgeronimo-jms-1.1-spec-java libjackson2-dataformat-xml-java libjackson2-dataformat-yaml libjeromq-java
+  libmail-java libwoodstox-java libbcpkix-java libcompress-lzf-java liblog4j1.2-java libprotobuf-java librsyntaxtextarea-java-doc libsemver-java-doc libtk-img-doc libvolk2-doc vtk7-doc vtk7-examples libxalan2-java-doc libbsf-java libxsltc-java libxerces2-java-doc
+  libxml-commons-resolver1.1-java-doc libxmlgraphics-commons-java-doc libxsimd-doc llvm-11-doc rxvt-unicode hunspell firm-phoenix-ware ngspice-doc geda-gnetlist pybind11-doc python-bottleneck-doc python-cycler-doc llvmlite-doc fonts-staypuft ipython3 python-matplotlib-doc
+  python3-cairocffi python3-gobject python3-tornado texlive-extra-utils python-mpmath-doc python3-gmpy2 myhdl-doc python-networkx-doc python3-gdal python3-pydot python3-pygraphviz nvidia-cuda-toolkit python-pandas-doc python3-statsmodels python-pil-doc python-ply-doc
+  python-pymeasure-doc python-pyqt5.qwt-doc python-pyqtgraph-doc python-pyside2-doc libvisa0 python-scipy-doc python3-wxgtk3.0 | python3-wxgtk texlive-fonts-extra python-sympy-doc python3-netcdf4 python-tables-doc vitables python-xlrt-doc python simutron simavr tcllib-critcl
+  ubertooth-firmware-source
+Recommended packages:
+  nec qsapecng geda-gschem geda-doc geda-examples pymissile usbprog geda geda-xgsch2pcb gsmc gspiceui
+The following NEW packages will be installed:
+  antennavis antlr3 arachne-pnr arachne-pnr-chipdb arduino arduino-builder arduino-core-avr arduino-ctags avarice avra avrp berkeley-abc bladerf bossa bossa-cli bwidget castxml catch2 covered dfcgen-gtk drawtiming dxf2gcode electric electronics-all electronics-analog
+  electronics-asic-dev electronics-cad-gui electronics-digital electronics-doc electronics-dsp-dev electronics-fpga-dev electronics-gadgets electronics-measurements electronics-microcontrollers electronics-pcb electronics-radio-dev electronics-simulation electronics-tasks emu8051
+  extra-xdg-menus flashrom flexloader fonts-lyx fpga-icestorm fpga-icestorm-chipdb fpgatools fritzing fritzing-data fritzing-parts gerbv ghdl ghdl-common ghdl-mcode gnucap gnucap-common gnucap-default-plugins0 gnuradio gnuradio-dev gnusim8085 gpsim gputils gputils-common
+  gputils-doc graywolf gtkwave guile-3.0 h5utils hdf5-tools irsim itcl3 iverilog java-wrappers jython kicad-doc-de kicad-doc-en kicad-doc-es kicad-doc-fr kicad-doc-it kicad-doc-ru lepton-eda libactivation-java libad9361-0 libairspy0 libantlr-java libantlr3-runtime-java
+  libasm-java libastylej-jni libatinject-jsr330-api-java libbatik-java libbcpg-java libbcprov-java libbladerf2 libbsh-java libbtbb1 libclang-cpp11 libcomedi0 libcommons-cli-java libcommons-codec-java libcommons-compress-java libcommons-exec-java libcommons-io-java
+  libcommons-lang3-java libcommons-net-java libcppunit-1.15-0 libcppunit-dev libcsxcad0 libctl7 libfmt-dev libfparser4 libfpga0 libfungw1 libgdsii0 libgmp-dev libgmpxx4ldbl libgnucap0 libgnuradio-analog3.10.1 libgnuradio-audio3.10.1 libgnuradio-blocks3.10.1
+  libgnuradio-channels3.10.1 libgnuradio-digital3.10.1 libgnuradio-dtv3.10.1 libgnuradio-fec3.10.1 libgnuradio-fft3.10.1 libgnuradio-filter3.10.1 libgnuradio-iio3.10.1 libgnuradio-network3.10.1 libgnuradio-pdu3.10.1 libgnuradio-pmt3.10.1 libgnuradio-qtgui3.10.1
+  libgnuradio-runtime3.10.1 libgnuradio-soapy3.10.1 libgnuradio-trellis3.10.1 libgnuradio-uhd3.10.1 libgnuradio-video-sdl3.10.1 libgnuradio-vocoder3.10.1 libgnuradio-wavelet3.10.1 libgnuradio-zeromq3.10.1 libgoogle-gson-java libgsm1-dev libgtkdatabox1 libgtkextra-3.0
+  libguava-java libgumbo1 libhackrf0 libhamlib4 libharminv3 libhawtjni-runtime-java libhdf4-0 libhttpclient-java libhttpcore-java libicu4j-java libiio0 libjackson2-annotations-java libjackson2-core-java libjackson2-databind-java libjansi-java libjansi-native-java libjava3d-java
+  libjava3d-jni libjaxb-api-java libjaxp1.3-java libjctools-java libjffi-java libjffi-jni libjline2-java libjmdns-java libjna-java libjna-jni libjna-platform-java libjnr-constants-java libjnr-ffi-java libjnr-netdb-java libjnr-posix-java libjnr-x86asm-java libjsch-java
+  libjsr305-java libjssc-java libjudydebian1 libjzlib-java liblbfgsb0 liblightcouch-java liblimesuite20.10-1 liblistserialsj-dev liblistserialsj1 libllvm11 libllvm13 liblog4j2-java libmeep23 libmirisdr0 libmongodb-java libnetcdf-c++4 libnetty-java libnf2ff0 libopenems0
+  libosmosdr0 libpyside2-py3-5.15 libqcsxcad0 libqwt-qt5-6 librnd3 librnd3-cloud librnd3-hid-gtk2-gdk librnd3-hid-gtk2-gl librnd3-lib-gl librnd3-lib-gtk librnd3-lib-gui librsyntaxtextarea-java librtaudio6 librte-eal22 librte-ethdev22 librte-hash22 librte-kvargs22 librte-mbuf22
+  librte-mempool22 librte-meter22 librte-net22 librte-rcu22 librte-ring22 librte-telemetry22 librtlsdr0 librxtx-java libsemver-java libserialport0 libservlet-api-java libshiboken2-py3-5.15 libsigrok4 libsigrokcxx4 libsigrokdecode4 libslf4j-java libsoapysdr0.8 libspdlog-dev
+  libstringtemplate-java libstringtemplate4-java libstroke0 libsystemc libsystemc-dev libtecla1 libthrift-0.16.0 libthrift-dev libtk-img libubertooth1 libuhd4.1.0 libvecmath-java libvolk2-bin libvolk2-dev libvolk2.5 libvtk7.1p libvtk7.1p-qt libxalan2-java libxerces2-java
+  libxml-commons-external-java libxml-commons-resolver1.1-java libxmlgraphics-commons-java libxsimd-dev libycadgraywolf1 limesuite-udev llvm-11 llvm-11-dev llvm-11-linker-tools llvm-11-runtime llvm-11-tools lpc21isp lpctools m16c-flash magic mcu8051ide meep microhope mspdebug
+  myhdl-cosimulation nec2c netgen-lvs ngspice numba-doc octave-openems openems opensta oregano pcb pcb-common pcb-gtk pcb-rnd pcb-rnd-auto pcb-rnd-cloud pcb-rnd-core pcb-rnd-doc pcb-rnd-export pcb-rnd-export-extra pcb-rnd-export-sim pcb-rnd-extra pcb-rnd-import-net
+  pcb-rnd-io-alien pcb-rnd-io-standard pcb-rnd-lib-gui pcb-rnd-lib-io pulseview pybind11-dev python-matplotlib-data python-odf-doc python-odf-tools python-tables-data python3-appdirs python3-beniget python3-bottleneck python3-click-plugins python3-cycler python3-decorator
+  python3-defusedxml python3-et-xmlfile python3-fonttools python3-fs python3-gast python3-iniconfig python3-jdcal python3-kiwisolver python3-llvmlite python3-lz4 python3-matplotlib python3-mpmath python3-myhdl python3-networkx python3-numba python3-numexpr python3-odf
+  python3-openpyxl python3-pandas python3-pandas-lib python3-pil.imagetk python3-pluggy python3-ply python3-py python3-pygccxml python3-pymeasure python3-pyqt5.qwt python3-pyqtgraph python3-pyside2.qtcore python3-pyside2.qtgui python3-pyside2.qtwidgets python3-pytest
+  python3-pythran python3-pyvisa python3-pyvisa-py python3-scipy python3-serial python3-sympy python3-tables python3-tables-lib python3-thrift python3-ufolib2 python3-unicodedata2 python3-usb python3-xlwt python3-zmq qelectrotech qelectrotech-data qelectrotech-examples qflow
+  qflow-tech-osu018 qflow-tech-osu035 qflow-tech-osu050 qrouter science-electronics sdcc sdcc-doc sdcc-libraries sdcc-ucsim sigrok sigrok-cli sigrok-firmware-fx2lafw simulide simulpic soapyosmo-common0.8 soapysdr-tools soapysdr0.8-module-airspy soapysdr0.8-module-all
+  soapysdr0.8-module-audio soapysdr0.8-module-bladerf soapysdr0.8-module-hackrf soapysdr0.8-module-lms7 soapysdr0.8-module-mirisdr soapysdr0.8-module-osmosdr soapysdr0.8-module-redpitaya soapysdr0.8-module-remote soapysdr0.8-module-rfspace soapysdr0.8-module-rtlsdr
+  soapysdr0.8-module-uhd tcl-signal tcllib tdom teensy-loader-cli tkcon tkgate tkgate-data tkgate-doc tklib transcalc ubertooth ubertooth-firmware uisp unicode-data verilator visolate xnec2c xoscope yagiuda yosys
+0 upgraded, 405 newly installed, 0 to remove and 179 not upgraded.
+Need to get 489 MB of archives.
+After this operation, 2,053 MB of additional disk space will be used.
+```
+
+---
+# abort
+```
+sudo aptitude install npm
 ```
 
 ---
 # 
 ```
-
+sudo apt install ngspice gnucap electric gwave libxpm-dev cksfv golang golang-go
 ```
 
 ---
-# 
+# 减少 cadence 172 运行报错
 ```
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libGL.so.1 /usr/lib64/libGL.so.1
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libXext.so /usr/lib64/libXext.so
 
-```
-
----
-# 
-```
-
-```
-
----
-# 
-```
-
-```
-
----
-# 
-```
-
+cd /opt/cadence
+source allegro_172_patch/spb172
+/opt/cadence/SPB172/tools/pcb/bin/allegro_pcb
 ```
 
 ---
