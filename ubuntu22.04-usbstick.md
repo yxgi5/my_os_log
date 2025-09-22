@@ -11492,6 +11492,11 @@ for embedded device
 # mount / -o rw,remount
 ```
 
+如果fuseblk自动加载为ro,那么这样修改为rw
+```
+sudo mount -o remount, rw /media/andy/3AD4C40AD4C3C67B
+cat /proc/mounts
+```
 ---
 
 # 安装 miniconda
@@ -15014,9 +15019,54 @@ source allegro_172_patch/spb172
 ```
 
 ---
-# 
+# ~/.gitconfig
 ```
+[core]
+	autocrl = false
+	fileMode = false
+	editor = vim
+[merge]
+	ff = false
+[pull]
+	ff = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Andreas Zhang
+	email = yxgi5@163.com
+[http]
+	postBuffer = 1048576000
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
+	proxy = socks5://127.0.0.1:20170
+[https]
+	proxy = socks5://127.0.0.1:20170
 
+```
+```
+[core]
+	autocrl = false
+	fileMode = false
+	editor = vim
+[merge]
+	ff = false
+[pull]
+	ff = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Andreas Zhang
+	email = yxgi5@163.com
+[http]
+	postBuffer = 1048576000
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
 ```
 
 ---
