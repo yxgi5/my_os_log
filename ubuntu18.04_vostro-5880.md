@@ -14839,7 +14839,55 @@ andreas@Vostro-5880:/opt/alist
 <https://github.com/AlistGo/alist/releases>
 
 ***
-#
+# ssh 文件权限
+```
+andy@andy-kuangshi16:~/.ssh
+$ ll
+total 48
+drwx------   2 andy andy 4096 Jun 17  2023 ./
+drwxr-x--- 123 andy andy 4096 Sep 23 17:18 ../
+-rw-r--r--   1 andy andy 2245 Oct 12  2022 authorized_keys
+-rw-rw-r--   1 andy andy   61 Feb  8  2023 config
+-rw-------   1 andy andy  751 Mar 13  2016 id_dsa
+-rw-r--r--   1 andy andy  606 Mar 13  2016 id_dsa.pub
+-rw-------   1 andy andy  419 Jun  8  2020 id_ed25519
+-rw-r--r--   1 andy andy  105 Jun  8  2020 id_ed25519.pub
+-rw-------   1 andy andy 1679 Mar  2  2020 id_rsa
+-rw-r--r--   1 andy andy  402 Mar  2  2020 id_rsa.pub
+-rw-r--r--   1 andy andy 1110 May 17  2023 known_hosts
+-rw-r--r--   1 andy andy  735 Mar 13  2016 mykey_rsa.pub
+```
+
+***
+# 
 ```
 ```
+
+***
+# 
+```
+```
+
+***
+# 
+```
+```
+
+***
+# 
+```
+```
+
+***
+# 
+```
+```
+
+
+
+
+
+
+
+
 
