@@ -14859,8 +14859,15 @@ drwxr-x--- 123 andy andy 4096 Sep 23 17:18 ../
 ```
 
 ***
-# 
+# github ip地址查询
+
+<https://www.ipaddress.com/website/www.github.com>
 ```
+sudo gedit /etc/hosts
+```
+for example, ip==140.82.113.3, add
+```
+140.82.113.3  github.com
 ```
 
 ***
