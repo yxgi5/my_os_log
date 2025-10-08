@@ -1060,7 +1060,117 @@ sudo apt install qtbase5-dev qtbase5-dev-tools qtbase5-doc qtbase5-doc-html qtba
 * * *
 # geany
 
+---
+* * *
+# pulseaudio 
 
+这样 openbox 环境也可输出声音到 hdmi 显示器
+```
+sudo apt install xfce4-pulseaudio-plugin pulseaudio-utils pulseaudio-module-zeroconf pulseaudio-module-raop pulseaudio-module-lirc pulseaudio-module-jack pulseaudio-module-bluetooth pulseaudio-equalizer pulseaudio-dlna gstreamer1.0-pulseaudio mkchromecast-pulseaudio osspd-pulseaudio pulsemixer
+
+The following packages were automatically installed and are no longer required:
+  apt-clone archdetect-deb bogl-bterm cryptsetup-bin dpkg-repack
+  gir1.2-timezonemap-1.0 gir1.2-xkl-1.0 grub-common kde-window-manager kinit
+  kio kpackagetool5 kwayland-data kwin-common kwin-data kwin-x11
+  libdebian-installer4 libkdecorations2-5v5 libkdecorations2private5v5
+  libkf5activities5 libkf5attica5 libkf5completion-data libkf5completion5
+  libkf5declarative-data libkf5declarative5 libkf5doctools5
+  libkf5globalaccel-data libkf5globalaccel5 libkf5globalaccelprivate5
+  libkf5idletime5 libkf5jobwidgets-data libkf5jobwidgets5 libkf5kcmutils-data
+  libkf5kcmutils5 libkf5kiocore5 libkf5kiontlm5 libkf5kiowidgets5
+  libkf5newstuff-data libkf5newstuff5 libkf5newstuffcore5 libkf5package-data
+  libkf5package5 libkf5plasma5 libkf5quickaddons5 libkf5solid5
+  libkf5solid5-data libkf5sonnet5-data libkf5sonnetcore5 libkf5sonnetui5
+  libkf5textwidgets-data libkf5textwidgets5 libkf5waylandclient5
+  libkf5waylandserver5 libkf5xmlgui-bin libkf5xmlgui-data libkf5xmlgui5
+  libkscreenlocker5 libkwin4-effect-builtins1 libkwineffects11
+  libkwinglutils11 libkwinxrenderutils11 libqgsttools-p1 libqt5multimedia5
+  libqt5multimedia5-plugins libqt5multimediaquick-p5 libqt5multimediawidgets5
+  libqt5opengl5 libqt5quickwidgets5 libxcb-composite0 libxcb-cursor0
+  libxcb-damage0 os-prober python3-dbus.mainloop.pyqt5 python3-icu python3-pam
+  python3-pyqt5.qtsvg python3-pyqt5.qtwebkit
+  qml-module-org-kde-kquickcontrolsaddons qml-module-qtmultimedia
+  qml-module-qtquick2 rdate
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  osspd python-bs4 python-certifi python-chardet python-concurrent.futures
+  python-docopt python-html5lib python-lxml python-netifaces python-notify2
+  python-openssl python-protobuf python-psutil python-pyroute2 python-requests
+  python-setproctitle python-urllib3 python-webencodings python-zeroconf
+Suggested packages:
+  libav-tools python-netaddr gir1.2-rsvg-3.0 python-genshi python-lxml-dbg
+  python-lxml-doc python-openssl-doc python-openssl-dbg python-psutil-doc
+  python-pyroute2-doc python-socks python-ntlm
+The following NEW packages will be installed:
+  osspd osspd-pulseaudio pulseaudio-dlna pulseaudio-module-jack
+  pulseaudio-module-lirc pulseaudio-module-raop pulseaudio-module-zeroconf
+  pulsemixer python-bs4 python-certifi python-chardet
+  python-concurrent.futures python-docopt python-html5lib python-lxml
+  python-netifaces python-notify2 python-openssl python-protobuf python-psutil
+  python-pyroute2 python-requests python-setproctitle python-urllib3
+  python-webencodings python-zeroconf
+The following packages will be upgraded:
+  gstreamer1.0-pulseaudio
+1 upgraded, 26 newly installed, 0 to remove and 516 not upgraded.
+Need to get 2,651 kB of archives.
+
+```
+
+```
+sudo apt install pasystray paprefs pavumeter pulseaudio-module-zeroconf
+
+The following additional packages will be installed:
+  libgconfmm-2.6-1v5 libglademm-2.4-1v5 libgtkmm-2.4-1v5
+Suggested packages:
+  paman
+The following NEW packages will be installed:
+  libgconfmm-2.6-1v5 libglademm-2.4-1v5 libgtkmm-2.4-1v5 paprefs pasystray pavumeter
+
+```
+
+```
+sudo apt install bluetooth bluez bluez-cups bluez-tools btscanner gnome-bluetooth python-bluez pulseaudio-module-bluetooth blueman rfkill
+
+The following additional packages will be installed:
+  ieee-data
+The following NEW packages will be installed:
+  bluetooth bluez-tools btscanner ieee-data python-bluez
+The following packages will be upgraded:
+  bluez bluez-cups
+
+```
+
+没有安装包的
+```
+E: Unable to locate package python3-bluez
+E: Unable to locate package bluez-meshd
+```
+
+
+---
+* * *
+# vlc
+
+```
+sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization
+
+```
+看起来会崩溃，不能用
+
+
+---
+* * *
+# Next Topic
+
+---
+* * *
+# Next Topic
+
+---
+* * *
+# Next Topic
+
+---
 * * *
 # Next Topic
 

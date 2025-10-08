@@ -15070,9 +15070,90 @@ source allegro_172_patch/spb172
 ```
 
 ---
-# 
+# 修改Docker数据目录位置，包含镜像位置
+
+查看当前数据目录位置
+```
+docker info | grep "Docker Root Dir"
 ```
 
+修改前记得先 stop docker 容器和服务
+```
+sudo docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+sudo systemctl stop docker
+```
+
+## 方法一：修改Docker配置文件
+
+/etc/docker/daemon.json 的 "data-root"属性 
+```
+{
+  "registry-mirrors": ["http://hub-mirror.c.163.com"],
+  "data-root": "/data/docker"
+}
+```
+你看上面例子，属性之间用逗号隔开
+
+
+## 方法二：修改Docker服务文件
+
+最简单也是最暴力的方式——修改`/etc/systemd/system/multi-user.target.wants/docker.service`， ExecStart行添加--graph或-g参数
+```
+#找到ExecStart部分，在此行末尾添加--graph=你的目录，我的如下
+[Service]
+Type=notify
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --graph=/home/hellxz/docker-home
+```
+
+## 方法三：使用挂载点
+
+如果不想修改Docker的配置，可以通过创建一个挂载点将新目录挂载到/var/lib/docker。这可以通过mount命令实现，并且可以在/etc/fstab中设置，以便在系统启动时自动挂载。
+```
+mount -o bind /new/path/to/docker /var/lib/docker
+```
+
+在/etc/fstab中添加如下配置：
+```
+/new/path/to/docker /var/lib/docker none bind 0 0
+```
+
+## 迁移数据
+```
+mkdir -p /data/docker
+rsync -av --progress /var/lib/docker/* /data/docker/
+```
+使用 rsync 可以确保文件的完整性和权限不变：
+
+-a 表示归档模式，保持文件的权限、时间戳等信息。
+
+-v 表示显示详细的输出。
+
+--progress 显示进度。
+
+rsync -aqxP？
+
+mv 比 rsync 快，
+```
+mv /var/lib/docker/* /data/docker/
+```
+
+数据迁移完毕就释放空间
+```
+sudo rm -rf /var/lib/docker
+```
+
+## 重新加载systemd的配置并重启Docker服务
+```
+#保存退出，接着让systemd重新读取下这些service等的配置
+sudo systemctl daemon-reload
+
+#重启docker服务
+sudo systemctl restart docker
+
+docker compose up -d
 ```
 
 ---
