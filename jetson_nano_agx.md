@@ -18,7 +18,6 @@
 
 其中选择自动登录桌面
 
-
 ## tips:`/etc/apt/sources.list`更换成国内源
 <http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/>
 <https://mirrors.aliyun.com/ubuntu-ports/>
@@ -27,6 +26,82 @@
 sudo apt update
 sudo apt upgrade
 ```
+
+* * *
+# 2+. nvidia sdk for jetsonX
+
+可以在主机通过sdkmanager给板子刷机
+
+<https://developer.nvidia.com/nvsdk-manager>
+```
+sudo dpkg -i sdkmanager_1.4.1-7402_amd64.deb
+
+sudo apt install -f
+
+sudo apt install vim-gtk vim ctags vim-doc vim-scripts exuberant-ctags libtemplate-perl ispell vim-addon-manager cscope
+
+sudo tail -f ~/.nvsdkm/sdkm.log
+
+sdkmanager
+```
+
+下载包在
+```
+~/Downloads/nvidia/sdkm_downloads
+```
+安装在
+```
+~/nvidia/nvidia_sdk
+```
+nvidia默认的usb网口, default ip
+```
+Target: 192.168.55.1
+Host: 192.168.55.100
+```
+
+<https://developer.download.nvidia.com/sdkmanager/sdkm-config/SDKMANAGER/Linux/sdkml2_sdkmanager_linux_deb.json>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/sdkml3_jetpack_l4t_451.json>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17_DEEPSTREAM/sdkml3_jetpack_l4t_451_deepstream.json>
+
+实际上类似于这样
+
+<https://developer.download.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17_DEEPSTREAM/sdkml3_jetpack_l4t_451_deepstream.json?WXKwCOquaAWNu0X3zcATvilrY8x1PcRrVnEG9pKFSH4Vc4GegPrhsJb9NW5jLO6ylPTWFG4XGwCKG7GwqvdWzwzy6dKGkfZECHjUg-F8LzftM6d-GbL_y06u3O7YXGErzlb8S1fzx31JU8oefmvxMgvyEWvkbs6exA2oog-oWXxwFR30l6h53XE7g-Dul5QDb7i-V2RJy0BFG6G6oxNl0devcqnhb0qnS_o3a0aszUa3enxdriPIUmac9AQN9Q>
+
+几个比较大的文件很难下
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/ubuntu1804/cuda-repo-ubuntu1804-10-2-local-10.2.89-440.40_1.0-1_amd64.deb>
+
+<https://developer.download.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/T210/Tegra_Linux_Sample-Root-Filesystem_R32.5.1_aarch64.tbz2>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/cuda-repo-l4t-10-2-local-10.2.89_1.0-1_arm64.deb>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/NsightSystems-linux-public-2020.5.3.17-0256620.deb>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/NoDLA/libnvinfer-samples_7.1.3-1+cuda10.2_all.deb>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/NoDLA/libnvinfer-doc_7.1.3-1+cuda10.2_all.deb>
+
+<https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/NoDLA/libnvinfer-bin_7.1.3-1+cuda10.2_arm64.deb>
+
+<https://developer.download.nvidia.com//assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/DLA/libnvinfer-samples_7.1.3-1+cuda10.2_all.deb>
+
+<https://developer.download.nvidia.com//assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17/T186/Jetson_Linux_R32.5.1_aarch64.tbz2>
+
+<https://developer.download.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.5.1/JETPACK_451_b17_DEEPSTREAM/deepstream-5.1_5.1.0-1_arm64.deb>
+
+有时候替换成developer.download.nvidia.cn可以下的动
+
+<http://172.17.0.1/Jetson_Linux_R32.5.1_aarch64.tbz2?fid=xPaCAOd6Io9uzil11Ik8wMSQiC196eQUAAAAAF0vEo99-hU7BE7JoYsl-BNsMd2-&mid=666&threshold=150&tid=5E392A99E5A7292FF65E3AB98212333E&srcid=119&verno=1>
+
+导出cookie再用工具下载
+```
+1) wget -x --load-cookies cookies.txt "chrome://startpage/downloads"
+2) curl --cookie cookies.txt "chrome://startpage/downloads"
+3) aria2c --load-cookies cookies.txt "chrome://startpage/downloads"
+```
+
 
 # 3. Jetson Nano 摄像头测试
 
@@ -1154,8 +1229,775 @@ E: Unable to locate package bluez-meshd
 ```
 sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization
 
+qt5ct
 ```
-看起来会崩溃，不能用
+vlc xxx.mp4 看起来会崩溃，不能用
+
+<https://forums.developer.nvidia.com/t/vlc-player-crashes-in-jetson-nano-segmentation-fault-core-dumped/176534>
+
+<https://forums.developer.nvidia.com/t/vlc-not-working-on-l4t-r27-0-1/49423/16>
+
+You may try to disable OMXIL plugin
+
+```
+sudo mv /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so.old
+```
+就好用了。
+
+
+记录
+```
+VLC media player 3.0.8 Vetinari (revision 3.0.8-0-gf350b6b5a7)
+[000000559a7ca650] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+qt5ct: using qt5ct plugin
+qt5ct: D-Bus global menu: no
+qt5ct: D-Bus system tray: no
+inotify_add_watch("/home/andy/.config/qt5ct") failed: "No such file or directory"
+Bus error (core dumped)
+
+
+qt5ct
+
+sudo apt install vainfo vdpau-va-driver
+
+killall -9 vlc
+vlc --reset-config vlc://quit
+
+vlc -vvv xxx.mp4
+
+rm -rf  ~/.config/vlc ~/.local/share/vlc
+
+strace vlc &> vlc.log
+
+dpkg -l | grep vlc
+
+egrep " (install|remove|upgrade) " /var/log/dpkg.log
+
+sudo mv /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so.old
+
+```
+
+---
+* * *
+# mplayer
+其实最好使还是这个
+
+```
+sudo apt install mplayer
+
+The following additional packages will be installed:
+  libavcodec-extra57 libavformat57 libavutil55 libdirectfb-1.7-7 libenca0 libpostproc54 libswresample2 libswscale4 libvorbisidec1 libxvmc1
+Suggested packages:
+  libdirectfb-extra mplayer-doc netselect | fping
+The following NEW packages will be installed:
+  libdirectfb-1.7-7 libenca0 libvorbisidec1 libxvmc1 mplayer
+The following packages will be upgraded:
+  libavcodec-extra57 libavformat57 libavutil55 libpostproc54 libswresample2 libswscale4
+
+
+sudo apt install mplayer mplayer-fonts mplayer-gui mplayer-skins
+```
+
+---
+* * *
+# 测试 jetson 的 GPU、ENCODER 什么的
+
+## 安装 nvidia-jetpack
+```
+sudo apt install nvidia-jetpack
+```
+
+sudo dpkg --get-selections | grep nvidia
+```
+andy@andy-nano:~/Downloads/nvidia$ sudo dpkg --get-selections | grep nvidia
+[sudo] password for andy:
+libnvidia-container-tools                       install
+libnvidia-container0:arm64                      install
+nvidia-container                                install
+nvidia-container-csv-cuda                       install
+nvidia-container-csv-cudnn                      install
+nvidia-container-csv-tensorrt                   install
+nvidia-container-csv-visionworks                install
+nvidia-container-runtime                        install
+nvidia-container-toolkit                        install
+nvidia-cuda                                     install
+nvidia-cudnn8                                   install
+nvidia-docker2                                  install
+nvidia-jetpack                                  install
+nvidia-l4t-3d-core                              install
+nvidia-l4t-apt-source                           install
+nvidia-l4t-bootloader                           install
+nvidia-l4t-camera                               install
+nvidia-l4t-configs                              install
+nvidia-l4t-core                                 install
+nvidia-l4t-cuda                                 install
+nvidia-l4t-firmware                             install
+nvidia-l4t-graphics-demos                       install
+nvidia-l4t-gstreamer                            install
+nvidia-l4t-init                                 install
+nvidia-l4t-initrd                               install
+nvidia-l4t-jetson-io                            install
+nvidia-l4t-jetson-multimedia-api                install
+nvidia-l4t-kernel                               install
+nvidia-l4t-kernel-dtbs                          install
+nvidia-l4t-kernel-headers                       install
+nvidia-l4t-multimedia                           install
+nvidia-l4t-multimedia-utils                     install
+nvidia-l4t-oem-config                           install
+nvidia-l4t-tools                                install
+nvidia-l4t-wayland                              install
+nvidia-l4t-weston                               install
+nvidia-l4t-x11                                  install
+nvidia-l4t-xusb-firmware                        install
+nvidia-opencv                                   install
+nvidia-tensorrt                                 install
+nvidia-visionworks                              install
+nvidia-vpi                                      install
+
+```
+```
+andy@andy-agx:~/Downloads/nvidia/nano_build_opencv$ sudo dpkg --get-selections | grep nvidia
+libnvidia-container-tools                       install
+libnvidia-container0:arm64                      install
+nvidia-container                                install
+nvidia-container-csv-cuda                       install
+nvidia-container-csv-cudnn                      install
+nvidia-container-csv-tensorrt                   install
+nvidia-container-csv-visionworks                install
+nvidia-container-runtime                        install
+nvidia-container-toolkit                        install
+nvidia-cuda                                     install
+nvidia-cudnn8                                   install
+nvidia-docker2                                  install
+nvidia-jetpack                                  install
+nvidia-l4t-3d-core                              install
+nvidia-l4t-apt-source                           install
+nvidia-l4t-bootloader                           install
+nvidia-l4t-camera                               install
+nvidia-l4t-configs                              install
+nvidia-l4t-core                                 install
+nvidia-l4t-cuda                                 install
+nvidia-l4t-firmware                             install
+nvidia-l4t-graphics-demos                       install
+nvidia-l4t-gstreamer                            install
+nvidia-l4t-init                                 install
+nvidia-l4t-initrd                               install
+nvidia-l4t-jetson-io                            install
+nvidia-l4t-jetson-multimedia-api                install
+nvidia-l4t-kernel                               install
+nvidia-l4t-kernel-dtbs                          install
+nvidia-l4t-kernel-headers                       install
+nvidia-l4t-libvulkan                            install
+nvidia-l4t-multimedia                           install
+nvidia-l4t-multimedia-utils                     install
+nvidia-l4t-oem-config                           install
+nvidia-l4t-tools                                install
+nvidia-l4t-wayland                              install
+nvidia-l4t-weston                               install
+nvidia-l4t-x11                                  install
+nvidia-l4t-xusb-firmware                        install
+nvidia-opencv                                   install
+nvidia-tensorrt                                 install
+nvidia-visionworks                              install
+nvidia-vpi                                      install
+```
+
+## 查看L4T版本
+```
+head -n 1 /etc/nv_tegra_release
+```
+
+## 查看JetPack版本
+```
+dpkg -l | grep nvidia-jetpack
+```
+
+## 查看cuda 版本
+```
+nvcc -V
+```
+
+## 查看cudnn版本
+```
+cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
+```
+
+tips：
+```
+nvidia-smi 不适用于 jetson 系列板卡哦
+类似 watch -n 1 nvidia-smi 都并不能用
+nvtop也不能用
+```
+
+
+
+
+## 安装 jetson-stats 可以使用 jtop
+```
+sudo apt-get install python3-pip
+
+sudo -H pip3 install jetson-stats
+
+
+sudo -H pip3 install -U jetson-stats
+sudo systemctl restart jtop.service
+
+
+jtop
+sudo jtop
+```
+
+## tegrastats
+```
+tegrastats | grep -E 'GR3D|NVD|NVE'
+tegrastats --interval 500 | grep -E 'GR3D|NVENC|NVDEC'
+```
+GR3D就是GPU
+
+
+
+
+---
+* * *
+# v4l-utils
+```
+sudo apt install v4l-utils
+v4l2-ctl --list-devices         # 列出所有视频设备
+v4l2-ctl --device=/dev/video0 --all  # 查看详细参数
+```
+
+---
+* * *
+# nload
+```
+sudo apt install nload
+```
+
+---
+* * *
+# gstreamer 可以测试硬件加速编解码
+
+<https://docs.nvidia.com/jetson/archives/r36.4/DeveloperGuide/SD/Multimedia.html>
+
+```
+sudo apt install \
+gstreamer1.0-tools \
+gstreamer1.0-plugins-good \
+gstreamer1.0-plugins-bad \
+gstreamer1.0-plugins-ugly \
+gstreamer1.0-libav \
+libgstreamer1.0-dev \
+libgstrtspserver-1.0-dev
+```
+
+```
+gst-inspect-1.0 --plugin
+gst-inspect-1.0 | grep nv      # 查看所有NVIDIA专用插件
+gst-inspect-1.0 nvv4l2decoder  # 检查解码器
+```
+
+例子
+```
+gst-launch-1.0 filesrc location="(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4" ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! video/x-raw,format=I420 ! autovideosink
+gst-launch-1.0 filesrc location="(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4" ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! autovideosink
+gst-launch-1.0 filesrc location="(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4" ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! v4l2sink device=/dev/video1
+gst-launch-1.0 filesrc location="(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4" ! decodebin ! videoconvert ! autovideosink
+gst-launch-1.0 filesrc location="(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4" ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! autovideosink
+gst-launch-1.0 filesrc location=(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4 ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! videoscale method=0 ! video/x-raw,width=320,height=240,format=I420 ! nvvidconv ! queue ! autovideosink
+gst-launch-1.0 filesrc location=(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4 ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! xvimagesink
+gst-launch-1.0 ximagesrc startx=1920 starty=0 endx=2943 endy=768 ! video/x-raw,framerate=15/1 ! videoscale method=0 add-borders=false ! video/x-raw,width=640,height=360 ! videoflip method=horizontal-flip ! ximagesink
+gst-launch-1.0 filesrc location=(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4 ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! videoscale method=0 add-borders=false ! video/x-raw,width=640,height=360 ! videoflip method=horizontal-flip ! ximagesink
+gst-launch-1.0 filesrc location=(18禁アニメ) 義母散華 後編 (DVD 1280x720 x264 AAC).mp4 ! qtdemux ! queue ! h264parse ! nvv4l2decoder ! nvvidconv ! queue ! videoscale method=0 add-borders=false ! video/x-raw,width=640,height=360 ! xvimagesink
+
+//gst-launch-1.0 videotestsrc ! nvvidconv ! 'video/x-raw(memory:NVMM)' ! nvv4l2h264enc insert-sps-pps=1 bitrate=4000000 ! h264parse ! qtmux ! filesink location=output.mp4  失败了
+//gst-launch-1.0 videotestsrc ! nvvidconv ! 'video/x-raw(memory:NVMM)' ! nvv4l2h264enc bitrate=4000000 ! h264parse ! qtmux ! filesink location=output.mp4   失败了
+
+
+
+gst-launch-1.0 videotestsrc ! nvvidconv ! 'video/x-raw(memory:NVMM)' ! nvv4l2h264enc bitrate=4000000 ! h264parse ! filesink location=output.mp4
+gst-launch-1.0 videotestsrc ! nvvidconv ! 'video/x-raw(memory:NVMM)' ! nvv4l2h264enc bitrate=4000000 ! h264parse ! matroskamux  ! filesink location=output.mkv
+```
+autovideosink 会占用显示(我这里是HDMI显示器)，其他操作不能(ssh访问是可以的，可以kill掉gst)，播放 H-carton 会一直播 很尴尬
+
+最好用ximagesink、xvimagesink进行窗口显示
+
+---
+* * *
+# ffmpeg
+
+这里特指编译带硬件加速编解码的ffmpeg版本
+
+参考
+
+<https://www.cyberciti.biz/faq/how-to-install-ffmpeg-with-nvidia-gpu-acceleration-on-linux>
+
+<https://github.com/LinusCDE/mad-jetson-ffmpeg>
+
+<https://github.com/Keylost/jetson-ffmpeg>
+
+<https://johnvansickle.com/ffmpeg>
+
+准备
+```
+sudo apt install build-essential yasm cmake libtool libc6 libc6-dev unzip wget libnuma1 libnuma-dev pkg-config
+sudo apt install bzip2 fontconfig libfribidi{0,-dev} gmpc{,-dev} gnutls-bin lame libass{9,-dev} libavc1394-{0,dev} libbluray{2,-dev} libdrm{2,-dev} libfreetype6{,-dev} libmodplug{1,-dev} libraw1394-{11,dev} librsvg2{-2,-dev} libsoxr{0,-dev} libtheora{0,-dev} libva{2,-dev} libva-drm2 libva-x11-2 libvdpau{1,-dev} libvorbisenc2 libvorbis{0a,-dev} libvpx{5,-dev} libwebp{6,-dev} libx11{-6,-dev} libx264-{152,dev} libx265-{146,dev} libxcb1{,-dev} libxext{6,-dev} libxml2{,-dev} libxv{1,-dev} libxvidcore{4,-dev} libopencore-amr{nb0,nb-dev,wb0,wb-dev} opus-tools libsdl2-dev speex v4l-utils zlib1g{,-dev} libopenjp2-7{,-dev} libssh-{4,dev} libspeex{1,-dev}
+```
+
+## 尝试最通用的编译
+
+```
+git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+cd nv-codec-headers && sudo make install
+
+
+sed 's#@@PREFIX@@#/usr/local#' ffnvcodec.pc.in > ffnvcodec.pc
+install -m 0755 -d '/usr/local/include/ffnvcodec'
+install -m 0644 include/ffnvcodec/*.h '/usr/local/include/ffnvcodec'
+install -m 0755 -d '/usr/local/lib/pkgconfig'
+install -m 0644 ffnvcodec.pc '/usr/local/lib/pkgconfig'
+```
+
+git加速，我这里用的v2rayN appimage
+```
+git config --global http.proxy 'socks5://127.0.0.1:10808'
+git config --global https.proxy 'socks5://127.0.0.1:10808'
+```
+
+clone 主仓库
+```
+git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/
+```
+
+
+
+```
+./configure \
+  --prefix=/usr/local \
+  --extra-cflags="-I/usr/local/include" \
+  --extra-ldflags="-L/usr/local/lib" \
+  --disable-debug \
+  --disable-stripping \
+  --enable-lto \
+  --enable-fontconfig \
+  --enable-gmp \
+  --enable-gnutls \
+  --enable-gpl \
+  --enable-ladspa \
+  --enable-libass \
+  --enable-libbluray \
+  --enable-libdrm \
+  --enable-libfreetype \
+  --enable-libfribidi \
+  --enable-libmodplug \
+  --enable-libmp3lame \
+  --enable-libopencore_amrnb \
+  --enable-libopencore_amrwb \
+  --enable-libopenjpeg \
+  --enable-libopus \
+  --enable-libpulse \
+  --enable-librsvg \
+  --enable-libsoxr \
+  --enable-libspeex \
+  --enable-libssh \
+  --enable-libtheora \
+  --enable-libv4l2 \
+  --enable-libvorbis \
+  --enable-libvpx \
+  --enable-libwebp \
+  --enable-libx264 \
+  --enable-libx265 \
+  --enable-libxcb \
+  --enable-libxml2 \
+  --enable-libxvid \
+  --enable-version3 \
+  --enable-nvmpi \
+  --enable-nvv4l2dec --enable-libv4l2 --enable-shared --extra-libs="-L/usr/lib/aarch64-linux-gnu/tegra -lnvbuf_utils" --extra-cflags="-I /usr/src/jetson_multimedia_api/include/"
+  
+  
+  
+  
+  ./configure --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --enable-gpl \
+--enable-gnutls \
+--enable-libaom \
+--enable-libass \
+--enable-libfdk-aac \
+--enable-libfreetype \
+--enable-libmp3lame \
+--enable-libopus \
+--enable-libvorbis \
+--enable-libvpx \
+--enable-libx264 \
+--enable-libx265 \
+--enable-nonfree
+
+
+./configure \
+--enable-nonfree \
+--enable-gpl \
+--enable-shared \
+--enable-ffmpeg \
+--enable-ffplay \
+--enable-ffprobe \
+--enable-libx264 \
+--enable-libx265 \
+--enable-cuda-nvcc \
+--enable-nvenc \
+--enable-nvdec \
+--enable-cuda \
+--enable-cuvid \
+--enable-libnpp \
+--extra-libs="-lpthread -lm" \
+--extra-cflags=-I/usr/local/cuda/include \
+--extra-ldflags=-L/usr/local/cuda/lib64 
+
+pkg-config --modversion x264
+pkg-config --variable=pc_path pkg-config
+```
+
+
+
+ERROR: x264 not found using pkg-config
+```
+sudo apt install libx264-dev
+sudo apt install libx265-dev
+```
+
+ERROR: X264_BUILD >= 155 not satisfied
+
+看起来要求较高的X264版本，放弃
+
+
+
+不整其他选项整了
+
+```
+./configure --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
+make -j $(nproc)
+//sudo make install
+
+
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvenc -profile:v main -b:v 2548951  "out.mp4"
+```
+编译成功，运行失败，hevc_nvenc看起来不能用
+
+## jetson-ffmpeg 版本
+
+```
+cd ~/Downloads/nvidia
+git clone https://github.com/Keylost/jetson-ffmpeg.git
+cd jetson-ffmpeg
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo ldconfig
+
+cd ~/Downloads/nvidia
+clone one of supported ffmpeg versions (for example ffmpeg 7.1)
+git clone git://source.ffmpeg.org/ffmpeg.git -b release/7.1 --depth=1
+Go to the directory with the jetson-ffmpeg sources and patch the ffmpeg using the ffpatch.sh script.
+cd jetson-ffmpeg
+./ffpatch.sh ../ffmpeg
+Go to ffmpeg sources directory configure and build ffmpeg with nvmpi enabled and your custom options 
+cd ../ffmpeg
+./configure --enable-nvmpi
+make
+//sudo make install
+```
+
+
+Decode h264 video example，其实 gst、vlc、mplayer 等播放视频都观察到解码器被使用
+```
+ffmpeg -c:v h264_nvmpi -i <input.mp4> -f null -
+```
+Decode h264 video with fast scaling during decoding example
+```
+ffmpeg -c:v h264_nvmpi -resize:v 1920x1080 -i <input.mp4> -f null -
+```
+Encode h264 video example
+```
+ffmpeg -i <input.mp4> -c:v h264_nvmpi <output.mp4>
+```
+Transcode h264 to h265 video example
+```
+ffmpeg -c:v h264_nvmpi -i <input.mp4> -c:v hevc_nvmpi <output.mp4>
+```
+
+尝试如下，hevc_nvmpi 是好使的, jtop 内看到硬件编码加速用起来了。
+```
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -hwaccel_device 0 -extra_hw_frames 3 -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvenc -profile:v main -b:v 2548951 -fps_mode cfr -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvenc -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main  -preset fast -b:v 2548951 -fps_mode cfr -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -hwaccel_device 0 -extra_hw_frames 3 -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -extra_hw_frames 3 -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+## ./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel cuda -hwaccel_device 0 -hwaccel_output_format cuda -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -hwaccel_output_format cuda -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -extra_hw_frames 3 -hwaccel_output_format cuda -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -b:v 2548951  "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -extra_hw_frames 3 -hwaccel_output_format cuda -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -preset fast -b:v 2548951 -fps_mode cfr -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 "out.mp4"
+##./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvenc -profile:v main -b:v 2548951 -fps_mode cfr -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 "out.mp4"
+./ffmpeg -hide_banner -threads 0 -v verbose -hwaccel auto -i ~/Downloads/output.mp4 -c:v hevc_nvmpi -profile:v main -preset fast -b:v 2548951 -fps_mode cfr -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 -g 250 -keyint_min 25 -sws_flags bicubic -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 "out.mp4"
+
+```
+
+
+
+---
+* * *
+# opencv
+
+这里特指编译带硬件加速编解码的opencv版本
+
+<https://developer.nvidia.com/embedded/community/jetson-projects/opencv>
+
+<https://github.com/mdegans/nano_build_opencv>
+```
+./build_opencv.sh           # 报错
+./build_opencv.sh 4.4.0     # 报错
+./build_opencv.sh 4.1.1     # 报错
+```
+all fail。以后再说
+
+<https://github.com/mdegans/nano_build_opencv/issues/77>
+
+<https://forums.developer.nvidia.com/t/jetson-nano-opencv-installation-nvcc-does-not-support-gpu-architecture/266847>
+
+<https://github.com/AastaNV/JEP/tree/master/script>
+
+<https://my.cytron.io/tutorial/build-opencv-with-cuda-support-for-jetson>
+
+<https://forums.developer.nvidia.com/t/opencv-3-2-with-cuda-compilation/48938>
+
+```
+#!/bin/bash
+#
+
+version="4.10.0"
+folder="workspace"
+
+set -e
+
+for (( ; ; ))
+do
+    echo "Do you want to remove the default OpenCV (yes/no)?"
+    read rm_old
+
+    if [ "$rm_old" = "yes" ]; then
+        echo "** Remove other OpenCV first"
+        sudo apt -y purge *libopencv*
+	break
+    elif [ "$rm_old" = "no" ]; then
+	break
+    fi
+done
+
+
+echo "------------------------------------"
+echo "** Install requirement"
+echo "------------------------------------"
+sudo apt-get update
+sudo apt-get install -y build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev python3.10-dev python3-numpy
+sudo apt-get install -y libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libv4l-dev v4l-utils qv4l2
+sudo apt-get install -y curl
+
+
+echo "------------------------------------"
+echo "** Download opencv "${version}""
+echo "------------------------------------"
+mkdir $folder
+cd ${folder}
+curl -L https://github.com/opencv/opencv/archive/${version}.zip -o opencv-${version}.zip
+curl -L https://github.com/opencv/opencv_contrib/archive/${version}.zip -o opencv_contrib-${version}.zip
+unzip opencv-${version}.zip
+unzip opencv_contrib-${version}.zip
+rm opencv-${version}.zip opencv_contrib-${version}.zip
+cd opencv-${version}/
+
+
+echo "------------------------------------"
+echo "** Build opencv "${version}""
+echo "------------------------------------"
+mkdir release
+cd release/
+cmake -D WITH_CUDA=ON -D WITH_CUDNN=ON -D CUDA_ARCH_BIN="8.7" -D CUDA_ARCH_PTX="" -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${version}/modules -D WITH_GSTREAMER=ON -D WITH_LIBV4L=ON -D BUILD_opencv_python3=ON -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make -j$(nproc)
+
+
+echo "------------------------------------"
+echo "** Install opencv "${version}""
+echo "------------------------------------"
+sudo make install
+echo 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+echo 'export PYTHONPATH=/usr/local/lib/python3.10/site-packages/:$PYTHONPATH' >> ~/.bashrc
+source ~/.bashrc
+
+
+echo "** Install opencv "${version}" successfully"
+```
+
+## nvcc fatal : Unsupported gpu architecture 'compute_87'
+脚本里，或者cmake传环境变量时候
+```
+-D CUDA_ARCH_BIN=5.3,6.2,7.2  # 去掉 8.7
+```
+For Nano, CUDA arch is 5.3
+
+For TX2, CUDA arch is 6.2
+
+For Xavier, CUDA arch is 7.2
+
+For Orin, CUDA arch is 8.7
+
+```
+Jetson AGX Orin, Jetson Orin NX, Jetson Orin Nano	8.7
+Jetson AGX Xavier, Jetson Xavier NX	                7.2
+Jetson TX2	                                        6.2
+Jetson Nano, Jetson TX1                             5.3
+
+```
+
+具体可在这里找到
+
+<https://developer.nvidia.com/cuda-legacy-gpus>
+
+<https://developer.nvidia.com/cuda-gpus>
+
+GPU Architecture and Major Revision Numbers
+
+|   Major Revision Number   |  NVIDIA GPU Architecture |
+|   ----                    |  ----                    |
+|   9                       |  NVIDIA Hopper GPU Architecture |
+|   8                       |  NVIDIA Ampere GPU Architecture |
+|   7                       |  NVIDIA Volta GPU Architecture |
+|   6                       |  NVIDIA Pascal GPU Architecture |
+|   5                       |  NVIDIA Maxwell GPU Architecture |
+|   3                       |  NVIDIA Kepler GPU Architecture |
+
+
+Jetson CUDA GPU Compute Capability
+
+|   Compute Capability      |   Jetson  |
+|   ----                    |  ----     |
+|   3.2                     |   Tegra K1, Jetson TK1    |
+|   5.3                     |   Jetson Nano             |
+|   6.2                     |   Jetson TX2              |
+|   7.2                     |   Jetson AGX Xavier, Jetson Xavier NX |
+|   8.7                     |   Jetson AGX Orin, Jetson Orin NX, Jetson Orin Nano   |
+|   11.0                    |   Jetson T5000, Jetson T4000  |
+
+
+## boostdesc_bgm.i: No such file or directory
+```
+sudo apt install libboost-all-dev
+
+Suggested packages:
+  libboost-doc graphviz libboost1.65-doc gccxml libmpfrc++-dev libntl-dev xsltproc doxygen docbook-xml docbook-xsl default-jdk fop
+The following NEW packages will be installed:
+  libboost-all-dev libboost-atomic-dev libboost-atomic1.65-dev libboost-atomic1.65.1 libboost-chrono-dev libboost-chrono1.65-dev libboost-chrono1.65.1 libboost-container-dev
+  libboost-container1.65-dev libboost-container1.65.1 libboost-context-dev libboost-context1.65-dev libboost-context1.65.1 libboost-coroutine-dev libboost-coroutine1.65-dev
+  libboost-coroutine1.65.1 libboost-date-time-dev libboost-date-time1.65-dev libboost-dev libboost-exception-dev libboost-exception1.65-dev libboost-fiber-dev libboost-fiber1.65-dev
+  libboost-fiber1.65.1 libboost-filesystem-dev libboost-filesystem1.65-dev libboost-graph-dev libboost-graph-parallel-dev libboost-graph-parallel1.65-dev libboost-graph-parallel1.65.1
+  libboost-graph1.65-dev libboost-graph1.65.1 libboost-iostreams-dev libboost-iostreams1.65-dev libboost-locale-dev libboost-locale1.65-dev libboost-log-dev libboost-log1.65-dev
+  libboost-log1.65.1 libboost-math-dev libboost-math1.65-dev libboost-math1.65.1 libboost-mpi-dev libboost-mpi-python-dev libboost-mpi-python1.65-dev libboost-mpi-python1.65.1
+  libboost-mpi1.65-dev libboost-mpi1.65.1 libboost-numpy-dev libboost-numpy1.65-dev libboost-numpy1.65.1 libboost-program-options-dev libboost-program-options1.65-dev
+  libboost-program-options1.65.1 libboost-python-dev libboost-python1.65-dev libboost-python1.65.1 libboost-random-dev libboost-random1.65-dev libboost-random1.65.1 libboost-regex-dev
+  libboost-regex1.65-dev libboost-regex1.65.1 libboost-serialization-dev libboost-serialization1.65-dev libboost-serialization1.65.1 libboost-signals-dev libboost-signals1.65-dev
+  libboost-signals1.65.1 libboost-stacktrace-dev libboost-stacktrace1.65-dev libboost-stacktrace1.65.1 libboost-system-dev libboost-system1.65-dev libboost-test-dev libboost-test1.65-dev
+  libboost-test1.65.1 libboost-thread-dev libboost-thread1.65-dev libboost-timer-dev libboost-timer1.65-dev libboost-timer1.65.1 libboost-tools-dev libboost-type-erasure-dev
+  libboost-type-erasure1.65-dev libboost-type-erasure1.65.1 libboost-wave-dev libboost-wave1.65-dev libboost-wave1.65.1 libboost1.65-dev libboost1.65-tools-dev mpi-default-bin
+
+```
+
+没有排除报错
+
+cat /tmp/build_opencv/opencv/build/CMakeDownloadLog.txt
+
+---
+* * *
+# cuda 10.2 samples
+
+
+如果需要
+```
+sudo apt update
+sudo apt install -y --no-install-recommends make g++
+```
+
+复制副本并编译
+```
+cp -r /usr/local/cuda/samples tmp
+cd tmp/samples/5_Simulations/nbody
+make
+./nbody
+```
+
+
+compute_53 is Nano GPU architecture
+
+compute_62 is TX2 GPU architecture
+
+compute_72 is Xavier GPU architecture
+
+compute_87 is Orin GPU architecture
+```
+$ ./nbody 
+Run "nbody -benchmark [-numbodies=<numBodies>]" to measure performance.
+	-fullscreen       (run n-body simulation in fullscreen mode)
+	-fp64             (use double precision floating point values for simulation)
+	-hostmem          (stores simulation data in host memory)
+	-benchmark        (run benchmark to measure performance) 
+	-numbodies=<N>    (number of bodies (>= 1) to run in simulation) 
+	-device=<d>       (where d=0,1,2.... for the CUDA device to use)
+	-numdevices=<i>   (where i=(number of CUDA devices > 0) to use for simulation)
+	-compare          (compares simulation results running once on the default GPU and once on the CPU)
+	-cpu              (run n-body simulation on the CPU)
+	-tipsy=<file.bin> (load a tipsy model file for simulation)
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+> Windowed mode
+> Simulation data stored in video memory
+> Single precision floating point simulation
+> 1 Devices used for simulation
+GPU Device 0: "Maxwell" with compute capability 5.3
+
+> Compute 5.3 CUDA device: [NVIDIA Tegra X1]
+```
+```
+$ ./nbody
+Run "nbody -benchmark [-numbodies=<numBodies>]" to measure performance.
+	-fullscreen       (run n-body simulation in fullscreen mode)
+	-fp64             (use double precision floating point values for simulation)
+	-hostmem          (stores simulation data in host memory)
+	-benchmark        (run benchmark to measure performance) 
+	-numbodies=<N>    (number of bodies (>= 1) to run in simulation) 
+	-device=<d>       (where d=0,1,2.... for the CUDA device to use)
+	-numdevices=<i>   (where i=(number of CUDA devices > 0) to use for simulation)
+	-compare          (compares simulation results running once on the default GPU and once on the CPU)
+	-cpu              (run n-body simulation on the CPU)
+	-tipsy=<file.bin> (load a tipsy model file for simulation)
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+> Windowed mode
+> Simulation data stored in video memory
+> Single precision floating point simulation
+> 1 Devices used for simulation
+GPU Device 0: "Xavier" with compute capability 7.2
+
+> Compute 7.2 CUDA device: [Xavier]
+```
+
+
+
+---
+* * *
+# docker
+
+
 
 
 ---
@@ -1174,5 +2016,16 @@ sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin
 * * *
 # Next Topic
 
+---
+* * *
+# Next Topic
+
+---
+* * *
+# Next Topic
+
+---
+* * *
+# Next Topic
 
 
