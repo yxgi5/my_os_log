@@ -14859,7 +14859,7 @@ drwxr-x--- 123 andy andy 4096 Sep 23 17:18 ../
 ```
 
 ***
-# github ip地址查询
+# git 加速之 github ip 地址查询
 
 <https://www.ipaddress.com/website/www.github.com>
 ```
