@@ -1,4 +1,3 @@
----
 
 # set gnome online acount and livepath
 
