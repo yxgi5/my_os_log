@@ -1227,7 +1227,7 @@ E: Unable to locate package bluez-meshd
 # vlc
 
 ```
-sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization
+sudo apt install vlc vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization qt5ct
 
 qt5ct
 ```
@@ -1240,7 +1240,7 @@ vlc xxx.mp4 看起来会崩溃，不能用
 You may try to disable OMXIL plugin
 
 ```
-sudo mv /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so.old
+sudo mv /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so /usr/lib/aarch64-linux-gnu/vlc/plugins/codec/libomxil_plugin.so.bk
 ```
 就好用了。
 
@@ -1258,7 +1258,7 @@ Bus error (core dumped)
 
 qt5ct
 
-sudo apt install vainfo vdpau-va-driver
+sudo apt install vainfo vdpau-va-driver qt5ct
 
 killall -9 vlc
 vlc --reset-config vlc://quit
@@ -1742,6 +1742,15 @@ ffmpeg -c:v h264_nvmpi -i <input.mp4> -c:v hevc_nvmpi <output.mp4>
 
 ```
 
+## tips
+```
+如果安装编译的版本，库文件可能找不到
+vim /etc/ld.so.conf.d/ffmpeg.conf
+内容为
+/usr/local/ffmpeg/lib
+在终端中输入
+ldconfig
+```
 
 
 ---
@@ -1911,9 +1920,116 @@ The following NEW packages will be installed:
 
 ```
 
-没有排除报错
-
 cat /tmp/build_opencv/opencv/build/CMakeDownloadLog.txt
+
+下载文件没有成功，多试几次自动下载或手动下载`boostdesc_bgm.i,vgg_generated_48.i等.rar`
+
+`build_opencv\opencv\.cache\xfeatures2d\boostdesc`
+
+<https://github.com/opencv/opencv_3rdparty/tree/contrib_xfeatures2d_boostdesc_20161012>
+
+或者在脚本中添加cmake选项
+```
+-DBUILD_opencv_xfeatures2d=OFF
+```
+
+
+目前排除这两个坑，就编译成功了！
+
+
+jtop看到opencv启用了gpu
+
+
+
+## tips
+
+其实，一般情况应该先删除 apt 安装的 opencv库
+```
+pkg-config --libs opencv
+pkg-config --modversion opencv
+pkg-config --cflags opencv
+sudo pkg-config --libs --cflags opencv
+sudo apt purge libopencv*
+sudo apt autoremove
+```
+
+但是这里 依赖关系不能轻易删除 libopencv*
+```
+The following packages will be REMOVED:
+  libopencv* libopencv-dev* libopencv-python* libopencv-samples* nvidia-jetpack* nvidia-opencv* nvidia-vpi* opencv-licenses* vpi1-samples*
+```
+
+## pkg-config --libs opencv
+```
+Package opencv was not found in the pkg-config search path.
+Perhaps you should add the directory containing `opencv.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'opencv' found
+```
+
+`echo $PKG_CONFIG_PATH`
+
+`find / -name pkgconfig`
+
+`find / -name opencv.pc`
+
+`apt-file search opencv.pc`
+
+比如可能找到如下路径，
+```
+/usr/share/pkgconfig
+/usr/lib/pkgconfig
+/usr/lib/x86_64-linux-gnu/pkgconfig
+/usr/local/lib/pkgconfig
+```
+选择一个即可
+
+然后把.pc文件复制到选择的文件夹中
+```
+例如选择/usr/lib/pkgconfig
+sudo cp /opt/opencv4.5.5/lib/pkgconfig/opencv4.pc /usr/lib/pkgconfig
+```
+
+## 测试命令
+```
+python -c "import cv2; print(f'OpenCV: {cv2.__version__} for python installed and working'); print(f'CUDA-enabled GPU count {cv2.cuda.getCudaEnabledDeviceCount()}')"
+
+python -c "import cv2; print(cv2.__version__); print(cv2.cuda.getCudaEnabledDeviceCount())"
+```
+
+
+```
+import cv2
+import numpy as np
+
+# Check if CUDA is available
+if not cv2.cuda.getCudaEnabledDeviceCount():
+    print("CUDA-enabled GPU not found. Exiting...")
+    exit()
+    
+# Load an image
+image = cv2.imread('image.jpg', cv2.IMREAD_COLOR)
+if image is None:
+    print("Error loading image. Exiting...")
+    exit()
+    
+# Upload image to GPU
+gpu_image = cv2.cuda_GpuMat()
+gpu_image.upload(image)
+
+# Apply Gaussian blur on GPU
+gpu_blurred_image = cv2.cuda_GaussianBlur(gpu_image, (15, 15), 0)
+
+# Download the result back to CPU
+blurred_image = gpu_blurred_image.download()
+
+# Display the results
+cv2.imshow('Original Image', image)
+cv2.imshow('Blurred Image', blurred_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
 
 ---
 * * *

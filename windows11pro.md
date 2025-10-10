@@ -724,4 +724,180 @@ USB2XXX_Software_Setup_v1.1.6.exe
 
 # nvidia
 
-nvidia-smi.exe
+driver + cuda + cudnn
+
+
+in cmd
+
+nvidia-smi
+
+```
+Microsoft Windows [版本 10.0.22631.5189]
+(c) Microsoft Corporation。保留所有权利。
+
+C:\Users\andy>nvidia-smi
+Fri Oct 10 20:53:51 2025
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 576.57                 Driver Version: 576.57         CUDA Version: 12.9     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4080 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |
+| N/A   44C    P0             28W /  150W |       0MiB /  12282MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+```
+
+nvcc -V
+```
+C:\Users\andy>nvcc -V
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Tue_May_27_02:24:01_Pacific_Daylight_Time_2025
+Cuda compilation tools, release 12.9, V12.9.86
+Build cuda_12.9.r12.9/compiler.36037853_0
+```
+
+
+
+# 安装预编译的 支持 cuda 的 cv2 
+
+要先安装 cuda toolkit
+
+
+```
+(base) C:\Users\andy>conda create -y -n py37 python=3.7
+
+(base) C:\Users\andy>conda activate py37
+
+(py37) C:\Users\andy>pip install C:\Users\andy\Downloads\opencv_contrib_python-4.11.0-cp37-abi3-win_amd64.whl
+Processing c:\users\andy\downloads\opencv_contrib_python-4.11.0-cp37-abi3-win_amd64.whl
+Collecting numpy>=1.17.0
+  Downloading numpy-1.21.6-cp37-cp37m-win_amd64.whl (14.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.0/14.0 MB 6.1 MB/s eta 0:00:00
+Installing collected packages: numpy, opencv-contrib-python
+Successfully installed numpy-1.21.6 opencv-contrib-python-4.11.0
+
+
+>>> import cv2
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "D:\anaconda3\envs\py37\lib\site-packages\cv2\__init__.py", line 181, in <module>
+    bootstrap()
+  File "D:\anaconda3\envs\py37\lib\site-packages\cv2\__init__.py", line 115, in bootstrap
+    ], True)
+  File "D:\anaconda3\envs\py37\lib\site-packages\cv2\__init__.py", line 109, in load_first_config
+    raise ImportError('OpenCV loader: missing configuration file: {}. Check OpenCV installation.'.format(fnames))
+ImportError: OpenCV loader: missing configuration file: ['config-3.7.py', 'config-3.py']. Check OpenCV installation.
+
+
+pip install opencv-python
+pip install opencv-python==4.11.0.86
+pip install opencv-python==4.5.1.48
+
+pip install opencv-contrib-python
+
+
+import cv2
+
+# 显示一个简单的图像查看窗口
+image = cv2.imread('your_image_path.jpg')  # 替换为你的图片路径
+cv2.imshow('Image window', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+python3 -m venv myenv
+source myenv/bin/activate  # 在Unix或MacOS上
+myenv\Scripts\activate  # 在Windows上
+pip install opencv-python
+
+
+
+
+
+
+
+conda remove -n py37 --all
+conda create -y -n py37 python=3.7
+conda activate py37
+pip install opencv-python-headless opencv-contrib-python-headless
+python -c "import cv2; print(cv2.__version__); print(cv2.cuda.getCudaEnabledDeviceCount())"
+
+
+pip cache purge
+pip install --force-reinstall opencv-python-headless opencv-contrib-python-headless
+
+
+
+
+安装预编译的 支持 cuda 的 cv2 没有成功
+
+https://www.jamesbowley.co.uk/nbs/ImportError_dll_load_failed_while_importing_cv2.html
+
+为啥？
+
+要先安装 cuda toolkit
+
+这样就可以了
+
+
+(base) C:\Users\andy>conda activate py37
+
+(py37) C:\Users\andy>pip list
+Package      Version
+------------ ---------
+certifi      2022.12.7
+numpy        1.21.6
+pip          22.3.1
+setuptools   65.6.3
+wheel        0.38.4
+wincertstore 0.2
+
+(py37) C:\Users\andy>pip install C:\Users\andy\Downloads\opencv_contrib_python-4.12.0.88-cp37-abi3-win_amd64.whl
+Processing c:\users\andy\downloads\opencv_contrib_python-4.12.0.88-cp37-abi3-win_amd64.whl
+Requirement already satisfied: numpy<2.0 in d:\anaconda3\envs\py37\lib\site-packages (from opencv-contrib-python==4.12.0.88) (1.21.6)
+Installing collected packages: opencv-contrib-python
+Successfully installed opencv-contrib-python-4.12.0.88
+
+(py37) C:\Users\andy>python -c "import cv2; print(cv2.__version__); print(cv2.cuda.getCudaEnabledDeviceCount())"
+4.12.0
+1
+
+(py37) C:\Users\andy>
+
+
+
+
+
+
+
+
+
+
+
+https://github.com/opencv/opencv/releases
+https://github.com/cudawarped/opencv_contrib/releases
+
+https://www.jamesbowley.co.uk/qmd/downloads.html
+
+https://github.com/cudawarped/opencv-python-cuda-wheels/releases
+https://github.com/shekyc/opencv-python-cuda-windows-wheels/releases
+
+https://www.jamesbowley.co.uk/qmd/opencv_cuda_python_windows.html
+https://blog.csdn.net/REAL_liudebai/article/details/119356958
+
+https://developer.nvidia.com/cudnn
+https://docs.nvidia.com/deeplearning/cudnn/backend/v9.14.0/release-notes.html#cudnn-9-10-2
+https://docs.nvidia.com/deeplearning/cudnn/latest/
+```
