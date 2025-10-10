@@ -15068,6 +15068,8 @@ source allegro_172_patch/spb172
 	lowSpeedLimit = 0
 	lowSpeedTime = 999999
 ```
+
+---
 # 
 ```
 sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev python3-subunit mesa-common-dev zstd liblz4-tool file locales
@@ -15156,6 +15158,7 @@ sleep 1
 xdotool getactivewindow
 sleep 1
 xdotool windowclose $(xdotool getactivewindow)
+<<<<<<< HEAD
 
 ```
 
@@ -15285,6 +15288,8 @@ docker compose up -d
 ---
 # 
 ```
+=======
+>>>>>>> a76209ae98b7b4e9fb0b31031a3faaa86fd581f9
 
 ```
 
