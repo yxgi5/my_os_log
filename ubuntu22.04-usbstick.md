@@ -15157,8 +15157,6 @@ sleep 1
 xdotool getactivewindow
 sleep 1
 xdotool windowclose $(xdotool getactivewindow)
-<<<<<<< HEAD
-
 ```
 
 ---
@@ -15287,9 +15285,6 @@ docker compose up -d
 ---
 # 
 ```
-=======
->>>>>>> a76209ae98b7b4e9fb0b31031a3faaa86fd581f9
-
 ```
 
 ---
