@@ -1924,7 +1924,9 @@ cat /tmp/build_opencv/opencv/build/CMakeDownloadLog.txt
 
 下载文件没有成功，多试几次自动下载或手动下载`boostdesc_bgm.i,vgg_generated_48.i等.rar`
 
-`build_opencv\opencv\.cache\xfeatures2d\boostdesc`
+或者，之前存档的文件有`build_opencv\opencv\.cache\xfeatures2d\boostdesc` 里面的复制进 `/tmp/build_opencv\opencv\.cache\xfeatures2d\boostdesc`
+
+发现了 失败情况有的文件大小为0， 直接替换。这里报错一般可以继续编译，也就是输入 sudo 密码，就继续编译了
 
 <https://github.com/opencv/opencv_3rdparty/tree/contrib_xfeatures2d_boostdesc_20161012>
 
