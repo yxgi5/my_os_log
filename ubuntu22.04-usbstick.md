@@ -15068,6 +15068,96 @@ source allegro_172_patch/spb172
 	lowSpeedLimit = 0
 	lowSpeedTime = 999999
 ```
+# 
+```
+sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev python3-subunit mesa-common-dev zstd liblz4-tool file locales
+sudo apt install efitools
+```
+
+---
+# htop
+```
+sudo apt install htop
+```
+
+---
+# 
+```
+sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint xterm python3-subunit mesa-common-dev zstd liblz4-tool
+sudo apt install build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 liblz4-tool locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd efitools
+```
+
+---
+# python-docx pypandoc
+```
+sudo -H pip3 install python-docx
+sudo -H pip3 install pypandoc
+sudo -H pip3 install beautifulsoup4 lxml pypandoc
+sudo apt install pandoc
+```
+
+---
+# ChatGPT to Markdown
+```
+chrome 插件
+```
+
+---
+# vscode插件
+```
+Cortex-Debug（Daniele Lacamera）
+C/C++ 插件（Microsoft）
+```
+
+---
+#  for ti pinmux
+```
+sudo apt install libudev0
+```
+
+---
+# xdotool and xdotoolgui
+<https://github.com/aleritty/xdotool-gui>
+
+实际上xdotoolgui已经没有多大价值, 直接用脚本调用xdotool不就行了
+
+```
+sudo apt install xdotool
+```
+```
+$ xdotool --version
+xdotool version 3.20160805.1
+```
+
+```
+$ xdotool getmouselocation
+x:3227 y:1793 screen:0 window:94372097
+```
+
+test_xdotool.sh
+```
+#!/bin/bash
+# Open terminal and type a command
+xdotool key ctrl+alt+t # Open terminal
+sleep 1 # Wait for terminal to open
+xdotool type --delay 120 "echo 'Automation with xdotool!'"  # 命令应该这样 xdotool type "echo 'Automation with xdotool'\!"
+xdotool key --delay 200 Return # Press Enter
+
+xdotool key a
+sleep 1
+xdotool key ctrl+c
+sleep 1
+xdotool type "Hello, World!"
+sleep 1
+xdotool click 1 # Left-click (1), middle-click (2), right-click (3)
+sleep 1
+#xdotool mousemove 1500 300 click 1
+#sleep 1
+xdotool getactivewindow
+sleep 1
+xdotool windowclose $(xdotool getactivewindow)
+
+```
 
 ---
 # 修改Docker数据目录位置，包含镜像位置
