@@ -15247,9 +15247,9 @@ docker compose up -d
 ```
 
 ---
-# 
+# libavif
 ```
-
+sudo apt install libavif-dev libavif-bin
 ```
 
 ---
