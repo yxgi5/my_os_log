@@ -15253,40 +15253,70 @@ sudo apt install libavif-dev libavif-bin
 ```
 
 ---
-# 
+# stlink-server
 ```
+$ cd /opt/Ac6/SystemWorkbench/stlinkserver
+$ sudo dpkg -i st-stlink-server-1.0.12-1-linux-amd64.deb
+$ cd /opt/Ac6/SystemWorkbench
+$ sudo ./install_stlink_udev.sh 
+The udev rule 49-stlinkv1.rules will be installed into /etc/udev/rules.d
+The udev rule 49-stlinkv2-1.rules will be installed into /etc/udev/rules.d
+The udev rule 49-stlinkv2.rules will be installed into /etc/udev/rules.d
+The udev rule 49-stlinkv3.rules will be installed into /etc/udev/rules.d
+```
+其他的
+```
+/opt/st/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.stlink-gdb-server.linux64_2.0.100.202109301221/tools/bin
+```
+---
+# 安装 bear 工具（用来生成 compile_commands.json）
+```
+sudo apt install bear
+
+The following NEW packages will be installed:
+  bear libear
+```
+
+---
+# Vitis_Libraries
+```
+/opt-shadow/Xilinx
+$ git clone org-3189299@github.com:Xilinx/Vitis_Libraries.git
 
 ```
 
 ---
-# 
+# gcc-arm-none-eabi
 ```
+sudo apt install gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-dev libstdc++-arm-none-eabi-newlib picolibc-arm-none-eabi gdb-arm-none-eabi
+
+gdb-multiarch -v
+
+GNU gdb (Ubuntu 12.1-0ubuntu1~22.04.2) 12.1
 
 ```
 
 ---
-# 
+# ltrace
 ```
+sudo apt install ltrace
+ltrace -f -o ltrace.txt ./create_encrypt_binary id.bin firmware.bin out.bin
 
 ```
 
 ---
-# 
+# 创建 compile_commands.json 数据库 for vscode
 ```
-
+sudo apt install bear
+sudo -H pip install compiledb
 ```
-
----
-# 
+这样使用
 ```
-
+bear -- make clean clean-libhal libhal  all
+compiledb -n make clean clean-lib libhal all
 ```
-
----
-# 
-```
-```
-
+具体参考模板
+开发板资料/stm32/stm32cubemx/stm32f103ze_makefile_mx/2.stm32f103ze_makefile_mx_single_makefile.zip
 ---
 # 
 ```
