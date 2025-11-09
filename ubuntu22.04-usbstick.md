@@ -15280,7 +15280,7 @@ The following NEW packages will be installed:
 ---
 # Vitis_Libraries
 ```
-/opt-shadow/Xilinx
+/opt/Xilinx
 $ git clone org-3189299@github.com:Xilinx/Vitis_Libraries.git
 
 ```
@@ -15317,6 +15317,50 @@ compiledb -n make clean clean-lib libhal all
 ```
 具体参考模板
 开发板资料/stm32/stm32cubemx/stm32f103ze_makefile_mx/2.stm32f103ze_makefile_mx_single_makefile.zip
+
+
+---
+# 完整复制 /opt/Xilinx 并保留所有权限、ACL、xattr
+```
+rsync -aAX --progress /opt/Xilinx /mydir/
+
+cp -a --preserve=all /opt/Xilinx /mydir/
+
+```
+Beyond Compare 的复制在默认情况下不会保留 ACL、SELinux、xattr 等扩展属性。比对用 BCompare，复制用上面的命令保 ACL
+
+
+
+---
+# 
+```
+sudo apt install libgmp-dev libgmpxx4ldbl libxext6
+```
+
+---
+# petalinux 用的gcc g++版本一般是10等
+```
+sudo apt install g++-10 g++-11
+sudo apt install gcc-9 g++-9 g++-9-multilib
+sudo apt install gcc-10 g++-10 g++-10-multilib
+sudo apt install gcc-11 g++-11 g++-11-multilib
+sudo apt install gcc-12 g++-12 g++-12-multilib
+
+```
+
+---
+# wemeet
+```
+
+```
+
+---
+# 
+```
+
+```
+
+
 ---
 # 
 ```
@@ -15335,27 +15379,12 @@ compiledb -n make clean clean-lib libhal all
 
 ```
 
----
-# 
-```
-
-```
 
 ---
 # 
 ```
 
 ```
-
-
-
-
-
-
-
-
-
-
 
 
 
