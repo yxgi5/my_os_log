@@ -15355,16 +15355,27 @@ sudo apt install gcc-12 g++-12 g++-12-multilib
 ```
 
 ---
-# 
+# Could not get lock /var/lib/dpkg/lock-frontend
 ```
+sudo lsof /var/lib/dpkg/lock-frontend
+sudo kill -9 <PID>
+```
+or
+```
+sudo rm -rf /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock
 
+然后
+
+sudo dpkg --configure -a
+或
+sudo apt --fix-broken install
 ```
 
 
 ---
-# 
+# pbuilder
 ```
-
+sudo apt install pbuilder
 ```
 
 ---
