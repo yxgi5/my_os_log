@@ -15353,7 +15353,6 @@ sudo apt install gcc-12 g++-12 g++-12-multilib
 ```
 
 ```
-
 ---
 # gcc-aarch64-linux-gnu
 ```
@@ -15381,7 +15380,23 @@ The following NEW packages will be installed:
 0 upgraded, 22 newly installed, 2 to remove and 116 not upgraded.
 Need to get 45.3 MB of archives.
 After this operation, 155 MB of additional disk space will be used.
+```
 
+---
+# Could not get lock /var/lib/dpkg/lock-frontend
+```
+sudo lsof /var/lib/dpkg/lock-frontend
+sudo kill -9 <PID>
+```
+or
+```
+sudo rm -rf /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock
+
+然后
+
+sudo dpkg --configure -a
+或
+sudo apt --fix-broken install
 ```
 
 
@@ -15392,6 +15407,11 @@ sudo apt install easystroke
 ```
 
 
+---
+# pbuilder
+```
+sudo apt install pbuilder
+```
 
 ---
 # 
