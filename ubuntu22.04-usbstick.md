@@ -15355,17 +15355,43 @@ sudo apt install gcc-12 g++-12 g++-12-multilib
 ```
 
 ---
-# 
+# gcc-aarch64-linux-gnu
 ```
+$ sudo apt install gcc-aarch64-linux-gnu make git
+[sudo] password for andy: 
+Sorry, try again.
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+make is already the newest version (4.3-4.1build1).
+git is already the newest version (1:2.34.1-1ubuntu1.15).
+The following additional packages will be installed:
+  binutils-aarch64-linux-gnu cpp-11-aarch64-linux-gnu cpp-aarch64-linux-gnu gcc-11-aarch64-linux-gnu gcc-11-aarch64-linux-gnu-base gcc-11-cross-base gcc-12-cross-base
+  libasan6-arm64-cross libatomic1-arm64-cross libc6-arm64-cross libc6-dev-arm64-cross libgcc-11-dev-arm64-cross libgcc-s1-arm64-cross libgomp1-arm64-cross libhwasan0-arm64-cross
+  libitm1-arm64-cross liblsan0-arm64-cross libstdc++6-arm64-cross libtsan0-arm64-cross libubsan1-arm64-cross linux-libc-dev-arm64-cross
+Suggested packages:
+  binutils-doc gcc-11-locales cpp-doc gcc-11-doc gdb-aarch64-linux-gnu gcc-doc
+The following packages will be REMOVED:
+  g++-multilib gcc-multilib
+The following NEW packages will be installed:
+  binutils-aarch64-linux-gnu cpp-11-aarch64-linux-gnu cpp-aarch64-linux-gnu gcc-11-aarch64-linux-gnu gcc-11-aarch64-linux-gnu-base gcc-11-cross-base gcc-12-cross-base
+  gcc-aarch64-linux-gnu libasan6-arm64-cross libatomic1-arm64-cross libc6-arm64-cross libc6-dev-arm64-cross libgcc-11-dev-arm64-cross libgcc-s1-arm64-cross libgomp1-arm64-cross
+  libhwasan0-arm64-cross libitm1-arm64-cross liblsan0-arm64-cross libstdc++6-arm64-cross libtsan0-arm64-cross libubsan1-arm64-cross linux-libc-dev-arm64-cross
+0 upgraded, 22 newly installed, 2 to remove and 116 not upgraded.
+Need to get 45.3 MB of archives.
+After this operation, 155 MB of additional disk space will be used.
 
 ```
 
 
 ---
-# 
+# 系统级鼠标手势
+```
+sudo apt install easystroke
 ```
 
-```
+
 
 ---
 # 

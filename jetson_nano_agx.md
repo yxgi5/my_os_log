@@ -157,7 +157,7 @@ Could not get lock /var/lib/apt/lists/lock - open (11: Resource temporarily unav
 主机通过SSH登录目标板
 
 
-## VNC配置
+## VNC配置(Vino 是 GNOME 官方 VNC 服务, 在 KDE、XFCE、LXDE、MATE 等环境不合适用)
 ```
 sudo apt update
 sudo apt install vino       （现在不叫vino-server了）
@@ -697,6 +697,24 @@ cat /sys/devices/pwm-fan/target-pwm
 sudo sh -c "echo 100 > /sys/devices/pwm-fan/target_pwm"
 echo 255 | sudo tee /sys/devices/pwm-fan/target_pwm
 ```
+
+更新的
+```
+$ cat /sys/devices/platform/pwm-fan/hwmon/hwmon4/power/control                                                                           
+auto   
+// Switch to manual fan control.
+$ sudo bash -c 'echo on >/sys/devices/platform/pwm-fan/hwmon/hwmon4/power/control'
+// Set fan speed to max (pwm).
+$ sudo bash -c 'echo 255 >/sys/devices/platform/pwm-fan/hwmon/hwmon4/pwm1'
+// Verify fan speed (pwm).
+$ cat /sys/devices/platform/pwm-fan/hwmon/hwmon4/pwm1 
+255
+// Verify rpm.
+$ cat /sys/devices/platform/39c0000.tachometer/hwmon/hwmon2/rpm   
+6214
+
+```
+
 
 ```
 sudo apt install libgtk2.0-dev libpango-perl libpango1.0-dev build-essential cpanminus git conky conky-all tk-dev volumeicon-alsa gnome-icon-theme parcellite shutter net-tools p7zip p7zip-full p7zip-rar unace unrar zip unzip p7zip-full p7zip-rar sharutils uudeview mpack jlha-utils arj cabextract file-roller xz-utils fonts-ipafont-gothic fonts-ipafont-mincho fonts-wqy-microhei fonts-wqy-zenhei fonts-indic git libgtk2.0-dev libglib2.0-dev libgconf2-dev libgstreamer1.0-dev g++ make cmake libgst-dev autoconf libtool automake cmake cmake-gui python-pip gtk-theme-switch gtk2-engines openbox-dev lxappearance-obconf adwaita-icon-theme-full chromium-browser  chromium-browser-l10n firefox network-manager-dev network-manager-openvpn network-manager-pptp network-manager-vpnc network-manager-openconnect network-manager-iodine pppoe ppp pppoeconf pppconfig fcitx-table-wubi libreoffice-l10n-en-za hyphen-en-gb hunspell-en-ca libreoffice-l10n-en-gb thunderbird-locale-en-gb mythes-en-au libreoffice-help-en-gb fcitx-sunpinyin hunspell-en-za gimp-help-en kde-l10n-engb hunspell-en-au hunspell-en-gb kde-l10n-zhcn fcitx-googlepinyin fcitx fcitx-bin fcitx-data fcitx-modules fcitx-googlepinyin fcitx-config-gtk fcitx-frontend-gtk2 fcitx-ui-classic fcitx-module-dbus xscreensaver libopengl-xscreensaver-perl xscreensaver-data xscreensaver-data-extra xscreensaver-gl xscreensaver-gl-extra xscreensaver-screensaver-bsod xscreensaver-screensaver-dizzy xscreensaver-screensaver-webcollage fonts-freefont-ttf ubuntu-desktop ubuntu-restricted-extras ubuntu-unity-desktop unity-tweak-tool screenfetch gitk
