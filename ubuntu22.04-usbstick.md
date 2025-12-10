@@ -15512,6 +15512,46 @@ sudo service nmbd restart
 ```
 
 ---
+# CPU 调频模式 查看 CPU 频率
+
+查看 CPU 频率
+```
+sudo apt install cpufrequtils
+cpufreq-info
+
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
+watch -n 0.5 "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"
+
+lscpu | grep "MHz"
+cat /proc/cpuinfo | grep MHz
+sudo apt install linux-tools-common linux-tools-$(uname -r)
+sudo turbostat
+sudo apt install linux-tools-common linux-tools-generic linux-tools-`uname -r`
+sudo cpupower frequency-info
+```
+
+CPU 调频模式
+```
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+```
+输出可能是：
+```
+performance
+powersave（Ubuntu 22.04 默认）
+ondemand
+schedutil 跟随调度器动态调频的策略，响应速度快，介于 ondemand 和 performance 之间。
+conservative
+```
+
+查看 CPU 支持的调频模式
+```
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+例如切换到 performance（满频）：
+sudo cpupower frequency-set -g performance
+```
+
+
+---
 # 
 ```
 
@@ -15524,6 +15564,82 @@ sudo service nmbd restart
 
 ```
 
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
 
 
 
