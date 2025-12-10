@@ -15414,9 +15414,101 @@ sudo apt install pbuilder
 ```
 
 ---
-# 
+# samba配置
 ```
+sudo apt install smbclient nautilus-share samba samba-common smbclient winbind cifs-utils
+```
+## 添加samba用户和密码
+```
+sudo smbpasswd -a andreas
+```
+## 修改配置文件
+sudo gedit /etc/samba/smb.conf
+```
+[global]
+allow insecure wide links = yes
+unix extensions = no
+...
+[exchange]
+    comment = Network Logon Service
+    path = /home/andreas/workdir/exchange
+    guest ok = yes
+    read only = no
+    writeable = yes
+    browseable = yes
 
+[figkey]
+    comment = Network Logon Service
+    path = /home/andreas/workdir/figkey
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+
+[software]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/software
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+
+[boards]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/开发板资料
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+
+[reference]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/参考资料
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+
+[rk3588]
+    comment = Network Logon Service
+    path = /opt/rk3588
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+    follow symlinks = yes
+    wide links = yes
+
+[tmp]
+	only user = yes
+	comment = Network Logon Service
+	valid users = andreas
+	browseable = yes
+	path = /opt/tmp
+
+[sss]
+	user = andreas,@andreas
+	revalidate = yes
+	path = /opt/porno
+	only user = yes
+	read list = andreas,@andreas
+	valid users = andreas,@andreas
+
+[mov]
+	write list = andreas,@andreas
+	writeable = yes
+	read list = andreas,@andreas
+	valid users = andreas,@andreas
+	user = andreas,@andreas
+	path = /ext_drv/mov
+	only user = yes
+	revalidate = yes
+
+```
+## 重启服务
+```
+sudo service smbd restart
+sudo service nmbd restart
 ```
 
 ---
