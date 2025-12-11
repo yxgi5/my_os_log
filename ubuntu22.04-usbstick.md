@@ -15414,9 +15414,21 @@ sudo apt install pbuilder
 ```
 
 ---
-# 
+# CPU 调频策略
 ```
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 
+sudo cpupower frequency-set -g performance
+
+
+sudo cpupower frequency-set -g powersave
+sudo cpupower frequency-set -g schedutil
+
+
+
+sudo apt install cpufrequtils
+cpufreq-info
 ```
 
 ---
