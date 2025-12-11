@@ -1129,6 +1129,33 @@ echo "password" | sudo anydesk --set-password
 sudo systemctl restart anydesk.service 
 ```
 
+
+
+## id重置
+
+如果是复制系统, id需要重置:
+
+```
+sudo systemctl stop anydesk.service
+```
+
+`/root/.anydesk`删掉, `~/.anydesk`删掉, 运行`anydesk`, 会产生新的`~/.anydesk`
+
+```
+/etc/anydesk/service.conf
+/etc/anydesk/system.conf
+```
+
+可以从`~/.anydesk`复制的到这两个文件来
+
+然后
+
+```
+sudo systemctl restart anydesk.service
+```
+
+记录神秘数字 `504189579`
+
 ---
 
 # check boot log
@@ -15640,7 +15667,6 @@ sudo cpupower frequency-set -g performance
 ```
 
 ```
-
 
 
 
