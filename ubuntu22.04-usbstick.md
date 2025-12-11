@@ -1129,6 +1129,33 @@ echo "password" | sudo anydesk --set-password
 sudo systemctl restart anydesk.service 
 ```
 
+
+
+## id重置
+
+如果是复制系统, id需要重置:
+
+```
+sudo systemctl stop anydesk.service
+```
+
+`/root/.anydesk`删掉, `~/.anydesk`删掉, 运行`anydesk`, 会产生新的`~/.anydesk`
+
+```
+/etc/anydesk/service.conf
+/etc/anydesk/system.conf
+```
+
+可以从`~/.anydesk`复制的到这两个文件来
+
+然后
+
+```
+sudo systemctl restart anydesk.service
+```
+
+记录神秘数字 `504189579`
+
 ---
 
 # check boot log
@@ -15414,22 +15441,142 @@ sudo apt install pbuilder
 ```
 
 ---
-# CPU 调频策略
+# samba配置
 ```
-cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
-cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+sudo apt install smbclient nautilus-share samba samba-common smbclient winbind cifs-utils
+```
+## 添加samba用户和密码
+```
+sudo smbpasswd -a andreas
+```
+## 修改配置文件
+sudo gedit /etc/samba/smb.conf
+```
+[global]
+allow insecure wide links = yes
+unix extensions = no
+...
+[exchange]
+    comment = Network Logon Service
+    path = /home/andreas/workdir/exchange
+    guest ok = yes
+    read only = no
+    writeable = yes
+    browseable = yes
 
-sudo cpupower frequency-set -g performance
+[figkey]
+    comment = Network Logon Service
+    path = /home/andreas/workdir/figkey
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
 
+[software]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/software
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
 
-sudo cpupower frequency-set -g powersave
-sudo cpupower frequency-set -g schedutil
+[boards]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/开发板资料
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
 
+[reference]
+    comment = Network Logon Service
+    path = /media/andreas/M4A/参考资料
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
 
+[rk3588]
+    comment = Network Logon Service
+    path = /opt/rk3588
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+    follow symlinks = yes
+    wide links = yes
 
+[tmp]
+	only user = yes
+	comment = Network Logon Service
+	valid users = andreas
+	browseable = yes
+	path = /opt/tmp
+
+[sss]
+	user = andreas,@andreas
+	revalidate = yes
+	path = /opt/porno
+	only user = yes
+	read list = andreas,@andreas
+	valid users = andreas,@andreas
+
+[mov]
+	write list = andreas,@andreas
+	writeable = yes
+	read list = andreas,@andreas
+	valid users = andreas,@andreas
+	user = andreas,@andreas
+	path = /ext_drv/mov
+	only user = yes
+	revalidate = yes
+
+```
+## 重启服务
+```
+sudo service smbd restart
+sudo service nmbd restart
+```
+
+---
+# CPU 调频模式 查看 CPU 频率
+
+查看 CPU 频率
+```
 sudo apt install cpufrequtils
 cpufreq-info
+
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
+watch -n 0.5 "cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq"
+
+lscpu | grep "MHz"
+cat /proc/cpuinfo | grep MHz
+sudo apt install linux-tools-common linux-tools-$(uname -r)
+sudo turbostat
+sudo apt install linux-tools-common linux-tools-generic linux-tools-`uname -r`
+sudo cpupower frequency-info
 ```
+
+CPU 调频模式
+```
+cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+```
+输出可能是：
+```
+performance
+powersave（Ubuntu 22.04 默认）
+ondemand
+schedutil 跟随调度器动态调频的策略，响应速度快，介于 ondemand 和 performance 之间。
+conservative
+```
+
+查看 CPU 支持的调频模式
+```
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+例如切换到 performance（满频）：
+sudo cpupower frequency-set -g performance
+```
+
 
 ---
 # 
@@ -15445,6 +15592,81 @@ cpufreq-info
 ```
 
 
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
+
+
+---
+# 
+```
+
+```
 
 
 
