@@ -15564,9 +15564,17 @@ unix extensions = no
 
 ```
 ## 重启服务
+
 ```
 sudo service smbd restart
 sudo service nmbd restart
+```
+
+or
+
+```
+sudo systemctl restart smbd.service
+sudo systemctl restart nmbd.service
 ```
 
 ---
