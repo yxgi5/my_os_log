@@ -15579,18 +15579,152 @@ sudo cpupower frequency-set -g performance
 
 
 ---
-# 
+# podman
+```
+$ sudo apt install podman
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  binutils-aarch64-linux-gnu cpp-11-aarch64-linux-gnu cpp-aarch64-linux-gnu gcc-11-aarch64-linux-gnu-base gcc-11-cross-base gcc-12-cross-base libasan6-arm64-cross libatomic1-arm64-cross
+  libc6-arm64-cross libc6-dev-arm64-cross libgcc-11-dev-arm64-cross libgcc-s1-arm64-cross libgomp1-arm64-cross libhwasan0-arm64-cross libitm1-arm64-cross liblsan0-arm64-cross
+  libstdc++6-arm64-cross libtsan0-arm64-cross libubsan1-arm64-cross linux-libc-dev-arm64-cross
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  buildah catatonit conmon containernetworking-plugins crun fuse-overlayfs golang-github-containernetworking-plugin-dnsname golang-github-containers-common
+  golang-github-containers-image uidmap
+Suggested packages:
+  containers-storage docker-compose
+The following NEW packages will be installed:
+  buildah catatonit conmon containernetworking-plugins crun fuse-overlayfs golang-github-containernetworking-plugin-dnsname golang-github-containers-common
+  golang-github-containers-image podman uidmap
+0 upgraded, 11 newly installed, 0 to remove and 129 not upgraded.
+Need to get 25.4 MB of archives.
+After this operation, 109 MB of additional disk space will be used.
 ```
 
 ```
+podman pull ubuntu:18.04
+podman pull ubuntu:20.04
+podman pull ubuntu:22.04
+podman pull ubuntu:24.04
+```
+```
+$ podman pull ubuntu:22.04
+Resolved "ubuntu" as an alias (/etc/containers/registries.conf.d/shortnames.conf)
+Trying to pull docker.io/library/ubuntu:22.04...
+Getting image source signatures
+Copying blob 6f4ebca3e823 done  
+Copying config 65c77cbc27 done  
+Writing manifest to image destination
+Storing signatures
+65c77cbc27c2640de4c99ed5cfe6b689b192f81745a36032b50e2407b073ff22
+andy@andy-kuangshi16:~
+$ podman pull ubuntu:18.04
+Resolved "ubuntu" as an alias (/etc/containers/registries.conf.d/shortnames.conf)
+Trying to pull docker.io/library/ubuntu:18.04...
+Getting image source signatures
+Copying blob 7c457f213c76 done  
+Copying config f9a80a55f4 done  
+Writing manifest to image destination
+Storing signatures
+f9a80a55f492e823bf5d51f1bd5f87ea3eed1cb31788686aa99a2fb61a27af6a
+andy@andy-kuangshi16:~
+$ podman pull ubuntu:20.04
+Resolved "ubuntu" as an alias (/etc/containers/registries.conf.d/shortnames.conf)
+Trying to pull docker.io/library/ubuntu:20.04...
+Getting image source signatures
+Copying blob 13b7e930469f done  
+Copying config b7bab04fd9 done  
+Writing manifest to image destination
+Storing signatures
+b7bab04fd9aa0c771e5720bf0cc7cbf993fd6946645983d9096126e5af45d713
+andy@andy-kuangshi16:~
+$ podman pull ubuntu:24.04
+Resolved "ubuntu" as an alias (/etc/containers/registries.conf.d/shortnames.conf)
+Trying to pull docker.io/library/ubuntu:24.04...
+Getting image source signatures
+Copying blob a3629ac5b9f4 done  
+Copying config 493218ed0f done  
+Writing manifest to image destination
+Storing signatures
+493218ed0f404132311952996fea8ce85e50c49f5a717f26f25c52a25fcb2e56
+```
+
+
 
 
 ---
-# 
+# distrobox
+```
+curl -O https://raw.githubusercontent.com/89luca89/distrobox/main/install
+chmod +x install
+sudo sh install # 也可以 ./install 或者 ./install --prefix $HOME/.local
+
+$ sudo ./install 
+[sudo] password for andy: 
+ Checking dependencies...
+ Downloading...
+ Unpacking...
+ Installation successful!
+ Shell scripts are located in /usr/local/bin
+ Manpages are located in /usr/local/share/man/man1
+
+```
+安装了 `distrobox-1.8.2.2.tar.gz`
+
+```
+sudo mkdir -p /containers/volumes/Xilinx
+sudo chown $USER:$USER /containers/volumes/Xilinx
+sudo chmod 755 /containers/volumes/Xilinx
+
+$ distrobox create \
+  --name ubuntu1804 \
+  --image ubuntu:18.04 \
+  --home ~/.distrobox/ubuntu-1804-home \
+  --volume /containers/volumes/Xilinx:/opt/Xilinx \
+  --additional-flags "--privileged"
+Creating 'ubuntu1804' using image ubuntu:18.04	 [ OK ]
+Distrobox 'ubuntu1804' successfully created.
+To enter, run:
+
+distrobox enter ubuntu1804
+```
+
+
+
+```
+distrobox list
+podman stats --no-stream
+
+
+distrobox stop ubuntu1804
+
+distrobox rm ubuntu1804
 ```
 
 ```
+# 1️⃣ 在原主机上，保存容器镜像
+podman commit u1804 ubuntu:18.04-v1
+podman save ubuntu:18.04-v1 > /containers/images/ubuntu-1804-v1.tar
 
+# 2️⃣ 拷贝宿主 home 和 Xilinx volume
+scp -r ~/.distrobox/ubuntu-1804-home newhost:~/.distrobox/
+scp -r /containers/volumes/Xilinx newhost:/containers/volumes/
+
+# 3️⃣ 在新主机上加载镜像
+podman load < ubuntu-1804-v1.tar
+
+# 4️⃣ 创建 Distrobox 容器，并绑定 home 和 volume
+distrobox create \
+  --name u1804 \
+  --image ubuntu:18.04-v1 \
+  --home ~/.distrobox/ubuntu-1804-home \
+  --volume /containers/volumes/Xilinx:/opt/Xilinx \
+  --additional-flags "--privileged"
+
+```
 
 ---
 # 
