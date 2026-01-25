@@ -15450,9 +15450,18 @@ sudo apt install smbclient nautilus-share samba samba-common smbclient winbind c
 sudo smbpasswd -a andreas
 ```
 ## 修改配置文件
+```
 sudo gedit /etc/samba/smb.conf
 ```
+
+最后两个是匿名访问读写和只读目录设置
+
+```
 [global]
+workgroup = WORKGROUP
+security = user
+map to guest = Bad User
+guest account = nobody
 allow insecure wide links = yes
 unix extensions = no
 ...
@@ -15530,12 +15539,42 @@ unix extensions = no
 	path = /ext_drv/mov
 	only user = yes
 	revalidate = yes
+	
+[exchange]
+    comment = Network Logon Service
+    path = /opt/exchange
+    guest ok = yes
+    read only = no
+    writeable = yes
+    browseable = yes
+    public = yes
+    force user = andy
+
+
+[workdir]
+    comment = Network Logon Service
+    path = /home/andy/workdir/zirui
+    guest ok = yes
+    read only = yes
+    writeable = no
+    browseable = yes
+    public = yes
+    force user = andy
+    
 
 ```
 ## 重启服务
+
 ```
 sudo service smbd restart
 sudo service nmbd restart
+```
+
+or
+
+```
+sudo systemctl restart smbd.service
+sudo systemctl restart nmbd.service
 ```
 
 ---
