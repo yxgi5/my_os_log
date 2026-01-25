@@ -2131,14 +2131,120 @@ GPU Device 0: "Xavier" with compute capability 7.2
 
 ---
 * * *
-# docker
+# docker 
+
+## 查看启动命令
+```
+resize -s 40 120
+docker ps --no-trunc
+docker ps -a --no-trunc > docker_output.txt
+
+docker inspect --format='{{.Config.Cmd}}' <container_id>
+```
+
+## 查看docker服务日志
+```
+sudo journalctl -u docker.service
+```
+
+## 关于镜像和代理
+
+像下面这样
+
+$ cat /etc/docker/daemon.json 
+```
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+    "registry-mirrors":  [
+	"https://docker.1panel.live",
+	"https://docker.1ms.run",
+	"https://docker.xuanyuan.me",
+	"https://docker.registry.cyou",
+	"https://docker-cf.registry.cyou",
+	"https://dockercf.jsdelivr.fyi",
+	"https://docker.jsdelivr.fyi",
+	"https://dockertest.jsdelivr.fyi",
+	"https://mirror.aliyuncs.com",
+	"https://dockerproxy.com",
+	"https://mirror.baidubce.com",
+	"https://docker.m.daocloud.io",
+	"https://docker.nju.edu.cn",
+	"https://docker.mirrors.sjtug.sjtu.edu.cn",
+	"https://docker.mirrors.ustc.edu.cn",
+	"https://mirror.iscas.ac.cn",
+	"https://docker.rainbond.cc",
+	"https://do.nark.eu.org",
+	"https://dc.j8.work",
+	"https://dockerproxy.com",
+	"https://gst6rzl9.mirror.aliyuncs.com",
+	"https://registry.docker-cn.com",
+	"http://hub-mirror.c.163.com",
+	"http://mirrors.ustc.edu.cn/",
+	"https://mirrors.tuna.tsinghua.edu.cn/",
+	"http://mirrors.sohu.com/"
+    ],
+    "data-root": "/media/andy/462c143b-0c11-4aca-bf8d-20b839017693/docker",
+    "insecure-registries" : [
+	"https://docker.1panel.live",
+	"https://docker.1ms.run",
+	"https://docker.xuanyuan.me",
+    	"registry.docker-cn.com",
+    	"docker.mirrors.ustc.edu.cn"
+    ],
+    "debug": true,
+    "experimental": false,
+    "proxies": {
+        "http-proxy": "127.0.0.1:10808",
+        "https-proxy": "127.0.0.1:10808"
+    }
+}
+```
 
 
 
+
+有些Docker daemon 的 daemon.json 文件中 不支持 proxies 这个配置项
+
+创建或编辑 /etc/systemd/system/docker.service.d/http-proxy.conf 文件， 类似
+```
+[Service]
+Environment="HTTP_PROXY=http://192.168.3.16:7890"
+Environment="HTTPS_PROXY=http://192.168.3.16:7890"
+Environment="NO_PROXY=localhost,127.0.0.1,::1"
+```
+
+```
+[Service]
+Environment="HTTP_PROXY=127.0.0.1:10808"
+Environment="HTTPS_PROXY=127.0.0.1:10808"
+Environment="NO_PROXY=localhost,127.0.0.1,::1"
+```
+然后执行
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+测试
+```
+docker run hello-world
+docker run -it --rm [imamge:tag] sh
+docker run -it --rm [imamge:tag] /bin/bash
+
+docker run -it --rm nvidia/cuda-arm64:11.1.1-cudnn8-devel-ubuntu18.04 bash
+sudo docker run --runtime=nvidia -it --name test -v /path:/path nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04 /bin/bash
+```
 
 ---
 * * *
-# Next Topic
+# tree
+```
+sudo apt install tree
+```
 
 ---
 * * *

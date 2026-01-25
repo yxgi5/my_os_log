@@ -337,6 +337,9 @@ SunloginClient_15.8.3.19819_x64.exe
 Git-2.43.0-64-bit.exe
 TortoiseGit-2.15.0.0-64bit.msi
 GitHubDesktopSetup-x64.exe
+
+
+git bash 设置charset为utf-8
 ```
 
 # uex（UEStudio）
@@ -726,7 +729,6 @@ USB2XXX_Software_Setup_v1.1.6.exe
 
 driver + cuda + cudnn
 
-
 in cmd
 
 nvidia-smi
@@ -759,6 +761,7 @@ Fri Oct 10 20:53:51 2025
 ```
 
 nvcc -V
+
 ```
 C:\Users\andy>nvcc -V
 nvcc: NVIDIA (R) Cuda compiler driver
@@ -770,10 +773,9 @@ Build cuda_12.9.r12.9/compiler.36037853_0
 
 
 
-# 安装预编译的 支持 cuda 的 cv2 
+# 安装预编译的 支持 cuda 的 cv2
 
 要先安装 cuda toolkit
-
 
 ```
 (base) C:\Users\andy>conda create -y -n py37 python=3.7
@@ -901,3 +903,33 @@ https://developer.nvidia.com/cudnn
 https://docs.nvidia.com/deeplearning/cudnn/backend/v9.14.0/release-notes.html#cudnn-9-10-2
 https://docs.nvidia.com/deeplearning/cudnn/latest/
 ```
+
+---
+
+# Win11“此电脑”文件夹设置
+
+This PC Tweaker
+
+---
+
+# 115
+
+---
+
+# 
+
+---
+
+# 
+
+---
+
+# 
+
+---
+
+# 
+
+
+
+
