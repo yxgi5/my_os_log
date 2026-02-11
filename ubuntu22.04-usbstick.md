@@ -15766,42 +15766,189 @@ distrobox create \
 ```
 
 ---
-# 
+# kconfig-frontends
 ```
-
-```
-
-
----
-# 
-```
-
+sudo apt install -y kconfig-frontends
 ```
 
 
 ---
-# 
-```
+#  v4l-utils
 
 ```
-
-
----
-# 
-```
-
+sudo apt install v4l-utils
 ```
 
 
 ---
-# 
-```
+# tailscale 内网穿透
 
 ```
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+其实可以下载审查`tailscale`安装脚本后再安装
+
+```
+curl -O https://tailscale.com/install.sh
+chmod +x install.sh
+sudo sh install
+```
+
+安装的版本查看
+
+```
+$ tailscale version
+1.94.1
+  tailscale commit: 62c6f1cd7560763edcc552251abadf7dd4659f82
+  long version: 1.94.1-t62c6f1cd7-g09fea6572
+  other commit: 09fea6572e9c7a839b4a8c209420141fdb33fbb4
+  go version: go1.25.5
+```
+
+登录 `tailscale` 服务器
+
+```
+$ export https_proxy="127.0.0.1:xxx"
+$ export http_proxy="127.0.0.1:xxx"
+
+$ sudo tailscale up --login-server=https://controlplane.tailscale.com --accept-dns=false
+
+$ tailscale status
+100.127.43.115  andy-zirui  denglitsch@  linux  -  
+
+$  tailscale ip -4
+100.127.43.115
+```
+
+| 主机名          | 虚拟IP         |
+| --------------- | -------------- |
+| andy-zirui      | 100.127.43.115 |
+| andy-kuangshi16 | 100.80.211.19  |
+
+确保两边都执行过 `sudo systemctl enable tailscaled`，防止重启后失联。
+
+
+
+## 远程桌面流量走P2P
+
+1. 习惯使用anydesk的, 其实rustdesk是一个类似平替, 如果用tailscale穿透了, 其实用哪个都可以流量走p2p, 选哪个都无所谓, 在中国大陆或许anydesk还更好一点.
+2. xrdp没有特殊需要就不要用了(仅在特定需要:新会话、多用户、独立桌面时才用), 我的习惯确实是同一账户同一个桌面“所见即所得”. 
+3. 用vnc是流量走P2P无论如何都可行的
+
+### **AnyDesk 无人值守设置** 
+
+一定要去 `设置 -> 安全 -> 无人值守访问` 开启“允许访问密钥”。否则你明天在公司发起连接，家里笔记本会一直弹窗询问“是否允许连接”，而你人在公司点不到。
+
+
+
+
+### 用VNC作为稳妥备份方案, 效率低但可靠
+
+我的机器一般都开启了`vnc`服务的. 直接用图形化的 `vncviewer` 访问吧
+
+
+
+
+---
+#  xfce
+
+````
+$ sudo apt install xfce4 xfce4-goodies -y
+[sudo] password for andy: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  elementary-xfce-icon-theme exo-utils greybird-gtk-theme libgarcon-1-0 libgarcon-common libgarcon-gtk3-1-0 libtagc0 libthunarx-3-0 libxfce4ui-utils ristretto tango-icon-theme thunar thunar-archive-plugin
+  thunar-data thunar-media-tags-plugin thunar-volman xfburn xfce4-appfinder xfce4-battery-plugin xfce4-clipman xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-datetime-plugin xfce4-dict
+  xfce4-diskperf-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-helpers xfce4-mailwatch-plugin xfce4-netload-plugin xfce4-notifyd xfce4-panel xfce4-places-plugin xfce4-screenshooter xfce4-sensors-plugin
+  xfce4-session xfce4-settings xfce4-smartbookmark-plugin xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-plugin
+  xfce4-whiskermenu-plugin xfce4-xkb-plugin xfdesktop4 xfdesktop4-data xfwm4 xiccd
+Suggested packages:
+  kdelibs-data gigolo parole xfce4-indicator-plugin xfce4-mpc-plugin xfce4-notes-plugin xfce4-radio-plugin xsensors fortunes-mod mugshot
+The following NEW packages will be installed:
+  elementary-xfce-icon-theme exo-utils greybird-gtk-theme libgarcon-1-0 libgarcon-common libgarcon-gtk3-1-0 libtagc0 libthunarx-3-0 libxfce4ui-utils ristretto tango-icon-theme thunar thunar-archive-plugin
+  thunar-data thunar-media-tags-plugin thunar-volman xfburn xfce4 xfce4-appfinder xfce4-battery-plugin xfce4-clipman xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-datetime-plugin
+  xfce4-dict xfce4-diskperf-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-goodies xfce4-helpers xfce4-mailwatch-plugin xfce4-netload-plugin xfce4-notifyd xfce4-panel xfce4-places-plugin
+  xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-settings xfce4-smartbookmark-plugin xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-timer-plugin xfce4-verve-plugin
+  xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfce4-xkb-plugin xfdesktop4 xfdesktop4-data xfwm4 xiccd
+0 upgraded, 54 newly installed, 0 to remove and 118 not upgraded.
+Need to get 19.3 MB of archives.
+After this operation, 91.6 MB of additional disk space will be used.
+
+### 修改 `/etc/xrdp/startwm.sh`
+
+- 在文件末尾改为启动 Xfce：
+
+```
+#!/bin/sh
+if [ -r /etc/default/locale ]; then
+  . /etc/default/locale
+  export LANG LANGUAGE
+fi
+
+# 注释掉默认 GNOME 启动
+# . /etc/X11/Xsession
+
+# 启动 Xfce
+startxfce4
+```
+
+sudo systemctl restart xrdp
+
+````
+
+
+
+或者
+
+```
+sudo apt install xfce4 xfce4-goodies -y
+echo "startxfce4" > ~/.xsession
+sudo systemctl restart xrdp
+
+sudo journalctl -u xrdp
+sudo journalctl -u xrdp-sesman
+```
+
+
+
+
+
+
+---
+#  xrdp
+
+```
+sudo apt update
+sudo apt install xrdp -y
+sudo systemctl enable xrdp
+sudo systemctl start xrdp
+sudo systemctl restart xrdp
+
+
+sudo apt install remmina remmina-plugin-rdp -y
+```
+
+在 Windows 上访问远程桌面（RDP 协议），可以用 MSTSC
+在 Linux 上访问远程桌面（RDP 协议），推荐用 Remmina
+
+也可以用 xfreerdp 命令行：
+
+```
+xfreerdp /v:100.64.0.2 /u:andy
+xfreerdp /v:100.x.y.z /u:username /p:password /dynamic-resolution
+```
+
+* /v: = 目标 IP
+* /u: = 用户名
+* 可以加 /f 全屏，/cert-ignore 忽略证书提示
 
 
 ---
 # 
+
 ```
 
 ```
