@@ -15947,17 +15947,26 @@ xfreerdp /v:100.x.y.z /u:username /p:password /dynamic-resolution
 
 
 ---
-# 
+# rpi-imager
 
 ```
-
+sudo apt install rpi-imager
 ```
 
 
 ---
-# 
-```
+# bashrc修改
 
+```
+#export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH 
+
+# 定义你要添加的路径
+CUDA_PATH="/usr/local/cuda/lib64"
+# 先检测目录是否存在，存在才进行设置（可选，但更严谨）
+if [ -d "$CUDA_PATH" ]; then
+    # 核心逻辑：${变量:+:}${变量} 的意思是有内容才加冒号
+    export LD_LIBRARY_PATH="$CUDA_PATH${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+fi
 ```
 
 
