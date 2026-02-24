@@ -15766,15 +15766,151 @@ distrobox create \
 ```
 
 ---
-# 
-```
+# update-initramfs
 
+```
+sudo apt update
+sudo apt install linux-generic-hwe-22.04
+sudo apt install --reinstall linux-firmware
+sudo update-initramfs -u
 ```
 
 
 ---
-# 
+# nvidia-driver downgrade
+
 ```
+$ sudo aptitude install nvidia-driver-550 cuda-drivers-550
+The following NEW packages will be installed:
+  cuda-drivers-550 linux-image-6.5.0-1024-nvidia{a} linux-image-6.8.0-1008-nvidia{a} linux-modules-6.5.0-1024-nvidia{a} linux-modules-6.8.0-1008-nvidia{a} nvidia-driver-550{b} 
+  nvidia-prime{a} 
+The following packages will be REMOVED:
+  cuda-drivers-575{a} 
+The following packages are RECOMMENDED but will NOT be installed:
+  libnvidia-compute-550:i386 libnvidia-decode-550:i386 libnvidia-encode-550:i386 libnvidia-fbc1-550:i386 libnvidia-gl-550:i386 
+0 packages upgraded, 7 newly installed, 1 to remove and 184 not upgraded.
+Need to get 82.4 MB of archives. After unpacking 325 MB will be used.
+The following packages have unmet dependencies:
+ nvidia-driver-550 : Depends: libnvidia-gl-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: nvidia-dkms-550 (<= 550.163.01-1) but it is not going to be installed
+                     Depends: nvidia-dkms-550 (>= 550.163.01) but it is not going to be installed
+                     Depends: nvidia-kernel-common-550 (<= 550.163.01-1) but it is not going to be installed
+                     Depends: nvidia-kernel-common-550 (>= 550.163.01) but it is not going to be installed
+                     Depends: nvidia-kernel-source-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: libnvidia-compute-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: libnvidia-extra-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: nvidia-compute-utils-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: libnvidia-decode-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: libnvidia-encode-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: nvidia-utils-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: xserver-xorg-video-nvidia-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: libnvidia-cfg1-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+                     Depends: libnvidia-fbc1-550 (= 550.163.01-0ubuntu1) but it is not going to be installed
+ nvidia-driver-575 : Conflicts: nvidia-prime but 0.8.17.1 is to be installed
+open: 119; closed: 57; defer: 29; conflict: 42                                                                                                                                            oThe following actions will resolve these dependencies:
+
+      Remove the following packages:                                    
+1)      libnvidia-cfg1-575 [575.57.08-0ubuntu1 (<NULL>, now)]           
+2)      libnvidia-common-575 [575.57.08-0ubuntu1 (<NULL>, now)]         
+3)      libnvidia-compute-575 [575.57.08-0ubuntu1 (<NULL>, now)]        
+4)      libnvidia-compute-575:i386 [575.57.08-0ubuntu1 (<NULL>, now)]   
+5)      libnvidia-decode-575 [575.57.08-0ubuntu1 (<NULL>, now)]         
+6)      libnvidia-decode-575:i386 [575.57.08-0ubuntu1 (<NULL>, now)]    
+7)      libnvidia-encode-575 [575.57.08-0ubuntu1 (<NULL>, now)]         
+8)      libnvidia-encode-575:i386 [575.57.08-0ubuntu1 (<NULL>, now)]    
+9)      libnvidia-extra-575 [575.57.08-0ubuntu1 (<NULL>, now)]          
+10)     libnvidia-fbc1-575 [575.57.08-0ubuntu1 (<NULL>, now)]           
+11)     libnvidia-fbc1-575:i386 [575.57.08-0ubuntu1 (<NULL>, now)]      
+12)     libnvidia-gl-575 [575.57.08-0ubuntu1 (<NULL>, now)]             
+13)     libnvidia-gl-575:i386 [575.57.08-0ubuntu1 (<NULL>, now)]        
+14)     nvidia-compute-utils-575 [575.57.08-0ubuntu1 (<NULL>, now)]     
+15)     nvidia-dkms-575 [575.57.08-0ubuntu1 (<NULL>, now)]              
+16)     nvidia-driver-575 [575.57.08-0ubuntu1 (<NULL>, now)]            
+17)     nvidia-kernel-common-575 [575.57.08-0ubuntu1 (<NULL>, now)]     
+18)     nvidia-kernel-source-575 [575.57.08-0ubuntu1 (<NULL>, now)]     
+19)     nvidia-persistenced [575.57.08-0ubuntu1 (<NULL>, now)]          
+20)     nvidia-utils-575 [575.57.08-0ubuntu1 (<NULL>, now)]             
+21)     xserver-xorg-video-nvidia-575 [575.57.08-0ubuntu1 (<NULL>, now)]
+
+      Install the following packages:                                   
+22)     libnvidia-cfg1-550 [550.163.01-0ubuntu1 (<NULL>)]               
+23)     libnvidia-common-550 [550.163.01-0ubuntu1 (<NULL>)]             
+24)     libnvidia-compute-550 [550.163.01-0ubuntu1 (<NULL>)]            
+25)     libnvidia-decode-550 [550.163.01-0ubuntu1 (<NULL>)]             
+26)     libnvidia-encode-550 [550.163.01-0ubuntu1 (<NULL>)]             
+27)     libnvidia-extra-550 [550.163.01-0ubuntu1 (<NULL>)]              
+28)     libnvidia-fbc1-550 [550.163.01-0ubuntu1 (<NULL>)]               
+29)     libnvidia-gl-550 [550.163.01-0ubuntu1 (<NULL>)]                 
+30)     nvidia-compute-utils-550 [550.163.01-0ubuntu1 (<NULL>)]         
+31)     nvidia-dkms-550 [550.163.01-0ubuntu1 (<NULL>)]                  
+32)     nvidia-firmware-550-550.163.01 [550.163.01-0ubuntu1 (<NULL>)]   
+33)     nvidia-kernel-common-550 [550.163.01-0ubuntu1 (<NULL>)]         
+34)     nvidia-kernel-source-550 [550.163.01-0ubuntu1 (<NULL>)]         
+35)     nvidia-utils-550 [550.163.01-0ubuntu1 (<NULL>)]                 
+36)     xserver-xorg-video-nvidia-550 [550.163.01-0ubuntu1 (<NULL>)]    
+
+
+
+
+
+The following NEW packages will be installed:
+  cuda-drivers-550 libnvidia-cfg1-550{a} libnvidia-common-550{a} libnvidia-compute-550{a} libnvidia-decode-550{a} libnvidia-encode-550{a} libnvidia-extra-550{a} libnvidia-fbc1-550{a} 
+  libnvidia-gl-550{a} linux-image-6.5.0-1024-nvidia{a} linux-image-6.8.0-1008-nvidia{a} linux-modules-6.5.0-1024-nvidia{a} linux-modules-6.8.0-1008-nvidia{a} 
+  nvidia-compute-utils-550{a} nvidia-dkms-550{a} nvidia-driver-550 nvidia-firmware-550-550.163.01{a} nvidia-kernel-common-550{a} nvidia-kernel-source-550{a} nvidia-prime{a} 
+  nvidia-utils-550{a} xserver-xorg-video-nvidia-550{a} 
+The following packages will be REMOVED:
+  cuda-drivers-575{a} libnvidia-cfg1-575{a} libnvidia-common-575{a} libnvidia-compute-575{a} libnvidia-compute-575:i386{a} libnvidia-decode-575{a} libnvidia-decode-575:i386{a} 
+  libnvidia-encode-575{a} libnvidia-encode-575:i386{a} libnvidia-extra-575{a} libnvidia-fbc1-575{a} libnvidia-fbc1-575:i386{a} libnvidia-gl-575{a} libnvidia-gl-575:i386{a} 
+  nvidia-compute-utils-575{a} nvidia-dkms-575{a} nvidia-driver-575{a} nvidia-kernel-common-575{a} nvidia-kernel-source-575{a} nvidia-persistenced{a} nvidia-utils-575{a} 
+  xserver-xorg-video-nvidia-575{a} 
+The following packages are RECOMMENDED but will NOT be installed:
+  libnvidia-compute-550:i386 libnvidia-decode-550:i386 libnvidia-encode-550:i386 libnvidia-fbc1-550:i386 libnvidia-gl-550:i386 
+0 packages upgraded, 22 newly installed, 22 to remove and 183 not upgraded.
+Need to get 351 MB of archives. After unpacking 212 MB will be freed.
+
+
+dpkg: nvidia-dkms-575: dependency problems, but removing anyway as you requested:
+ nvidia-fs-dkms depends on cuda-drivers-grid | nvidia-prebuilt-kernel | nvidia-dkms-kernel | nvidia-kernel-dkms; however:
+  Package cuda-drivers-grid is not installed.
+  Package nvidia-prebuilt-kernel is not installed.
+  Package nvidia-dkms-kernel is not installed.
+  Package nvidia-dkms-575 which provides nvidia-dkms-kernel is to be removed.
+  Package nvidia-kernel-dkms is not installed.
+
+Removing nvidia-dkms-575 (575.57.08-0ubuntu1) ...
+Removing all DKMS Modules
+
+
+sudo aptitude install libnvidia-compute-550:i386 libnvidia-decode-550:i386 libnvidia-encode-550:i386 libnvidia-fbc1-550:i386 libnvidia-gl-550:i386 nvidia-fs-dkms
+
+
+
+
+prime-select query
+nvidia?
+sudo prime-select on-demand
+reboot
+sudo prime-select intel
+reboot
+
+
+
+vainfo
+
+ls -l /dev/dri
+card0
+card1
+renderD128
+renderD129
+
+
+dpkg --list | grep linux-image
+
+sudo apt remove linux-image-6.8.0-1008-nvidia \
+                 linux-headers-6.8.0-1008-nvidia
+sudo update-grub
+sudo apt install linux-generic-hwe-22.04
+uname -r
 
 ```
 
