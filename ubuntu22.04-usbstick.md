@@ -16120,16 +16120,11 @@ fi
 
 
 ---
-# 
-```
+# jupyter notebook
 
 ```
-
-
----
-# 
-```
-
+sudo -H pip3 install jupyter
+jupyter notebook
 ```
 
 
@@ -16174,6 +16169,12 @@ fi
 
 ```
 
+
+---
+# 
+```
+
+```
 
 
 
