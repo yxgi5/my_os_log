@@ -16125,6 +16125,34 @@ fi
 ```
 sudo -H pip3 install jupyter
 jupyter notebook
+
+andy@andy-kuangshi16:~/Desktop
+$ cat jupyterlab.desktop 
+[Desktop Entry]
+Name=JupyterLab
+Comment=Run JupyterLab
+Exec=jupyter-lab %f
+Terminal=true
+Type=Application
+Icon=jupyterlab
+StartupNotify=true
+MimeType=application/x-ipynb+json;
+Categories=Development;Education;
+Keywords=python;
+andy@andy-kuangshi16:~/Desktop
+$ cat jupyter-notebook.desktop 
+[Desktop Entry]
+Name=Jupyter Notebook
+Comment=Run Jupyter Notebook
+Exec=jupyter-notebook %f
+Terminal=true
+Type=Application
+Icon=notebook
+StartupNotify=true
+MimeType=application/x-ipynb+json;
+Categories=Development;Education;
+Keywords=python;
+
 ```
 
 
