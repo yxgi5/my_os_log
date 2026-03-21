@@ -16157,30 +16157,75 @@ Keywords=python;
 
 
 ---
-# 
+# 安装 iostat
+```
+$ sudo apt install sysstat
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Suggested packages:
+  isag
+The following NEW packages will be installed:
+  sysstat
+0 upgraded, 1 newly installed, 0 to remove and 130 not upgraded.
+Need to get 487 kB of archives.
+After this operation, 1,507 kB of additional disk space will be used.
+Get:1 https://mirrors.cqu.edu.cn/ubuntu jammy-updates/main amd64 sysstat amd64 12.5.2-2ubuntu0.2 [487 kB]
+Fetched 487 kB in 8s (62.3 kB/s) 
+Preconfiguring packages ...
+Selecting previously unselected package sysstat.
+(Reading database ... 851339 files and directories currently installed.)
+Preparing to unpack .../sysstat_12.5.2-2ubuntu0.2_amd64.deb ...
+Unpacking sysstat (12.5.2-2ubuntu0.2) ...
+Setting up sysstat (12.5.2-2ubuntu0.2) ...
+
+Creating config file /etc/default/sysstat with new version
+update-alternatives: using /usr/bin/sar.sysstat to provide /usr/bin/sar (sar) in auto mode
+Created symlink /etc/systemd/system/sysstat.service.wants/sysstat-collect.timer → /lib/systemd/system/sysstat-collect.timer.
+Created symlink /etc/systemd/system/sysstat.service.wants/sysstat-summary.timer → /lib/systemd/system/sysstat-summary.timer.
+Created symlink /etc/systemd/system/multi-user.target.wants/sysstat.service → /lib/systemd/system/sysstat.service.
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for doc-base (0.11.1) ...
+Processing 1 added doc-base file...
+
+
+
+iostat
+```
+
+
+---
+# btop
 ```
 
 ```
 
 
 ---
-# 
+# usb速率查看
 ```
-
-```
-
-
----
-# 
-```
-
+lsusb -t
 ```
 
 
 ---
-# 
+# sync 同步文件
+```
+先确定二进制比较一致,然后 size 相同 → 认为相同
+```
+rsync -av --size-only src/ dst/
+```
+目录后面要加/哦
+
+```
+rsync -av --size-only "/media/andy/3C530A917791B92B/39_MATLAB教程（443G）/" "/media/andy/5E3C65BF40762AA6/39_MATLAB教程（443G）/"
+rsync -av --size-only /media/andy/3C530A917791B92B/AXU7EV/ /media/andy/5E3C65BF40762AA6/AXU7EV/
 ```
 
+全盘二进制比对, 会再读取两个盘的数据比较慢的, 
+```
+rsync -avc src/ dst/
+```
 ```
 
 
