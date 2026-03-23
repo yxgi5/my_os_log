@@ -16154,6 +16154,227 @@ Categories=Development;Education;
 Keywords=python;
 
 ```
+---
+# intel显卡驱动安装
+
+参考
+<https://dgpu-docs.intel.com/driver/client/overview.html#ubuntu-22.04>
+<https://github.com/canonical/intel-graphics-preview/blob/main/setup-intel-graphics.sh>
+
+## 添加ppa_apt仓库公钥
+```
+wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | \
+  sudo gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics.gpg
+```
+## 添加ppa_apt仓库
+```
+echo "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu jammy unified" | \
+  sudo tee /etc/apt/sources.list.d/intel-gpu-jammy.list
+```
+## 更新apt仓库数据库
+```
+sudo apt update
+```
+
+## 安装过程
+```
+sudo apt-get install -y libze-intel-gpu1 libze1 intel-opencl-icd clinfo \
+libva-dev intel-media-va-driver-non-free vainfo \
+libze-dev intel-ocloc \
+intel-level-zero-gpu-raytracing \
+xserver-xorg-video-intel \
+intel-fw-gpu level-zero libmfx1 hwinfo
+
+sudo apt-get install --reinstall linux-modules-extra-$(uname -r)
+sudo apt-get install -y libze-intel-gpu1 libze1 intel-metrics-discovery intel-opencl-icd clinfo intel-gsc
+sudo apt-get install -y intel-media-va-driver-non-free libmfx-gen1 libvpl2 libvpl-tools libva-glx2 va-driver-all vainfo
+sudo apt-get install -y intel-gsc libigdgmm12 libigc2 libze-intel-gpu-raytracing intel-media-va-driver-non-free \
+	libze1 vainfo libvpl2 libvpl-tools intel-metrics-discovery intel-metrics-library libmfx-gen1 \
+	xpu-smi intel-opencl-icd libze-intel-gpu1
+
+
+sudo gpasswd -a ${USER} render
+newgrp render
+
+clinfo | grep "Device Name"
+lspci -k | grep -EA3 'VGA|3D|Display'
+inxi -G
+sudo lshw -c video
+sudo lspci -nn | grep -e VGA
+glxinfo -B
+export LIBVA_DRIVER_NAME=iHD LIBVA_TRACE=1
+vainfo
+//sudo apt install -y intel-i915-dkms xpu-smi intel-opencl-icd intel-level-zero-gpu level-zero intel-media-va-driver-non-free libmfx1 libmfxgen1 libvpl2 libegl-mesa0 libegl1-mesa libegl1-mesa-dev libgbm1 libgl1-mesa-dev libgl1-mesa-dri libglapi-mesa libgles2-mesa-dev libglx-mesa0 libigdgmm12 libxatracker2 mesa-va-drivers mesa-vdpau-drivers mesa-vulkan-drivers va-driver-all vainfo hwinfo clinfo
+```
+
+## 最终检查结果
+
+
+```
+$ vainfo
+Trying display: wayland
+Trying display: x11
+libva info: Open new log file 1.004901.thd-0x003543c3 for the thread 0x003543c3
+libva info: LIBVA_TRACE is on, save log into 1.004901.thd-0x003543c3
+libva info: VA-API version 1.22.0
+libva error: vaGetDriverNames() failed with unknown libva error
+libva info: User environment variable requested driver 'iHD'
+libva info: Trying to open /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so
+libva info: Found init function __vaDriverInit_1_22
+libva info: va_openDriver() returns 0
+vainfo: VA-API version: 1.22 (libva 2.22.0)
+vainfo: Driver version: Intel iHD driver for Intel(R) Gen Graphics - 25.2.4 ()
+vainfo: Supported profile and entrypoints
+      VAProfileNone                   :	VAEntrypointVideoProc
+      VAProfileMPEG2Simple            :	VAEntrypointVLD
+      VAProfileMPEG2Main              :	VAEntrypointVLD
+      VAProfileH264Main               :	VAEntrypointVLD
+      VAProfileH264Main               :	VAEntrypointEncSlice
+      VAProfileH264High               :	VAEntrypointVLD
+      VAProfileH264High               :	VAEntrypointEncSlice
+      VAProfileJPEGBaseline           :	VAEntrypointVLD
+      VAProfileJPEGBaseline           :	VAEntrypointEncPicture
+      VAProfileH264ConstrainedBaseline:	VAEntrypointVLD
+      VAProfileH264ConstrainedBaseline:	VAEntrypointEncSlice
+      VAProfileVP8Version0_3          :	VAEntrypointVLD
+      VAProfileHEVCMain               :	VAEntrypointVLD
+      VAProfileHEVCMain               :	VAEntrypointEncSlice
+      VAProfileHEVCMain10             :	VAEntrypointVLD
+      VAProfileHEVCMain10             :	VAEntrypointEncSlice
+      VAProfileVP9Profile0            :	VAEntrypointVLD
+      VAProfileVP9Profile0            :	VAEntrypointEncSlice
+      VAProfileVP9Profile1            :	VAEntrypointVLD
+      VAProfileVP9Profile1            :	VAEntrypointEncSlice
+      VAProfileVP9Profile2            :	VAEntrypointVLD
+      VAProfileVP9Profile2            :	VAEntrypointEncSlice
+      VAProfileVP9Profile3            :	VAEntrypointVLD
+      VAProfileVP9Profile3            :	VAEntrypointEncSlice
+      VAProfileHEVCMain12             :	VAEntrypointVLD
+      VAProfileHEVCMain422_10         :	VAEntrypointVLD
+      VAProfileHEVCMain422_12         :	VAEntrypointVLD
+      VAProfileHEVCMain444            :	VAEntrypointVLD
+      VAProfileHEVCMain444            :	VAEntrypointEncSlice
+      VAProfileHEVCMain444_10         :	VAEntrypointVLD
+      VAProfileHEVCMain444_10         :	VAEntrypointEncSlice
+      VAProfileHEVCMain444_12         :	VAEntrypointVLD
+      VAProfileHEVCSccMain            :	VAEntrypointVLD
+      VAProfileHEVCSccMain            :	VAEntrypointEncSlice
+      VAProfileHEVCSccMain10          :	VAEntrypointVLD
+      VAProfileHEVCSccMain10          :	VAEntrypointEncSlice
+      VAProfileHEVCSccMain444         :	VAEntrypointVLD
+      VAProfileHEVCSccMain444         :	VAEntrypointEncSlice
+      VAProfileAV1Profile0            :	VAEntrypointVLD
+      VAProfileAV1Profile0            :	VAEntrypointEncSlice
+      VAProfileHEVCSccMain444_10      :	VAEntrypointVLD
+      VAProfileHEVCSccMain444_10      :	VAEntrypointEncSlice
+```
+
+测试
+
+```
+ffmpeg -init_hw_device qsv=hw:/dev/dri/renderD128 \
+-i test.mp4 \
+-c:v hevc_qsv \
+-global_quality 26 \
+-maxrate 5M \
+-bufsize 10M \
+-c:a copy \
+output_qsv.mp4
+
+
+ffmpeg -hide_banner \
+-hwaccel qsv \
+-i test.mp4 \
+-c:v hevc_qsv \
+-global_quality 26 \
+-look_ahead 1 \
+-preset medium \
+-c:a copy \
+output_qsv.mp4
+
+
+
+ffmpeg -hide_banner \
+-hwaccel qsv \
+-hwaccel_output_format qsv \
+-i test.mp4 \
+-c:v hevc_qsv \
+-global_quality 26 \
+-look_ahead 1 \
+-preset medium \
+-c:a copy \
+output_qsv.mp4
+
+
+ffmpeg -hide_banner \
+-vaapi_device /dev/dri/renderD128 \
+-i test.mp4 \
+-vf 'format=nv12,hwupload' \
+-c:v h264_vaapi -qp 23 \
+-c:a copy \
+output_vaapi.mp4
+
+
+ffmpeg -hide_banner -threads 0 -v verbose \
+-init_hw_device qsv=hw:0 -filter_hw_device hw -hwaccel qsv -hwaccel_output_format qsv \
+-i test.mp4 \
+-c:v hevc_qsv \
+-profile:v main -preset veryfast \
+-b:v 400k \
+-g 250 -keyint_min 25 \
+-ar 44100 -b:a 128k -c:a aac -ac 2 \
+-map_metadata -1 -map_chapters -1 \
+-strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 \
+output_hevc_qsv.mp4
+
+
+ffmpeg -hide_banner -threads 0 -v verbose \
+-init_hw_device qsv=hw:0 -filter_hw_device hw -hwaccel qsv -hwaccel_output_format qsv \
+-i test.mp4 \
+-c:v hevc_qsv \
+-profile:v main -preset veryfast \
+-global_quality 26 \
+-g 250 -keyint_min 25 \
+-ar 44100 -b:a 128k -c:a aac -ac 2 \
+-map_metadata -1 -map_chapters -1 \
+-strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 \
+output_hevc_qsv.mp4
+
+
+ffmpeg -hide_banner -threads 0 -v verbose \
+-init_hw_device qsv=hw:0 -filter_hw_device hw -hwaccel qsv -hwaccel_output_format qsv \
+-i test.mp4 \
+-c:v hevc_qsv \
+-profile:v main -preset veryfast \
+-global_quality 28 \
+-maxrate 5M \
+-bufsize 10M \
+-g 250 -keyint_min 25 \
+-ar 44100 -b:a 128k -c:a aac -ac 2 \
+-map_metadata -1 -map_chapters -1 \
+-strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 \
+output_hevc_qsv.mp4
+
+## ng
+ffmpeg -hide_banner \
+-vaapi_device /dev/dri/renderD128 \
+-i test.mp4 \
+-vf 'format=nv12,hwupload' \
+-c:v hevc_vaapi -qp 26 \
+-c:a copy \
+output_vaapi.mp4
+
+#ng
+ffmpeg -hide_banner \
+-vaapi_device /dev/dri/renderD128 \
+-i test.mp4 \
+-vf 'scale=ceil(iw/2)*2:ceil(ih/2)*2,format=nv12,hwupload' \
+-c:v hevc_vaapi -qp 26 \
+-c:a copy \
+output_vaapi.mp4
+```
+
+
 
 
 ---
