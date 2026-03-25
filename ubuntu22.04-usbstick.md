@@ -16449,9 +16449,51 @@ rsync -avc src/ dst/
 ```
 ```
 
+---
+# 压力测试 基础环境
+
+```
+sudo apt install -y stress-ng lm-sensors sysstat htop
+
+//如果需要
+sudo sensors-detect
+
+sensors
+watch -n 1 sensors
+
+watch -n 1 uptime
+watch -n 1 "sensors; echo; cat /proc/cpuinfo | grep MHz | head"
+
+stress-ng --cpu 0 --cpu-method matrixprod --timeout 24h --metrics-brief
+
+stress-ng \
+  --cpu 0 \
+  --vm 2 --vm-bytes 70% \
+  --io 2 \
+  --hdd 1 \
+  --timeout 24h \
+  --metrics-brief
+```
+
+日志化
+```
+stress-ng ... > stress.log 2>&1
+while true; do
+  date >> temp.log
+  sensors >> temp.log
+  sleep 10
+done
+```
+后台化
+```
+nohup stress-ng --cpu 0 --timeout 24h > stress.log 2>&1 &
+//或者用tmux
+sudo apt install tmux
+tmux
+```
 
 ---
-# 
+# VNC 通用配置
 ```
 
 ```
