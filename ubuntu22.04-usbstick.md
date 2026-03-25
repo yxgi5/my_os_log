@@ -3459,6 +3459,15 @@ to
 user-session=cinnamon
 ```
 
+`/etc/lightdm/lightdm.conf`
+
+```
+[SeatDefaults]
+greeter-setup-script=xhost +
+```
+
+
+
 ```
 sudo systemctl disable gdm.service
 sudo systemctl enable lightdm.service
@@ -15995,6 +16004,10 @@ $  tailscale ip -4
 ### 用VNC作为稳妥备份方案, 效率低但可靠
 
 我的机器一般都开启了`vnc`服务的. 直接用图形化的 `vncviewer` 访问吧
+
+
+
+关于登录界面远程访问(realvnc/vino/anydesk/rustdesk)的处理, 一般要切换为`lightdm`特别是`greeter-setup-script=xhost +`
 
 
 
