@@ -16494,8 +16494,33 @@ tmux
 
 ---
 # VNC 通用配置
+
+`tightvncserver`与`realvnc`冲突, 如果能用`realvnc`就用不然用`vino`, 再不然才用`tightvncserver`
+
+```
+sudo apt install tightvncserver
+sudo apt install xfce4 xfce4-session xfce4-goodies -y
+vncpasswd
+
 ```
 
+`~/.vnc/xstartup`
+
+```
+#!/bin/sh
+
+export XKL_XMODMAP_DISABLE=1
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+
+startxfce4
+```
+
+```
+vncserver -kill :1
+vncserver :1 -geometry 1920x1080
+
+注意看log
 ```
 
 
