@@ -16567,10 +16567,13 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 
 
 ---
-# 
+# nvme-cli
 
 ```
+sudo apt install nvme-cli
+sudo nvme list
 
+sudo lshw
 ```
 
 
