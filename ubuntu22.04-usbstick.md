@@ -16567,26 +16567,23 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 
 
 ---
-# 
+# modelsim 2020.4
 
 ```
+sudo apt install libc6:i386 libstdc++6:i386 libncurses5:i386
+sudo apt install libxft2 libxft2:i386 lib32ncurses6
+sudo apt install libxext6
+sudo apt install libxext6:i386
+sudo dpkg --add-architecture i386
+sudo apt-get install libstdc++5:i386
 
-```
+sfk就是swissfileknife,一个二进制替换工具而已, 语法上1.5.5肯定可以, 新的2.x版本语法不确定是否兼容
 
+lic文件的产生和更新照旧
 
----
-# 
+lib里面的两个小文件会造成识别为questasim, 这样编译仿真库会有问题. 删掉存档里的这两个非库文件就是.
 
-```
-
-```
-
-
----
-# 
-
-```
-
+vivado2022.2从gui调用vsim也还不成功, 反正有simulate.sh和do脚本产生了, 能仿真, 也没有鸡巴关系.
 ```
 
 
@@ -16901,6 +16898,21 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 
 ```
 
+
+---
+# 
+
+```
+
+```
+
+
+---
+# 
+
+```
+
+```
 
 
 
