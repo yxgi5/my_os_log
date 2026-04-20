@@ -16586,6 +16586,16 @@ lib里面的两个小文件会造成识别为questasim, 这样编译仿真库会
 vivado2022.2从gui调用vsim也还不成功, 反正有simulate.sh和do脚本产生了, 能仿真, 也没有鸡巴关系.
 ```
 
+---
+# nvme-cli
+
+```
+sudo apt install nvme-cli
+sudo nvme list
+
+sudo lshw
+```
+
 
 ---
 # 
