@@ -16015,7 +16015,7 @@ $  tailscale ip -4
 ---
 #  xfce
 
-````
+```
 $ sudo apt install xfce4 xfce4-goodies -y
 [sudo] password for andy: 
 Reading package lists... Done
@@ -16038,6 +16038,7 @@ The following NEW packages will be installed:
 0 upgraded, 54 newly installed, 0 to remove and 118 not upgraded.
 Need to get 19.3 MB of archives.
 After this operation, 91.6 MB of additional disk space will be used.
+```
 
 ### 修改 `/etc/xrdp/startwm.sh`
 
@@ -16057,9 +16058,10 @@ fi
 startxfce4
 ```
 
+```
 sudo systemctl restart xrdp
 
-````
+```
 
 
 
