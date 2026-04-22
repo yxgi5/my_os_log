@@ -16600,10 +16600,15 @@ sudo lshw
 
 
 ---
-# 
+# xdelta3 二进制增量备份和恢复
 
 ```
+sudo apt install xdelta3
+```
 
+```
+xdelta3 -e -s base.bin new.csv delta.xd
+xdelta3 -d -s base.bin delta.xd recovered.bin
 ```
 
 
