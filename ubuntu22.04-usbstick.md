@@ -16613,10 +16613,10 @@ xdelta3 -d -s base.bin delta.xd recovered.bin
 
 
 ---
-# 
+# ethtool
 
 ```
-
+sudo apt install ethtool
 ```
 
 
