@@ -16621,26 +16621,218 @@ sudo apt install ethtool
 
 
 ---
-# 
+# 串口
+
+比如要调试HMI屏幕, 需要在板子进行十六进制读写操作
 
 ```
 
+sudo apt install tio
+
+tio /dev/ttyUSB0
+
+tio -b 115200 /dev/ttyUSB0
+
+tio -L test.log /dev/ttyUSB0
+
+
+
+stty -F /dev/ttyPS1 115200 cs8 -cstopb -parenb -ixoff
+
+
+stty -F /dev/ttyPS1 115200 raw
+stty -F /dev/ttyPS1 19200 raw
+stty -F /dev/ttyPS1 9600 raw
+
+stty -F /dev/ttyPS1 raw -echo
+
+
+hexdump -C /dev/ttyPS1
+
+xxd /dev/ttyPS1
+这些工具 会缓存一部分数据（通常 4~16 字节），然后才刷新到终端。满 16 字节才显示一次
+
+# 实时接收并每字节换行
+cat /dev/ttyPS1 | xxd -p -c 1
+
+# 实时接收并每16字节换行
+stdbuf -i0 -o0 xxd -p -c 16 /dev/ttyPS1     # 输入/输出无缓冲，保证实时显示
+
+printf '\x5A\xA5\x04\x83\x00\x10\x01' > /dev/ttyPS1
 ```
 
 
 ---
-# 
+# avif, webp, heif/heic图片查看支持
+
+ff等浏览器也是可以看的, 但是直接让看图工具直接支持更好啊
+
+```
+sudo apt install gthumb goe imagemagick
+sudo apt install libheif1 libavif13 heif-gdk-pixbuf
+sudo apt install webp libwebp7 webp-pixbuf-loader	# 新一些的系统是默认就有的
+
+# 有ffmpeg顺手就转换格式
+ffmpeg -i input.avif output.png
+
+#imagemagick提供转换
+magick input.avif output.png
+#imagemagick提供查看信息
+identify input.avif
+
+# webp提供cli可 查看
+vwebp image.webp
+# webp提供cli可 转换格式
+dwebp image.webp -o image.png
+imagemagick提供转换
+magick input.webp output.png
+
+
+sudo apt install libheif-examples
+# 转 HEIC
+heif-enc input.png -o output.heic
+heif-enc input.png -q 90 -o output.heic  # q取0~100越大越接近无损, 一般80~90就很好
+heif-enc input.png --lossless -o output.heic	# 无损转换
+
+## 如果系统装了 x265 支持，可以：
+heif-enc -q 90 --encoder x265 input.png -o output.heic
+压缩率通常更好
+
+## 也可以用ImageMagick
+magick input.png -quality 85 output.heic
+
+# 查看 HEIC 信息
+heif-info output.heic
+
+# 输出 AVIF
+heif-enc --avif input.png -q 85 -o output.avif	# 一般40~50就很好
+
+# 无损 AVIF
+heif-enc --avif input.png --lossless -o output.avif
+
+# 有损 WebP
+cwebp -q 85 input.png -o output.webp	# 推荐75~90
+
+# 无损 WebP
+cwebp -lossless input.png -o output.webp
+
+# 查看文件大小对比
+ls -lh *.png *.webp *.avif *.heic
+
+# JPG → PNG
+magick input.jpg output.png
+magick input.jpg -quality 90 output.png
+
+PNG 的 quality：
+
+影响压缩强度
+不影响画质（PNG 还是无损）
+
+magick input.jpg -define png:compression-level=9 output.png # 范围：0~9 推荐：9
+
+# PNG 压缩优化
+
+有损减小 PNG：
+
+pngquant --quality=70-90 input.png
+
+
+# PNG → JPG (有损)
+magick input.png -quality 90 output.jpg
+
+## 去掉透明通道(避免透明变黑或黑底)
+
+PNG 可能有 alpha。转 JPG 时最好指定背景：
+
+magick input.png -background white -alpha remove output.jpg
+
+使用 cjpeg 压缩率通常优于 libjpeg
+
+sudo apt install imagemagick jpegoptim pngquant
+
+pngtopnm input.png | cjpeg -quality 90 > output.jpg
+
+# JPG 压缩优化
+jpegoptim --max=85 image.jpg
+
+无损优化：
+
+jpegoptim --strip-all image.jpg
+
+
 
 ```
 
 ```
+很多 Ubuntu / Linux Mint（尤其 20.04 / 22.04 / Mint 系列）安装的是 ImageMagick 6，它没有：
+
+magick
+
+而是使用老命令：
+
+convert
+mogrify
+identify
+
+这样确认：
+
+convert --version
+
+如果看到：
+
+ImageMagick 6.x
+
+那就是 IM6。
+
+前面说的 magick 全部替换成：
+
+convert
+
+即可。
+```
+
+
+
+| 转换工具 | 用途        |
+| -------- | ----------- |
+| heif-enc | HEIC / AVIF |
+| cwebp    | WebP        |
+| magick   | 通用转换    |
+
+
+
+| 格式 | 推荐质量 | 编码速度 |
+| ---- | -------- | -------- |
+| HEIC | 85~90    | 中       |
+| WebP | 80~85    | 快       |
+| AVIF | 45~55    | 很慢     |
+
+*AVIF 编码是真的慢，尤其高质量(60+)*, 而且有**高频细节丢失**, 关注细节质量和压缩比的尽量用heic
+
+
+
+各格式现实建议
+
+| 场景     | 推荐       |
+| -------- | ---------- |
+| 照片     | JPG / AVIF |
+| UI截图   | PNG        |
+| 网页图片 | WebP       |
+| 高压缩   | AVIF       |
+| 透明图   | PNG / WebP |
+
+
+
+
 
 
 ---
-# 
+# lunacy
+
+官网下载的deb包依赖新的libc, 不能直接运行. snap安装的可以用, 可以考虑制作imageapp
 
 ```
-
+sudo snap install lunacy
 ```
 
 
