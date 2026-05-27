@@ -13713,6 +13713,14 @@ sudo ln -s opt-shadow opt
 
 ```
 
+其实, 最好是用bind mount, 就可以避免像petalinux等软件实际路径为/opt-shadow造成的问题
+
+```
+mount -o bind /opt-shadow /opt
+```
+
+
+
 
 ---
 # mint21 更新
@@ -16837,35 +16845,479 @@ sudo snap install lunacy
 
 
 ---
-# 
+# pyqt5
 
 ```
+$ python -V
+Python 3.10.12
+
+$ sudo -H pip install PyQt6 -i https://pypi.tuna.tsinghua.edu.cn/simpl
+$ sudo -H pip install PyQt6 PyQt6-Qt6 PyQt6-sip -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+验证安装
+
+打开 Python 交互式命令行
+
+```
+python
+```
+
+需要分别导入模块
+
+```
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt6.QtCore import Qt, QTimer  # 核心类、常量等
+from PyQt6.QtGui import QFont, QIcon  # GUI 相关类
+print(PyQt6.QtCore.QT_VERSION_STR)
+print(PyQt6.QtCore.PYQT_VERSION_STR)
+
+```
+
+```
+>>> print(PyQt6.QtCore.QT_VERSION_STR)
+6.11.0
+>>> print(PyQt6.QtCore.PYQT_VERSION_STR)
+6.11.0
+```
+
+
+
+
+
+
+
+
+---
+# showkey 显示键盘事件
+
+```
+sudo showkey
+
+$ cat /proc/bus/input/devices | grep event
+H: Handlers=kbd event0 
+H: Handlers=kbd event1 
+H: Handlers=kbd event2 
+H: Handlers=mouse0 event6 	# 这个是鼠标
+H: Handlers=kbd event7 
+H: Handlers=event8 
+H: Handlers=event9 
+H: Handlers=event10 
+H: Handlers=event11 
+H: Handlers=event12 
+H: Handlers=event13 
+H: Handlers=event14 
+H: Handlers=event15 
+H: Handlers=sysrq kbd event3 leds 	# 这个是键盘
+H: Handlers=kbd event4 
+H: Handlers=kbd event5 
+andy@andy-zirui:~/Documents/repos/os_log_git
+$ sudo evtest /dev/input/event3
+
+sudo cat /dev/input/event3 | hexdump -C
 
 ```
 
 
 ---
-# 
+# airdisk局域网共享目录挂载
 
 ```
+我想把 smb://192.168.31.42/airdisk/
+挂载到本地的 /mnt/airdisk/
+用户名 AirDisk
+假设密码是 202619
+怎么做
+```
+
+## 手动挂载
+
+1. 创建挂载点
+
+   ```
+   sudo mkdir -p /mnt/airdisk
+   ```
+
+   
+
+2. 安装必要工具
+
+   ```
+   sudo apt update && sudo apt install cifs-utils   # Ubuntu/Debian
+   # sudo dnf install cifs-utils                    # Fedora
+   # sudo pacman -S cifs-utils                      # Arch
+   
+   ```
+
+   
+
+3. 挂载命令
+
+   方式一：使用凭证文件
+
+   ```
+   # 创建凭证文件
+   sudo tee /etc/smbcredentials/airdisk.creds > /dev/null <<EOF
+   username=AirDisk
+   password=202619
+   EOF
+   
+   # 设置权限
+   sudo chmod 600 /etc/smbcredentials/airdisk.creds
+   
+   # 挂载
+   sudo mount -t cifs //192.168.31.42/airdisk /mnt/airdisk \
+     -o credentials=/etc/smbcredentials/airdisk.creds,vers=3.0,uid=$(id -u),gid=$(id -g),cache=strict,noserverino
+   ```
+
+   方式二：带密码快速挂载
+
+   ```
+   sudo mount -t cifs //192.168.31.42/airdisk /mnt/airdisk \
+     -o username=AirDisk,password=202619,vers=3.0,uid=$(id -u),gid=$(id -g)
+   ```
+
+   方式三:  每次挂载时输入密码
+
+   ```
+   
+   sudo mount -t cifs //192.168.31.42/airdisk /mnt/airdisk \
+     -o username=AirDisk,vers=3.0,uid=$(id -u),gid=$(id -g),cache=strict
+   ```
+
+   
+
+4. 卸载命令
+
+   ```
+   sudo umount /mnt/airdisk
+   ```
+
+   
+
+5. 常用参数说明
 
 ```
+vers=3.0使用 SMB3 协议（最安全，推荐）
+uid=$(id -u),gid=$(id -g)用当前用户权限访问文件
+cache=strict缓存策略，更可靠
+noserverino解决某些 NAS inode 问题
+nounix禁用 unix 扩展（某些设备需要）
+```
+
+
+
+## 自动挂载
+
+1. 获得用户 uid 和 gid 信息
+
+```
+$ id
+```
+
+2. 编辑 fstab 文件
+
+```
+sudo nano /etc/fstab
+```
+
+在文件最下方添加下面这一行
+
+```
+//192.168.31.42/airdisk  /mnt/airdisk  cifs  credentials=/etc/smbcredentials/airdisk.creds,vers=3.0,uid=1000,gid=1000,nofail,x-systemd.automount,x-systemd.mount-timeout=30,iocharset=utf8,cache=strict  0  0
+```
+
+或者
+
+```
+//192.168.31.42/airdisk /mnt/airdisk cifs credentials=/etc/smbcredentials/airdisk.creds,vers=3.0,uid=1000,gid=1000,nofail,x-systemd.automount,x-systemd.mount-timeout=30,iocharset=utf8,cache=strict,noserverino 0 0
+```
+
+
+
+参数说明
+
+```
+credentials=...：使用凭证文件（安全）
+vers=3.0：使用 SMB3 协议
+uid=1000,gid=1000：改成你 id 命令显示的数字（推荐）
+nofail：启动时网络不可用也不会报错
+x-systemd.automount：按需挂载（推荐），而不是开机立即挂载
+x-systemd.mount-timeout=30：等待 30 秒
+iocharset=utf8：解决中文文件名乱码
+cache=strict：提高数据一致性
+```
+
+
+
+应用并测试
+
+```
+# 测试配置是否正确（不会真正挂载）
+sudo mount -a --test
+
+# 重新加载 fstab 并挂载
+sudo mount -a
+
+# 检查是否成功
+df -h | grep airdisk
+ls -l /mnt/airdisk
+```
+
+
 
 
 ---
-# 
+#  sftp目录挂载
+
+```
+sudo apt install sshfs fuse3
+
+sudo mkdir -p /mnt/remote_sftp
+
+sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 \
+      username@远程IP:/远程路径   /mnt/remote_sftp
+      
+== sudo mount -t fuse.sshfs username@<remote_ip>:/remote/path /mnt/remote_sftp
+
+sudo mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+```
+
+参数
+
+```
+reconnect断线后自动重连
+ServerAliveInterval=15保持连接
+allow_other允许其他用户访问（需要时加）
+idmap=user用户映射
+cache=yes启用缓存加快速度
+```
+
+可选在 fstab 中添加
+
+```
+andy@100.88.12.34:/home/andy  /mnt/remote_sftp  fuse.sshfs  noauto,x-systemd.automount,_netdev,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,allow_other,IdentityFile=/home/andy/.ssh/id_ed25519  0  0
+```
+
+强烈建议用 IdentityFile= 指定私钥路径（比密码更安全）. 后面有详细的密钥免输入密码设置
+
+
+
+测试
+
+```
+ls /mnt/remote_sftp
+df -h | grep remote_sftp
+```
+
+
+
+## 直接在命令里输入密码
+
+```
+# 先安装 sshpass
+sudo apt install sshpass
+
+# 然后这样挂载（密码明文写在命令中）
+sshpass -p '你的密码' \
+sudo mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+```
+
+## 通过密码文件
+
+```
+# 创建密码文件
+echo '你的密码' > ~/.sshfs_password
+chmod 600 ~/.sshfs_password
+
+# 使用密码文件挂载
+sshpass -f ~/.sshfs_password \
+sudo mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15 \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+```
+
+## 使用 SSH 密钥
+
+```
+# 在本地生成密钥（如果还没有）
+ssh-keygen -t ed25519
+
+# 把默认私钥的公钥复制到远程主机
+ssh-copy-id andy@100.80.77.86
+## 可以指定定某个私钥的公钥
+ssh-copy-id -i /home/andy/.ssh/id_ed25519 andy@100.80.77.86
+## 把某个私钥的公钥加入本地授权公钥文件(如果有需要的话, 我的使用场景是共用密钥, 所有有必要)
+ssh-copy-id -i /home/andy/.ssh/id_ed25519 andy@localhost
+
+# 测试 SSH 登录（使用 ed25519）
+ssh -i /home/andy/.ssh/id_ed25519 andy@100.80.77.86
+
+# 生成并复制完成后，就可以无密码挂载了
+sudo mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15,IdentityFile=~/.ssh/id_ed25519 \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+  
+
+sudo mount -t fuse.sshfs   -o \
+reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,IdentityFile=/home/andy/.ssh/id_ed25519,IdentitiesOnly=yes,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+  
+  
+sudo mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15,IdentitiesOnly=yes,IdentityFile=/home/andy/.ssh/id_ed25519,compression=yes \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+```
+
+参数 -o 里逗号分隔, 不能有空格
+
+```
+IdentityFile=/home/andy/.ssh/id_ed25519 → 最重要，明确告诉它使用哪个私钥
+IdentitiesOnly=yes → 只使用指定的密钥，不尝试其他密钥
+StrictHostKeyChecking=no → 第一次连接时跳过主机指纹确认（可后续去掉）
+```
+
+密钥需要确认以下两点：
+
+```
+1. 私钥权限必须正确(假设使用id_ed25519这个密钥)：
+ls -l /home/andy/.ssh/id_ed25519
+应该显示 -rw-------（600），
+
+如果不对，执行：
+chmod 600 /home/andy/.ssh/id_ed25519
+chmod 700 /home/andy/.ssh
+
+2. 远程主机上是否已加入公钥：
+确保远程 /home/andy/.ssh/authorized_keys 里包含对应的公钥。
+
+如果没有
+# 在本地执行, 把当前这台机器的 ed25519 公钥复制到远程
+ssh-copy-id -i /home/andy/.ssh/id_ed25519 andy@100.80.77.86
+
+# 在远程主机查看
+cat /home/andy/.ssh/authorized_keys
+应该有本地的/home/andy/.ssh/id_ed25519.pub的内容
+
+这样就可以免密码了
+
+3. fstab文件可以添加
+andy@100.80.77.86:/home/andy/Downloads  /mnt/remote_sftp  fuse.sshfs  noauto,x-systemd.automount,_netdev,reconnect,ServerAliveInterval=15,IdentitiesOnly=yes,IdentityFile=/home/andy/.ssh/id_ed25519,compression=yes  0  0
+```
+
+### 修改默认密钥
+
+```
+$ ssh -G andy@100.80.77.86 | grep -iE "identityfile|IdentityOnly"
+identityfile ~/.ssh/id_rsa
+identityfile ~/.ssh/id_ecdsa
+identityfile ~/.ssh/id_ecdsa_sk
+identityfile ~/.ssh/id_ed25519
+identityfile ~/.ssh/id_ed25519_sk
+identityfile ~/.ssh/id_xmss
+identityfile ~/.ssh/id_dsa
+
+$ cat ~/.ssh/config 2>/dev/null || echo "没有配置文件"
+Host github.com
+    ForwardX11 no
+Host *
+    ForwardX11 yes
+    
+```
+
+可以知道~/.ssh/config文件没有修改默认密钥设置, 默认就是~/.ssh/id_rsa
+
+如果要修改, ~/.ssh/config文件可以类似这样添加
+
+```
+Host 100.80.77.86
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+```
+
+以后连接这个 IP 时就会自动使用 ed25519
+
+全局设置这样添加
+
+```
+# 全局默认设置
+Host *
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+```
+
+优先级, 具体 Host 配置 > Host * 全局配置
+
+```
+# 针对特定主机的设置（优先级更高）
+Host 100.80.77.86
+    HostName 100.80.77.86
+    User andy
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    Compression yes
+
+# 全局默认设置（可选）
+Host *
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+```
+
+那么我的~/.ssh/config可以这么写
+
+```
+Host 100.80.77.86
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    Compression yes
+
+Host *
+    ForwardX11 yes
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+```
+
+
+
+那么按前面的远程的authorized_keys添加了id_ed25519的公钥, 而没有id_rsa的公钥, 会这样
+
+```
+# 不免密码  sudo mount -t fuse.sshfs 时是以 root 身份运行的，root 无法直接读取你用户 andy 的私钥，所以还是会提示输入密码。
+sudo mount -t fuse.sshfs   -o \
+reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,IdentitiesOnly=yes,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+
+
+# 免密
+ssh andy@100.80.77.86  
+
+
+# 免密
+ssh-copy-id -i /home/andy/.ssh/id_ed25519 andy@100.80.77.86
+
+
+# 免密
+sudo mount -t fuse.sshfs   -o \
+reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,IdentityFile=/home/andy/.ssh/id_ed25519,IdentitiesOnly=yes,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
 
 ```
 
-```
 
 
----
-# 
+好吧, 最终只是了解怎么修改, 实际上还是用系统默认的优先 id_rsa 吧
 
-```
 
-```
 
 
 ---
