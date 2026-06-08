@@ -16936,6 +16936,7 @@ sudo cat /dev/input/event3 | hexdump -C
 
    ```
    sudo mkdir -p /mnt/airdisk
+   sudo chown "$USER:$(id -gn)" /mnt/airdisk/     or        sudo chown "$USER:" /mnt/airdisk/
    ```
 
    
@@ -17321,9 +17322,14 @@ reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,IdentityFile=/home/andy/.
 
 
 ---
-# 
+# 升级cargo和rustc
 
 ```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo --version
+rustc --version
+cargo 1.96.0 (30a34c682 2026-05-25)
+rustc 1.96.0 (ac68faa20 2026-05-25)
 
 ```
 
