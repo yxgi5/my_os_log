@@ -17084,6 +17084,12 @@ sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 \
 sudo mount -t fuse.sshfs \
   -o reconnect,ServerAliveInterval=15,StrictHostKeyChecking=no \
   andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+  
+最好是用当前用户组
+sudo chown "$USER:$(id -gn)" /mnt/remote_sftp/
+mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
 ```
 
 参数
