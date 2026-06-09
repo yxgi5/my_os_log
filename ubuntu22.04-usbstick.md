@@ -17341,10 +17341,11 @@ rustc 1.96.0 (ac68faa20 2026-05-25)
 
 
 ---
-# 
+# securefs/gocryptfs+sirikali
 
 ```
-
+sudo apt install securefs gocryptfs
+sudo apt install sirikali cryfs encfs ecryptfs-utils
 ```
 
 
