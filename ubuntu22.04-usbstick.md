@@ -13733,6 +13733,46 @@ mount -o bind /opt-shadow /opt
 - `bind`：关键选项
 - `0 0`：不做 dump / fsck
 
+有些系统建议显式加 `_bind` 变体：
+
+```
+/opt-shadow   /opt   none   bind,x-systemd.requires=/opt-shadow   0   0
+```
+
+或者在 systemd 系统上更稳一点：
+
+```
+/opt-shadow   /opt   none   bind,nofail   0   0
+```
+
+
+
+普通 `bind` 不会递归挂载子 mount（比如 `/opt-shadow` 里面还有 mount point）
+
+递归版本：
+
+```
+/opt-shadow   /opt   none   bind,rbind   0   0
+```
+
+等价命令：
+
+```
+mount --rbind /opt-shadow /opt
+```
+
+### 验证
+
+```
+mount -a
+```
+
+或：
+
+```
+findmnt /opt
+```
+
 
 ---
 # mint21 更新
