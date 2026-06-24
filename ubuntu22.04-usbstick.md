@@ -13719,7 +13719,19 @@ sudo ln -s opt-shadow opt
 mount -o bind /opt-shadow /opt
 ```
 
+对应的 `/etc/fstab` 写法是：
 
+```
+/opt-shadow   /opt   none   bind   0   0
+```
+
+### 解释
+
+- `/opt-shadow`：源目录
+- `/opt`：挂载目标
+- `none`：fstab 里 bind mount 不需要文件系统类型
+- `bind`：关键选项
+- `0 0`：不做 dump / fsck
 
 
 ---
