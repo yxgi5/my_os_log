@@ -17404,6 +17404,8 @@ sudo apt install sirikali cryfs encfs ecryptfs-utils
 ---
 # detox
 
+不要安装， 这个命令比较危险。 中文名可能会消失， 虽然文件还在....
+
 ```
 sudo apt install detox
 # detox -r archive/
