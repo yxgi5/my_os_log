@@ -17427,9 +17427,7 @@ mkisofs -V archive -r -udf -o archive.iso /path/to/archive		# detected in locale
 mkisofs -V archive -r -o archive.iso /path/to/archive        # 纯 Linux 存档: Linux 原始结构
 ```
 
-`-no-joliet`选项好像不支持
-
-
+还是报`Joliet tree sort failed. The -joliet-long switch may help you.`,  而且`-no-joliet`选项不支持.
 
 记录几个Joliet制作命令，一般用不到了
 
