@@ -17427,6 +17427,10 @@ mkisofs -V archive -r -udf -o archive.iso /path/to/archive		# detected in locale
 mkisofs -V archive -r -o archive.iso /path/to/archive        # 纯 Linux 存档: Linux 原始结构
 ```
 
+`-no-joliet`选项好像不支持
+
+
+
 记录几个Joliet制作命令，一般用不到了
 
 ```
@@ -17439,7 +17443,20 @@ mkisofs -V archive -r -J -jcharset=utf8 -o archive.iso /path/to/archive         
 mkisofs -V archive -r -J -jcharset=utf8 -joliet-long -o archive.iso /path/to/archive            # 扩展 文件名长度限制
 ```
 
-如果用xorriso, 还不如用mkisofs
+
+
+如果前面的都不行, 就用xorriso, 下面制作的是 native ISO9660+RR 模式
+
+```
+xorriso \
+  -outdev mov.iso \
+  -volid mov \
+  -map mov / \
+  -rockridge on \
+  -commit
+```
+
+注意 xorriso 的 mkisofs 兼容层在这个版本里“不支持 UDF”, 所以下面几个会失败
 
 ```
 xorriso -as mkisofs \
@@ -17469,18 +17486,7 @@ xorriso \
   -udf \
   -o mov.iso
 ```
-都失败了. xorriso 的 mkisofs 兼容层在这个版本里“不支持 UDF”
 
-下面制作的是 native ISO9660+RR 模式
-
-```
-xorriso \
-  -outdev mov.iso \
-  -volid mov \
-  -map mov / \
-  -rockridge on \
-  -commit
-```
 
 
 
