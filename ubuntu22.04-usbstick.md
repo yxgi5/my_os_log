@@ -17420,9 +17420,11 @@ sudo apt install detox
 Joliet 已经不是“现代 Windows 兼容核心”，UDF 才是
 
 ```
-mkisofs -V archive -r -no-joliet -udf -o archive.iso /path/to/archive   # UDF 提供 Windows 兼容性 (UDF 才是 Windows 现代兼容层)
+mkisofs -V archive -r -udf -input-charset=utf-8 -o archive.iso /path/to/archive   # UDF 提供 Windows 兼容性 (UDF 才是 Windows 现代兼容层)
 
-mkisofs -V archive -r -no-joliet -o archive.iso /path/to/archive        # 纯 Linux 存档: Linux 原始结构
+mkisofs -V archive -r -udf -o archive.iso /path/to/archive		# detected in locale settings
+
+mkisofs -V archive -r -o archive.iso /path/to/archive        # 纯 Linux 存档: Linux 原始结构
 ```
 
 记录几个Joliet制作命令，一般用不到了
@@ -17436,6 +17438,51 @@ mkisofs -V archive -r -J -jcharset=utf8 -o archive.iso /path/to/archive         
 
 mkisofs -V archive -r -J -jcharset=utf8 -joliet-long -o archive.iso /path/to/archive            # 扩展 文件名长度限制
 ```
+
+如果用xorriso, 还不如用mkisofs
+
+```
+xorriso -as mkisofs \
+  -V mov \
+  -r \
+  -no_joliet \
+  -udf \
+  -o mov.iso \
+  mov/
+  
+  
+  
+xorriso \
+  -outdev mov.iso \
+  -volid mov \
+  -map mov / \
+  -rockridge on \
+  -udf on \
+  -commit
+
+xorriso \
+  -outdev mov.iso \
+  -volid mov \
+  -map mov / \
+  -as mkisofs \
+  -r \
+  -udf \
+  -o mov.iso
+```
+都失败了. xorriso 的 mkisofs 兼容层在这个版本里“不支持 UDF”
+
+下面制作的是 native ISO9660+RR 模式
+
+```
+xorriso \
+  -outdev mov.iso \
+  -volid mov \
+  -map mov / \
+  -rockridge on \
+  -commit
+```
+
+
 
 ## CD和DVD镜像的刻录
 
