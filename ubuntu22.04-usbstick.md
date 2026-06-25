@@ -17417,6 +17417,25 @@ sudo apt install detox
 
 ## 制作ISO
 
+```
+mkisofs \
+  -V archive_label \
+  -r \
+  -iso-level 3 \
+  -o archive.iso \
+  /path/to/archive/
+
+xorriso \
+  -outdev archive.iso \
+  -map /path/to/archive / \
+  -volid archive_label \
+  -rockridge on \
+  -compliance iso_9660_level=3 \
+  -commit
+```
+
+
+
 Joliet 已经不是“现代 Windows 兼容核心”，UDF 才是
 
 ```
