@@ -17402,18 +17402,53 @@ sudo apt install sirikali cryfs encfs ecryptfs-utils
 
 
 ---
-# 
+# detox
 
 ```
-
+sudo apt install detox
+# detox -r archive/
 ```
 
 
 ---
-# 
+# 制作ISO镜像 和 刻录CD和DVD镜像
+
+## 制作ISO
+
+Joliet 已经不是“现代 Windows 兼容核心”，UDF 才是
 
 ```
+mkisofs -V archive -r -no-joliet -udf -o archive.iso /path/to/archive   # UDF 提供 Windows 兼容性 (UDF 才是 Windows 现代兼容层)
 
+mkisofs -V archive -r -no-joliet -o archive.iso /path/to/archive        # 纯 Linux 存档: Linux 原始结构
+```
+
+记录几个Joliet制作命令，一般用不到了
+
+```
+mkisofs -V archive -r -J -jcharset=utf8 -no-iso-translate -o archive.iso /path/to/archive       # ISO9660 层是否做字符转换, 很古老, 目前基本无卵用
+
+mkisofs -V archive -r -J -jcharset=utf8 -joliet-long -no-iso-translate -o archive.iso /path/to/archive 
+
+mkisofs -V archive -r -J -jcharset=utf8 -o archive.iso /path/to/archive                         # 通过 Joliet 支持中文, Windows 资源管理器显示友好, 但是 Linux 素材源会有 文件名冲突问题
+
+mkisofs -V archive -r -J -jcharset=utf8 -joliet-long -o archive.iso /path/to/archive            # 扩展 文件名长度限制
+```
+
+## CD和DVD镜像的刻录
+
+查看设备
+
+```
+$ cdrecord -scanbus
+```
+
+一般是1,0,0
+
+刻录CD/DVD镜像
+
+```
+# cdrecord -v -dev=1,0,0 /TargetImage.iso
 ```
 
 
