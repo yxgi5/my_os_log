@@ -17420,7 +17420,7 @@ sudo apt install detox
 ```
 mkisofs \
   -V archive_label \
-  -udf
+  -udf \
   -r \
   -J -joliet-long \
   -iso-level 3 \
