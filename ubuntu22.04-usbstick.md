@@ -17418,22 +17418,51 @@ sudo apt install detox
 ## 制作ISO
 
 ```
-mkisofs \
+genisoimage   -V  "DICOM"   -udf   -r   -J -joliet-long   -iso-level 3   -o DICOM.iso   DICOM
+
+genisoimage \
   -V archive_label \
   -udf \
   -r \
-  -J -joliet-long \
+  -J -joliet-long -jcharset=utf8 \
+  -allow-lowercase \
+  -allow-multidot \
+  -allow-leading-dots \
   -iso-level 3 \
   -o archive.iso \
   /path/to/archive/
 
-mkisofs \
+genisoimage \
   -V archive_label \
+  -udf \
+  -input-charset utf-8 \
   -r \
-  -J -joliet-long \
+  -U \
+  -J -joliet-long -jcharset=utf8 \
   -iso-level 3 \
   -o archive.iso \
   /path/to/archive/
+
+genisoimage \
+  -V archive_label \
+  -udf \
+  -input-charset utf-8 \
+  -r \
+  -U \
+  -iso-level 3 \
+  -o archive.iso \
+  /path/to/archive/
+  
+-T or -translation-table
+在光盘的每个目录下都生成一个 TRANS.TBL 的文件，用于帮助在不兼容 RR 标准的系统上使用正确的文件名来访问文件。
+
+-U or -untranslated-filenames
+允许非转换的文件名，这会导致完全不兼容 ISO9660 标准。相当于开启了以下选项：-d -l -N -allow-leading-dots -relaxed-filenames -allow-lowercase -allow-multidot -no-iso-translate，就是减少对文件名的限制。
+
+-input-charset utf-8 # 明确指定输入字符集为 UTF-8
+
+-output-charset utf-8 # （可选）输出字符集设置
+
 
 mkisofs \
   -V archive_label \
@@ -17455,6 +17484,22 @@ xorriso \
   -commit
   
 xorriso \
+  -outdev archive.iso \
+  -map /path/to/archive / \
+  -volid archive_label \
+  -rockridge on \
+  -joliet "on" \
+  -compliance iso_9660_level=3 \
+  -compliance deep_paths \
+  -compliance long_paths \
+  -compliance long_names \
+  -compliance lowercase \
+  -compliance joliet_long_names \
+  -compliance joliet_long_paths \
+  -commit
+
+  
+xorriso \
   -outdev archive.iso \                 # 输出 ISO
   -map /path/to/archive /archive \      # 自定义内容目录 和iso内的根目录 
   -volid "archive_label" \              # 卷标
@@ -17469,6 +17514,15 @@ xorriso -as mkisofs \
   -o archive.iso \                      # 输出 ISO
   -iso-level 3 \                        # 解除 4GB 文件限制
   /tmp/iso_custom                       # 自定义内容目录
+
+
+
+
+# 查看生成的 ISO 结构信息
+isoinfo -d -i output.iso
+ 
+# 列出 Joliet 文件名
+isoinfo -f -J -i output.iso 
 ```
 
 
