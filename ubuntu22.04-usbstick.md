@@ -17420,6 +17420,23 @@ sudo apt install detox
 ```
 mkisofs \
   -V archive_label \
+  -udf
+  -r \
+  -J -joliet-long \
+  -iso-level 3 \
+  -o archive.iso \
+  /path/to/archive/
+
+mkisofs \
+  -V archive_label \
+  -r \
+  -J -joliet-long \
+  -iso-level 3 \
+  -o archive.iso \
+  /path/to/archive/
+
+mkisofs \
+  -V archive_label \
   -r \
   -iso-level 3 \
   -o archive.iso \
@@ -17432,6 +17449,22 @@ xorriso \
   -rockridge on \
   -compliance iso_9660_level=3 \
   -commit
+  
+xorriso \
+  -outdev archive.iso \                 # 输出 ISO
+  -map /path/to/archive /archive \      # 自定义内容目录 和iso内的根目录 
+  -volid "archive_label" \              # 卷标
+  -rockridge on \                       # Unix 权限和链接支持
+  -compliance iso_9660_level=3 \        # 解除 4GB 文件限制
+  -commit
+
+
+xorriso -as mkisofs \
+  -r -J -joliet-long \                  # 启用 Rock Ridge 扩展(Unix 权限和链接支持), 启用 Joliet 扩展(Windows 长文件名支持)
+  -V "archive" \                        # 卷标
+  -o archive.iso \                      # 输出 ISO
+  -iso-level 3 \                        # 解除 4GB 文件限制
+  /tmp/iso_custom                       # 自定义内容目录
 ```
 
 
