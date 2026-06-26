@@ -17448,6 +17448,10 @@ xorriso \
   -volid archive_label \
   -rockridge on \
   -compliance iso_9660_level=3 \
+  -compliance deep_paths \
+  -compliance long_paths \
+  -compliance long_names \
+  -compliance lowercase \
   -commit
   
 xorriso \
