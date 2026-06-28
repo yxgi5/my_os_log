@@ -17421,37 +17421,27 @@ sudo apt install detox
 genisoimage   -V  "DICOM"   -udf   -r   -J -joliet-long   -iso-level 3   -o DICOM.iso   DICOM
 
 genisoimage \
-  -V archive_label \
-  -udf \
-  -r \
-  -J -joliet-long -jcharset=utf8 \
-  -allow-lowercase \
-  -allow-multidot \
-  -allow-leading-dots \
-  -iso-level 3 \
-  -o archive.iso \
-  /path/to/archive/
-
-genisoimage \
-  -V archive_label \
   -udf \
   -input-charset utf-8 \
+  -full-iso9660-filenames \
   -r \
   -U \
   -J -joliet-long -jcharset=utf8 \
   -iso-level 3 \
+  -V archive_label \
   -o archive.iso \
-  /path/to/archive/
+  -graft-points archive=/path/to/archive/
 
 genisoimage \
-  -V archive_label \
   -udf \
   -input-charset utf-8 \
+  -full-iso9660-filenames \
   -r \
   -U \
   -iso-level 3 \
+  -V archive_label \
   -o archive.iso \
-  /path/to/archive/
+  -graft-points archive=/path/to/archive/
   
 -T or -translation-table
 在光盘的每个目录下都生成一个 TRANS.TBL 的文件，用于帮助在不兼容 RR 标准的系统上使用正确的文件名来访问文件。
