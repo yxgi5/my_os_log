@@ -17792,10 +17792,12 @@ tmux 用法
 
 
 ---
-# 
+# dos2unix windows 换行符转UNIX换行符
+
+Windows 编辑过的脚本常带有 `\r\n`，导致 Linux 下报错 `#!/bin/sh\r: not found`, 例如:
 
 ```
-
+dos2unix project-spec/meta-user/recipes-apps/trd-init/files/*.sh
 ```
 
 
