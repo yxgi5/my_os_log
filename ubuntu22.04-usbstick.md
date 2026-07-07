@@ -17738,11 +17738,57 @@ done
 
 
 ---
-# 
+# ssh登录的terminal后台运行, 可以关闭terminal
+
+## 简单任务用 nohup
+
+```
+nohup ./your_script.sh
+
+nohup ./your_script.sh > output.log 2>&1 &
+```
+忽略挂起信号，最好把输出重定向到文件
+
+查看进程
+```
+jobs 
+或
+ps -ef | grep your_script
+```
+
+## 交互式会话用 screen/tmux
+
+创建虚拟终端，断开 SSH 后程序仍在后台运行，可随时重新连接查看状态。
+
+screen 用法
+```
+创建：screen -S my_session
+分离：按 Ctrl+A 然后 D
+恢复：screen -r my_session
 
 ```
 
+tmux 用法
 ```
+创建：tmux new -s my_session
+分离：按 Ctrl+B 然后 D
+恢复：tmux attach -t my_session
+
+```
+
+
+## 长期运行/开机自启 用 systemd 服务
+
+最稳定，支持开机自启、崩溃重启、日志管理。
+
+```
+创建服务文件 /etc/systemd/system/myapp.service
+配置 ExecStart、User 等参数
+启动：sudo systemctl start myapp
+开机自启：sudo systemctl enable myapp
+```
+
+
 
 
 ---
