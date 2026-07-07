@@ -12899,9 +12899,9 @@ web前端是
 
 <http://localhost:2017>
 
-
 sudo gedit /etc/v2raya/v2raya
 修改
+
 ```
 V2RAYA_V2RAY_BIN=/usr/bin/xray/xray
 
@@ -17424,6 +17424,7 @@ genisoimage \
   -udf \
   -input-charset utf-8 \
   -full-iso9660-filenames \
+  -allow-limited-size \
   -r \
   -U \
   -J -joliet-long -jcharset=utf8 \
@@ -17436,6 +17437,7 @@ genisoimage \
   -udf \
   -input-charset utf-8 \
   -full-iso9660-filenames \
+  -allow-limited-size \
   -r \
   -U \
   -iso-level 3 \
@@ -17513,6 +17515,43 @@ isoinfo -d -i output.iso
  
 # 列出 Joliet 文件名
 isoinfo -f -J -i output.iso 
+```
+
+
+
+## DVD 恢复及压制
+
+```
+标准 video-DVD 结构（UDF/ISO9660）：
+
+AUDIO_TS/   （通常为空，但必须存在）
+VIDEO_TS/
+    VIDEO_TS/VIDEO_TS.BUP
+    VIDEO_TS/VIDEO_TS.IFO
+    VIDEO_TS/VIDEO_TS.VOB
+    VIDEO_TS/VTS_01_0.BUP
+    VIDEO_TS/VTS_01_0.IFO
+    VIDEO_TS/VTS_01_0.VOB
+    VIDEO_TS/VTS_01_1.VOB
+    VIDEO_TS/VTS_01_2.VOB
+    VIDEO_TS/VTS_01_3.VOB
+    VIDEO_TS/VTS_01_4.VOB
+    VIDEO_TS/VTS_01_5.VOB
+
+
+
+# 可以这样恢复为video-DVD， 可以选-udf或者不选
+genisoimage -dvd-video \
+  -udf \
+  -V "DMSM-5051" \
+  -o dvd.iso \
+  "02-DMSM-5051 LUCKY LEGS KICK！"
+ 
+
+ffmpeg可以直接对video-dvd进行压缩：
+
+ffmpeg -hide_banner -threads 0 -v verbose -init_hw_device qsv=hw:0 -filter_hw_device hw -hwaccel qsv -hwaccel_output_format qsv -i "/media/andy/3C530A917791B92B/Storage/H8A/porno/[实用堂]/dvd.iso" -c:v hevc_qsv -profile:v main -preset veryfast -b:v 636021 -g 250 -keyint_min 25 -ar 44100 -b:a 128k -c:a aac -ac 2 -map_metadata -1 -map_chapters -1 -strict -2 -rtbufsize 120m -max_muxing_queue_size 1024 -n "/media/andy/3C530A917791B92B/Storage/H8A/porno/[实用堂]/output.mp4"
+
 ```
 
 
@@ -17606,26 +17645,95 @@ $ cdrecord -scanbus
 
 
 ---
-# 
+# 批量转换bmp文件为jpg文件的命令
 
 ```
+sudo apt install imagemagick
+
+在 Ubuntu 22.04 上：
+
+ImageMagick 6 → 命令是 convert
+ImageMagick 7 → 命令才是 magick
+
+for f in *.BMP; do
+  convert "$f" -quality 100 "${f%.BMP}.jpg"
+done
+
+for f in *.bmp; do
+  convert "$f" -quality 100 "${f%.bmp}.jpg"
+done
+
+并发加速
+for f in *.bmp; do
+  magick "$f" "${f%.bmp}.jpg" &
+done
+wait
+
+
+递归转换（包含子目录）
+find . -name "*.bmp" -exec bash -c 'magick "$0" "${0%.bmp}.jpg"' {} \;
+
+
+JPEG质量（0–100）
+for f in *.bmp; do
+  magick "$f" -quality 90 "${f%.bmp}.jpg"
+done
+
+
 
 ```
 
 
 ---
-# 
+# GIF压缩首选 gifsicle
 
 ```
+magick input.gif -colors 64 -fuzz 2% output.gif
+-colors 64：从256色降到64色（关键）
+-fuzz 2%：允许颜色合并误差（进一步压缩）
 
+# 压缩效果明显（推荐）
+magick input.gif -coalesce -colors 64 -layers Optimize output.gif
+-coalesce：拆帧（非常重要）
+-layers Optimize：合并重复像素
+
+# 低质量
+magick input.gif -coalesce -resize 50% -colors 32 -layers Optimize output.gif
+
+
+for f in *.gif; do
+  magick "$f" -coalesce -colors 64 -layers Optimize "${f%.gif}_c.gif"
+done
+
+for f in *.gif; do
+  magick "$f" \
+    -coalesce \
+    -resize 80% \
+    -colors 48 \
+    -layers Optimize \
+    "${f%.gif}_small.gif"
+done
+
+
+
+sudo apt install gifsicle
+gifsicle -O3 input.gif -o output.gif
+
+降质量 + 调色板优化
+gifsicle -O3 --colors 64 input.gif -o output.gif
+
+for f in *.gif; do
+  gifsicle -O3 --colors 64 "$f" -o "${f%.gif}_opt.gif"
+done
 ```
 
 
 ---
-# 
+# dvdbackup
 
 ```
-
+ sudo apt install dvdbackup
+ dvdbackup -i ttt -I
 ```
 
 
