@@ -1264,6 +1264,62 @@ Vacuuming done, freed 0B of archived journals on disk.
 
 ---
 
+# systemd服务状态及journal查询
+
+Systemd 方式服务
+
+```
+systemctl status trd-autostart
+```
+
+`systemctl status` 命令默认只显示服务最近的几行日志（通常是最后10行左右），主要用于快速确认服务状态和最近的关键错误.
+
+更多可以查看journal
+
+```
+# 该服务所有日志
+journalctl -u trd-autostart
+
+# 实时跟踪 
+journalctl -u trd-autostart -f				# 按 Ctrl+C 停止监控
+
+# 想看最近的几十行或几百行，而不想翻阅全部历史
+# 查看最近 50 行
+journalctl -u trd-autostart -n 50
+# 查看最近 100 行并实时跟踪
+journalctl -u trd-autostart -n 100 -f
+
+#按时间范围筛选日志
+# 查看今天以来的日志
+journalctl -u trd-autostart --since today
+
+# 查看最近 1 小时的日志
+journalctl -u trd-autostart --since "1 hour ago"
+
+# 查看特定时间段（例如从 10:00 到 11:00）
+journalctl -u trd-autostart --since "2026-07-09 10:00:00" --until "2026-07-09 11:00:00"
+
+# 查看详细格式（Verbose）
+如果默认的日志格式信息不够全（例如缺少环境变量、执行路径等细节）：
+journalctl -u trd-autostart -o verbose
+
+```
+
+## 只看错误级别的日志
+
+```
+# 只显示优先级为 error 及以上的日志（包含 err, crit, alert, emerg）
+journalctl -u trd-autostart -p err
+
+# 或者使用数字级别（3 代表 error）
+journalctl -u trd-autostart -p 3
+
+```
+
+- 优先级级别参考：`0`(emerg), `1`(alert), `2`(crit), `3`(err), `4`(warning), `5`(notice), `6`(info), `7`(debug)。
+
+---
+
 # journalctl
 
 [https://www.itbkz.com/11591.html](https://www.itbkz.com/11591.html)
@@ -12869,6 +12925,7 @@ config.json
 ```
 
 `makedeb`生成`xray_1.8.23-1_amd64.deb`安装
+
 ```
 sudo systemctl enable xray.service
 sudo systemctl restart xray.service
