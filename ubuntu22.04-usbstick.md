@@ -1264,62 +1264,6 @@ Vacuuming done, freed 0B of archived journals on disk.
 
 ---
 
-# systemd服务状态及journal查询
-
-Systemd 方式服务
-
-```
-systemctl status trd-autostart
-```
-
-`systemctl status` 命令默认只显示服务最近的几行日志（通常是最后10行左右），主要用于快速确认服务状态和最近的关键错误.
-
-更多可以查看journal
-
-```
-# 该服务所有日志
-journalctl -u trd-autostart
-
-# 实时跟踪 
-journalctl -u trd-autostart -f				# 按 Ctrl+C 停止监控
-
-# 想看最近的几十行或几百行，而不想翻阅全部历史
-# 查看最近 50 行
-journalctl -u trd-autostart -n 50
-# 查看最近 100 行并实时跟踪
-journalctl -u trd-autostart -n 100 -f
-
-#按时间范围筛选日志
-# 查看今天以来的日志
-journalctl -u trd-autostart --since today
-
-# 查看最近 1 小时的日志
-journalctl -u trd-autostart --since "1 hour ago"
-
-# 查看特定时间段（例如从 10:00 到 11:00）
-journalctl -u trd-autostart --since "2026-07-09 10:00:00" --until "2026-07-09 11:00:00"
-
-# 查看详细格式（Verbose）
-如果默认的日志格式信息不够全（例如缺少环境变量、执行路径等细节）：
-journalctl -u trd-autostart -o verbose
-
-```
-
-## 只看错误级别的日志
-
-```
-# 只显示优先级为 error 及以上的日志（包含 err, crit, alert, emerg）
-journalctl -u trd-autostart -p err
-
-# 或者使用数字级别（3 代表 error）
-journalctl -u trd-autostart -p 3
-
-```
-
-- 优先级级别参考：`0`(emerg), `1`(alert), `2`(crit), `3`(err), `4`(warning), `5`(notice), `6`(info), `7`(debug)。
-
----
-
 # journalctl
 
 [https://www.itbkz.com/11591.html](https://www.itbkz.com/11591.html)
@@ -12925,7 +12869,6 @@ config.json
 ```
 
 `makedeb`生成`xray_1.8.23-1_amd64.deb`安装
-
 ```
 sudo systemctl enable xray.service
 sudo systemctl restart xray.service
@@ -17549,7 +17492,7 @@ xorriso \
 
   
 xorriso \
-  -outdev archive.iso \                 # 输出 ISO
+  -outdev archive.iso \                 # 输出 ISO, 要特别注意，先确保在这个参数正确！！！！
   -map /path/to/archive /archive \      # 自定义内容目录 和iso内的根目录 
   -volid "archive_label" \              # 卷标
   -rockridge on \                       # Unix 权限和链接支持
@@ -17573,6 +17516,47 @@ isoinfo -d -i output.iso
 # 列出 Joliet 文件名
 isoinfo -f -J -i output.iso 
 ```
+
+
+
+## 解决“危险覆盖”的问题
+
+`genisoimage`（以及其前身 `mkisofs）本身‌**没有内置的交互式提示功能**‌来防止覆盖输出文件。它的设计逻辑是：如果 `-o` 指定的文件已存在，它会直接静默覆盖。
+
+`~/.bashrc` 或 `~/.zshrc` 中添加一个安全包装函数
+
+```bash
+safe_geniso() {
+    local outfile=""
+    local args=()
+    
+    # 解析参数找到 -o 后面的文件名
+    for ((i=1; i<=$#; i++)); do
+        if [[ "${!i}" == "-o" ]]; then
+            next=$((i+1))
+            outfile="${!next}"
+            break
+        fi
+    done
+
+    if [[ -n "$outfile" && -f "$outfile" ]]; then
+        echo "⚠️ 警告: 输出文件 '$outfile' 已存在！"
+        read -p "是否覆盖? (y/N): " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            echo "操作已取消。"
+            return 1
+        fi
+    fi
+    
+    # 执行原始命令
+    genisoimage "$@"
+}
+
+```
+
+
+
+
 
 
 
@@ -17795,66 +17779,19 @@ done
 
 
 ---
-# ssh登录的terminal后台运行, 可以关闭terminal
-
-## 简单任务用 nohup
+# makemkv
 
 ```
-nohup ./your_script.sh
-
-nohup ./your_script.sh > output.log 2>&1 &
-```
-忽略挂起信号，最好把输出重定向到文件
-
-查看进程
-```
-jobs 
-或
-ps -ef | grep your_script
-```
-
-## 交互式会话用 screen/tmux
-
-创建虚拟终端，断开 SSH 后程序仍在后台运行，可随时重新连接查看状态。
-
-screen 用法
-```
-创建：screen -S my_session
-分离：按 Ctrl+A 然后 D
-恢复：screen -r my_session
+sudo snap install makemkv
 
 ```
-
-tmux 用法
-```
-创建：tmux new -s my_session
-分离：按 Ctrl+B 然后 D
-恢复：tmux attach -t my_session
-
-```
-
-
-## 长期运行/开机自启 用 systemd 服务
-
-最稳定，支持开机自启、崩溃重启、日志管理。
-
-```
-创建服务文件 /etc/systemd/system/myapp.service
-配置 ExecStart、User 等参数
-启动：sudo systemctl start myapp
-开机自启：sudo systemctl enable myapp
-```
-
-
 
 
 ---
-# dos2unix windows 换行符转UNIX换行符
-
-Windows 编辑过的脚本常带有 `\r\n`，导致 Linux 下报错 `#!/bin/sh\r: not found`, 例如:
+# 
 
 ```
-dos2unix project-spec/meta-user/recipes-apps/trd-init/files/*.sh
+
 ```
 
 
