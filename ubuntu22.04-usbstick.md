@@ -16048,6 +16048,31 @@ $  tailscale ip -4
 
 
 
+## 无法连接远程机器的处理
+
+1. 在`https://console.tailscale.com/admin/machines`确认远端机器是否在线
+
+2. 如果远端机器在线, 而本地ping不通远端
+
+   ```
+   sudo tailscale down
+   tailscale up --accept-dns=false
+   
+   ```
+
+   会要求
+
+   ```
+   To authenticate, visit:
+   
+   	https://login.tailscale.com/a/xxxxx
+   
+   ```
+
+   网页挂梯子登录成功会显示Success. 似乎终端不用挂梯子也行
+
+
+
 ## 远程桌面流量走P2P
 
 1. 习惯使用anydesk的, 其实rustdesk是一个类似平替, 如果用tailscale穿透了, 其实用哪个都可以流量走p2p, 选哪个都无所谓, 在中国大陆或许anydesk还更好一点.
