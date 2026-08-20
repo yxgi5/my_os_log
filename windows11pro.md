@@ -916,7 +916,48 @@ This PC Tweaker
 
 ---
 
-# 
+# 命令行挂载ISO文件有关操作
+
+## 挂载(最好是管理员权限)
+
+```powershell
+Mount-DiskImage -ImagePath "D:\YourFile.iso"
+```
+
+```cmd
+powershell -Command "Mount-DiskImage -ImagePath 'D:\YourFile.iso'"
+```
+
+## 卸载
+
+```powershell
+Dismount-DiskImage -ImagePath "D:\YourFile.iso"
+```
+
+```cmd
+powershell -Command "Dismount-DiskImage -ImagePath 'D:\YourFile.iso'"
+```
+
+## 查看已挂载的 ISO 信息
+
+```powershell
+Get-DiskImage -ImagePath "C:\你的文件夹\文件名.iso" | Get-Volume
+```
+
+## WinCDEmu
+```
+vmnt.exe "D:\Downloads\example.iso"
+vumnt.exe "D:\Downloads\example.iso"
+```
+## ImDisk
+```
+imdisk -a -t iso -f "D:\Downloads\example.iso" -l Z
+imdisk -d -l Z
+```
+> -a: 添加/挂载
+> -t iso: 类型为 ISO
+> -f: 文件路径
+> -l Z: 指定盘符为 Z:（可选，不指定则自动分配）
 
 ---
 
@@ -929,7 +970,3 @@ This PC Tweaker
 ---
 
 # 
-
-
-
-
