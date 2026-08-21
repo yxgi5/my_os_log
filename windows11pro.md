@@ -946,8 +946,23 @@ Get-DiskImage -ImagePath "C:\你的文件夹\文件名.iso" | Get-Volume
 
 ## WinCDEmu
 ```
-vmnt.exe "D:\Downloads\example.iso"
-vumnt.exe "D:\Downloads\example.iso"
+# 挂载一个镜像文件
+batchmnt D:\images\setup.iso
+ 
+# 挂载并指定盘符
+batchmnt D:\images\setup.iso G:
+ 
+# 卸载某个镜像
+batchmnt /unmount D:\images\setup.iso
+ 
+# 卸载指定盘符上的虚拟光驱
+batchmnt /unmount G:
+ 
+# 卸载所有已挂载的镜像
+batchmnt /unmountall
+ 
+# 列出当前所有已挂载的镜像及对应盘符
+batchmnt /list
 ```
 ## ImDisk
 ```
