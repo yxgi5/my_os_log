@@ -17209,6 +17209,12 @@ sshpass -p '你的密码' \
 sudo mount -t fuse.sshfs \
   -o reconnect,ServerAliveInterval=15,StrictHostKeyChecking=no \
   andy@100.80.77.86:/home/andy/Downloads /mnt/remote_sftp
+
+
+# 一般不需要sudo, 这里不使用sshpass,直接输入远程机器的ssh密码即可
+mount -t fuse.sshfs \
+  -o reconnect,ServerAliveInterval=15,StrictHostKeyChecking=no \
+  andy@100.80.77.86:/mnt/airdisk /mnt/remote_sftp
 ```
 
 ## 通过密码文件
