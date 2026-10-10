@@ -16048,15 +16048,15 @@ $  tailscale ip -4
 
 
 
-## 无法连接远程机器的处理
+## 无法连接远程机器或不能被远程访问的处理
 
 1. 在`https://console.tailscale.com/admin/machines`确认远端机器是否在线
 
-2. 如果远端机器在线, 而本地ping不通远端
+2. 如果远端机器在线, 而本地ping不通远端, 可以在两端都
 
    ```
    sudo tailscale down
-   tailscale up --accept-dns=false
+   sudo tailscale up --accept-dns=false
    
    ```
 
@@ -17819,9 +17819,10 @@ sudo snap install makemkv
 
 
 ---
-# 
+# matplotlib
 
 ```
+sudo -H pip3 install  matplotlib  -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 ```
 

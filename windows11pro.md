@@ -976,12 +976,133 @@ imdisk -d -l Z
 
 ---
 
-# 
+# 禁用休眠
+
+```
+powercfg /h off
+powercfg /a
+
+powercfg /change standby-timeout-ac 0
+powercfg /change monitor-timeout-ac 0
+```
+
+
 
 ---
 
-# 
+# github的ssh密钥设置
+
+```
+$env:USERPROFILE\.ssh  ==	C:\Users\andy\.ssh\
+id_rsa	权限 icacls /inheritance:r /grant:r andy:R —— 去掉继承，只剩你本人读
+
+
+ssh -T git@github.com        → Hi yxgi5! You've successfully authenticated
+git pull --all               → Already up to date
+git status -sb               → ## master...origin/master（同步，无 ahead/behind）
+```
+
+
+
+
 
 ---
 
-# 
+#  for msys64(mingw64)
+
+```
+xorriso gettext freetype ninja
+```
+
+
+
+---
+
+# 永久禁⽤ Windows Defender
+
+1在「开始」菜单中搜索并打开「Windows 安全中心」，选择「病毒和威胁防护」。
+2在「病毒和威胁防护」设置中，点击「管理设置」。
+3找到并关闭「篡改防护」开关。
+
+通过组策略 禁⽤ Windows Defender
+对于 Windows 10 和 Windows 11 的专业版
+和企业版用户，可以通过组策略编辑器永久禁用 Windows
+Defender 实时保护，具体步骤如下：
+1使用Windows + R快捷键打开「运行」对话框
+，执行gpedit.msc打开组策略编辑器。
+2导航至以下路径：
+
+计算机配置 > 管理模板 > Windows 组件 > Windows Defender 防病毒
+3双击「关闭 Windows Defender 防病毒」策略，选择「已启用」，然后点击「确定」。
+
+启用「关闭 Windows Defender 防病毒」策略
+4打开「命令提示符」，执行gpupdate /force命令强制更新组策略，或者重启计算机以让更改生效。
+
+通过注册表 禁⽤ Windows Defender
+对于 Windows 10 和 Windows 11 的家庭版用户，可以通过修改注册表来永久禁用 Windows Defender，具体步骤
+如下：
+1使用Windows + R快捷键打开「运行」对话框，执行regedit打开注册表编辑器。
+2导航至以下路径：
+
+```
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender
+```
+
+3将名为DisableAntiSpyware的 DWORD (32位) 值设置为1，如果没有就新建。
+
+4重启计算机以使更改生效。
+再次打开 Windows 安全中心并查看「病毒和威胁防护」时，可能会看到提示：无可用的防病毒提供方。你的设备
+易受攻击。
+
+验证 Windows Defender 运⾏状态
+以下步骤适用于 Windows 10 和 Windows 11 操作系统。
+如果你禁用了 Windows Defender，可以通过以下 PowerShell
+命令来验证是否成功：
+1使用Windows + R快捷键打开「运行」对话框，输入powershell，然后按Ctrl + Shift + Enter以管理
+员权限打开 Windows PowerShell 窗口。
+2执行以下命令：
+
+```
+Get-MpComputerStatus | select AMRunningMode
+```
+
+
+
+
+
+---
+
+# Windows Defender 隔离文件的恢复
+
+先禁⽤ Windows Defender, 看上面的一条
+
+然后用cmd命令恢复,但是要原来位置的目录在才行.
+
+https://learn.microsoft.com/zh-cn/defender-endpoint/restore-quarantined-files-microsoft-defender-antivirus
+
+```
+(set "_done=" & if exist "%ProgramData%\Microsoft\Windows Defender\Platform\" (for /f "delims=" %d in ('dir "%ProgramData%\Microsoft\Windows Defender\Platform" /ad /b /o:-n 2^>nul') do if not defined _done (cd /d "%ProgramData%\Microsoft\Windows Defender\Platform\%d" & set _done=1)) else (cd /d "%ProgramFiles%\Windows Defender")) >nul 2>&1
+MpCmdRun.exe -Restore -ListAll
+MpCmdRun.exe -Restore -Name HackTool:Win32/Keygen!MTB
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
