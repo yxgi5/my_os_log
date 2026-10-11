@@ -977,7 +977,10 @@ imdisk -d -l Z
 ---
 
 # 
-
+```
+subst s: t:\
+subst /D S:
+```
 ---
 
 # 
